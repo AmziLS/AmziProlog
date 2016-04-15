@@ -1,0 +1,16 @@
+FILES = chello.cpp main.cpp
+
+C_FLAGS = -D_CONSOLE -O6
+
+# NOTE egcs++ has incompatible error handling with gcc
+# causes segmentation faults when catching CLSExceptions.
+CC = gcc
+
+all: chello hello.xpl
+
+chello: $(FILES)
+	$(CC) -I$(AMZI_DIR)/include -L$(AMZI_DIR)/lib $(C_FLAGS) -lamzi -lm -lstdc++ -o chello $(FILES)
+
+hello.xpl: hello.pro
+	acmp hello
+	alnk hello hello

@@ -1,0 +1,49 @@
+Cube Solver II - copyright (c) 1994 Amzi! inc.
+This program may be freely copied with appropriate credit given.
+
+Cube Solver II is designed to be an entertaining example of Prolog
+applied to a non-trivial problem.  Full source is included to
+expose both the beauty (and obscurity) of Prolog.
+
+The application is illustrative of typical AI programs.  It
+involves a hugh search space which is brought to a manageable
+size through the use of heuristics.  It represents the encoding
+of the knowledge necessary to unscramble a cube.
+
+This version of Cube Solver II has a simple scrolling interface
+written that should work in any Edinburgh standard Prolog.
+
+The sources are split among six files, and take advantage of Cogent
+Prolog's support of modules.  The import and export directives can
+be ignored for interpreted use of the code, but might have to be
+modified for use with another Prolog compiler.
+
+The following files contain documentation:
+
+     rubuse.txt  - a users guide of sorts, notes on notation and
+                   the user interface
+     rubread.me  - this one
+     rubdoc1.txt - the strategy for solving the cube
+     rubdoc2.txt - the internal representation of the problem
+     *.pro       - the source files with comments
+
+To run it from a Prolog interpreter
+
+     ?- [rubik, rubdata, rubdisp, rubedit, rubhelp, rubhist, rubmov].
+     ?- main.
+
+If you have the compiler, you can compile each of the modules and run
+them from the interactive runtime.
+
+     ?- load([rubik, rubdata, rubdisp, rubedit, rubhelp, rubhist, rubmov]).
+
+In either case, you can turn on logging, using the .INI file to generate
+a log of all the moves.
+
+Runtime/API customers can use the file RUBBUILD.BAT to compile and
+link and package a standalone version of RUBIK.
+
+The RUBIK.INI file is set up assuming a 32-bit environment.  It also uses
+the logfile to record the moves that led up to a solution.
+
+

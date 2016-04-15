@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Hello Prolog</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="HelloProlog"></A><FONT COLOR="#D2AA00">Hello Prolog</FONT> </h1>
+<P><!AMZI_INDEX= Hello Prolog>As Kernighan &amp; Ritchie point out in their
+classic C text, the hardest part is getting the first simple program to
+work in your environment. The Prolog side of Hello Prolog is the same for
+each environment, but each host language environment has a different way
+of connecting to the Logic Server. This section describes:</P>
+
+<UL>
+<LI><A HREF="#ThePrologSideofHelloProlog">The Prolog Side of Hello Prolog</A>
+- Describes the Prolog code for the Hello Prolog application and how to
+compile and link it. </LI>
+
+<LI><A HREF="#TheHostLanguageSideofHelloProl">The Host Language Side of
+Hello Prolog</A> - Describes the general outline of a host language Program
+that uses the compiled Prolog program. </LI>
+</UL>
+
+<P>Under each of the samples subdirectories for the various programming tools 
+  (c, cpp, delphi, java, vb, cgi, etc.) you will find a hello subdirectory with 
+  that implements Hello Prolog. </P>
+
+<H2><A NAME="ThePrologSideofHelloProlog"></A><FONT COLOR="#0000FF">Prolog
+Side of Hello Prolog</FONT></H2>
+
+<P><!AMZI_INDEX= Hello Prolog>The Prolog program to be embedded is hello.pro, 
+  which has a single predicate, <B>hello/2</B>, whose first argument is a string 
+  supplied by the caller and whose second argument is a string constructed in 
+  Prolog for retrieval by the host program. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">% hello.pro - hello for embedding
+
+hello(Caller, Greeting) :-
+        strcat($Greetings $, Caller, S1),
+        strcat(S1, $, from Amzi! Prolog.$, Greeting).</FONT></PRE>
+</UL>
+
+<P>In the Prolog interpreter, a call to <B>hello/2</B> would look like
+</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- hello($your name$, X).
+X = Greetings your name from Amzi! Prolog</FONT></PRE>
+</UL>
+
+<H3><A NAME="CompilingandLinkingHELLOPRO"></A><FONT COLOR="#000080">Compiling
+and Linking</FONT></H3>
+
+<P><!AMZI_INDEX= Compiling; Linking; Hello Prolog>To call Amzi! Prolog from another 
+  language, you must have a compiled program to load, a .xpl file. Once a compiled 
+  program is loaded, you can then consult other Prolog source files or compiled 
+  files (.plm files), but you can't consult another .xpl file. </P>
+
+<P>A compiled version of hello (hello.xpl) is included in the Amzi! directory, 
+  but to recreate this file from the IDE </P>
+
+<OL>
+  <LI>Select Build/Compile from the menu and choose hello.pro from the file selection 
+    dialog. This will create the Prolog object module hello.plm. </LI>
+
+  <LI>Select Build/Link from the menu and choose hello.plm from the file selection 
+    dialog. This will create the Prolog load module hello.xpl. </LI>
+</OL>
+
+<P>To create hello.xpl from the operating system command line: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">c&gt;  acmp hello
+c&gt;  alnk hello hello</FONT></PRE>
+</UL>
+
+<P>In either case make sure hello.xpl is either in the path or the directory from 
+  which you run the final hello program. If not you will get an error message 
+  indicating hello.xpl could not be opened. </P>
+
+<H2><A NAME="TheHostLanguageSideofHelloProl"></A><FONT COLOR="#0000FF">Host
+Language Side of Hello Prolog</FONT></H2>
+
+<P><!AMZI_INDEX= Hello Prolog>All of the source code for various environments 
+  is stored in environment-specific subdirectories of samples. Most are also included 
+  in the appropriate reference sections. </P>
+
+<P>The host program initializes the Prolog environment, and calls the <B>hello/2</B> 
+  predicate. It checks for error conditions, and, all going well, prints the returned 
+  greeting from hello.pro. </P>
+
+<P>The code looks a little longer, because at each step of the way error
+checking is done. Return codes from the API indicate whether or not a function
+was successful. The sample code displays status messages at each step,
+or displays an error message if the step failed. </P>
+
+<P>The error handling uses an API function call to get and display the error message 
+  from Prolog. (To test the error handling, simply rename the file hello.xpl to 
+  something else, and run the host language program. You should get an error message 
+  indicating the load was unsuccessful because hello.xpl couldn't be loaded.) 
+</P>
+
+<P>(Instead of checking the return code from each function, you can use
+the setjmp/longjmp feature of C to trap Prolog errors and handle them in
+one place. See the section on error handling for details.) </P>
+
+<P>The host calling program: </P>
+
+<OL>
+<LI>Initializes the Prolog environment, </LI>
+
+  <LI>Loads the compiled version of hello, </LI>
+
+  <LI>Constructs a query term such as 'hello($C Programmer$, X)', </LI>
+
+<LI>Calls the Prolog engine with the query, </LI>
+
+<LI>Retrieves the resultant value of X into a C string, </LI>
+
+<LI>Displays the string, and </LI>
+
+<LI>Closes the Prolog environment. </LI>
+</OL>
+
+<P>When the program runs correctly, you will get output similar to: </P>
+
+<PRE><FONT COLOR="#000080">  Prolog Initialized
+  Hello Loaded
+
+  Greetings C Programmer from Amzi! Prolog
+
+  Prolog Successfully Completed</FONT></PRE><!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I></I> </P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>Engine Dev Doc</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1>Porting the Engine</h1>
+<h2>env.h</h2>
+<p>In env.h create a new master environment variable for the new platform. See 
+  the comments in the file for details on naming conventions. For example, a new 
+  port to x86 Solaris would use: ENVgi3</p>
+<p>Use the other environment definitions as an example for the new one. Basically, 
+  each environment then defines a number of other environment-specific macros, 
+  such as BIG__ENDIAN, UNIX, and IBMPC.</p>
+<h2>makefile.abc</h2>
+<p>Create a makefile that goes with the environment. Such as makefile.gi3 for 
+  the Solaris port. Usually you can copy one of the other makefiles from Windows 
+  or Unix as appropriate.</p>
+<p>Someday we'll figure out how to use imake for the Unix builds, but for now 
+  each environment has its own makefiles.</p>
+<p>Set the build so that the compiler sets the flag for the new environment, something 
+  like -DENVgi3.</p>
+<h2>lenv.h/cpp &amp; defs.h</h2>
+<p>We've tried to move all of the environment specific code to lenv.h/cpp. Typically 
+  these are various I/O functions used by the engines, but includes macros for 
+  dealing with endianess as well.</p>
+<p>The file defs.h contains lots of macro definitions, many of which refer to 
+  functions in lenv.h/cpp.</p>
+<h2>compiling</h2>
+<p>Many of the early compilation errors will probably just be getting the right 
+  libraries in place for the target platform. Note that the engine makes use of 
+  wide characters and the standard template library. These are not always current 
+  on some platforms.</p>
+<p>If you run into problems that need fixing, usually the fix is just adjusting 
+  some of the #ifdefs in lenv.h/cpp. If you find you need a fix elsewhere, then 
+  its best if you can move that fix to lenv.h/cpp. But there are parts of the 
+  code that simply require the #ifdefs in other places.</p>
+<h2>linking</h2>
+<p>The engine is a .dll or .so and goes in the amzi/bin directory.</p>
+<h2>arun</h2>
+<p>For testing you'll need to next build arun, in the src/acore/run directory. 
+  It is a very simply executable that loads a .xpl file and calls its main/0 predicate.</p>
+<p>arun.exe goes in amzi/bin as well.</p>
+<h2>testing</h2>
+<p>Amzi! is binary compatible across platforms. So the first test is a very simple 
+  Prolog program, such as hello:</p>
+<p>main :- write(hello), nl.</p>
+<p>You should compile and link hello.xpl on a separate platform and move it to 
+  a test directory for your new build. You then type:</p>
+<p>&gt;arun hello</p>
+<p>If it works, you're 90% done.</p>
+<h2>more testing</h2>
+<p>Anyone who's managed software knows that if a developer claims to be 90% done, 
+  the project has just begun.</p>
+<p>Use more and more complex programs. The compiler and listener are two good 
+  ones. Copy arun(.exe) to acmp(.exe) and alis(.exe) and keep both in amzi/bin.</p>
+<p>For this test acmp.xpl and alis.xpl need to be in amzi/abin.</p>
+<p>You should be able to then type:</p>
+<p>&gt;acmp hello</p>
+<p>And compile the program.</p>
+<p>You can also use:</p>
+<p>&gt;alis</p>
+<p>To get the standard Prolog listener.</p>
+<p>On some platforms you will need to have set AMZI_DIR to your Amzi! directory 
+  in order for it to find the system .xpl files in amzi/abin.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

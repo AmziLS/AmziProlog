@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>No title</title>
+  <meta name="GENERATOR" content="amaya 5.2" />
+</head>
+
+<body>
+<h1>High Level Primitives</h1>
+
+<p></p>
+
+<p>These high level primitives are based on the idea of partial application,
+which first appeared on computers in POP-2 but actually date back to the work
+of logicians Curry and Schoenfinkel. The derived mapping primitives are found
+in various languages but are prosleytised for Prolog by Naish, Lee, Technical
+Report 96/2, U. Melbourn.</p>
+
+<p></p>
+
+<h2>apply</h2>
+
+<p><span style="color: #FF95C8"><span style="color: #000000">Using
+<strong>apply</strong>/n, a function is applied to arguments one at a time
+until it has enough to be called. While it does not have enough, it returns a
+partially applied function with frozen arguments.</span></span></p>
+
+<p>This concept is readily understood in a functional language where the
+result is separated from the input arguments, although even there a strictly
+typed language would have some difficulties with the result. In Prolog there
+are no type constraints but the goals are relationships not functions, and
+the result or results can be anywhere. The user, of course, knows where to
+look but there remains the problem of how to retrieve a partial application.
+This is solved by an extra argument in <strong>apply</strong> for this return
+value. In the event that <strong>apply</strong> actually closes out the
+argument list and the goal is called then that extra argument is redundant,
+so if the user is aware when it is a closure then <strong>apply</strong> can
+be used with one less argument.</p>
+
+<p>Thus we have:</p>
+<ul>
+  <li>apply/3: apply(Goal, Arg, PartiallyAppliedGoal)</li>
+  <li>apply/2: apply(Goal, ClosingArg) 
+    <p></p>
+  </li>
+</ul>
+
+<p>Eg.:</p>
+plus(A, B, C) :- (number(A) -&gt; (number(B) -&gt; C is A + B ; number(C), B
+is C - A) ; number(B), number(C), A is C - B). 
+<pre></pre>
+<pre>?- apply(plus, 1, X) .    % /3</pre>
+<pre>X = plus(1)               % plus(1,X) failed</pre>
+<pre>?- apply(plus(1), 2, X) . % /3</pre>
+<pre>X = 3                     % plus(1,2,X) succeeded</pre>
+<pre></pre>
+<pre>?= apply(plus, X, Y).     % /3 put a var in the result position (1)</pre>
+<pre>Y = plus(X)</pre>
+<pre>?- apply(plus(X), 1, Y).  % /3</pre>
+<pre>Y = plus(X, 1),</pre>
+<pre>?- apply(plus(X, 1), 2).  % /2 close out with no more vars</pre>
+<pre>X = 1</pre>
+
+<p></p>
+
+<p>Higher arities of <strong>apply</strong> may be defined which are simply
+repeated calls to <strong>apply</strong>/3.</p>
+
+<p></p>
+
+<h3>map</h3>
+
+<p></p>
+
+<p>Apply a given goal to each element of a list:</p>
+<pre> % map(f, [e1, e2, ... , en], [f e1, f e2, ... , f en]) </pre>
+<pre>map(_, [], []). 
+map(F, [A|As], [FA|FAs]):- 
+   apply(F, A, FA), 
+   map(F, As, FAs). </pre>
+
+<p></p>
+
+<h3>mapI</h3>
+
+<p></p>
+
+<p>As <strong>map</strong>, but with indexed iterations:</p>
+<pre>mapI(__, _, Null, []):- Null == []. 
+mapI(I, F, [A|As], [FA|FAs]):- 
+   apply(FI, I, A, FA), 
+   I1 is I + 1, 
+   mapI(I1, F, As, FAs).</pre>
+
+<p></p>
+
+<h3>map2</h3>
+
+<p></p>
+
+<p>Applies a given goal to the corresponding elements of two lists:</p>
+
+<p></p>
+<pre>map2(_, [], _, []). map2(_, _, [], []). 
+map2(F, [A|As], [B|Bs], [FAB|FABs]):- 
+   apply(F, A, B, FAB), 
+   map2(F, As, Bs, FABs). </pre>
+
+<p></p>
+
+<h3>converse</h3>
+
+<p></p>
+<pre>converse(F, X, Y, FYX):- 
+   apply(F, Y, X, FYX). </pre>
+
+<p></p>
+
+<h3>compose</h3>
+
+<p></p>
+<pre>compose(F, G, X, FGX):- 
+   apply(G, X, GX), 
+   apply(F, GX, FGX).</pre>
+
+<p></p>
+
+<h3>filter</h3>
+
+<p></p>
+
+<p>Select elements from list by predicate P:</p>
+<pre>filter(_, [], []). 
+filter(P, [A0|As0], As):- 
+  (  
+      apply(P, A0) -&gt;  
+      As = [A0|As1] ;                         % transfer A0   </pre>
+<pre>      As = As1                                % skip A0 
+   ), </pre>
+<pre>   filter(P, As0, As1). </pre>
+<pre></pre>
+
+<h3>filterI</h3>
+
+<p></p>
+
+<p>As filter, but indexed:</p>
+<pre>filterI(_, _, [], []). 
+filterI(I, P, [A0|As0], As):- 
+   (                                       % filter with index as parameter  
+       not not apply(P, I, _) -&gt;             % snap the bindings  
+       As = [A0|As1] ;                       % transfer A0  </pre>
+<pre>       As = As1                              % skip A0 </pre>
+<pre>   ), 
+   I1 is I + 1, 
+   filterI(I1, P, As0, As1)</pre>
+<pre></pre>
+
+<h3>foldr</h3>
+
+<p></p>
+
+<p>Applies an infix operation between adjacent elements of a list:</p>
+<pre>% foldr(op, b, [e1, e2, ... , en], (e1 op (e2 op ( ... (en op b) )))) </pre>
+<pre>foldr(F, B, [], B). 
+foldr(F, B, [A|As], R):- 
+   foldr(F, B, As, R1), 
+   apply(F, A, FA), 
+   apply(FA, R1, R). 
+</pre>
+
+<h3>foldl</h3>
+
+<p></p>
+
+<p>As foldr, but in reverse order:</p>
+<pre>% foldl(op, b, [e1, ... , en1, en], (en op (en1 op ( ... (e1 op b) )))) </pre>
+<pre>foldl(_, _, [], A, A).            
+foldl(FC, FB, [X|Xs], A0, A) :-             
+   apply(FC, X, A0, A1),                
+   foldl(FC, FB, Xs, A1, A). </pre>
+
+<p></p>
+
+<p></p>
+
+<h1>Lambda Expressions</h1>
+
+<p></p>
+
+<p>A lambda expression defines an anonymous expression with a list of bound
+variables. It is implemented as a term with functor lambda and arguments that
+are the elements of the bound variable list followed by the body:</p>
+
+<p><strong>lambda</strong>(BV1, BV2, ... BVn, Body)</p>
+
+<p>It can be used by <strong>apply</strong> in lieu of a simple goal. When a
+lambda expression is applied to a value that value is bound to BV1, which
+means it is also bound in the body. If the arity of the lambda expression is
+two (one BV and a body) that means the final bound variable has been set and
+the body is ready to be called. If not, a new shorter lambda expression
+without BV1 is returned .</p>
+
+<p>The body may, after all be a simple goal for the purpose of declaring the
+BVs and thus the arity of that goal, so that <strong>apply</strong> does not
+have to keep stabbing around for an executable clause before all the BVs are
+set. Furthermore, it removes the ambiguity that arises when there exists
+multiple clauses of the same name but different arity.</p>
+
+<p>Eg:</p>
+
+<p>?- apply(lambda(X,Y,Z, plus), 1, Map), apply(Map, 2).</p>
+
+<p>X = 1</p>
+
+<p>Y = 2</p>
+
+<p>Z = 3</p>
+
+<p>Map = lambda(2, 3, plus(1,2,3))</p>
+
+<p></p>
+
+<p>In general, the body is not a simple goal but an expression involving
+operators and perhaps calling goals as well. An important feature is that the
+body may contain free variables (FVs) which require to be set but are not on
+the BV list, They are set by the context in which the lambda expression is
+used.</p>
+
+<p></p>
+
+<p>Eg: The minor of a determinant:</p>
+<pre>main:- 
+   Det = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]], 
+   minor(Det, 2, 2, Minor),             % get Minor<em>22</em>
+   write(Minor),nl.  
+
+minor(D, Row, Col, M) :-                
+   Map1 = lambda(X, X =\= Row),         % Row is free
+   Map2 = lambda(Y, Y =\= Col),         % Col is free
+   filterI(1, Map1, D, R1),             % filter rows 
+   map(filterI(1, Map2), R1, M).        % select row and filter cols </pre>
+
+<p>.</p>
+
+<p>?- main.</p>
+
+<p>[[1, 3, 4], [9, 11, 12], [13, 15, 16]]</p>
+
+<p></p>
+
+<p><span style="font-family: times">This illustrates the use of free
+variables. It also shows how, to improve clarity, the lambda expressions
+(Maps) may defined outside the point of application. In fact they could be
+imported from elsewhere, because the bound variable list would still be
+valid, however, free variables would have to be bound where the map is
+defined.</span></p>
+
+<p>It is not necessary to use a lambda expression to make use of free
+variables but a direct call must be applied to those variables as arguments
+first, and then the mapping arguments follow.  Thus, the order of the
+arguments is constrained and the free variables must be local.</p>
+
+<p></p>
+
+<h1>Determinants</h1>
+
+<p></p>
+
+<h2>Laplace Expansion</h2>
+
+<p></p>
+
+<p>A determinant may be evaluated by summing the product of the elements of
+one row (or column) and their cofactors. Cofactors are simply minors signed
+according to the joint parity of their coordinates.</p>
+<pre></pre>
+<pre> detL([[A, B], [C, D]], N):- 
+    N is A*D - B*C. 
+ detL(D, N)-                                  % expand D by 1st row 
+    D = [Row1|Rows],                          % get 1st row 
+    minors(D, Minors),                        % minors of the 1st row  
+    map(detL, Minors, DetMs),                 % determinants of those minors 
+    map2(times, Row1, DetMs, Terms),          % aij*|Aij| 
+    foldr(minus, 0, Terms, N).                % Sigma, apply cofactor signs here </pre>
+
+<p></p>
+
+<p>It is more efficient to intruduce the signs in the final fold operation by
+using minus instead of sum.</p>
+
+<p></p>
+
+<h2>Pivotal Condensation</h2>
+
+<p></p>
+
+<p>Another way to evaluate a determinant is to choose any non-zero element as
+a pivot (A) and replace D from all possible rectangles A, B, C, D (where D is
+not in the pivot row or column) by the determinant A*D - B*C. This eliminates
+the pivot row and column and thus reduces each dimension of the array by 1.
+Repeat that until one dimension is one. The resulting scalar or vector is too
+large by a scalar factor which is the product of all pivots, each raised to a
+power two less than the smaller dimension of the array to which it is
+applied..</p>
+<pre>detP(Det, N):- 
+    detP([], Det, N).  </pre>
+<pre>detP([_|Pivots], UnNormal, Normal):- 
+    UnNormal = [[X]|_], !, 
+    mapI(ptoN, 1, Pivots, Cs), 
+    foldr(times, 1, Cs, Coeff), 
+    map(normalize(Coeff), UnNormal, Normal). % Normal is singleton if Det square 
+detP(Pivots, Det, N):- 
+    Det = [Row1|Rows], 
+    pivot(Row1, 1, PivCol, A),            % choose Pivot (A) 
+    Map = lambda(X, X =\= PivCol),       
+    filterI(1, Map, Row1, Bs),            % Bs is row1 without the pivot 
+    map(nth(PivCol), Det, [_|Cs]),        % Cs is pivot column without the pivot minor(Det, 1, PivCol, M),             % pivot minor M, not always square 
+    map2(abcds(A, Bs), Cs, M, MM),        % for each row 
+    detP([A|Pivots], MM, N). </pre>
+
+<p></p>
+
+<p>This method is more efficient than Laplace expansion.</p>
+
+<p></p>
+
+<h2>Solution of Simultaneous Equations by Pivotal Condensation.</h2>
+
+<p></p>
+
+<p>Notice that the above description of pivotal condensation admits the
+possibility of non-square arrays.</p>
+
+<p>Consider the matrix representation of a set of n simultaneous
+equations:</p>
+<pre><strong>    AX = K</strong></pre>
+
+<p>where <strong>A</strong> is the square array of coefficients,
+<strong>X</strong> is the column vector of unknowns and <strong>K</strong>
+the column vector of constants.</p>
+
+<p>Form a new array :</p>
+<pre><strong>    |A -K|
+    | I  |  </strong></pre>
+
+<p>where <strong>A</strong> is consolidated on the right by
+<strong>-K</strong> and <strong>|A -K</strong>| is consolidated below by the
+conforming unit matrix <strong>I</strong>.</p>
+
+<p>Pivotally condense this array n times to a vector <strong>C</strong>,
+which is n+1 long, containing the n solutions plus a scale factor. Divide
+through by that factor and truncate <strong>C</strong> to n. All these
+operations are coded into the routine solveSE/3, which needs just
+<strong>A</strong> and <strong>K</strong> to return <strong>C</strong>.</p>
+
+<p>Because the condensation scale factor is different in this case than that
+for determinants  the condensation is recoded, but remains essentially the
+same.</p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+</body>
+</html>

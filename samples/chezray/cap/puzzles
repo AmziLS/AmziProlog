@@ -1,0 +1,23 @@
+%
+% List of crypto-arithmetic puzzles to choose.
+% Argument of each term is the domain in which to solve it. 
+% 0-9 by default.
+
+[
+fun,
+gerald,
+goodnight,
+money1,
+money2,
+ocean,
+primes(+[2,3,5,7]),
+schuh([0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9]),
+toohard,
+trente,
+twenty,
+vier,
+xroads,
+try,
+aa
+].
+

@@ -1,0 +1,14 @@
+C_FLAGS = -O6
+
+# NOTE egcs++ has incompatible error handling with gcc,
+# segmentation faults when catching CLSExceptions.
+CC = gcc
+
+all: petscb pets.xpl
+
+petscb: petscb.cpp
+	$(CC) -I$(AMZI_DIR)/include -L$(AMZI_DIR)/lib $(C_FLAGS) -lamzi -lm -lstdc++ -o petscb petscb.cpp
+
+pets.xpl: pets.pro
+	acmp pets
+	alnk pets pets

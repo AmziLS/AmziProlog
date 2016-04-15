@@ -1,0 +1,524 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Scheduling the Atlantic Coast Conference Basketball Games</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY>
+
+<H1><FONT COLOR="#0000FF">Scheduling the Atlantic Coast Conference Basketball
+Games</FONT></H1>
+
+<P>Putting together the schedule of games to be played for any sports league
+is always a bit tricky, making sure each team plays each other the right
+number of times. In the case of a highly competitive league with numerous
+fans and lucrative television coverage, such as Atlantic Coast Conference
+(ACC) basketball, the problem gets more complex as each team vies for a
+schedule that optimizes recognition and revenue.</P>
+
+<P>Past year's ACC basketball schedules were always full of compromises,
+as conventional manual approaches to game scheduling could not provide
+a fair and balanced scheduled. This year Fred Barakat, Associate Commissioner
+of the ACC, started looking for outside help. Conventional approaches to
+the problem using linear algebra failed to find a valid schedule. This
+article describes a Prolog program that found a solution that meets all
+the constraints.</P>
+
+<H2><FONT COLOR="#000080">The Problem</FONT></H2>
+
+<P>There are three tiers of constraints in the 1997 ACC Basketball schedule.
+The first consists of general sports scheduling constraints, the second
+fairness constraints, and the third constraints specific to 1997.</P>
+
+<H3>General Constraints</H3>
+
+<P>The ACC contains nine teams which play on Wednesdays and Saturdays in
+an 18 game schedule. On each game day eight teams will be playing and one
+team will have a bye. At the end of the first nine game days, each team
+should have played each other once, and have had one bye.</P>
+
+<P>During the second nine games days, each team plays each other again,
+only this time with the home and away teams reversed.</P>
+
+<H3>Fairness Constraints</H3>
+
+<P>The fairness constraints mostly have to do with balancing home and away
+games. Ideally, each team would like to play all of its games as home games
+on Saturdays, thus maximizing both ticket sales and television coverage.
+A fair schedule provides each team with equal home and away games and an
+equal number (4) of home games on Saturdays.</P>
+
+<P>The home and away games for each team need to be balanced for each half
+season. The home Wednesday and Saturday games need to be balanced over
+the full season. This constraint is the one that adds the most complexity
+to the problem. Because their are an odd number of teams and an odd number
+of games in a half season, there are not equal numbers of Wednesdays and
+Saturdays in a half season. This means the problem cannot be considered
+as two symmetric halves when it comes to balancing home Saturday games.</P>
+
+<P>In addition to the balance constraints, no team wants to play more than
+two home or two away games in a row. Further, a bye is considered an away
+game, as the team might schedule a non-conference away game during the
+bye.</P>
+
+<P>Finally, two teams cannot replay each other without at least three game
+days in between.</P>
+
+<H3>1997 Schedule Constraints</H3>
+
+<P>There are certain games which must be played on certain dates. For example,
+the meeting of the top ranked teams, Duke and North Carolina, is predetermined,
+as are the opening season games and the traditional rivals who play on
+the closing day.</P>
+
+<H2><FONT COLOR="#000080">The Code</FONT></H2>
+
+<P>Prolog is extremely well-suited for both pattern-matching and search,
+so the basic strategy for solving this problem builds on those strengths.
+A variation of the 'generate and test' approach is used, where Prolog's
+search mechanism is used to generate possible schedules and its pattern-matching
+is used to see if the schedule meets the constraints.</P>
+
+<P>The problem is, of course, that there are an astronomical number of
+possible schedules, so great care must be taken to constantly trim the
+search space to a more manageable size. Constraints must be applied as
+early as possible in the generation of a schedule, and heuristics are used
+throughout to trim the search space and detect problems before a particular
+schedule is pursued too far.</P>
+
+<H3>Problem Representation</H3>
+
+<P>The Prolog code relies heavily on lists to represent the games to be
+scheduled, the evolving schedule, and other items. Recursion is the primary
+control structure used, so, in essence, the main loop of the program is
+a classic recursion, with one Prolog rule for the boundary condition and
+one for the recursive case. The two main lists passed through the recursion
+are the list of games to be scheduled, and the evolving schedule.</P>
+
+<P>Boundary Condition: When there are no more games to be scheduled, then
+the schedule passed to this point is the final schedule.</P>
+
+<P>Recursive case: Take a days worth of games from the pending list and
+put them in the schedule list. Test to make sure no constraints are violated.
+If they are, backtrack, and if not make a recursive call with the rest
+of the pending list and the evolving schedule list.</P>
+
+<P>Teams are represented by the digits 1 through 9, and games are represented
+by pairs of away and home teams separated by the '-' operator. For example
+1-2 means 1 plays 2 at 2.</P>
+
+<P>Given this, one can write a first approximation of the main predicates.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">main :-
+  schedule([1-2, 1-3, 1-4, ... 2-1, 2-3, ...], [], SCHEDULE)
+  output(SCHEDULE).</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">schedule([], SCHEDULE, SCHEDULE).
+schedule(GAMES, PARTIAL_SCHEDULE, SCHEDULE) :-
+  pick(GAMES, DAYS_GAMES, GAMES_LEFT),
+  test(DAYS_GAMES, PARTIAL_SCHEDULE),
+  schedule(GAMES_LEFT, [DAYS_GAMES|PARTIAL_SCHEDULE], SCHEDULE).</FONT></PRE>
+</UL>
+
+<P>The predicate 'pick' selects four match ups for a day and returns the
+games left to play. The predicate 'test' makes sure the selected day's
+games don't violate any constraints.</P>
+
+<P>This program has all of the control structure needed to search for a
+valid schedule. The partial schedule starts out as the empty list. At each
+level of recursion, games are picked to add to the schedule, and then tested.
+If the games selected cause a constraint fault, then the program backtracks
+into pick to get another possible set of games.</P>
+
+<P>If there are no sets of games available for a day, then the program
+backtracks to the previous level of recursion, and tries a different set
+of games.</P>
+
+<P>In this way, program execution continues forward and back, until finally
+a valid schedule is produced or all the choices are exhausted.</P>
+
+<TABLE BORDER=1 CELLSPACING=3 CELLPADDING=3 >
+<TR>
+<TD>
+<H2>Prolog</H2>
+
+<P>Prolog is not a difficult language to learn, but it includes features
+that are not commonly found in other languages. These features take some
+getting used to, but it is these features that make it an exceptional language
+for solving certain classes of problems.</P>
+
+<P><B>First, it is a symbolic language</B>, meaning it is designed to manipulate
+symbols. For example 4 - 2 is a complex symbol in Prolog made up of three
+primitive symbols, in this case two integers and an operator. If asked,
+Prolog can evaluate this particular expression arithmetically, but in general
+it is just a symbol used exactly as it's written. The scheduling program
+makes use of this particular pattern to represent games, so 4 - 2 is used
+to mean team 4 plays team 2 at team 2's home.</P>
+
+<P><B>Second, it uses logical variables</B>, which, unlike conventional
+programming variables, take on values based on pattern matching with symbols.
+Notationally, variables are indicated by an initial upper case letter.
+For example, in the scheduling program the variable X in the pattern X
+- 2 can be used to identify all of the teams that play team 2 at team 2's
+home.</P>
+
+<P><B>Third, it has a built-in backtracking search mechanism</B>, so, unlike
+in conventional languages, execution can go both forward and back. When
+it goes backward, logical variables become unbound from their previous
+values, and when execution starts forward again, they can become bound
+to new values. For example, the pattern X - Y can be used to pick games
+from a list of games. If the game causes a constraint violation, backtracking
+will automatically lead to new values of X and Y as another possible game
+is selected.</P>
+
+<P><B>Fourth, it uses recursion</B>. Many languages support recursion,
+but in Prolog recursion is a way of life. It is used extensively in the
+scheduling program, from the highest level loop which recursively selects
+games from the possible game list, building an output schedule as it goes,
+to the lowest level predicates that walk various intermediate lists looking
+for games and patterns as they ensure the constraints of the problem are
+met.</P>
+
+<P><B>Fifth, it is implemented using the Warren Abstract Machine (WAM)</B>.
+A naive implementation of Prolog can be tedious, as the features mentioned
+above do not naturally map to the underlying architecture of today's computers.
+(By contrast, the flow of control and variable representation of conventional
+programming languages map very cleanly to basic computer architecture,
+which is why they are designed the way they are.) David Warren designed
+an abstract computer with specialized heaps and stacks and its own assembly
+language that is highly optimized for executing compiled Prolog programs.
+It is used in one form or another by most serious Prolog implementations.</P>
+
+<P>While the first four features make Prolog an exceptional language for
+expressing the solution to problems such as the ACC scheduling problem,
+it is the fifth feature that makes it a practical language for implementing
+the solution.</P>
+</TD>
+</TR>
+</TABLE>
+
+<H2><FONT COLOR="#000080">Efficiency</FONT></H2>
+
+<P>Unfortunately, I don't think any of us have the patience to wait for
+the simplified version of the program to wade through the massive search
+space of this problem, looking for a solution. There are a million or so
+possible combinations of games for any day, and 18 days in the full schedule.
+This means around a million to the 18th power possible schedules.</P>
+
+<P>The way to get the search space down to a reasonable size is to use
+every bit of information about constraints as early as possible in the
+generation of a schedule. That way backtracking begins much closer to the
+source of a constraint problem. In the following section we'll look at
+how the various constraints were represented for this problem.</P>
+
+<H2><FONT COLOR="#000080">General Sports Schedule Constraints</FONT></H2>
+
+<P>The nine teams are represented by a list of integers. The games/1 predicate
+uses that list to generate a long list of all possible games, with byes
+represented by the team number being repeated with an '=' operator between
+them. The generated list looks like</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">[1=1. 1-2, 1-3, ...2-1, 2=2. 2-3, ...9-8, 9=9]</FONT></PRE>
+</UL>
+
+<P>Because this list includes all of the games that need to be scheduled,
+the constraint about games is satisfied when all games on the list are
+scheduled.</P>
+
+<P>One way to guarantee four games and a bye each day is to have the loop
+that picks games for each day programmed with this information. Another
+way is to provide a template for a day's games, in which the teams are
+represented by variables. This is the approach taken in the scheduling
+program, for reasons that will become clearer later on.</P>
+
+<P>The template for a days games is a complex Prolog pattern, or structure
+of the form</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">day(N, [T1=T1, T2-T3, T4-T5, T6-T7, T8-T9])</FONT></PRE>
+</UL>
+
+<P>Notice that the second argument is a list with five elements. One is
+a bye, with the team name a variable, and the rest are games with different
+variables for each of the teams. The predicate that picks games walks this
+list of games in the template, unifying the variables with actual teams.
+This guarantees each day has one bye and four games.</P>
+
+<P>The next constraint, that each team play each other once in the first
+half and once in the second half, leads to the first efficiency in the
+program. Because the first and second halves almost mirror each other,
+but have a slight difference, separate predicates are implemented for filling
+in each half.</P>
+
+<P>The difference between the two halves is that when a game is picked
+for the schedule in the first half, it's inverse game is also removed from
+the games-left-to-play list and put on a list of games to be scheduled
+in the second half. This ensures a rematch won't be considered during the
+first half.</P>
+
+<P>The second half, of course, doesn't need to build this secondary list
+of games.</P>
+
+<P>The overall structure of the program then looks like</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">schedule(SCHEDULE) :-
+  games(GAMES),
+  first_half(GAMES, [], SCHEDULE_1, [], GAMES_2),
+  second_half(GAMES_2, SCHEDULE_1, SCHEDULE).</FONT></PRE>
+</UL>
+
+<P>The next major efficiency is added to the search in the predicate that
+picks the games for a given day. It works with a copy of the list of games
+that it drastically trims as each game is selected. Once two teams are
+playing, all other possible games with those two teams can be removed from
+the list of potential games for that day. (Backtracking automatically restores
+those games if necessary for further search.)</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">get_games([], _).
+get_games([AWAY-HOME|GAMES], PICK_LIST) :-
+  deal(AWAY-HOME, PICK_LIST, PICKS_LEFT),
+  clean(AWAY-HOME, PICKS_LEFT, CLEANED_PICKS),
+  get_games(GAMES, CLEANED_PICKS).</FONT></PRE>
+</UL>
+
+<P>The deal/3 predicate selects an AWAY-HOME pattern from the list of games,
+thus unifying the variables in the template with the values for AWAY and
+HOME. The clean/3 predicate then uses those values to remove all other
+games from the list of games that involves either of these teams.</P>
+
+<P>This picking can be further improved by ensuring that the picks are
+combinations of games rather than permutations. That is, once a four game
+set has been picked for a day, there is no reason to try different arrangements
+of those same four games.</P>
+
+<TABLE BORDER=1 CELLSPACING=3 CELLPADDING=3 >
+<TR>
+<TD>
+<H2>Code</H2>
+
+<P>Two list utility predicates provide all of the power for the low level
+predicates. One is delete/3 which deletes an element from a list and returns
+the list of remaining elements. It, like member/2, is very useful for generating
+selections from a list, but with the added advantage that it returns the
+rest of the list as well, for further processing.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">delete(A,[A|X],X).
+delete(A,[B|X],[B|Y]) :- delete(A,X,Y).</FONT></PRE>
+</UL>
+
+<P>The pick/2 predicate is very similar, but has the useful behavior of
+not including any elements in the returned list that occur before the element
+selected. That way, when it is used to pick multiple items from the list,
+it does not generate permutations of those items.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">pick(A,[A|X],X).
+pick(A,[B|X],Y) :- pick(A,X,Y).</FONT></PRE>
+</UL>
+</TD>
+</TR>
+</TABLE>
+
+<H2><FONT COLOR="#000080">Fairness Constraints</FONT></H2>
+
+<P>The fairness constraints are the ones that make the ACC scheduling problem
+difficult to solve. The first issue is one of representation. All of the
+fairness constraints have to do with an individual team schedule, but the
+schedule is organized as a list of games played each day. One could extract
+each team's information from the schedule, but it is easier to maintain
+a second list that is organized by team.</P>
+
+<P>This team list contains nine elements, where each element is a structure
+of the form</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">team(TEAM, BALANCE, HOMEAWAYLIST, WEDHOME, SATHOME, FIRSTBYE)</FONT></PRE>
+</UL>
+
+<P>TEAM is the team's number.</P>
+
+<P>BALANCE is the home/away game balance. It is initialized a 0. Each time
+a home game is added the balance is incremented. When an away game is added
+it is decremented. This must be 0 after the ninth game.</P>
+
+<P>HOMEAWAYLIST is an 18 element list with the games for this team. Examples
+of elements of this list are a-3, h-5, and a-bye, indicating an away game
+with team 3, a home game with team 5 and a bye. Notice that the bye will
+match the pattern a-X which is used in the constraint that byes count as
+away games when constraining consecutive away games. Initially each of
+the elements of GAMELIST is an 'x', which will not match any of the game
+patterns.</P>
+
+<P>WEDHOME and SATHOME are the total home games for Saturday and Wednesday.
+These must be equal at the end of the schedule.</P>
+
+<P>FIRSTBYE indicates whether the first half bye of a team is a Saturday
+or Wednesday. The second half bye must be the other day.</P>
+
+<P>The team list is passed through the levels of recursion along with the
+other game and schedule lists. It is updated as it goes, and the tests
+for fairness are applied against it's elements.</P>
+
+<P>The simplest example is FIRSTBYE, which is set during the first half
+to either 'wed' or 'sat'. In the second half, when a bye is scheduled for
+a team, the day of the week is checked and if its the same as FIRSTBYE,
+then failure occurs initiating backtracking which will lead to another
+team being selected for that week's bye.</P>
+
+<P>The rules which check the home away balance and home saturday home wednesday
+balance are similar.</P>
+
+<P>The elegance of Prolog comes out in the rules which check if three home
+or away games have been played in a row, and which make sure there are
+at least three intervening games before two teams have a rematch.</P>
+
+<P>Here is away_triple, which takes a team's game list and looks for a
+pattern with three away games in a row.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">away_triple([a-_, a-_, a-_|Z]) :- !.
+away_triple([_|Z]) :-
+  away_triple(Z).</FONT></PRE>
+</UL>
+
+<P>If there are three away games in a row, away_triple succeeds, otherwise
+it fails. It is used with a not.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">...
+not( away_triple(HOMEAWAYLIST) ),
+...</FONT></PRE>
+</UL>
+
+<P>The predicate that makes sure there are three intervening games is similar.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">back_to_back([_-T, _-T|Z]) :- !.
+back_to_back([_-T, _, _-T|Z]) :- !.
+back_to_back([_-T, _, _, _-T|Z]) :- !.
+back_to_back([_|Z]) :-
+  back_to_back(Z).</FONT></PRE>
+</UL>
+
+<P>It succeeds if there are games too close, and fails otherwise.</P>
+
+<H2><FONT COLOR="#000080">Tuning</FONT></H2>
+
+<P>As explained so far, the program will converge on a solution after awhile,
+but some of the constraints cause serious problems. For example, the program
+can merrily build a schedule and when it finishes game 9 discover the home/away
+balance is not right, so it starts backtracking. It would be better if
+it found out sooner it had a problem</P>
+
+<P>The solution taken is to add a new constraint that the home/away balance
+cannot exceed 2 games at any time. This is more tightly constrained than
+the actual constraint, but prevents the evolving schedule from getting
+into a balance problem sooner rather than later.</P>
+
+<P>A similar approach is taken with the Wednesday/Saturday balance of home
+games.</P>
+
+<P>The program can also be sped up by only applying constraints when necessary.
+For example, the only time it is necessary to check if a rematch is too
+soon is during the opening games of the second half of the season. So the
+rules that check for back to back games have a pre-check that looks at
+the game day first. It won't actually check the home/away list unless it
+game 10, 11 or 12.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">...
+not( (N&gt;9, N&lt;13, back_to_back(HOMEAWAYLIST)) ),
+...</FONT></PRE>
+</UL>
+
+<P>Anytime a heuristic can be applied that reduces the searching, performance
+of the application will be improved. This is actually the enjoyable challenge
+of the application, to come up with representations and heuristics that
+get it to find a schedule sooner rather than later. Given that it is not
+practical to explore the entire search space, such enhancements are necessary.</P>
+
+<P>As it stands, the program generates a valid schedule in a couple of
+hours. This is good enough for the one time schedule, but we'd still like
+it to go faster. One immediate area to improve the home/away balance is
+to move the final tests for out of balance sooner. It now ensures the balance
+is 0 after game 9, but it could check that its less than 1 after game 8
+as well.</P>
+
+<P>Similar refinements can be added for the Wednesday/Saturday home game
+balance.</P>
+
+<P>Another category of enhancement is to prearrange the list of unscheduled
+games before each day based on the team's balance information. For example,
+teams that are tilting towards too many home games will have their home
+games moved to the end of the picking list.</P>
+
+<H2><FONT COLOR="#000080">1997 Schedule Constraints</FONT></H2>
+
+<P>Finally we come to schedule-specific constraints. These are the games
+that must be played on fixed dates. This is where the value of using a
+template for the games of a day comes in. You remember that the predicates
+that pick the games for a day fill in a template, whose general form is</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">day(N, [T1=T1, T2-T3, T4-T5, T6-T7, T8-T9])</FONT></PRE>
+</UL>
+
+<P>These templates can have specific games already filled in. For example,
+the games for both day 1 and day 18 are predetermined. The template for
+day 1 is</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">day(1, [6=6, 9-7, 3-2, 1-8, 4-5])</FONT></PRE>
+</UL>
+
+<P>On some days, there are partial constraints. For example, team 6 must
+play team 2 at team 2 on the 9th game day. The template for day 9 is</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">day(9, [6-2, T1=T1, T2-T3, T4-T5, T6-T7]).</FONT></PRE>
+</UL>
+
+<P>The same Prolog code handles a template with games predetermined as
+easily as one with variables. When there are variables, the predicate that
+selects games for the days can backtrack through the pick list. When the
+values are already set, then the predicate that selects games simply picks
+those predetermined games from the list and doesn't try again.</P>
+
+<P>So, the predetermined games actually reduce the search space and, in
+one sense, make the problem easier. But to make use of them in this way,
+they must be dealt with first. For this reason, the schedule is not built
+in a simple linear fashion. Instead, the game days are sorted, with the
+most constrained being scheduled first, followed by the least constrained.
+For the first half, this means day 1 is scheduled first, followed by day
+9, followed by the remaining days.</P>
+
+<P>The second half starts out with day 18, whose schedule is completely
+predetermined.</P>
+
+<P>The mechanism of prespecifying templates for certain days makes the
+program easy to modify for years to come, as each year's peculiarities
+can simply be added by adjusting the initial game day templates.</P>
+
+<H2><FONT COLOR="#000080">Conclusion</FONT></H2>
+
+<P>Prolog is an excellent language for implementing scheduling applications,
+especially when the constraints of the schedule are symbolic in nature.
+Scheduling applications are typically hard problems, with search spaces
+that cannot be fully explored. The expressiveness of Prolog makes it an
+excellent tool for specifying constraints and heuristics that reduce the
+search space. The performance of Prolog makes it practical.</P>
+
+<H3>Author</H3>
+
+<P>Dennis Merritt is a partner in Amzi! inc., the vendor of Amzi! Prolog
++ Logic Server. A simplified sports scheduling demo application that produces
+round-robin schedules is available from their web site: <A HREF="http://www.amzi.com">http://www.amzi.com</A>.
+Dennis can be reached at www.amzi.com.</P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>No title</title>
+  <meta name="GENERATOR" content="amaya 5.2" />
+</head>
+
+<body>
+<h1><a name="PolyPlot" id="PolyPlot">PolyPlot</a></h1>
+
+<p></p>
+
+<h2>poly.pro</h2>
+
+<p></p>
+
+<p>This relates to real functions of a complex variable: w =
+F(<strong>z</strong>).</p>
+
+<p>No complex variables are employed here; <strong>z</strong> is thought of
+as an implied free variable to which F may be applied later.</p>
+
+<p>The most general form of meromorphic function is a quotient of two
+polynomials, denoted here by pq(F, G). The practical significance of this
+form is illustrated by transfer functions in electronic cicuit theory.</p>
+
+<p>A poly(nomial) is a list of real coefficents of <strong>z</strong>, from
+const to degree. A monic poly is one where the coefficient of the highest
+degree is 1. Any poly may be rendered monic by factoring out a real scale
+factor. A rational quotient of polys is pq(F, G), and pq may be reduced to
+lower terms by cancelling common leading zeros, rendering F and G monic, and
+taking the quotient of the scales. No attempt is made to cancel common
+algebraic factors.</p>
+
+<p>The poly with roots at a +- b*i in the complex plane (where a and b are
+real and i = sqrt(-1)) is the quadratic with real coefficients:
+[a<sup>2</sup> + b<sup>2</sup>, -2a, 1]. Thus, any poly may be defined as a
+product of real linear and quadratic factors from the roots, if you know
+them. Cons-ing a zero onto a polynomial is the same as post-multiplying by
+<strong>z</strong>. Compound expressions on F involving arithmetic operators
++, -, * may be evaluated with eval. There are also clauses for
+differentiation and integration of polys, which is a form of function
+composition. Polys may be expressed in binary form as [F|Fs] =
+F+Fs*<strong>z</strong>, and this leads to recursive expressions for
+operations on polys.</p>
+
+<p>Eg.: * [F|Fs]*[G|Gs] = (F+Fs*<strong>z</strong>) *
+(G+Gs*<strong>z</strong>) = F*G + (G*Fs+F*Gs)*<strong>z</strong> +
+Fs*Gs*<strong>z</strong><sup>2</sup></p>
+
+<p>Function composition of polynomials denoted in math notation by F(G) is
+denoted here by apply(F, G).</p>
+
+<p>Then we have: apply([F|Fs], G) = F + G*apply(Fs, G).</p>
+
+<p>Halley and Newton are classical root-finding transformers, which when
+composed with a poly and a root guess will usually, and in some sense, return
+a better guess.</p>
+
+<p>Polynomials may be printed in arithmetic notation with</p>
+
+<p>portray(poly, F).</p>
+
+<p>Quotients may be printed in arithmetic notation with:</p>
+
+<p>portray(pq, Scale, pq(F, G)).</p>
+
+<p>Contour and gradient maps of quotients may be displayed on the complex
+plane with</p>
+
+<p>reliefpq(Scale, pq(F, G), Legend),</p>
+
+<p>which uses comm('plotserver') to start the display co-processor.</p>
+
+<p>The window header displays the Legend, and the status bar shows the result
+<strong>w</strong> (in polar coordinates) of applying Scale*pq(F, G) once to
+the cartesian coordinates <strong>z</strong> of the mouse position.</p>
+
+<p>The primitive distancepq(Scale, pq(F, G), Legend) is similar, but calls
+comm('plotserver distance'), which colors the transformed function output
+according to distance from a root of the original function.</p>
+
+<p></p>
+
+<h2>demos.pro</h2>
+
+<p>These displays are drawn by a plotserver written in C++. Prolog stores
+data in shared memory and and then uses the 'comm' comand to trigger the
+plotserver, which retrieves the data. The function is calculated or estimated
+for every pixel in the window. Contours or gradients are delineated by
+coloring the pixel suitably when the function there evaluates to within
+epsilon of the contour. This has the gratifying effect of making it wide
+where the surface is flat, and narrow where it is steep.</p>
+
+<p>To expedite the plot a 'quad' method is used, whereby the window is tiled
+into four parts and the function is calculated on the perimeter of each tile.
+If it is the same color all the way around the tile is assumed to be the same
+color all over; if not, then the tile is subdivided into four tiles and the
+process repeated. At some small size (5 by 5 pixels) the tile is scrutinised
+in detail.</p>
+
+<p>Some annotations at the bottom of the window are obscured by the system
+toolbar, but that can be moved off the screen with the mouse.</p>
+
+<p><strong>Note: </strong>In order to save a plot press
+'<strong>PrintScrn</strong>' and then open '<strong>paint</strong>' and
+paste.</p>
+
+<p></p>
+
+<h3>demo1</h3>
+
+<p>A very simple pq having a second-order pole at the origin.</p>
+
+<p></p>
+
+<h3>demo2</h3>
+
+<p>The bilinear function, having one pole and one zero.</p>
+
+<p>Frequently encountered in practise, such as the electric field between
+parallel conductors, or flow in an infinite isotropic conducting surface with
+one source and one sink, or see the fractals in demo20.</p>
+
+<p>Notice how the flow and potential lines are orthogonal. This is because w
+is a conformal transformation of the polar coordinates in z, and angles of
+intersection are preserved.</p>
+
+<p></p>
+
+<h3>demo3</h3>
+
+<p>Electronic transfer functions are the quotient of two polynomials. The
+real frequency response is seen on the imaginary axis of the relief map. If
+the response is to be as flat as possible (maximally flat) over a certain
+interval then the poles should be uniformly distributed over the semi-circle
+on that interval in the left half plane. This demo illustrates the case of
+four poles, and it can be seen that one contour line follows the imaginary
+axis closely within the unit circle. If the response is to be as flat as
+possible within a certain tolerance (Tchebyscheff) then the poles should be
+on an ellipse.</p>
+
+<p></p>
+
+<h3>demo4 demo5 demo6 demo7</h3>
+
+<p>Newton and Halley transforms are root-finding tools of first and second
+order, respectively. By composing one of these transforms with some
+polynomial on z, a new function is obtained which, when applied to some
+coordinate in z, will return another coordinate which is on an orbit towards
+some root of the polynomial. So repeated iterations will home on that
+root.</p>
+
+<p>This has application to fractal studies but here they are merely displays
+of complicated functions.</p>
+
+<p></p>
+
+<h3>demo11 demo12 demo13</h3>
+
+<p>These are merely analogues of demo1, demo2 and demo3 but displaying the
+cartesian coordinates instead of the polar coordinates, so they are not
+relief maps.</p>
+
+<p></p>
+
+<h3>demo20</h3>
+
+<p>This displays the Halley transform of simple polynomials of degree n,
+having roots on unit circle. By mousing on a pixel the root-finding orbit
+from there is displayed. The map is colored according to how many steps it
+takes (distance) to get within epsilon of a root.. There is a basin of
+attraction around each root where it behaves as expected, but halfway between
+roots the display turns fractal and the behaviour is astonishing, although
+the method still works. The fractal region is seen to be full of similar
+nodules, which in turn have nodules. The nodules nearest unit circle are
+called the 'director' nodules because an orbit starting from some other
+nodule cannot escape from the fractal region until it steps on a director
+nodule, whence it is directed to a root. (Choose n == 7 for best
+illustration).</p>
+
+<p>This author was able to discern that the director nodules are each, in
+fact, bilinear transforms of the whole display, reproducing the colors and
+the nodules, and as such contain images of themselves, ad infinitum. It
+follows that there must be a dusting of points on the display which each
+represent the whole picture. I think it is correct to call these the Julia
+set.</p>
+
+<p>Don't you feel sorry for Newton and Halley who, lacking Windows, never got
+to fully understand and appreciate their own wonderful methods?</p>
+
+<p></p>
+
+<h3>demo21</h3>
+
+<p>This is the same as demo20 but the polynomial is z-multiplied, thus
+introducing a pole at the origin. This makes a profound difference to the
+display and the nodules are no longer as simple as bilinear transforms, and
+the display becomes extremely attractive.</p>
+
+<p></p>
+
+<h3>demo30</h3>
+
+<p></p>
+
+<p>A display of the famous, and now familiar, Mandlebrot set, which got the
+whole fractal business started.</p>
+
+<p></p>
+
+<p></p>
+</body>
+</html>

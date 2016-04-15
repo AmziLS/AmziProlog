@@ -1,0 +1,24 @@
+SOURCE=$(APLS_SOURCE)
+RELEASE=$(APLS_RELEASE)
+
+ifdef DEBUG
+C_FLAGS = -g
+else
+C_FLAGS = -O6 -w
+endif
+
+CC = gcc
+all: arun
+
+# libamzi was linked with -lstdc++, -lm, -ldl so not needed here
+# above true for BSD, but not so for Mac it seems...
+
+arun: arun.cpp
+	gcc -I$(RELEASE)/include -L$(RELEASE)/lib $(C_FLAGS) -o $(RELEASE)/bin/arun \
+	   arun.cpp -lamzi -lstdc++ -ldl
+	cp $(RELEASE)/bin/arun $(RELEASE)/bin/alis
+	cp $(RELEASE)/bin/arun $(RELEASE)/bin/acmp
+
+clean:
+	-rm *.o
+

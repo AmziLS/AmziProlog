@@ -1,0 +1,68 @@
+AC_FLAGS = -DENVgm6 -D_UNICODE
+
+SOURCE=$(APLS_SOURCE)
+RELEASE=$(APLS_RELEASE)
+
+CC = gcc
+
+#ifdef xxDEBUG
+#C_FLAGS = -c -g -fpic -Wimplicit -D_DEBUG
+#else
+C_FLAGS = -c -w -O2 -fpic -Wimplicit
+#endif
+
+OBJECTS = builtin.o control.o ddb.o ddbmem.o \
+    engine.o engine2.o except.o hxl.o ini.o lexec.o lexec2.o \
+    lexecdbg.o llink.o lload.o lstring.o main.o \
+    lenv.o lenv_wpf.o termsvc.o tsread.o tswrite.o  \
+    pstring.o lex.o prep.o cell.o stash.o streams.o \
+    module.o modclassic.o atomtable.o lreal.o gcthing.o \
+    fixed.o lmath.o
+
+HEADERS = builtins.h cell.h control.h ddb.h module.h debug.h \
+    defs.h engine.h env.h except.h hxl.h inc.h ini.h lexec.h \
+    lenv.h llink.h llist.h lload.h lstring.h main.h streams.h \
+    termsvc.h tsread.h lex.h stash.h pstring.h atomtable.h lreal.h \
+    gcthing.h fixed.h lmath.h ddbmem.h \
+    utf_checked.h utf_core.h utf_unchecked.h
+
+.cpp.o:
+	$(CC) $(C_FLAGS) -o $@ $(AC_FLAGS) $<
+
+# there is some real confusion here around the need to link in
+# -lstdc++ or not, because arun can include these libs.  That
+# doesn't work for people building Logic Server applications,
+# linking with libamzi.so.  So keep -lstdc++ -lm in here.
+
+# Always recompile engine to get the current date/time in.
+
+# Old code to build pro version
+#	$(CC) $(C_FLAGS) -DUNIX_PRO -o keys.o $(AC_FLAGS) keys.cpp
+#	$(CC) -shared -o libamzi.so $(OBJECTS) -lm -lstdc++ -ldl
+#	mv libamzi.so libamzi_pro.so
+
+# But we're taking off -ldl because libdl functions are included in libc in FreeBSD
+# hmmm, appears a bug/feature on the Mac puts the full path in the actual .so
+# so when you package and move to another machine, it expects my development path.
+# This might fix it.
+
+$(RELEASE)/lib/libamzi.so: $(OBJECTS) amzi.h
+	$(CC) $(C_FLAGS) -o engine.o $(AC_FLAGS) engine.cpp
+#	$(CC) -shared -o $(RELEASE)/lib/libamzi.so $(OBJECTS) -lm -lstdc++
+	$(CC) -shared -o libamzi.so $(OBJECTS) -lm -lstdc++
+#	$(CC) -shared -o $(RELEASE)/lib/libamzi.so -install_name @executable_path/../lib/libamzi.so $(OBJECTS) -lm -lstdc++               
+#	$(CC) -shared -o $(RELEASE)/lib/libamzi.so $(OBJECTS) -lm -lstdc++
+#	install_name_tool -id @executable_path/../lib/libamzi.so $(RELEASE)/lib/libamzi.so
+#	install_name_tool -id libamzi.so $(RELEASE)/lib/libamzi.so
+	cp libamzi.so $(RELEASE)/lib/
+	cp amzi.h $(RELEASE)/include/
+	cp logicserver.h $(RELEASE)/include/
+	cp amzi.cfg $(RELEASE)/config/
+
+$(OBJECTS) : $(HEADERS)
+
+clean:
+	-rm *.o
+
+
+

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+   id="com.amzi.prolog.doc"
+   name="Amzi! Documentation"
+   version="1.0.0"
+   provider-name="Amzi! inc.">
+
+   <runtime>
+   </runtime>
+
+<!-- To regenerate search index, delete workspace/.metadata/.plugins/org.eclipse.help -->
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="amzi_toc.xml"
+            primary="true">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="pro_toc.xml"
+            primary="true">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="libs_toc.xml"
+            primary="true">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="ls_toc.xml"
+            primary="true">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="aip_toc.xml"
+            primary="true">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="xsip_toc.xml"
+            primary="true">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="articles_toc.xml"
+            primary="true">
+      </toc>
+   </extension>
+
+
+</plugin>

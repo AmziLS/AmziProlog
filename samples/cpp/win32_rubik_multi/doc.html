@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>C++ Win32 Multi-Threaded Rubik Cube Sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1><font color="#0000FF">C++ Win32 Multi-Threaded Rubik Cube Sample</font></h1>
+<p>The Win32_Rubik_Multi (MultiThreaded) sample is an MDI MFC application. Each 
+  child window has an unfolded view of a Rubik's cube and a 'Solve' button. When 
+  the button is pressed, the cube is randomly scrambled and then solved.</p>
+<p>This demo was much more interesting in the days of slower machines. Now each 
+  cube solves so fast you can't get them all going at once. A good enhancement 
+  would be to add a 'Solve All' menu item that automatically sent the solve message 
+  to all the cubes so maybe a bunch could be solved at once.</p>
+<p>The FILE/NEW menu item causes new child windows to be created, and each one 
+  is associated with a new Logic Server, running in a separate thread. 
+<p>When you click the 'Solve' button in multiple windows, each one shows a cube 
+  being solved at the same (or as close to same as NT multi-threading allows) 
+  time. 
+<p>This demo was derived from the Microsoft multi-threaded 'Bounce' sample, with 
+  solving Rubik's cube replacing the bouncing balls. 
+<h2>Building the Sample</h2>
+<ol>
+  <li>Create a project in the Eclipse IDE called cubemt in the win32_rubik_multi 
+    sample directory.</li>
+  <li>Set the properties of the project (right mouse button while mouse on project 
+    in navigator) to output to rubik.xpl, not in the default bin directory.</li>
+  <li>Open the Microsoft Visual C++ Project CubeMT.sln and build CubeMT.exe.</li>
+</ol>
+<h2>Running the Sample</h2>
+<ol>
+  <li>Run debug\CubeMT.exe (or release depending on which you built)</li>
+  <li>Select File/New to create a new Rubik's cube, then click on Solve to solve 
+    it.</li>
+</ol>
+<p>
+<!-- #BeginLibraryItem "/docs/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server and e-Prolog are trademarks 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p>&nbsp; </p>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<HTML>
+<!-- #BeginTemplate "/Templates/alk.dwt" --> 
+<HEAD>
+<!-- #BeginEditable "doctitle" --> 
+<TITLE>Queries</TITLE>
+<!-- #EndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+<p><!-- #BeginEditable "Previous1" -->{Previous1}<!-- #EndEditable -->&nbsp <a href="../index.html">Start</a> 
+  &nbsp <a href="../toc.html">Contents</a> &nbsp 
+  <!-- #BeginEditable "Next1" -->{Next1}<!-- #EndEditable --></p>
+<hr>
+<h1><img src="../Images/paws.gif"><!-- #BeginEditable "Lesson" -->Queries<!-- #EndEditable --> 
+</h1>
+<!-- #BeginEditable "Body" --> 
+<p>To pose a query at the listener you enter a goal pattern. The pattern of the 
+  goal follows the same syntax as that of a Prolog fact:</p>
+<blockquote> 
+  <pre><font color="#000099">?- goal(argument_1, ..., argument_N).</font></pre>
+</blockquote>
+<p> A goal is either <b>true</b> or <b>false</b>. In the listener this is represented 
+  by either a <b>yes</b> or <b>no</b>.</p>
+<p>Start a listener, reconsult <a href="../facts/amzi_air.pro">docs/alk/facts/amzi_air.pro</a>, 
+  and try the following examples:</p>
+<blockquote> 
+  <pre><font color="#000099">
+?- airport('I68', 'Lebanon, OH').
+yes
+
+?- airport('I68', 'Winder, GA').
+no
+</font></pre>
+</blockquote>
+<p>Note that <b>true</b> in Prolog means the goal can be matched in current Prolog 
+  memory. <b>False</b> means the goal cannot be matched using the facts in current 
+  Prolog memory.</p>
+<p><b><i>NOTE ==&gt;</i></b> <i>This is called the <b>closed world assumption</b> 
+  and is the topic of philosophical debates on accurate representation of truth 
+  and falsity. It could be argued that true and unknown are more accurate states, 
+  and falsity should be definitely known, just as truth is. Using logic programming, 
+  one could create a reasoning system that recongnized three states: true, false, 
+  and unknown.</i></p>
+<h3>Logical Variables</h3>
+<p>Goal patterns can include logical, or pattern-matching, variables. A goal with 
+  a logical variable is true if there is a value the variable could have that 
+  would make the goal true. In that case the variable takes that value.</p>
+<p>Syntactically, a <b>logical variable</b> is indicated by an initial upper case 
+  letter, or an underscore.</p>
+<ul>
+  <pre>
+<font color="#000099">?- airport('I68', X).
+X = 'Lebanon, OH' 
+yes
+
+?- airport(X, 'Winder, GA').
+X = 'WDR' 
+yes
+
+?- airport(X, 'Los Angeles, CA').
+no</font>
+</pre>
+</ul>
+<p>When you try the above queries, you'll notice the cursor is left after the 
+  value of logical variable is presented. Press the Enter key to end the query.</p>
+<p>The first goal above asks the question: <i>Is there a value of X that makes 
+  the goal airport('I68', X) true?</i> The listener responds with yes and the 
+  value of X that makes the goal true.</p>
+<p>The last goal asks: <i>Is there a value of X that makes the goal airport(X, 
+  'Los Angeles, CA') true?</i> Since Los Angeles isn't included in docs/alk/facts/amzi_air.pro, 
+  the answer is no.</p>
+<h3>Compound Goals</h3>
+<p>We can use the value of logical variable in a subsequent query goal. Here's 
+  how we ask: <i>Is there a flight to 'Ann Arbor, MI' and if so what is its flight 
+  number and origin?</i></p>
+<ul>
+  <pre><font color="#000099">
+?- airport(ID, 'Ann Arbor, MI'), flight(Flight, From, ID).
+ID = 'ARB'
+Flight = aa17
+From = 'I68' 
+yes</font>
+</pre>
+</ul>
+<p>The first goal above is true if the value of ID is 'ARB'. That value is then 
+  used in the second goal, which is true if the values of Flight and From are 
+  aa17 and 'I68'.</p>
+<p>Notice that this is equivalent to a join operation in a relational database. 
+  The airport and flight predicates are joined on the value of ID.</p>
+<p>We could also find out the base_fare for that flight and the full name of the 
+  origin airport:</p>
+<ul>
+  <pre><font color="#000099">
+?- airport(ToID, 'Ann Arbor, MI'), flight(F, FromID, ToID),
+base_fare(F, Fare), airport(FromID, From).
+
+ToID = 'ARB'
+F = aa17
+FromID = 'I68'
+Fare = 60
+From = 'Lebanon, OH' 
+
+yes
+</font></pre>
+</ul>
+<p><b><i>NOTE ==></i></b><i> The Amzi! IDE listener 'listens' to the <b>keyboard</b>, 
+  and echoes the input to the screen. It does not pick up the goals from the screen. 
+  This means if you make an editing mistake in a long query, such as the one above, 
+  you cannot use the mouse or cursor arrows to correct the error. Doing so will 
+  yield unexpected results. You can use the <b>backspace key to correct errors</b>, 
+  and you can use <b>cut and paste</b> at the end of query, not the middle or 
+  beginning.</i></p>
+<h3>Multiple Answers</h3>
+<p>In many cases, there might be multiple values of logical variable that makes 
+  a goal pattern true. When a goal is first presented, the logical variables in 
+  that goal take on values from the first fact that matches the goal pattern.</p>
+<ul>
+  <pre><font color="#000099">
+?- flight(F, 'WDR', To).
+
+F = aa02
+To = 'I68' </font> 
+</pre>
+</ul>
+<p>As we've noticed, the listener leaves the cursor after the last variable. Pressing 
+  Enter tells the listener we are happy with the result.</p>
+<p>But, there might be more values of the logical variables that make the query 
+  true. To find them, press the semi-colon (;) key.</p>
+<ul>
+  <pre><font color="#000099">
+?- flight(F, 'WDR', To).
+
+F = aa02
+To = 'I68' ;
+
+F = aa03
+To = 'SPG' ;
+no</font>
+</pre>
+</ul>
+<p>The final <b>no</b> means there were no more flight facts that matched the 
+  goal pattern. In other words, there are two known flights from 'WDR', one to 
+  'I68' and one to 'SPG'.</p>
+<h3>Backtracking</h3>
+<p>The mechanism Prolog uses to find multiple answers is called <b>backtracking</b>. 
+  In the listener, the semi-colon (;) starts backtracking on the query goal.</p>
+<p>First, values of logical variables are unbound, and the search for another 
+  fact that matches the goal pattern begins at the next fact after the last one 
+  found.</p>
+<p>Backtracking works in complex goals as well. The backtracking mechanism is 
+  applied to the right most goal first, and when all its solutions are exhausted, 
+  backtracking starts in the previous goal. This process continues until all possible 
+  solutions are found.</p>
+<p>Here's a query that finds the airports you can get to from 'Winder, GA'.</p>
+<ul>
+  <pre><font color="#000099">
+?- airport(A, 'Winder, GA'), flight(F, A, ToID),
+airport(ToID, To).
+
+A = 'WDR'
+F = aa02
+ToID = 'I68'
+To = 'Lebanon, OH' ;
+
+A = 'WDR'
+F = aa03
+ToID = 'SPG'
+To = 'St. Petersburg, FL' ;
+no</font></pre>
+</ul>
+<p>Here's all the places you can fly to from 'Lebanon, OH' for $100:</p>
+<ul>
+  <pre><font color="#000099">
+?- airport(A, 'Lebanon, OH'), flight(F, A, ToID),
+base_fare(F, 100), airport(ToID, To).
+
+A = 'I68'
+F = aa01
+ToID = 'WDR'
+To = 'Winder, GA' ;
+
+A = 'I68'
+F = aa11
+ToID = 'UNV'
+To = 'State College, PA' ;
+
+A = 'I68'
+F = aa19
+ToID = 'EZF'
+To = 'Fredericksburg, VA' ;
+
+A = 'I68'
+F = aa21
+ToID = 'CPK'
+To = 'Norfolk, VA' ;
+no</font></pre>
+</ul>
+<p>Notice in this query that backtracking can be initiated by failure of one of 
+  the goals in the query. Consider the second flight in the logic base from 'I68'.</p>
+<blockquote> 
+  <pre><font color="#000099">flight(aa10, 'I68', '1A0').</font></pre>
+</blockquote>
+<p>When the <b>flight(F, A, ToID)</b> goal backtracks to this fact, the value 
+  of F is bound with the flight number, in this case aa10. That value is then 
+  used in the next goal, <b>base_fare(F, 100)</b>. But <b>base_fare(aa10, 100)</b> 
+  is false. This cause Prolog to backtrack into <b>flight/3</b> again to find 
+  the next flight. This continues until another flight with a fare of 100 is found.</p>
+<h3>Tracing Queries</h3>
+<p>The listener includes a debugger that traces the goals in a query. It can be 
+  used to better understand exactly how Prolog satisfies a query.</p>
+<p>The debugger uses four terms to describe different states at a goal in a compound 
+  query. These are often called ports.</p>
+<ul>
+  <li><b>CALL</b> - A goal is being called for the first time, or more precisely 
+    from a previous goal. Because of backtracking, a goal might be CALLed multiple 
+    times as previous goals get new solutions.</li>
+  <li><b>EXIT</b> - A goal is true, and the unbound variables are bound to the 
+    values that make it true. The next goal is then CALLed.</li>
+  <li><b>REDO</b> - A goal is being backtracked into, or more precisely being 
+    activated from a following failed goal. The variables that were unbound when 
+    the goal was CALLed are unbound again and a new solution looked for. If found, 
+    the goal will EXIT again, if not it will FAIL.</li>
+  <li><b>FAIL</b> - A goal has no more solutions, and the previous goal will be 
+    backtracked into, i.e. REDO.</li>
+</ul>
+<p>Here's how to set up the debugger for the last compound query:</p>
+<ul>
+  <pre><font color="#000099">
+?- debug.
+
+??- airport(A, 'Lebanon, OH'), flight(F, A, ToID),
+base_fare(F, 100), airport(ToID, To).</font>
+</pre>
+</ul>
+<p>In the IDE, the debugger starts in a separate window. In the command line listener, 
+  alis, the debugger output appears as part of the listener dialog.</p>
+<p>Here's an annotated listing from the debugger for the first two solutions from 
+  the query. The simplist way to use the debugger is to <b>creep</b> from port 
+  to port. In the IDE, this is done using the <b>creep</b> button. In the command 
+  line listener, a question mark (?) follows each line, and entering the letter 
+  'c' after it creeps to the next port.</p>
+<table BORDER=1 CELLPADDING=3 >
+  <tr>
+    <td bgcolor="#FFFFCC"> 
+    <p>The double ??- indicates a debugger prompt, rather than a
+	normal listener prompt.</p>  
+        <pre>
+??- airport(A, 'Lebanon, OH'), flight(F, A, ToID),
+base_fare(F, 100), airport(ToID, To).</pre>
+        
+      <p> Variable names are not preserved in the debugger, but instead internal 
+        heap locations are provided. For more advanced debugging, this is good, 
+        but for a relatively simple case it adds some confusion. In this next 
+        line we see our variable 'A' is at heap location 383.<br>
+        </p>
+        
+      <pre>[] CALL user:airport(H383, 'Lebanon, OH') ? c</pre>
+      <p> Prolog tries and succeeds (EXITs) from the first clause, indicated by 
+        the (1), of airport/2. H383, our 'A', is bound to 'I68'.<br>
+      </p>
+      <pre>[] trying (1)user:airport('I68', 'Lebanon, OH')
+[] EXIT (1)user:airport('I68', 'Lebanon, OH') ? c</pre>
+      <p> The next goal, flight/3 is then called, with the second argument bound 
+        to 'I68'. It succeeds using the first (1) clause from flight/3, and the 
+        variables H389 ('F') and H391 ('ToID') are bound to aa01 and 'WDR'.<br>
+      </p>
+      <pre>[] CALL user:flight(H389, 'I68', H391) ? c
+[] trying (1)user:flight(aa01, 'I68', 'WDR')
+[] EXIT (1)user:flight(aa01, 'I68', 'WDR') ? c</pre>
+      <p>Now base_fare/2 is called. Notice that our variable 'F' is bound already 
+        bound to aa01 and that is reflected in the way the debugger displays the 
+        CALL. <br>
+      </p>
+      <pre>[] CALL user:base_fare(aa01, 100) ? c
+[] trying (1)user:base_fare(aa01, 100)
+[] EXIT (1)user:base_fare(aa01, 100) ? c</pre>
+      <p>The base_fare for aa01 is 100, so base_fare EXITs. A second goal for 
+        airport/2 is started, looking for the name associated with 'WDR'. That 
+        succeeds with the second (2) clause of airport/2.<br>
+      </p>
+      <pre>[] CALL user:airport('WDR', H404) ? c
+[] trying (2)user:airport('WDR', 'Winder, GA')
+[] EXIT (2)user:airport('WDR', 'Winder, GA') ? c</pre>
+      <p>And all the values of the variables, with our names back, are displayed. 
+        With the command line listener, the display is embedded in the debugging 
+        output as shown here. With the IDE the output would appear in the listener 
+        window. <br>
+      </p>
+      <pre>
+A = 'I68'
+F = aa01
+ToID = 'WDR'
+To = 'Winder, GA' ;</pre>
+      <p>A semicolon (;) as always triggers backtracking. The last predicate called 
+        is backtracked (REDO) into first. That was the last call to airport/2, 
+        looking for the airport name associated with 'WDR'.<br>
+      </p>
+      <pre>[] REDO user:airport('WDR', 'Winder, GA') ? c
+[] FAIL user:airport('WDR', H404) ? c</pre>
+      <p>It fails because there was only one clause with airport('WDR', To). Notice 
+        on failure, the variable H404 (our 'To') is now unbound. Backtracking 
+        (REDO) now proceeds into the previous goal, base_fare/2.<br>
+      </p>
+      <pre>[] REDO user:base_fare(aa01, 100) ? c
+[] FAIL user:base_fare(aa01, 100) ? c</pre>
+      <p>It fails because there was only one base_fare(aa01, 100). Backtracking 
+        (REDO) goes back to the previous goal, flight(F, 'I68', ToID).<br>
+      </p>
+      <pre>[] REDO user:flight(aa01, 'I68', 'WDR') ? c
+[] trying (10)user:flight(aa10, 'I68', '1A0')
+[] EXIT (10)user:flight(aa10, 'I68', '1A0') ? c</pre>
+      <p>It succeeds using clause ten (10). This starts forward motion again with 
+        a CALL to base_fare/2, checking the fare for flight aa10.<br>
+      </p>
+      <pre>[] CALL user:base_fare(aa10, 100) ? c
+[] FAIL user:base_fare(aa10, 100) ? c</pre>
+      <p>But that's not the fare for aa10, so it failed, triggering backtracking 
+        (REDO) into flight/3 again. flight/3 succeeds (EXIT) again with clause 
+        11. <br>
+      </p>
+      <pre>[] REDO user:flight(aa10, 'I68', '1A0') ? c
+[] trying (11)user:flight(aa11, 'I68', 'UNV')
+[] EXIT (11)user:flight(aa11, 'I68', 'UNV') ? c</pre>
+      <p>And this fare is 100.<br>
+      </p>
+      <pre>[] CALL user:base_fare(aa11, 100) ? c
+[] trying (11)user:base_fare(aa11, 100)
+[] EXIT (11)user:base_fare(aa11, 100) ? c
+[] CALL user:airport('UNV', H404) ? c
+[] trying (8)user:airport('UNV', 'State College, PA')
+[] EXIT (8)user:airport('UNV', 'State College, PA') ? c</pre>
+      <p>And the second airport that met the query is displayed.<br>
+      </p>
+      <pre>
+A = 'I68'
+F = aa11
+ToID = 'UNV'
+To = 'State College, PA'</pre>
+      <p>Hitting enter rather than semi-colon (;) accepted the result, stopping 
+        the listener from triggering further backtracking.<br>
+      </p>
+      <pre>yes
+</pre>
+</td></tr></table>
+<p>When learning Prolog, the debugger is an invaluable tool for understanding 
+  exactly how Prolog queries work.</p>
+<!-- #EndEditable --> 
+<hr>
+<!-- #BeginEditable "References" --><a href="../../pro/pug_listener.htm">Prolog 
+User's Guide: Listener</a><br>
+<a href="../../pro/pug_debugger.htm">Prolog User's Guide: Debugger</a><!-- #EndEditable --> 
+<p><!-- #BeginEditable "Previous2" -->{Previous2}<!-- #EndEditable -->&nbsp <a href="../index.html">Start</a> 
+  &nbsp <a href="../toc.html">Contents</a> &nbsp 
+  <!-- #BeginEditable "Next2" -->{Next2}<!-- #EndEditable --></p>
+</BODY>
+<!-- #EndTemplate -->
+</HTML>

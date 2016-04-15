@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>No title</title>
+  <meta name="GENERATOR" content="amaya 5.2" />
+</head>
+
+<body>
+<h1>Tools</h1>
+
+<p></p>
+
+<h2>Timing</h2>
+
+<p></p>
+
+<p><strong>fugit/1</strong></p>
+
+<p>Time a command</p>
+
+<p></p>
+
+<h2>Flow Tracing</h2>
+
+<p></p>
+
+<p><strong>flow/1</strong></p>
+
+<p>Trace plain code</p>
+
+<p></p>
+
+<p><strong>flow/3</strong></p>
+
+<p>Trace DCG code</p>
+
+<p></p>
+
+<h2>Tools for Long Lists</h2>
+
+<p></p>
+
+<p>The basic prolog tools for list manipulation are normally defined to
+process the list one element at a time. However, when the individual list
+elements are not of interest, as in the following:</p>
+<ul>
+  <li><strong>append</strong>,</li>
+  <li><strong>length</strong>,</li>
+  <li><strong>last</strong></li>
+  <li><strong>reverse</strong></li>
+</ul>
+
+<p>then it is quicker to process long lists in chunks.</p>
+
+<p>Those primitives are defined here as alternatives to the standard library
+and operate on chunks up to eight elements at a time. They are intended to be
+fully bilateral.</p>
+
+<p></p>
+
+<h2>Tools related to Iteration</h2>
+
+<p></p>
+
+<h3>iota/3</h3>
+
+<p><strong>iota(Start, Finish, List)</strong></p>
+
+<p>produces a List of integers increasing or decreasing in unit steps from
+Start to Finish.</p>
+
+<p></p>
+
+<h3>in/2</h3>
+
+<p><strong>in(Element, List)</strong></p>
+
+<p>is the same as member(Element, List).</p>
+
+<p></p>
+
+<p><strong>in(Element, iota(Start, Finish))</strong></p>
+
+<p>is the same as: iota(Start, Finish, List), member(Element, List).</p>
+
+<p></p>
+
+<h3>do/2</h3>
+
+<p></p>
+
+<p>These are repeat - fail operations which are only useful for producing
+side effects Being failure driven, they can be nested.</p>
+
+<p></p>
+
+<p><strong>do(while(Condition), Goals)</strong></p>
+
+<p></p>
+
+<p><strong>do(Goals, while(Condition))</strong></p>
+
+<p></p>
+</body>
+</html>

@@ -1,0 +1,1997 @@
+<html>
+<head>
+<title>Amzi! Program Logic Manual</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1>Amzi! Program Logic Manual</h1>
+<p>This is the beginnings of a program logic manual, started many releases and 
+  one name change ago. It was incomplete at the time, and the software has undergone 
+  many changes since. Still, the underlying Prolog architecture is the same, and, 
+  while the information here is often wrong in detail, the big picture ideas are 
+  valid. Maybe we'll update it sometime.</p>
+<pre>
+
+Cogent Prolog Logic Manual
+
+Contents:
+
+Overview
+System Modules
+Open Architecture
+Compiled Code Formats
+Loading Compiled Code
+Executing Compiled Code
+Atom Table
+Terms
+Dynamic Database
+Prolog Modules
+Heaps & Stacks
+Error Handling
+I/O Predicates
+  External Window Interface
+Evaluable Predicates
+Memory Management
+Garbage Collection
+Compiler
+Linker
+Packager
+Shell
+Interpreter
+Interactive Runtime
+Debugger
+Porting Issues
+Naming Conventions
+Utility Macros & Functions
+
+
+---------.---------.---------.---------|---------.---------.---------.---------|
+
+---------
+Overview:
+---------
+
+Cogent Prolog is a Warren Abstract Machine (WAM) based implementation of
+Prolog.  For details on the WAM see "Warren's Abstract Machine - A Tutorial
+Reconstruction" by Hassan Ait-Kaci, published by MIT Press.  Other
+references are Warren's original paper and the work at the Argon National
+Laboratory.
+
+The WAM is a pseudo-code machine that executes op codes designed to
+implement Prolog.  So in its simplest form,
+
+  Prolog Source --> (compiler) --> WAM codes --> (engine) --> output
+
+The engine, CPENG, is written in C.  The compiler, CPC, is written in
+Cogent Prolog, and is always a good test case to see if a new version
+of Prolog is working right.
+
+Other program level components of the Cogent system are the interpreter
+and the linker.
+
+The interpreter, CPI, is really better called an interactive runtime
+because it executes both Prolog source code and compiled Prolog code.
+It, like the compiler, is written in Cogent Prolog.  The shell, CPSHL,
+is another version of the interactive runtime that makes use of the
+Cogent text-mode windows to implement a full-screen interface to the
+interactive runtime.
+
+The linker, CPL, is a C program that takes multiple WAM object code
+files and combines them into one file.  The output from CPC is a .PLM
+file.  It contains a single Prolog module's worth of WAM code.  The
+output from CPL is a .XPL file that contains multiple modules.  Either
+can be fed into the engine or interactive runtime.
+
+In addition to supporting the basic WAM operations, CPENG provides
+support for the Prolog dynamic database and many of the various built-in
+predicates that make up a Prolog.
+
+Many more built-in predicates are contained in the Prolog source file,
+CPLIB.PRO.  The compiled version of this file is distributed with
+Cogent Prolog.  CPLIB.PLM is linked into both CPI.XPL and CPSHL.XPL.
+This is how these programs can execute the full set of built-in predicates.
+
+When a user wants to build a complete stand-alone prolog application,
+he/she must link CPLIB.PLM with the rest of his/her code.
+
+
+---------------
+System Modules:
+---------------
+
+The modules of Cogent Prolog are organized around the main objects of
+the WAM.  These are the heap stacks, the control stacks, the atom
+data base, the code, memory, and strings.  There are also objects for
+external interfaces, miscellaneous predicates and error handling.
+
+In each case, a header file, cpXXX.h defines the interface and one or
+more modules define the functions and data.
+
+cogent.h - defines the external interface to the WAM
+  cpmain.c - the main call-in entry points
+  cpcover.c - the call-out entry points
+
+cpinc.h - includes standard includes
+
+cpenv.h - environment setting of constants
+
+cpdefs.h - global typedefs and defines
+
+cpglob.h - global variables
+  cpglob.c - the definitions of the global variables, plus a few functions
+
+cperr.h - error handling
+  cperr.c
+
+cpio.h - file and other direct I/O
+  cpio.c
+
+cpmem.h - memory management
+  cpmem.c
+
+cpmisc.h - miscellaneous built-in predicates
+  cpmisc.c
+
+cpstring.h - the string database
+  cpstring.c
+
+cpadb.h - the atom database, atoms, dynamic data and compiled clauses
+  adbatom.c - manipulate atoms directly
+  adbcall.c - interpreter calls
+  adbcls.c - manipulate compiled clauses
+  adbdb.c - manipulate the dynamic database
+
+cpcode.h - everything to do with code
+  cddebug.c - support for debugger
+  cdexec.c - executes compiled code (heart of the WAM)
+  cdexec2.c - support functions for cdexec.c
+  cdload.c - loads code from compiled files
+  cdtag.c - support for cuttag function
+
+cpheap.h - heap, local and X variables
+  hpdebug.c - heap diagnostics
+  hpgc.c - garbage collection of the heap
+  hpheap.c - getting and putting to the heap
+
+cpterm.h - everything to do with terms
+  tmarith.c - the arithmetic functions
+  tmclass.c - classification of terms
+  tmcopy.c - term copying, a non-trivial act
+  tmread.h - common definitions for two reader modules
+    tmread.c - the main reader
+    tmread2.c - support functions for the reader
+  tmstash.c - term stashing functions
+  tmunify.c - unification functions
+  tmwrite.c - write a term
+
+cpext.h - external interfaces
+  xtdos.c - DOS interfaces
+  xtgraph.c - graphics interfaces
+  xtwnboss.c - WINBOSS interfaces
+
+------------------
+Open Architecture:
+------------------
+
+----------------------
+Compiled Code Formats:
+----------------------
+
+3.0 Design Changes:
+
+In release 3.0 the cross reference information in compiled code no longer
+assumes the nature of the target machine.  So, offsets to labels in the 
+code are no longer calculated by the compiler.  Instead, references to 
+labels, and labels themselves, are used in the .plm code formats.  The
+actual offsets are generated by cdload.c when the code is loaded.  This
+means different machines can load and execute the same object code files.
+
+This change was made necessary by the port to the 64-bit DEC Alpha under
+OSF/1.  The size of the addresses made all other code length calculations
+obsolete.
+
+Branches are always to clauses, but there are two starts to a clause in
+a sequence of clauses.  One is at the (re)try_me_else instruction and the
+other is just after it.  For the cascading (re)trys, each one points to the
+next (re)try.  For the indexing structures built at the end of the code,
+the brances are to the first real instruction following the (re)try.
+
+The compiler generates labels in the branching code at the end of a predicate.
+Those labels, Olabel opcode, are not passed on by the loader.  Instead, they
+are just noted with their address.  Any branching instructions to that
+address get the appropriate address offset.
+
+On the other hand, the compiler does not generate any labels for the main
+clauses.  These are generated by the loader and actually inserted in the
+code for use by cdexec.c when running the code.  cdexec.c doesn't need them
+except for reporting on what clause it is in.
+
+The generated label addresses at the beginning of each clause, after the
+(re)trys are used by the branching instructions as well.
+
+The links from one retry to the next are generated by the loader when
+the code is loaded.  The loader uses two different array structures to keep
+track of the (re)try addresses and the label addresses.
+
+---------
+WAM codes
+
+put_constant x06 const(*) reg(1)
+call         x   functor(2) functor(2) arity(1) numperms(2)
+escape       x0d functor(2) arity(1)
+proceed      x0b
+
+const: tag_byte(1) followed by constant
+  1 - atom(2), 2 - int(2), 3 - string(*), 4 - float(4), 5 - long(4)
+reg:  smint(1) referring to register offset
+functor: atom(2)
+arity: smint(1)
+
+
+    /* the op-codes */
+
+Ono_op        '\000'    /*  0 - 0x00 */
+Owho_am_i     '\063'    /* 51 - 0x33 */
+
+    /* gets */
+Oget_x_var    '\037'    /* 31 - 0x1f */
+Oget_y_var    '\043'    /* 35 - 0x23 */
+Oget_con      '\001'    /*  1 - 0x01 */
+Oget_nil      '\002'    /*  2 - 0x02 */
+Oget_struc    '\003'    /*  3 - 0x03 */
+Oget_list     '\004'    /*  4 - 0x04 */
+Oget_x_val    '\057'    /* 47 - 0x2f */
+Oget_y_val    '\060'    /* 48 - 0x30 */
+
+    /* puts */
+Oput_x_var    '\061'    /* 49 - 0x31 */
+Oput_y_var    '\062'    /* 50 - 0x32 */
+Oput_unsafe   '\005'    /*  5 - 0x05 */
+Oput_con      '\006'    /*  6 - 0x06 */
+Oput_nil      '\007'    /*  7 - 0x07 */
+Oput_struc    '\010'    /*  8 - 0x08 */
+Oput_list     '\011'    /*  9 - 0x09 */
+Oput_x_val    '\054'    /* 44 - 0x2c */
+Oput_y_val    '\055'    /* 45 - 0x2d */
+
+    /* sequencing codes */
+Oexit           '\042'    /* 34 - 0x22 */
+Ofail           '\040'    /* 32 - 0x20 */
+Otrust_me_2_else  '\041'  /* 33 - 0x21 */
+Ocall           '\012'    /* 10 - 0x0a */
+Ocall_local     '\050'    /* 40 - 0x28 */
+Oproceed        '\013'    /* 11 - 0x0b */
+Oexec           '\014'    /* 12 - 0x0c */
+Oexec_local     '\051'    /* 41 - 0x29 */
+Oescape         '\015'    /* 13 - 0x0d */
+Oalloc          '\016'    /* 14 - 0x0e */
+Odealloc        '\017'    /* 15 - 0x0f */
+Ocut            '\020'    /* 16 - 0x10 */
+Ocutd           '\021'    /* 17 - 0x11 */
+Otry_me_else    '\022'    /* 18 - 0x12 */
+Otry            '\023'    /* 19 - 0x13 */
+Oretry_me_else  '\024'    /* 20 - 0x14 */
+Oretry          '\025'    /* 21 - 0x15 */
+Otrust_me_else  '\026'    /* 22 - 0x16 */
+Otrust          '\027'    /* 23 - 0x17 */
+Oswitch_on_term '\033'    /* 27 - 0x1b */
+  int1 int2 int3
+  int3 int2 int1 (all SINT)
+Ogoto           '\034'    /* 28 - 0x1c */
+Oswitch_on_cons '\035'    /* 29 - 0x1d */
+Oswitch_on_struc '\036'   /* 30 - 0x1e */
+
+    /* Ounify ops */
+Ounify_x_var   '\044'
+Ounify_y_var   '\056'
+Ounify_unsafe  '\046'
+Ounify_con     '\030'
+Ounify_void    '\031'
+Ou_var_getlist '\047'
+Ounify_nil     '\032'
+Ounify_x_val   '\052'
+Ounify_y_val   '\053'
+
+
+-------------------
+Example: PORT01.PRO
+
+top:- write_(hello,0,-1).
+
+procedure   top / 0
+
+        put_constant  hello,X1   06 01 0200 00
+        put_constant  &0,X2      06 02 0000 01
+        put_constant  &-1,X3     06 02 ffff 02
+        escape  write_ / 3       0d 0300 03
+        proceed                  0b
+
+port01.xpl (note bytes reversed)
+
+0000000  02ff 0001 0000 0000 0000 0000 0000 0000
+0000020  0000 0000 0000 0000 0000 0000 0000 0000
+0000040  0011 6f74 0070 6568 6c6c 006f 7277 7469
+0000060  5f65 1a00 2500 0100 0000 0600 0201 0000
+0000100  0206 0000 0601 ff02 02ff 030d 0300 000b
+
+port01.plm (note bytes reversed)
+
+0000000  03ff 0000 0000 0000 0000 0000 0000 0000
+0000020  0000 0000 0000 0000 0000 0000 0000 0000
+0000040  0011 6f74 0070 6568 6c6c 006f 7277 7469
+0000060  5f65 2800 3300 0100 0000 0000 1b00 fffd
+0000100  fffd fffd 0012 0000 0600 0101 0000 0206
+0000120  0000 0601 ff02 02ff 020d 0300 000b
+------------------------------------------------
+-------------------
+Example: PORT03.XPL
+
+top:- 
+  amzi(X),
+  writex(X), 
+  nlx,
+  fail.
+top.
+
+amzi(ella).
+amzi(kato).
+amzi(mary).
+amzi(dennis).
+amzi(ducks).
+
+writex(X) :-
+  write_(X,0,-1).
+
+nlx :- writex('\n').
+
+0000000  377 002 001 000 000 000 000 000 000 000 000 000 000 000 000 000
+0000020  000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000
+0000040  071 000 012 000 156 154 170 000 164 157 160 000 141 155 172 151
+0000060  000 145 154 154 141 000 153 141 164 157 000 167 162 151 164 145
+0000100  137 000 144 145 156 156 151 163 000 167 162 151 164 145 170 000
+0000120  155 141 162 171 000 144 165 143 153 163 000
+
+061 000 073 000 003 000 000 000
+
+procedure   top / 0
+        (try_me_else)               022  063 000 000 000
+        allocate  1                 016  001 000
+        put_y_variable  Y1,X1       062  000 000
+        call  amzi / 1,1            012  004 000  001 000  001  001 000
+        put_unsafe_value  Y1,X1     005  000 000
+        call  writex / 1,0          012  011 000  002 000  001  000 000
+        call  nlx / 0,0             012  002 000  003 000  000  000 000
+        fail                        040
+
+procedure   top / 0
+        (trust_me_2_else)           041  000 000
+        proceed                     013
+
+133 000 200 000 004 000 001 000
+
+procedure   amzi / 1
+        (switch_on_term)            033  134 000  000 000  000 000
+        (try_me_else)               022  020 000  001 000
+        get_constant  ella,X1       001  001 005 000 000
+        proceed                     013
+
+procedure   amzi / 1
+        (retry_me_else)             024  016 000
+        get_constant  kato,X1       001  001 006 000 000
+        proceed                     013
+
+procedure   amzi / 1
+        (retry_me_else)             024  016 000
+        get_constant  mary,X1       001  001 012 000 000
+        proceed                     013
+
+procedure   amzi / 1
+        (retry_me_else)             024  016 000
+        get_constant  dennis,X1     001  001 010 000 000
+        proceed                     013
+
+procedure   amzi / 1
+        (trust_me_2_else)           041  000 000
+        get_constant  ducks,X1      001  001 013 000 000
+        proceed                     013  013
+
+procedure   amzi / 1
+        (retry_me_else)             024  000 000
+_0:
+        switch_on_constant  5,fudge 035  005 000
+        ducks	78                       001  013 000  354 377
+        dennis	62                       001  010 000  326 377
+        mary	46                       001  012 000  300 377
+        kato	30                       001  006 000  252 377
+        ella	14                       001  005 000  224 377
+
+025 000 033 000 011 000 001 000
+
+procedure   writex / 1
+
+        put_constant  &0,X2         006  002  000 000  001
+        put_constant  &-1,X3        006  002  377 377  002
+        escape  write_ / 3          015  007 000  003
+        proceed                     013
+
+021 000 021 000 002 000 000 000
+
+procedure   nlx / 0
+
+        put_constant  '\n',X1       006  001  001 000  000 
+        execute  writex / 1         014  011 000  002 000  001
+--------------------------------------------------------------
+
+-------------------------------------------------------
+Example: The code from the beginning of CPLIB in CPI.XPL
+
+0000: ff  2  1  0  0  0  0  0  0  0  0  0  0  0  0  0    ................
+0010:  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0    ................
+0020: ca  a  7 32 6d 65 73 73 61 67 65 24  0 61 64 64    ...2message$.add
+0030:  0 6c 69 73 74 69 6e 67 5f 65 6e 64  0  7 32 62    .listing_end..2b
+0040: 69 6f 73  0 21  0 2a  0 2b  0 2c  0 2d  0 73 65    ios.!.*.+.,.-.se
+0050: 65 6e  0 2f  0 65 72 72 24 68 61 6e 64 6c 65  0    en./.err$handle.
+0060: 6c 6f 61 64 5f 63 6f 64 65 24  0 66 69 6e 64 61    load_code$.finda
+0070: 6c 6c  0 3a  0 3b  0 3c  0 3d  0 3e  0 61 6c 65    ll.:.;.<.=.>.ale
+0080: 72 74  0 72 65 63 6f 72 64  0 66 69 6e 64 66 69    rt.record.findfi
+...
+...  This is all the atom table
+...
+0aa0: 32 63 6c 6f 73 65 24 73 74 72 65 61 6d  0  7 32    2close$stream..2
+0ab0: 64 6f 24 72 65 63 6f 6e 73  0  7 32 65 72 72 5f    do$recons..2err_
+0ac0: 6b 65 79  0  7 32 66 72 65 65 5f 76 61 72 73  0    key..2free_vars.
+0ad0: 73 74 72 65 61 6d 73  0 72 65 74 72 61 63 74  0    streams.retract.
+0ae0:  7 33 61 62 6f 75 74 24 63 70 69  0                .3about$cpi.
+
+:- (mode$(8, 1, 0)).	    
+
+procedure   latent_exp / 0     0154 0000
+
+        put_constant  &8,X1    06 02 0008 00
+        put_constant  &1,X2    06 02 0001 01
+        put_constant  &0,X3    06 02 0000 02
+        escape  mode$ / 3      0d 0142 03
+        proceed                0b
+                                          (1a 0,25  0)               ..%.
+0af0: 54  1/ 0  0- 6  2  8  0  0, 6  2  1  0  1, 6  2    T...............
+0b00:  0  0  2, d 42  1  3, b.
+
+op(Prec, Class, []) :- !.
+op(Prec, Class, [H|T]) :- op(Prec, Class, H), op(Prec, Class, T).
+op(Prec, Class, Symbol) :- atom(Symbol), !, op_(Prec, Class, Symbol).
+
+procedure   op / 3                 0067 0003
+
+                                   12 0014 0003     (try_me_else)
+        get_nil  X3                02 02
+        allocate  0                0e 0000
+        cut                        10
+        deallocate                 0f
+        proceed                    0b
+
+procedure   op / 3
+                                   14 0034          (retry_me_else)
+        get_x_variable  X4,X1      1f 03 00
+        put_x_value  X3,X1         2c 02 00
+        escape  atom / 1           0d 00a2 01
+        allocate  0                0e 0000
+        cut                        10
+        put_x_value  X4,X1         2c 03 00
+        escape  op_ / 3            0d 003b 03
+        deallocate                 0f
+        proceed                    0b
+
+procedure   op / 3
+                                   21 0000           (trust_me_2_else)
+        allocate  3                0e 0003
+        get_y_variable  Y3,X1      23 02 00
+        get_y_variable  Y2,X2      23 01 01
+        get_list  X3               04 02
+        unify_x_variable  X3       24 02
+        unify_y_variable  Y1       2e 00
+        put_y_value  Y3,X1         2d 02 00
+        put_y_value  Y2,X2         2d 01 01
+        call  op / 3,3             0a 0067 0001 03 0003
+        put_y_value  Y3,X1         2d 02 00
+        put_y_value  Y2,X2         2d 01 01
+        put_y_value  Y1,X3         2d 00 02
+        deallocate                 0f
+        execute  op / 3            0c 0067 0001 03
+
+                             (5d  0,a6  0)67  0/ 3  0-   ....B...]...g...
+0b10: 12 14  0  3  0, 2  2, e  0  0,10, f, b;14 34  0,   ..............4.
+0b20: 1f  3  0,2c  2  0, d a2  0  1, e  0  0,10,2c  3    ...,..........,.
+0b30:  0, d 3b  0  3, f, b;21  0  0, e  3  0,23  2  0,   ..;....!.....#..
+0b40: 23  1  1, 4  2,24  2,2e  0,2d  2  0,2d  1  1 ,a    #....$...-..-...
+0b50: 67  0  1  0  3  3  0,2d  2  0,2d  1  1,2d  0  2,   g......-..-..-..
+0b60:  f, c 67  0  1  0  3.
+
+:- (op(1200, xfx, [:-, -->])).
+
+procedure   latent_exp / 0
+
+        put_list  X3
+        unify_constant  :-
+        u_var_getlist
+        unify_constant  -->
+        unify_nil
+        put_constant  &1200,X1
+        put_constant  xfx,X2
+        execute  op / 3           0c 0067 0005 03
+
+                          (22  0,31  0)54  1/ 0  0- 9    ..g....".1.T....
+0b70:  2 18  1 2b  0 27 18  1 b9  0 1a  6  2 b0  4  0    ...+.'..........
+0b80:  6  1 59  0  1, c 67  0  5  0  3.
+
+:- (op(1200, fx, [?-, :-])).
+
+procedure   latent_exp / 0
+
+        put_list  X3
+        unify_constant  ?-
+        u_var_getlist
+        unify_constant  :-
+        unify_nil
+        put_constant  &1200,X1
+        put_constant  fx,X2
+        execute  op / 3          0c 0067 0005 03
+
+                                       22  0 31  0 54    ..Y...g....".1.T
+0b90:  1  0  0  9  2 18  1 2e  0 27 18  1 2b  0 1a  6    .........'..+...
+0ba0:  2 b0  4  0  6  1 60  0  1, c 67  0  5  0  3.
+
+:- (op(1150, xfy, ->)).
+
+procedure   latent_exp / 0
+
+        put_constant  &1150,X1
+        put_constant  xfy,X2
+        put_constant  ->,X3
+        execute  op / 3          0c 0067 0004 03
+
+                                                   1b    ......`...g.....
+0bb0:  0 25  0 54  1  0  0  6  2 7e  4  0  6  1 5a  0    .%.T.....~....Z.
+0bc0:  1  6  1 2a  0  2, c 67  0  4  0  3.
+
+:- (op(1100, fx, [import, export])).
+
+procedure   latent_exp / 0
+
+        put_list  X3
+        unify_constant  import
+        u_var_getlist
+        unify_constant  export
+        unify_nil
+        put_constant  &1100,X1
+        put_constant  fx,X2
+        execute  op / 3          0c 0067 0005 03
+
+                                          22  0 31  0    ...*...g....".1.
+0bd0: 54  1  0  0  9  2 18  1 89  0 27 18  1 dd  0 1a    T.........'.....
+0be0:  6  2 4c  4  0  6  1 60  0  1, c 67  0  5  0  3.   ..L....`...g....
+
+
+0bf0: 1b  0 25  0 54  1  0  0  6  2 4c  4  0  6  1 5a    ..%.T.....L....Z
+0c00:  0  1  6  1 10  0  2  c 67  0  4  0  3 1b  0 25    ........g......%
+0c10:  0 54  1  0  0  6  2 e8  3  0  6  1 5a  0  1  6    .T..........Z...
+0c20:  1  8  0  2  c 67  0  4  0  3 27  0 39  0 54  1    .....g....'.9.T.
+-------------------------------------------------------------------------
+
+
+
+
+----------------------
+Loading Compiled Code:
+----------------------
+
+------------------------
+Executing Compiled Code:
+------------------------
+
+-----------
+Atom Table:
+-----------
+
+The atom table is a hashed table which provides the key for finding
+information related to an atom.  It might be just a simple atom, or
+a functor that has either compiled or interpreted code associated with
+it.  In other words, everything of interest is hung someway or another
+off the atom table.
+
+adbAtomTable is an array of ATOM_ELMs.  See CPADB.H for the most up
+to date structure definitions.
+
+typedef struct {
+    PRED_BLK   *pinfo;            /* predicate info */
+    char       *aname;            /* print name */
+}   ATOM_ELM;
+
+An atom, in the code, is a short integer which is the index into the
+adbAtomTable array.  An atom is initially added to the table by a hashing
+algorithm.
+
+The aname field is used to display the name of the atom when necessary.
+
+pinfo is NULL if there is no predicate information, otherwise it points
+to the predicate block.
+
+typedef struct _p_info  {           /* predicate info block */
+        struct _c_info  *pclause;   /* pointer to clause chain */
+        struct _d_info  *pdbase;    /* pointer to db chain whose */
+                                    /* key is the functor of this pred */
+        int           groups[2][2]; /* associativity, precedence (operators) */
+} PRED_BLK;
+
+A clause chain is a chain of compiled clauses.  The database chain is
+a chain of interpreted, database, clauses.
+
+Hashing
+-------
+
+The routines for manipulating the atom table are in pcls.c.  The atom table
+is a hashed table, and to find an atom from a string, the string is 
+hashed, by AtomHash() to return a number which is the index into the
+table.
+
+If there is a collision, then the number is just incremented by one
+until an empty slot is found, (wrapping to zero when the top of the
+atom table is met).
+
+The resulting hashed number is &'d with (Alistl-1), the size of the atom
+table, so, Alistl must be a power of 2 for this to work ok.  Like, 4096,
+8192, 16384.  This last is the max for 16-bit version.
+
+
+------
+Terms:
+------
+
+A cell is the same length as a pointer, usually 32 bits but 64 on the
+DEC Alpha.  It can be thought of as having at most three compartments,
+The first being the high half which often has a value, the second being
+the high-low quarter which has an arity or other small integer if
+appropriate and the third is the low-low quarter which has the flags
+for the cell type.
+
+Cell  |   value        | arity  | type   |
+
+For references, only the last two bits are used for a type flag, the
+rest is the address aligned on a four-byte boundary.
+
+Structures
+----------
+
+A structure has a cell with a reference and type structure.
+
+| ref                | strucT |   points to func/arity of structure
+
+| functor    | arity | atomS consT |
+| arg1                         |
+  ...
+| argn                         |
+
+example:
+
+dogs(ella,kato).
+
+H37  |  H48      strucT |
+...
+H48  |  dogs    | 2 | atomS consT |
+H49  |  ella    | - | atomS consT |
+H50  |  kato    | - | atomS consT |
+
+
+Lists
+-----
+
+A list is like a structure, but the reference points directly to the
+first of its two arguments.  Functions that look for the functor and
+arity of a list have them returned automatically as "." and 2, but
+this functor arity is never actually stored in the heap.
+
+example:
+
+[dogs, ella, kato]
+
+H37  |  H48     listT |
+...
+H48  |  dogs   | - | atomS consT |
+H49  |  H52     listT |
+...
+H52  |  ella   | - | atomS consT |
+H53  |  H63     listT |
+...
+H63  |  kato   | - | atomS consT |
+H64  |  nilA   | - | atomS consT |
+
+
+-----------------
+Dynamic Database:
+-----------------
+
+The dynamic database is the collection of non-compiled Prolog terms that
+make up an application.  These terms are created when a file is consulted
+and by calls to assert.  They are referred to when a term is call'd and
+by other operations on the dynamic database, such as retract, erase, etc.
+
+typedef struct _d_info  {             /* dbase info block */
+	struct _d_info  *pdbase;      /* next dbase on KEY chain */
+	struct _d_info  *prev_pdbase; /* previous dbase on KEY chain */
+	COUNT           pdbinfo;      /* info -- see below */
+	COUNT           numvars;      /* number of variables in src code */
+	short           size;         /* size of src code */
+	CELL            dbcode;       /* src code for dbase entry */
+} DBASE_BLK;
+
+Note that the CELL is the last element of the structure, this is to force
+alignment of the following code on a CELL boundary.
+
+
+ADBDB.C
+-------
+
+internal functions:
+
+DBASE_BLKptr rec_db_(TERM t, DBASE_BLKptr  pdb, PATOM key)
+
+   Adds a new dbase entry for term t, linked in after pdb, or put at
+   beginning if pdb==NULL.
+
+   Its called by p_dbzrec() and p_dbarec().  p_dbzrec() finds the end of
+   the chain first, p_dbarec() just calls with pdb==NULL.
+
+adbAssert(int az, TERM t)
+
+   does what assert does, finds the functor of the term t to use as a key,
+   checks if its a protected functor, and if not records the term at the
+   beginning or ending depending on the value of az.
+
+external functions:
+
+p_dbinstance()  instance(Ref, Term) - Ref must be instantiated.
+p_dbarec()      recorda(Key, Term, Ref)
+p_dbzrec()      recordz(Key, Term, Ref)
+p_asserta()     assert & asserta
+p_assertz()     assertz
+p_dbrefgen()    dbkey$ref(Key, DBref, Term) - returns on backtracking
+                   all DBrefs for given key.
+p_dbtrash()     erase(DBref) - simply flags entry as erased.
+
+---------------
+Prolog Modules:
+---------------
+
+Cogent Prolog supports modules.  The key aspect of module support is a
+module can have hidden predicates, in fact all the predicates in a module
+are hidden unless otherwise specified.
+
+:- export & :- import directives are used to specify input and output
+predicates to a module, (however, it makes no difference which is used
+as an external reference is an external reference.)
+
+The existence of one of these directives indicates a Prolog source file
+is a module.  Without one of these directives, all predicates are
+assumed to be global, rather than hidden or local.
+
+The compiler file BUILTINS.PRO contains a predefined list of external
+predicates defined in CPLIB.PRO, so it is not necessary to declare them
+in a users program.  Note that this just contains built-in predicates
+written in Prolog, not C.
+
+The built-in predicate is$code/2 is used by the compiler (as well as
+interpreter and debugger) to determine if code is system code or not.
+is$code/2 unifies its second argument with a 2 if its a system built-in
+or 1 if its a compiled Prolog predicate.  If fails otherwise.
+
+Sooooo, the compiler must be running on an engine with the built-in
+predicates defined inorder to correctly compile a program.  hmmmmm.
+
+In 3.0, to accomodate the various collections of extended predicates,
+the onus of determining whether a predicate is a system predicate or
+not is shifted to the loader, so it at run time determines whether to
+code a call as an escape (C predicate) or call or call local or exec
+or exec local.
+
+If a call cannot be fixed up, rather than abort, assume it is a call
+to the dynamic database, so change the call to a real call.
+
+So, during load,
+
+   read code
+   if call or relative
+      if builtin or extended
+         replace with escape
+
+   while fixing up
+      if cannot fix up a call_local or relative
+         replace with interpreter call
+
+This last point should mean that its only necessary to declare exports,
+as other references are resolved automatically at run time.
+---------------
+Heaps & Stacks:
+---------------
+
+Control Stack
+-------------
+
+This is the choice point stack, containing information for backtracking.
+The BF flag is set on backtracking, otherwise its not.  This can be used
+in built-in predicates to determine if backtracking, but must be called
+from a Prolog predicate?
+
+
+---------------
+Error Handling:
+---------------
+
+Error handling is through setjmps and longjmps.  Because there might be
+errors at multiple levels, a stack of jmp_bufs is kept and an index into
+them in global memory.
+
+Three types of errors, abort, fatal and exec.  The code with the problem
+calls errAbortProlog, errFatal or errExec for the three cases.
+
+errAbortProlog()
+   close streams,
+   print message,
+   exit -1;
+
+errFatal()
+   print error message,
+   if (m_fatal_err)
+      errAbortProlog(fatalS);
+   else
+      query user Esc to restart?
+      if no
+         errAbortProlog(fatalS);
+      else
+         longjmp(jmpstack[0],1);
+
+errExec()
+   print error message,
+   if jmpi<0
+      errAbortProlog(setjmpS);
+   else if ipl_B
+      errAbortProlog(xplloadS);
+   else
+      longjmp(jmpstack[jmpi], err_no);
+
+if an errExec happens, then the setjmp in cdProve is re-entered and
+errEscape is called to give the Prolog error handler a chance.  Also,
+if break is hit then errEscape is called from the main loop of Prove
+when an escape is called.  Thirdly, if an escape function returns
+a non true or false return code, errEscape is called.
+
+errEscape()
+   if ipl_B
+      longjmp(jmpstack[0], 1);
+   else
+      build heap term with F/A of failing goal,
+      build heap term for calling err$handle/2,
+      call err=codeNewProve,
+      return err;
+
+CPLIB.PRO
+
+err$handle(Term, ErrNum) :-
+   tag(err_handle),
+   err$handle1(Term, ErrNum).
+
+err$handle1(Term, ErrNum) :-
+   err_handle(ErrNum, Term, SFA),        % user defined error handler
+   !,
+   ...succeed, fail, or abort based on SFA...
+err$handle1(Term, ErrNum) :-
+   ...
+   not(not(disp$err(Term, ErrNum))),
+   ...
+   write($Action (?...
+   get1(A),
+   err_key(A, Term),
+   ...
+
+disp$err(Term, ErrNum) :-
+   ...display Term with args...
+   disp$read$error(ErrNum), !.
+
+disp$read$error(-59) :-         % if it is a read error display the string
+   err_read(Txt, Posn),         % this is a built-in returning inbuff 
+   puts$read$err(Txt, Posn),    % sticks NEAR HERE in listing
+   ...
+   
+err_key(`r, _) :- pop$streams, abort(0).
+err_key(`h, _) :- abort(2).
+err_key(`q, _) :- abort(2).
+err_key(`c, _) :- !.
+err_key(`f, _) :-
+   cut_tag(err$handle), 
+   fail.
+err_key(`b, _) :-
+   pp$nl, write($[Type 'quit.' to return]$),
+   top_loop($\n??- $),
+   fail.
+err_key(`?, _) :- 
+   pp$nl, write($   Valid responses are$),
+ 
+
+
+jmpstack[0] is main calling routine of this invocation of Prolog.
+jmpstack[jmpi] is somewhere down the stack.  It might be in the reader,
+in Prove, or in docall.
+
+Recovery strategies:
+
+cdExec calls errEscape to let Prolog user decide.  Note that for 3.0 this
+means embedded applications should probably implement their own
+err_handle/2 to deal with errors accordingly.
+
+      
+      
+
+Aborts should be rare, they mean something disasterous happened.
+Fatal means Prolog can't continue, but can be safely reset.
+Exec means a predicate is in trouble with a bad argument or something.
+
+3.0 design, have jmpstack[0] set by all of the routines that call
+Prove and friends, so it can return codes.  Have another global for
+external jmp_buf, and have a return to jmpstack[0] cause either
+a return or a longjmp to the user defined jmp_buf.
+
+3.0 design, must also set and unset break handler on callin and out
+of each external routine.
+
+in CPERR.H:
+
+#define	MAXJMPS	10
+
+extern jmp_buf		UserJmp; 				/* set to jmpstack[0] in cpLoad */
+extern jmp_buf		jmpstack[];
+extern int			jmpi;
+
+extern BOOL			ipl_B;					/* initial program load flag */
+
+in CPERR.C:
+
+errFatal() has
+   longjmp(jmpstack[0],1)
+errExec() has
+	if (jmpi < 0) errAbortProlog(setjmpS);
+	if (ipl_B) errAbortProlog(xplloadS);
+	longjmp(jmpstack[jmpi], err_no);
+errEscape() has
+	if (ipl_B) longjmp(jmpstack[0], 1);
+
+in CPMAIN.C:
+
+cpInit()
+	cpJmpErr = jmpstack;			/* so calling program can reset jmpstack[0] */
+cpLoad()
+	jmpi = 0;
+	if (0 != setjmp(jmpstack[0]))
+		return(-1);
+	ipl_B = TRUE; 					/* initial program load in case of errors */
+	if (TRUE != (err = codeLoad(load_file)))
+		errFatal(err);
+cpMain()
+   jmpi = 0;
+   if (err = setjmp(jmpstack[0]))
+   {
+      if (UserJmp) longjmp(UserJmp,err);
+      else return(err);
+   }
+...same for all code that calls prove and friends.
+in CDLOAD.C:
+
+	if (++jmpi >= MAXJMPS) errAbortProlog(setjmpS);
+	if ((err = setjmp(jmpstack[jmpi])) != 0)
+	{
+		close_down(f);
+		jmpi--;
+		errExec(loadE, fname);
+	}
+   ...
+	close_down(f);
+	jmpi--;
+	return(TRUE);
+
+in CDEXEC.C:
+
+   if (++jmpi >= MAXJMPS) errAbortProlog(setjmpS);
+   if ((err = setjmp(jmpstack[jmpi])) != 0)
+   {
+      if (TRUE ==   errEscape(Escape_predA, Escape_arity, err))
+      {
+         code_ptr = Escape_code_ptr;
+         code_ptr += cdATOM_L + 1;
+      }
+      else
+         code_ptr = failure();
+   }
+   ...
+   jmpi--;
+   return(ret_code);
+
+in ADBCALL.C:
+
+   if (++jmpi >= MAXJMPS) errAbortProlog(setjmpS);
+   if ((err = setjmp(jmpstack[jmpi])) != 0)
+   ...
+   jmpi--;
+
+
+in TMREAD.C:
+
+   if (++jmpi >= MAXJMPS) errAbortProlog(setjmpS);
+   if (0 != setjmp(jmpstack[jmpi]))
+      jmpi--;
+   ...
+   jmpi--;
+
+
+in CPMISC.C:
+
+p_abort() when arg=0 for call error and reset
+   case 0:    longjmp(jmpstack[0], 1);
+
+
+
+---------------
+I/O Predicates:
+---------------
+
+External Window Predicates
+--------------------------
+
+7/94
+
+Cogent streams support both file I/O and window I/O.  The window I/O is
+externally defined through the API, so any window manager can be used.
+
+Philosophically, the Cogent stream I/O to windows is simply adequate
+enough to allow normal Prolog reads and writes to work in a window that
+acts as a console.  It is expected that more complex window I/O will
+be supported with extended predicates that link directly to the specific
+window manager.
+
+Four window functions need to be specified as external call back functions
+used by the engine.  These are
+
+  close a window,
+  put a string,
+  get a char,
+  unget a char.
+
+The functions for each of these are stored in the global variables
+
+  WN_CLOSE
+  WN_PUTS
+  WN_GETC
+  WN_UNGETC
+
+
+---------------------
+Evaluable Predicates:
+---------------------
+
+------------------------------
+Internal Evaluable Predicates:
+------------------------------
+
+In implementing evaluable predicates, Cogent often implements some of the
+code in C and some in Prolog.  The C portion is in the form of evaluable
+predicates with undocumented names, and the Prolog portion implements
+the visible predicate.
+
+CPLIB.PRO is the source file for the Prolog built-in predicates.
+
+--------------------
+Stashing Predicates:
+--------------------
+
+stash$, reserve$, get?$ all manipulate the heap directly and are used
+for building lists when called by findall, setof, or bagof in CPLIB.PRO
+
+------------------
+Memory Management:
+------------------
+
+Cogent handles the small requests for memory from its own allocator, based
+on the K&R and Knuth memory allocators.  The large chunks, for it and for
+heaps, stacks, buffers and all, are gotten with mallocx.  It calls the
+system allocator and adds its own pointer to the front of that.
+
+LastMall is the pointer to the last malloc'd chunk.
+
+-------------------
+Garbage Collection:
+-------------------
+
+---------
+Compiler:
+---------
+
+Building a new compiler is a tricky business because it requires the
+compiler.  Be careful to backup the old .xpl files carefully so that
+there is always a working compiler that can be used.
+
+The 3.0 compiler has been enhanced to allow the definition of c predicates,
+so that it is not necessary to compile a program using an extended engine
+to get the correct code generated for references to the extended built-in
+predicates.
+
+   :- cpred  [sqrt/2, display_pcx_file/1].
+
+
+The main work is done by compile/3.
+
+It keeps three stash points to dynamically expand lists that are used
+to generate the final code.  Stash points are reserved heap locations
+that point to lists that are built dynamically outside of the heap,
+in malloc'd space.  They use the predicates:
+
+reserve$(H) - unifies H with the next Heap offset, it will use it to
+	build lists.
+peek$(H, X) - unifies X with the list that has been built at H.
+get$(H, X) - same as peek, but frees up the stash'd list.
+stash$(H, T) - add T to the end of list being built at H.
+
+AssemblePoint AP - the assembled code for each clause
+ClausePoint CP - contains index, virtual and physical address of each clause
+CurrentProc CurrProc - the current predicate being worked on
+
+CP data structure is a list of terms
+   cpinfo(FirstArg, VirtualCodePtr, PhysicalCodePtr)
+
+The PhysicalCodePtr points to the physical location in the file of the clause
+The VirtualCodePtr is computed based on the generated size of the code
+  (it is this that is being removed in 3.0 so that the loader can compute
+   the offset instead)
+
+
+Branch Tables
+-------------
+
+The branch tables are built after the clauses are strung together.  Branch
+tables are a performance enhancement that adds indexing on the first
+arguments of predicates.
+
+They are triggered by a switch-on-term opcode added to the head of the
+compiled code for a predicate.  There are three arguments telling where
+to branch for constant, structure, or list.  A variable argument just
+starts down the clauses sequentially.
+
+The switch transfers control to a branch table which then selectively
+try's the appropriate clauses.
+
+ex.
+
+switch on-constant on-list on-structure
+...clauses...
+on-constant: table of constants
+on-list: table of lists
+on-structure: table of structures
+
+If the predicate has all variables for the first argument, or an arity
+of 0, then the switch at the beginning is inactivated by writing in a
+dummy op-code that is ignored by the linker and loader.
+
+walk through
+------------
+
+aaa(st(X)).
+aaa(X).
+
+build_branch/5
+  input:
+    1 - H, handle of output file
+    2 - N, pred name
+    3 - A, arity
+    4 - CCI, [cpinfo(FirstArg, Label, PP), ...]
+    5 - LastPP, physical code pointer to end of code - will need to
+        be updated if branch tables added to code
+  output:
+    modifies the output code file with branch tables at end of code and
+    filled in switch labels at head of code.
+  clause 1
+    arity = 0, so kills switch by writing opcode 52 in code file, where
+    52 is the non_op, no_switch ignored by linker and loader
+  clause 2
+    all variable first args, so kills switch by writing in file
+  clause 3
+    The switch at head of code will be real, so calls do_blocks/4 to
+    generate the code for the branch tables and compute the switch labels
+    for constants, lists and structures
+      do_blocks(CCI, A, [C, L, S], Code)
+    [C,L,S] are the switch labels and
+    Code is the code to write.
+
+do_blocks/4
+  input:
+    1 - CCI, [cpinfo(FirstArg, Label, PP), ...]
+    2 - A, arity
+  output:
+    3 - CLS, [constant label, list label, structure label]
+    4 - TryCode, branch table code to add to end of predicate
+  clause 1
+    if all FirstArgs are vars or vars and one other kind, then
+    filter out the vars
+      filterv(CCI, VarC)
+    VarC is a subset of CCI with only clauses that have variable firstargs.
+    then build a branch table for the clauses with first vars
+      try_block(VarC, A, TryLbl, TryCode, TryLink),
+      block_code((Kind, CCI), Arity, TryLbl, TryLbl, CLS, TryLink, [])
+  clause 2
+    multiple types of firstargs.
+
+(in the case of example, CCI has two clauses, the first with a structure,
+the second with a variable first arg)
+
+try_block/5
+  input:
+    1 - [cpinfo(_, Lbl, _)|Clauses], list of clauses, only labels are of
+        of interest
+    2 - NTV, number of temporary variables, same as arity
+  output:
+    3 - Label, the label at the head of the try block
+    4 - Code, the code of the try block
+    5 - Link, the other half of Code difference list
+  clause 1
+    if no clauses, then Label = fail (0) and Code = Link (both vars)
+  clause 2
+    if only one clause, the Label = clause Lbl, Code = Link (both vars)
+  clause 3
+    build try block code
+      Code =  [label(L1), try(NTV, L1), retry(L2), ..., trust(Ln) | X]
+      Label = L1
+      Link = X
+
+(in the case of example, there would be only one variable clause, #2,
+so the output should be Label = 2, Code = Link)
+
+(the example input to block_code/7 is thus:
+(struct, CCI), arity = 1, label = 2, label = 2, CLS, Link, [] )
+
+block_code/7
+  input:
+    1 - (Kind, CompC), kind of firstarg and cpinfo list
+    2 - Arity
+    3 - TryLbl
+    4 - VarLbl
+    6 - TryLink, end of open list for code
+    7 - Link
+  output:
+    5 - [ConstLbl, ListLbl, StrucLbl]
+  clause 1
+    if Kind = list then ConstLbl = TryLbl, ListLbl = VarLbl and
+    StructLbl = TryLbl
+  clause 2
+    first, a little oingo boingo in the form of cs_block
+    cs_block(CompC, Arity, BlkLbl, BlkCode, BlkLink, Hashed)
+    then, depending on Kind, set either ConstLbl or StrucLbl to BlkLbl.
+    The other two switch labels stay at TryLbl.
+
+(BUG - the list case will always just branch to vars, never to list)
+(BUG - this is also the case when there is no hash table, 
+
+cs_block/6
+  input:
+    1 - CCI
+    2 - Arity
+  output:
+    3 - BlkLbl
+    4 - BlkCode
+    5 - BlkLink
+    6 - Hashed
+  clause 1
+    if CCI = [], BlkLbl = fail, no_hash, Code = Link
+  clause 2
+    if CCI = [cpinfo(_,L,_)], BlkLbl = L, no_hash, Code = Link
+  clause 3
+    gather the contiguous clauses, cs_gather/5, and link them together
+    for hash table at end, cs_link/5.
+    BlkCode is the code generated.
+    BlkLbl is the label at the head of the code.
+
+build_branch - CCI is list [cpinfo(FirstArg, Label, PP),...]
+
+do-blocks(CCI, Arity, [ConstLbl, ListLbl, StrucLbl], Generated branch code)
+  this is the guy who gets the three labels for the switch
+
+If there is only variables and one kind of thing, then the variables
+are filtered out - filterv(CCI, VarC) - VarC is subset of CCI with only
+the variable clauses.
+
+Then call try_block(VarC, Arity, TryLbl, TryCode, TryLink)
+it returns the Try_s which are fed to
+block_code((Kind,CCI), Arity, TryLbl, TryLbl, CLS, TryLink, []), where
+in this case the TryLbls are really the first VarLbl.
+
+block_code calls cs_block to get, if needed a block table.
+cs_block(CCI, Arity, BlkLbl, BlkCode, BlkLink, Hashed)
+
+cs_block unifies BlkLbl with a label(BlkLbl) statement added to the
+head of the code (BlkCode)
+
+Labels
+------
+
+Labels are used in two different ways in the 3.0 compiler.  First, there
+are the generated labels for various switches and trys.  These might
+appear anywhere in the code.  These are generated as negative numbers
+by the compiler.
+
+The other type of label is a clause label.  These are positive numbers.
+
+When code is loaded, the negative number labels disappear and are replaced
+by machine dependent offsets to the code.  The clauses labels, on the
+other hand are preserved for use by the plm debugger.  References to
+them are also replaced by offsets when the code is loaded.
+
+
+example walk through
+--------------------
+
+amzi(ella).
+amzi(kato).
+amzi(mary).
+amzi(dennis).
+amzi(ducks).
+
+process_clauses(OutFile, CodeHandle, AP, CP, CurrProc) :-
+	read(Clause = amzi(ella)),
+	compile_a_clause(amzi(ella), ...)
+
+compile_a_clause(amzi(ella), ...) :-
+	filter_clause(amzi(ella),
+		FC = amzi(ella), Name/Arity = amzi/1, FArg = ella ),
+	peek$(CurrProc, CPI = [])    % because no clauses yet
+	stash$(CurrProc, amzi/1),
+	compile_clause(amzi/1, ella, amzi(ella), ...)
+
+compile_clause(amzi/1, ella, amzi(ella), ...) :-
+	compileclause(amzi(ella), Code-L),
+	L = [],          % if not it fails?
+	stash$(AP, Code),          % store that code in AssemblePoint
+	fail.
+compile_clause(amzi/1, ella, ...) :- after compiling, then assemble
+	peek$(CP, CPInfo),    % what have we learned at ClausePoint?
+	is_it_first(CPInfo, FirstClause = yes),
+	get$(AP, [Code]),     % AssemblePoint has code
+	cntr_get(1, VirtualP = ?)   % virtual address of clause?
+	output(CodeHandle, Code, amzi/1, yes, PhysicalP),
+	stash$(CP, cpinfo(ella, VirtualP, PhysicalP),  % used to build code refs
+	!.
+
+compile_a_clause(amzi(kato), ...  
+	...
+	output(CodeHandle, Code, amzi/1, no, PhysicalP),
+	stash$(CP, cpinfo(kato, VirtualP, PhysicalP)
+	...
+
+compile_a_clause(amzi(ducks), ...
+
+close_procedure(CodeHandle, CP, CurrProc) :-
+	get$(ClausePoint, CP),    % list of cpinfo
+	get$(CurrProc, [N/A]),
+	string_clauses(CodeHandle, N, A, CP),
+
+string_clauses(Handle, N, A, [cpinfo(FArg, VP, PP) | T]) :-
+	% walks the list of cpinfo's setting each try_me_else and retry_me_else
+	% to have the correct information
+	string_v_clauses(..,
+	build_branch(...
+
+build_branch(...
+	do_blocks(...
+
+% CLS is [ConstLbl, ListLbl, StructLbl]
+	
+do_blocks(CCI, Arity, CLS, TryCode) :- builds the blocks of index structures
+	% in this example, we have only one kind of first arg and no vars
+	same_or_var(CCI, Kind = constant),
+	filterv(CCI, VarC = []),   % there are no variable first args
+	try_block([], 1, TryLbl = 0, TryCode = TryLink),  % because VarC = []
+	block_code((Kind, CCI), Arity, TryLbl, 8, CLS, TryLink, []).
+
+block_code((const, CompC), Arity=1, TryLbl=0, VarLbl=8, CLS, Code, Link=[]) :-
+	cs_block(CompC, 1, BlkLbl, BlkCode, BlkLink, Hashed),
+
+% gather is list of lists of continguous clauses of same kind
+
+cs_block(Clauses, 1, Lbl, [label(Lbl)|Code], Link, Hashed) :-
+	cs_gather(Clauses, [], Gather = [Clauses], [], yes_hash),
+	cs_link(try, 1, Gather, Code, Link).
+
+% in this examples all the clauses are together
+
+------
+Shell:
+------
+
+------------
+Interpreter:
+------------
+
+The interpreter is implemented in a combination of Prolog and C code.
+
+Prolog
+------
+
+The ?- prompt and reader is implemented in the top_loop/2 predicate in
+toploop.pro.  It translates for DCG and calls do$/1 to execute the
+translated (if necessary) term that was read.
+
+do$/1 contains all the catches for special constructs such as [|] as a
+short hand for consult, special predicates such as edit and the like.
+
+Passing all that, it calls varsof(X), where X is the term read, to get
+the variable list and then a simple call(X).
+
+C
+-
+
+In cdexec.c, the WAM code for call catches the special case where call is
+calling call, that is, a compiled call in the code, such as in the call(X)
+in top_loop/2.
+
+In that case, the function adbDoCall is called with the current code_ptr,
+which still points to the callA atom.  X0 should have the term to be
+called.
+
+(For other calls, not callA, the WAM code for call searches the atom table
+for compiled clauses to branch to, or failing that, calls adbCallInterp
+with the current code pointer pointing to the functor being called.)
+
+adbDoCall then sets the code_ptr to the compiled code for the predicate,
+if available, or else, sets the code for running the compiled clause
+of the Prolog predicate, call$i.  (The debugger uses call$d instead.)
+
+Prolog
+------
+
+call$i/1 then gets the environment point, and calls rb$/2 to start to 
+break apart the terms.  The value of X remains what it was, so in effect
+the call/1 gets passed directly to the call$i/1 predicate.  call$i/1
+does all the Prolog in Prolog things, like resolving disjunctions and
+the like.
+
+Maybe it would be better in C?  maybe it would be better if it did last
+call optimization?  does it now?  what stops it?
+
+-----
+
+Going the other way, regular calls (no explicit call/1) or goals that do
+not have compiled clauses associated with them are resolved through calls
+to the interpreter, from the compiled code.  They call adbCallInterp.
+
+adbCallInterp takes the atom from the code and the current X[i] for its
+arguments, if any, and builds a new X[0] with the full term and copying
+the X[i] to the heap, pointed to from the new X[0].  It then calls the
+compiled prolog code for call$i.
+
+-----
+
+So, to implement a call-in string evaluator, we need to first take the
+string to a term, build the term on the heap, point X[0] to that term, 
+making it a structure or whatever, and then use exec, so it ends when done,
+to call the interpreter module.
+
+Actually, might be better to call adbDoCall.  Set up exec stream so it
+contains the atoms, callA and functor about to be called.
+
+
+The interpreter from cplib.pro
+------------------------------
+
+**      The interpreter - use a tag stack marking algorithm
+**  to handle '!'
+**	X is a whole procedure, so E is the choice point (should be B) before
+** the procedure is called.  It is, therefor, the right place to return
+** to, plus one more, when there is a cut.  This is what cut$env does.
+*/
+
+call$i(X) :- get$env(E), rb$(X, E).
+			
+
+% the order of these clauses is very important - avoid looping
+% back to call$i through the call()
+%
+
+rb$((A,B), N) :- !, rb$(A, N), rb$(B, N).
+rb$((A ; B), N) :- !, (rb$(A, N); rb$(B, N)).
+rb$(!, N) :- !, cut$env(N).     % Do not move this cut !!!!
+rb$(true, _) :- !.
+rb$(G, _) :- is$code(G, _), !, call(G).
+% Keep this as the last clause so we can trim the environment
+% when the last clause for G is tried
+rb$(G, _) :-  
+	get$env(E),  % This is the NEW environment - do not move it !!
+	clause(G, B), 
+	rb$(B, E).
+
+/* 
+*     need the following so the interpreter can pick up the predicates
+*     - they are not defined internally by predicates but by compiled
+*     code sequences so we have to present them explicitly for the
+*	 interpreter   
+*
+*/
+
+var(X) :- var(X).
+nonvar(X) :- nonvar(X).
+atomic(X) :- atomic(X).
+not(X) :- not(X).
+call(X) :- call(X).
+\+(X) :- not(X).
+X = X.
+X \= Y :- not(X = Y).
+repeat :- repeat.
+true.
+(A -> B ; C) :- call(A), !, call(B).
+(A -> B ; C) :- !, call(C).
+(A -> B) :- call(A), !, call(B).
+
+list(X) :- list(X).
+structure(X) :- structure(X).
+
+
+How the interpreter compiles
+---------------------------- 
+procedure   call$i / 1
+
+        get_x_variable  X2,X1
+        put_x_variable  X3,X1
+        escape  get$env / 1
+        put_x_value  X2,X1
+        put_x_value  X3,X2
+        execute  rb$ / 2
+
+procedure   rb$ / 2
+
+        allocate  2
+        get_y_variable  Y1,X2
+        get_structure  , / 2,X1
+        unify_x_variable  X1
+        unify_y_variable  Y2
+        cut
+        put_y_value  Y1,X2
+        call  rb$ / 2,2
+        put_y_value  Y2,X1
+        put_y_value  Y1,X2
+        deallocate
+        execute  rb$ / 2
+
+procedure   rb$ / 2
+
+        get_structure  ; / 2,X1
+        unify_x_variable  X1
+        unify_x_variable  X3
+        allocate  0
+        cut
+        try_me_else  _0 / 3
+        call  rb$ / 2,0
+        goto  _1
+_0:
+        trust_me_else  fail
+        put_x_value  X3,X1
+        call  rb$ / 2,0
+_1:
+        deallocate
+        proceed
+
+procedure   rb$ / 2
+
+        get_constant  !,X1
+        allocate  0
+        cut
+        put_x_value  X2,X1
+        escape  cut$env / 1
+        deallocate
+        proceed
+
+procedure   rb$ / 2
+
+        get_constant  true,X1
+        allocate  0
+        cut
+        deallocate
+        proceed
+
+procedure   rb$ / 2
+
+        put_x_variable  X2,X2
+        escape  is$code / 2
+        allocate  0
+        cut
+        deallocate
+        execute  call / 1
+
+procedure   rb$ / 2
+
+        get_x_variable  X3,X1
+        allocate  2
+        put_y_variable  Y1,X1
+        escape  get$env / 1
+        put_x_value  X3,X1
+        put_y_variable  Y2,X2
+        call  clause / 2,2
+        put_unsafe_value  Y2,X1
+        put_unsafe_value  Y1,X2
+        deallocate
+        execute  rb$ / 2
+
+procedure   rb$ / 2
+
+_0:
+        try  226 / 2
+        trust  260
+_1:
+        try_me_else  _2 / 2
+        switch_on_constant  2,fudge
+        true	202
+        !	163
+_2:
+        retry  226
+        trust  260
+_3:
+        try_me_else  _4 / 2
+        switch_on_structure  2,fudge
+        ; / 2	88
+        , / 2	14
+_4:
+        retry  226
+        trust  260
+
+procedure   var / 1
+
+        switch_on_term  fail,fail,fail
+        proceed
+
+procedure   nonvar / 1
+
+        switch_on_term  _0,_0,_0
+        fail
+_0:
+        proceed
+
+procedure   atomic / 1
+
+        switch_on_term  _0,fail,fail
+        fail
+_0:
+        proceed
+
+procedure   not / 1
+
+        allocate  0
+        try_me_else  _0 / 1
+        call  call / 1,0
+        cutd  _0
+        fail
+_0:
+        trust_me_else  fail
+_1:
+        deallocate
+        proceed
+
+procedure   call / 1
+
+        execute  call / 1
+
+procedure   \+ / 1
+
+        allocate  0
+        try_me_else  _0 / 1
+        call  call / 1,0
+        cutd  _0
+        fail
+_0:
+        trust_me_else  fail
+_1:
+        deallocate
+        proceed
+
+procedure   = / 2
+
+        get_x_value  X1,X2
+        proceed
+
+procedure   \= / 2
+
+        allocate  0
+        try_me_else  _0 / 2
+        get_x_value  X2,X1
+        cutd  _0
+        fail
+_0:
+        trust_me_else  fail
+_1:
+        deallocate
+        proceed
+
+procedure   repeat / 0
+
+        allocate  0
+        try  _0 / 0
+_0:
+        deallocate
+        proceed
+
+procedure   true / 0
+
+        proceed
+
+procedure   -> / 2
+
+        get_structure  ; / 2,X2
+        allocate  1
+        unify_y_variable  Y1
+        unify_void  1
+        call  call / 1,1
+        cut
+        put_y_value  Y1,X1
+        deallocate
+        execute  call / 1
+
+procedure   -> / 2
+
+        get_structure  ; / 2,X2
+        unify_void  1
+        unify_x_variable  X1
+        allocate  0
+        cut
+        deallocate
+        execute  call / 1
+
+procedure   -> / 2
+
+        allocate  1
+        get_y_variable  Y1,X2
+        call  call / 1,1
+        cut
+        put_y_value  Y1,X1
+        deallocate
+        execute  call / 1
+
+procedure   list / 1
+
+        switch_on_term  fail,_0,fail
+        fail
+_0:
+        proceed
+
+procedure   structure / 1
+
+        switch_on_term  fail,_0,_0
+        fail
+_0:
+        proceed
+
+
+--------------------
+Interactive Runtime:
+--------------------
+
+---------
+Debugger:
+---------
+
+---------------
+Porting Issues:
+---------------
+
+-------------------
+Naming Conventions:
+-------------------
+
+These are by no means followed universally, but C code formats will try
+to be in the future at least as follows.
+
+Variable names all in lowercase are local.
+Global variables begin with an uppercase and have mixed upper and lower
+	case.
+Defined constants are all upper case.
+Global variables have a lowercase prefix indicating the module it is
+	defined in.
+All variables have an extension following an _ indicating the type of
+	the variable.
+
+Modifiers of types are f or n for far or near.  f is only needed for
+	data since in the medium model the default is near.  Or, in other
+	words, the modifier is only included when it is declared as well.
+Pointers are indicated by p, handles by h.
+Types are:
+
+	s - string
+	c - char
+	i - integer
+	f - float
+
+System defined types are lowercase.
+Application defined types are uppercase.
+
+When written, virutally none of the code corresponds to these conventions.
+	
+examples
+
+	char * _far string_fs;
+	char * string_s;
+	char * _near string_ns;
+
+
+--------------------------
+Utility Macros & Functions
+--------------------------
+
+/* Cell masks */
+
+#ifdef P64
+#define   CELL_PTR    0xFFFFFFFFFFFFFFFC
+#define   CELL_TAG    0x0000000000000003
+#define   CELL_TAGB   0x00000000000000FF
+#define   CELL_ARITY  0x00000000FFFF0000
+#define   CELL_THIDX  0x00000000FFFF0000
+#define   CELL_THOFF  0xFFFFFFFF00000000
+#define   CELL_TH     0xFFFFFFFFFFFF0000
+#define   CELL_HIGH   0xFFFFFFFF00000000
+#define   CELL_LOW    0x00000000FFFFFFFF
+
+#define   refT        0x0000000000000000
+#define   strucT      0x0000000000000001
+#define   listT       0x0000000000000002
+#define   consT       0x0000000000000003
+
+#define   typeM       0x0000000000000003
+#define   subtypeM    0x000000000000001C
+
+#define   atomS       0x0000000000000000
+#define   intS        0x0000000000000004
+#define   rlS         0x0000000000000008
+#define   dbrefS      0x000000000000000C
+#define   mscwS       0x0000000000000010    /* mark stack control word */
+#define   strS        0x0000000000000014
+#define   longS       0x0000000000000018
+
+#define   unusedT     0x00000000000000FF      /* unused cell */
+
+#else
+#define   CELL_PTR    0xFFFFFFFCL
+#define   CELL_TAG    0x00000003L
+#define   CELL_TAGB   0x000000FFL
+#define   CELL_ARITY  0x0000FF00L
+#define   CELL_THIDX  0x0000FF00L
+#define   CELL_THOFF  0xFFFF0000L
+#define   CELL_TH     0xFFFFFF00L
+#define   CELL_HIGH   0xFFFF0000L
+#define   CELL_LOW    0x0000FFFFL
+
+#define   refT        0x00000000L
+#define   strucT      0x00000001L
+#define   listT       0x00000002L
+#define   consT       0x00000003L
+
+#define   typeM       0x00000003L
+#define   subtypeM    0x0000001CL
+
+#define   atomS       0x00000000L
+#define   intS        0x00000004L
+#define   rlS         0x00000008L
+#define   dbrefS      0x0000000CL
+#define   mscwS       0x00000010L    /* mark stack control word */
+#define   strS        0x00000014L
+#define   longS       0x00000018L
+
+#define   unusedT     0x000000FFL      /* unused cell */
+
+#endif
+
+#if defined(P64)
+#define  HALFCELL     32
+#define  QUARTERCELL  16
+
+#elif defined(P32)
+#define  HALFCELL     16
+#define  QUARTERCELL   8
+
+#elif defined(P16)
+#define  HALFCELL     16
+#define  QUARTERCELL   8
+
+#endif
+
+
+/* rhs Macros (can only be used on rhs of =) */
+
+#define  StrPtr(s)     ( (STRptr) s + sizeof(STRING_BLK) )
+
+#define  ILong(x)      ( ((CELL)(x)) << HALFCELL )
+#define  Tag(t)        (*(t) & CELL_TAGB)
+#define  Type(t)       (Tag(t) & typeM)
+#define  TagType(t)    (Tag(t) & (typeM | subtypeM))
+#define  SubType(t)    (Tag(t) & subtypeM)
+#define  TValue(t)     ((TERM) *(t))   /* ok when c is a refT, else use .. */
+#define  TMValue(t)    (TERM) (*(t) & CELL_PTR)
+#define  IValue(t)     (int) (* (intCptr) (t) >> HALFCELL)
+#define  AValue(t)     (PATOM) (*(t) >> HALFCELL)
+#define  Arity(t)      ((ARITY) ((*(t) & CELL_ARITY) >> QUARTERCELL))
+#define  TypeMscw(t)   IValue(t)
+#define  LValue(t)     (*(t))
+
+/* for things */
+
+extern CELLptr   heapThingBlocks[];
+
+#define  THindx(t)   ((*(t) & CELL_THIDX) >> QUARTERCELL)
+#define  THoff(t)      ((*(t) & CELL_THOFF) >> HALFCELL)
+#define  THptr(t)      (heapThingBlocks[(int)THindx(t)] + (int)THoff(t))
+#define  FValue(t)   ((float) *THptr(t))
+#define  SValue(t)   (StrPtr((BYTEptr) *THptr(t)))
+#define  SBValue(t)   ((STRING_BLKptr) *THptr(t))
+#define  XValue(t)   ((long) *THptr(t))
+#define  DValue(t)   ((DBASE_BLKptr) *THptr(t))
+
+/* The equivalents for Arity, IValue, Avalue and TValue when we want to ASSIGN
+** the value
+*/
+
+#define  ATag(t, v)      ((*(t)) = ((*(t)) & ~CELL_TAGB) | (CELL) v)  
+#define  AaValue(t, v)   ((*(t)) = ((*(t)) & CELL_LOW) | ILong(v))
+#define  AiValue(t, v)   ((*(t)) = ((*(t)) & CELL_LOW) | ILong(v))
+#define  AtValue(t, v)   ((*(t)) = (CELL) (v))
+#define  Aarity(t, v)    ( (*(t)) = ( (*(t)) & ~CELL_ARITY ) | ( ((CELL) v) << QUARTERCELL ) )
+#define  Amscw(t, v)     (Aarity(t, v))
+#define  AsValue(t, v)   (heapStoreThing(t, (CELL) v, strS))
+#define  AfValue(t, v)   (heapStoreThing(t, (CELL) v, rlS))
+#define  AxValue(t, v)   (heapStoreThing(t, (CELL) v, longS))
+#define  AdValue(t, v)   (heapStoreThing(t, (CELL) v, dbrefS))
+
+/* new assignment macros designed to eventually replace the old ones */
+
+#define  HIGHHALF(v)    ( ( ((CELL)(v)) << HALFCELL ) & CELL_HIGH )
+#define  CELLARITY(a)   ( ( ((CELL)(a)) << QUARTERCELL ) & CELL_ARITY )
+
+#define  putATOM(t,v)   ( *(t) = HIGHHALF(v) | CELLARITY(0) | consT | atomS )
+#define  putFUNC(t,v,a) ( *(t) = HIGHHALF(v) | CELLARITY(a) | consT | atomS )
+#define  putINT(t,v)    ( *(t) = HIGHHALF(v) | consT | intS )
+#define  putXINT(t,v)   ( heapStoreThing(t, (CELL) v, longS) )
+        
+/* predicate macros */
+
+#define  IsConst(t)    (Type(t) == consT)
+#define  IsAtom(t)     (IsConst(t) && (SubType(t) == atomS))
+#define  IsInt(t)      (IsConst(t) && (SubType(t) == intS))
+#define  IsFloat(t)    (IsConst(t) && (SubType(t) == rlS))
+#define  IsDbref(t)    (IsConst(t) && (SubType(t) == dbrefS))
+#define  IsMscw(t)     (IsConst(t) && (SubType(t) == mscwS))
+#define  IsStr(t)      (IsConst(t) && (SubType(t) == strS)) 
+#define  IsList(t)     (Type(t) == listT)
+#define  IsRef(t)      (Type(t) == refT)
+#define  IsUb(t)       (IsRef(t) && TValue(t) == t)
+#define  IsStruc(t)    (Type(t) == strucT)
+#define  IsXint(t)     (IsConst(t) && (SubType(t) == longS))
+#define  IsUnused(t)   (Tag(t) == unusedT)
+
+/* for capturing read errors */
+
+#define  READERROR(x) ((m_readerrors) ? errExec(x) : FALSE)
+
+/* dereferencing */
+
+#define  CDrf(c)       (IsRef(c) ?  termDeref(c) : (TERM) c)
+
+
+/* hpheap.c */
+
+void      heapInit(uintC, uintC);
+void      heapReset(void);
+void      heapInitThings(void);
+void      heapStoreThing(TERM, CELL, long);
+TERM      heapGetF(void);
+TERM      heapBufToTerm(STRptr);
+int      heapTermToBuf(TERM, char *);
+TERM      heapBuy(int);
+TERM      heapError(void);
+TERM      heapPush(CELL);
+TERM      heapPop(void);

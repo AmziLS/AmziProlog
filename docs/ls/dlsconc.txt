@@ -1,0 +1,287 @@
+MS-Access#Access
+AMZI Environment Variable#AMZI Environment Variable
+ducks#Amzi! inc:ducks
+AMZI.H#AMZI.H
+AMZI.HPP#AMZI.HPP
+AMZILIB.PLM#AMZILIB.PLM
+amzi.bas#amzi.bas
+ APISAMP #APISAMP (directory)
+apitrace#apitrace
+Amzi! Architecture#Architecture
+AUTOEXEC.BAT#AUTOEXEC.BAT
+AWIDE.err#AWIDE.err
+Backtracking#Backtracking
+Break Handling#Break
+[Ctrl-Break]#Break
+ `C' #C
+C++ #C++
+C++ #C++
+ OWL #C++:Borland C++
+C++ wrapper#C++:class
+CLSEngine#C++:class
+Implementing Extended Predicates in C++#C++:extended predicates
+Visual C++#C++:Visual C++
+ MFC #C++:Visual C++
+catch(#catch
+catch/3#catch
+closelog#closelog
+Compiling#Compiling and Linking
+Consulting Prolog Source#Code:consulting
+Supported Environments#Compilers:supported
+AMZI.cfg#Configuration:AMZI.cfg
+INCLUDE=#Configuration:INCLUDE
+LIB=#Configuration:LIB
+Search Path#Configuration:path
+control stack#control (stack)
+Control Stack#control (stack)
+Delphi#Delphi
+Delphi component#Delphi:component
+TLSEngine#Delphi:component
+AMZI.PAS#Delphi:component
+Delphi GUI Predicates#Delphi:GUI extensions
+Installing the Delphi Component#Delphi:installing component
+Delphi Logic Server Types#Delphi:types
+ DLL file#DLL
+ DLL extension#DLL
+DOS Runtime Shell#DOS:Runtime shell
+DOS Extended Predicates#DOS:Extended predicates
+Dynamic Database#Dynamic database
+Engine ID Parameter#Engine ID
+(ERR)#ERR
+ERR file#ERR
+ERR extension#ERR
+Prolog Error File#ERR
+ERR.TXT#ERR.TXT
+err_handle(#err_handle
+err_handle/3#err_handle
+err_msg(#err_msg
+err_raise(#err_raise
+err_read(#err_read
+Error handler#Error handler
+default error handler#Error handler:default
+exec error handler#Error handler:default
+Default Error Handler#Error handler:default
+user-defined error handler#Error handler:user
+User Error Handler#Error handler:user
+Errors and Interrupts#Errors
+Abort -#Errors:abort
+Trapping Prolog Aborts#Errors:abort
+Catastrophic -#Errors:catastrophic
+Logic Server Return Codes#Errors:codes
+error codes#Errors:codes
+RC return code#Errors:codes
+TF return code#Errors:codes
+Compilation Errors#Errors:compilation
+Prolog Error File#Errors:err Files
+err Files#Errors:err Files
+errfile#Errors:err Files
+Exec -#Errors:exec
+Trapping Execution Errors#Errors:exec
+Fatal -#Errors:fatal
+Trapping Fatal Errors#Errors:fatal
+Error Handling#Errors:handling
+handling errors#Errors:handling
+Trapping Execution Errors#Errors:handling
+Loadtime Errors#Errors:loadtime
+syntax errors#Errors:read
+read errors#Errors:read
+Runtime Errors#Errors:runtime
+soft errors#Errors:soft
+Extended predicates#Extended predicates
+Extended Predicates#Extended predicates
+DOS Extended Predicates#Extended predicates:DOS
+Extended Predicate Example#Extended predicates:example
+Implementing Extended Predicates in C++#Extended predicates:in C++
+Implementing Extended Predicates in Delphi#Extended predicates:in Delphi
+Initializing the Extended Predicates#Extended predicates:initializing
+Writing Extended Predicates#Extended predicates:writing
+ (ERR)#Files:ERR
+ ERR file#Files:ERR
+ ERR extension#Files:ERR
+errfile#Files:ERR
+ (.cfg)#Files:INI
+ .cfg file#Files:INI
+ .cfg extension#Files:INI
+logfile#Files:log
+file naming conventions#Files:naming conventions
+ (.plm) #Files:PLM
+ (.ppj) #Files:PPJ
+ (.pro) #Files:PRO
+ .plm file #Files:PLM
+ .ppj file#Files:PPJ
+ .pro file#Files:PRO
+ .plm extension #Files:PLM
+ .ppj extension#Files:PPJ
+ .pro extension#Files:PRO
+errfile#Files:ERR
+ .cfg file#Files:INI
+ .cfg extension#Files:INI
+logfile#Files:log
+file naming conventions#Files:naming conventions
+runtime error#Files:runtime error
+XPL#Files:XPL
+Garbage collection#Garbage collection
+Heap Stack#heap (stack)
+heap stack#heap (stack)
+Hello Prolog#Hello Prolog
+CHELLO.CPP#Hello Prolog:C++
+HELLOP.DPR#Hello Prolog:Delphi
+HELLO.MAK#Hello Prolog:Visual Basic
+Hidden Predicates#Hidden predicates
+Capturing Prolog I/O#Input/output:redirecting
+Redirecting I/O Streams Example#Input/output:redirecting example
+cfg Files#INI (.cfgtialization Files)
+Configuration Files#INI (.cfgtialization Files)
+AMZI.cfg#INI:AMZI.cfg
+Default .cfg Values#INI:default values
+INI Parameters#INI:parameters
+InitPreds(#InitPreds
+[Ctrl-Break]#Interrupts
+Static Link Libraries#Libraries:static
+A_MW2D.DLL#Libraries:A_MW2D.DLL
+A_MW3D.DLL#Libraries:A_MW3D.DLL
+A_MW2D.LIB#Libraries:A_MW2D.LIB
+A_MW3D.LIB#Libraries:A_MW3D.LIB
+Compiling and Linking#Linking
+Manipulating Lists#Lists
+local stack#local (stack)
+Local Stack#local (stack)
+logfile#logfile
+logfile#Log files
+Log files#Log files
+Prolog Logic-Bases#Logic-Base
+Logic Server Engine#Logic Server
+Main Entry Points#Logic Server:main entry points
+lsAddPred#lsAddPred
+lsAsserta#lsAsserta
+lsAssertaStr#lsAssertaStr
+lsAssertz#lsAssertz
+lsAssertzStr#lsAssertzStr
+lsCall#lsCall
+lsCallStr#lsCallStr
+lsClearCall#lsClearCall
+lsClose#lsClose
+lsClrJmp#lsClrJmp
+lsErrMsg#lsErrMsg
+lsErrRaise#lsErrRaise
+lsErrReadBuf#lsErrReadBuf
+lsExec#lsExec
+lsExecStr#lsExecStr
+lsGetArg#lsGetArg
+lsGetArgType#lsGetArgType
+lsGetFA#lsGetFA
+lsGetJmp#lsGetJmp
+lsGetParm#lsGetParm
+lsGetParmType#lsGetParmType
+lsGetStream#lsGetStream
+lsGetTerm#lsGetTerm
+lsGetTermType#lsGetTermType
+lsGetVersion#lsGetVersion
+lsInit#lsInit
+lsInitLSX#lsInitLSX
+lsInitPreds#lsInitPreds
+lsLoad#lsLoad
+lsMain#lsMain
+lsMakeAddr#lsMakeAddr
+lsMakeAtom#lsMakeAtom
+lsMakeFA#lsMakeFA
+lsMakeFloat#lsMakeFloat
+lsMakeInt#lsMakeInt
+lsMakeList#lsMakeList
+lsMakeStr#lsMakeStr
+lsPopList#lsPopList
+lsPushList#lsPushList
+lsRedo#lsRedo
+lsReset#lsReset
+lsRetract#lsRetract
+lsRetractStr#lsRetractStr
+lsSetCommandArgs#lsSetCommandArgs
+lsSetInput#lsSetInput
+lsSetOutput#lsSetOutput
+lsSetStream#lsSetStream
+lsStrArgLen#lsStrArgLen
+lsStrParmLen#lsStrParmLen
+lsStrToTerm#lsStrToTerm
+lsTermToStr#lsTermToStr
+lsTermToStrQ#lsTermToStrQ
+lsUnify#lsUnify
+lsUnifyArg#lsUnifyArg
+lsUnifyParm#lsUnifyParm
+lsvAssertaStr#lsvAssertaStr
+lsvAssertzStr#lsvAssertzStr
+lsvCallStr#lsvCallStr
+lsvMakeTerm#lsvMakeTerm
+lsvRetractStr#lsvRetractStr
+lsvScanTerm#lsvScanTerm
+LSVTOOLS.C#LSVTOOLS.C
+ LSX file#LSXs
+ LSX extension#LSXs
+LSX Example#LSXs:example
+Extended Predicates Libraries (LSXs)#LSXs:generally
+lsxload#lsxload
+main/0#main/0
+Modes#Modes
+nllog#nllog
+ODBC Support#ODBC
+LSODBC.LSX#ODBC:LSX
+LSODBC16.LSX#ODBC:LSX
+openlog(#openlog
+Search Path#Path
+Pathnames#Pathnames
+Edinburgh#Prolog:standards
+WAM#Prolog:WAM
+Warren Abstract#Prolog:WAM
+Prolog Database#Prolog:database
+Dynamic Database#Prolog:database
+Extending Prolog#Prolog:extending
+Consulting Prolog Source#Prolog source code
+multiple answers#Queries:multiple answers
+Nested Scoping Answer#Queries:nested
+Calling Prolog with a String Query#Queries:string
+Logic Server Return Codes#Return codes
+RC return code#Return codes:RC
+Return Codes#Return codes:RC
+TF return code#Return codes:TF
+setjmp/longjmp#setjmp/longjmp
+Smalltalk#Smalltalk
+stream#Streams
+stdin#Streams:stdin
+stdout#Streams:stdout
+user stream#Streams:user
+Asserting and Retracting#Strings:asserting/retracting
+Calling Prolog with a String Query#Strings:for queries
+Converting Terms to Strings#Strings:converting from terms
+String/Term Conversion#Strings:converting from terms
+Manipulating Structures#Structures
+complex structure#Structures:complex
+Prolog Terms#Terms
+Asserting and Retracting#Terms:asserting/retracting
+Calling Terms#Terms:calling
+Handling Varying Prolog Types#Terms:determining type
+Internals of Complex Terms#Terms:internally
+Scope of Logic Server Terms#Terms:scope of
+Making Simple Terms#Terms:making simple
+Making/Getting Prolog Types#Terms:making simple
+Converting Terms to Strings#Terms:converting to strings
+String/Term Conversion#Terms:converting to strings
+Prolog Types#Types
+Prolog Types#Types:making
+trail stack#trail (stack)
+Trail Stack#trail (stack)
+unifies#Unification
+UTIL.PRO#UTIL.PRO,PLM
+UTIL.PLM#UTIL.PRO,PLM
+Visual Basic#Visual Basic
+Visual Basic Logic Server Constants#Visual Basic:constants
+amzi.bas#Visual Basic:module
+Windows Runtime Shell#Windows:Runtime shell
+Windows SDK#Windows:SDK
+writelog(#writelog
+
+
+
+228     INDEX
+
+INDEX     7
+
+

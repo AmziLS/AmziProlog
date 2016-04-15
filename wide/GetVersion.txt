@@ -1,0 +1,117 @@
+
+CURRENT NT Documentation on GetVersion - note that despite saying its confusing, they don't
+give a good example.  Note that they say users got confused.
+
+So I tried GetVersionEx - its not supported on Win95 - What's the point of using GetVersionEx
+if it doesn't run on the various versions you're trying to detect?
+
+Well back to get version - it actually returns x90505220 for NT4.0.  Nothing at all like
+it says it should.
+
+--- MS Docs ---
+
+The GetVersion function returns the current version number of Windows and information about the operating system platform. 
+This function has been superseded by GetVersionEx, which is the preferred method for obtaining system version number information. New applications should use GetVersionEx. The GetVersionEx function was developed because many existing Windows applications err when examining the DWORD return value of a GetVersion function call, transposing the major and minor version numbers packed into that DWORD. The GetVersionEx function forces applications to explicitly examine each element of version information, and allows for future enhancements to that information.
+DWORD GetVersion(VOID)
+ 
+Parameters
+This function has no parameters. 
+Return Values
+If the function succeeds, the return value is a DWORD value that contains the major and minor version numbers of Windows in the low order word, and information about the operating system platform in the high order word. 
+For all platforms, the low order word contains the version number of Windows. The low-order byte of this word specifies the major version number, in hexadecimal notation. The high-order byte specifies the minor version (revision) number, in hexadecimal notation. 
+To distinguish between operating system platforms, use the high order bit and the low order byte, as shown in the following table:
+Platform	High order bit	Low order byte (major version number)
+Windows NT	zero	3 or 4
+Windows 95	1 	4
+Win32s with Windows 3.1	1	3
+ 
+For Windows NT and Win32s, the remaining bits in the high order word specify the build number. 
+For Windows 95 the remaining bits of the high order word are reserved.
+Remarks
+This function does not return the current version number of MS-DOS. 
+The following code fragment illustrates how to extract information from the GetVersion return value:
+  
+dwVersion = GetVersion();
+ 
+// Get major and minor version numbers of Windows
+
+dwWindowsMajorVersion =  (DWORD)(LOBYTE(LOWORD(dwVersion)));
+dwWindowsMinorVersion =  (DWORD)(HIBYTE(LOWORD(dwVersion)));
+
+// Get build numbers for Windows NT or Win32s
+
+if (dwVersion < 0x80000000)                // Windows NT
+    dwBuild = (DWORD)(HIWORD(dwVersion));
+else if (dwWindowsMajorVersion < 4)        // Win32s
+    dwBuild = (DWORD)(HIWORD(dwVersion) & ~0x8000);
+else         // Windows 95 -- No build numbers provided
+    dwBuild =  0;
+ 
+See Also
+GetVersionEx
+
+--- ---
+
+So here's the old 2.x documentation from the SDK, remember how they said programmers
+were confused about the higher lower order bytes?  Well for no apparent reason they
+swapped the bytes going from DOS to Windows.  So you have to use them one way on
+one platform, and the other on the other.
+
+2.x 
+
+	DWORD GetVersion(void)		
+The GetVersion function retrieves the current version numbers of the Windows and MS-DOS operation systems.
+Parameters
+This function has no parameters.
+Return Value
+The return value specifies the major and minor version numbers of Windows and of MS-DOS, if the function is successful.
+Comments
+The low-order word of the return value contains the version of Windows, if the function is successful. The high-order byte contains the minor version (revision) number as a two-digit decimal number. For example, in Windows 3.1, the minor version number is 10. The low-order byte contains the major version number.
+The high-order word contains the version of MS-DOS, if the function is successful. The high-order byte contains the major version; the low-order byte contains the minor version (revision) number.
+Example
+The following example uses the GetVersion function to display the Windows and MS-DOS version numbers:
+  
+int len;
+char szBuf[80];
+DWORD dwVersion;
+
+dwVersion = GetVersion();
+
+len = sprintf(szBuf, "Windows version %d.%d\n",
+    LOBYTE(LOWORD(dwVersion)),
+    HIBYTE(LOWORD(dwVersion)));
+
+sprintf(szBuf + len, "MS-DOS version %d.%d",
+    HIBYTE(HIWORD(dwVersion)),
+    LOBYTE(HIWORD(dwVersion)));
+
+MessageBox(NULL, szBuf, "GetVersion", MB_ICONINFORMATION);
+  
+Note that the major and minor version information is reversed between the Windows version and MS-DOS version.
+
+--- ---
+
+Well, we found this in the knowledge base, one of the prime examples of Microsoft
+arrogance.  It appears under 3.11 GetVersion returned 3.10.  So why does GetVersion
+not return the version?  To make it compatible with the older version!  They say this
+with a straight face as if its a reasonable thing to do!  We're going to implement
+a function that will let you tell what version you're running under, but to make
+it compatible we'll have it return the same version number for different versions???!!?
+
+
+From the Knowledge base:
+
+SYMPTOMS
+--------
+ 
+GetVersion() returns 3.10 when running under Windows for Workgroups version
+3.11.
+ 
+CAUSE
+-----
+ 
+GetVersion() still returns 3.10 from Windows for Workgroups version 3.11
+because there are too many applications that are checking for version 3.10.
+GetVersion() returns 3.10 to maintain compatibility with those applications
+that check for Windows version 3.10.
+ 

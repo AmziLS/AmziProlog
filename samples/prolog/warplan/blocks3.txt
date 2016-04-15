@@ -1,0 +1,51 @@
+                  WARPLAN-SOLUTION OF SUSSMAN'S ANOMALY 
+                            SUMMARY TRACE
+
+
+Given Facts:   [on(a,table),on(b,table),on(c,a),clear(b),clear(c)]
+Initial Goals: [on(a,b),on(b,c)]
+
+Current Goal:  on(a,b)
+   TRYING ACTION  move(a,_93,b)
+   Preconditions: [clear(b),on(a,_93),not_equal(a,b),clear(a)]
+                     consistent with solved goals
+                  []
+      Current Goal:  clear(b)        Holds Now:     clear(b)
+      Current Goal:  on(a,_93)       Holds Now:     on(a,table)
+      Current Goal:  not_equal(a,b)  Holds Outside: not_equal(a,b)
+      Current Goal:  clear(a)
+         TRYING ACTION  move(_131,a,_133)
+         Preconditions: [on(_131,a),not_equal(a,table),clear(_131)]
+                            consistent with solved goals
+                        [on(a,table),clear(b)]
+            Current Goal:  on(_131,a)          Holds Now:     on(c,a)
+            Current Goal:  not_equal(a,table)  Holds Outside:
+                                                   not_equal(a,table)
+            Current Goal:  clear(c)            Holds Now:     clear(c)
+         ACHIEVE:       move(c,a,table)
+   ACHIEVE:       move(a,table,b)
+
+Current Goal:  on(b,c)
+   TRYING ACTION  move(b,_173,c)
+   Preconditions: [clear(c),on(b,_173),not_equal(b,c),clear(b)]
+   RETRACE:       move(a,table,b)
+   Preconditions: [clear(c),on(b,_173),not_equal(b,c),clear(b)]
+                     consistent with solved goals
+                  [clear(b),on(a,table),not_equal(a,b),clear(a)]
+      Current Goal:  clear(c)        Holds Now:     clear(c)
+      Current Goal:  on(b,_173)      Holds Now:     on(b,table)
+      Current Goal:  not_equal(b,c)  Holds Outside: not_equal(b,c)
+      Current Goal:  clear(b)        Holds Now:     clear(b)
+   ACHIEVE:       move(b,table,c)
+
+Current Goal:  none
+Solved Goals:  [on(b,c),on(a,b)]
+Partial Plan:  [move(a,table,b),move(b,table,c),move(c,a,table)]
+
+move(c,a,table)
+move(b,table,c)
+move(a,table,b)
+
+
+yes
+?-

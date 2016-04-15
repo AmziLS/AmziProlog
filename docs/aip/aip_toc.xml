@@ -1,0 +1,112 @@
+<toc label="Adventure in Prolog">
+  <topic label="Preface" href="doc/aip/apreface.htm">
+  </topic>
+  <topic label="Where to Find a Prolog" href="doc/aip/aprolog.htm">
+  </topic>
+  <topic label="Getting Started" href="doc/aip/a1start.htm">
+   <topic label="Jumping In" href="doc/aip/a1start.htm#JumpingIn">
+   </topic>
+   <topic label="Logic Programming" href="doc/aip/a1start.htm#LogicProgramming">
+   </topic>
+   <topic label="Jargon" href="doc/aip/a1start.htm#Jargon">
+   </topic>
+  </topic>
+  <topic label="Facts" href="doc/aip/a2facts.htm">
+   <topic label="Nani Search" href="doc/aip/a2facts.htm#NaniSearch">
+   </topic>
+   <topic label="Exercises" href="doc/aip/a2facts.htm#Exercises">
+   </topic>
+  </topic>
+  <topic label="Simple Queries" href="doc/aip/a3simple.htm">
+   <topic label="How Queries Work" href="doc/aip/a3simple.htm#HowQueriesWork">
+   </topic>
+   <topic label="Exercises" href="doc/aip/a3simple.htm#Exercises">
+   </topic>
+  </topic>
+  <topic label="Compound Queries" href="doc/aip/a4comqry.htm">
+   <topic label="Built-in Predicates" href="doc/aip/a4comqry.htm#BuiltinPredicates">
+   </topic>
+   <topic label="Exercises" href="doc/aip/a4comqry.htm#Exercises">
+   </topic>
+  </topic>
+  <topic label="Rules" href="doc/aip/a5rules.htm">
+   <topic label="How Rules Work" href="doc/aip/a5rules.htm#HowRulesWork">
+   </topic>
+   <topic label="Using Rules" href="doc/aip/a5rules.htm#UsingRules">
+   </topic>
+   <topic label="Exercises" href="doc/aip/a5rules.htm#Exercises">
+   </topic>
+  </topic>
+  <topic label="Arithmetic" href="doc/aip/a6arith.htm">
+   <topic label="Exercises" href="doc/aip/a6arith.htm#Exercises">
+   </topic>
+  </topic>
+  <topic label="Managing Data" href="doc/aip/a7manage.htm">
+   <topic label="Exercises" href="doc/aip/a7manage.htm#Exercises">
+   </topic>
+  </topic>
+  <topic label="Recursion" href="doc/aip/a8recurs.htm">
+   <topic label="How Recursion Works" href="doc/aip/a8recurs.htm#HowRecursionWorks">
+   </topic>
+   <topic label="Pragmatics" href="doc/aip/a8recurs.htm#Pragmatics">
+   </topic>
+   <topic label="Exercises" href="doc/aip/a8recurs.htm#Exercises">
+   </topic>
+  </topic>
+  <topic label="Data Structures" href="doc/aip/a9struct.htm">
+   <topic label="Exercises" href="doc/aip/a9struct.htm#Exercises">
+   </topic>
+  </topic>
+  <topic label="Unification" href="doc/aip/a10unif.htm">
+   <topic label="Exercises" href="doc/aip/a10unif.htm#Exercises">
+   </topic>
+  </topic>
+  <topic label="Lists" href="doc/aip/a11lists.htm">
+   <topic label="Using the List Utilities" href="doc/aip/a11lists.htm#UsingTheListUtilities">
+   </topic>
+   <topic label="Exercises" href="doc/aip/a11lists.htm#Exercises">
+   </topic>
+  </topic>
+  <topic label="Operators" href="doc/aip/a12oper.htm">
+   <topic label="Exercises" href="doc/aip/a12oper.htm#Exercises">
+   </topic>
+  </topic>
+  <topic label="Cut" href="doc/aip/a13cut.htm">
+   <topic label="Using the Cut" href="doc/aip/a13cut.htm#UsingTheCut">
+   </topic>
+   <topic label="Exercises" href="doc/aip/a13cut.htm#Exercises">
+   </topic>
+  </topic>
+  <topic label="Control Structures" href="doc/aip/a14cntrl.htm">
+   <topic label="Recursive Control Loop" href="doc/aip/a14cntrl.htm#RecursiveControlLoop">
+   </topic>
+   <topic label="Tail Recursion" href="doc/aip/a14cntrl.htm#TailRecursion">
+   </topic>
+   <topic label="Exercises" href="doc/aip/a14cntrl.htm#Exercises">
+   </topic>
+  </topic>
+  <topic label="Natural Language" href="doc/aip/a15nlang.htm">
+   <topic label="Difference Lists" href="doc/aip/a15nlang.htm#DifferenceLists">
+   </topic>
+   <topic label="Natural Language Front End" href="doc/aip/a15nlang.htm#NaturalLanguageFrontEnd">
+   </topic>
+   <topic label="Definite Clause Grammar" href="doc/aip/a15nlang.htm#DefiniteClauseGrammar">
+   </topic>
+   <topic label="Reading Sentences" href="doc/aip/a15nlang.htm#ReadingSentences">
+   </topic>
+   <topic label="Exercises" href="doc/aip/a15nlang.htm#Exercises">
+    <topic label="Appendix" href="doc/aip/appendix.htm">
+    </topic>
+   </topic>
+   <topic label="Nani Search" href="doc/aip/appendix.htm#NaniSearch">
+   </topic>
+   <topic label="Family" href="doc/aip/appendix.htm#Family">
+   </topic>
+   <topic label="Custord" href="doc/aip/appendix.htm#Custord">
+   </topic>
+   <topic label="Birds" href="doc/aip/appendix.htm#Birds">
+   </topic>
+  </topic>
+<topic label="Index" href="doc/aip/advidx_xml.htm">
+</topic>
+</toc>

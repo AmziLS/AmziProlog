@@ -1,0 +1,154 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; U) [Netscape]">
+   <title>Prolog Expert Systems</title>
+</head>
+<body bgcolor="#FFFFFF">
+<h1> <font color="#0000FF">PROXS Sample Application</font></h1>
+The PROXS sample application shows how a subset of Prolog rules can be
+used for a simple identification expert system (XS).&nbsp; The sample XS
+encodes a portion of a book on birds of North America.&nbsp; It is not
+meant to be complete, only a demonstration.
+<h2>
+PROXS Knowledge Bases</h2>
+The terms 'expert system' and 'knowledge base' often refer to collections
+of rules that encode knowledge, or expertise, in a way it can be used by
+a computer.&nbsp; For example, the bird identification sample knowledge
+base has rules that were derived from the experts who wrote 'Birds of North
+America.'
+<p>Many Amzi! customers have implemented more practical systems, such as
+Xircom's installation advisor that provides configuration advice when installing
+network cards on PCs, Arla's process control advisor that provides advice
+for tweaking the cheese manufacturing process to ensure a consistent product,
+and a major computer vendor's marketing CD that provides technical advice
+for prospects looking at their systems.
+<p>The rules by themselves are useless.&nbsp; They need to refer to dynamic
+data, often called 'working memory,' which changes from run to run.&nbsp;
+For the bird identification system, this data is the collection of the
+user's responses to questions.&nbsp; The configuration advisor gets information
+from both the user and the PC directly, whereas the process control advisor
+gets its information from sensors connected to the manufacturing process.
+<p>Finally, some type of control program is needed, to decide which rules
+to fire and when.&nbsp; This is called an 'inference engine.'&nbsp; The
+inference engine and related tools are often called an expert system shell.&nbsp;
+The rules and data of a particular application are the actual expert system
+or knowledge base.
+<p>Each of these elements, the rules, the data and the inference engine,
+can range from the relatively simple to the quite complex, depending on
+application needs.&nbsp; A full discussion is beyond the scope of this
+document, but no matter what the needs, Prolog is an excellent tool for
+implementing any type of expert system.
+<p>This document describes the components of the PROXS expert system shell
+and the birds knowledge base.
+<h2>
+PROXS Data</h2>
+The data representation in PROXS is the simplest kind, which is attribute(value)
+pairs.&nbsp; This representation is used throughout, from the highest level
+goals, such as bird(albatross) to the detailed information such as color(white).&nbsp;
+The syntax used is a natural Prolog syntax.
+<p>The basic information is gathered from the user, who is asked if, for
+example, color:white is true or not for the bird in question, or who is
+given a list of menu choices from which to choose a value for size.
+<h2>
+PROXS Rules</h2>
+The rules in PROXS express relationships built from the underlying facts.&nbsp;
+The rules are a subset of Prolog syntax, sticking to attribute(value) clauses.&nbsp;
+For example, the following are the rules that will lead to identifying
+one of the two types of albatross in the system.
+<pre>order(tubenose) :-
+&nbsp; nostrils(external_tubular),
+&nbsp; live(at_sea),
+&nbsp; bill(hooked).
+
+family(albatross) :-
+&nbsp; order(tubenose),
+&nbsp; size(large),
+&nbsp; wings(long_narrow).
+
+bird(laysan_albatross) :-
+&nbsp; family(albatross),
+&nbsp; color(white).
+bird(black_footed_albatross) :-
+&nbsp; family(albatross),
+&nbsp; color(dark).
+</pre>
+The first rule can be read as 'the order is tubenose if the nostrils are
+external tubular, the bird lives at sea and the bill is hooked.'&nbsp;
+(It is relatively easy to provide this type of rule syntax as well, which
+might be useful if the rules are to be viewed by non-technical individuals.)
+<br>&nbsp;
+<p>PROXS Inference Engine
+<p>Prolog has an inference engine built into the language that can be used
+directly for many expert system applications.&nbsp; PROXS makes some modifications
+to normal Prolog inferencing, which we'll discuss later, but in general
+uses it as is.&nbsp; Given a goal, normal Prolog inferencing looks for
+rules that match the pattern of the goal on the left of the ':-' symbol
+(called the neck and read as 'if').&nbsp; If it finds one, then it takes
+each of the list of goals to the right of the ':-' and uses it as a subgoal.
+<p>If a subgoal fails, then it 'backtracks' and looks for other matches.
+<p>For example, given the rules above and the goal bird(X), where X is
+a variable, Prolog will first try the rule for bird(laysan_albatross).
+<pre>The first subgoal is then family(albatross),
+&nbsp;&nbsp;&nbsp;&nbsp; and its first subgoal is order(tubenose)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; and its first subgoal is nostrils(external_tubular).</pre>
+
+<h2>
+Communicating with the User</h2>
+nostrils(external_tubular) does not have an inference rule as above.&nbsp;
+Rather, it is something that requires an answer from the user.&nbsp; In
+the rule base this is represented by a special rule like this
+<pre>nostrils(X) :- ask(nostrils,X).</pre>
+which will trigger a simple yes/no query to the user.&nbsp; Some attributes
+have menu choices, represented like this
+<pre>size(X) :- menuask(size,X,[large,plump,medium,small]).</pre>
+which will trigger a query with a menu.
+<p>ask and menuask are called Prolog predicates, and they are implemented
+in the inference engine portion of PROXS.
+<p>Say the system finds out that family(albatross) is true, while it's
+working on bird(laysan_albatross).&nbsp; The next goal is color(white).&nbsp;
+If the answer is yes, the bird is identified.&nbsp; If the answer is no,
+then the bird is not a laysan_albatross, and Prolog backtracking will try
+the next rule that matches bird(X), which is the one for bird(black_footed_albatross).
+<h2>
+Remembering the Answers</h2>
+This is where the PROXS system makes some modifications to normal Prolog
+inferencing.&nbsp; Ordinarily, once Prolog starts on bird(black_footed_albatross),
+it will start all over again with family(albatross) and ask all the same
+questions.&nbsp; To avoid this repetion, ask and menuask are designed to
+remember the answers to questions, so they don't have to be asked again.
+<p>Given this, family(albatross) will silently succeed the second time,
+and the next question the user will see is color(dark).&nbsp; If the answer
+is yes, then the bird is identified as a black_footed_albatross.&nbsp;
+If the answer is no, then, given just the rules above, the system will
+stop in defeat.
+<h2>
+Explanations</h2>
+Some expert systems require various types of explanations as to how results
+were reached.&nbsp; Typically these are used either to educate or assure
+the user, or as diagnostic aids for the developers.&nbsp; The PROXS inference
+engine supports three types of explanations.
+<p>'How' explanations are used to show the rule that applied to reach a
+result.&nbsp; So, asking how bird(black_footed_albatross) would show the
+rule that led to that conclusion.
+<p>'Why' explanations are triggered when the user selects 'why' as an answer
+to a question.&nbsp; The why explanation shows the chain of inference that
+led to the question being asked.&nbsp; Ask 'why' to the first question
+posed by the bird system and you will see the goals from the rules above
+listed.
+<p>'WhyNot' explanations are like 'how' explanations, only they show why
+certain results were not choosen.&nbsp; For example, if the answer was
+bird(black_footed_albatross) then whynot bird(laysan_albatross) would show
+that color(white) fails.
+<h2>
+Summary</h2>
+The PROXS rules and data representation use normal Prolog syntax.&nbsp;
+The PROXS inference engine is the basic Prolog inference engine with modifications
+that allow answers to questions to be remembered, and explanations of results
+and questions to be presented.
+<br>&nbsp;
+<p><i>Copyright (c)1996 Amzi! inc.&nbsp; All Rights Reserved.</i>
+<br>&nbsp;
+</body>
+</html>

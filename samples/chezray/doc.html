@@ -1,0 +1,71 @@
+<title>ChezRay</title>
+<body bgcolor="#FFFFFF">
+<h1><font color="#0000FF">ChezRay</font></h1>
+
+<h2>A repository of prolog programs by Ray Reeves</h2>
+
+<p></p>
+
+<p><a href="cap/doc.html#L33">Crypto-Arithmetic Processor</a></p>
+
+<p><a href="mm/doc.html">MasterMind</a></p>
+
+<p><a href="polyplot/doc.html">PolyPlot</a></p>
+
+<p><a href="joli/doc.html">JOLI</a></p>
+
+<p><a href="xmas/doc.html">Xmas</a></p>
+
+<p><a href="hll/doc.html">High Level Language</a></p>
+
+<p><a href="tools/doc.html">Tools</a></p>
+
+<p></p>
+
+<h3>Primes</h3>
+
+<p>The code for primes is all installed, but is worth mentioning here.</p>
+
+<p></p>
+
+<p><strong>makePrimes/4</strong></p>
+
+<p>makePrimes(From, To, Primes, LastPrime)</p>
+
+<p>Computes all (Primes) primes in the range From to To extremely rapidly,
+and stores them in an internal.vector. Uses a priority queue to implement the
+sieve of Eratosthenes.</p>
+
+<p></p>
+
+<p><strong>makePrimes/1</strong></p>
+
+<p>makes all primes to 2**15, which is sufficient to factorize 32 bit
+integers.</p>
+
+<p></p>
+
+<p><strong>primes/1</strong></p>
+
+<p>primes(Primes)</p>
+
+<p>Primes is the length of the prime vector.</p>
+
+<p></p>
+
+<p><strong>nthPrime/2</strong></p>
+
+<p>nthPrime(Index, Prime)</p>
+
+<p>returns the nth prime (index origin: 1) from the prime vector.</p>
+
+<p></p>
+
+<p><strong>primeFactors/2</strong></p>
+
+<p>primeFactors(N, Factors)</p>
+
+<p>factorizes N, using the prime vector.</p>
+
+</body>
+</html>

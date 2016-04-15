@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>tutorial testing - prolog sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1>Tutorial Testing - Prolog sample</h1>
+<p>This sample illustrate a knowledge engineering approach for building intelligent 
+  tests, and also illustrates an architecture for knowledgebase applications in 
+  general.</p>
+<p>The idea behind tutorial testing is the test is used to learn what the student 
+  knows and doesn't know, and uses that knowledge to point to pertinent tutorial 
+  texts and to provide further testing in the problem areas.</p>
+<p>Comments in the code provide documentation.</p>
+<p>To run the system from the listener:</p>
+<ul><pre>
+?- [tutor_test_ui].
+
+yes
+?- main.
+what's 2 + 5 10
+you're confusing + with *
+what's 3 + 5 8
+good
+what's 2 * 5 4
+read multiplication chapter
+
+yes
+?- main.
+what's 2 + 5 6
+read addition chapter
+what's 3 + 5 15
+you're confusing + with *
+what's 2 * 5 10
+good
+
+yes
+</pre></ul>
+<p>The knowledgebase architecture is represented in the file structure:</p>
+<ul>
+  <li><b>tutor_test_ui.pro</b> - A command line user interface to the program. 
+    The same logic could be coded in a host language, such as Java or VB, as well. 
+    The I/O predicates of the engine are defined in the interface code, so extended 
+    predicates in Java or VB could be used for a GUI front-end.</li>
+  <li><b>tutor_test_engine.pro</b> - The reasoning engine for the tutorial test. 
+    It asks a question, and then based on the answer decides what to tell the 
+    student and what to do next.</li>
+  <li><b>tutor_test_math.pro</b> - A simple math test that illustrates how to 
+    develop a test using the tutorial test program. </li>
+</ul>
+
+</body>
+</html>

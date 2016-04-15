@@ -1,0 +1,267 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; U) [Netscape]">
+   <TITLE>Compiler</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1>
+<A NAME="Compiler"></A><FONT COLOR="#D2AA00">Compiler</FONT></H1>
+<p><!AMZI_INDEX =acmp; Compiler>
+The Amzi! Prolog compiler transforms Prolog source code files (.pro) into object 
+  code files (.plm). Source files must be plain text with no embedded control 
+  characters other than the newline.</p>
+<p>The Compiler (and Linker) are automatically invoked in the IDE when you select 
+  Project | Rebuild Project or Project | Rebuild All. It is also invoked when 
+  you run or debug a compiled Prolog Projec.t</p>
+<H2>
+<A NAME="AdvantagesofCompiling"></A><FONT COLOR="#0000FF">Advantages</FONT></H2>
+<!AMZI_INDEX = Compiling>Amzi! Prolog offers a compiler which optimizes
+a great deal of the searching procedure used on dynamic (or interpreted)
+predicates. General pattern matches are replaced by specific test-and-branch
+sequences of code, and procedure calls are flattened with the result that
+compiled programs run in much less space than their interpreted counterparts,
+and groups of clauses are cross-indexed to provide rapid table look up.
+
+<P>The net result of all of this work is that compiled code can run twenty
+or thirty times faster than equivalent interpreted code, occupies less
+space in memory and consumes much less space to execute.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>We strongly
+recommend that as much code as possible be compiled once it has been developed.</I>
+<H2>
+<A NAME="DisadvantagesofCompiling"></A><FONT COLOR="#0000FF">Disadvantages</FONT></H2>
+<!AMZI_INDEX = Compiling >When code is compiled the code loses some features
+which may be important in some applications:
+<UL>
+  <LI> The code cannot be listed or examined (using <A HREF="ref_logicbase.htm">listing</A> 
+    or <A HREF="ref_logicbase.htm">clause</A>).<!AMZI_INDEX=listing; clause></LI>
+
+<LI>
+Individual clauses in a compiled predicate cannot be changed--the whole
+predicate must be removed.</LI>
+</UL>
+Both of these restrictions can be ameliorated by selective intermixing
+of compiled and interpreted code in the same application.
+<H2>
+<A NAME="RequirementsonCompiledFiles"></A><FONT COLOR="#0000FF">Requirements</FONT></H2>
+<!AMZI_INDEX = Compiling >The compiler assumes that all clauses for a given
+predicate are contiguous and located in the same file. If they are not,
+then the source code containing the clauses must include the 'multifile'
+directive for all predicates that are defined in multiple files, and/or
+the 'discontiguous' directive for predicates whose clauses are not contiguous.
+(This is so the compiler can optimize the code for the various clauses.)
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>The compiler
+does not, by default (no discontiguous or multifile specified), accomodate split
+definitions of predicates. It compiles the separated clusters of continguous clauses as separate chunks of compiled code, each with the same name. So when you try to load the compiled program, when the loader reaches the second definition of a predicate
+you will get an error message indicating you have attempted to redefine
+a compiled predicate.</I>
+<H2>
+<A NAME="CompilerDirectives"></A><FONT COLOR="#0000FF">Directives</FONT></H2>
+<!AMZI_INDEX = Directives; import; export; dynamic; multifile; discontiguous >Interpreted 
+code is simply loaded as dynamic clauses into the logicbase as it is 'consult'ed. The compiler, 
+however, processes the code before compiling and may require you to specify certain 
+directives on how you want it to proceed. The directives are summarized here and 
+explained in greater detail in the <a href="ref_directives.htm">Directives</a> 
+section: 
+<UL>
+  <li> <b>discontiguous</b> - lists predicates whose clause definitions are not 
+    contiguous in a given source file.</li>
+  <LI><b>dynamic</b> - lists predicates that the compiler will not compile, and 
+    will store in the logicbase as dynamic clauses instead of static/compiled 
+    clauses.</LI>
+    
+  <li><b>include</b> - includes the named file and switches the compiler input 
+    stream to it. Good for including files with operator directives in them.</li>
+    
+  <li> <b>multifile</b> - lists predicates whose clause definitions might occur 
+    in multiple files.</li>
+  <li><b>op</b> - define operators.</li>
+  <li><b>set_prolog_flag</b> - lets you set a prolog flag for compilation, such 
+    as default numbers to use.</li>
+</UL>
+<p>There are also directives for defining a collection of predicates with a public 
+  interface called a <i>module</i>--see <a href="ref_modules.htm">Modules</a> 
+  for details. </p>
+<H2>
+<A NAME="StartingtheCompilerfromtheWind"></A><FONT COLOR="#0000FF">Running
+from the IDE</FONT></H2>
+<!AMZI_INDEX = acmp; IDE; Compiler >
+Normally the compiler is invoked when you build a project by either choosing Project 
+| Build Project or Project | Rebuild Project. Build will compile and link only 
+the modified files in the project, whereas Rebuild compiles and links all the 
+files. 
+<P>Any compilation problems will be added to the Tasks View. 
+<P align="center"><img src="task_view.gif" width="522" height="144"> 
+<P align="left">When you click on an error in the Tasks View the editor will position 
+  the cursor in the source file where the error was found.
+<H2>
+<A NAME="StartingtheCompilerfromtheComm"></A><FONT COLOR="#0000FF">Running
+from the Command-Line</FONT></H2>
+<!AMZI_INDEX =  acmp; Command-Line; Compiler >There are two ways of supplying
+the names of files to be compiled to the compiler:
+<UL>
+<LI>
+By specifying all the information on the command line</LI>
+
+<LI>
+By answering the prompts</LI>
+</UL>
+The command-line can take three arguments.
+<UL>
+<PRE><FONT COLOR="#000080">acmp [source], [object], [listing]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[source]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the name of the source file (.pro)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[object]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the name of the object file to be created (.plm)&nbsp;
+[listing]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the name of the optional listing file (PAL)</FONT></PRE>
+</UL>
+To use compile in prompting mode, do not specify any arguments.
+<UL>
+<PRE><FONT COLOR="#000080">c>&nbsp; acmp
+source file [.PRO] :
+object file [.PLM] :
+listing file [.PAL] :</FONT></PRE>
+</UL>
+For example:
+<UL>
+  <PRE><FONT COLOR="#000080">c>&nbsp; acmp
+Amzi! Prolog Compiler
+Copyright (c) 1987-2000 Amzi! inc. All Rights Reserved.
+Source Code [.PRO]: duck2
+Object Code [duck2.PLM]:
+Listing File [NULL.PAL]: duck2
+Compiling duck2.pro
+|- main / 0
+|- go / 0
+|- go / 0
+|- go / 0
+[CodeSize 410 Bytes, Compile time 11 seconds.]</FONT></PRE>
+</UL>
+or
+<UL>
+<PRE><FONT COLOR="#000080">c>&nbsp; acmp duck1
+...</FONT></PRE>
+</UL>
+
+<H2>
+<A NAME="CompilerMessages"></A><FONT COLOR="#0000FF">Messages</FONT></H2>
+<!AMZI_INDEX = Compiling ; Messages>When the compiler begins compiling,
+it indicates which clause of which predicate is being compiled by using
+a display of the form:
+<UL>
+<PRE><FONT COLOR="#000080">|-&nbsp; Name / Arity_Pred_1_Clause_1
+|-&nbsp; Name / Arity_Pred_2_Clause_2
+|-&nbsp; ...</FONT></PRE>
+</UL>
+If an error occurs a message will be printed to the screen and the error
+handler will be invoked. Most errors will be syntax errors. In the case
+of a syntax error, the offending term will be listed along with the error
+message.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Note that
+when the compiler reads in clauses it does so by reading in all clauses
+for a given predicate and the </I>first clause of the following predicate<I>.
+Thus it is possible for a read error to occur in a clause which is not
+in the predicate being compiled but is in the next predicate to be compiled.</I>
+
+<P>Errors in a clause will cause the compilation of that clause to be skipped;
+compilation continues with the next clause.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>The compiler
+output is especially useful for tracking down errors due to unintentional
+split-definition clauses, or "missing" predicates lost by a misplaced period.
+By viewing the listing you can see if all the clause definitions are contiguous,
+and if all the predicates you thought were in the file actually were.</I>
+<H2>
+<A NAME="CompilationErrors"></A><FONT COLOR="#0000FF">Errors</FONT></H2>
+<!AMZI_INDEX = Compiling; Errors; maxclauses; destbuf; srcbuf>Other than syntax 
+errors, the most common cause of errors will be caused by trying to compile clauses 
+or predicates which are too complex. In these cases you will likely receive a 
+fatal error of the form "XXX stack full" where XXX is heap or control or local 
+or trail. The easiest way around this trouble is to use 32-bit mode to compile 
+the program, and set your <A HREF="pug_runtime.htm#CFGParameters">stack sizes</A> 
+large enough in the .cfg file. 
+<P>You might also run into difficulties loading programs that contain predicates 
+  with large numbers of clauses. The <A HREF="pug_runtime.htm">.cfg file parameters</A> 
+  <B>maxclauses</B>, <B>destbuf</B> and <B>srcbuf</B> can all be used to increase 
+  the capacity of the Prolog engine when loading a compiled program. 
+<H3>
+<A NAME="ComplexClauses"></A><FONT COLOR="#000080">Complex Clauses</FONT></H3>
+<!AMZI_INDEX =  Compiling; Clauses>The complexity of a clause is determined
+approximately by the number of variables in the clause. If this number
+gets too large then the compiler may fill a stack and cause a fatal error.
+To correct this it may be necessary to take a clause and split it into
+a number of smaller clauses.
+
+<P>The compiler optimizes its processing of clauses with only one or zero
+goals in the body. This permits such clauses to be compiled more quickly.
+<I>This optimization has no effect on the resulting compiled code</I> (it
+just arrives at it sooner).
+
+<P>The downside of this is a slight chance that such a clause will cause
+a stack to overflow on compilation. This is usually due to having very
+complex clauses, e.g.,
+<UL>
+<PRE><FONT COLOR="#000080">options(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[option1, ..],&nbsp;&nbsp;
+[option2, ..],&nbsp;&nbsp;
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[option30, ..]&nbsp;&nbsp;
+).</FONT></PRE>
+</UL>
+To resolve this problem, cast the clause in the following form:
+<UL>
+<PRE><FONT COLOR="#000080">options(X1, X2, .., X30) :-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+X1 = [option1,..],&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+X30 = [option30,..].</FONT></PRE>
+</UL>
+By forcing the clause to have a more complex body (and a simpler head)
+the optimization technique described above will not be used by the compiler.
+<H3>
+<A NAME="ComplexPredicates"></A><FONT COLOR="#000080">Complex Predicates</FONT></H3>
+<!AMZI_INDEX = Compiling; Predicates>Complex predicates generally occur
+because there are too many clauses in a given predicate. The precise number
+depends on the relative complexity of the individual clauses. The Amzi!
+Prolog Compiler can compile predicates with many hundreds of clauses, so
+in practice we do not expect this to be much of a problem.
+
+<P>Where it is a problem try dividing predicates into two or more predicates,
+e.g.,
+<UL>
+<PRE><FONT COLOR="#000080">head1 :- body1.
+head1 :- body2.
+..
+head1 :- body100.</FONT></PRE>
+</UL>
+can be replaced with a slight performance penalty by:
+<UL>
+<PRE><FONT COLOR="#000080">head1 :- body1.
+..
+head1 :- body50.
+head1 :- head2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % New link to remaining clauses
+head2 :- body51.
+..
+head2 :- body100.</FONT></PRE>
+</UL>
+
+<H2> <A NAME="MainPredicate"></A><FONT COLOR="#0000FF">Main Predicate</FONT></H2>
+<!AMZI_INDEX = Predicates; main>The Prolog system treats the predicate <B>main/0</B> 
+in a special way. When Prolog initializes it looks to see if there is a definition 
+for the predicate <B>main/0</B>. If there is a definition, then <B>main/0</B> 
+is proved instead of entering the listener (see the section on <a href="pug_listener.htm">alis</a>). 
+Thus for an application to "load and run" it should contain a definition: 
+<UL>
+<PRE><FONT COLOR="#000080">main :- run_user_program.</FONT></PRE>
+</UL>
+<p>Then when the application loads it will immediately try to prove the user-written 
+  predicate <B>run_user_program</B>.</p>
+<p><!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p></p>
+<p><I></I> 
+</p></BODY>
+</HTML>

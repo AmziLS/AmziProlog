@@ -1,0 +1,1098 @@
+
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<TITLE>3 Backward Chaining with Uncertainty</TITLE>
+</HEAD>
+<BODY bgcolor="#ffffff">
+<h1><a name="BackwardChainingWithUncertainty"></a><B><FONT FACE="New Century Schlbk,Century Schoolbook"> 3 
+  Backward Chaining with Uncertainty </font></B></h1>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>As 
+  we have seen in the previous chapter, backward chaining systems are good for 
+  solving structured selection types of problems. The Birds system was a good 
+  example; however it made the assumption that all information was either absolutely 
+  true, or absolutely false. In the real world, there is often uncertainty associated 
+  with the rules of thumb an expert uses, as well as the data supplied by the 
+  user.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>For 
+  example, in the Birds system the user might have spotted an albatross at dusk 
+  and not been able to clearly tell if it was white or dark colored. An expert 
+  system should be able to handle this situation and report that the bird might 
+  have been either a laysan or black footed albatross.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  rules too might have uncertainty associated with them. For example a mottled 
+  brown duck might only identify a mallard with 80% certainty.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  chapter will describe an expert system shell called Clam which supports backward 
+  chaining with uncertainty. The use of uncertainty changes the inference process 
+  from that provided by pure Prolog, so Clam has its own rule format and inference 
+  engine.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="certaintyfactors"></a>3.1 
+  Certainty Factors </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  most common scheme for dealing with uncertainty is to assign a certainty factor 
+  to each piece of information in the system. The inference engine automatically 
+  updates and maintains the certainty factors as the inference proceeds.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="anexample"></a>An 
+  Example</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Let's 
+  first look at an example using Clam. The certainty factors (preceded by cf) 
+  are integers from -100 for definitely false, to +100 for definitely true.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  following is a small knowledge base in Clam which is designed to diagnose a 
+  car which will not start. It illustrates some of the behavior of one scheme 
+  for handling uncertainty.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>goal problem.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>rule 1</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>if&#9;&#9;not 
+      turn_over and<BR>
+      &#9;battery_bad</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>then&#9;problem 
+      is battery.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>rule 2</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>if&#9;&#9;lights_weak</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>then&#9;battery_bad 
+      cf 50.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>rule 3</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>if&#9;&#9;radio_weak</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>then&#9;battery_bad 
+      cf 50.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>rule 4</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>if&#9;&#9;turn_over 
+      and<BR>
+      &#9;smell_gas</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>then&#9;problem 
+      is flooded cf 80.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>rule 5</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>if&#9;&#9;turn_over 
+      and<BR>
+      &#9;gas_gauge is empty</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>then&#9;problem 
+      is out_of_gas cf 90.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>rule 6</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>if&#9;&#9;turn_over 
+      and<BR>
+      &#9;gas_gauge is low</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>then &#9;problem 
+      is out_of_gas cf 30.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>&nbsp;</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>ask&#9;turn_over</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>menu&#9;(yes 
+      no)</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prompt &#9;'Does 
+      the engine turn over?'.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>ask&#9;lights_weak</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>menu&#9;(yes 
+      no)</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prompt &#9;'Are 
+      the lights weak?'.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>ask&#9;radio_weak</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>menu&#9;(yes 
+      no)</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prompt &#9;'Is 
+      the radio weak?'.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>ask&#9;smell_gas</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>menu&#9;(yes 
+      no)</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prompt &#9;'Do 
+      you smell gas?'.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>ask&#9;gas_gauge</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>menu&#9;(empty 
+      low full)</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prompt &#9;'What 
+      does the gas gauge say?'.</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  inference uses backward chaining similar to pure Prolog. The goal states that 
+  a value for the attribute <B>problem</B> is to be found. Rule 1 will cause the 
+  sub-goal of <B>bad_battery</B> to be pursued, just as in Prolog.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  rule format also allows for the addition of certainty factors. For example rules 
+  5 and 6 reflect the varying degrees of certainty with which one can conclude 
+  that the car is out of gas. The uncertainty arises from the inherent uncertainty 
+  in gas gauges. Rules 2 and 3 both provide evidence that the battery is bad, 
+  but neither one is conclusive.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="ruleuncertainty"></a>Rule 
+  Uncertainty</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>What 
+  follows is a sample dialog of a consultation with the Car expert system.</FONT></P>
+<DIR> 
+  <DIR> <B> </b> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>consult, restart, 
+      load, list, trace, how, exit</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>:<B>consult</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Does the engine 
+      turn over?</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>: <B>yes</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Do you smell 
+      gas?</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>: <B>yes</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>What does the 
+      gas gauge say?</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> empty</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> low</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> full</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>: <B>empty</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>problem-out_of_gas-cf-90</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>problem-flooded-cf-80</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>done with problem</FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Notice, 
+  that unlike Prolog, the inference does not stop after having found one possible 
+  value for problem. It finds all of the reasonable problems and reports the certainty 
+  to which they are known. As can be seen, these certainty factors are not probability 
+  values, but simply give some degree of weight to each answer.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="useruncertainty"></a>User 
+  Uncertainty</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  following dialog shows how the user's uncertainty might be entered into the 
+  system. The differences from the previous dialog are shown in bold.</FONT></P>
+<DIR> 
+  <DIR> <B> </b> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>:consult</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Does the engine 
+      turn over?</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>: yes</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Do you smell 
+      gas?</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>: yes cf 50</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>What does the 
+      gas gauge say?</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> empty</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> low</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> full</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>: empty</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>problem-out_of_gas-cf-90</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>problem-flooded-cf-40</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>done with problem</FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Notice 
+  in this case that the user was only certain to a degree of 50 that there was 
+  a gas smell. This results in the system only being half as sure that the <B>problem</B> 
+  is <B>flooded</B>.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="combiningcertainties"></a>Combining 
+  Certainties</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Finally 
+  consider the following consultation which shows how the system combines evidence 
+  for a bad battery. Remember that there were two rules which both concluded the 
+  battery was weak with a certainty factor of 50.</FONT></P>
+<DIR> 
+  <DIR> <B> </b> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>:consult</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Does the engine 
+      turn over?</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>:<B> no</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Are the lights 
+      weak?</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>: <B>yes</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Is the radio 
+      weak?</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>: <B>yes</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>problem-battery-cf-75</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>done with problem</FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>In 
+  this case the system combined the two rules to determine that the battery was 
+  weak with certainty factor 75. This propagated straight through rule 1 and became 
+  the certainty factor for <B>problem</B> <B>battery</B>.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="propertiesofcertaintyfactors"></a>Properties 
+  of Certainty Factors</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>There 
+  are various ways in which the certainty factors can be implemented, and how 
+  they are propagated through the system, but they all have to deal with the same 
+  basic situations:</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<DIR> 
+  <DIR> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;rules 
+      whose conclusions are uncertain;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;rules 
+      whose premises are uncertain;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;user 
+      entered data which is uncertain;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;combining 
+      uncertain premises with uncertain conclusions;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;updating 
+      uncertain working storage data with new, also uncertain information;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;establishing 
+      a threshold of uncertainty for when a premise is considered known.</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Clam 
+  uses the certainty factor scheme which was developed for MYCIN, one of the earliest 
+  expert systems used to diagnose bacterial infections. Many commercial expert 
+  system shells today use this same scheme.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="mycinscertaintyfactors"></a>3.2 
+  MYCINs Certainty Factors </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  basic MYCIN certainty factors (CFs) were designed to produce results that seemed 
+  intuitively correct to the experts. Others have argued for factors that are 
+  based more on probability theory and still others have experimented with more 
+  complex schemes designed to better model the real world. The MYCIN factors, 
+  however, do a reasonable job of modeling for many applications with uncertain 
+  information.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>We 
+  have seen from the example how certainty information is added to the rules in 
+  the <B>then</B> clause. We have also seen how the user can specify CFs with 
+  input data. These are the only two ways uncertainty gets into the system.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Uncertainty 
+  associated with a particular run of the system is kept in working storage. Every 
+  time a value for an attribute is determined by a rule or a user interaction, 
+  the system saves that attribute value pair and associated CF in working storage.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  CFs in the conclusion of the rule are based on the assumption that the premise 
+  is known with a CF of 100. That is, if the conclusion has a CF of 80 and the 
+  premise is known to CF 100, then the fact which is stored in working storage 
+  has a CF of 80. For example, if working storage contained:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>turn_over 
+      cf 100</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>smell_gas 
+      cf 100</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>then 
+  a firing of rule 4 </FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>rule 4</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>if&#9;&#9;turn_over 
+      and</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>&#9;&#9;smell_gas</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>then&#9;problem 
+      is flooded cf 80</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>would 
+  result in the following fact being added to working storage:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>problem flooded 
+      cf 80</B></FONT></P>
+  </DIR>
+</DIR>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="determiningpremisecf"></a>Determining 
+  Premise CF</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>However, 
+  it is unlikely that a premise is perfectly known. The system needs a means for 
+  determining the CF of the premise. The algorithm used is a simple one. The CF 
+  for the premise is equal to the minimum CF of the individual sub goals in the 
+  premise. If working storage contained:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>turn_over 
+      cf 80</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>smell_gas 
+      cf 50</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>then 
+  the premise of rule 4 would be known with CF 50, the minimum of the two.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="combiningpremisecfandconclusioncf"></a>Combining 
+  Premise CF and Conclusion CF</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>When 
+  the premise of a rule is uncertain due to uncertain facts, and the conclusion 
+  is uncertain due to the specification in the rule, then the following formula 
+  is used to compute the adjusted certainty factor of the conclusion:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>CF = RuleCF * 
+      PremiseCF / 100.</FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Given 
+  the above working storage and this formula, the result of a firing of rule 4 
+  would be:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>problem is 
+      flooded cf 40</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  resulting CF has been appropriately reduced by the uncertain premise. The premise 
+  had a certainty factor of 50, and the conclusion a certainty factor of 80, thus 
+  yielding an adjusted conclusion CF of 40.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="premisethresholdcf"></a>Premise 
+  Threshold CF</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>A 
+  threshold value for a premise is needed to prevent all of the rules from firing. 
+  The number 20 is used as a minimum CF necessary to consider a rule for firing. 
+  This means if working storage had:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>turn_over 
+      cf 80</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>smell_gas 
+      cf 15</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Then 
+  rule 4 would not fire due to the low CF associated with the premise.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="combiningcfs"></a>Combining 
+  CFs</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Next 
+  consider the case where there is more than one rule which supports a given conclusion. 
+  In this case each of the rules might fire and contribute to the CF of the resulting 
+  fact. If a rule fires supporting a conclusion, and that conclusion is already 
+  represented in working memory by a fact, then the following formulae are used 
+  to compute the new CF associated with the fact. X and Y are the CFs of the existing 
+  fact and rule conclusion.</FONT></P>
+<DIR> 
+  <DIR> <B> </b> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>CF(X, Y) = X 
+      + Y(100 - X)/100.&#9;&#9;&#9;X, Y both &gt; 0</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>CF(X, Y) = X 
+      + Y/1 - min(|X|, |Y|).&#9;&#9;one of X, Y &lt; 0</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>CF(X, Y) = -CF(-X, 
+      -Y).&#9;&#9;&#9;&#9;X, Y both &lt; 0</FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>For 
+  example, both rules 2 and 3 provide evidence for <B>battery_bad</B>.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>rule 2</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>if&#9;&#9;lights_weak</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>then&#9;battery_bad 
+      cf 50.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>rule 3</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>if&#9;&#9;radio_weak</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>then&#9;battery_bad 
+      cf 50.</B></FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Assume 
+  the following facts are in working storage:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>lights_weak 
+      cf 100</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>radio_weak 
+      cf 100</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>A 
+  firing of rule 2 would then add the following fact:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>battery_bad 
+      cf 50</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Next 
+  rule 3 would fire, also concluding <B>battery_bad</B> cf 50. However there already 
+  is a <B>battery_bad</B> fact in working storage so rule 3 updates the existing 
+  fact with the new conclusion using the formulae above. This results in working 
+  storage being changed to:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>battery_bad 
+      cf 75</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  case most clearly shows why a new inference engine was needed for Clam. When 
+  trying to prove a conclusion for which the CF is less than 100, we want to gather 
+  all of the evidence both for and against that conclusion and combine it. Prolog's 
+  inference engine will only look at a single rule at a time, and succeed or fail 
+  based on it.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="ruleformat"></a>3.3 
+  Rule Format </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Since 
+  we are writing our own inference engine, we can design our own internal rule 
+  format as well. (We will use something easier to read for the user.) It has 
+  at least two arguments, one for the IF or left hand side (LHS) which contains 
+  the premises, and one for the THEN or right hand side (RHS) which contains the 
+  conclusion. It is also useful to keep a third argument for a rule number or 
+  name. The overall structure looks like:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>rule(Name, 
+      LHS, RHS).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  name will be a simple atom identifying the rule. The <B>LHS</B> and <B>RHS</B> 
+  must hold the rest of the rule. Typically in expert systems, a rule is read 
+  LHS implies RHS. This is backwards from a Prolog rule which can be thought of 
+  as being written RHS :- LHS, or RHS is implied by LHS. That is the RHS (conclusion) 
+  is written on the left of the rule, and the LHS (premises) is written on the 
+  right.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Since 
+  we will be backward chaining, and each rule will be used to prove or disprove 
+  some bit of information, the <B>RHS</B> contains one goal pattern, and its associated 
+  CF. This is:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>rhs(Goal, 
+      CF)</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>LHS</B> can have many sub-goals which are used to prove or disprove the <B>RHS</B> 
+  :</FONT></P>
+<DIR> 
+  <DIR> <FONT FACE="Courier" SIZE=2> </font> 
+    <P><B><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>lhs(GoalList)</FONT></B></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>where 
+  <B>GoalList</B> is a list of goals.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  next bit of design has to do with the actual format of the goals themselves. 
+  Various levels of sophistication can be added to these goals, but for now we 
+  will use the simplest form, which is attribute-value pairs. For example, <B>gas_gauge</B> 
+  is an attribute, and <B>low</B> is a value. Other attributes have simple yes-no 
+  values, such as <B>smell_gas</B>. An attribute-value pair will look like:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>av(Attribute, 
+      Value)</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>where 
+  Attribute and Value are simple atoms. The entire rule structure looks like:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>rule(Name, 
+      <BR>
+      lhs( [av(A1, V1), av(A2, V2), ....] ), <BR>
+      rhs( av(Attr, Val), CF) ).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Internally, 
+  rule 5 looks like:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>rule(5, <BR>
+      lhs( [av(turns_over, yes), av(gas_gauge, empty)] ), <BR>
+      rhs( av(problem, flooded), 80) ).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  rule format is certainly not easy to read, but it makes the structure clear 
+  for programming the inference engine. There are two ways to generate more readable 
+  rules for the user. One is to use operator definitions. The other is to use 
+  Prolog's language handling ability to parse our own rule format. The built-in 
+  definite clause grammar (DCG) of most Prologs is excellent for this purpose. 
+  Later in this chapter we will use DCG to create a clean user interface to the 
+  rules. The forward chaining system in a later chapter uses the operator definition 
+  approach.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="theinferenceengine"></a>3.4 
+  The Inference Engine </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Now 
+  that we have a format for rules, we can write our own inference engine to deal 
+  with those rules. Let's summarize the desired behavior:</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<DIR> 
+  <DIR> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;combine 
+      certainty factors as indicated previously;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;maintain 
+      working storage information that is updated as new evidence is acquired;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;find 
+      all information about a particular attribute when it is asked for, and put 
+      that information in working storage.</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  major predicates of the inference engine are shown in figure 3.1. They are described 
+  in detail in the rest of this section.</FONT> </P>
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2></FONT> 
+<P ALIGN="CENTER"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><BR>
+  <IMG SRC="backwarduncertainty3-1.gif" WIDTH=391 HEIGHT=211><BR>
+  </FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=1>Figure 
+  3.1 Major predicates of Clam inference engine</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="workingstorage"></a>Working 
+  Storage</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Let's 
+  first decide on the working storage format. It will simply contain the known 
+  facts about attribute-value pairs. We will use the Prolog database for them 
+  and store them as:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>fact (av(A, 
+      V), CF).</B></FONT></P>
+  </DIR>
+</DIR>
+<h3 ALIGN="JUSTIFY"><B><font face="New Century Schlbk,Century Schoolbook" size=2><b><a name="findavalueforanattribute"></a></b></font><FONT FACE="New Century Schlbk,Century Schoolbook">Find 
+  a Value for an Attribute</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>We 
+  want to start the inference by asking for the value of a goal. In the case of 
+  the Car expert system we want to find the value of the attribute <B>problem</B>. 
+  The main predicate that does inferencing will be <B>findgoal/2</B>. In the Car 
+  expert system it could be called from an interpreter with the following query:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>?- findgoal( 
+      av(problem, X), CF).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>findgoal/2</B> predicate has to deal with three distinct cases:</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<DIR> 
+  <DIR> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;the 
+      attribute -value is already known;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;there 
+      are rules to deduce the attribute -value;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;we 
+      must ask the user.</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  system can be designed to automatically ask the user if there are no rules, 
+  or it can be designed to force the knowledge engineer to declare which attribute 
+  values will be supplied by the user. The latter approach makes the knowledge 
+  base for the expert system more explicit, and also provides the opportunity 
+  to add more information controlling the dialog with the user. This might be 
+  in the form of clearer prompts, and/or input validation criteria.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>We 
+  can define a new predicate <B>askable/2</B> that tells which attributes should 
+  be retrieved from the user, and the prompt to use. For example:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>askable(live, 
+      'Where does it live?').</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>With 
+  this new information we can now write <B>findgoal</B>.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="attributevaluealreadyknown"></a>Attribute 
+  Value Already Known</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+  The first rule covers the case where the information is in working storage. 
+  It was asserted so we know all known values of the attribute have been found. 
+  Therefor we cut so no other clauses are tried. </FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>findgoal( 
+      av(Attr, Val), CF) :-<BR>
+      fact( av(Attr, Val), CF), <BR>
+      !.</B></FONT></P>
+  </DIR>
+</DIR>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="askuserforattributevalue"></a>Ask 
+  User for Attribute Value</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  next rule covers the case where there is no known information, and the attribute 
+  is askable. In this case we simply ask.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>findgoal(av(Attr, 
+      Val), CF) :-<BR>
+      not fact(av(Attr, _), _), <BR>
+      askable(Attr, Prompt), <BR>
+      query_user(Attr, Prompt), <BR>
+      !, <BR>
+      findgoal(av(Attr, Val), CF).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>query_user</B> predicate prompts the user for a value and CF and then asserts 
+  it as a <B>fact</B>. The recursive call to <B>findgoal</B> will now pick up 
+  this <B>fact</B>.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>query_user(Attr, 
+      Prompt) :-<BR>
+      write(Prompt), <BR>
+      read(Val), <BR>
+      read(CF), <BR>
+      asserta( fact(av(Attr, Val), CF)).</B></FONT></P>
+  </DIR>
+</DIR>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="deduceattributevaluefromrules"></a>Deduce 
+  Attribute Value from Rules</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  final rule of <B>findgoal</B> covers the interesting case of using other rules. 
+  Remember that the inferencing is going to require looking for all rules which 
+  provide support for values for the sought attribute, and combining the CFs from 
+  them. This is done by calling <B>fg</B>, which uses a repeat fail loop to continue 
+  to find rules whose RHS conclude a value for the attribute. The process stops 
+  when the attribute is known with a CF of 100, or all the rules have been tried.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>findgoal(Goal, 
+      CurCF) :-<BR>
+      fg(Goal, CurCF).<BR>
+      </B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>fg(Goal, CurCF) 
+      :-<BR>
+      rule(N, lhs(IfList), rhs(Goal, CF)), <BR>
+      prove(IfList, Tally), <BR>
+      adjust(CF, Tally, NewCF), <BR>
+      update(Goal, NewCF, CurCF), <BR>
+      CurCF == 100, !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>fg(Goal, CF) 
+      :- fact(Goal, CF).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  three new predicates called in <B>fg</B> are as follows:</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<DIR> 
+  <DIR> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prove</b> 
+      - prove the LHS premise and find its CF;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>adjust</b> 
+      - combine the LHS CF with the RHS CF;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>update</b> 
+      - update existing working storage values with the new conclusion.</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  is the guts of the inferencing process for the new inference engine. First it 
+  finds a rule whose RHS matches the pattern of the goal. It then feeds the LHS 
+  of that rule into <B>prove</B> which succeeds if the LHS can be proved. The 
+  <B>prove</B> predicate returns the combined CF from the LHS. If <B>prove</B> 
+  fails, backtracking is initiated causing the next rule which might match the 
+  goal pattern to be tried.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prove(IfList, 
+      Tally) :-<BR>
+      prov(IfList, 100, Tally).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prov([], Tally, 
+      Tally).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prov([H|T], 
+      CurTal, Tally) :-<BR>
+      findgoal(H, CF), <BR>
+      min(CurTal, CF, Tal), <BR>
+      Tal &gt;= 20, <BR>
+      prov(T, Tal, Tally).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>min(X, Y, 
+      X) :- X =&lt; Y, !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>min(X, Y, 
+      Y) :- Y =&lt; X.</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  input argument to <B>prove</B> is the list of premises for the rule, and the 
+  output is the <B>Tally</B>, or combined CF from the premises. The <B>prove</B> 
+  predicate calls <B>prov</B> with an extra argument to keep track of <B>Tally</B>. 
+  At each recursion the <B>Tally</B> is reset to the minimum up to that point. 
+  Of course, <B>prov</B> recursively calls <B>findgoal</B> for each of the premises. 
+  Notice the check to make sure the <B>Tally</B> stays above 20. This is the threshold 
+  value for considering an attribute - value pair to be true.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>After 
+  <B>prove</B> succeeds, <B>adjust</B> computes the combined CF based on the RHS 
+  CF and the <B>Tally</B> from the LHS.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>adjust(CF1, 
+      CF2, CF) :-<BR>
+      X is CF1 * CF2 / 100, <BR>
+      int_round(X, CF).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>int_round(X, 
+      I) :-<BR>
+      X &gt;= 0, <BR>
+      I is integer(X + 0.5).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>int_round(X, 
+      I) :-<BR>
+      X &lt; 0, <BR>
+      I is integer(X - 0.5).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Then 
+  <B>update</B> combines the new evidence for this attribute-value pair with any 
+  existing known evidence. The first argument is the attribute - value pair just 
+  deduced, and the second is its CF. The third argument is the returned value 
+  for the CF when it is combined with existing facts for the attribute-value pair.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>update(Goal, 
+      NewCF, CF) :-<BR>
+      fact(Goal, OldCF), <BR>
+      combine(NewCF, OldCF, CF), <BR>
+      retract( fact(Goal, OldCF) ), <BR>
+      asserta( fact(Goal, CF) ), <BR>
+      !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>update(Goal, 
+      CF, CF) :-<BR>
+      asserta( fact(Goal, CF) ).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>combine(CF1, 
+      CF2, CF) :-<BR>
+      CF1 &gt;= 0, <BR>
+      CF2 &gt;= 0, <BR>
+      X is CF1 + CF2*(100 - CF1)/100, <BR>
+      int_round(X, CF).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>combine(CF1, 
+      CF2, CF) :-<BR>
+      CF1 &lt; 0, <BR>
+      CF2 &lt; 0, <BR>
+      X is - ( -CF1 -CF2 * (100 + CF1)/100), <BR>
+      int_round(X, CF).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>combine(CF1, 
+      CF2, CF) :-<BR>
+      (CF1 &lt; 0; CF2 &lt; 0), <BR>
+      (CF1 &gt; 0; CF2 &gt; 0), <BR>
+      abs_minimum(CF1, CF2, MCF), <BR>
+      X is 100 * (CF1 + CF2) / (100 - MCF), <BR>
+      int_round(X, CF).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>abs_minimum</B> predicate finds the minimum in terms of absolute value. The 
+  code can be seen in the appendix.</FONT></P>
+<P ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook">Negation</FONT></B></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>One 
+  last point is to deal with negation. The premises might also be of the form 
+  <B>not goal</B>. In this case we call <B>findgoal</B> for the <B>goal</B>, and 
+  complement the CF to find the degree of certainty of its negation. For example 
+  if a fact has a CF of 70, then not fact has a certainty of -70.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>findgoal(not 
+      Goal, NCF) :-<BR>
+      findgoal(Goal, CF), <BR>
+      NCF is - CF, !.</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  rule should become the first clause for <B>findgoal</B>.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="makingtheshell"></a>3.5 
+  Making the Shell </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Now 
+  that the inference engine is built, it can become part of a shell. The code 
+  to build this first version of the Clam shell is the same as that used to build 
+  the Native shell. It consists of a command loop with the commands <B>load</B>, 
+  <B>consult</B>, and <B>exit</B>. Figure 3.2 shows the architecture of Clam.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>super :-<BR>
+      repeat, <BR>
+      write('consult, load, exit'), nl, <BR>
+      write(':'), <BR>
+      read_line(X), <BR>
+      doit(X), <BR>
+      X == exit.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>doit(consult) 
+      :- top_goals, !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>doit(load) 
+      :- load_rules, !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>doit(exit).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="CENTER"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><BR>
+  <IMG SRC="backwarduncertainty3-2.gif" WIDTH=344 HEIGHT=393><BR>
+  </FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=1>Figure 
+  3.2 Major predicates of the Clam shell</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="startingtheinference"></a>Starting 
+  the Inference</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>consult</B> command does a little more than just call <B>findgoal</B>. It 
+  calls <B>top_goals</B> which uses the <B>top_goal</B> facts to start the inference. 
+  The system might have more than one <B>top_goal</B> to allow sequencing of the 
+  consultation. For example a diagnostic system might have two goals, the first 
+  diagnoses the problem, and the second recommends a solution.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>After 
+  <B>top_goals</B> satisfies a goal, it prints the values for the goal as seen 
+  in the early examples of Car.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>top_goals 
+      :-<BR>
+      top_goal(Attr), <BR>
+      top(Attr), <BR>
+      print_goal(Attr), <BR>
+      fail.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>top_goals.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>top(Attr) 
+      :-<BR>
+      findgoal(av(Attr, Val), CF), !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>top(_) :- 
+      true.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>print_goal(Attr) 
+      :-<BR>
+      nl, <BR>
+      fact(av(Attr, X), CF), <BR>
+      CF &gt;= 20, <BR>
+      outp(av(Attr, X), CF), nl, <BR>
+      fail.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>print_goal(Attr) 
+      :-write('done with '), write(Attr), nl, nl.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>outp(av(A, 
+      V), CF) :-<BR>
+      output(A, V, PrintList), <BR>
+      write(A-'cf'-CF), <BR>
+      printlist(PrintList), !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>outp(av(A, 
+      V), CF) :-<BR>
+      write(A-V-'cf'-CF).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>printlist([]).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>printlist([H|T]) 
+      :-<BR>
+      write(H), <BR>
+      printlist(T).</B></FONT></P>
+  </DIR>
+</DIR>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="englishlikerules"></a>3.6 
+  English-like Rules </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>load</B> command for Clam does not simply read in Prolog terms as in Native, 
+  but instead uses DCG to read in a knowledge base in the format shown earlier 
+  in the chapter for the Car system. You might notice that the askable items have 
+  the additional syntax to allow menu choices which was not included in the implementation 
+  details above. It is coded similarly to the menu feature in Native.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>load_kb</B> predicate in the shell gets a file name as in Native, and then 
+  calls <B>load_rules</B> with the file name.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>load_rules(F) 
+      :-<BR>
+      clear_db, <BR>
+      see(F), <BR>
+      lod_ruls, <BR>
+      write('rules loaded'), nl, <BR>
+      seen, !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>lod_ruls :-<BR>
+      repeat, <BR>
+      read_sentence(L), <BR>
+      process(L), <BR>
+      L == eof.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>process(eof) 
+      :- !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>process(L) 
+      :-<BR>
+      trans(R, L, []), <BR>
+      assertz(R), !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>process(L) 
+      :-<BR>
+      write('translate error on:'), nl, <BR>
+      write(L), nl.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>clear_db :-<BR>
+      abolish(top_goal, 1), <BR>
+      abolish(askable, 4), <BR>
+      abolish(rule, 3).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  section of code basically calls <B>read_sentence</B> to tokenize a sentence 
+  (up to a ".") into a list. The token list is then processed by the DCG predicate 
+  <B>trans</B>, and the resulting Prolog term, <B>R</B>, is asserted in the knowledge 
+  base. For a good description of DCG, see Clocksin &amp; Mellish chapter 9, <I>Using 
+  Grammar Rules</I>. The <B>clear_db</B> predicate removes all earlier <B>top_goal</B>, 
+  <B>askable</B>, and <B>rule</B> predicates so that a new knowledge base can 
+  be loaded over an existing one.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  tokenizing predicate, <B>read_sentence</B>, varies from Prolog to Prolog based 
+  on the implementation. If the implementation has built-in predicates which can 
+  read tokens, then <B>read_sentence</B> is trivial. If not, it has to read the 
+  input character by character and build the tokens. An example of this type of 
+  sentence read predicate can be found in Clocksin &amp; Mellish section 5.3, 
+  <I>Reading English Sentences</I>.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  top level DCG predicate, <B>trans</B>, looks for the three types of statements 
+  allowed in the knowledge base:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>trans(top_goal(X))--&gt;[goal, 
+      is, X].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>trans(top_goal(X))--&gt;[goal, 
+      X].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>trans(askable(A, 
+      M, P))--&gt;<BR>
+      [ask, A], menux(M), prompt(A, P).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>trans(rule(N, 
+      lhs(IF), rhs(THEN, CF)))--&gt; id(N), if(IF), then(THEN, CF).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  following predicates recognize the menu and prompt fields in the ask statement.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>menux(M)--&gt; 
+      [menu, '('], menuxlist(M).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>menuxlist([Item])--&gt; 
+      [Item, ')'].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>menuxlist([Item|T])--&gt; 
+      [Item], menuxlist(T).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prompt(_, 
+      P)--&gt; [prompt, P].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prompt(P, 
+      P)--&gt; [].</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Next 
+  are the predicates used to parse the basic rule structure. Note the flexibility 
+  that can be added into the system with DCG. Both <B>and</B> and <B>", "</B> 
+  can be used as LHS separators. The attribute-value phrases can be expressed 
+  in many different ways to allow the most natural expression in the rules.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>id(N)--&gt;[rule, 
+      N].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>if(IF)--&gt;[if], 
+      iflist(IF).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>iflist([IF])--&gt;phrase(IF), 
+      [then].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>iflist([Hif|Tif])--&gt;phrase(Hif), 
+      [and], iflist(Tif).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>iflist([Hif|Tif])--&gt;phrase(Hif), 
+      [', '], iflist(Tif).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>then(THEN, 
+      CF)--&gt;phrase(THEN), [cf], [CF].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>then(THEN, 
+      100)--&gt;phrase(THEN).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>phrase(not 
+      av(Attr, yes))--&gt;[not, Attr].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>phrase(not 
+      av(Attr, yes))--&gt;[not, a, Attr].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>phrase(not 
+      av(Attr, yes))--&gt;[not, an, Attr].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>phrase(not 
+      av(Attr, Val))--&gt;[not, Attr, is, Val].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>phrase(not 
+      av(Attr, Val))--&gt;[not, Attr, are, Val].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>phrase(av(Attr, 
+      Val))--&gt;[Attr, is, Val].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>phrase(av(Attr, 
+      Val))--&gt;[Attr, are, Val].</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>phrase(av(Attr, 
+      yes))--&gt;[Attr].</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Using 
+  DCG in this fashion, it is easy to implement as friendly a syntax for the knowledge 
+  base as desired. The same approach could also be used for the Native system, 
+  with DCG that translated English-like rules into Prolog syntax.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Now 
+  that we have a customized knowledge base and inference engine, it is possible 
+  to add other features to the system. The next chapter shows how to add explanations.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="exercises"></a>Exercises 
+  </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>3.1 
+  - Add attribute object value triples to the knowledge representation of Clam.</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>3.2 
+  - There are other ways of dealing with uncertainty in the literature which could 
+  be used with Clam. A simple one would just use a few text modifiers such as 
+  weak, very weak, or strong and have rules for combining them. Implement this 
+  or some other scheme in Clam.</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>3.3 
+  - Isolate the predicates which are used for calculating certainty factors so 
+  it is easy to add additional methods. Implement them so the calling predicates 
+  do not need to know the syntax of the certainty factor, since they might be 
+  text, numbers, or more complex data structures.</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>3.4 
+  - Allow rules to have optional threshold values associated with them which override 
+  the default of 20. This would be an addition to the rule syntax as well as the 
+  code.</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>3.5 
+  - Have the inference engine automatically generate a prompt to the user when 
+  there is no <B>askable</B> or <B>rule</B> which finds a value for an attribute.</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>3.6 
+  - Add menus to the query user facility.</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>3.7 - Implement another 
+  diagnostic application using Clam. Note any difficulties and features which 
+  could be added to alleviate those difficulties.</FONT></P>
+<P><i><font size=-1>Copyright &copy;1989,2000 Amzi! inc. All Rights Reserved.</font></i></P>
+</BODY>
+</HTML>

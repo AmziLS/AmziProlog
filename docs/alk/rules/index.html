@@ -1,0 +1,145 @@
+<HTML>
+<!-- #BeginTemplate "/Templates/alk.dwt" --> 
+<HEAD>
+<!-- #BeginEditable "doctitle" --> 
+<TITLE>Rules</TITLE>
+<!-- #EndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+<p><!-- #BeginEditable "Previous1" -->{Previous1}<!-- #EndEditable -->&nbsp <a href="../index.html">Start</a> 
+  &nbsp <a href="../toc.html">Contents</a> &nbsp 
+  <!-- #BeginEditable "Next1" -->{Next1}<!-- #EndEditable --></p>
+<hr>
+<h1><img src="../Images/paws.gif"><!-- #BeginEditable "Lesson" -->Rules<!-- #EndEditable --> 
+</h1>
+<!-- #BeginEditable "Body" --> 
+<p>Rules in Prolog are really just canned queries. Consider the query in the previous 
+  chapter that found the flights from Winder, GA:</p>
+<ul>
+  <pre><font color="#000099">?- airport(ID, 'Winder, GA'), flight(F, ID, X), airport(X, To).</font></pre>
+</ul>
+<p>We could make a rule called <b>from_winder/1</b> that encapsulated that query:</p>
+<ul>
+  <pre><font color="#000099">
+from_winder(X) :-
+   airport(WID, 'Winder, GA'),
+   flight(F, WID, ToID),
+   airport(ToID, X).</font>
+</pre>
+</ul>
+<p>And then, instead of the above query, just query the rule:</p>
+<ul>
+  <pre><font color="#000099">
+?- from_winder(X).
+
+X = 'Lebanon, OH' ;
+
+X = 'St. Petersburg, FL' ;
+no</font></pre>
+</ul>
+<p>Notice that, just as with the query, backtracking (using the semi-colon ';') 
+  through the query to the rule gives all the values of X for which the query 
+  is true.</p>
+<p>Notice also that the only variable the listener displays in the one in the 
+  query. The values of the variables inside the rule, such as ToID, remain hidden.</p>
+<p>From the listener there is no way of telling whether the goal <b>from_winder(X)</b> 
+  is satisfied by a rule, or by two facts of the form <b>from_winder('Lebanon, 
+  OH')</b>.</p>
+<p>Instead of a <b>from_winder/1</b> rule, we could have a more general rule for 
+  finding where you can get from a given airport:</p>
+<ul>
+  <pre><font color="#000099">
+destination(From, To) :-
+   airport(FromID, From),
+   flight(F, FromID, ToID),
+   airport(ToID, To).</font>
+</pre>
+</ul>
+<p>Using it, we get the same results:</p>
+<ul>
+  <pre><font color="#000099">
+?- destination('Winder, GA', X).
+
+X = 'Lebanon, OH' ;
+
+X = 'St. Petersburg, FL' ;
+no</font></pre>
+</ul>
+<p>We can find destinations from other airports as well:</p>
+<ul>
+  <pre><font color="#000099">
+?- destination('St. Petersburg, FL', X).
+
+X = 'Winder, GA' ;
+
+X = 'Russellville, AL' ;
+no</font></pre>
+</ul>
+<h3>Math</h3>
+<p>Rules can have mathematical evaluation and comparisons. The operator 'is' is 
+  used for mathematical evaluation. The expression on the right side of the 'is' 
+  is evaluated, and unified with the variable on the left side.</p>
+<blockquote> 
+  <pre><font color="#000099">
+?- X is 2 + 3.
+
+X = 5
+yes</font>
+</pre>
+</blockquote>
+<p>Greater than and less than operators '&gt;', '&gt;=', '&lt;', '=&lt;' can be 
+  used to compare either numbers or expressions. Note that less than or equal 
+  is written '=&lt;' NOT '&lt;='. This is because Prolog programmers often use 
+  symbols that look like arrows, so care is taken to not have any of these comparison 
+  operators look like arrows.</p>
+<blockquote> 
+  <pre><font color="#000099">?- 2 * 3 &gt; 2 + 3.</font></pre>
+  <pre><font color="#000099">yes</font></pre>
+</blockquote>
+<p>These can be used in rules as well. docs/alk/rules/amzi_air.pro has distances 
+  for each flight, rather than base fares. It also has facts on fuel costs and 
+  consumption. Using these, we can write a rule for computing the base fare for 
+  a flight based on its distance.</p>
+<blockquote> 
+  <pre><font color="#000099">dollars_per_gallon(2.00).
+air_speed_knots(120).
+gallons_per_hour(10.0).
+takeoff_fuel(5.0).</font></pre>
+  <pre><font color="#000099">fuel_cost(Distance, Cost) :-
+   dollars_per_gallon(DpG),
+   gallons_per_hour(GpH),
+   air_speed_knots(AS),
+   takeoff_fuel(TF),
+   Cost is (TF + (Distance/AS) * GpH) * DpG.
+ </font></pre>
+</blockquote>
+<p>This way, if the price of fuel goes up, just that fact can be changed.</p>
+<p>Rules can refer to other rules, just as they refer to facts.</p>
+<blockquote>
+  <pre><font color="#000099">
+base_fare(FlightID, Cost) :-
+  distance(FlightID, Distance),
+  fuel_cost(Distance, Cost).</font>
+</pre>
+</blockquote>
+<p>Now all the facts we had before about base_fare for flights is replaced with 
+  these rules. Testing it.</p>
+<blockquote> 
+  <pre><font color="#000099">?- base_fare(aa11, X).
+
+X = 60.00
+yes</font>
+</pre>
+</blockquote>
+<p>Putting this all together, we can quote a price for a given trip:</p>
+<p>price(From, To, Price) :-</p>
+<!-- #EndEditable --> 
+<hr>
+<!-- #BeginEditable "References" -->{References}<!-- #EndEditable --> 
+<p><!-- #BeginEditable "Previous2" -->{Previous2}<!-- #EndEditable -->&nbsp <a href="../index.html">Start</a> 
+  &nbsp <a href="../toc.html">Contents</a> &nbsp 
+  <!-- #BeginEditable "Next2" -->{Next2}<!-- #EndEditable --></p>
+</BODY>
+<!-- #EndTemplate -->
+</HTML>

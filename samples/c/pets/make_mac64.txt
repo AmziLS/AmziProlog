@@ -1,0 +1,12 @@
+C_FLAGS = -O6
+
+CC = gcc
+
+all: pets pets.xpl
+
+pets: pets.c
+	$(CC) -I$(AMZI_DIR)/include -L$(AMZI_DIR)/lib $(C_FLAGS) -lamzi -lm -lstdc++ -o pets pets.c
+
+pets.xpl: pets.pro
+	acmp pets
+	alnk pets pets

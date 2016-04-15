@@ -1,0 +1,95 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; U) [Netscape]">
+   <title>Rule-Based Shipping Expert System</title>
+</head>
+<body bgcolor="#FFFFFF">
+<h1> <font color="#0000FF">Rule-Based Shipping Advisor Sample</font></h1>
+Shipping notes on how to build an embedded rule-based system in Prolog.
+<h2>
+Design issues -</h2>
+
+<ul>
+<li>
+Design of the rules</li>
+
+<li>
+Implementing in Prolog</li>
+
+<li>
+Implementing a rule language in Prolog</li>
+</ul>
+One of the major first issues is deciding whether or not the application
+will make use of custom extensions to
+<br>the Prolog language.
+<p>Any host language application can query the Prolog rule base, assert
+and retract facts, get answers back, but
+<br>the host program is in control.&nbsp; Prolog only responds.
+<p>Using C/C++, the developer can create custom extensions to Prolog that
+allow Prolog to respond back to the application.
+<p>The simplest example is use of a built-in messagebox predicate that
+Prolog can use to query the user.
+<h2>
+Development steps -</h2>
+Come up with some simple rules and getting it working in the interpreter.
+<p>Playing with the ideas starts to give shape to the application.
+<p>Write a Prolog front-end that simulates the interaction with the system
+that the host program will have.&nbsp; This
+<br>allows testing and debugging to proceed in the Prolog interactive environment.
+<p>Example - the shipping application will be embedded in VB, so interaction
+will be through assert facts, gathered
+<br>from the VB front end.&nbsp; A main routine simulates this by gathering
+inputs and calling the main predicates.
+<p>Start simple - examples from shipper - try this and test it, if there's
+bugs, then use the debugger to trace the
+<br>output, understand the flow of control and the interaction of the rules
+for a simple case.
+<pre>main :-
+&nbsp; get_inputs,
+&nbsp; get_options.
+
+get_options :-
+&nbsp; option(Shipper, Service, Cost, Delivery),
+&nbsp; write(Shipper:Service:Cost:Delivery), nl,
+&nbsp; fail.
+get_options.&nbsp;&nbsp;
+
+get_inputs :-
+&nbsp; prompt(weight, $What is the weight? $),
+&nbsp; prompt(type, $What type of package (brochure, package)? $),
+&nbsp; prompt(destination, $What is the destination? $).
+
+prompt(Attr, Prompt) :-
+&nbsp; write(Prompt),
+&nbsp; read_string(Str),
+&nbsp; string_term(Str, Val),
+&nbsp; retractall(known(Attr, _)),
+&nbsp; assert(known(Attr, Val)).
+
+% Rules callable from VB
+
+option(Shipper, Service, Cost, Delivery) :-
+&nbsp; shipper(Shipper, Service, Cost, Delivery).
+
+shipper('USMail', 'First Class', Cost, 'One or two days') :-
+&nbsp; known(weight, W),
+&nbsp; known(destination, D),
+&nbsp; cost_usmail(W, D, Cost).
+
+cost_usmail(W, 'USA', 32) :-
+&nbsp; W =&lt; 1.
+cost_usmail(W, 'USA', X) :-
+&nbsp; X is 32 + 23 * (W - 1).
+</pre>
+Design points, its often useful to keep the information being reasoned
+over separate from the rules and data
+<br>of the expert system.
+<p>In this case information is represented as simple attribute: value pairs,
+such as weight:3.&nbsp; They are stored in a
+<br>Prolog fact, known(Attr,Val).
+<p>Utility predicates are written to maintain the information. They can
+grow complex, to full frame-based systems.
+</body>
+</html>

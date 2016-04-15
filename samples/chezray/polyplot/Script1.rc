@@ -1,0 +1,136 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG1 DIALOGEX 100, 100, 298, 165
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_LEFTSCROLLBAR
+CAPTION "MAP CONTROLS"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,165,16,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,165,38,50,14
+    CONTROL         "75",IDC_SCALE75,"Button",BS_AUTORADIOBUTTON | WS_GROUP | 
+                    WS_TABSTOP,15,30,24,10
+    CONTROL         "150",IDC_SCALE150,"Button",BS_AUTORADIOBUTTON,15,42,28,
+                    10
+    CONTROL         "300",IDC_SCALE300,"Button",BS_AUTORADIOBUTTON,15,54,28,
+                    10
+    CONTROL         "600",IDC_SCALE600,"Button",BS_AUTORADIOBUTTON,15,66,28,
+                    10
+    CONTROL         "1200",IDC_SCALE1200,"Button",BS_AUTORADIOBUTTON,15,78,
+                    32,10
+    CONTROL         "2400",IDC_SCALE2400,"Button",BS_AUTORADIOBUTTON,15,90,
+                    32,10
+    EDITTEXT        IDC_EDITX,88,30,40,14,ES_MULTILINE | ES_READONLY | 
+                    ES_NUMBER | WS_GROUP
+    CONTROL         "Spin1",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_AUTOBUDDY | UDS_ARROWKEYS,129,31,11,14
+    EDITTEXT        IDC_EDITY,89,76,40,14,ES_MULTILINE | ES_READONLY | 
+                    ES_NUMBER | WS_GROUP
+    CONTROL         "Spin2",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_AUTOBUDDY | UDS_ARROWKEYS,132,76,11,14
+    GROUPBOX        "Center X",IDC_SCALE2,78,15,69,38
+    GROUPBOX        "Center Y",IDC_SCALE3,78,60,70,38
+    GROUPBOX        "Scale",IDC_SCALE1,6,14,59,95
+    CONTROL         "Axes",IDC_AXES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    106,118,31,10
+    CONTROL         "Unit Circle",IDC_UNITC,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,140,118,48,10
+    CONTROL         "Text",IDC_TEXT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    191,118,30,10
+    CONTROL         "15 degrees",IDC_ANGLE15,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP | WS_TABSTOP,165,65,51,10
+    CONTROL         "30 degrees",IDC_ANGLE30,"Button",BS_AUTORADIOBUTTON,165,
+                    78,51,10
+    CONTROL         "45 degrees",IDC_ANGLE45,"Button",BS_AUTORADIOBUTTON,165,
+                    91,51,10
+    GROUPBOX        "Angle increments",IDC_ANGLES,156,55,69,50
+    CONTROL         "Sound",IDC_SOUND,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
+                    WS_TABSTOP,66,118,37,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_DIALOG1, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 289
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 158
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>O.S. Extended Predicates</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<h1><A NAME="ExtendedPredicates"></A><FONT COLOR="#D2AA00">O.S. Extended Predicates 
+  </FONT></h1>
+
+<P><!AMZI_INDEX= Extended Predicates; Predicates; arun; aolsutil.lsx>The built-in 
+  predicates defined so far are part of the core Amzi! implementation. In addition 
+  to these, each operating system has a collection of 'extended predicates' that 
+  are defined for that environment. These include, for example, predicates that 
+  manipulate files and directories and predicates that allow Windows programs 
+  to put up message boxes. </P>
+
+<P>Extended predicates are implemented using the Logic Server API, and come with 
+  full source code for Logic Server customers. They can be easily supplemented 
+  with your own definitions. The operating system dependent predicates are defined 
+  in osutil.cpp and are implemented as a Logic Server Extension (.lsx). The compiled 
+  file is aosutil.lsx, which is installed in the amzi/bin directory. It can be 
+  modified by any customers with the Logic Server.</P>
+<P>To load aosutils.lsx, either include a line in the amzi.cfg:</P>
+<ul>
+  <Pre><font color="#000080">lsxload = aosutils</font></Pre>
+</ul>
+<P>or from Prolog call:</P>
+<ul>
+  <Pre><font color="#000080">loadlsx('aosutils.lsx').</font></Pre>
+</ul>
+<P>Using the Logic Server, one can add other .lsx's containing custom extended 
+  predicates. See the Logic Server reference for details. </P>
+
+<h3><A NAME="FileampDirectoryPredicates"></A><font color="#000080">File and Directory 
+  Name Parameters </font></h3>
+
+<P><!AMZI_INDEX= Files; Directories> The file/path names can be entered as strings, 
+  atoms or character lists. Take care to use double backslashes when string_esc 
+  is turned on, the default. </P>
+
+<H3><A NAME="chdirDirL"></A><FONT COLOR="#000080">chdir(DirL)</FONT></H3>
+
+<P><!AMZI_INDEX= chdir><B>chdir</B> attempts to change the current working
+directory to DirL, which is a character list, atom or string. If the change
+is successful, <B>chdir/1</B> suceeds, otherwise it fails. For example:
+</P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- chdir('\\amzi5\\samples').</FONT></PRE>
+</UL>
+
+<H3><A NAME="chdirDirLErr"></A><FONT COLOR="#000080">chdir(DirL, Err)</FONT></H3>
+
+<P><!AMZI_INDEX= chdir><B>chdir/2</B> attempts to change the current working
+directory to DirL, which is a character list, atom or string. Err is unified
+with the operating system error code (which is usually 0 for no error).
+For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- chdir('/amzi5/samples', Ecode).</FONT></PRE>
+</UL>
+
+<H3><A NAME="curdirDirL"></A><FONT COLOR="#000080">curdir(DirS)</FONT></H3>
+
+<P><!AMZI_INDEX= curdir><B>curdir/1</B> attempts returns the current directory
+as a string in DirS. It fails if the operating system is unable to return
+the pathname. For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- curdir(Path).
+Path = `C:\amzi5`</FONT></PRE>
+</UL>
+
+<H3><A NAME="delfilePathLErr"></A><FONT COLOR="#000080">delfile(PathL,
+Err)</FONT></H3>
+
+<P><!AMZI_INDEX=  delfile><B>delfile/2</B> attempts to delete the file
+specified by PathL, where PathL is a character list. Err is unified with
+the operating system error code (which is usually 0 for no error). For
+example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- delfile('a:\\ducks.tst', Ecode).</FONT></PRE>
+</UL>
+
+<H3><A NAME="mkdirDirLErr"></A><FONT COLOR="#000080">mkdir(DirL, Err)</FONT></H3>
+
+<P><!AMZI_INDEX= mkdir><B>mkdir/2</B> attempts to create subdirectory DirL,
+which is a character list, atom or string. Err is unified with the operating
+system error code (which is usually 0 for no error). For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- mkdir(NEWDIR, Err).</FONT></PRE>
+</UL>
+
+<H3><A NAME="renameOldNameNewNameErr"></A><FONT COLOR="#000080">rename(OldName,
+NewName, Err)</FONT></H3>
+
+<P><!AMZI_INDEX= rename><B>rename/3</B> renames the OldName file to NewName. Err 
+  is the error code returned from rename, which should be 0 if all went well. 
+</P>
+<ul>
+  <pre><font color="#000080">?- rename('oldfile.txt', 'newfile.txt', Err).</font></pre>
+</ul>
+
+<H3><A NAME="rmdirDirLErr"></A><FONT COLOR="#000080">rmdir(DirL, Err)</FONT></H3>
+
+<P><!AMZI_INDEX= rmdir><B>rmdir/2</B> attempts to remove subdirectory Dir,
+which is a character list, atom or string. Err is unified with the operating
+system error code (which is usually 0 for no error). For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- rmdir('\\temp', ErrCode).</FONT></PRE>
+</UL>
+
+<h3><A name="findfilesMaskAttrFileInfo"></A><font color="#000080">findfiles(Mask,
+  Attr, FileInfo)</font></h3>
+<p><!AMZI_INDEX=  findfiles><b>findfiles/3</b> (Windows only) is used to get file information 
+  from the current directory. </p>
+<p>Mask is an atom, string or character list giving the pattern to match, such 
+  as '*.*' for everything or '*.pro' for all Prolog files. </p>
+<p>Attr is an integer defining what type of files to find. The values are: 0 - 
+  normal files, 1 - read only, 4 - system files, 8 - label, and 16 - directories. 
+  These values can be added together. </p>
+<p>FileInfo is a structure with the file information in the format: </p>
+<ul>
+  <pre><font color="#000080">fileinfo(Name, Attr, time(Hr, Min, Sec), date(Year, Mon, Day), Size).</font></pre>
+</ul>
+<p><b>findfiles/3</b> is designed to be backtracked into and fail when there are 
+  no more files. So, the query </p>
+<ul>
+  <pre><font color="#000080">?- findfiles('*.pro', 0, F), write(F), nl, fail.</font></pre>
+</ul>
+<p>will write all of the information about the Prolog files in the current directory. 
+</p>
+<p>To get a list of file information, <b>findall/3</b> can be used. For example, 
+  to get a list of just the names of the Prolog files </p>
+<ul>
+  <pre><font color="#000080">?- findall(Name, findfiles('*.pro', 0, fileinfo(Name, _, _, _, _)), FileNames).
+FileNames = [duck1.pro, duck2.pro, ...]</font></pre>
+</ul>
+<p>To get a list of directories </p>
+<ul>
+  <pre><font color="#000080">?- findall(DirName, 
+        findfiles('*.*', 16, fileinfo(DirName, _, _, _, _)), 
+        DirNames).
+DirNames = [., .., amzi, samples, ....]</font></pre>
+</ul>
+<p><i><img src="arrowrt.gif" height=18 width=18 align=BOTTOM> <b>findfiles/3</b> 
+  is actually implemented in alib (Prolog built-in predicates) but uses two osutils 
+  extended predicates, <b>findfirst/4</b> and <b>findnext/2</b> to set up Prolog 
+  backtracking. </i></p>
+<H3><A NAME="FileStat"></A>
+<FONT COLOR="#000080">stat(FileName,Atime,Ctime,Mtime,Size,Mode,NLink,Uid,Gid)</FONT></H3>
+<!AMZI_INDEX = stat/9>
+<p><b>stat/9</b> (Unix only) given FileName returns access time, change time, 
+  modify time, size (all unsigned longs) and mode, number of links, user-id, group-id.</p>
+<h3><A name="getdriveDrive"></A><font color="#000080">getdrive(Drive)</font></h3>
+<p><!AMZI_INDEX=  getdrive><b>getdrive/1</b> (Windows only) returns the current 
+  drive as a string. For example: </p>
+<ul>
+  <pre><font color="#000080">?- getdrive(X).
+X = $c:$</font></pre>
+</ul>
+<H3><A name="setdriveDrive"></A><font color="#000080">setdrive(Drive)</font></H3>
+<p><!AMZI_INDEX= setdrive><b>setdrive/1</b> (Windows only) takes a drive specification 
+  and sets the current drive to it. For example: </p>
+<ul>
+  <pre><font color="#000080">?- setdrive(a). </font></pre>
+</ul>
+<p>or </p>
+<ul>
+  <pre><font color="#000080">?- setdrive('A:').</font></pre>
+</ul>
+
+<H3><A name="get_env_var"></A><font color="#000080">get_env_var(VARIABLE, VALUE)</font></H3>
+<p><!AMZI_INDEX= get_env_var/2; environment variables><b>get_env_var/2</b> (Windows 
+  only) gets the value of a system environment variable. For example:</p>
+<ul>
+  <pre><font color="#000080">?- get_env_var(`OS`, X).
+X = `Windows_NT`
+yes </font></pre>
+</ul>
+
+<h3><A name="wgetfileFileStr"></A><font color="#000080">w_getfile(FileStr)</font></h3>
+<p><!AMZI_INDEX=  w_getfiler><b>w_getfile/1</b> calls the standard Windows file 
+  open dialog box, and unifies the file name with FileStr. FileStr is a string 
+  and the backslashes are all doubled to avoid problems with string_esc. (32-bit 
+  Windows platforms only.) </p>
+<h2></h2>
+<H3><A NAME="wmsgboxTerm"></A><FONT COLOR="#000080">w_msgbox(Term)</FONT></H3>
+
+<P><!AMZI_INDEX=  w_msgbox><B>w_msgbox/1</B> writes Term in a Windows message
+box, with an OK button. </P>
+
+<H3><A NAME="wtfmsgboxTerm"></A><FONT COLOR="#000080">w_tfmsgbox(Term)</FONT></H3>
+
+<P><!AMZI_INDEX=  w_tfmsgbox><B>w_tfmsgbox/1</B> write Term in a Windows message 
+  box with YES and NO buttons. If the user picks YES, the predicate succeeds, 
+  if the user picks NO the predicate fails. <br>
+</P>
+<P> <!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p></P>
+
+<P>&nbsp; </P>
+
+</BODY>
+</HTML>

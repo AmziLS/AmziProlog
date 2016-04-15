@@ -1,0 +1,20 @@
+SOURCE=$(APLS_SOURCE)
+RELEASE=$(APLS_RELEASE)
+
+LIBS = \
+   list.plm \
+   misc.plm \
+   date_time.plm \
+   xml.plm
+
+.SUFFIXES: .plm .pro
+
+.pro.plm:
+	acmp $<
+
+_libs : clean $(LIBS)
+	cp *.plm $(RELEASE)/abin
+
+clean :
+	-rm *.plm
+

@@ -1,0 +1,23 @@
+SOURCE=$(APLS_SOURCE)
+RELEASE=$(APLS_RELEASE)
+
+.SUFFIXES: .plm .pro
+
+OBJECTS = reader.plm
+
+.pro.plm:
+	acmp $<
+
+all: $(RELEASE)/abin/alib.plm $(RELEASE)/abin/acmp.xpl
+
+$(RELEASE)/abin/alib.plm : alib.pro
+	acmp alib
+	cp alib.plm $(RELEASE)/abin/alib.plm
+
+$(RELEASE)/abin/acmp.xpl : $(OBJECTS)
+	cp acmp.xpl $(RELEASE)/abin/acmp.xpl
+
+#clean :
+#	-rm *.plm
+
+	

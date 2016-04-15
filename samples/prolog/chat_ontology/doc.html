@@ -1,0 +1,737 @@
+<html>
+<head>
+<title>ChatBots and Ontologies</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>ChatBots and Ontologies</h1>
+<p>The two types of AI application studied are chat bots (<a href="http://www.ainewsletter.com/newsletters/aix_0307.htm">July 
+  2003 newsletter</a>) and ontologies (<a href="http://www.ainewsletter.com/newsletters/aix_0306.htm">June 
+  2003 newsletter</a>).</p>
+<p>Both are perfect examples of the ideas expressed in the first newsletter (<a href="http://www.ainewsletter.com/newsletters/aix_0211.htm">November 
+  2002</a>) about AI applications in general. Both require a knowledge representation 
+  language and a reasoning engine that knows how to apply that knowledge.</p>
+<p>In the case of chat bots, the knowledge is patterns of inputs and responses 
+  that drive a dialog. In the case of ontologies, the knowledge is relationships 
+  and attributes of words and concepts.</p>
+<p>A chat bot tool provides a way to represent the knowledge and a way to deploy 
+  it. An ontology tool does the same.</p>
+<p>There are chat bot and ontology tools available, and good ones at that, but 
+  they suffer the problems of all AI tools. They make assumptions about how and 
+  what types of knowledge can be represented, and further, on how that knowledge 
+  is deployed.</p>
+<p>If the assumptions fit an application area, that's great. But if not... Well 
+  that's a very practical line of reasoning. The simple truth is, its a lot more 
+  fun to play with your own knowledge representation and reasoning engine, and, 
+  you can get it to do exactly what you want.</p>
+<p>The programs can be written in any programming language, but we'll use Prolog 
+  in the newsletter because it is particularly versatile for a rapid prototyping 
+  and experimentation approach to AI concepts, as well as being very compact and 
+  fitting better in a newsletter.</p>
+<p>Logic programs have the added benefit that they read much like program specifications 
+  and can be used for the design of applications intended for implementation in 
+  other languages. So if you don't like Prolog, read along and code in Lisp, Mozart, 
+  Java or the language of your choice. For those that don't know Prolog, there 
+  are boxes with explanatory notes.</p>
+<p>One final note. Design decisions for the programs were always made in favor 
+  of clarity, sometimes at the expense of performance, although this will not 
+  be an issue until the knowledge base for either program grows to a large size.</p>
+<h2><a name="chat_bot"></a>Chat Bot</h2>
+<p>Chat bot is the generic name for programs derived from Weizenbaum's original 
+  Eliza program, which mimicked a therapist. Eliza was written almost as a joke, 
+  to show how mindless pattern-matching rules can be used to generate realistic 
+  conversations, thus proving the software was NOT intelligent. Yet chat bots 
+  have come closer to passing the Turing test than other types of programs, and 
+  Richard Wallace hypothesizes that that is because much human dialog is, in fact, 
+  mindless pattern-matching.</p>
+<h3>Pronoun Reversal</h3>
+<p>One of the main insights in Eliza was how much can be done simply by changing 
+  the grammatical person of a sentence, like 'I' to 'you' and 'mine' to 'yours'. 
+  This is called pronoun reversal. We'll start with a very simple, and extremely 
+  annoying chat bot that does only that, and adds a question mark at the end.</p>
+<p>To represent the knowledge of which words to reverse, we'll use Prolog facts, 
+  which are logically the same as relations in a relational database. Here's the 
+  few we'll use for testing, in a relation call <b>me_you/2</b>, the /2 indicating 
+  there are two arguments.</p>
+<blockquote> 
+  <pre><font color="#000099">me_you(me,you).
+me_you(i,you).
+me_you(my,your).
+me_you(am,are).</font></pre>
+</blockquote>
+<p>The choice of the me_you/2 predicate was the first design decision about knowledge 
+  representation.</p>
+<h3>Input/Output</h3>
+<p>The reasoning engine needs an interface to the user or caller. For the chat 
+  bot all that is required is a predicate (like a function) that takes an input 
+  string of user text and puts out a response string. A predicate <b>respond</b> 
+  with two arguments, the input and the response, provides that service. It is 
+  refered to in Prolog as <b>respond/2</b>.</p>
+<p>Any application that can call Prolog could be used to provide the dialog interface 
+  with the user, and Prolog is certainly a language that can call Prolog. Here's 
+  a simple loop for a console version of the program that can also be run in a 
+  Prolog listener (interpreter).</p>
+<blockquote> 
+  <pre><font color="#000099">main :-
+   write('DDJ AI Expert ChatBot Sample'), nl,
+   repeat,
+   write('> '), read_string(InputString),
+   respond(InputString, ResponseString),
+   write(ResponseString), nl,
+   InputString == `quit`.</font>
+</pre>
+</blockquote>
+<table width="100%" border="1" cellpadding="10" bordercolor="#000099" bgcolor="#DFFFFF">
+  <tr> 
+    <td>A Prolog <b>logic base</b>, or program, is made up of logical <b>clauses</b> 
+      that define <b>predicates</b>. This one is simple. The predicate is called 
+      <b>main/0</b> (the /0 indicating no arguments) and has only one clause. 
+      After the neck<b> :-</b> symbol are a comma separated list of <b>goals</b>, 
+      which typically call other predicates. The most important one here is <b>respond/2</b>, 
+      which will do the real work. Logical variables are indicated by an initial 
+      upper case letter, such as <b>InputString</b>.</td>
+  </tr>
+</table>
+<h3>Core Pattern Matcher</h3>
+<p>How should a sentence be represented internally by the program? Thinking of 
+  the sentence as a list of words seems like a good starting point. Proceeding 
+  in a top-down manner, here is the implementation of <b>respond/2</b>.</p>
+<blockquote> 
+  <pre><font color="#000099">respond(InputString, ResponseString) :-
+   string_to_list(InputString, InputWordList),
+   swap_person(InputWordList, SwappedWordList),
+   form_response(SwappedWordList, ResponseWordList),
+   list_to_string(ResponseWordList, ResponseString),
+   !.</font>
+</pre>
+</blockquote>
+<table width="100%" border="1" cellpadding="10" bordercolor="#000099" bgcolor="#DFFFFF">
+  <tr> 
+    <td>The <b>!</b>, called <b>cut</b>, is used to turn off Prolog's automatic 
+      backtracking search for multiple solutions for a given rule. In this case, 
+      we only want one response for each user input.</td>
+  </tr>
+</table>
+<p>The first and last goal of respond/2 perform the service of converting strings 
+  to and from lists of words. For experimentation, those steps could be simply 
+  eliminated, using lists directly for input and output. For final use, those 
+  steps should be quite nice, dealing with punctuation and capitalization. For 
+  now, we'll make use of simple built-in predicates that do the conversion for 
+  us but require everything in lower case. Later nicer versions of these can be 
+  implemented.</p>
+<blockquote> 
+  <pre><font color="#000099">string_to_list(String, List) :-
+   string_tokens(String, List).
+
+list_to_string(List, String) :-
+   stringlist_concat(List, ` `, String).</font>
+</pre>
+</blockquote>
+<table width="100%" border="1" cellpadding="10" bordercolor="#000099" bgcolor="#DFFFFF">
+  <tr> 
+    <td>The utility predicates for dealing with strings and lists are not part 
+      of the ISO standard for Prolog, so different implementations support different 
+      ones. They are all relatively easy to write in Prolog. The two used here, 
+      <b>string_tokens/2</b> and <b>stringlist_concat/3</b> are part of Amzi! 
+      Prolog. You might have to find equivalents for other Prologs, or, simply 
+      skip this step and use lists directly for input and output.</td>
+  </tr>
+</table>
+<p>Next to implement is the real guts of the program where the <b>me_you/2</b> 
+  knowledge is applied in the first step of creating a response. Recursion is 
+  typically used to process lists in Prolog. The recursive rules to replace the 
+  pronouns in a list of words are:</p>
+<p><b>boundary condition</b> - The list is empty, we're done.<br>
+  <b>recursive condition</b> - Take the first word in the list and call <b>swap_word/2</b> 
+  to see what the replacement word is. Put that word in the output list and recursively 
+  call the rest of input list to generate the rest of the output list.</p>
+<blockquote> 
+  <pre><font color="#000099">swap_person([], []).
+swap_person([X|Xs], [Y|Ys]) :-
+   swap_word(X,Y),
+   !, swap_person(Xs,Ys).
+</font>
+</pre>
+</blockquote>
+<table width="100%" border="1" cellpadding="10" bordercolor="#000099" bgcolor="#DFFFFF">
+  <tr> 
+    <td> 
+      <p><b>[H|T]</b> is Prolog notation for separating a list into its head (first 
+        element), and tail (remainder of the list). This allows for the easy writing 
+        of recursive rules where some operation is performed on the head, and 
+        the tail is then used as the argument to the next recursion. The empty 
+        list is represented by [] and usually signifies the boundary condition 
+        for a recursion.</p>
+      <p>So, for example, when <b>swap_person/2</b> is called with the input list 
+        [i,want,pizza], the pattern [X|Xs] is mapped to it in a process called 
+        <b>unification</b>. X becomes i, Xs becomes [want,pizza]. swap_word/2 
+        will unify Y with you and Ys will become what ever is returned by calling 
+        <b>swap_person/2</b> with [want,pizza].</p>
+    </td>
+  </tr>
+</table>
+<p>The <b>swap_word/2</b> rules look in the knowledge base portion of the program 
+  to see if the word is one mentioned in the <b>me_you/2</b> relation. If its 
+  not, the word is replaced with itself.</p>
+<blockquote> 
+  <pre><font color="#000099">swap_word(X,Y) :- me_you(X,Y).
+swap_word(X,Y) :- me_you(Y,X).
+swap_word(W,W).</font>
+</pre>
+</blockquote>
+<p>One last bit and we're ready to run. We form the response, for now, by simply 
+  adding a question mark on the end.</p>
+<blockquote> 
+  <pre><font color="#000099">form_response(In,Out) :-
+   append(In, [?], Out).</font>
+</pre>
+</blockquote>
+<p><b>append/3</b> is a common list utility in Prolog that appends one list to 
+  another. In this case we're adding the list with the single element, ?, to the 
+  end of our output list of words. To use a library of common list utilities we 
+  need these two lines at the front of the program. We'll use other list utilities 
+  later as well. (If you don't have a library, the implementations of various 
+  list utility predicates can be readily found and coded directly in the program.)</p>
+<blockquote> 
+  <pre><font color="#000099">:- load(list).
+:- import(list).</font>
+</pre>
+</blockquote>
+<p>We're now ready to load the program into a Prolog listener and see how it runs.</p>
+<blockquote> 
+  <pre><font color="#000099">?- consult(chatbot).
+yes
+?- main.
+DDJ AI Expert ChatBot Sample
+> i have problems with my computer
+you have problems with your computer ?
+> yes
+yes ?
+> will you help me
+will i help you ?
+> quit
+quit ?
+yes</font>
+</pre>
+</blockquote>
+<p>It's already sounding like some people I know.</p>
+<h3>Adding Response Patterns</h3>
+<p>The &quot;intelligence&quot; of a chat bot lies in the patterns it is told 
+  to recognize. Lists of words and variables can represent a pattern to look for, 
+  and lists that have those same variables in them can be used for various possible 
+  responses.</p>
+<table width="100%" border="1" cellpadding="10" bordercolor="#000099" bgcolor="#DFFFFF">
+  <tr> 
+    <td>There are two types of logical variables in Prolog. Named ones, beginning 
+      with an upper case letter, and anonymous ones, represented by an underscore. 
+      The named variables can be used to echo parts of the input back, and anonymous 
+      ones for indicating we don't care about parts of the input.</td>
+  </tr>
+</table>
+<p>Here's two responses for any input that has the adjacent words &quot;blue screen&quot; 
+  in it.</p>
+<blockquote> 
+  <pre><font color="#000099">response( [_,blue,screen,_],
+  [ [why,do,you,use,windows,?],
+    [wipe,your,computer,clean,and,install,linux,'.'] ]).</font>
+</pre>
+</blockquote>
+<p>Here's a response pattern for any input with the word &quot;linux&quot; in 
+  it.</p>
+<blockquote> 
+  <pre><font color="#000099">response( [_,linux,_],
+  [ [nobody,supports,linux,'.'] ]).</font>
+</pre>
+</blockquote>
+<p>That should drive them nuts.</p>
+<p>Here's a few more response patterns that might come in handy to keep the conversation 
+  going. The last one is a catch all that is used if none of the other patterns 
+  match. It does the job of echoing the input with a question mark. Remember that 
+  the input word lists have already had the pronouns swapped before they are used 
+  in these patterns.</p>
+<blockquote> 
+  <pre><font color="#000099">response( [yes,_],
+  [ [why,?] ]).
+response( [no,_],
+  [ [why,not,?] ]).
+response( [_,you,like,X],
+  [ [how,can,you,like,X,?],
+    [is,it,strange,to,like,X,?] ]).
+response( [_,want,to,X],<br>  [ [why,would,you,want,to,X,?],<br>    [you,can,not,X,'.'],<br>    [is,it,dangerous,to,X,?] ]).<br>response( [X],
+  [ [X,?] ]).</font>
+</pre>
+</blockquote>
+<table width="100%" border="1" cellpadding="10" bordercolor="#000099" bgcolor="#DFFFFF">
+  <tr> 
+    <td>When a named variable appears multiple times in a rule, like X in the 
+      above patterns gets a value, all occurances of X automatically have the 
+      same value. So when the pattern matcher we will write determines a value 
+      of X from the input pattern, then that value will be echoed in the output 
+      patterns.</td>
+  </tr>
+</table>
+<p>Before looking at the code, here's how these response rules will drive a dialog 
+  with the chat bot.</p>
+<blockquote> 
+  <pre><font color="#000099">?- main.
+DDJ AI Expert ChatBot Sample
+> i get a blue screen on my computer
+wipe your computer clean and install linux .
+> ok, i did that but now i cannot get linux to work.
+nobody supports linux .</font>
+</pre>
+</blockquote>
+<p>When there are multiple response patterns to pick from, the engine will pick 
+  one at random. Here's another run with the same rules, but a different result.</p>
+<blockquote> 
+  <pre>
+<font color="#000099">> i get a blue screen on my computer
+why do you use windows ?
+> i like the windows operating system
+is it strange to like the windows operating system ?
+> no
+why not ?
+> lots of people like windows
+lots of people like windows ?
+> yes
+why ?
+> it is easy to use
+it is easy to use ?</font>
+</pre>
+</blockquote>
+<p><b>The Response Pattern Matcher</b></p>
+<p>The tricky part of the pattern matcher is setting a variable to possibly multiple 
+  words in the input. For example, in the response pattern [_,want,to,X] X might 
+  match a phrase. That phrase is best represented as a list of words as well, 
+  so we will have an output list with embedded lists in it. A list utility, <b>flatten/2</b>, 
+  will fix that problem.</p>
+<p>For example if the input is [i,want,to,learn,to,fly] X will be bound to [learn,to,fly] 
+  and the outputs will look like [why,would,you,want,to,[learn,to,fly]]. <b>flatten/2</b> 
+  converts that to [why,would,you,want,to,learn,to,fly].</p>
+<p>Here is a new version of <b>form_response/2</b> that uses the <b>response/2</b> 
+  rules in the knowledge base portion of the application.</p>
+<blockquote> 
+  <pre><font color="#000099">form_response(Input,Response) :-
+   response(InputPattern, ResponsePatterns),
+   match(InputPattern, Input),
+   random_elem(ResponsePatterns, ResponsePattern),
+   flatten(ResponsePattern, Response).</font>
+</pre>
+</blockquote>
+<table width="100%" border="1" cellpadding="10" bordercolor="#000099" bgcolor="#DFFFFF">
+  <tr> 
+    <td>This rule makes use of Prolog automatic backtracking search to find the 
+      right response rule. It first picks a <b>response/2</b> and then uses <b>match/2</b> 
+      to see if its pattern matches the input. If it doesn't, then Prolog backtracks 
+      and tries the next <b>response/2</b> rule. When it finds one that matches, 
+      it picks one of the possible response outputs, flattens the list and returns 
+      the response.</td>
+  </tr>
+</table>
+<p>Here's the recursive rules that try to match the input word list with a pattern 
+  in one of the response rules. It will be called with the input pattern from 
+  a rule and its job will be to see if that pattern can be matched with the user's 
+  input. Further, if there are variables in the input pattern, then the binding 
+  for those variables will be determined as well.</p>
+<p>There are two boundary conditions.</p>
+<ul>
+  <li>One is when the the word list for the input pattern is empty, meaning the 
+    pattern matcher succeeded.</li>
+  <li>The other is when the only element left in the input pattern is a variable, 
+    in which case the pattern also succeeds and the variable is bound to whatever 
+    is left in the user input.</li>
+</ul>
+<p>There are two recursive cases.</p>
+<ul>
+  <li>When the next element in the input pattern list is a variable, a separate 
+    predicate is called to gather words from the user input up until the next 
+    specific word in the input pattern is encountered.</li>
+  <li>When the next element is a specific word, then if it matches the user input, 
+    recursion continues.</li>
+</ul>
+If the input doesn't match, none of the four <b>match/2</b> rules will succeed 
+and the call to <b>match/2</b> fails, triggering backtracking search for another 
+<b>response/2</b>. 
+<blockquote> 
+  <pre><font color="#000099">match([], []).
+match([Xs], IWs) :-
+   var(Xs),
+   !,
+   Xs = IWs.
+match([Xs,W|PWs], IWs) :-
+   var(Xs),
+   !,
+   fill_var(Xs, W, IWs, IWsLeft),
+   match([W|PWs], IWsLeft).
+match([W|PWs], [W|IWs]) :-
+   !,
+   match(PWs, IWs).</font></pre>
+</blockquote>
+<p><b>fill_var/4</b> is another recursive predicate that walks the input list 
+  looking for the first occurance of a word that matches the word after the variable. 
+  It has four arguments:</p>
+<ul>
+  <li>the output list of words, returned to caller;</li>
+  <li>the next word in the input pattern that cause recursion to stop when its 
+    found;</li>
+  <li>the user input list being walked, looking for the stop word;</li>
+  <li>the remainder of the input list, returned for the caller for further processing.</li>
+</ul>
+<blockquote> 
+  <pre><font color="#000099">fill_var([], W, [W|IWs], [W|IWs]) :-
+   !.
+fill_var([X|Xs], W, [X|IWs], IWsLeft) :-
+   fill_var(Xs, W, IWs, IWsLeft).</font></pre>
+</blockquote>
+<p>It is easy in Prolog to test individual predicates such as this one. When the 
+  program is loaded in a Prolog listener, any of the predicates can be queried 
+  directly. </p>
+<blockquote> 
+  <pre><font color="#000099">?- match([a,b,c], [a,b,c]).
+yes
+
+?- match([a,X,d], [a,b,c,d]).
+X = [b, c] 
+yes
+
+?- match([_,like,X], [you,like,to,fly,planes]).
+X = [to, fly, planes] 
+yes
+
+?- match([_,like,X], [you,want,to,fly,planes]).
+no
+
+?- match([a,b,c], [a,r,c]).
+no</font>
+</pre>
+</blockquote>
+<p>If you are new to Prolog, the best way to learn to understand code like this 
+  is to run it in a debugger, which will provide a trace of Prolog execution and 
+  variable bindings. Here is a trace of <b>form_response/2</b> from one type of 
+  Prolog debugger.</p>
+<blockquote> 
+  <pre><font color="#000099">
+DDJ AI Expert ChatBot Sample
+> i like pizza
+'CALL':user:form_response([you, like, pizza], H132)
+ 'CALL':user:response(H321, H322)
+ 'EXIT':user:response([H388, blue, screen, H394], 
+        [[why, do, you, use, windows, ?], 
+        [wipe, your, computer, clean, and, install, linux, .]])
+ 'CALL':user:match([H388, blue, screen, H394], [you, like, pizza])
+ 'FAIL':user:match([H388, blue, screen, H394], [you, like, pizza])
+ 
+ 'REDO':user:response([H388, blue, screen, H394], 
+        [[why, do, you, use, windows, ?], 
+        [wipe, your, computer, clean, and, install, linux, .]])
+ 'EXIT':user:response([yes, H390], [[why, ?]])
+ 'CALL':user:match([yes, H390], [you, like, pizza])
+ 'FAIL':user:match([yes, H390], [you, like, pizza])
+ 
+ 'REDO':user:response([yes, H390], [[why, ?]])
+ 'EXIT':user:response([no, H390], [[why, not, ?]])
+ 'CALL':user:match([no, H390], [you, like, pizza])
+ 'FAIL':user:match([no, H390], [you, like, pizza])
+ 
+ 'REDO':user:response([no, H390], [[why, not, ?]])
+ 'EXIT':user:response([H388, you, like, H394], 
+        [[how, can, you, like, H394, ?], 
+        [is, it, strange, to, like, H394, ?]])
+ 'CALL':user:match([H388, you, like, H394], [you, like, pizza])
+ 'EXIT':user:match(['[]', you, like, [pizza]], [you, like, pizza])
+ 'CALL':user:random_elem([[how, can, you, like, [pizza], ?], 
+        [is, it, strange, to, like, [pizza], ?]], H348)
+ 'EXIT':user:random_elem([[how, can, you, like, [pizza], ?], 
+        [is, it, strange, to, like, [pizza], ?]], 
+        [how, can, you, like, [pizza], ?])
+ 'CALL':user:flatten([how, can, you, like, [pizza], ?], H132)
+ 'EXIT':user:flatten([how, can, you, like, [pizza], ?], 
+        [how, can, you, like, pizza, ?])
+'EXIT':user:form_response([you, like, pizza], 
+       [how, can, you, like, pizza, ?])
+how can you like pizza ?
+></font> </pre>
+</blockquote>
+<p>This trace illustrates that the rules are tried in the order they appear. So 
+  if a user input might match multiple response patterns, the first one will have 
+  priority.</p>
+<p>At this point, all the code is here that is needed to run the program and get 
+  the results displayed a few paragraphs back.</p>
+<h3>Enhancements</h3>
+<p>There are a number of enhancements that can be made to the sample.</p>
+<p>Implement better formatting of input and output strings.</p>
+<p>Put the knowledge in a separate file, so different sets of pattern matching 
+  rules can be used. Let the user can pick from a menu of rule files.</p>
+<p>Indexing of response rules by key words in the patterns can be added. So for 
+  example, rules that match the word 'can' might be indexed on 'can'. This can 
+  be used for greater efficiency if a very large number of patterns are coded, 
+  and it can be used to easily let one pattern refer to another for completion.</p>
+<p>Memory of past variable bindings can be kept and popped back in from time to 
+  time. So we might remember the user liked pizza and if nothing else matches, 
+  have a response that uses the memory to ask a question about pizza.</p>
+<p>Add facts similar to the <b>me_you/2</b> facts that can be used to map a variety 
+  of input words into a single word used for pattern matching. For example, 'need' 
+  might map to 'want' so the rules matching 'want' will also work if the user 
+  types 'need'. Also it would be nice if the these facts used lists of words, 
+  rather than being restricted to single words.</p>
+<p>And of course creating more and more response patterns to make the chat bot 
+  more interesting.</p>
+<h2><a name="ontology"></a>Ontology</h2>
+<p>Tools for ontologies are easy to create and play with in Prolog. As always, 
+  first a knowledge representation for the ontology is determined, and then tools 
+  to use it are developed.</p>
+<h3>Knowledge Representation</h3>
+<p>The entries for the ontology can be stored as property lists, where each word 
+  has a property list associated with it. A property list is just a list whose 
+  elements are Property = Value. Using this idea for representing ontological 
+  knowledge, here's some entries we might want to support an application about 
+  food.</p>
+<blockquote> 
+  <pre><font color="#000099">word(pizza, [
+  kind_of = food,
+  contains = cheese,
+  contains = tomato ]).
+word(broccoli, [
+  kind_of = food,
+  color = green ]).
+word(donut, [
+  kind_of = food,
+  contains = sugar ]).
+word(spaghetti_sauce, [
+  kind_of = food,
+  contains = tomato ]).</font>
+</pre>
+</blockquote>
+<p>Here's some more entries about people and allergies.</p>
+<blockquote> 
+  <pre><font color="#000099">word(joe, [
+  instance_of = person,
+  allergy = tomato ]).
+word(jill, [
+  instance_of = person,
+  allergy = cheese ]).</font>
+</pre>
+</blockquote>
+<h3>Reasoning Engine</h3>
+<p>Now, armed with typical list utilities we can write a predicate that can answer 
+  questions about the properties of words in our ontology.</p>
+<blockquote> 
+  <pre><font color="#000099">property(Word, Property, Value) :-
+   word(Word, PropertyList),
+   member(Property = Value, PropertyList).</font>
+</pre>
+</blockquote>
+<table width="100%" border="1" cellpadding="10" bordercolor="#000099" bgcolor="#DFFFFF">
+  <tr> 
+    <td>Because Prolog is just matching patterns itself, the <b>property/3</b> 
+      predicate works no matter which variables are bound. So it can find properties 
+      of a particular word, or words with a particular property.</td>
+  </tr>
+</table>
+<p>Here's some things we can do with <b>property/3</b> in the listener. (The semicolon 
+  tells Prolog to look for another solution, so in these queries we find all solutions.)</p>
+<blockquote> 
+  <pre><font color="#000099">?- property(pizza, contains, X).
+X = cheese ;
+X = tomato ;
+no
+
+?- property(X, kind_of, food).
+X = pizza ;
+X = broccoli ;
+X = donut ;
+X = spaghetti_sauce ;
+no
+
+?- property(X, kind_of, food), property(X, color, green).
+X = broccoli ;
+no
+
+?- findall(X, property(pizza, contains, X), L).
+X = H19
+L = [cheese, tomato] 
+yes</font>
+</pre>
+</blockquote>
+<h3>Applications of the Ontology</h3>
+<p>The ontology we developed can be used to support other applications. The types 
+  of information we stored in the small sample can be used, for example, in an 
+  expert system that warns people about what foods they can and cannot eat based 
+  on allergies.</p>
+<p>The rules of that expert system might be written directly in Prolog. Each of 
+  these rules finds a person word and a food word and compares the allergy of 
+  the person with what the food contains.</p>
+<blockquote> 
+  <pre><font color="#000099">can_eat(Person, Food) :-
+  property(Person, instance_of, person),
+  property(Person, allergy, Allergy),
+  property(Food, kind_of, food),
+  not property(Food, contains, Allergy).
+
+cannot_eat(Person, Food) :-
+  property(Person, instance_of, person),
+  property(Person, allergy, Allergy),
+  property(Food, kind_of, food),
+  property(Food, contains, Allergy).</font>
+</pre>
+</blockquote>
+<p>Note that the ontology has changed the knowledge engineering task for this 
+  allergy expert system. Without the ontology, the knowledge would all be stored 
+  in the rules. With the ontology, the rules become simple general purpose rules 
+  and the knowledge is stored in the ontology.</p>
+<p>Here's how these two rules can be used.</p>
+<blockquote> 
+  <pre><font color="#000099">?- can_eat(joe, pizza).
+no
+
+?- can_eat(joe, donut).
+yes
+
+?- can_eat(joe, X).
+X = broccoli ;
+X = donut ;
+no
+
+?- cannot_eat(joe, X).
+X = pizza ;
+X = spaghetti_sauce ;
+no
+
+?- can_eat(X, broccoli).
+X = joe ;
+X = jill ;
+no</font>
+</pre>
+</blockquote>
+<h3>Transitivity</h3>
+<p>Transitivity is an easy enhancement to add to the ontology engine. Transitivity 
+  applies for certain properties, such as <b>kind_of</b>. It means that if X <b>kind_of</b> 
+  Y and Y <b>kind_of</b> Z then X <b>kind_of</b> Z. We can define certain properties 
+  as transitive by specifying it in the knowledge base.</p>
+<blockquote> 
+  <pre><font color="#000099">transitive(kind_of).
+transitive(contains).</font>
+</pre>
+</blockquote>
+<p>Now if we're looking for a value for a property that is transitive, our engine 
+  can recursively call itself.</p>
+<blockquote> 
+  <pre><font color="#000099">property(Word, Property, Value) :-
+   word(Word, PropertyList),
+   member(Property = Value, PropertyList).
+property(Word, Property, Value) :-
+   transitive(Property),
+   word(Word, PropertyList),
+   member(Property = Word2, PropertyList),
+   property(Word2, Property, Value).</font>
+</pre>
+</blockquote>
+<p>To test it make one small change to the ontology, have pizza contain spaghetti_sauce 
+  instead of tomato.</p>
+<blockquote> 
+  <pre><font color="#000099">word(pizza, [
+  kind_of = food,
+  contains = cheese,
+  contains = spaghetti_sauce ]).</font>
+</pre>
+</blockquote>
+<p> The test will be to see if joe is still not allowed to eat pizza, as the pizza 
+  does not directly contain tomato.</p>
+<blockquote> 
+  <pre><font color="#000099">?- property(pizza, contains, X).
+X = cheese ;
+X = spaghetti_sauce ;
+X = tomato ;
+no
+
+?- can_eat(joe, pizza).
+no
+
+?- cannot_eat(joe, pizza).
+yes</font>
+</pre>
+</blockquote>
+<h2><a name="chat_bot_ontology"></a>Chat Bot with Ontology</h2>
+<p>We can use the ontology we developed to add more intelligence to the patterns 
+  in the chat bot rules. In particular we can specify properties to include in 
+  the pattern match. Here's a pattern that recognizes when the user is talking 
+  about food.</p>
+<blockquote> 
+  <pre><font color="#000099">response( [_,property(W,kind_of,food),_],
+  [ [are,you,talking,about,W,because,you,are,hungry,'?'],
+    [when,did,you,last,eat,W,'?'] ]).</font>
+</pre>
+</blockquote>
+<p>And here's some to add to the annoying behavior of our technical support.</p>
+<blockquote> 
+  <pre><font color="#000099">response( [_,property(W,kind_of,windows),_],
+  [ [you,should,dump,W,and,switch,to,unix,'.'] ]).
+response( [_,property(W,kind_of,unix),_],
+  [ [you,should,dump,W,and,switch,to,windows,'.'] ]).</font>
+</pre>
+</blockquote>
+<p>These last two require the addition of some more information in the ontology.</p>
+<blockquote> 
+  <pre><font color="#000099">word(windows, [
+  kind_of = operating_system ]).
+word(unix, [
+  kind_of = operating_system ]).
+word(xp, [
+  kind_of = windows ]).
+word(w2000, [
+  kind_of = windows ]).
+word(linux, [
+  kind_of = unix ]).</font>
+</pre>
+</blockquote>
+<p>And we have to make some small changes to the basic pattern matcher to recognize 
+  and handle these property patterns in the rules. The new clauses are indicated 
+  in red.</p>
+<blockquote> 
+  <pre><font color="#000099">match([], []).
+match([Xs], IWs) :-
+   var(Xs),
+   !,
+   Xs = IWs.
+match([Xs,W|PWs], IWs) :-
+   var(Xs),
+   !,
+   fill_var(Xs, W, IWs, IWsLeft),
+   match([W|PWs], IWsLeft).
+<font color="#CC0000">match([property(W,P,V)|PWs], [W|IWs]) :-
+   property(W,P,V),
+   !,
+   match(PWs,IWs).</font>
+match([W|PWs], [W|IWs]) :-
+   !,
+   match(PWs, IWs).
+
+fill_var([], W, [W|IWs], [W|IWs]) :-
+   !.
+<font color="#CC0000">fill_var([], property(W,P,V), [W|IWs], [W|IWs]) :-
+   property(W,P,V),
+   !.</font>
+fill_var([X|Xs], W, [X|IWs], IWsLeft) :-
+   fill_var(Xs, W, IWs, IWsLeft).</font>
+</pre>
+</blockquote>
+<p>Trying the new pattern rules we get a dialog like this.</p>
+<blockquote> 
+  <pre><font color="#000099">?- main.
+DDJ AI Expert ChatBot Sample
+> i have problmes with xp
+you should dump xp and switch to unix .
+> ok i just installed linux
+you should dump linux and switch to windows .
+> you are going in circles
+i am going in circles ?
+> do you wnat to get a pizza
+when did you last eat pizza ?
+> yesterday
+yesterday ?
+> yes i ate pizza yesterday
+are you talking about pizza because you are hungry ?</font></pre>
+</blockquote>
+</body>
+</html>

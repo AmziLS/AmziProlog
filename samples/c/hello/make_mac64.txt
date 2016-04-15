@@ -1,0 +1,12 @@
+C_FLAGS = -O6
+
+CC = gcc
+
+all: hello hello.xpl
+
+hello: hello.c
+	$(CC) -I$(AMZI_DIR)/include -L$(AMZI_DIR)/lib $(C_FLAGS) -lamzi -lm -lstdc++ -o hello hello.c
+
+hello.xpl: hello.pro
+	acmp hello
+	alnk hello hello

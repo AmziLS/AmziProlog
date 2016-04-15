@@ -1,0 +1,37 @@
+SOURCE=$(APLS_SOURCE)
+RELEASE=$(APLS_RELEASE)
+
+.SUFFIXES: .plm .pro
+
+ALIS = $(RELEASE)/abin/alis.xpl
+AIDL = $(RELEASE)/abin/aidl.xpl
+AXRF = $(RELEASE)/abin/axrf.xpl
+ALIB = $(RELEASE)/abin/alib.plm
+DEBUG64 = $(RELEASE)/abin/debug64.plm
+AREG = $(RELEASE)/src/acore/compile/register.plm
+READER = ../compile/reader.plm
+
+OBJECTS = alis.plm debug.plm listen.plm axrf.plm probe.plm debug64.plm $(READER)
+
+
+all: $(DEBUG64) $(ALIS) $(AIDL) $(AXRF)
+
+.pro.plm:
+	acmp $<
+
+$(DEBUG64) : debug64.plm
+	cp debug64.plm $(DEBUG64)
+
+$(ALIS) : $(ALIB) $(OBJECTS)
+	alnk $(ALIS) alis listen debug debug64 $(READER)
+
+$(AIDL) : $(ALIB) $(OBJECTS)
+	alnk $(AIDL) listen debug debug64 $(READER)
+
+$(AXRF) : $(ALIB) $(OBJECTS)
+	alnk $(AXRF) axrf
+
+clean :
+	rm *.plm
+
+	

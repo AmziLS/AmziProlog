@@ -1,0 +1,20 @@
+SOURCE=$(APLS_SOURCE)
+RELEASE=$(APLS_RELEASE)
+
+ifdef DEBUG
+C_FLAGS = -c -g -fpic -Wimplicit
+else
+C_FLAGS = -c -fpic -Wimplicit
+endif
+
+CC = gcc
+
+$(RELEASE)/lib/aosutils.lsx: osutils.o
+	$(CC) -L$(RELEASE)/lib -shared -o aosutils.lsx osutils.o -lamzi
+	cp aosutils.lsx $(RELEASE)/lib/
+
+osutils.o: osutils.cpp
+	$(CC) -I$(RELEASE)/include $(C_FLAGS) -o osutils.o osutils.cpp
+
+clean:
+	rm *.o

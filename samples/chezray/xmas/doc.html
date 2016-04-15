@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>No title</title>
+  <meta name="GENERATOR" content="amaya 5.2" />
+</head>
+
+<body>
+<h1>Xmas</h1>
+
+<h2>The Filenes Christmas Shopping Puzzle </h2>
+
+<p> </p>
+
+<p>12 couples were waited on consecutively, as they bought a total  of 8 each
+of the following items:  </p>
+<ol>
+  <li>Aris Gloves</li>
+  <li>Airplane Book</li>
+  <li>COCO Perfume</li>
+  <li>Pearl Strands</li>
+  <li>A Football Sweater</li>
+  <li>A Handbag</li>
+</ol>
+
+<p></p>
+
+<p>Each husband and wife were waited on together.  Each couple bought 4
+items. No two couples bought the same combination of items, and none of the
+couples  bought two or more of the same item. </p>
+
+<p> Using the following clues, can you find:          </p>
+<ul>
+  <li>The full name of each husband and wife.</li>
+  <li>What order they were waited on.</li>
+  <li>What items each couple bought.
+    <p></p>
+  </li>
+</ul>
+
+<p>Hint: One husband is Bob, one wife is Elizabeth, and one surname is
+Stanton.  </p>
+<ol>
+  <li>The Craigs, who bought a handbag, were waited on before the Murphys,
+    who were not waited on last.</li>
+  <li>The Collins bought Aris gloves, a sweater, and handbag, and COCO.</li>
+  <li>The couples waited on 8th and 10th bought the Airplane Book.</li>
+  <li>These five couples were waited on consecutively: the Smiths; Gary and
+    his wife; a couple who bought the Airplane Book and a handbag; the
+    Swains; and Bill and his wife.</li>
+  <li>Geraldine and her husband did not buy either a handbag or a
+  sweater.</li>
+  <li>The couple who were waited on last did not buy pearls.</li>
+  <li>One of the items Tom and his wife bought was the Airplane Book.</li>
+  <li>The Marshalls did not buy COCO or pearls.</li>
+  <li>Evelyn and her husband bought Aris gloves but not COCO.</li>
+  <li>These five couples were waited on consecutively: Martha and her
+    husband; Jack and his wife; the couple who bought Aris gloves, COCO, the
+    Airplane Book, and a handbag; the couple who did not buy either pearls or
+    the Airplane Book; and Margaret and her husband.</li>
+  <li>The first five couples waited on all bought COCO.</li>
+  <li>Chuck and his wife did not buy Aris gloves.</li>
+  <li>The couples waited on first, second, and fourth did not buy a
+  sweater.</li>
+  <li>Eleanor and her husband did not buy COCO.</li>
+  <li>Neither Allen and his wife, who did not buy a handbag, nor the Anthonys
+    bought Aris gloves.</li>
+  <li>Cheryl and her husband, who were not waited on 10th or 12th, and John
+    and his wife are two couples who bought both a sweater and a handbag.</li>
+  <li>The Douglases, who did not buy Aris gloves or a sweater, were waited on
+    9th.</li>
+  <li>Adam and his wife, who did not buy a handbag, were waited on
+    immediately before the Days.</li>
+  <li>Steve and his wife bought pearls, the Airplane Book, a sweater, and one
+    other item.</li>
+  <li>The last three couples waited on did not buy Aris gloves.</li>
+  <li>The Joneses did not buy a sweater.</li>
+  <li>Susan and her husband bought pearls.</li>
+  <li>George and his wife bought a sweater.</li>
+  <li>The four couples who did not buy Aris gloves are (in no particular
+    order): Dorothy and her husband; the Craigs; Joe and his wife; and
+    Rosalyn and her husband (who did not buy a sweater).</li>
+  <li>The O'Connors bought both COCO and a sweater.</li>
+  <li>Sandra and her husband, who did not buy a sweater, were waited on
+    immediately before Cathleen and her husband.</li>
+</ol>
+
+<p><br />
+</p>
+<hr />
+
+<p></p>
+
+<p>This is the apogee of the Zebra puzzle style, so pervasive in Prolog
+discussions because it is well suited to the backtracking approach. All
+puzzles of this style can be approached in the same way:</p>
+<ul>
+  <li>Let there be a an attribute template called, for want of a better name,
+    the feasible functor (ff).</li>
+  <li>For each attribute write a list of partially instantiated ffs for each
+    attribute value and it's related values.</li>
+  <li>Unify the first list with some permutation of each of the others.</li>
+</ul>
+
+<p>That deals well with positive contraints but negative constraints
+(filters) have to be introduced separately.</p>
+
+<p>Furthermore, it may be critical in Prolog to process constraints in a
+particular (but unknown) order. That problem is neatly solved by co-routines,
+but not many Prologs have that. Failing that, a terrible solution is to embed
+the whole body in a permutation routine and let it thrash until a suitable
+goal order is found!</p>
+
+<p></p>
+</body>
+</html>

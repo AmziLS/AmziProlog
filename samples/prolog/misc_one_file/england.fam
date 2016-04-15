@@ -1,0 +1,18 @@
+person('Henry VII', male, 'Margaret Beaufort', 'Edmund Tudor', 'Elizabeth of York').
+person('James IV', male, 'Elizabeth of York', 'Henry VII', 'Margaret Tudor').
+person('Henry VIII', male, 'Elizabeth of York', 'Henry VII', 'Catherine of Aragon').
+person('Mary', female, 'Elizabeth of York', 'Henry VII', 'Charles Brandon').
+person('James V', male, 'Margaret Tudor', 'James IV', 'Mary of Guise').
+person('Lady Margaret Douglas', female, 'Margaret Tudor', 'Archibald Earl of Angus', 'Mathew Earl of Lennox').
+person('Mary Tudor', female, 'Catherine of Aragon', 'Henry VIII', single).
+person('Elizabeth I', female, 'Anne Boleyn', 'Henry VIII', single).
+person('Edward VI', male, 'Jane Seymour', 'Henry VIII', single).
+person('Lady Frances Brandon', female, 'Mary', 'Charles Brandon', 'Henry Grey').
+person('Mary Queen of Scots', female, 'Mary of Guise', 'James V', 'Henry Lord Darnley').
+person('Henry Lord Darnley', male, 'Lady Margaret Douglas', 'Mathew Earl of Lennox', 'Mary Queen of Scots').
+person('Lord Charles Stuart', male, 'Lady Margaret Douglas', 'Mathew Earl of Lennox', 'Elizabeth Cavendish').
+person('Lady Jane Grey', female, 'Lady Frances Brandon', 'Henry Grey', single).
+person('Lady Catherine Grey', female, 'Lady Frances Brandon', 'Henry Grey', 'Edward Seymour').
+person('Lady Mary Grey', female, 'Lady Frances Brandon', 'Henry Grey', 'Thomas Keys').
+person('James I', male, 'Mary Queen of Scots', 'Henry Lord Darnley', single).
+

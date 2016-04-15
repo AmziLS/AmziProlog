@@ -1,0 +1,207 @@
+# makefile for samples, copies files to be distributed
+
+CP = cp
+MD = -mkdir
+SRC = $(APLS_SOURCE)/amzi-apls-samples
+DST = $(APLS_RELEASE)/samples
+
+# For unix, copy the file, make these the definitions:
+# CP = cp
+# MD = -mkdir
+# SRC = $(AMZI_DEV_DIR)/src/samples
+# DST = $(AMZI_DEV_DIR)/samples
+# change all / to /
+# remove _windows from all:
+
+all: _common _chezray
+
+_common:
+	-rm -Rf $(APLS_RELEASE)/samples
+	$(MD) $(APLS_RELEASE)/samples
+	$(CP) $(SRC)/doc.html             $(DST)/doc.html
+	$(MD) $(DST)/c
+	$(CP) $(SRC)/c/doc.html           $(DST)/c/doc.html
+	$(MD) $(DST)/c/hello
+	$(CP) $(SRC)/c/hello/doc.html     $(DST)/c/hello
+	$(CP) $(SRC)/c/hello/hello.c      $(DST)/c/hello
+	$(CP) $(SRC)/c/hello/hello.pro    $(DST)/c/hello
+	$(CP) $(SRC)/c/hello/make_mac64.txt $(DST)/c/hello
+	$(CP) $(SRC)/c/hello/make_lnx32.txt $(DST)/c/hello
+	$(CP) $(SRC)/c/hello/make_sol32.txt $(DST)/c/hello
+	$(MD) $(DST)/c/pets
+	$(CP) $(SRC)/c/pets/doc.html     $(DST)/c/pets
+	$(CP) $(SRC)/c/pets/make_mac64.txt $(DST)/c/pets
+	$(CP) $(SRC)/c/pets/make_lnx32.txt $(DST)/c/pets
+	$(CP) $(SRC)/c/pets/make_sol32.txt $(DST)/c/pets
+	$(CP) $(SRC)/c/pets/pets.c       $(DST)/c/pets
+	$(CP) $(SRC)/c/pets/pets.pro     $(DST)/c/pets
+	$(MD) $(DST)/cpp
+	$(CP) $(SRC)/cpp/doc.html        $(DST)/cpp/doc.html
+	$(MD) $(DST)/cpp/hello
+	$(MD) $(DST)/cpp/hello/console
+	$(CP) $(SRC)/cpp/hello/console/doc.html   $(DST)/cpp/hello/console
+	$(CP) $(SRC)/cpp/hello/console/chello.cpp $(DST)/cpp/hello/console
+	$(CP) $(SRC)/cpp/hello/console/chello.h   $(DST)/cpp/hello/console
+	$(CP) $(SRC)/cpp/hello/console/hello.pro  $(DST)/cpp/hello/console
+	$(CP) $(SRC)/cpp/hello/console/main.cpp   $(DST)/cpp/hello/console
+	$(CP) $(SRC)/cpp/hello/console/make_mac64.txt $(DST)/cpp/hello/console
+	$(CP) $(SRC)/cpp/hello/console/make_lnx32.txt $(DST)/cpp/hello/console
+	$(CP) $(SRC)/cpp/hello/console/make_sol32.txt $(DST)/cpp/hello/console
+	$(MD) $(DST)/cpp/pets
+	$(CP) $(SRC)/cpp/pets/doc.html      $(DST)/cpp/pets
+	$(CP) $(SRC)/cpp/pets/make_lnx32.txt  $(DST)/cpp/pets
+	$(CP) $(SRC)/cpp/pets/make_sol32.txt  $(DST)/cpp/pets
+	$(CP) $(SRC)/cpp/pets/make_mac64.txt  $(DST)/cpp/pets
+	$(CP) $(SRC)/cpp/pets/pets.cpp      $(DST)/cpp/pets
+	$(CP) $(SRC)/cpp/pets/pets.pro      $(DST)/cpp/pets
+	$(MD) $(DST)/cpp/pets_callback
+	$(CP) $(SRC)/cpp/pets_callback/doc.html      $(DST)/cpp/pets_callback
+	$(CP) $(SRC)/cpp/pets_callback/make_lnx32.txt  $(DST)/cpp/pets_callback
+	$(CP) $(SRC)/cpp/pets_callback/make_sol32.txt  $(DST)/cpp/pets_callback
+	$(CP) $(SRC)/cpp/pets_callback/pets.pro      $(DST)/cpp/pets_callback
+	$(CP) $(SRC)/cpp/pets_callback/petscb.cpp    $(DST)/cpp/pets_callback
+
+	$(MD) $(DST)/prolog
+	$(CP) $(SRC)/prolog/doc.html            $(DST)/prolog
+	$(MD) $(DST)/prolog/babel
+	$(CP) $(SRC)/prolog/babel/doc.html      $(DST)/prolog/babel
+	$(CP) $(SRC)/prolog/babel/.project      $(DST)/prolog/babel
+	$(CP) $(SRC)/prolog/babel/amzi.cfg      $(DST)/prolog/babel
+	$(CP) $(SRC)/prolog/babel/build.properties   $(DST)/prolog/babel
+	$(CP) $(SRC)/prolog/babel/babel.pro     $(DST)/prolog/babel
+	$(CP) $(SRC)/prolog/babel/english.pro   $(DST)/prolog/babel
+	$(CP) $(SRC)/prolog/babel/german.pro    $(DST)/prolog/babel
+	$(CP) $(SRC)/prolog/babel/japanese.pro  $(DST)/prolog/babel
+	$(CP) $(SRC)/prolog/babel/latin.pro     $(DST)/prolog/babel
+	$(CP) $(SRC)/prolog/babel/spanish.pro   $(DST)/prolog/babel
+	$(CP) $(SRC)/prolog/babel/makefile      $(DST)/prolog/babel
+	$(MD) $(DST)/prolog/configuration
+	$(CP) $(SRC)/prolog/configuration/*.html    $(DST)/prolog/configuration
+	$(CP) $(SRC)/prolog/configuration/*.pro     $(DST)/prolog/configuration
+	$(CP) $(SRC)/prolog/configuration/.project  $(DST)/prolog/configuration
+	$(CP) $(SRC)/prolog/configuration/amzi.cfg  $(DST)/prolog/configuration
+	$(CP) $(SRC)/prolog/configuration/build.properties  $(DST)/prolog/configuration
+	$(MD) $(DST)/prolog/chat_ontology
+	$(CP) $(SRC)/prolog/chat_ontology/doc.html      $(DST)/prolog/chat_ontology
+	$(CP) $(SRC)/prolog/chat_ontology/chat_ont.pro  $(DST)/prolog/chat_ontology
+	$(CP) $(SRC)/prolog/chat_ontology/.project      $(DST)/prolog/chat_ontology
+	$(CP) $(SRC)/prolog/chat_ontology/amzi.cfg      $(DST)/prolog/chat_ontology
+	$(CP) $(SRC)/prolog/chat_ontology/build.properties  $(DST)/prolog/chat_ontology
+	$(MD) $(DST)/prolog/tutorial_tests
+	$(CP) $(SRC)/prolog/tutorial_tests/*.html    $(DST)/prolog/tutorial_tests
+	$(CP) $(SRC)/prolog/tutorial_tests/*.pro     $(DST)/prolog/tutorial_tests
+	$(MD) $(DST)/prolog/duckworld
+	$(CP) $(SRC)/prolog/duckworld/doc.html      $(DST)/prolog/duckworld
+	$(CP) $(SRC)/prolog/duckworld/duckym.pro    $(DST)/prolog/duckworld
+	$(CP) $(SRC)/prolog/duckworld/dw_data.pro   $(DST)/prolog/duckworld
+	$(CP) $(SRC)/prolog/duckworld/dw_main.pro   $(DST)/prolog/duckworld
+	$(CP) $(SRC)/prolog/duckworld/dw_rules.pro  $(DST)/prolog/duckworld
+	$(CP) $(SRC)/prolog/duckworld/makefile      $(DST)/prolog/duckworld
+	$(CP) $(SRC)/prolog/duckworld/.project      $(DST)/prolog/duckworld
+	$(CP) $(SRC)/prolog/duckworld/amzi.cfg      $(DST)/prolog/duckworld
+	$(CP) $(SRC)/prolog/duckworld/build.properties  $(DST)/prolog/duckworld
+	$(MD) $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/birds.pro     $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/catch.pro     $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/custord.pro   $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/dcgxpand.pro  $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/doc.html      $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/dospath.pro   $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/eliza_uga.pro $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/gene.pro      $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/logicW.pro    $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/money.pro     $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/nanisrch.pro  $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/pi.pro        $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/traffic1.pro  $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/traffic2.pro  $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/traffic3.kb   $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/traffic3.pro  $(DST)/prolog/misc_one_file
+	$(CP) $(SRC)/prolog/misc_one_file/wordlist.pro  $(DST)/prolog/misc_one_file
+	$(MD) $(DST)/prolog/mlist
+	$(CP) $(SRC)/prolog/mlist/mlist.pro     $(DST)/prolog/mlist
+	$(CP) $(SRC)/prolog/mlist/scan.inp      $(DST)/prolog/mlist
+	$(CP) $(SRC)/prolog/mlist/.project      $(DST)/prolog/mlist
+	$(CP) $(SRC)/prolog/mlist/amzi.cfg      $(DST)/prolog/mlist
+	$(CP) $(SRC)/prolog/mlist/build.properties  $(DST)/prolog/mlist
+	$(MD) $(DST)/prolog/proxs
+	$(CP) $(SRC)/prolog/proxs/doc.html      $(DST)/prolog/proxs
+	$(CP) $(SRC)/prolog/proxs/birds.pxs     $(DST)/prolog/proxs
+	$(CP) $(SRC)/prolog/proxs/proxs.pro     $(DST)/prolog/proxs
+	$(CP) $(SRC)/prolog/proxs/pxmain.pro    $(DST)/prolog/proxs
+	$(CP) $(SRC)/prolog/proxs/.project      $(DST)/prolog/proxs
+	$(CP) $(SRC)/prolog/proxs/amzi.cfg      $(DST)/prolog/proxs
+	$(CP) $(SRC)/prolog/proxs/build.properties  $(DST)/prolog/proxs
+	$(MD) $(DST)/prolog/ship
+	$(CP) $(SRC)/prolog/ship/doc.html      $(DST)/prolog/ship
+	$(CP) $(SRC)/prolog/ship/ship.pro      $(DST)/prolog/ship
+	$(CP) $(SRC)/prolog/ship/shiprule.txt  $(DST)/prolog/ship
+	$(CP) $(SRC)/prolog/ship/.project      $(DST)/prolog/ship
+	$(CP) $(SRC)/prolog/ship/amzi.cfg      $(DST)/prolog/ship
+	$(CP) $(SRC)/prolog/ship/build.properties  $(DST)/prolog/ship
+	$(MD) $(DST)/prolog/ssched
+	$(CP) $(SRC)/prolog/ssched/doc.html      $(DST)/prolog/ssched
+	$(CP) $(SRC)/prolog/ssched/ssched.pro    $(DST)/prolog/ssched
+	$(CP) $(SRC)/prolog/ssched/ssmain.pro    $(DST)/prolog/ssched
+	$(CP) $(SRC)/prolog/ssched/.project      $(DST)/prolog/ssched
+	$(CP) $(SRC)/prolog/ssched/amzi.cfg      $(DST)/prolog/ssched
+	$(CP) $(SRC)/prolog/ssched/build.properties  $(DST)/prolog/ssched
+	$(MD) $(DST)/prolog/taxes
+	$(CP) $(SRC)/prolog/taxes/tax.dat       $(DST)/prolog/taxes
+	$(CP) $(SRC)/prolog/taxes/tax.pro       $(DST)/prolog/taxes
+	$(CP) $(SRC)/prolog/taxes/.project      $(DST)/prolog/taxes
+	$(CP) $(SRC)/prolog/taxes/amzi.cfg      $(DST)/prolog/taxes
+	$(CP) $(SRC)/prolog/taxes/build.properties  $(DST)/prolog/taxes
+	$(MD) $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/blocks3.pro   $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/blocks3.txt   $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/blocks5.pro   $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/compile.pro   $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/compile2.pro  $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/flash.pro     $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/hungry.pro    $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/lube.pro      $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/lube2.pro     $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/nilsson.pro   $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/rich2.pro     $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/strips.pro    $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/warplan.pro   $(DST)/prolog/warplan
+	$(CP) $(SRC)/prolog/warplan/wedding1.pro  $(DST)/prolog/warplan
+	$(MD) $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/doc.html      $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/makefile      $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/doc.html      $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/rubik.gif      $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/rubdata.pro   $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/rubdisp.pro   $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/rubedit.pro   $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/rubhelp.pro   $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/rubhist.pro   $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/.project      $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/amzi.cfg      $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/build.properties   $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/rubik.pro     $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/rubload.pro   $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/rubloadc.pro  $(DST)/prolog/rubik
+	$(CP) $(SRC)/prolog/rubik/rubmov.pro    $(DST)/prolog/rubik
+
+_chezray:
+	$(MD) $(DST)/chezray
+	$(CP) $(SRC)/chezray/doc.html     $(DST)/chezray/doc.html
+	$(MD) $(DST)/chezray/cap
+	$(CP) $(SRC)/chezray/cap/*.*      $(DST)/chezray/cap
+	$(MD) $(DST)/chezray/hll
+	$(CP) $(SRC)/chezray/hll/*.*      $(DST)/chezray/hll
+	$(MD) $(DST)/chezray/joli
+	$(CP) $(SRC)/chezray/joli/*.*     $(DST)/chezray/joli
+	$(MD) $(DST)/chezray/mm
+	$(CP) $(SRC)/chezray/mm/*.*       $(DST)/chezray/mm
+	$(MD) $(DST)/chezray/polyplot
+	$(CP) $(SRC)/chezray/polyplot/*.* $(DST)/chezray/polyplot
+	$(MD) $(DST)/chezray/polyplot/displaypq
+	$(CP) $(SRC)/chezray/polyplot/displaypq/*.*   $(DST)/chezray/polyplot/displaypq
+	$(MD) $(DST)/chezray/tools
+	$(CP) $(SRC)/chezray/tools/*.*    $(DST)/chezray/tools
+	$(MD) $(DST)/chezray/xmas
+	$(CP) $(SRC)/chezray/xmas/*.*     $(DST)/chezray/xmas
+

@@ -1,0 +1,71 @@
+/*****************************************************************\
+*
+* banner.cpp - fly a banner sometimes
+*
+* Copyright (c) 1992-2009 by Amzi! inc.  All Rights Reserved.
+*
+\******************************************************************/
+
+#include "inc.h"
+#include "pch.h"
+
+Banner g_banner;
+
+#if defined(WINDOWS)
+void Banner::init()
+{
+   return;
+}
+
+bool Banner::fly()
+{
+	LString msg;
+	bool take_off = true;
+
+	if (!m_flown && g_license->m_activated) {
+		if (g_license->m_free) {
+			msg = LString(aS("Free edition (develop and run Prolog in the IDE)\n\n"));
+			msg = msg + aS("To access Amzi!'s full development capabilities\n");
+			msg = msg + aS("either purchase an individual license, or ask your\n");
+			msg = msg + aS("school or company to purchase a site license at:\n\n");
+			msg = msg + aS("          www.amzi.com");
+		}
+		else if (g_license->m_eval_expired) {
+			msg = LString(aS("Evaluation expired. \n"));
+			msg = msg + aS("Re-activate as a free edition to continue to use the IDE.\n\n");
+			msg = msg + aS("To access Amzi!'s full development capabilities\n");
+			msg = msg + aS("either purchase an individual license, or ask your\n");
+			msg = msg + aS("school or company to purchase a site license at:\n\n");
+			msg = msg + aS("          www.amzi.com");
+		}
+		else if (g_license->m_eval) {
+			aCHAR daysleft[4];
+			Lsprintf(daysleft, 3, aS("%d"), g_license->m_eval_days_left);
+			msg = LString(aS("Evaluation edition. Days left: ")) + daysleft + aS("\n\n");
+			msg = msg + aS("To access Amzi!'s full development capabilities\n");
+			msg = msg + aS("either purchase an individual license, or ask your\n");
+			msg = msg + aS("school or company to purchase a site license at:\n\n");
+			msg = msg + aS("          www.amzi.com");
+		}
+		else {
+			take_off = false;
+		}
+
+		if (take_off) {
+			MessageBox(NULL, msg, aS("Amzi! Prolog + Logic Server"), MB_OK);
+		}
+		m_flown = true;
+	}
+	return true;
+}
+#else
+void Banner::init()
+{
+   return;
+}
+
+bool Banner::fly()
+{
+	return true;
+}
+#endif

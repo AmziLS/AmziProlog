@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>configuration - prolog sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1>Configuration - Prolog sample</h1>
+<p>The configuration sample is an initial prototype for a configuration system, 
+  using door units as a sample. It uses an architecture that separates the generic 
+  configuration reasoning predicates from the specific configuration knowledge, 
+  in this case for door units.</p>
+<p>As it is a prototype, the knowledge uses a subset of Prolog. With a little 
+  more work the knowlegdge could be stored in a format easier for the lay person 
+  to understand. The work would involve putting more of the work in the configuration 
+  reasoning engine.</p>
+<p>It uses a subset of Prolog to store the knowledge for a particular domain. 
+  Configurations are built up using Prolog's ability to create a structure from 
+  the top down, filling in the 'holes' as the configuration process proceeds.</p>
+<p>Comments in the code provide documentation.</p>
+<p>To run the system from the listener:</p>
+<ul><pre>
+?- consult(configure_ui).
+?- main.
+</pre></ul>
+<p>The files in the sample are:</p>
+<ul>
+  <li><b>configure_ui.pro</b> - A command line user interface to the program. 
+    The same logic could be coded in a host language, such as Java or VB, as well.</li>
+  <li><b>configure.pro</b> - The predicates that support the configuration process. 
+    These are generic so they can be used with any knowledge base in the correct 
+    format.</li>
+  <li><b>configure_door.pro</b> - A small sample configuration knowledge base 
+    for door units. </li>
+</ul>
+
+</body>
+</html>

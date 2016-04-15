@@ -1,0 +1,535 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Visual Basic Module</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="VisualBasicModule"></A><FONT COLOR="#D2AA00">Visual Basic Module</FONT> 
+</h1>
+<P> 
+  <!AMZI_INDEX= Visual Basic Module>
+  This documents the Amzi! Logic Server Visual Basic VB Module before .NET. VB.NET 
+  users are advised to use the <a href="lsadotnet.htm">.NET Class</a> instead. 
+  This module provides a wrapper on the Logic Server DLL that presents the Logic 
+  Server in a manner more consistent with VB use. It includes: </P>
+
+<UL>
+<LI>A VB Module that encapsulates a Logic Server Engine, </LI>
+
+<LI>Automatic mapping from C-strings to VB strings, and </LI>
+
+<LI>Automatic error handling via a common routine. </LI>
+</UL>
+
+<P>The documentation is organized as follows: </P>
+
+<MENU>
+<LI><A HREF="#HelloPrologFromVisualBasic">Hello Prolog</A> - Getting the
+Hello Prolog up and running from Visual Basic. </LI>
+
+<LI><A HREF="#LogicServerVBModuleOverview">Overview</A> - Overview of the
+Visual Basic cover functions for the Logic Server. </LI>
+
+<LI><A HREF="#VisualBasicCallingTheLogicServerAPI">Using the Module</A>
+- How to call the Logic Server from Visual Basic. </LI>
+
+<LI><A HREF="#ImplementingExtendedPredicatesInVB">Implementing Extended
+Predicates</A> - How to add Prolog extended predicates written in VB 5.0
+or later.</LI>
+
+<LI><A HREF="#VBModuleReference">Reference</A> - Complete listing of all
+of the Visual Basic Logic Server functions. </LI>
+
+<LI><A HREF="#VBLogicServerExample">Example</A> - A more complete Visual
+Basic example illustrating a variety of Logic Server functions. </LI>
+</MENU>
+
+<H2><A NAME="HelloPrologFromVisualBasic"></A><FONT COLOR="#0000FF">Hello
+Prolog</FONT></H2>
+
+<P><!AMZI_INDEX= Hello Prolog>The hello.vbp Visual Basic Hello Prolog project 
+  is in the directory samples\vb\hello. It consists of a form, hello.frm (Hello 
+  VB Source Code), and a Logic Server Definitions file, amzi.bas. </P>
+
+<P>The form has a single button to which all the code is attached. The code initializes 
+  the Prolog environment and calls the <B>hello/2</B> predicate. It checks for 
+  error conditions, and if all is well prints in message boxes two status messages 
+  then the returned greeting from hello.pro. </P>
+
+<P>To run, open the project in Visual Basic and select Run/Start. Press
+the 'Greet Me!' button, then press [Enter] or click the mouse on each of
+the three OK message boxes. </P>
+
+<P>The Logic Server VB Module is implemented in the file amzi.bas in the
+top-level INCLUDE subdirectory. You use it by simply adding that file to
+to your project. </P>
+
+<H2><A NAME="LogicServerVBModuleOverview"></A><FONT COLOR="#0000FF">Overview</FONT></H2>
+
+<P><!AMZI_INDEX=Visual Basic Module; AMZI5.BAS>The Amzi! Logic Server VB
+Module is designed to give the VB programmer easy access to the services
+provided by the Logic Server DLL. </P>
+
+<P>The Logic Server is an engine, similar to a database engine. When you
+include the Logic Server in your application, you are really including
+a Logic Server Engine. This engine knows how to access compiled and dynamic
+Prolog predicates in the Prolog logicbase. The API to the Logic Server provides
+functions that let you:
+</P>
+
+<UL>
+<LI>Initialize and close the engine, as well as load and run Prolog code,
+</LI>
+
+<LI>Assert and retract logic terms dynamically, </LI>
+
+<LI>Pose logical queries, retrieve all answers, </LI>
+
+<LI>Use an intuitive string interface for communication, </LI>
+
+<LI>Use detailed term manipulation functions for communication, </LI>
+
+<LI>Process errors. </LI>
+</UL>
+
+<P>The Logic Server VB Module is distributed in source form in the file
+amzi.bas. You can build your own VB functions on top of it, or modify
+the cover functions themselves. (If you have ideas for improving the interface,
+please let us know and we'll include them in the VB Module in a later release.)
+</P>
+
+<P>When you compare the functions in the VB Module, you'll find they extend,
+and in some cases, modify, the API functions as described in the manual.
+The differences are: </P>
+
+<UL>
+<LI>Function names end with an 'LS' as opposed to starting with 'ls' (the
+latter is reserved for direct DLL calls). </LI>
+
+<LI>The functions do not take an engine ID as an argument, that is handled
+within the VB Module and with SetCurrentEngineLS. </LI>
+
+<LI>All functions take Basic strings as arguments rather than C strings.
+The maximum string length returned by Prolog to Basic is controlled by
+calling SetMaxStrLenLS. </LI>
+
+<LI>The functions do not return error codes. Errors are handled within
+the VB Module using the ErrorHandler routine. The operation of this routine
+is controlled by calling SetErrorHandlerLS. Depending upon the setting,
+this routine either: [1] signals error 31300 or [2] displays an error message,
+and optionally closes the Logic Server, then ends the program. </LI>
+
+<LI>Functions that succeed or fail return the VB values 'true' and 'false'.</LI>
+
+<LI>Many functions are now procedures because they do not have to return
+error codes. </LI>
+
+<LI>There are numerous new functions with types indicated in their names,
+that augment the more general dynamic typing and pointer API calls. For
+example, lsGetArg takes as arguments the target type and a pointer to that
+type. The VB Module has functions such as GetStrArgLS, which simply returns
+the value of the string. </LI>
+</UL>
+
+<P>Philosophically, the VB Module preserves as much of the flavor of the
+pure API as possible, and augments it to provide a more VB-like interface.
+</P>
+
+<H2><A NAME="VisualBasicCallingTheLogicServerAPI"></A><FONT COLOR="#0000FF">Using
+the Module</FONT></H2>
+
+<P><!AMZI_INDEX=Visual Basic Module>To include the Logic Server in an application,
+simply add the Logic Server VB Module, amzi.bas, to your project. </P>
+
+<P>To call the Logic Server, simply embed the API calls in the functions
+of your application. You will need to open and close the Logic Server as
+well. The following code opens the Logic Server, loads a compiled Prolog
+file, executes a simple query, and closes the Logic Server. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Dim s as String, term as long
+Call InitLS(&quot;&quot;)
+Call LoadLS (&quot;hello&quot;)
+tf = CallStrLS(term, &quot;hello(vb, X)&quot;)
+Call GetArgLS(term, 2, bSTR, s)
+Call CloseLS</FONT></PRE>
+</UL>
+
+<P>This code assumes the Prolog program, hello.pro, has a fact in it of the form 
+  <TT>hello(vb,</TT> <TT>prolog)</TT>. It also assumes hello.pro has been compiled 
+  and linked to create hello.xpl, and that file is in the current directory or 
+  your PATH. See the Amzi! Prolog + Logic Server manual for more information on 
+  compiling and linking Prolog code. </P>
+
+<H2><A NAME="ImplementingExtendedPredicatesInVB"></A><FONT COLOR="#0000FF">Implementing
+Extended Predicates</FONT></H2>
+
+<P><!AMZI_INDEX= Extended Predicates>Visual Basic 5.0 (and later), like
+C/C++, Java and Delphi, can be used to implement custom extended predicates
+to the Prolog language. These custom extensions give the Prolog code the
+ability to directly access anything Visual Basic can access. </P>
+
+<P>The VB functions that implement extended predicates must be in their own module, 
+  declared as returning type long, and public. For example:</P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">Public Function PMsgBox(ByVal EngineID As Long) As Long</FONT> </PRE>
+</UL>
+
+<P>The extended predicate function returns 1 for success (true) and 0 for
+failure (false).</P>
+
+<P>The predicates are added one at a time by using the VB&nbsp;module function
+AddPredLS. </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM><I> Note: Extended
+predicate definitions must always be added after calling InitLS and before
+calling LoadLS.</I> </P>
+
+<P>The sample in directory samples\vb\extpred includes a simple example of adding 
+  a msgbox predicate to Prolog. </P>
+
+<H2><A NAME="VBModuleReference"></A><FONT COLOR="#0000FF">Reference</FONT></H2>
+
+<P> 
+  <!AMZI_INDEX= Visual Basic Module>
+  This section contains the interface portion of the unit amzi.bas, which defines 
+  the Logic Server VB Module. It generally conforms to the ls procedures and functions 
+  in the <a href="lsapirf.htm">LSAPI Reference</a>. You can browse the source 
+  code for more details. </P>
+
+<MENU>
+<LI><A HREF="#LogicServerConstants">Logic Server Constants</A> </LI>
+
+<LI><A HREF="#FunctionsToSetUpLogicServer">Functions to Set Up Logic Server</A>
+</LI>
+
+<LI><A HREF="#FunctionsForExtendedPredicates">Functions for Extended Predicates</A></LI>
+
+<LI><A HREF="#FunctionsForCallingProlog">Functions for Calling Prolog</A>
+</LI>
+
+<LI><A HREF="#FunctionsForLogicbase">Functions for Dynamic Clauses in Logicbase</A>
+</LI>
+
+<LI><A HREF="#FunctionsForStringTermConversion">Functions for String/Term
+Conversions</A> </LI>
+
+<LI><A HREF="#FunctionsForMakingGettingPrologTypes">Functions for Making/Getting
+Prolog Types</A> </LI>
+
+<LI><A HREF="#FunctionsForManipulatingStructures">Functions for Manipulating
+Structures</A> </LI>
+
+<LI><A HREF="#FunctionsForManipulatingLists">Functions for Manipulating
+Lists</A> </LI>
+
+<LI><A HREF="#MiscellaneousFunctions">Miscellaneous Functions</A> </LI>
+</MENU>
+
+<H3><A NAME="LogicServerConstants"></A><FONT COLOR="#000080">Logic Server
+Constants</FONT></H3>
+
+<P><!AMZI_INDEX= Visual Basic Module; Types; Constants>These are the simple
+constants used by the Logic Server. They are used to map values to the
+API data types. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">' For unicode systems, set unicode to True
+#Const unicode = False
+
+' Last Error Message and Code
+Global ErrorLS As String
+Global ErrLS As Integer
+
+' The current engine id
+Dim EngineID As Long
+
+' The type of error handling to perform, 
+' 0=message boxes, 1=generate errors
+Dim ErrorMethod As Variant
+
+' The maximum size of strings returned from Prolog
+Dim MaxStrLen As Variant
+
+' Prolog Types
+Global Const pATOM = 0
+Global Const pINT = 1
+Global Const pSTR = 2
+Global Const pFLOAT = 3
+Global Const pSTRUCT = 4
+Global Const pLIST = 5
+Global Const pTERM = 6
+Global Const pADDR = 7
+Global Const pVAR = 8
+Global Const pWSTR = 9
+Global Const pWATOM = 10
+
+' Basic Types
+Global Const bATOM = 0
+Global Const bSTR = 1
+Global Const bINT = 2
+Global Const bLONG = 3
+Global Const bSHORT = 4
+Global Const bFLOAT = 5
+Global Const bDOUBLE = 6
+Global Const bADDR = 7
+Global Const bTERM = 8
+Global Const bWSTR = 9
+Global Const bWATOM = 10</FONT></PRE>
+</UL>
+
+<H3><A NAME="FunctionsToSetUpLogicServer"></A><FONT COLOR="#000080">Logic
+Server Set-Up</FONT></H3>
+
+<P><!AMZI_INDEX=Logic Server Set-Up; lsInit; lsInitLSX; lsAddLSX; lsMain; lsReset; lsClose; lsLoad >These 
+  functions provide the basic API services. They are used to initialize and close 
+  down the Prolog environment. The function, Main, runs the <b>main/0</b> predicate 
+  of a load Prolog file. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Sub InitLS (ByVal INIFile As String)
+Sub InitLSX ()
+Sub AddLSX (ByVal LSXFile As String)
+Sub AddPredLS(ByVal Predname As String, ByVal Arity As Integer, ByVal pfunc As Long)
+Sub LoadLS (ByVal XPLFile As String)
+Function MainLS () as Integer
+Sub ResetLS ()
+Sub CloseLS ()</FONT></PRE>
+</UL>
+
+<P>They are based on the API functions lsInit, lsInitLSX, lsAddLSX, lsLoad,
+lsMain, lsReset, and lsClose. </P>
+
+<P>The following functions control parameters within the VB Module. SetMaxStrLenLS
+sets the maximum length for all strings returned from Prolog to Basic .
+</P>
+
+<P>SetErrorHandlerLS chooses whether error messages are displayed in message
+boxes (&quot;MessageBox&quot;) or signalled via error #31300 (&quot;ErrorCode&quot;).
+When an error is signalled, ErrorLS is set to the error message and ErrLS
+is set to the Amzi! Logic Server error code. The routine that performs
+these operations is called ErrorHandle. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Sub SetMaxStrLenLS (ByVal num As Integer)
+Sub SetErrorHandlerLS (ByVal ErrMethod As String)</FONT></PRE>
+</UL>
+
+<H3><A NAME="FunctionsForExtendedPredicates"></A><FONT COLOR="#000080">Extended
+Predicates</FONT></H3>
+
+<P><!AMZI_INDEX= Extended Predicates; lsGetParm; lsUnifyParm>When you write
+an extended predicate, you can directly manipulate the Prolog parameters
+to that function. These predicates provide that service. The Get family
+retrieves the nth parameter that was used in the call, and the Unify family
+unifies some computed result with the nth parameter. </P>
+
+<P>The VB module contains a number of type-specific additions to the basic
+API. Functions such as GetLongParmLS and UnifyStrParmLS. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Sub GetParmLS(ByVal Param As Integer, ByVal BType As Integer, Ptr As Variant)
+Function GetStrParmLS(ByVal Param As Integer) As String
+Function GetIntParmLS(ByVal Param As Integer) As Integer
+Function GetLongParmLS(ByVal Param As Integer) As Long
+Function GetFloatParmLS(ByVal Param As Integer) As Single
+Function GetParmTypeLS(ByVal Term As Long, ByVal ParmNum As Integer) As Integer
+Function StrParmLenLS(ByVal ParmNum As Integer) As Integer
+Function UnifyParmLS(ByVal Param As Integer, ByVal BType As Integer, ByVal Ptr As Variant) As Boolean
+Function UnifyStrParmLS(ByVal Param As Integer, ByVal Str As String) As Boolean
+Function UnifyAtomParmLS(ByVal Param As Integer, ByVal Str As String) As Boolean
+Function UnifyIntParmLS(ByVal Param As Integer, ByVal IntVal As Integer) As Boolean
+Function UnifyLongParmLS(ByVal Param As Integer, ByVal LongVal As Long) As Boolean
+Function UnifyFloatParmLS(ByVal Param As Integer, ByVal FloatVal As Single) As Boolean</FONT></PRE>
+</UL>
+
+<P>These functions are based on the API functions lsGetParm, lsGetParmType,
+lsUnifyParm, and lsStrParmLen.</P>
+
+<H3><A NAME="FunctionsForCallingProlog"></A><FONT COLOR="#000080">Calling
+Prolog</FONT></H3>
+
+<P><!AMZI_INDEX= Calling Prolog; Visual Basic Module; lsExec; lsExecStr; lsCall; lsCallStr; lsRedo; lsClearCall>These
+are the functions that actually call predicates in a Prolog logicbase/program.
+They query term can be represented as a string or a Prolog term. The first
+argument, a term, is always unified with the result of the call. The Redo
+function initiates backtracking, which reunifies the term with the next
+result. </P>
+
+<P>ClearCall is only useful if you start a Redo loop and don't finish.
+It clears the stack. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Function ExecLS (TermPtr As Long) as Boolean
+Function ExecStrLS (TermPtr As Long, ByVal StrPtr) as Boolean
+Function CallLS (TermPtr As Long) as Boolean
+Function CallStrLS (TermPtr As Long, ByVal StrPtr As String) as Boolean
+Function RedoLS () as Boolean
+Sub ClearCallLS ()
+Function GetCurrentEngineLS&nbsp;()&nbsp;as Long
+Sub SetCurrentEngineLS&nbsp;(NewEngID as Long)</FONT></PRE>
+</UL>
+
+<P>These functions are based on the API functions lsExec, lsExecStr, lsCall,
+lsCallStr, lsRedo, and lsClearCall. </P>
+
+<P>Get and SetCurrentEngineLS let you switch between multiple invocations
+of the Logic Server. To use them, call InitLS then use GetCurrentEngineLS
+to get the ID. Save that value. Call InitLS again and use GetCurrentEngineLS
+to get the new ID. Save that value as well. Then use SetCurrentEngineLS
+to switch between the active Prolog engines.</P>
+
+<H3><A NAME="FunctionsForLogicbase"></A><FONT COLOR="#000080">Dynamic Clauses in the Logicbase</FONT></H3>
+
+<P><!AMZI_INDEX=Logicbase; lsAsserta; lsAssertz; lsRetract; lsAssertaStr; lsAssertzStr; lsRetractStr>These
+functions make it easy to assert and retract dynamic terms to and from Prolog's
+logicbase.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Sub AssertaLS (ByVal Term As Long)
+Sub AssertzLS (ByVal Term As Long)
+Function RetractLS (ByVal Term As Long) as Boolean
+Sub AssertaStrLS (ByVal StrPtr As String)
+Sub AssertzStrLS (ByVal StrPtr As String)
+Function RetractStrLS (ByVal StrPtr As String) as Boolean</FONT></PRE>
+</UL>
+
+<P>These functions are based on the API functions lsAsserta, lsAssertaStr,
+lsAssertz, lsAssertzStr, and lsRetract. </P>
+
+<H3><A NAME="FunctionsForStringTermConversion"></A><FONT COLOR="#000080">Converting
+Strings/Terms</FONT></H3>
+
+<P><!AMZI_INDEX= Converting; Strings; Terms; lsTermToStr; lsTermToStrQ; lsStrToTerm>These
+functions convert strings to terms and terms to strings. The 'Q' versions
+create quoted strings, when necessary for atoms and strings that require
+delimiter symbols. The 'Q' versions are necessary for those cases where
+you want to use the resulting string in another query. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Sub TermToStrLS (ByVal Term As Long, StrPtr As String, ByVal StrLen As Integer)
+Sub TermToStrQLS (ByVal Term As Long, StrPtr As String, ByVal StrLen As Integer)
+Sub StrToTermLS (TermPtr As Long, ByVal StrPtr As String)</FONT></PRE>
+</UL>
+
+<P>These functions are based on the API functions lsTermToStr, lsTermToStrQ,
+and lsStrToTerm. </P>
+
+<H3><A NAME="FunctionsForMakingGettingPrologTypes"></A><FONT COLOR="#000080">Making/Getting
+Prolog Types</FONT></H3>
+
+<P><!AMZI_INDEX= Visual Basic Module; Prolog Types; Types; lsMakeAtom; lsMakeStr; lsMakeInt; lsMakeLong; lsMakeFloat; lsMakeAddr; lsGetTermType; lsGetTerm>These
+functions map Prolog types to and from VB types, and retrieve VB types
+from Prolog terms. The type-specific Get functions are VB additions. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Sub MakeAtomLS (TermPtr As Long, ByVal StrPtr As String)
+Sub MakeStrLS (TermPtr As Long, ByVal StrPtr As String)
+Sub MakeIntLS (TermPtr As Long, ByVal IntVal As Integer)
+Sub MakeLongLS (TermPtr As Long, ByVal IntVal As Integer)
+Sub MakeFloatLS (TermPtr As Long, ByVal FloatVal As Double)
+Sub MakeAddrLS (TermPtr As Long, Ptr As Variant)
+Function GetTermTypeLS (ByVal Term As Long) as Integer
+Sub GetTermLS (ByVal Term As Long, ByVal BType As Integer, Ptr As Variant)
+Function GetStrTermLS (ByVal Term As Long) As String
+Function GetIntTermLS (ByVal Term As Long) As Integer
+Function GetLongTermLS (ByVal Term As Long) As Long
+Function GetFloatTermLS (ByVal Term As Long) As Double</FONT></PRE>
+</UL>
+
+<P>These functions are based on the API functions lsMakeAtom, lsMakeStr,
+lsMakeInt, lsMakeFloat, lsMakeAddr, lsGetTermType, and lsGetTerm. </P>
+
+<H3><A NAME="FunctionsForManipulatingStructures"></A><FONT COLOR="#000080">Manipulating
+Structures</FONT></H3>
+
+<P><!AMZI_INDEX=  Structures; lsGetFA; lsGetFunctor; lsGetArity; lsMakeFA; lsUnifyArg; lsGetArg; lsUnify; lsGetArgType; lsStrArgLen>These
+Prolog structure-manipulating functions let you create structures, and
+take apart terms that represent structures. This is especially useful for
+getting at various arguments in a query. For example, in the query 'sibling(mary,
+X)', the GetStrArgLS function can be used to get the second argument of
+this structure, after a CallStrLS has caused the variable to be bound.
+</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Sub GetFALS (ByVal Term As Long, StrPtr As String, IntPtr As Integer)
+Function GetFunctorLS (ByVal Term As Long) As String
+Function GetArityLS (ByVal Term As Long) As Integer
+Sub MakeFALS (Term As Long, ByVal Functor As String, ByVal Arity As Integer)
+Function UnifyArgLS (TermPtr As Long, ByVal ArgNum As Integer, ByVal PType As Integer, ByVal Ptr As Variant) As Boolean
+Function UnifyStrArgLS (TermPtr As Long, ByVal ArgNum As Integer, ByVal StrPtr As String) As Boolean
+Function UnifyAtomArgLS (TermPtr As Long, ByVal ArgNum As Integer, ByVal StrPtr As String) As Boolean
+Function UnifyIntArgLS (TermPtr As Long, ByVal ArgNum As Integer, ByVal IntVal As Integer) As Boolean
+Function UnifyLongArgLS (TermPtr As Long, ByVal ArgNum As Integer, ByVal LongVal As Long) As Boolean
+Function UnifyFloatArgLS (TermPtr As Long, ByVal ArgNum As Integer, ByVal FloatVal As Double) As Boolean
+Sub GetArgLS (ByVal Term As Long, ByVal ArgNum As Integer, ByVal BType As Integer, Ptr As Variant)
+Function GetStrArgLS (ByVal Term As Long, ByVal ArgNum As Integer) As String
+Function GetIntArgLS (ByVal Term As Long, ByVal ArgNum As Integer) As Integer
+Function GetLongArgLS (ByVal Term As Long, ByVal ArgNum As Integer) As Long
+Function GetFloatArgLS (ByVal Term As Long, ByVal ArgNum As Integer) As Double
+Function GetArgTypeLS (ByVal Term As Long, ByVal ArgNum As Integer) As Integer
+Function StrArgLenLS (ByVal Term As Long, ByVal ArgNum As Integer) As Integer
+Function UnifyLS (ByVal Term1 As Long, ByVal Term2 As Long) as Integer</FONT></PRE>
+</UL>
+
+<P>These functions are based on the API functions lsGetFA, lsMakeFA, lsUnifyArg
+, lsGetArg, lsGetArgType, lsStrArgLen, and lsUnify. </P>
+
+<H3><A NAME="FunctionsForManipulatingLists"></A><FONT COLOR="#000080">Manipulating
+Lists</FONT></H3>
+
+<P><!AMZI_INDEX=  Lists; lsMakeList; lsPushList; lsGetHead; lsGetTail>These
+list manipulation functions let you create Prolog lists, add items to lists,
+and retrieve items from lists. The GetHead family of functions can be used
+in loops to get all the items in a list. Note that, because GetHead doesn't
+invoke the Prolog engine or unification, it does not return a Boolean.
+It returns a normal function return code, in which 0 means success and
+anything else indicates the end of the list has been reached. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Sub MakeListLS (TermPtr As Long)
+Sub PushListLS (TermPtr As Long, ByVal Term As Long)
+Function GetHeadLS (TermPtr As Long, ByVal BType As Integer, Ptr As Variant) as Integer
+Function GetStrHeadLS (TermPtr As Long, StrPtr As String) As Integer
+Function GetIntHeadLS (TermPtr As Long, IntVal As Integer) As Integer
+Function GetLongHeadLS (TermPtr As Long, LongVal As Long) As Integer
+Function GetFloatHeadLS (TermPtr As Long, FloatVal As Double) As Integer
+Function GetTailLS (TermPtr As Long) As Long</FONT></PRE>
+</UL>
+
+<P>These functions are based on the API functions lsMakeList, lsPushList,
+lsGetHead and lsGetTail. </P>
+
+<H3><A NAME="MiscellaneousFunctions"></A><FONT COLOR="#000080">Miscellaneous
+Functions</FONT></H3>
+
+<P><!AMZI_INDEX= Miscellaneous Functions; lsSetStream; lsGetStream; lsGetVersion; lsExceptMsg; lsGetExceptReadBuffer>These
+miscellaneous functions are used to change the Prolog streams, get the
+version number, and work with Prolog error codes. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Sub SetStreamLS (ByVal Stream As Integer, ByVal Handle As Integer)
+Function GetStreamLS (ByVal Stream As Integer) As Integer
+Function GetVersionLS () As String
+Function GetExceptMsgLS () As String
+Function GetExceptReadBufferLS () As String</FONT></PRE>
+</UL>
+
+<P>These functions are based on the API functions lsSetStream, lsGetStream,
+lsGetVersion, lsGetExceptMsg, and lsGetExceptReadBuffer. </P>
+
+<H2><A NAME="VBLogicServerExample"></A><FONT COLOR="#0000FF">Examples</FONT></H2>
+
+<P>A number of examples can be found in the samples\vb subdirectory. </P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I></I> </P>
+
+</BODY>
+</HTML>

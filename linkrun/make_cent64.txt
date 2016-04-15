@@ -1,0 +1,25 @@
+SOURCE=$(APLS_SOURCE)
+RELEASE=$(APLS_RELEASE)
+
+AC_FLAGS = -DENVgl6 -D_UNICODE
+ENG = ../engine
+
+FILES = alnk.cpp $(ENG)/lenv.cpp $(ENG)/ddbmem.cpp $(ENG)/lstring.cpp
+HEADERS = $(ENG)/env.h $(ENG)/defs.h $(ENG)/lenv.h $(ENG)/ddbmem.h
+
+ifdef DEBUG
+C_FLAGS = -g -Wimplicit
+else
+C_FLAGS = -Wimplicit
+endif
+
+all: link 
+
+link: $(FILES) $(HEADERS)
+	$(CC) -DLINKER -I$(ENG) -I$(RELEASE)/include -L$(RELEASE)/lib \
+	   $(C_FLAGS) $(AC_FLAGS) -o $(RELEASE)/bin/alnk \
+	   $(FILES) -lm -lstdc++ -lamzi -ldl
+#	install_name_tool -change libamzi.so @loader_path/../lib/libamzi.so $(RELEASE)/bin/alnk
+
+clean:
+	-rm *.o

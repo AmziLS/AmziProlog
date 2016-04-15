@@ -1,0 +1,548 @@
+!-Cut#!
+end_of_file#end_of_file
+EOF#end_of_file
+Comments#%
+X * Y#*
+X ** Y#**
+X + Y#+
+X , Y#,
+X minus#-
+negative of X#-
+Goal1 -> Goal2 ; Goal3#->
+if-then-else#->
+X / Y#/
+X // Y#//
+X /\ Y#/\
+X ; Y#;
+Term1 : Term2#:
+X < Y#<
+X << Y#<<
+X = Y#=
+Term =.. List#=..
+Term =.. List#univ
+X =:= Y#=:=
+X =< Y#=<
+X == Y#==
+X =\= Y#=\=
+X > Y#>
+X >= Y#>=
+X >> Y#>>
+X @< Y#@<
+X @=< Y#@=<
+X @> Y#@>
+X @>= Y#@>=
+[user]#[user]
+bitwise complement#\
+\+ Goal#\+
+is a synonym for not X#\+
+X \/ Y#\/
+X \= Y#\=
+X \== Y#\==
+abolish(#abolish
+abort(#abort
+ACMP-The Compiler#ACMP
+Advantages of Compiling#ACMP:advantages
+Disadvantages of Compiling#ACMP:disadvantages
+compiler directive#ACMP:directives
+latent expressions#ACMP:latent expressions
+Compiler Messages#ACMP:messages
+Requirements on Compiled Files#ACMP:requirements
+Starting the Compiler#ACMP:starting
+acos(#acos
+Listener Tools#add
+ALIS-The Listener#ALIS
+Consulting Files from the Command-Line#ALIS:command-line
+ENV.PRO#ALIS:ENV.PRO file
+Loading Prolog Code Files#ALIS:loading Prolog code
+Proving Goals#ALIS:proving goals
+Starting the Listener#ALIS:starting
+Executing main/0 from the Command-Line#ALIS:main/0
+ALIS.err#ALIS.err
+ALNK-The Linker#ALNK
+Starting the Linker#ALNK:starting
+input script file#ALNK:input script file
+AMZI Environment Variable#AMZI Environment Variable
+ducks#Amzi! inc:ducks
+AMZI.H#AMZI.H
+AMZI.HPP#AMZI.HPP
+AMZILIB.PLM#AMZILIB.PLM
+amzi.bas#amzi.bas
+APKG-The Packager#APKG
+Starting the Packager#APKG:starting
+arg(#arg
+apitrace#apitrace
+Arithmetic#Arithmetic
+ARUN-Amzi! Prolog Runtime#ARUN
+Starting ARUN from the Command-Line#ARUN:command line
+Distributing Your Programs#ARUN:distributing
+Redistributable Files#ARUN:distributing
+Error Files#ARUN:err Files
+Initialization files#ARUN:cfg Files
+Starting ARUN#ARUN:starting
+asin(#asin
+assert(#assert
+asserta(#asserta
+assertz(#assertz
+Associativity#Associativity
+atan(#atan
+atom(#atom
+atom_concat(#atom_concat
+atom_codes(#atom_codes
+atom_length(#atom_length
+atom_uplow(#atom_uplow
+atomic(#atomic
+atomlist_concat(#atomlist_concat
+Atoms#Atoms
+Atom Processing#Atoms
+Built-in Atoms#Atoms:built-in
+maxatoms#Atoms:maximum number of
+attr(#attr
+AUTOEXEC.BAT#AUTOEXEC.BAT
+AWIDE.err#AWIDE.err
+Backtracking#Backtracking
+backtracking#Backtracking
+bagof(#bagof
+Box model#Box model
+Ctrl-Break#Break
+bugcallfail(#bugcallfail
+bugexitredo(#bugexitredo
+call(#call
+catch(#catch
+catch/3#catch
+Character Lists#Character lists
+chdir(#chdir
+clause(#clause
+Clauses#Clauses
+'missing' clauses#Clauses:'missing'
+Adding and Removing Clauses#Clauses:adding
+compiled clauses#Clauses:compiled
+complex clauses#Clauses:complex
+Complex Clauses#Clauses:complex
+dynamic clauses#Clauses:dynamic
+maxclauses#Clauses:maximum number of
+removing clauses#Clauses:removing
+static clauses#Clauses:static
+closelog#closelog
+cls#cls
+cntr_dec(#cntr_dec
+cntr_get(#cntr_get
+cntr_inc(#cntr_inc
+cntr_set(#cntr_set
+comm(#comm
+command_line(#command_line
+Comments#Comments
+compare(#compare
+compare_lists(#compare_lists
+Configuration#Configuration
+AMZI.cfg#Configuration:AMZI.cfg
+INCLUDE=#Configuration:INCLUDE
+LIB=#Configuration:LIB
+Search Path#Configuration:path
+consult(#consult
+control stack#control (stack)
+Control Stack#control (stack)
+cos(#cos
+Counters#Counters
+cputime#cputime
+current_atom(#current_atom
+current_prolog_flag(#current_prolog_flag
+current_streams(#current_streams
+current_user(#current_user
+Cut#Cut
+cut_tag(#cut_tag
+Database References#Database references
+Keys to the Database#Database references
+date(#date
+db_ref(#db_ref
+DCG#DCG
+Listener Tools#debug
+The Debugger#Debugger
+breakpoints#Debugger:breakpoints
+creep#Debugger:creep
+Debugger Display#Debugger:display
+Debugger Example#Debugger:example
+Starting the Debugger#Debugger:starting
+leap#Debugger:leap
+Leashing Debug Ports#Debugger:leash
+Debug Port Options#Debugger:options
+single step#Debugger:single step
+spypoints#Debugger:spypoints
+skip #Debugger:skip
+Starting and Leaving the Debugger#Debugger:starting
+Debugging Your Programs#Debugging
+Initial Development for Embedded Modules#Debugging:embedded modules
+Tracing API Calls#Debugging:embedded modules
+Debugging Logic Server API#Debugging:Logic Server calls
+runtime errors#Debugging:runtime errors
+delfile(#delfile
+destbuf#destbuf
+Distribution Contents#Directories:amzi
+Directives#Directives
+display(#display
+ DLL#DLL
+DOS Predicates#DOS:specific predicates
+DOS.C#DOS.C
+DOS.PRO,PLM#DOS.PRO,PLM
+Duck World#Duck World
+Dynamic Database#Dynamic Database
+2.71828#e
+Listener Tools#edit
+erase(#erase
+eraseall(#eraseall
+(ERR)#ERR
+ERR file#ERR
+ERR extension#ERR
+Prolog Error File#ERR
+ERR.TXT#ERR.TXT
+err_handle(#err_handle
+err_handle/3#err_handle
+err_msg(#err_msg
+err_raise(#err_raise
+err_read(#err_read
+Error handler#Error handler
+default error handler#Error handler:default
+Default Error Handler#Error handler:default
+user-defined error handler#Error handler:user
+User Error Handler#Error handler:user
+Errors and Interrupts#Errors
+Catastrophic -#Errors:catastrophic
+error codes#Errors:codes
+Compilation Errors#Errors:compilation
+Prolog Error File#Errors:err Files
+err Files#Errors:err Files
+errfile#Errors:err Files
+Fatal -#Errors:fatal
+handling errors#Errors:handling
+Loadtime Errors#Errors:loadtime
+syntax errors#Errors:read
+read errors#Errors:read
+Runtime Errors#Errors:runtime
+soft errors#Errors:soft
+Escape Characters#Escape characters
+Escape Codes#Escape characters
+string_esc#Escape characters
+exp(#exp
+expand_term(#expand_term
+Exporting Predicates#export
+:- export#export
+fail #fail
+fatal_errors#fatal_errors
+fclose(#fclose
+fflush(#fflush
+file_errors#file_errors
+file_exists(#file_exists
+fileerrors(#fileerrors
+binary files#Files:binary
+distributed files#Files:distributed
+editing files#Files:editing
+ (ERR)#Files:ERR
+ ERR file#Files:ERR
+ ERR extension#Files:ERR
+errfile#Files:ERR
+ (.cfg)#Files:INI
+ .cfg file#Files:INI
+ .cfg extension#Files:INI
+logfile#Files:log
+file naming conventions#Files:naming conventions
+ (.plm) #Files:PLM
+ (.ppj) #Files:PPJ
+ (.pro) #Files:PRO
+ .plm file #Files:PLM
+ .ppj file#Files:PPJ
+ .pro file#Files:PRO
+ .plm extension #Files:PLM
+ .ppj extension#Files:PPJ
+ .pro extension#Files:PRO
+redistributable files#Files:redistributable
+runtime error#Files:runtime error
+source format#Files:source format
+ (.xpl)#Files:XPL
+ .xpl file#Files:XPL
+ .xpl extension#Files:XPL
+findall(#findall
+findfiles(#findfiles
+float(#float
+floating point numbers#Floating point numbers
+flush_in#flush_in
+flush_out#flush_out
+fopen(#fopen
+for(#for
+fread(#fread
+fseek(#fseek
+functor(#functor
+fwrite(#fwrite
+Garbage collection#Garbage collection
+gc(#gc
+gensym(#gensym
+get(#get
+get_mode(#get_mode
+get_preds(#get_preds
+get0(#get0
+get1(#get1
+get0_noecho(#get_noecho
+Goals#Goals
+Complex Goals#Goals:complex
+Proving Goals#Goals:proving
+halt #halt
+handle_name#handle_name
+Heap Stack#heap (stack)
+heap stack#heap (stack)
+Hidden Predicates#Hidden predicates
+hide_cursor#hide_cursor
+I/O by IDs#ID
+IDE-Interactive Development Environment#IDE
+Importing Predicates#import
+:- import#import
+cfg Files#INI (.cfgtialization Files)
+Configuration Files#INI (.cfgtialization Files)
+AMZI.cfg#INI:AMZI.cfg
+Default .cfg Values#INI:default values
+INI Parameters#INI:parameters
+Input/output#Input/output
+Requirements and Installation#Installation
+instance(#instance
+integer(#integer
+Integers#Integers
+International characters#International characters
+Errors and Interrupts#Interrupts
+Interrupting Prolog#Interrupts
+[Ctrl-Break]#Interrupts
+X is Y#is
+is/2#is
+iteration#Iteration
+keyb(#keyb
+Latent Expressions#Latent expressions
+leash(#leash
+Leashing#Leashing
+Environment Specific and Utility Libraries#Libraries:Prolog
+DOS.PLM#Libraries:Prolog
+UTIL.PLM#Libraries:Prolog
+lint#lint
+list(#list
+listing(#listing
+Lists#Lists
+List Processing#Lists
+ln(#ln
+load(#load
+local stack#local (stack)
+Local Stack#local (stack)
+logfile#logfile
+logfile#Log files
+Log files#Log files
+Logic Server API supports#Logic Server:supported tools
+apitrace#Logic Server:tracing
+Windows DLL#Logic Server:Windows DLL
+long(#long
+LSVTOOLS.C#LSVTOOLS.C
+lsxload#lsxload
+m_collimit#m_collimit
+m_curtype#m_curtype
+m_hide#m_hide
+m_move#m_move
+m_press#m_press
+m_release#m_release
+m_reset#m_reset
+m_rowlimit#m_rowlimit
+m_show#m_show
+m_status#m_status
+main/0#main/0
+maxatoms#maxatoms
+maxclauses#maxclauses
+maxmem#maxmem
+maxvars#maxvars
+Managing Memory#Memory
+maxmem#Memory:maximum usage
+Reducing Memory Demands#Memory:reducing usage
+Stacks and Database Space#Memory:usage
+mkdir(#mkdir
+X mod Y#mod
+Modes#Modes
+Using Modules#Modules
+Modules Example#Modules:example
+name(#name
+nl(#nl
+nllog#nllog
+nonblank_string(#nonblank_string
+nonvar(#nonvar
+nospy(#nospy
+nospyall(#nospyall
+not(#not
+number(#number
+Integers#Numbers
+Floating Point Numbers#Numbers
+numbervars(#numbervars
+once(#once
+op(#op
+openlog(#openlog
+Operators#Operators
+Associativity#Operators:associativity
+built-in operators#Operators:built-in
+Precedence#Operators:precedence
+Predefined Prolog Operators#Operators:predefined
+Search Path#Path
+Pathnames#Pathnames
+use of backslash#Pathnames:use of backslash
+3.14159#pi
+port(#port
+Ports#Ports
+call port#Ports
+redo port#Ports
+exit port#Ports
+fail port#Ports
+pp(#pp
+Precedence#Precedence
+Predicates#Predicates
+'missing' predicates#Predicates:'missing'
+compiled predicates#Predicates:compiled
+complex predicates#Predicates:complex
+Complex Predicates#Predicates:complex
+DOS only predicates#Predicates:DOS only
+environment-specific#Predicates:environment-specific
+extended predicates#Predicates:extended
+hidden predicates#Predicates:hidden
+list of dynamic predicates#Predicates:list of dynamic
+main/0#Predicates:main/0
+press_any_key#press_any_key
+pro_control(#pro_control
+pro_db(#pro_db
+pro_heap(#pro_heap
+pro_local(#pro_local
+pro_mem(#pro_mem
+pro_trail(#pro_trail
+Demonstrating Your Programs#Programs:demonstrating
+Distributing Your Programs#Programs:distributing
+Projects#Projects
+compiling projects#Projects:compiling
+consulting projects#Projects:consulting
+linking projects#Projects:linking
+Edinburgh#Prolog:standards
+WAM#Prolog:WAM
+Warren Abstract#Prolog:WAM
+Prolog Database#Prolog:database
+Dynamic Database#Prolog:database
+protect_db#protect_db
+put(#put
+quit.#quit
+random floating point number#random
+rca(#rca
+read(#read
+readbuffer#readbuffer
+readdepth#readdepth
+read_string(#read_string
+reconsult(#reconsult
+record(#record
+recorda(#recorda
+recorded(#recorded
+recordz(#recordz
+recursion#Recursion
+remove_dups(#remove_dups
+repeat#repeat
+replace #replace
+Requirements and Installation#Requirements
+respkey(#respkey
+retract(#retract
+retractall(#retractall
+rev_attr(#rev_attr
+rmdir(#rmdir
+Screen attributes#Screen attributes
+see(#see
+seeing(#seeing
+seen#seen
+seentold#seen
+seetell(#seetell
+set_errors(#set_errors
+set_mode(#set_mode
+setof(#setof
+short(#short
+show_cursor#show_cursor
+sin(#sin
+skip(#skip
+sort(#sort
+spy(#spy
+Spypoints#Spypoints
+Adding Spypoints#Spypoints:adding
+Removing Spypoints#Spypoints:removing
+sqrt(#sqrt
+srcbuf#srcbuf
+stack_sizes(#stack_sizes
+Stacks#Stacks
+Constraints in Setting Stack Sizes#Stacks:16-bit constraints
+INI Parameters#Stacks:adusting sizes
+strcat(#strcat
+stream_type(#stream_type
+Streams#Streams
+checking type of streams#Streams:checking type of
+stdin#Streams:stdin
+stdout#Streams:stdout
+user stream#Streams:user
+string(#string
+string_atom(#string_atom
+string_esc#string_esc
+string_integer(#string_integer
+string_length(#string_length
+string_list(#string_list
+string_term(#string_term
+Strings#Strings
+String Processing#Strings
+string_esc#Strings:escape processing
+thingblksize#Strings:size
+Structures#Structures
+structure(#structure
+internally#Structures:internally
+sub_atom(#sub_atom
+sub_string(#sub_string
+substring(#substring (obsolete)
+tab(#tab
+tag(#tag
+tan(#tan
+tell(#tell
+telling(#telling
+Prolog Terms#Terms
+Term Classification#Terms:classification
+Comparison of Terms#Terms:comparison
+Dissecting Terms#Terms:dissecting
+Equality of Terms#Terms:equality
+readbuffer#Terms:size
+tget(#tget
+throw(#throw
+throw/1#throw
+time(#time
+timer(#timer
+thingblksize#thingblksize
+tmove(#tmove
+told#told
+apitrace#Tracing
+Tracing API Calls#Tracing
+trail stack#trail (stack)
+Trail Stack#trail (stack)
+true#true
+tscroll(#tscroll
+ttyflush#ttyflush
+ttyrdy#ttyrdy
+Unification#Unification
+univ(#univ
+user_pp(#user_pp
+UTIL.PRO#UTIL.PRO,PLM
+UTIL.PLM#UTIL.PRO,PLM
+var(#var
+anonymous variables#Variables:anonymous
+binding variables#Variables:binding
+maxvars#Variables:maximum number of
+naming variables#Variables:naming
+varlist(#varlist
+varsof(#varsof
+verbose#verbose
+version(#version
+wa(#wa
+wc(#wc
+wca(#wca
+write(#write
+writelog(#writelog
+writeq(#writeq
+
+
+228     INDEX
+
+INDEX     13
+
+

@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pets", "pets.vcproj", "{B759BECE-B728-43D3-BA58-F9AE05FE6F03}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B759BECE-B728-43D3-BA58-F9AE05FE6F03}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B759BECE-B728-43D3-BA58-F9AE05FE6F03}.Debug|Win32.Build.0 = Debug|Win32
+		{B759BECE-B728-43D3-BA58-F9AE05FE6F03}.Release|Win32.ActiveCfg = Release|Win32
+		{B759BECE-B728-43D3-BA58-F9AE05FE6F03}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

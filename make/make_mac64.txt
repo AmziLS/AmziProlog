@@ -1,0 +1,122 @@
+MAKE=make
+AMZI_MAKE=make_mac64.txt
+
+SOURCE=$(APLS_SOURCE)
+SUBDIRS = engine run link listen compile
+RELEASE=$(APLS_RELEASE)
+PLUGIN=$(SOURCE)/../eclipse/amzi-eclipse/workspace/com.amzi.prolog-update_site
+
+all: dirs engine run link osutils compile libs listen docs samples interfaces eclipse package
+
+dirs: FORCE
+	find $(SOURCE) -name *.o -exec rm {} \;
+	echo ==Making directories==
+	-rm -r $(RELEASE)
+	mkdir $(RELEASE)
+	mkdir $(RELEASE)/bin
+	mkdir $(RELEASE)/lib
+	mkdir $(RELEASE)/abin
+	mkdir $(RELEASE)/include
+	mkdir $(RELEASE)/config
+	mkdir $(RELEASE)/eclipse_plugin
+
+engine: FORCE
+	echo =================
+	echo =================
+	echo ==Making engine==
+	cd $(SOURCE)/engine; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+run: FORCE
+	echo =================
+	echo =================
+	echo ==Making run==
+	cd $(SOURCE)/run; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+link: FORCE
+	echo =================
+	echo =================
+	echo ==Making link==
+	cd $(SOURCE)/amzi-apls-linkrun; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+osutils: FORCE
+	echo =================
+	echo =================
+	echo === making osutils ===
+	cd $(SOURCE)/amzi-apls-osutils; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+compile: FORCE
+	echo =================
+	echo =================
+	echo ==Making compile==
+	cd $(SOURCE)/amzi-apls-compile; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+listen: FORCE
+	echo =================
+	echo =================
+	echo ==Making listen==
+	cd $(SOURCE)/amzi-apls-listen; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+	
+docs: FORCE
+	echo =================
+	echo =================
+	echo ==Making docs==
+	cd $(SOURCE)/amzi-apls-docs; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+	
+samples: FORCE
+	echo =================
+	echo =================
+	echo ==Making samples==
+	cd $(SOURCE)/amzi-apls-samples; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+libs: FORCE
+	echo =================
+	echo =================
+	echo ==Making libs==
+	cd $(SOURCE)/amzi-apls-libs; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+	
+interfaces: FORCE
+	echo =================
+	echo =================
+	echo ==Making interfaces==
+	cd $(SOURCE)/../interfaces/amzi-interfaces-make; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+eclipse: FORCE
+	echo =================
+	echo =================
+	echo ==Copying Eclipse plug in==
+	cp $(PLUGIN)/artifacts.jar $(RELEASE)/eclipse_plugin/artifacts.jar
+	cp $(PLUGIN)/content.jar $(RELEASE)/eclipse_plugin/content.jar
+	cp $(PLUGIN)/site.xml $(RELEASE)/eclipse_plugin/site.xmo
+	cp -r $(PLUGIN)/features $(RELEASE)/eclipse_plugin/features
+	cp -r $(PLUGIN)/plugins $(RELEASE)/eclipse_plugin/plugins
+	sleep 5
+
+package: FORCE
+	echo =================
+	echo =================
+	echo ==Packaging release==
+	cd $(RELEASE)/../; tar -cvzf ../amzi-apls-distribution/amzi_apls_mac.tar.gz apls
+	sleep 5
+
+
+clean: FORCE
+	for i in $(SUBDIRS); \
+	do \
+	  echo ==Making in $$i ; \
+	  (cd $(SOURCE)/$$i; $(MAKE) -f $(AMZI_MAKE) clean) ; \
+	done
+
+FORCE:
+
+
+

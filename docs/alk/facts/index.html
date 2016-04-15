@@ -1,0 +1,106 @@
+<HTML><!-- #BeginTemplate "/Templates/alk.dwt" -->
+<HEAD>
+<!-- #BeginEditable "doctitle" --> 
+<TITLE>Facts</TITLE>
+<!-- #EndEditable -->
+<meta http-equiv="Content-Type" content="text/html; charset=">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+  <p><!-- #BeginEditable "Previous1" -->{Previous1}<!-- #EndEditable -->&nbsp <a href="../index.html">Start</a> 
+    &nbsp <a href="../toc.html">Contents</a> &nbsp <!-- #BeginEditable "Next1" -->{Next1}<!-- #EndEditable --></p>
+<hr>
+<h1><img src="../Images/paws.gif"><!-- #BeginEditable "Lesson" -->Facts 
+  and Terms<!-- #EndEditable --> 
+</h1>
+<!-- #BeginEditable "Body" --> 
+<p>Prolog comes from the same theoretical roots as relational databases. A Prolog 
+  logic base is composed of facts and rules.</p>
+<p>Facts in Prolog are similar in form to rows of a relational database table. 
+  Unlike a database, Prolog facts are stored as text in a Prolog source file. 
+  They can be indexed, sorted or compiled for faster runtime access.</p>
+<p>Here are some examples of facts from an application for a sample airline, Amzi! 
+  Air:</p>
+<ul>
+  <pre><font color="#000099">airport('I68', 'Lebanon, OH').
+airport('WDR', 'Winder, GA').
+airport('SPG', 'St. Petersburg, FL').
+airport('M22', 'Russellville, AL').
+airport('1A0', 'Soddy Daisy, TN').</font>
+</pre>
+</ul>
+<p>They relate airport identifiers with the names of the towns the airport services.</p>
+<p>Here are some facts about Amzi! Air flight numbers and departure and arrival 
+  airports:</p>
+<ul>
+  <pre><font color="#000099">
+flight(aa01, 'I68', 'WDR').
+flight(aa03, 'WDR', 'SPG').
+flight(aa05, 'SPG', 'M22').</font>
+</pre>
+</ul>
+<h3>Prolog Jargon</h3>
+A Prolog fact is of the form:
+<ul>
+  <pre>
+<font color="#000099">predicate_name(argument_1, ..., argument_N).</font>
+</pre>
+</ul>
+<p>A <b>predicate</b> is a collection of facts, each having the same predicate_name 
+  and the same number of arguments. It corresponds to a table in a relational 
+  database.</p>
+<p>The <b>arity</b> of a predicate is the number of arguments. This corresponds 
+  to the number of columns in a relational table.</p>
+<p>A predicate is often represented by predicate/arity. So the two examples above 
+  are <b>airport/2</b> and <b>flight/3</b>.</p>
+<p>A fact is more formally called a <b>clause</b> in Prolog. So above we show 
+  three <b>clauses</b> of <b>flight/3</b>.</p>
+<h3>Prolog Term Types</h3>
+<p>Unlike a database, Prolog facts are <b>typeless</b>. The arguments can be any 
+  type of term allowed in Prolog. Two common types are <b>atoms</b> and <b>numbers</b>.</p>
+<p><b>Atoms</b> contain text that is stored internally in an atom table, allowing 
+  for very fast pattern matching as predicates are searched. Some atoms from the 
+  above examples are:</p>
+<ul>
+  <pre><font color="#000099">
+'I68'
+'Lebanon, OH'
+aa01</font>
+</pre>
+</ul>
+<p>Any characters (ASCII, multibyte or wide Unicode) enclosed in single quotes 
+  are atoms. The quotes are not necessary if the atom is composed of all letters 
+  and the initial letter is lower case.</p>
+<p><b>Numbers</b> are integers or decimals or floating point. Here are some facts 
+  about base airfares in the Amzi! Air logic base:</p>
+  
+<ul>
+  <pre><font color="#000099">
+base_fare(aa03, 100).
+base_fare(aa04, 100).
+base_fare(aa05, 90).
+base_fare(aa06, 90).</font>
+</pre>
+</ul>
+<p>In this <b>base_fare/2</b> predicate, the second argument is an integer representing 
+  the fare.</p>
+<p>For the examples, it makes sense that each argument holds the same type of 
+  term, but that is not necessary in Prolog, as will be seen later on in the tutorial.</p>
+<p><b><i>NOTE ==&gt;</i></b><i> In actual applications, factual knowledge as shown 
+  here might be stored in a Prolog logic base, or might be accessed from external 
+  data stores. Either approach works well with Amzi! as will be described later 
+  in the tutorial.</i></p>
+<h3>Prolog Text</h3>
+<p>The facts are stored in text files. They can be edited using any program editor. 
+  The Amzi! IDE contains an editor.</p>
+<p>You can open the file <a href="amzi_air.pro">alk/facts/amzi_air.pro</a> to 
+  see more of the facts that will be used in the Amzi! Air sample application.</p>
+<p>The next section discusses how to use the facts.</p>
+<!-- #EndEditable --> 
+<hr>
+<!-- #BeginEditable "References" --><a href="../../pro/ref_terms.htm">Prolog Reference: 
+Terms</a><!-- #EndEditable --> 
+<p><!-- #BeginEditable "Previous2" -->{Previous2}<!-- #EndEditable -->&nbsp <a href="../index.html">Start</a> 
+    &nbsp <a href="../toc.html">Contents</a> &nbsp <!-- #BeginEditable "Next2" -->{Next2}<!-- #EndEditable --></p>
+</BODY>
+<!-- #EndTemplate --></HTML>

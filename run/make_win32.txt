@@ -1,0 +1,7 @@
+_amzirun:
+	devenv wrun.sln /rebuild "Release|Win32"
+
+clean:
+	devenv wrun.sln /clean "Release|Win32"
+	devenv wrun.sln /clean Debug
+

@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Modules</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="Modules"></A><FONT COLOR="#D2AA00">Modules</FONT> </h1>
+<!AMZI_INDEX = Modules; import; export>
+<p>Modules are supported according to the ISO Prolog standard. For a quick start, 
+  see the file <a href="../../samples/prolog/duckworld/doc.html">samples/prolog/duckworld/duckym.pro</a>. 
+  It is a version of the duck world tutorial sample that uses modules.</p>
+<p>A <b>module</b> is a named collection of predicates. A module can <b>import</b> 
+  predicates from other modules, and can <b>export</b> predicates for other modules 
+  to use.</p>
+
+
+<H2><A NAME="DefaultUserModule"></A><FONT COLOR="#0000FF">Default User Module</FONT></H2>
+
+<P><!AMZI_INDEX = user (module)>If a program does not have any module directives, 
+  then, by default, all of the predicates are defined in a default module named 
+  'user'.</P>
+<p>All of the predicates in module 'user' are automatically visible from all other 
+  modules.</p>
+<h2><a name="SystemModule"></a><font color="#0000FF">System Module</font></h2>
+<p><!AMZI_INDEX = system (module)>All of the built-in predicates of the system are 
+  in a special system module, that is automatically visible from all other modules.</p>
+<h2><a name="DefiningModules"></a><font color="#0000FF">Defining Modules</font></h2>
+<p><!AMZI_INDEX = module; end_module>It is possible to separate the definition of 
+  a module from the body of the module, where the predicates are defined. The 
+  definition of a module starts with the directive</p>
+<blockquote>
+  <pre><font color="#000080">:- module(M).</font></pre>
+</blockquote>
+<p>where M is the name of the module, and ends with</p>
+<blockquote>
+  <pre><font color="#000080">:- end_module(M).</font></pre>
+</blockquote>
+<p>The two directives both need to be specified.</p>
+<h3><font color="#0000ff"><a name="DefiningModules"></a><font color="#000080">Adding 
+  Predicates to a Module</font></font></h3>
+<p><!AMZI_INDEX = body; end_body>The body of a module is bracketed between 
+  the directives</p>
+<blockquote>
+  <pre><font color="#000080">:- body(M).</font></pre>
+  <pre><font color="#000080">:- end_body(M).</font></pre>
+</blockquote>
+<p>where M is the name of the module.</p>
+<p>The body directives are optional, and the predicates of a module can be included 
+  between the module/end_module pair instead. (This is a non-ISO extension in 
+  Amzi!) </p>
+<h2><font color="#0000ff"><a name="ReferringToModules"></a>Referring to Modules</font></h2>
+<p><!AMZI_INDEX = :; module:functor>The colon notation is used to explicitly refer 
+  to a predicate in another module. It is</p>
+<blockquote>
+  <p>MODULE:FUNCTOR(ARG1, ... ARGN)</p>
+</blockquote>
+<p>For example,</p>
+<blockquote>
+  <pre><font color="#000080">assert( data:loc(egg,pen) )</font></pre>
+</blockquote>
+<p>asserts a <b>loc/2</b> clause in the 'data' module.</p>
+<h3><font color="#0000ff"><a name="Exports"></a></font><font color="#000080">Exports</font></h3>
+<p><!AMZI_INDEX = export>The export directive is used to define the 
+  external interface to a module, that is, the predicates which can be called 
+  from other modules. The exports are part of the module definition.</p>
+<blockquote>
+  <pre><font color="#000080">:- export(F/A).</font></pre>
+</blockquote>
+<p>or</p>
+<blockquote>
+  <pre><font color="#000080">:- export([F1/A1, F2/A2, ...Fn/An]).</font></pre>
+</blockquote>
+<p>For example, these directives define a module, 'data', that exports two predicates.</p>
+<blockquote>
+  <pre><font color="#000080">:- module(data).
+:- export( [nextto/2, loc/2] ).
+:- end_module(data).</font></pre>
+</blockquote>
+<h3><font color="#0000ff"><a name="Imports"></a></font><font color="#000080">Imports</font></h3>
+<p><!AMZI_INDEX = import>A module can either import another module or specific 
+  predicates using the import directive. This lets it refer to those predicates 
+  without module qualification.</p>
+<blockquote>
+  <pre><font color="#000080">:- import(list).</font></pre>
+</blockquote>
+  <p>This lets the calling module see all the exported predicates from the module 
+  'list'.</p>
+<blockquote>
+  <pre><font color="#000080">:- import( [list:member/2, list:append/3] ).</font></pre>
+</blockquote>
+<p>Lets a module see the two specific predicates in the module 'list'.</p>
+<h2><font color="#0000ff"><a name="Metapredicates"></a>Metapredicates</font></h2>
+<p><!AMZI_INDEX = metapredicates>Metapredicates are of interest only to those 
+  programmers writing predicates whose arguments are themselves predicates.</p>
+<p>Modules create a problem with predicates whose arguments are themselves intended 
+  to be predicates. Ideally those predicate arguments should refer to predicates 
+  in the calling module, not the defining module for the predicate.</p>
+<p>Consider, for example, the system predicate <b>assert/1</b>. It is defined 
+  in the system module, but its argument typically refers to a clause in the module 
+  in which it is used.</p>
+<p>For example</p>
+<blockquote>
+  <pre><font color="#000080">:- module(data).
+add(fact(X)) :-
+  assert(fact(X)).</font></pre>
+</blockquote>
+<p>In this example, you would expect the assert to assert fact(X) in the 'data' 
+  module, which it does, even though <b>assert/1</b> is defined in a different 
+  module.</p>
+<p>Predicates with this property are called <i>metapredicates</i>, and the arguments 
+  that are context sensitive are called <i>metaarguments</i>. They are specified 
+  with the metapredicate directive. The metaarguments are indicated by the ':' 
+  symbol, other arguments by the '*' symbol.</p>
+<p>For example, the system metapredicates <b>assert/1</b> and <b>clause/3</b> 
+  have these directives declared for them.</p>
+<blockquote>
+  <pre><font color="#000080">:- metapredicate(assert(:)).
+:- metapredicate(findall(*,:,*)).</font></pre>
+</blockquote>
+<p>An example of some user code that might require a metapredicate definition 
+  is a tracing predicate. For example.</p>
+<blockquote>
+  <pre><font color="#000080">:- module(trace).
+:- export(tr/1).
+:- metapredicate(tr(:)).
+tr(X) :-
+   (write(call-X),nl; write(fail-X),nl,fail),
+   call(X),
+   (write(exit-X),nl; write(redo-X),nl,fail).
+:- end_module(trace)</font></pre>
+</blockquote>
+<p>This module could then be used to help debug another module with code like 
+  this.</p>
+<blockquote>
+  <pre><font color="#000080">:- module(buggy).
+:- import(trace).
+a(X) :-
+   tr( b(X) ).
+b(X) :-
+   something.
+...
+:- end_module(buggy).</font></pre>
+</blockquote>
+<p>Because tr/1 is a metapredicate, the call uses the b/1 definition in module 
+  'buggy', instead of looking for one in module 'trace'.</p>
+
+<p><!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p></p>
+<P><I></I> </P>
+
+</BODY>
+</HTML>

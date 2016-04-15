@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html">
+  <title>JOLI</title>
+</head>
+
+<body>
+<h1>JOLI</h1>
+<br>
+
+
+<p>JOLI's task is to tidy Prolog source code. It accepts code that is
+syntactically sound (ie. compiles) but with undisciplined layout, and then
+formats it in a style that emphasizes the structure of the code, fits in
+eighty column lines and hopefully makes it easy to read. Prolog code 
+structure is simpler than other most languages because there is only one 
+basic syntactic form: the Horn clause, nevertheless this not a simple task 
+and the project is ever quite complete.</p>
+
+<p>The underlying creed is that the black marks are user code and inviolable,
+but the white space is ours. However, there is one situation with oversize
+anchored comment lines where this rule is violated and some black  marks
+elided; furthermore, the user's use of blank lines around comments  is 
+respected.</p>
+
+<p>JOLI might have been implemented by reading the whole source file and
+translating it to an abstract structure and then printing  it out. That would
+ maximize the contextual information and give best results  but would take up
+storage space, a drawback that is less significant with each passing  year.
+However, JOLI is implemented by processing code on the  fly with little or no
+storage required and few intermediate structures. It relies heavily on seek
+and tell to revise text already processed and written.</p>
+A large part of the processing pertains to comment layout, where much of  the
+ improvement over the appearance of casual code can be made. There are  two
+types of comments: a block comment contained within tradition slash-star
+(PL1) notation and  possibly extending over many lines, and Prolog's own 
+single line  comment  style with a percent initial. Now a block comment may,
+in fact, not occupy  more than one line, but unlike a line comment it may be
+followed by more code on the same line, so it should not be moved. In fact
+all block comments are reproduced verbatim, even if they are oversized 
+lines, the reason  being  that they may contain some kind of two-dimensional 
+diagram that would be wrecked by wrapping. Furthermore, the white space 
+before a block comment  is treated as part of the comment, for the same
+reason.
+
+<p>Line comments fall  into two categories: anchored comments  which start in
+column 1, and free comments that start indented or after code. A line
+containing a comment  but no code  is called a comment line.   Anchored line
+comments  are, of course,  comment lines. If an anchored line is too long it
+is broken at a space so as to occupy two lines, the second line being being 
+prefaced  by '%%'. If  it contains no spaces it is truncated to fit in eighty
+columns  (as adumbrated  above). The rationale here is that many programmers 
+like to separate sections  with a comment line full of dashes or some other 
+mark,  and sometimes carelessly  exceed eighty  columns.   A vexing question
+concerning comment lines is whether they may be preceded by or succeeded by
+one blank  line and whether a blank  line should be permitted  between
+comments. Although  meaningless blank lines are to be deplored they are often
+used to mean whether the comment refers to the preceding or succeeding  code.
+Since JOLI  cannot  know this a single  blank line in the area of comments 
+is accepted as  meaningful.</p>
+
+<p>Clauses that are not contaminated with comment  lines are spaced according
+to the following rule:  There will be no blank  line between clauses of  the
+same name and arity and there will be one blank  line between clause of 
+different  name or arity. Multiple blank lines are  not permitted.</p>
+
+<p>Free line comments are moved to start in the comment column (48) if
+possible.  If they are too long they are simply right justified, if possible,
+but if  they are still too long then they simply overflow. Tab characters
+occurring in line comments are replaced by a space character, because tabs
+make for uncertain size. Consecutive spaces are not allowed in line comments
+because they serve no purpose and space is at a premium. We like to see a
+space after  the percent sign but do not mandate it because of the increase
+in length.</p>
+
+<p>The code is mostly DCG with a 'pipe' connecting successive goals. There is
+a lexer which provides all the primitives for a crude parser. The code is
+supposed to be already sound, and there is little error reporting. The lexer
+conceals the comments from the parser as far as possible.</p>
+
+<p>Processing is based on the concept of 'priming' the pipe with one
+character from the input file and then 'firing' that character to the output
+file. There are three priming primitives: prime0, prime1 and prime. Prime0
+gets the next character from the file, prime1 calls prime0 repeatedly until
+it gets a 'black' character and prime calls prime1 but triggers  'actions'
+when an 'active character' is seen. These actions will consume the active
+character so prime is called again until an ordinary character is seen. Of
+course, any of these primes may be called directly.</p>
+
+<p>Prime0 will not get a character if there is already one in the pipe. In
+effect it says "use the one you've got". This does not mean that there is
+never more than one in the pipe because it possible in DCG to push characters
+back into the pipe, and that is sometimes done. In fact, the pipe is simply a
+ list and can hold any sort of term, and we accumulate successive line
+comments in the pipe before printing them to see if some diabolical person
+has 'widowed' a cut or a comma or a stop and made it remote from the clause
+it  follows. Then JOLI repairs the transgression by inserting it before the
+comments.</p>
+
+<p>The 'fire' primitive is comparatively simple, it writes one character or
+term from the pipe, but can be given a list of characters to write. Since
+fire  and prime are usually successive goals they are amalgamated in
+'firePrime'.</p>
+
+<p>Code is laid out according to a current 'style'. For example, the head and
+neck of a clause are consecutive on one line, with no indentation. If there
+are arguments they are laid out in 'wrap' style, which means an oversized
+argument list will be wrapped back to the first argument position. A regular 
+prolog list is also written in wrap style. The body of a clause is initially 
+laid out in 'long' style which means each goal is on a new line. The goals
+are indented one tab unit, which is three characters.</p>
+
+<p>Typically, a clause  will contain a section nested within parentheses or
+braces and there is a  fair chance that it will fit on one line, so a 'short'
+style is introduced  to do that. Now a short style can handle a size fault by
+replacing itself  with long style with a further tab. The processor will back
+ up and use the  alternative style. Nesting can recur to any depth, and each 
+time the same  strategy is used. The question arises, if there is more than
+one short handler  extant then which one should handle a size fault? The 
+unequivocal answer  is the highest one, not the lowest one. To ensure this,
+no handler will be laid down if one of that type is already stacked. Since a 
+handler (usually)  purges itself when used then a later handler of that type 
+can then be permitted.</p>
+
+<p>A 'write' handler is similar to a wrap handler except there is no nesting
+syntax. Prolog write primitives are so crude that it takes several goals to
+put out a simple message, which is a compelling motive to put them on the
+same line if possible, to make the message readable. A size fault will start
+a new  write line.</p>
+
+<p>An issue that is central to Prolog formatting in most people's minds is
+how to emphasize the cut and disjunction symbols. A common suggestion  to put
+them separate lines is the very antithesis of formatting, comparable to
+putting the word 'or' on a separate line in English prose. What JOLI does  in
+short style  is to simply space them from adjacent symbols. In long  style  a
+cut (and it's punctuation) is kept on the same line as the preceding  goal, 
+so that  it ends the line. The if-then symbol (-&gt;) is treated the  same
+way. A  disjunction (;) is treated the same way, but in addition the  next
+line is kept  blank. This is very emphatic.</p>
+
+<p>The practice of surrounding operators with blanks is a laudable one, but
+expressions are more easily understood if some attention is paid to operator
+precedence.  Thus, A*X + B is preferable to A * X + B, and shorter. This is 
+particularly desirable for '/', which in Prolog is not only the symbol for
+divide but also the operator in Name/Arity, where spaces would be 
+unacceptable. Unfortunately, we cannot extend this principle very far 
+because there are many levels of operator precedence.</p>
+
+<p>Not all clause heads are functors but sometimes operator expressions. This
+ makes more difficulty for the parser to find the principal operator, (and
+could  lead to pathological formatting problems), but having found it, 
+clause  separation proceeds as for functors.</p>
+
+<p>In accordance with our constitution, we do not remove redundant
+parentheses because they are black marks, but  leave them as as conspicuous
+but silent criticism. We do introduce black marks in the banner, with the
+unfortunate result that joli-ing a joli-ed  file results in two banners. This
+could be  considered a useful history record, but more likely not.  </p>
+
+<p>We cannot hope to achieve infallibility in formatting but simply succeed
+in the majority of cases, and we never expect to wreck   the syntax.  If the
+user  is not satisfied with the result then post editing is the cure. What
+JOLI does is to allow the user to indulge in a stream of  consciousness and
+tidy it up later. More than that, if the result is felt  to be better than
+the  original, even when an effort was made to conform to some other
+formatting  standard, then the user will be encouraged to lay out code this
+way in future.</p>
+
+<p>Ray Reeves 2001</p>
+</body>
+</html>

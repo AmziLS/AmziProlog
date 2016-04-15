@@ -1,0 +1,547 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Debugger</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="TheCommandLineDebugger"></A><FONT COLOR="#D2AA00">Command-Line Debugger</FONT> 
+</h1>
+<P> 
+  <!AMZI_INDEX = Debugger>
+  Amzi! Prolog includes a debugger, based on the Clocksin &amp; Mellish box-model 
+  of Prolog execution, that allows you to trace and interact with interpreted 
+  clauses as they are running. It is run from <A HREF="pug_listener.htm">alis</A> 
+  using built-in predicates. It also runs in the Listener in the <a href="pug_ide.htm">Amzi! IDE</a>. The 
+  IDE also has its own <a href="pug_debugger_ide.htm">source 
+  code debugger</a> that also supports debugging of remote programs.</P>
+
+<H2><A NAME="BoxModelofProcedureFlow"></A><FONT COLOR="#0000FF">Box Model</FONT></H2>
+
+<P><!AMZI_INDEX = Procedure Flow; Box Model; call; exit; fail; redo; leash; Creep; Leap>The
+box model of Prolog execution is a conceptual tool that gives a procedural
+interpretation of flow-of-control through a Prolog program. As such it
+is useful for understanding the execution of a program. To use the box
+model envision each Prolog goal surrounded by a box: </P>
+
+<blockquote>
+  <p align="center"><IMG SRC="boxmdl.gif" HEIGHT=74 WIDTH=182 border="0"> </p>
+</blockquote>
+<P>Each box has four <I>ports</I> through which Prolog may enter (<I>call</I>
+and <I>redo</I> ports) or leave (<I>exit</I> or <I>fail</I> ports) the
+goal. </P>
+
+<MENU>
+<LI><B>call - </B>when Prolog is initially asked to prove the goal it enters
+through the <I>call</I> port. </LI>
+
+<LI><B>exit</B> - having entered through <I>call</I>, Prolog leaves through
+<I>exit</I> if it can prove the goal. </LI>
+
+<LI><B>fail</B> - if Prolog cannot prove the goal it leaves the box via
+the <I>fail</I> port. </LI>
+
+<LI><B>redo</B> - if at some further point in the program (i.e., after
+having entered through <I>call</I> and left via <I>exit</I>) Prolog backtracking
+occurs then eventually (if backtracking reaches this stage back in the
+proof) Prolog reenters the goal via the <I>redo</I> port. </LI>
+</MENU>
+
+<P>There is one box per goal in a program, and the boxes are linked from
+port to port. Ports that we stop at in the debugger are known as &quot;debug
+ports.&quot; </P>
+
+<P>You can creep through your program from port to port, stopping at each
+one. You might think of this as &quot;single stepping&quot; your program.
+The debugger can stop at every CALL, REDO, FAIL and EXIT and ask what to
+do next. </P>
+
+<P>Using <A HREF="#LeashingDebugPorts">leash</A> (described later in this
+section) you can limit which of the ports are stopped at. Then, when you
+creep, all the ports will be displayed, but the debugger will only stop
+at the ones which are leashed. For example, you might want to stop only
+at CALLs and REDOs. By default, all ports are leashed when the debugger
+is started. </P>
+
+<P>Alternatively, you can &quot;leap&quot; to only the ports of predicates
+specified as spypoints. You might think of this as running until a &quot;breakpoint&quot;
+is reached. In this case, the intervening ports are not displayed. </P>
+
+<P>By combining your use of creeping and leaping, you can cause the debugger
+to stop at certain ports and interact with them before continuing. Thus
+you can rapidly trace through code which is of no interest (because it
+has already been debugged) and concentrate on a predicate or two at will.
+</P>
+
+<H2><A NAME="StartingandLeavingtheDebugger"></A><FONT COLOR="#0000FF">Starting
+and Exiting</FONT></H2>
+
+<P>To start the debugger in the listener type: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+  <TR> 
+    <TD>Command-Line alis</TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <PRE><FONT COLOR="#000080">?- debug. </FONT></PRE>
+    </TD>
+  </TR>
+</TABLE>
+
+<P>To exit the debugger: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+  <TR> 
+    <TD>Command-Line alis</TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <PRE><FONT COLOR="#000080">??- quit. </FONT></PRE>
+    </TD>
+  </TR>
+</TABLE>
+
+<P>Note, in command-line alis, the debug listener is identified by an
+extra &quot;?&quot; in the prompt. When you exit the debug listener you
+are returned to the original listener. </P>
+
+<H2><A NAME="DebuggerDisplay"></A><FONT COLOR="#0000FF">Display</FONT></H2>
+
+<P> 
+  <!AMZI_INDEX = Ports; Call; Exit; Fail; Redo; Depth; Clauses; Terms>
+  The debugger output is intermixed with other output in the normal scrolling 
+  dialog of the listener. It is controlled by keyboard commands. </P>
+
+<P>The debugger works by displaying the names of the ports that execution passes 
+  through in the course of a computation. </P>
+
+<P>The message output by the debugger at a port is of the following form:
+</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">[DEPTH] PORT: [CLAUSE#] TERM  [PROMPT]</FONT></PRE>
+</UL>
+
+<P>For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">CALL:  (1) append([a,b,c], [d,e,f], H33)  ?</FONT></PRE>
+</UL>
+
+<P>Notice that variables are represented using the Hn notation. </P>
+
+<blockquote>
+  <p><B>DEPTH</B> is a number of leading spaces indicating how many ancestors 
+    the goal involved in this port has, i.e., how deeply nested in the proof it 
+    is. So top-level goals (typed in response to ?-) are indented 0 spaces (for 
+    a depth of 0). Goals in the body of the clause proving this goal are indented 
+    1 space (for a depth of 1). Goals in the bodies of clauses proving these goals 
+    are indented 2 spaces and so on. Depths greater than 10 are indicated by both 
+    a number and spaces. </p>
+  <p><B>PORT:</B> is one of CALL: REDO: FAIL: EXIT: corresponding to the ports 
+    of the box model discussed above. </p>
+  <p><B>CLAUSE# </B>is the number of the clause being executed. It is not displayed 
+    for built-in predicates because that is not useful. </p>
+  <p><B>TERM</B> is the goal (with any variable bindings) that caused entry to 
+    the call or redo port of the box. </p>
+  <p><B>PROMPT</B> if this port is a debugging port and we are running under a 
+    command-line environment, then ? is printed and user input is awaited, otherwise 
+    mouse or keyboard input is awaited. </p>
+</blockquote>
+<H3><A NAME="portrayGOAL"></A><FONT COLOR="#000080">portray(GOAL)</FONT></H3>
+
+<P><!AMZI_INDEX = portray><b>portray/1</b> is a user-defined predicate that is 
+  called by the debugger when it displays a goal. You can create portray/1 clauses 
+  to generate formatted output of complex goals that are difficult to follow in 
+  the normal debugger listing. </P>
+
+<H2><A NAME="DebugPortOptions"></A><FONT COLOR="#0000FF">Debug Port Options</FONT></H2>
+
+<P> 
+  <!AMZI_INDEX = Ports; Creep; Leap; Skip>
+  At each debugging port you have a number of options for controlling the execution 
+  of the debugger. The usual response is one character (with no need to press 
+  [Enter]). The options are: </P>
+
+<blockquote>
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD WIDTH=86><B>Command<BR>
+-Line</B> </TD>
+
+<TD WIDTH=86><B>Windows<BR>
+-IDE</B></TD>
+
+<TD WIDTH=288><B>Option <BR>
+Description</B> </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>[Enter]<BR>
+c</B> </TD>
+
+<TD WIDTH=86><B>Creep</B></TD>
+
+<TD WIDTH=288>Creep to the very next port. If the next port is leashed
+(or is a spypoint) then prompt for further input else automatically creep
+to the next port after that. Consequently, if leashing is set to &quot;none&quot;,
+creeping at one port will produce a tracing of all the ports between it
+and the next spypoint. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>f</B></TD>
+
+<TD WIDTH=86><B>Fail</B></TD>
+
+<TD WIDTH=288>Force the debugger to go to the fail port for this predicate
+invocation. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>l</B></TD>
+
+<TD WIDTH=86><B>Leap</B></TD>
+
+<TD WIDTH=288>Leap to the next spypoint. The next port to be displayed
+will be the next encountered spypoint. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>s</B></TD>
+
+<TD WIDTH=86><B>Skip</B></TD>
+
+<TD WIDTH=288>Skip. Only used at a <I>call</I> or <I>redo</I> port. This
+useful option turns off display from the debugger until it reaches the
+corresponding <I>exit</I> or <I>fail</I> port for this call. Thus it can
+be used to turn off the debugger during the course of a complex subproof.
+No messages will be issued by the debugger during this subproofeven if
+a spypoint is encountered. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>a</B></TD>
+
+<TD WIDTH=86><B>Stop</B></TD>
+
+<TD WIDTH=288>Aborts the debugger and returns to the debug listener. </TD>
+</TR>
+</TABLE>
+</blockquote>
+<P>Other options are available for looking at and changing the Prolog environment
+under command-line alis. They are: </P>
+<blockquote>
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD WIDTH=86><B>Command- Line</B> </TD>
+
+<TD WIDTH=86><B>Windows- IDE</B></TD>
+
+<TD WIDTH=288><B>Option Description</B> </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>n</B></TD>
+
+<TD WIDTH=86>n/a </TD>
+
+<TD WIDTH=288>Notrace. Turns off the debugger and then continues with the
+proof in progress. That is, runs the rest of your program. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>b</B></TD>
+
+<TD WIDTH=86>n/a </TD>
+
+<TD WIDTH=288>Break to a new listener. Temporarily turns off the debugger
+and invokes a new listener (with a ???- prompt). This allows you to work
+with the program however you please without leaving the trace. (You might
+want to separately test some predicates, change some, or whatever.) When
+the new listener is exited (by typing 'quit.'), the debugger is turned
+back on and the interrupted proof continues. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>d</B></TD>
+
+<TD WIDTH=86>n/a </TD>
+
+<TD WIDTH=288>Display the current goal with all of the current variable
+bindingsthen prompt again. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>h</B></TD>
+
+<TD WIDTH=86>n/a </TD>
+
+<TD WIDTH=288>Halts Prolog and exits.</TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>@</B></TD>
+
+<TD WIDTH=86>n/a </TD>
+
+<TD WIDTH=288>Prompts for you to enter a Prolog goal. Temporarily turns
+off the debugger, like n, but instead lets you enter a single Prolog goal.
+It tries to prove it and then turns the debugger back on and continues
+the suspended proof. This is useful for quick checks of other parts of
+the program and for changing leashing or spypoints while debugging. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>?</B></TD>
+
+<TD WIDTH=86>n/a </TD>
+
+<TD WIDTH=288>Displays a listing of debug port options.</TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>[^Break]</B></TD>
+
+<TD WIDTH=86>n/a</TD>
+
+<TD WIDTH=288>If your program is stuck in a loop, you can press [Ctrl-Break]
+and the debugger will stop at the next port and prompt for an option. </TD>
+</TR>
+</TABLE>
+</blockquote>
+<H2><A NAME="Spypoints"></A><FONT COLOR="#0000FF">Spypoints</FONT></H2>
+
+<P>
+  <!AMZI_INDEX = Spypoints; spy; nospy; nospyall>
+  Spypoints are used to stop the debugger at particular predicates. Execution 
+  always pauses at a spypoint regardless of what ports are leashed and whether 
+  you are leaping or creeping. </P>
+
+<P>A spypoint is set on a predicate by using <B>spy/1</B>. It is removed by using 
+  <B>nospy/1</B>. To remove all spypoints, use <B>nospyall/0</B>. The current 
+  spypoints are listed by using <B>spy/0</B>. </P>
+
+<P>The argument to <B>spy</B> and <B>nospy</B> is one of: </P>
+
+<MENU>
+<LI>name </LI>
+
+<LI>name/arity </LI>
+
+<LI>[list of name and/or name/arity] </LI>
+</MENU>
+
+<P>Ttypically you will use the &quot;@&quot; debug port option to control your 
+  spypoints by entering the <B>spy</B>, <B>nospy</B> and <B>nospyall</B> commands 
+  as goals. </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Note that
+entering and exiting the debugger does not remove or otherwise alter the
+setting of spypoints. The only way to remove spypoints is to use one of
+the above. </I></P>
+
+<H2><A NAME="LeashingDebugPorts"></A><FONT COLOR="#0000FF">Leashing Debug
+Ports</FONT></H2>
+
+<P><!AMZI_INDEX = Ports; leash>As mentioned above we can either creep or
+leap to a port. When we leap to a port, it is a port for a predicate that
+has a spypoint set on it, and the debugger pauses to allow interaction.
+</P>
+
+<P>Creeping takes us to the ports of predicates in between the spypoints.
+The debugger might pause at a port, or it may simply display it without
+giving you the opportunity to interact, as execution continues. The different
+behavior at ports is controlled by leashing. </P>
+
+<P>Leashing is not related to particular predicates, as spypoints are,
+but is instead a characteristic of each of the four types of ports, CALL,
+REDO, FAIL and EXIT. By default, all ports have leashing turned on, so
+all ports of predicates that are crept to are paused at. But leashing can
+be turned off for the ports of these intermediate predicates so they display
+but don't require step-by-step interaction from you. </P>
+
+<P>You use the <B>leash/1</B> predicate to specify the ports to make debugging 
+  ports as follows: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- leash(call).          % leashes all call ports
+?- leash([call, redo]).  % leashes call and redo ports
+?- leash([]).            % leashes no ports
+?- leash(none).          % leashes no ports
+?- leash(all).           % leashes all four ports
+?- leash([call,fail,redo,exit]). % leashes all 4 ports</FONT></PRE>
+</UL>
+
+<P>Note that unmentioned ports are automatically unleashed. To find out
+what ports are currently being leashed use <B>leash/0</B>. </P>
+
+<P>Typically you will use the &quot;@&quot; debug port option to control your 
+  leashing by entering the leash command as a goal. </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Note that
+entering and exiting the debugger does not remove or otherwise alter the
+ports currently being leashed. The only way to change leashing is to use
+one of the above. </I></P>
+
+<H2><A NAME="Logging"></A><FONT COLOR="#0000FF">Logging</FONT></H2>
+
+<P><!AMZI_INDEX = Logging; Ports; openlog; writelog; nllog; closelog>The
+log-file capability allows you to record a transcript of a Prolog session.
+This is especially useful in recording long traces during debugging. </P>
+
+<P>Logging can be controlled from a listener, or within a Prolog program
+or using the &quot;@&quot; debug port option through the use of built-in
+predicates. </P>
+
+<MENU>
+  <LI><A HREF="ref_io.htm">openlog</A>(Fname) - This opens the file Fname and sets 
+    a flag letting Prolog know it is logging. The file overwrites any previous 
+    file of the same name. Fname must be an atom, such as 'temp.log' or simply 
+    log. </LI>
+
+  <LI><A HREF="ref_io.htm">closelog</A> - This closes the log file and stops the 
+    logging process. </LI>
+
+  <LI><A HREF="ref_io.htm">writelog</A>(X) - Writes X just to the log file. </LI>
+
+  <LI><A HREF="ref_io.htm">nllog</A> - Writes a newline to the log file. </LI>
+</MENU>
+
+<P>Logging can also be turned on for an application by specifying a log
+file in the application's .cfg file. </P>
+
+<H2><A NAME="DebuggerExample"></A><FONT COLOR="#0000FF">Example</FONT></H2>
+
+<P><!AMZI_INDEX =Debugging; Creep; Leap; leash>Let's look at an example of creeping, 
+  leaping and leashing using Duck World presented in <A HREF="pug_tutorial.htm">A 
+  Quick Tutorial</A>. First we consult our source code and enter the debugger. 
+</P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+  <TR> 
+    <TD>Command-Line alis</TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <PRE><FONT COLOR="#000080">?- [duck1,duck2].
+yes
+?- debug. </FONT></PRE>
+    </TD>
+  </TR>
+</TABLE>
+
+<P>Next, we set connect as a spypoint and leash only the call port. Then
+we call main. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+  <TR> 
+    <TD>Command-Line alis</TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <PRE><FONT COLOR="#000080">??- spy(connect).
+yes
+??- leash(call).
+yes
+??- main. </FONT></PRE>
+    </TD>
+  </TR>
+</TABLE>
+
+<P>We start to creep through the program by typing &quot;c&quot;. Note, we pause 
+  only on CALL ports.Tthe program output is interspersed with the debugging information. 
+  Here we show the command-line I/O with the program I/O shown in italics: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Calling: main
+CALL:(1) main    ? c
+  CALL: consult(duckenv)    ? c
+  EXIT: consult(duckenv)
+  Calling: write(Welcome to Duck World)
+  CALL: write( Welcome to Duck World )    ? c
+<I>Welcome to Duck World </I>  EXIT: write( Welcome to Duck World )</FONT></PRE>
+</UL>
+
+<P>Now we type &quot;l&quot; (alis) to leap to our spypoint. No more debugging 
+  ports will be displayed until we get to the spypoint. But we will get a warning 
+  if there are no clauses matching a call. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">   CALL: nl    ? l
+<I>Go get an egg 
+&gt;&gt; goto(yard).</I></FONT></PRE>
+</UL>
+
+<P>Our leap was interrupted for some user input, so we type &quot;goto(yard).&quot;
+We creep onwards watching the variable bindings and backtracking. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">      Calling: connect(house,yard)
+      CALL:(1) connect(house,yard) ? c
+        Calling: nextto(house,yard)
+        FAIL: nextto(house,yard)
+      FAIL: connect(house,yard)
+      REDO:(2) connect(house,yard)
+        Calling: nextto(yard,house)
+        CALL:(2) nextto(yard,house)    ? c
+        EXIT: nextto(yard,house)</FONT></PRE>
+</UL>
+
+<P>We continue to creep forwards. Every time we reach a predicate that
+is a spypoint, we pause. Note that although we are only leashing CALLs,
+we pause at the other ports for connect, as shown below. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">      EXIT: connect(house,yard) ? c
+      Calling: move(you,yard)
+      CALL:(1) move(you,yard)    ? c
+        CALL: retract(loc(you,H754))    ? c
+        EXIT: retract(loc(you,house))
+        CALL: assert(loc(you,yard))    ? c
+        EXIT: assert(loc(you,yard))
+      EXIT: move(you,yard)
+      CALL: write( You are in the )    ? c
+<I>You are in the </I>      EXIT: write( You are in the )
+      CALL: write(yard)    ? c
+<I>yard</I>      EXIT: write(yard)
+      CALL: nl    ? c
+      EXIT: nl
+    EXIT: goto(yard)</FONT></PRE>
+</UL>
+
+<P>We reach a predicate which we are not interested in seeing, so we type &quot;s&quot; 
+  (alis) to skip to the EXIT or FAIL port for this call. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">    Calling: demons
+    CALL: demons    ? s
+    EXIT: demons</FONT></PRE>
+</UL>
+
+<P>Finally, we turn off trace and finish running the program: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+  <TR> 
+    <TD>Command-Line alis</TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <PRE><FONT COLOR="#000080">CALL: ! ? n
+&gt;&gt; quit.
+Quitter </FONT></PRE>
+    </TD>
+  </TR>
+</TABLE>
+
+<p><!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p></p>
+<P>&nbsp; </P>
+
+</BODY>
+</HTML>

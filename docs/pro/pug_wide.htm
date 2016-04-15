@@ -1,0 +1,1757 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Windows IDE</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="IDEInteractiveDevelopmentEnvir"></A><FONT COLOR="#D2AA00">Original Amzi! Windows IDE</FONT></h1>
+<P><!AMZI_INDEX = WIDE> The original Amzi! Windows IDE (WIDE) is a relatively simple IDE ideal for introductory and student use in learning Prolog.  It is included in the Amzi! distribution as an alternative to the full-featured Eclipse IDE which, while being much more powerful, takes a bit longer to learn.</P>
+<ul>
+  <li><a href="#AQuickTutorial">Amzi! Quick Tutorial w/ WIDE examples</a></li>
+  <li><a href="#WIDEControls">Overview of WIDE Controls</a></li>
+  <li><a href="#Projects">Using Projects with WIDE</a></li>
+  <li><a href="#TheDebugger">Debugging with WIDE</a></li>
+    </li>
+</ul>
+
+<hr/>
+
+<h1><A NAME="AQuickTutorial"></A><FONT COLOR="#D2AA00">Quick Tutorial</FONT> </h1>
+<P>This section is a tutorial introduction to the Amzi! Prolog development
+tools. It is not intended to be an introduction to Prolog. If you need
+an introduction to the Prolog language we recommend <I>Adventure in Prolog</I>.
+</P>
+
+<P>The tutorial makes use of a simple adventure game, Duck World, to illustrate
+how to use the Amzi! tools to build complex applications. Accordingly,
+it is composed of a number of files. </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>(Why Duck
+World? Because Amzi! inc. is located in an old farm house backed up on
+conservation land. We bought ducks out of whimsy one day, which were later
+discovered by the fox in the woods. The ducks have proved to be an adventure.)</I>
+</P>
+
+<P>The tutorial demonstrates both the command-line (alis) and Windows-IDE
+interfaces to Amzi! Prolog. </P>
+
+<P>This tutorial starts by testing some of the basic predicates of Duck
+World in the listener. It then goes through the full example, showing how
+the program is modularized, how it is compiled and run using the listener,
+and how it is linked into a distributable application. </P>
+
+<P>The source code for Duck World can be found in the samples/prolog/ducks sub-directory. 
+</P>
+
+<H2><A NAME="DuckWorld"></A><FONT COLOR="#0000FF">Duck World</FONT></H2>
+
+<P><!AMZI_INDEX = Tutorial; Duck World>An adventure game is a simulation
+of an environment, real or imagined, that the user explores, usually with
+some goal in mind. Duck World is a simple adventure game, where the objective
+is to go from the house, through the yard, to the duck pen to get an egg,
+and back to the house again, without losing any ducks to the fox. </P>
+
+<P>The commands for manipulating the environment are all entered as legal
+Prolog goals (ending in periods). </P>
+
+<P>They are: </P>
+
+<MENU>
+<LI>goto(X) - moves you to place X, where X can be either house, yard or
+pen. </LI>
+
+<LI>take(X) - takes something if it's where you are; the egg is the only
+thing you're supposed to take. </LI>
+
+<LI>chase(ducks) - how to get the ducks back in their pen. </LI>
+
+<LI>quit - this, or any illegal command, will quit the game for you. </LI>
+</MENU>
+
+<P>When you have brought the egg into the house the game ends. </P>
+
+<H2><A NAME="StartingtheListener"></A><FONT COLOR="#0000FF">Starting the
+Listener</FONT></H2>
+
+<P><!AMZI_INDEX = alis; Listener; IDE>Amzi! Prolog can be run using one
+of two different methods: </P>
+
+<UL>
+<LI>By running the listener, alis. </LI>
+
+<LI>By running the Windows Interactive Development Environment (IDE). </LI>
+</UL>
+
+<P>To start the listener from the operating system command-line, type the
+input shown in the left box. To do this within the IDE, select the menu
+items shown in the right box. General instructions are given in <I>italics</I>.
+</P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">c&gt;  alis</FONT></PRE>
+</TD>
+
+<TD>
+<PRE><I><FONT COLOR="#000080">Double-Click on Icon for the
+Amzi! Prolog IDE
+</FONT></I><FONT COLOR="#000080">Listener / Start</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>The copyright message will be displayed followed by the prompt, <B>?-</B>
+</P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">Amzi! Prolog &lt;version information&gt;
+Amzi! Prolog Listener
+Copyright (c)1987-97 Amzi! inc. All Rights Reserved.
+Type  'quit.'  to exit
+?-</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>You are now in a Prolog listener, which is awaiting your command. Try
+out this classic, being careful to remember the single quotes and the ending
+period. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- write('Hello World').
+Hello World</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM>
+<I>Note: The listener does NOT have a full line editor at the ?- prompt,
+although it appears to behave that way in the IDE. You can type in characters
+and backspace to fix mistakes. You cannot use the mouse or cursor keys
+to edit a query. You can cut and paste from one line to the prompt, but
+you can only edit that line using the backspace key. </I></P>
+
+<P>(To exit, you would type &quot;quit.&quot; or select Listener / End
+from the IDE menu.) </P>
+
+<H2><A NAME="CreatingaSourceFile"></A><FONT COLOR="#0000FF">Creating a
+Source File</FONT></H2>
+
+<P><!AMZI_INDEX =  Duck World; Tutorial; Source Files; pro Files>Before
+looking at the Duck World source code, create a small experimental file
+called DW.PRO. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE</TD>
+</TR>
+
+<TR>
+<TD>
+      <PRE><I><FONT COLOR="#000080">Use an editor to type in your code
+Save your file as dw.pro </FONT></I></PRE>
+</TD>
+
+<TD>
+      <PRE><FONT COLOR="#000080">File / New
+<I>Type your code into the window
+</I>File / Save As dw.pro </FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Type the following lines of Prolog code into DW.PRO: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">% Experiments
+nextto(house, yard).
+nextto(yard, pen).
+
+loc(you, house).
+
+move(Place) :-
+  retract( loc(you, _) ),
+  assert( loc(you, Place) ).</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Note, it
+is important to keep the clauses defining a predicate together, as the
+clauses of the predicate nextto/2 are. If the definitions are scattered,
+the program will seem to work properly when interpreted, but behave in
+an unexpected manner when compiled.</I> </P>
+
+<H2><A NAME="ConsultingaSourceFile"></A><FONT COLOR="#0000FF">Consulting
+a Source File</FONT></H2>
+
+<P><!AMZI_INDEX = Source Files; pro Files; Duck World; alis; IDE>To play
+with DW.PRO, consult it into the listener as shown: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- consult(dw).
+yes</FONT></PRE>
+</TD>
+
+<TD>
+      <PRE><FONT COLOR="#000080">Listener / Consult
+dw.pro</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>You are now in the listener with DW.PRO consulted. </P>
+
+<H2><A NAME="UsingtheListener"></A><FONT COLOR="#0000FF">Using the Listener</FONT></H2>
+
+<P><!AMZI_INDEX = alis; Tutorial; Duck World; listing; add; move; goto>Now
+that you've reached the listener, make sure your file was consulted by
+using <B>listing</B>. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- listing.</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>This will show you the predicates of dw.pro, although they will look a little 
+  different because the variables are renamed with an _ and a number, e.g. _0. 
+</P>
+
+<P>You can try various queries from the listener. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- loc(you, X).
+X = house</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>You can test move. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- move(yard), loc(you, X).
+X = yard
+?- move(foobar), loc(you, X).
+X = foobar</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Because <B>move</B> doesn't check to see if the move makes sense, you
+might decide to add a <B>goto</B> predicate with more intelligence. You
+can enter it directly in the listener using <B>add</B>. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- add.
+|  goto(P) :-
+loc(you, X),
+nextto(X, P),
+move(P).
+|  quit.
+?-</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>This is a useful technique for quick experiments, but the code typed
+in the listener is not entered into your source file. Because we want <B>goto</B>
+to be part of the game it is best to type it directly into the source file
+and then reconsult it. </P>
+
+<P>This can be done by moving from the listener to the editor. You can
+use the built-in IDE editor, or, under DOS, invoke the editor of your choice.
+In the IDE, simply selecting Listener/Reconsult will reconsult the last
+file (or project) consulted. The last file consulted is also remembered
+between sessions, so you begin a new IDE session by simply selecting Reconsult.
+</P>
+
+<P>(You need to reconsult, rather than consult, because consulting would
+will simply add a second copy of your program to the Prolog workspace.
+Listing would show two of every predicate.) </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE</TD>
+</TR>
+
+<TR>
+<TD>
+      <PRE><I><FONT COLOR="#000080">Edit dw.pro in an editor
+then in the listener:
+</FONT></I><FONT COLOR="#000080">?- reconsult(dw).
+yes</FONT></PRE>
+</TD>
+
+<TD>
+      <PRE><FONT COLOR="#000080"><I>Edit dw.pro in its window
+</I>File / Save
+Listener / Reconsult</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>You can then test it. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- goto(yard).
+yes
+?- goto(pen).
+yes
+?- goto(yard).
+no</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>It didn't work right, which leads to the next section. </P>
+
+<H2><A NAME="Debugging"></A><FONT COLOR="#0000FF">Debugging</FONT></H2>
+
+<P><!AMZI_INDEX = Tutorial; Duck World; Debugging><B>goto</B> lets you
+get into the pen, but doesn't let you get back out. First, you can use
+the listener to make sure the game is in the state required for testing.
+To do this enter the goals to place you in the pen. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- retract(loc(you, _)), assert(loc(you, pen)).
+yes</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>The listener gives you the ability to dynamically adjust the state of
+your application, effectively putting you in the middle of it. This, by
+itself, is a powerful tool for debugging. </P>
+
+<P>You can now trace the execution of goto(yard) to see why it is failing.
+To do this you need to start the debugger. Type: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- debug.</FONT></PRE>
+</TD>
+
+<TD>
+<PRE><FONT COLOR="#000080">Listener / Debug On</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>The debugger in alis is line-oriented, and is controlled from the keyboard.
+In the IDE, a separate debugger window is opened, which is controlled with
+the mouse. You enter your normal interaction with the program in the listener
+window. </P>
+
+<P>Next, type in the goal to be traced at the listener prompt, which is
+??- for alis and ?- for the IDE: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- goto(yard).</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>To step through the Prolog code type: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">? c
+<I>Alternatively
+</I>? [Enter]</FONT></PRE>
+</TD>
+
+<TD>
+<PRE><I><FONT COLOR="#000080">Click on the &quot;Creep&quot; button</FONT></I></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Note the IDE does not display the ? prompt. (See the Debugger section
+for other options.) </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">Calling: goto(yard)
+CALL:(1) goto(yard)    ? c
+   Calling: loc(you,H64)
+   CALL: loc(you,pen)    ? c
+   EXIT: loc(you,pen)    ? c
+   Calling: nextto(pen,yard)
+   FAIL: nextto(pen,yard)    ? c
+   FAIL: loc(you,pen)    ? c
+   FAIL: loc(you,H64)    ? c
+FAIL: goto(yard)    ? c
+FAIL: goto(yard)    ? c
+no</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>To leave the debugger </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">??- quit.</FONT></PRE>
+</TD>
+
+<TD>
+<PRE><FONT COLOR="#000080">Listener / Debug Off
+<I>Or, Click on the &quot;Stop&quot;
+button</I></FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>The trace reveals that nextto(pen, yard) is different from nextto(yard,
+pen), so, to get <B>goto/1</B> to work, a predicate that equates the two
+is needed. The solution chosen for Duck World is the predicate <B>connect/2</B>,
+which is used instead of <B>nextto/2</B> in the <B>goto/1</B> definition.
+</P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">connect(X, Y) :- nextto(X, Y).
+connect(X, Y) :- nextto(Y, X).</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>This code can be added to the source file and the development process
+continues. This is the normal way to develop a Prolog application. Predicates
+are gradually added to the source file as the application grows. The application
+can be tested at any point during the development process and individual
+predicates can be tested and their execution traced to understand why the
+application is working the way it does. </P>
+
+<H2><A NAME="Modules"></A><FONT COLOR="#0000FF">Modules</FONT></H2>
+
+<P><!AMZI_INDEX = Tutorial; Modules; Duck World; consult; loc; main; dynamic; goto>As
+an application grows, it is natural to want to break it up into modules.
+At the simplest this means splitting the predicate definitions among various
+source files. These files can be <B>consult</B>ed together and the application
+run from the listener. </P>
+
+<P>However, it is often preferred to keep some of the predicates hidden
+within a file and to allow only certain predicates to be called from other
+source files. This is done through two compiler directives (specified by
+:- in the source code), import and export. These directives specify which
+predicates will be visible outside of the source file (export), and which
+predicates the file is calling that it expects to find elsewhere (import).
+</P>
+
+<P>Included in the samples are two source files that illustrate this idea.
+They are: </P>
+
+<ul>
+  <li>duck1.pro - the source code implementing the commands. </li>
+  <li>duck2.pro - the source code for the main control loop. </li>
+</ul>
+<P>Even for compiled applications, there are usually at least a few predicates
+which remain in the dynamic database. It is often convenient to separate
+their definition to a separate file that also initializes them by <B>assert</B>ing
+them into the dynamic database when the program starts up. </P>
+
+<P>In the case of Duck World, the <B>loc/2</B> predicate is constantly
+being changed by the application and therefore is kept in the dynamic database.
+The file DUCKENV.PRO contains the code to initialize the database. Notice
+that it is <B>consult</B>ed when <B>main/0</B> is called. </P>
+
+<P>If you want to keep a dynamic predicate's definition in with compiled
+code, you can use the <B>dynamic</B> directive. It tells the compiler to
+keep the specified predicate in the dynamic database, rather than comiling
+it. </P>
+
+<P>For example, in this code <B>loc/2</B> will be in the dynamic database
+while <B>main</B> and <B>goto</B> are compiled. dynamic is ignored for
+interpreted code. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">:- dynamic loc/2.
+
+main :- ...
+
+loc(you, house).
+loc(egg, pen)...
+
+goto(...</FONT></PRE>
+</UL>
+
+<H2><A NAME="RunningaModularApplication"></A><FONT COLOR="#0000FF">Running
+a Modular Application</FONT></H2>
+
+<P><!AMZI_INDEX = Tutorial; Duck World; Modules; consult; main>You can
+run the modularized Duck World from a listener by <B>consult</B>ing it
+and calling <B>main/0</B>, the predicate that starts it running. (You can
+also call any of the other predicates of Duck World to see if they're working
+and trace them if they're not.) </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- consult([duck1, duck2]).                               
+?- main.
+Welcome to Duck World
+Go get an egg
+&gt;&gt; goto(yard).
+You are in the yard
+&gt;&gt; .....</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<H3><A NAME="UsingalisandBATFiles"></A><FONT COLOR="#000080">Using alis
+and BAT Files</FONT></H3>
+
+<P><!AMZI_INDEX = alis; BAT; Tutorial; Duck World; main><B>main/0</B>
+is a special predicate for Amzi! Prolog because it is the main entry point
+into your program. When you include files to be consulted on the alis
+command line, alis first tries to call <B>main/0</B> before establishing
+the listener environment. This means that alis can be used to launch your
+application without the need for compiled or linked code. Further, when
+alis finds a <B>main/0</B> to call, it exits back to the operating system
+when it's finished, rather than staying in the listener. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">c&gt;  alis duck1 duck2
+Welcome to Duck World
+Go get an egg
+&gt;&gt; quit.
+Quitter
+c&gt;</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>By creating a batch file, ducks.bat with the line &quot;alis duck1 duck2&quot;, 
+  you can run Duck World by simply typing &quot;ducks&quot; at the operating system 
+  prompt. </P>
+
+<P>If you have a large number of files in your application, you can create
+a file like DUCKS.PRO that consults each of the files. Then only this one
+file need be specified on the alis command line. </P>
+
+<H3><A NAME="UsingProjectsintheIDE"></A><FONT COLOR="#000080">Using Projects</FONT></H3>
+
+<P><!AMZI_INDEX = Tutorial; Duck World; IDE>You can create a project file (.ppj) 
+  by selecting Build / Project New from the IDE menu. Enter the name of your project, 
+  e.g. ducks.ppj. Next you will be presented with a dialog box which you can use 
+  to add files to your project. Double-click on duck1.pro and duck2.pro. Their 
+  names will appear in the window on the bottom. Click on &quot;OK.&quot; </P>
+
+<P>Now instead of using Listener / Consult to individually consult each
+file, you can simply consult the project, which, in turn, consults each
+file in the project. </P>
+
+<H2><A NAME="Compiling"></A><FONT COLOR="#0000FF">Compiling</FONT></H2>
+
+<P><!AMZI_INDEX = Compiling; Duck World; Tutorial>Compiling Duck World
+is easily done: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">c&gt;  acmp duck1
+c&gt;  acmp duck2</FONT></PRE>
+</TD>
+
+<TD>
+<PRE><FONT COLOR="#000080">Build / Compile
+ducks.ppj</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Note, under the IDE we simply compile the project. This causes all the
+modified source files in the project to be recompiled. </P>
+
+<P>acmp can also be invoked with no arguments, in which case it will prompt
+you for the names of the files. See the Compiler section for more details.
+</P>
+
+<P>The result of compiling is a Prolog object file, in this case, duck1.plm and 
+  duck2.plm. </P>
+
+<H2><A NAME="Running"></A><FONT COLOR="#0000FF">Running</FONT></H2>
+
+<P><!AMZI_INDEX  Tutorial; Duck World>The .plm files can be run from either alis 
+  or the IDE just as the .pro Files were. The only difference is they go faster 
+  and the debugger cannot trace them. If you wanted, you could run Duck World 
+  consulting the .pro file for one and loading the .plm file for the other. This 
+  way you could use trace on the predicates in the .pro file (duck2 in this example). 
+</P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>?- load(duck1), consult(duck2), main.</TD>
+</TR>
+</TABLE>
+
+<P>This can also be accomplished in the IDE by setting up your project to include 
+  duck1.plm and DUCK2.PRO. When consulting projects (using Listener / Consult), 
+  .plm files are loaded and .pro files are consulted. </P>
+
+<P>With alis, the .plm files can be loaded from the command line, just as the 
+  .pro files were. This can be either directly </P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">c&gt;  alis duck1.plm duck2.plm</FONT></PRE>
+</blockquote>
+<P>or by using an intermediate file to load the component files. </P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">c&gt;  alis ducks</FONT></PRE>
+</blockquote>
+<H2><A NAME="LinkingandEXEGeneration"></A><FONT COLOR="#0000FF">Linking
+and Running</FONT></H2>
+
+<P><!AMZI_INDEX = Linking; Packaging; EXE Files; Tutorial; Duck World>To
+build a stand-alone application first create a Prolog load module (.xpl
+file) with the Amzi! Prolog linker, alnk. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">c&gt;  alnk ducks duck1 duck2</FONT></PRE>
+</TD>
+
+<TD>
+<PRE><FONT COLOR="#000080">Build / Link
+ducks.ppj</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Note, under the IDE we just link the project to create an .xpl file with
+the same name as the project. </P>
+
+<P>Using alnk, the first argument is the name of the .xpl file. The next
+two files are the .plm files that are linked together. </P>
+
+<P>The .plm files (in this case duck1.plm and duck2.plm) are linked with alib.plm, 
+  the Prolog portion of the Amzi! engine, to form an application. (Hence, alib.plm 
+  must be somewhere in the PATH or AMZI_DIR.) </P>
+
+<P>Alnk can also be invoked with no arguments, in which case it will prompt you 
+  for inputs. See the <a href="pug_linker.htm">Linker section</a> for more details. 
+</P>
+
+<P>To run Duck World, just type: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">c&gt; arun ducks</FONT></PRE>
+</TD>
+
+<TD>
+<PRE><FONT COLOR="#000080">Build / Run
+ducks.xpl                    </FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<H2><A NAME="DistributinganApplication"></A><FONT COLOR="#0000FF">Distributing
+an Application</FONT></H2>
+
+<P><!AMZI_INDEX = Duck World; tutorial; Distributing>If you decided to
+distribute Duck World, then to do so, you need these files for command-line
+environments: </P>
+
+<ul>
+  <li>ducks.exe - The start up executable </li>
+  <li>ducks.xpl - The Prolog load module </li>
+  <li>ducks.cfg - The initialization file (optional) </li>
+  <li>duckenv.pro - The user modifiable source code (optional) </li>
+</ul>
+<P>For Windowing environments, arun.exe would be replaced by your own
+C/C++, Visual Basic or other language program. </P>
+
+<H2><A NAME="InterfacingwithOtherTools"></A><FONT COLOR="#0000FF">Interfacing
+with Other Tools</FONT></H2>
+
+<P><!AMZI_INDEX =  C++; Delphi>You can enhance the Prolog engine with your
+own built-in predicates written in C/C++, Delphi or Java. </P>
+
+<P>For example, you might want to use a graphical interface for Duck World
+with quacking ducks and the like. In this case the Logic Server API allows
+you to either extend the Prolog language with graphics predicates written
+in C/C++ that are called directly by the Prolog code, or to write the user
+interface to the code in C/C++ (or Visual Basic under Windows) and call
+embedded Prolog for the logic. You can combine the techniques, both extending
+and embedding Prolog in the same application. </P>
+
+<P>The <a href="../ls/lsfrtop.htm">section on the Logic Server API</a> tells how 
+  integrate Prolog with other languages. </P>
+
+<hr/>
+
+<h1><A NAME="WIDEControls"></A><FONT COLOR="#D2AA00">Windows IDE Interface</FONT></h1>
+<P><!AMZI_INDEX = IDE>The IDE is a Windows application which provides a
+friendly GUI interface to the Prolog system. From within the IDE you can:
+</P>
+
+<UL>
+<LI>Edit source files </LI>
+
+<LI>Compile files </LI>
+
+<LI>Link programs</LI>
+
+<LI>Create and manage projects</LI>
+
+<LI>Debug programs </LI>
+
+<LI>Execute programs </LI>
+
+<LI>Enter a standard  ?- Prolog listener </LI>
+</UL>
+
+
+
+<H2><A NAME="WIDEInterface"></A><FONT COLOR="#0000FF">Interface</FONT></H2>
+
+<P><!AMZI_INDEX = IDE>
+  The Windows IDE has two version, one uses just ASCII for source code and the other  32-bit Unicode or ASCII. These are: amzi/apls/bin/wideA.exe or wideW.exe. After the IDE has been invoked you are presented
+with a screen divided into four main areas: </P>
+
+<UL>
+<LI>Running along the top of the screen is the menu bar. Many of the commands
+will already be familiar to experienced Windows users. </LI>
+
+<LI>Below the menu bar is the tool bar which gives you access to the most
+commonly used commands and functions by clicking on the corresponding icon.
+</LI>
+
+<LI>Running along the bottom of the screen is the status bar which indicates
+what the highlighted menu option does. </LI>
+
+<LI>The bulk of the middle of the screen is empty. Depending on which option
+is chosen, the area will fill with windows. It is within these windows
+that most of the interchange between you and the IDE takes place. </LI>
+</UL>
+
+<P>Each open Prolog source file is displayed in its own window. Windows
+can be moved, resized and reduced to an icon. If there is a project currently
+open, then it also appears in a window.</P>
+
+<P>The listener is also in its own window. The current release allows only
+one listener window to be active at one time. The debugger runs in a separate
+window, but it can only be turned on when the listener is active. </P>
+
+<P>The listener/debugger sessions can be logged to a file, saved or printed
+for later review. </P>
+
+<P>Using menu commands, source files can be compiled into object (.plm)
+files. Both source and object files can be consulted into the listener.
+Also using menu commands, you can link multiple .plm files into a load module,
+which can also be run in a window. </P>
+
+<H2><A NAME="UnicodeAndASCII"></A><FONT COLOR="#0000FF">Unicode and ASCII</FONT></H2>
+
+<P><!AMZI_INDEX = Unicode; ASCII>The wideW editor in the IDE will accept either
+Unicode or ASCII files, and save a file in the same format it was originally
+read in. New files can be saved as either ASCII or Unicode. </P>
+
+<P>To view Unicode characters it is necessary to set the IDE&nbsp;font
+to a Unicode font. Lucida Console has a large number of Unicode characters.</P>
+
+<H2><A NAME="FileMenu"></A><FONT COLOR="#0000FF">File Menu</FONT></H2>
+
+<DT><! AMZI_INDEX = File Menu; New File; New Project; Open File; Open Project; Close; 
+
+Close All; Save; Save As; Save All; Unlock; Print; Print Preview; Print Setup; Exit>New
+File</DT>
+
+<DD>Opens a new, blank edit window.</DD>
+
+<DT>New Project</DT>
+
+<DD>Creates a new project and displays the project
+dialog box.</DD>
+
+<DT>Open File</DT>
+
+<DD>Opens an existing Prolog source file (.pro).</DD>
+
+<DT>Open Project</DT>
+
+<DD>Opens an existing project.</DD>
+
+<DT>Close</DT>
+
+<DD>Closes the current edit window.</DD>
+
+<DT>Close All</DT>
+
+<DD>Closes all open edit windows.</DD>
+
+<DT>Save</DT>
+
+<DD>Saves the source file or project associated with the current window.</DD>
+
+<DT>Save As</DT>
+
+<DD>Saves the source file or project associated with the current window
+in a new file.</DD>
+
+<DT>Save All</DT>
+
+<DD>Saves all open source files and the current project (if one is open).</DD>
+
+<DT>Unlock</DT>
+
+<DD>Prompts for information required to activate the software.</DD>
+
+<DT>Print</DT>
+
+<DD>Prints the contents of the current edit, listener or debugger window.</DD>
+
+<DT>Print Preview</DT>
+
+<DD>Displays how the contents of the current window will appear when printed.</DD>
+
+<DT>Print Setup</DT>
+
+<DD>Select a printer and set parameters for printing.</DD>
+
+<DT>Recent File List</DT>
+
+<DD>A list of the Prolog source files most recently opened.</DD>
+
+<DT>Recent Project List</DT>
+
+<DD>A list of the projects most recently opened.</DD>
+
+<DT>Exit</DT>
+
+<DD>Exits the IDE.</DD>
+
+<H2><A NAME="EditMenu"></A><FONT COLOR="#0000FF">Edit Menu</FONT></H2>
+
+<DT><! AMZI_INDEX = Edit Menu; Undo; Cut; Copy; Paste; Delete; Select All; Find; Find Next; 
+
+Replace>Undo</DT>
+
+<DD>Reverses the last editing change made.</DD>
+
+<DT>Cut</DT>
+
+<DD>Deletes the currently highlighted text and saves it on the clipboard.</DD>
+
+<DT>Copy</DT>
+
+<DD>Makes a copy of the currently highlighted text on the clipboard.</DD>
+
+<DT>Paste</DT>
+
+<DD>Inserts the contents of the clipboard at the cursor.</DD>
+
+<DT>Delete</DT>
+
+<DD>Deletes the currently highlighted text.</DD>
+
+<DT>Select All</DT>
+
+<DD>Selects (highlights) all the text.</DD>
+
+<DT>Find</DT>
+
+<DD>Finds the first occurance of a string in the current window.</DD>
+
+<DT>Find Next</DT>
+
+<DD>Finds the next occurance of a string in the current window.</DD>
+
+<DT>Replace</DT>
+
+<DD>Finds and replaces text in the current window.</DD>
+
+<H2><A NAME="ViewMenu"></A><FONT COLOR="#0000FF">View Menu</FONT></H2>
+
+<DT><! AMZI_INDEX = View Menu; Tool Bar; Status Bar; Set Font>Tool Bar</DT>
+
+<DD>Toggles the display of the tool bar at the top of the main IDE window.</DD>
+
+<DT>Status Bar</DT>
+
+<DD>Toggles the display of the status bar at the bottom of the main IDE
+window.</DD>
+
+<DT>Set Font</DT>
+
+<DD>Sets the font name and size to be used for edit, listener and debugger
+window text.</DD>
+
+<H2><A NAME="ListenerMenu"></A><FONT COLOR="#0000FF">Listener Menu</FONT></H2>
+
+<DT><! AMZI_INDEX = Listener Menu; Start; End; Consult; Reconsult; Debug On; Debug Off>Start</DT>
+
+<DD>Opens the listener into a window and emits the ?- prompt.</DD>
+
+<DT>End</DT>
+
+<DD>Closes the listener.</DD>
+
+<DT>Consult</DT>
+
+<DD>Consults a Prolog source file (.pro) or loads
+a Prolog object file (.plm) into the listener.</DD>
+
+<DT>Reconsult</DT>
+
+<DD>Consults a Prolog source file into the listener, replacing any current
+definitions for the predicates.</DD>
+
+<DT>Debug On</DT>
+
+<DD>Opens the debugger into a window.</DD>
+
+<DT>Debug Off</DT>
+
+<DD>Closes the debugger.</DD>
+
+<H2><A NAME="BuildMenu"></A><FONT COLOR="#0000FF">Build Menu</FONT></H2>
+
+<DT><! AMZI_INDEX = Compile; Link; Build; Run>Compile</DT>
+
+<DD>Compiles a Prolog source file (.pro).</DD>
+
+<DT>Link</DT>
+
+<DD>Links one or more Prolog object files (.plm)
+into a Prolog load module (.xpl).</DD>
+
+<DT>Build</DT>
+
+<DD>Compiles all modified files and links all files and libraries in a
+project into a Prolog load module.</DD>
+
+<DT>Run</DT>
+
+<DD>Loads a Prolog load module and calls the main/0 predicate in a new
+window.</DD>
+
+<H2><A NAME="WindowMenu"></A><FONT COLOR="#0000FF">Window Menu</FONT></H2>
+
+<DT><! AMZI_INDEX = Cascade; Tile Horizontally; Tile Vertically; Arrange Icons; Close All>Cascade</DT>
+
+<DD>Rearrange all open windows (including the listener, debugger and current
+project, if any) in a cascading fashion from the upper left to the lower
+right.</DD>
+
+<DT>Tile Horizontally</DT>
+
+<DD>Arranges the windows in a horizontal fashion.</DD>
+
+<DT>Tile Vertically</DT>
+
+<DD>Arranges the windows in a vertical fashion.</DD>
+
+<DT>Close All</DT>
+
+<DD>Closes all windows.</DD>
+
+<DT>Open Window List</DT>
+
+<DD>A list of all currently open windows.</DD>
+
+<H2><A NAME="Help"></A><FONT COLOR="#0000FF">Help</FONT></H2>
+
+<DT><! AMZI_INDEX = Index; About Amzi!; Change Browser>Index</DT>
+
+<DD>Displays the top-level index to all the Amzi! help files in a web browser.</DD>
+
+<DT>About Amzi!</DT>
+
+<DD>Displays version information for the installed software.</DD>
+
+<DT>Change Browser</DT>
+
+<DD>Changes the web browser program to use for displaying help.</DD>
+
+<hr/>
+
+<h1><A NAME="Projects"></A><FONT COLOR="#D2AA00">Projects</FONT> </h1>
+<P><!AMZI_INDEX = Projects>Projects provide a useful way to organize and
+manage the creation of applications or components that consist of multiple
+files and/or libraries.</P>
+
+<P>Projects are created using the Windows-IDE. When a project is open a
+dialog box appears in the IDE with list boxes containing the files and
+libraries in the project. This dialog box stays open for the current project.
+Closing the dialog box closes the project.</P>
+
+<H2><A NAME="CreatingAProject"></A><FONT COLOR="#0000FF">Creating a Project</FONT></H2>
+
+<P><!AMZI_INDEX = Projects; ppj Files>To create a project select File /
+New Project. This displays the project dialog box. To save your project,
+select File / Save or close the dialog box. Project files are saved with
+a .ppj suffix.</P>
+
+<H2><A NAME="ProjectDialogBox"></A><FONT COLOR="#0000FF">Dialog Box</FONT></H2>
+
+<DL>
+<P><!AMZI_INDEX = Projects>Projects are edited via the project dialog box
+and saved using the normal File/Save or File/SaveAs menu items when the
+project dialog is the active window in the IDE. Projects are automatically
+saved when the project is closed. The project dialog box contains the following
+items:</P>
+
+  <DT>xpl&nbsp;File</DT>
+
+<DD>Enter the name of the .xpl file to be created when linking. This can
+be a full pathname.</DD>
+
+<DT>Project Directory</DT>
+
+<DD>The pathname for the directory to make current for all operations on
+the project.</DD>
+
+<DT>Operator Definitions</DT>
+
+<DD>The name of a Prolog file containing the operator
+definitions used by the source files in the project. This entry is
+optional, but if it is included it will be compiled or consulted first,
+so the operator definitions are known to all files in the project. (Note
+that operators defined in libraries are automatically applied first, so
+those operators do not have to be defined in either the project source
+files or the operator definition file.</DD>
+
+<DT>Project Files</DT>
+
+<DD>The list of .pro or .plm files included in the project. The extension
+is used when consulting the project into the listener. .pro Files are consulted
+as text files and .plm files are loaded as object files. The 'Add File'
+button adds one or more files. 'Remove File' removes a file from the project.
+The 'pro-&gt;plm' button changes a file extension.</DD>
+
+<DT>Library Files</DT>
+
+  <DD>The list of .plm files included in the project (usually from the amzi/abin 
+    directory).</DD>
+</DL>
+
+<H2><A NAME="BuildingAProject"></A><FONT COLOR="#0000FF">Consulting/Loading</FONT></H2>
+
+<P><!AMZI_INDEX = Consulting>In the Windows-IDE, you can consult and/or
+load all the files in your project into the listener by pressing the 'Re'
+button or by selecting Listener / Consult or Listener / Reconsult.</P>
+
+<P>All the .pro&nbsp;files are consulted, and the .plm files and libraries are 
+  loaded.</P>
+
+<H2><A NAME="BuildingAProject"></A><FONT COLOR="#0000FF">Building</FONT></H2>
+
+<P><! AMZI_INDEX = abld; Projects>Using the Windows-IDE, you can compile
+all the modified files, and link all the project files and libraries into
+an .xpl file by pressing the BLD button or by selecting Build / Build.</P>
+
+<P>Using the command-line, you can do the same by invoking abld&nbsp;on
+the project as follows:</P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">c&gt; abld ducky.ppj</FONT></PRE>
+</blockquote>
+
+
+<hr/>
+
+<h1><A NAME="TheDebugger"></A><FONT COLOR="#D2AA00">Debugger</FONT> </h1>
+<P><!AMZI_INDEX = Debugger>Amzi! Prolog includes a debugger, based on the Clocksin 
+  &amp; Mellish box-model of Prolog execution, that allows you to trace and interact 
+  with interpreted clauses as they are running. It is run from the Windows IDE 
+  using menu commands and dialog boxes, and from <A HREF="pug_listener.htm">alis</A> 
+  using built-in predicates. </P>
+
+<H2><A NAME="BoxModelofProcedureFlow"></A><FONT COLOR="#0000FF">Box Model</FONT></H2>
+
+<P><!AMZI_INDEX = Procedure Flow; Box Model; call; exit; fail; redo; leash; Creep; Leap>The
+box model of Prolog execution is a conceptual tool that gives a procedural
+interpretation of flow-of-control through a Prolog program. As such it
+is useful for understanding the execution of a program. To use the box
+model envision each Prolog goal surrounded by a box: </P>
+
+<blockquote>
+  <p><IMG SRC="boxmdl.gif" HEIGHT=152 WIDTH=370> </p>
+</blockquote>
+<P>Each box has four <I>ports</I> through which Prolog may enter (<I>call</I>
+and <I>redo</I> ports) or leave (<I>exit</I> or <I>fail</I> ports) the
+goal. </P>
+
+<MENU>
+<LI><B>call - </B>when Prolog is initially asked to prove the goal it enters
+through the <I>call</I> port. </LI>
+
+<LI><B>exit</B> - having entered through <I>call</I>, Prolog leaves through
+<I>exit</I> if it can prove the goal. </LI>
+
+<LI><B>fail</B> - if Prolog cannot prove the goal it leaves the box via
+the <I>fail</I> port. </LI>
+
+<LI><B>redo</B> - if at some further point in the program (i.e., after
+having entered through <I>call</I> and left via <I>exit</I>) Prolog backtracking
+occurs then eventually (if backtracking reaches this stage back in the
+proof) Prolog reenters the goal via the <I>redo</I> port. </LI>
+</MENU>
+
+<P>There is one box per goal in a program, and the boxes are linked from
+port to port. Ports that we stop at in the debugger are known as &quot;debug
+ports.&quot; </P>
+
+<P>You can creep through your program from port to port, stopping at each
+one. You might think of this as &quot;single stepping&quot; your program.
+The debugger can stop at every CALL, REDO, FAIL and EXIT and ask what to
+do next. </P>
+
+<P>Using <A HREF="#LeashingDebugPorts">leash</A> (described later in this
+section) you can limit which of the ports are stopped at. Then, when you
+creep, all the ports will be displayed, but the debugger will only stop
+at the ones which are leashed. For example, you might want to stop only
+at CALLs and REDOs. By default, all ports are leashed when the debugger
+is started. </P>
+
+<P>Alternatively, you can &quot;leap&quot; to only the ports of predicates
+specified as spypoints. You might think of this as running until a &quot;breakpoint&quot;
+is reached. In this case, the intervening ports are not displayed. </P>
+
+<P>By combining your use of creeping and leaping, you can cause the debugger
+to stop at certain ports and interact with them before continuing. Thus
+you can rapidly trace through code which is of no interest (because it
+has already been debugged) and concentrate on a predicate or two at will.
+</P>
+
+<H2><A NAME="StartingandLeavingtheDebugger"></A><FONT COLOR="#0000FF">Starting
+and Exiting</FONT></H2>
+
+<P>To start the debugger in the listener type: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE </TD>
+</TR>
+
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080"><TT>?- debug.</TT> </FONT></PRE>
+</TD>
+
+<TD>
+<PRE><FONT COLOR="#000080">Listener / Debug On</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>To exit the debugger: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE </TD>
+</TR>
+
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">??- quit. </FONT></PRE>
+</TD>
+
+<TD>
+<PRE><FONT COLOR="#000080">Listener / Debug Off</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Note, in command-line alis, the debug listener is identified by an
+extra &quot;?&quot; in the prompt. When you exit the debug listener you
+are returned to the original listener. </P>
+
+<H2><A NAME="DebuggerDisplay"></A><FONT COLOR="#0000FF">Display</FONT></H2>
+
+<P><!AMZI_INDEX = Ports; Call; Exit; Fail; Redo; Depth; Clauses; Terms>In
+command-line alis, the debugger output is intermixed with other output
+in the normal scrolling dialog of the listener. The debugger is controlled
+by keyboard commands. </P>
+
+<P>Under the Windows-IDE, the debugger output is displayed in a separate
+window. The debugger is controlled by command buttons along the right side
+of the debugger window. </P>
+
+<P align="center"><IMG SRC="debug.gif" HEIGHT=664 WIDTH=417> </P>
+
+<P>The debugger works by displaying the names of the ports that execution
+passes through in the course of a computation. </P>
+
+<P>The message output by the debugger at a port is of the following form:
+</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">[DEPTH] PORT: [CLAUSE#] TERM  [PROMPT]</FONT></PRE>
+</UL>
+
+<P>For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">CALL:  (1) append([a,b,c], [d,e,f], H33)  ?</FONT></PRE>
+</UL>
+
+<P>Notice that variables are represented using the Hn notation. </P>
+
+<P><B>DEPTH</B> is a number of leading spaces indicating how many ancestors
+the goal involved in this port has, i.e., how deeply nested in the proof
+it is. So top-level goals (typed in response to ?-) are indented 0 spaces
+(for a depth of 0). Goals in the body of the clause proving this goal are
+indented 1 space (for a depth of 1). Goals in the bodies of clauses proving
+these goals are indented 2 spaces and so on. Depths greater than 10 are
+indicated by both a number and spaces. </P>
+
+<P><B>PORT:</B> is one of CALL: REDO: FAIL: EXIT: corresponding to the
+ports of the box model discussed above. </P>
+
+<P><B>CLAUSE# </B>is the number of the clause being executed. It is not
+displayed for built-in predicates because that is not useful. </P>
+
+<P><B>TERM</B> is the goal (with any variable bindings) that caused entry
+to the call or redo port of the box. </P>
+
+<P><B>PROMPT</B> if this port is a debugging port and we are running under
+a command-line environment, then ? is printed and user input is awaited,
+otherwise mouse or keyboard input is awaited. </P>
+
+<P>In the IDE the debugger display can be toggled to have formatting on
+or off. If formatting is on, then each argument of a goal appears on a
+separate line. With formatting off, each goal is written on a single line.
+</P>
+
+<H3><A NAME="portrayGOAL"></A><FONT COLOR="#000080">portray(GOAL)</FONT></H3>
+
+<P><!AMZI_INDEX = portray><b>portray/1</b> is a user-defined predicate that is 
+  called by the debugger when it displays a goal. You can create portray/1 clauses 
+  to generate formatted output of complex goals that are difficult to follow in 
+  the normal debugger listing. </P>
+
+<H2><A NAME="DebugPortOptions"></A><FONT COLOR="#0000FF">Debug Port Options</FONT></H2>
+
+<P><!AMZI_INDEX = Ports; Creep; Leap; Skip>At each debugging port you have
+a number of options for controlling the execution of the debugger. Under
+command-line environments, the usual response is one character (with no
+need to press [Enter]). Under the Windows-IDE, the usual response is to
+click on a button. The options are: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD WIDTH=86><B>Command<BR>
+-Line</B> </TD>
+
+<TD WIDTH=86><B>Windows<BR>
+-IDE</B></TD>
+
+<TD WIDTH=288><B>Option <BR>
+Description</B> </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>[Enter]<BR>
+c</B> </TD>
+
+<TD WIDTH=86><B>Creep</B></TD>
+
+<TD WIDTH=288>Creep to the very next port. If the next port is leashed
+(or is a spypoint) then prompt for further input else automatically creep
+to the next port after that. Consequently, if leashing is set to &quot;none&quot;,
+creeping at one port will produce a tracing of all the ports between it
+and the next spypoint. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>f</B></TD>
+
+<TD WIDTH=86><B>Fail</B></TD>
+
+<TD WIDTH=288>Force the debugger to go to the fail port for this predicate
+invocation. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>l</B></TD>
+
+<TD WIDTH=86><B>Leap</B></TD>
+
+
+<TD WIDTH=288>Leap to the next spypoint. The next port to be displayed
+will be the next encountered spypoint. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>s</B></TD>
+
+<TD WIDTH=86><B>Skip</B></TD>
+
+<TD WIDTH=288>Skip. Only used at a <I>call</I> or <I>redo</I> port. This
+useful option turns off display from the debugger until it reaches the
+corresponding <I>exit</I> or <I>fail</I> port for this call. Thus it can
+be used to turn off the debugger during the course of a complex subproof.
+No messages will be issued by the debugger during this subproofeven if
+a spypoint is encountered. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>a</B></TD>
+
+<TD WIDTH=86><B>Stop</B></TD>
+
+<TD WIDTH=288>Aborts the debugger and returns to the debug listener. </TD>
+</TR>
+</TABLE>
+
+<P>Other options are available for looking at and changing the Prolog environment
+under command-line alis. They are: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD WIDTH=86><B>Command- Line</B> </TD>
+
+<TD WIDTH=86><B>Windows- IDE</B></TD>
+
+<TD WIDTH=288><B>Option Description</B> </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>n</B></TD>
+
+<TD WIDTH=86>n/a </TD>
+
+<TD WIDTH=288>Notrace. Turns off the debugger and then continues with the
+proof in progress. That is, runs the rest of your program. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>b</B></TD>
+
+<TD WIDTH=86>n/a </TD>
+
+<TD WIDTH=288>Break to a new listener. Temporarily turns off the debugger
+and invokes a new listener (with a ???- prompt). This allows you to work
+with the program however you please without leaving the trace. (You might
+want to separately test some predicates, change some, or whatever.) When
+the new listener is exited (by typing 'quit.'), the debugger is turned
+back on and the interrupted proof continues. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>d</B></TD>
+
+<TD WIDTH=86>n/a </TD>
+
+<TD WIDTH=288>Display the current goal with all of the current variable
+bindingsthen prompt again. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>h</B></TD>
+
+<TD WIDTH=86>n/a </TD>
+
+<TD WIDTH=288>Halts Prolog and exits.</TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>@</B></TD>
+
+<TD WIDTH=86>n/a </TD>
+
+<TD WIDTH=288>Prompts for you to enter a Prolog goal. Temporarily turns
+off the debugger, like n, but instead lets you enter a single Prolog goal.
+It tries to prove it and then turns the debugger back on and continues
+the suspended proof. This is useful for quick checks of other parts of
+the program and for changing leashing or spypoints while debugging. </TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>?</B></TD>
+
+<TD WIDTH=86>n/a </TD>
+
+<TD WIDTH=288>Displays a listing of debug port options.</TD>
+</TR>
+
+<TR>
+<TD WIDTH=86><B>[^Break]</B></TD>
+
+<TD WIDTH=86>n/a</TD>
+
+<TD WIDTH=288>If your program is stuck in a loop, you can press [Ctrl-Break]
+and the debugger will stop at the next port and prompt for an option. </TD>
+</TR>
+</TABLE>
+
+<H2><A NAME="Spypoints"></A><FONT COLOR="#0000FF">Spypoints</FONT></H2>
+
+<P><!AMZI_INDEX = Spypoints; spy; nospy; nospyall>Spypoints are used to
+stop the debugger at particular predicates. Execution always pauses at
+a spypoint regardless of what ports are leashed and whether you are leaping
+or creeping. </P>
+
+<P>Under the Windows-IDE, you can click on the 'Spy...' button to get a
+dialog box containing a list of all predicates in your program. You can
+move those predicates back and forth between that list and the list of
+current spypoints. </P>
+
+<P align="center"><img src="spy.gif" height=228 width=547></P>
+
+<P>Under command-line alis, a spypoint is set on a predicate by using
+<B>spy/1</B>. It is removed by using <B>nospy/1</B>. To remove all spypoints,
+use <B>nospyall/0</B>. The current spypoints are listed by using <B>spy/0</B>.
+</P>
+
+<P>The argument to <B>spy</B> and <B>nospy</B> is one of: </P>
+
+<MENU>
+<LI>name </LI>
+
+<LI>name/arity </LI>
+
+<LI>[list of name and/or name/arity] </LI>
+</MENU>
+
+<P>In command-line alis, typically you will use the &quot;@&quot; debug
+port option to control your spypoints by entering the <B>spy</B>, <B>nospy</B>
+and <B>nospyall</B> commands as goals. </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Note that
+entering and exiting the debugger does not remove or otherwise alter the
+setting of spypoints. The only way to remove spypoints is to use one of
+the above. </I></P>
+
+<H2><A NAME="LeashingDebugPorts"></A><FONT COLOR="#0000FF">Leashing Debug
+Ports</FONT></H2>
+
+<P><!AMZI_INDEX = Ports; leash>As mentioned above we can either creep or
+leap to a port. When we leap to a port, it is a port for a predicate that
+has a spypoint set on it, and the debugger pauses to allow interaction.
+</P>
+
+<P>Creeping takes us to the ports of predicates in between the spypoints.
+The debugger might pause at a port, or it may simply display it without
+giving you the opportunity to interact, as execution continues. The different
+behavior at ports is controlled by leashing. </P>
+
+<P>Leashing is not related to particular predicates, as spypoints are,
+but is instead a characteristic of each of the four types of ports, CALL,
+REDO, FAIL and EXIT. By default, all ports have leashing turned on, so
+all ports of predicates that are crept to are paused at. But leashing can
+be turned off for the ports of these intermediate predicates so they display
+but don't require step-by-step interaction from you. </P>
+
+<P>Under the Windows-IDE, you can select which ports are leashed by clicking
+on and off the button in front of the port name on the debugger window.
+</P>
+
+<P>Under command-line alis, you use the <B>leash/1</B> predicate to specify
+the ports to make debugging ports as follows: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- leash(call).          % leashes all call ports
+?- leash([call, redo]).  % leashes call and redo ports
+?- leash([]).            % leashes no ports
+?- leash(none).          % leashes no ports
+?- leash(all).           % leashes all four ports
+?- leash([call,fail,redo,exit]). % leashes all 4 ports</FONT></PRE>
+</UL>
+
+<P>Note that unmentioned ports are automatically unleashed. To find out
+what ports are currently being leashed use <B>leash/0</B>. </P>
+
+<P>In command-line alis, typically you will use the &quot;@&quot; debug
+port option to control your leashing by entering the leash command as a
+goal. </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Note that
+entering and exiting the debugger does not remove or otherwise alter the
+ports currently being leashed. The only way to change leashing is to use
+one of the above. </I></P>
+
+<H2><A NAME="Logging"></A><FONT COLOR="#0000FF">Logging</FONT></H2>
+
+<P><!AMZI_INDEX = Logging; Ports; openlog; writelog; nllog; closelog>The
+log-file capability allows you to record a transcript of a Prolog session.
+This is especially useful in recording long traces during debugging. </P>
+
+<P>Logging can be controlled from a listener, or within a Prolog program
+or using the &quot;@&quot; debug port option through the use of built-in
+predicates. </P>
+
+<MENU>
+<LI>openlog(Fname) - This opens the file Fname
+and sets a flag letting Prolog know it is logging. The file overwrites
+any previous file of the same name. Fname must be an atom, such as 'temp.log'
+or simply log. </LI>
+
+<LI>closelog - This closes the log file and
+stops the logging process. </LI>
+
+<LI>writelog(X) - Writes X just to the log file.
+</LI>
+
+<LI>nllog - Writes a newline to the log file.
+</LI>
+</MENU>
+
+<P>Logging can also be turned on for an application by specifying a log
+file in the application's .cfg file. </P>
+
+<H2><A NAME="DebuggerExample"></A><FONT COLOR="#0000FF">Example</FONT></H2>
+
+<P><!AMZI_INDEX =Debugging; Creep; Leap; leash>Let's look at an example
+of creeping, leaping and leashing using Duck World presented in <A HREF="#AQuickTutorial">A
+Quick Tutorial</A>. First we consult our source code and enter the debugger.
+</P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE </TD>
+</TR>
+
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- [duck1,duck2].
+yes
+?- debug. </FONT></PRE>
+</TD>
+
+<TD>
+      <PRE><FONT COLOR="#000080">Listener / Consult duck1.pro
+Listener / Consult duck2.pro
+Listener / Debug On </FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Next, we set connect as a spypoint and leash only the call port. Then
+we call main. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE </TD>
+</TR>
+
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">??- spy(connect).
+yes
+??- leash(call).
+yes
+??- main. </FONT></PRE>
+</TD>
+
+<TD>
+<PRE><FONT COLOR="#000080">Click Spy...
+Click connect / 2
+Click Add
+Click OK
+Uncheck REDO, FAIL and EXIT
+?- main. </FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>We start to creep through the program by typing &quot;c&quot; in command-line
+alis, and by clicking on &quot;Creep&quot; in Windows-IDE. Note, we pause
+only on CALL ports. Under alis, the program output is interspersed with
+the debugging information. Under the IDE, they are kept in separate windows.
+Here we show the command-line I/O with the program I/O shown in italics:
+</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Calling: main
+CALL:(1) main    ? c
+  CALL: consult(duckenv)    ? c
+  EXIT: consult(duckenv)
+  Calling: write(Welcome to Duck World)
+  CALL: write( Welcome to Duck World )    ? c
+<I>Welcome to Duck World </I>  EXIT: write( Welcome to Duck World )</FONT></PRE>
+</UL>
+
+<P>Now we click on &quot;Leap&quot; (IDE) or type &quot;l&quot; (alis)
+to leap to our spypoint. No more debugging ports will be displayed until
+we get to the spypoint. But we will get a warning if there are no clauses
+matching a call. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">   CALL: nl    ? l
+<I>Go get an egg 
+&gt;&gt; goto(yard).</I></FONT></PRE>
+</UL>
+
+<P>Our leap was interrupted for some user input, so we type &quot;goto(yard).&quot;
+We creep onwards watching the variable bindings and backtracking. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">      Calling: connect(house,yard)
+      CALL:(1) connect(house,yard) ? c
+        Calling: nextto(house,yard)
+        FAIL: nextto(house,yard)
+      FAIL: connect(house,yard)
+      REDO:(2) connect(house,yard)
+        Calling: nextto(yard,house)
+        CALL:(2) nextto(yard,house)    ? c
+        EXIT: nextto(yard,house)</FONT></PRE>
+</UL>
+
+<P>We continue to creep forwards. Every time we reach a predicate that
+is a spypoint, we pause. Note that although we are only leashing CALLs,
+we pause at the other ports for connect, as shown below. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">      EXIT: connect(house,yard) ? c
+      Calling: move(you,yard)
+      CALL:(1) move(you,yard)    ? c
+        CALL: retract(loc(you,H754))    ? c
+        EXIT: retract(loc(you,house))
+        CALL: assert(loc(you,yard))    ? c
+        EXIT: assert(loc(you,yard))
+      EXIT: move(you,yard)
+      CALL: write( You are in the )    ? c
+<I>You are in the </I>      EXIT: write( You are in the )
+      CALL: write(yard)    ? c
+<I>yard</I>      EXIT: write(yard)
+      CALL: nl    ? c
+      EXIT: nl
+    EXIT: goto(yard)</FONT></PRE>
+</UL>
+
+<P>We reach a predicate which we are not interested in seeing, so we click
+on &quot;Skip&quot; (IDE) or type &quot;s&quot; (alis) to skip to the
+EXIT or FAIL port for this call. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">    Calling: demons
+    CALL: demons    ? s
+    EXIT: demons</FONT></PRE>
+</UL>
+
+<P>Finally, we turn off trace and finish running the program: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>Command-Line alis</TD>
+
+<TD>Windows-IDE </TD>
+</TR>
+
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">CALL: ! ? n
+&gt;&gt; quit.
+Quitter </FONT></PRE>
+</TD>
+
+<TD>
+<PRE><FONT COLOR="#000080">Click Spy...
+Click Clear All
+Click OK
+CALL: !
+Click Leap
+&gt;&gt; quit.
+Quitter </FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --></BODY>
+</HTML>

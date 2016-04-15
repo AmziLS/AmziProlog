@@ -1,0 +1,471 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Manipulating Terms</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<h1><A NAME="ManipulatingTerms"></A><FONT COLOR="#D2AA00">Manipulating Terms</FONT></h1>
+
+<P><!AMZI_INDEX= Terms; Manipulating Terms>This section includes predicates for
+identifying, comparing and manipulating terms. The general categories are:
+</P>
+
+<MENU>
+<LI><A HREF="#TermClassification">Term Classification</A> </LI>
+
+<LI><A HREF="#EqualityofTerms">Equality of Terms</A> </LI>
+<LI><A HREF="#StandardOrder">Standard Order of Terms</A> </LI>
+
+  <LI><A HREF="#ComparisonofTerms">Ordering of Terms</A> </LI>
+
+<LI><A HREF="#EqualityofTerms">Equality of Terms</A> </LI>
+
+<LI><A HREF="#DissectingTerms">Dissecting Terms</A> </LI>
+  <LI><A HREF="#VariableIdentification">Variable Identification</A> </LI>
+</MENU>
+
+<H2><A NAME="TermClassification"></A><FONT COLOR="#0000FF">Term Typing</FONT></H2>
+
+<p><!AMZI_INDEX= term typing>There are a handful of fundamental types of terms 
+  in Prolog. The predicates described in this section can be used to test the 
+  type of a given term. There are subtypes among the number type, which can also 
+  be tested for, and are described in the section on <a href="ref_math.htm#NumberTypes">number 
+  types</a>.</p>
+<h3><A NAME="termtype"></A><FONT COLOR="#000080">term_type(TERM, TYPE)</FONT></h3>
+
+<P><!AMZI_INDEX= term_type/2; term typing; atom; string; list; structure; number; var; type of terms><B>term_type/2</B> takes an input TERM, 
+  and returns an atom describing the type. TYPE will be one of:</P>
+<pre> atom, string, list, structure, number, or var.</pre>
+
+<H3><A NAME="atomicX"></A><FONT COLOR="#000080">atomic(X)</FONT></H3>
+
+<P><!AMZI_INDEX= atomic/1><B>atomic/1</B> succeeds if X is currently instantiated 
+  to an atomic primitive type, such as an atom or string or number. It is the 
+  opposite of <b>compound/1</b>. If X is a structure or list, <b>atomic/1</b> 
+  fails.</P>
+
+
+<H3><A NAME="atomX"></A><FONT COLOR="#000080">atom(X)</FONT></H3>
+
+<P><!AMZI_INDEX= atom/1><B>atom/1</B> succeeds if X is currently instantiated 
+  to an atom; else it fails.</P>
+
+
+<H3><A NAME="stringX"></A><FONT COLOR="#000080">string(X)</FONT></H3>
+
+<P><!AMZI_INDEX= string/1><B>string/1</B> succeeds if X is
+currently instantiated to a string; else it fails. </P>
+
+<H3><A NAME="numberX"></A><FONT COLOR="#000080">number(X)</FONT></H3>
+
+<P><!AMZI_INDEX= number/1><B>number/1</B> succeeds if X is currently instantiated 
+  to a numeric type, such as integer, float or real. The different types of number 
+  can also be tested for, as described in the section on <a href="ref_math.htm#NumberTypes">number 
+  types</a>.</P>
+
+<h3><a name="compoundX"></a><font color="#000080">compound(X)</font></h3>
+<p><!AMZI_INDEX= compound/1><b>compound/1</b> succeeds if X is currently instantiated 
+  to either a structure or a list. It fails if X is an atomic primitive. It is 
+  the opposite of <b>atomic/1</b>.</p>
+
+<H3><A NAME="structureX"></A><FONT COLOR="#000080">structure(X)</FONT></H3>
+
+<P><!AMZI_INDEX= structure/1><B>structure/1</B> succeeds if X 
+  is currently instantiated to a structure; else it fails. </P>
+
+<h3><font color="#000080"><a name="list"></a>list(X)</font></h3>
+<p><!AMZI_INDEX= list/1><b>list/1</b> succeeds if X is currently instantiated 
+  to a list; else it fails. Note that '[]', which is called the empty list, is 
+  really an atom. So list([]) fails as well, and conversely, atom([]) succeeds. 
+  See <b>is_list/1</b> below.</P>
+
+<H3><a name="islistX"></a><font color="#000080">is_list(X)</font></H3>
+<p><!AMZI_INDEX= is_list/1><b>is_list/1</b> succeeds if X is instantiated to a 
+  list OR the empty list, '[]', which is really an atom.</p>
+
+<H3><A NAME="varX"></A><FONT COLOR="#000080">var(X)</FONT></H3>
+
+<P><!AMZI_INDEX= var/1><B>var/1</B> succeeds if X is an unbound
+variable; else it fails. </P>
+
+<H3><A NAME="nonvarX"></A><FONT COLOR="#000080">nonvar(X)</FONT></H3>
+
+<P><!AMZI_INDEX= nonvar/1><B>nonvar/1</B> succeeds if X is
+not an unbound variable; else it fails. </P>
+
+
+<H2><A NAME="EqualityofTerms"></A><FONT COLOR="#0000FF">Equality of Terms</FONT></H2>
+
+<P><!AMZI_INDEX= '=/2 '; '==/2 '; not(not()); Equality of Terms; Identical Terms; Unification of Terms; Unification; Unification Avoidance>Equality or non-equality of terms can be determined 
+  in a variety of ways. The key difference is whether or not variable unification is to 
+  take place.</P>
+<P>The '=' operator unifies the variables in the terms to be compared.</P>
+<P>The '==' operator does not unify the variables, so a variable will NOT be equal to anything 
+  other than the same unbound variable.</P>
+<P>not(not()) is a common Prolog trick that tests if a goal would be made true 
+  by unification, but does not do the unification.</P>
+<P>See <a href="#copy_term">copy_term/2</a> as another way to avoid unification 
+  of variables in terms.</P>
+<P>Examples:</P>
+<UL><FONT COLOR="#000080"><PRE>
+?- a = X.
+X = a 
+yes
+
+?- X = Y.
+X = H3
+Y = H3 
+yes
+
+?- a == a.
+yes
+
+?- a == X.
+no
+
+?- X == Y.
+no
+
+?- X == X.
+X = H3 
+yes
+
+?- not(not(a = X)).
+X = H4 
+yes
+
+?- not(not(X = Y)).
+X = H3
+Y = H4 
+yes
+</PRE></FONT></UL>
+
+
+<H3><A NAME="XeqY"></A><FONT COLOR="#000080">X = Y</FONT></H3>
+
+<P><!AMZI_INDEX= Unification Operator; '='>X <B>=</B> Y succeeds if X can be unified 
+  with Y. See discussion and examples above.</P>
+
+<H3><A NAME="XneqY"></A><FONT COLOR="#000080">X \= Y</FONT></H3>
+
+<P><!AMZI_INDEX= Unification Operator Negated; \=>X <B>\=</B> Y succeeds if X cannot
+be unified with Y. </P>
+
+<H3><A NAME="XeqeqY"></A><FONT COLOR="#000080">X == Y</FONT></H3>
+
+<P><!AMZI_INDEX= Identity; '==/2 '>X <B>==</B> Y succeeds if X and Y are identical, i.e., 
+  they unify with <I>no</I> variable bindings occurring. See discussion and examples 
+  above..</P>
+
+<H3><A NAME="XneqeqY"></A><FONT COLOR="#000080">X \== Y</FONT></H3>
+
+<P><!AMZI_INDEX= Identity Negated; '\==/2 '>X <B>\==</B> Y succeeds if X and Y are not
+identical. </P>
+
+<H3><A NAME="notnotXeqY"></A><FONT COLOR="#000080">not(not(X = Y))</FONT></H3>
+
+<P><!AMZI_INDEX= notnot; Unification Avoidance><B>not(not(X = Y))</B> Succeeds 
+  if X can be unified with Y, but doesn't do the unification. See discussion and 
+  examples above.</P>
+<H2><A NAME="StandardOrder"></A><FONT COLOR="#0000FF">Standard Order of Terms</FONT></H2>
+
+<P><!AMZI_INDEX= Terms; Standard Order; Sort Order>Two terms may be compared via the standard ordering, which 
+  is variables @&lt; numbers @&lt; atoms @&lt; strings @&lt; structures @&lt; 
+  lists.</P>
+<P>Variables can either be sorted as equal or arbitrarily compared based on their 
+  internal memory locations. The decision is made based on the value of the Prolog 
+  flag <a href="pug_runtime.htm#SettableFlags">vars_sort_equal</a>. If the value is on, then 
+  they sort as equals, if it is off they sort based on internal order. The default 
+  is off.</P>
+<P> So two variables at the same location sort as equal.</P>
+<P>Numbers compare in the obvious way, which is contrary to the ISO standard which 
+  asks that floating point numbers sort before integers.</P>
+<P>Atoms and strings compare alphabetically by ASCII (Unicode) order.</P>
+<P>Structures compare alphabetically by functor first, arity second and then by 
+  the comparison of each argument.</P>
+<P>Lists compare by length first, then by each element.</P>
+<H2><A NAME="ComparisonofTerms"></A><FONT COLOR="#0000FF">Ordering of Terms</FONT></H2>
+
+<P><!AMZI_INDEX= Compare Terms; Term Ordering>Two terms may be compared via the standard ordering using these operators.</P>
+
+<H3><A NAME="XltY"></A><FONT COLOR="#000080">X @&lt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= @&lt;/2 >X <B>@&lt;</B> Y succeeds
+if X is less than Y in the standard order </P>
+
+<H3><A NAME="XgtY"></A><FONT COLOR="#000080">X @&gt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= @&gt;/2>X <B>@&gt;</B> Y succeeds
+if X is greater than Y in the standard order </P>
+
+<H3><A NAME="XlteqY"></A><FONT COLOR="#000080">X @=&lt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= @=&lt;/2>X <B>@=&lt;</B> Y succeeds
+if X is less or equal to Y in the standard order </P>
+
+<H3><A NAME="XgteqY"></A><FONT COLOR="#000080">X @&gt;= Y</FONT></H3>
+
+<P><!AMZI_INDEX= @&gt; '=/2 ' >X <B>@&gt; '='</B> Y succeeds
+if X is greater or equal to Y in the standard order </P>
+
+<H3><A NAME="compareResultTermTerm"></A><FONT COLOR="#000080">compare(Result,
+Term1, Term2)</FONT></H3>
+
+<P><!AMZI_INDEX= compare/3><B>compare</B> compares terms Term1 and Term2 using 
+  the standard ordering. Unifies Result with ==, &lt;, or &gt; depending on the 
+  sort order of Term1 and Term2. </P>
+
+<H2><A NAME="DissectingTerms"></A><FONT COLOR="#0000FF">Term Creation and Decomposition</FONT></H2>
+<P><!AMZI_INDEX= Creating Terms; Constructing Terms; Decomposing Terms; Dissecting Terms>These predicates are useful for dynamically 
+  breaking apart or constructing terms. The predicates functor/3 and arg/3 work 
+  together to create or analyze a term. The single predicate =../2 (univ) can 
+  also be used for the same purpose.</P>
+
+<H3><A NAME="functorTermFunctorN"></A><FONT COLOR="#000080">functor(TERM, FUNCTOR, 
+  ARITY)</FONT></H3>
+
+<P><!AMZI_INDEX= functor/3; Structure Creation; Structure Analysis><b>functor/3</b> 
+  works together with <b>arg/3</b> (see below) to dynamically create or analyze 
+  a term. <b>functor/3</b> gets the functor and arity of the term. <b>arg/3</b> 
+  is used to get specific arguments.</P>
+<P>If TERM is bound, then <b>functor/3</b> unifies FUNCTOR and ARITY to the functor 
+  and arity.</P>
+<P>Conversely, <b>functor/3</b> will create a TERM with the specified FUNCTOR 
+  and ARITY with unbound variables for arguments.</P>
+
+<P>For example: </P>
+
+<UL>
+<FONT COLOR="#000080"><PRE>
+?- functor(connect(yard, pen), F, A).
+F = connect
+A = 2
+yes
+?- functor(T, connect, 2), arg(1, T, yard), arg(2, T, pen).
+T = connect(yard, pen)
+yes
+</PRE></FONT>
+</UL>
+
+<H3><A NAME="argNTermArgument"></A><FONT COLOR="#000080">arg(N, Term, Argument)</FONT></H3>
+
+<P><!AMZI_INDEX= arg/3; Argument Setting; Argument Getting>N must be instantiated 
+  to a positive integer less than or equal to the number of arguments in the compound 
+  term Term. Argument is then instantiated to the Nth argument of Term. <b>arg/3</b> 
+  can be used to either find an argument or unify a value with an argument.</P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- arg(1, connect(yard, pen), X).
+X = yard
+
+?- arg(2, test(X,Y,Z), hello).
+X = H2
+Y = hello
+Z = H4</FONT></PRE>
+</UL>
+
+<H3><A NAME="TermListBunivB"></A><FONT COLOR="#000080">Term =.. List <B>(univ)</B></FONT></H3>
+
+<P><!AMZI_INDEX= Lists to Structures; Structures to Lists; Structure Creation; '=../2 '; univ>The operator &quot;=..&quot;
+is called &quot;univ.&quot; &quot;Term<B> =.. </B>List&quot; converts between
+compound terms Term and the list List. If Term is instantiated to a compound
+term, then List is unified with the <I>list</I> whose first element is
+the principal functor of Term, and whose successive elements are the arguments
+of Term. An atom is treated as a compound term of arity 0. </P>
+
+<P>If Term is a variable, List must be instantiated to a list of definite
+length whose first element is an atom. Then Term is unified with the structure
+whose principal functor is the head of List and whose arguments are the
+elements in the tail of List. </P>
+
+<P><B>univ</B> fails if the arguments do not make legal structures. </P>
+
+<UL>
+<FONT COLOR="#000080"><PRE>
+?- T =.. [test, 1, 2, 3].
+T = test(1,2,3) 
+?- test(1,2,3) =.. L.
+L = [test,1,2,3]
+</PRE></FONT>
+</UL>
+<p><b>univ/2</b> is often used to dynamically generate goals for Prolog execution, 
+  as the following code sample illustrates. Note how unification caries the variables 
+  in the arguments to do/2 into the created GOAL, so they are properly instantiated 
+  by the call.</p>
+<UL>
+<FONT COLOR="#000080"><PRE>
+a(1).
+b(1,2).
+
+do(FUNCTOR, ARGS) :-
+  GOAL =.. [FUNCTOR|ARGS],
+  call(GOAL).
+
+?- do(a, [X]).
+X = 1 
+yes
+
+?- do(b, [X,Y]).
+X = 1
+Y = 2 
+yes
+</PRE></FONT>
+</UL>
+
+<H3><A NAME="gensymRootSym"></A><FONT COLOR="#000080">gensym(Root, Sym)</FONT></H3>
+
+<P><!AMZI_INDEX= Atom Generation; gensym/2><B>gensym/2</B> is used to create atom names
+on the fly. The names are formed by adding successive integers to the root.
+<B>gensym</B> is designed to create new symbols each time it is called;
+it fails on backtracking. For example </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- gensym(foo, X).
+X = foo1
+?- gensym(foo, X).
+X = foo2 
+?- gensym(foo, X).
+X = foo3</FONT></PRE>
+</UL>
+
+<H3><A NAME="copy_term"></A><FONT COLOR="#000080">copy_term(T1, T2)</FONT></H3>
+
+<P><!AMZI_INDEX= copy_term/2; copying terms; unification avoidance><B>copy_term/2</B> unifies T2 with a 
+  copy of term T1. The copy is the same as the original, except it has new variables. 
+  This is useful for applications that want to work with a structure, but don't 
+  want to instantiate the variables of that structure.</P>
+<UL><FONT COLOR="#000080"><PRE>
+?- copy_term(a(X), T).
+X = H1
+T = a(H48) 
+yes
+
+?- A = a(X), copy_term(A, B), B = a(3).
+A = a(H1)
+X = H1
+B = a(3) 
+yes
+</PRE></FONT></UL>
+
+<H2><A NAME="VariableIdentification"></A><FONT COLOR="#0000FF">Variable Identification</FONT></H2>
+
+<H3><A NAME="string_query2"></A><FONT COLOR="#000080">string_query(QUERYSTRING, RESULTSTRING)</FONT></H3>
+
+<P> 
+  <!AMZI_INDEX= Variable Names/Bindings; string_query/2>
+  <b>string_query/2</b> takes as input a query in a string, QUERYSTRING, and returns 
+  a result string, RESULTSTRING, as a comma-separated list of variable name = 
+  binding pairs. An empty string is returned if there were no variables in the 
+  query string. string_query/2 is designed to make it easier to analyze the results 
+  of queries posed from the Logic Server API.</P>
+<UL><FONT COLOR="#000080"><PRE>
+?- assert(pet(duck, leona)).
+yes
+?- assert(pet(duck, ivan)).
+yes
+
+?- string_query( `pet(Type, Name)`, ResultString ).
+ResultString = `Type = duck, Name = leona` ;
+ResultString = `Type = duck, Name = ivan` ;
+no
+?- </PRE></FONT></UL>
+
+<H3><A NAME="varlist_query3"></A><FONT COLOR="#000080">varlist_query(QUERYSTRING, LENGTH, RESULTLIST)</FONT></H3>
+
+<P> 
+  <!AMZI_INDEX= Variable Names/Bindings; varlist_query/3>
+  <b>varlist_query/3</b> takes as input a query in a string, QUERYSTRING, and 
+  returns a list of alternating variable names and bindings in RESULTLIST. The 
+  LENGTH of the list is returned in LENGTH. <b>varlist_query/3</b> is intended 
+  to make it easy to get variable bindings in a query made from the Logic Server, 
+  but might be of use in other applications as well.</P>
+<UL><FONT COLOR="#000080"><PRE>
+?- assert(pet(duck, leona)).
+yes
+?- assert(pet(duck, ivan)).
+yes
+
+?- varlist_query(`pet(X,Y)`, L, Z).
+
+L = 4
+Z = ['X', duck, 'Y', leona] ;
+
+L = 4
+Z = ['X', duck, 'Y', ivan] ;
+no
+?- </PRE></FONT></UL>
+
+
+<H3><A NAME="numbervarsTermStartEnd"></A><FONT COLOR="#000080">numbervars(TERM, 
+  START, END)</FONT></H3>
+
+<P><!AMZI_INDEX= Variable Numbering; numbervars/3><b>numbervars/3</b> converts 
+  the variables of TERM into structures of the form, '$VAR'(N), that get special 
+  handling by <b>write</b> and <b>writeq</b>. They are displayed as _XN. This 
+  means they are written in a form that can be read back in as a variable. <b>numbervars/3</b> 
+  is used internally in <b>listing</b>, to allow the clauses written out to be 
+  read back in without change.</P>
+<P>START must be instantiated to a non-negative integer. END is instantiated to 
+  Start plus the number of distinct variables in Term. </P>
+
+<P>In the following example, numbervars unifies X with '$VAR'(1) and Y with '$VAR'(2), which print out as _X1 and _X2.</P>
+
+<UL>
+<FONT COLOR="#000080"><PRE>
+?- T = a(X,Y), numbervars(T, 1, N), writeq(T).
+a(_X1, _X2)
+T = a(_X1, _X2)
+X = _X1
+Y = _X2
+N = 3 
+yes
+</PRE></FONT>
+</UL>
+
+<H3><A NAME="varlistList"></A><FONT COLOR="#000080">varlist(List)</FONT></H3>
+
+<P><!AMZI_INDEX= Variables; varlist/1; Variable Names ><B>varlist/1</B> returns a list of 
+  the variable names passed to the current clause. Each variable name is represented 
+  by a character list. This can be useful for applications that want to preserve 
+  and report on variable names. For example: </P>
+
+<UL><FONT COLOR="#000080">
+<PRE>
+foo(A,B) :-
+   varlist(L),
+   write(L).
+
+?- foo(XX,YYY).
+[[0w0058, 0w0058], [0w0059, 0w0059, 0w0059]]
+XX = H1
+YYY = H2 
+</PRE></FONT>
+</UL>
+
+<H3><A NAME="varsofTermList"></A><FONT COLOR="#000080">varsof(Term, List)</FONT></H3>
+
+<P><!AMZI_INDEX= Variables; varsof/2><B>varsof/2</B> succeeds if List
+can be unified with a list of all uninstantiated (and non-anonymous) variables
+in Term. Each variable occurs only once in List even though it may have
+more than one occurrence in Term. </P>
+
+<P>For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- varsof( a(X, Y, X), L).
+X = H0
+Y = H1
+L = [H0, H1] </FONT></PRE>
+</UL>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I></I> </P>
+
+</BODY>
+</HTML>
