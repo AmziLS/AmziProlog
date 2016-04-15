@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DBGENE", "DBGENE.vcproj", "{FA3DAA54-5999-482A-A14A-9DDE587F893A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA3DAA54-5999-482A-A14A-9DDE587F893A}.Debug|Win32.ActiveCfg = Release|Win32
+		{FA3DAA54-5999-482A-A14A-9DDE587F893A}.Debug|Win32.Build.0 = Release|Win32
+		{FA3DAA54-5999-482A-A14A-9DDE587F893A}.Release|Win32.ActiveCfg = Release|Win32
+		{FA3DAA54-5999-482A-A14A-9DDE587F893A}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

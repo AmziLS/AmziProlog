@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>C# .NET Pets Callback Sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1><font color="#0000FF">C# .NET Pets Callback Sample</font></h1>
+<p>This is a slightly more complex version of Pets in which the Prolog program 
+  has a prompt/2 predicate used to get information from the user. In the example, 
+  it is used to ask the user for the sound the pet makes. </p>
+<p>prompt/2 is implemented as an extended predicate in the C# program, illustrating 
+  the technique of having extended predicates associated with instances of classes 
+  derived from the Logic Server. 
+<h2>Building the Sample</h2>
+<ol>
+  <li>Open the pets_callback project.</li>
+  <li>Make sure the 'References' include amzinet.dll.</li>
+  <li>Build pets_callback.exe.</li>
+  <li>Optionally copy amzi.dll to the bin subdirectory where amzinet.dll and pets_callback.exe 
+    are located.</li>
+  <li>Compile and link pets.pro and copy pets.xpl to the bin subdirectory (or 
+    bin/Debug or bin/Release).</li>
+  
+</ol>
+<h2>Running the Sample</h2>
+<ol>
+  <li>Run pets_callback.exe.</li>
+  <li>Enter a sound like 'woof', 'quack' or 'meow'.</li>
+</ol>
+<p>
+<!-- #BeginLibraryItem "/docs/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2004 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server and e-Prolog are trademarks 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p>&nbsp; </p>
+</body>
+</html>

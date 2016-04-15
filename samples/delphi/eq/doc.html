@@ -1,0 +1,106 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; U) [Netscape]">
+   <title>Delphi Equation Drawing Sample</title>
+</head>
+<body bgcolor="#FFFFFF">
+<h1> <font color="#0000FF">Delphi Equation Drawing Sample</font></h1>
+The EQ sample application shows how Prolog rules can be used for graphic
+layout. In this case the rules are used to layout mathematical expressions
+as they might appear in a text book.
+<p>Mathematical expressions are input as they would be written in Prolog,
+which is similar to other programming language formats. These are valid
+Prolog mathematical expressions.
+<ul>
+<pre><font color="#000080">c = sqrt(a**2 + b**2)
+2 * y / 4 * z&nbsp;
+apples + oranges / (pears + cherries)</font></pre>
+</ul>
+The only Prolog wrinkle is terms beginning with upper case letters must
+be quoted.
+<ul>
+<pre><font color="#000080">'X' **2 + 'Y' ** 2 = 'R' ** 2
+'Speed' = 'Distance' / 'Time'</font></pre>
+</ul>
+Fun examples exercise the recursive aspects of the program.
+<ul>
+<pre><font color="#000080">tree = 1/1/1/1/1/1/1
+sqrt( sqrt( sqrt( 2**2**2**2 )))</font></pre>
+</ul>
+<b>Delphi</b> is used for both the front and back ends of this application.
+On the front end it provides the user interface. On the back end it provides
+extensions to Prolog for drawing on the screen.
+<p><b>Amzi!</b> is used for the heart of the application, taking the programmatic
+version of the mathematical expression and recursively breaking it down
+for display, computing the right position and size for each element of
+the expression, based on the other elements of the expression. For example,
+the line dividing two halfs of a fraction must be slightly longer than
+the larger of the numerator and denominator, and the numerator and denominator
+must be positioned above and below that line.
+<p><a href="#EQApplicationArchitecture">Application Architecture</a> - Details 
+  on the implementation, including annotated source code. 
+<p><a href="http://www.amzi.com">www.amzi.com</a> - Additional demos, articles,
+freeware, evaluation copies and information about Amzi! Prolog + Logic
+Server.
+<p>We welcome any and all comments about this demo. Contact us at www.amzi.com.
+<h2>Building the Sample</h2>
+<ol>
+  <li>Compile and link equation.pro into equation.xpl.</li>
+  <li>Open the Delphi Project eq.dpr.</li>
+  <li>Build eq.exe.</li>
+</ol>
+<h2>Running the Sample</h2>
+
+<ol>
+  <li>Open the Delphi Project eq.dpr or double-click on eq.exe that you built 
+    above.</li>
+  <li>Type a mathematical expression in the edit box and press the 'Draw' button. 
+    The equation will be displayed in text book format. </li>
+</ol>
+<p>If the mathematical equation is not a legal Prolog term, you will get
+an error indicating as much. Simply edit the expression and try again.
+<p>If you use an unquoted uppercase letter, you will get an error indicating
+as much.
+<h1>
+
+<hr WIDTH="100%"></h1>
+
+<h2>
+<a NAME="EQApplicationArchitecture"></a>EQ Application Architecture</h2>
+The EQ application is composed of three distinct parts. Source code is
+included for each.
+<p><b><a href="eqmain.pas">User Interface</a></b> - Delphi controls the
+form and Windows interface. It passes the mathematical expression to Prolog
+for generation of graphic display commands, and notifies Prolog when the
+Delphi canvas needs redrawing. These functions illustrate how Delphi communicates
+with an embedded Prolog logic base using the Amzi! Logic Server.
+<p><b><a href="p_draw.pas">Delphi/Prolog Extensions for Graphics</a></b>
+- It is easy to customize Amzi! Prolog with extended predicates written
+in other languages. In this example, graphics predicates are implemented
+as Delphi functions, giving Prolog the ability to directly draw on a Delphi
+canvas.
+<p>This Delphi unit implements a number of extended predicates that Prolog
+can use for graphic display. While simple mappings of Delphi are possible,
+as for example in the draw_lineto/3 predicate, Amzi! lets you implement
+predicates that behave as Prolog expects. For example, the draw_font/4
+predicate either sets or retrieves font properties depending on whether
+the Prolog arguments are bound or not.
+<p><b><a href="equation.pro">Prolog Logic for Layout</a></b> - Prolog is
+used to generate a list of graphics commands for displaying a given mathematical
+expression. That list is executed whenever the canvas needs to be redrawn,
+which, of course, includes the first time the mathematical expression is
+entered.
+<p>The predicate grapheq/6 does all of the work. It generates a list of
+Prolog goals that, when executed, displays the equation in the Delphi paint
+box. The list of goals is saved in the Prolog dynamic database so it can
+be used again if the paint box needs repainting, for example when another
+window overlaps it and is then removed.
+<p>
+<hr>
+<center>
+<p><i><font size=-1>Copyright &copy;1996-2000 Amzi! inc. All Rights Reserved.</font></i></center>
+
+</body>
+</html>

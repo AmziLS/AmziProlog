@@ -1,0 +1,417 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; U) [Netscape]">
+   <title>VBGene -- ODBC Visual Basic Genealogical Sample</title>
+</head>
+<body bgcolor="#FFFFFF">
+<h1> <b><font color="#0000FF">VBGene - ODBC Visual Basic Genealogical Sample</font></b></h1>
+The DBGene sample application uses a classic Prolog application idea to illustrate 
+how the Amzi! Logic Server can be used to provide the services of Prolog in conventional 
+application environments. Given a genealogical database of information about people, 
+the application lets you pose queries about various relationships, such as sister, 
+uncle, grandparent, and ancestor. This implementation was built with three tools. 
+<ul>
+<li>
+<b>Visual Basic</b> was used for the GUI interface (other GUI tools such
+as Delphi or C++ could have been used instead),</li>
+
+<li>
+<b>Amzi! Prolog</b> was used to define the rules for family relationships,
+and</li>
+
+<li>
+<b>Access</b> was used for the database of people (any database with an
+ODBC driver could be used).</li>
+</ul>
+The glue for the application is the Amzi! Logic Server. The application:
+<ul>
+<li>
+Uses the <b>Logic Server API </b>to get easy access from Visual to the
+Prolog logic base, and</li>
+
+<li>
+Uses the <b>Logic Server ODBC extension</b> to lets the Prolog rules reason
+directly over the database tables.</li>
+</ul>
+<a href="#UsingDBGene">Using DBGene</a> - How to use the sample, and how
+to put in your own family database.
+<p><a href="#DBGENEApplicationArchitecture">Application Architecture</a>
+- Details on the implementation, including annotated source code.
+<p><a href="http://www.amzi.com">www.amzi.com</a> - Additional demos, articles,
+freeware, evaluation copies and information about Amzi! Prolog + Logic
+Server.
+<p>We welcome any and all comments about this demo. Contact us at www.amzi.com
+<h2>Building the Sample</h2>
+<ol>
+  <li>Open the dbgene project in the prolog subdirectory and rebuild it. This 
+    compiles dbgene.pro and links it with the aodbc and misc libraries.</li>
+  <li>Open the odbcgene project in Visual Basic and build odbcgene.exe.</li>
+</ol>
+<h2>Running the Sample</h2>
+<p>To run it you need: </p>
+<ol>
+  <li> Install ODBC 2.0 or later.</li>
+  <li>Make sure 'aodbc.lsx' is somewhere in your path (it is in amzi\bin).</li>
+  <li> An amzi.cfg file containing the line 'lsxload=aodbc'.</li>
+  <li>Create adata source named 'gene' in your 32-bit ODBC administrator (in the 
+    Control Panel) that uses the gene.mdb database included with this demo. </li>
+</ol>
+<h2>
+
+<hr></h2>
+
+<h2>
+<a NAME="UsingDBGene"></a>Using DBGene</h2>
+To run DBGene, you need:
+<ol>
+<li>
+ODBC (2.0 or later) installed</li>
+
+<li>
+AODBC.LSX somewhere in your path (it is in amzi\bin)</li>
+
+<li>
+a data source named 'gene' defined in your 32-bit ODBC administrator (in
+the control panel) that uses the gene.mdb database included with this demo.</li>
+</ol>
+DBGene automatically loads the ODBC database, ‘gene’ and the logic base,
+‘dbgene’. The lefthand listbox contains the names of the people in the
+gene database. The middle listbox contains a list of the relations the
+dbgene logic base knows about. If you select a relation and an individual,
+then press the ‘query’ button, the names of the people who satisfy that
+relation appear in the right hand box.
+<p>If you have the tools to modify the database, which was created using
+Microsoft Access, you can fill it with individuals from your own family
+tree. Or you can replace the gene database with an ODBC database of your
+own choosing.
+<p>
+<hr WIDTH="100%">
+<h2>
+<a NAME="DBGENEApplicationArchitecture"></a>DBGENE Application Architecture</h2>
+The DBGene application is composed of three components
+<ul>
+<li>
+the Visual Basic user interface,</li>
+
+<li>
+the Amzi! Prolog logic base, and</li>
+
+<li>
+the Access database of people.</li>
+</ul>
+The <a href="#Database">database</a> contains two tables, one defining
+people, with information such as a unique ID number, name, date-of-birth,
+and parents, and the other defining marriages, with the ID numbers of the
+individuals in each marriage.
+<p>The <a href="#LogicBase">logic base</a> contains rules that define relationships
+based on the database. These are rules that express what it means to be
+a sibling, uncle, ancestor, etc. At the base of each of these rules are
+Prolog predicates that map directly to the database, using the Logic Server
+ODBC extension.
+<p>The <a href="#UserInterface">user interface</a> contains list boxes
+that present the pertinent information from the logic base. That information
+is obtained from a Visual Basic program that uses logic base services.
+<p>
+<hr WIDTH="100%">
+<h2>
+<a NAME="Database"></a>Database</h2>
+The database used in this example is an Access database. If you have Access,
+you can edit it directly to reflect your own family tree. If you have a
+different database with an ODBC driver, you can create tables like these
+for your own family and assign the ODBC database name ‘gene’ to your database.
+<p>There are two tables in the database defined as follows.
+<p><b>Person</b>
+<ul>
+<pre><font color="#000080">*pid number (key)
+*surname text[40] (indexed)
+*midname....text[40]
+*name text[40]
+*gender text[1] m/f
+*mother number (indexed) (a pid)
+*father number (indexed) (a pid)
+dob text[10] (date yyyy-mm-dd)
+dod text[10] (date yyyy-mm-dd)
+birthplace text[50]
+nation text[40]
+note text[255]</font></pre>
+</ul>
+<b>Marriage</b>
+<ul>
+<pre><font color="#000080">*husband number (indexed) (a pid)
+*wife number (indexed) (a pid)
+married text[10] (date yyyy-mm-dd)
+divorced text[10] (date yyyy-mm-dd)
+note text[255]</font></pre>
+</ul>
+* - Fields that are used in this demonstration. Other fields are ignored.
+<h3>
+The Sample People</h3>
+The people in the sample database have decided to propagate maternal family
+names through the middle name, just as paternal family names are often
+propagated by the last name. That is, the children of a marriage take the
+middle name of the mother and the last name of the father. That way the
+daughters carry on the maternal family name and the sons carry on the paternal
+family names, and you can get a better sense by looking at the names who
+might be related to whom.
+<p>Individuals with no middle name are at the top of the tree, also indicated
+by parents with PID numbers of 0.
+<p>
+<hr WIDTH="100%">
+<h2>
+<a NAME="LogicBase"></a>Logic Base</h2>
+This is the Prolog code used to define the genealogical logic base. To
+use it the host language must first open the ODBC connection by calling
+the db_open/1 predicate.
+<p>The <a href="dbgene.pro">code</a> consists of these primary sections:
+<ul>
+<li>
+A list of relations, used by the host language to display the choices to
+the user.</li>
+
+<li>
+Database definitions used to build SQL queries from Prolog queries.</li>
+
+<li>
+The rules defining the primitive relationships that are based directly
+on the representation of people in the database. These rules make heavy
+use of the ODBC query predicate.</li>
+
+<li>
+The higher-level rules for more complex relationships, all defined using
+the primitive rules described above, so they are not affected by changes
+to the representation of a person.</li>
+
+<li>
+The query interface designed for use from a host language program. Other
+versions of the program have different interfaces.</li>
+</ul>
+
+<hr WIDTH="100%">
+<h2>
+<a NAME="UserInterface"></a>User Interface</h2>
+The Visual Basic user interface consists of a simple dialog box and some
+functions that call the Prolog services portion of the application, and
+populate the list boxes of the dialog.
+<p>The code included is:
+<ul>
+<li>
+dbgenevb.frm - the logic-base is initialized and closed with the form loading
+and unloading. Three routines fill the three list boxes via calls to Prolog
+for the logic server API.</li>
+</ul>
+
+<pre><font color="#000080">''''''''''''''''''''''''''''''''''''''''''''''''
+' Display All the Relations for the Highlighted
+' Person and Relationship
+'
+Private Sub DisplayRelations()
+&nbsp;&nbsp;&nbsp; Dim Person As String, Relationship As String
+&nbsp;&nbsp;&nbsp; Dim StrVal As String
+&nbsp;&nbsp;&nbsp; Dim rc As Integer, tf As Integer
+&nbsp;&nbsp;&nbsp; Dim Term As Long
+&nbsp;&nbsp;&nbsp; Dim PID As Integer
+&nbsp;&nbsp;&nbsp; Dim PersonID, Firstname, Midname, Surname As String
+
+&nbsp;&nbsp;&nbsp; ' First clear the list of related persons
+&nbsp;&nbsp;&nbsp; RelatedPersonsList.Clear
+
+&nbsp;&nbsp;&nbsp; ' If we don't have both a person and a relationship highlighted
+&nbsp;&nbsp;&nbsp; ' then exit this routine
+&nbsp;&nbsp;&nbsp; If PersonList.ListIndex &lt; 0 Or RelationshipList.ListIndex &lt; 0 Then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exit Sub
+&nbsp;&nbsp;&nbsp; End If
+
+&nbsp;&nbsp;&nbsp; ' Get the highlighted person and relationship
+&nbsp;&nbsp;&nbsp; Person = PersonList.List(PersonList.ListIndex)
+&nbsp;&nbsp;&nbsp; Relationship = RelationshipList.List(RelationshipList.ListIndex)
+
+&nbsp;&nbsp;&nbsp; ' Build the Prolog command "query(&lt;relationship>(X,&lt;person_id>), PID, Surname, Midname, Name)"
+&nbsp;&nbsp;&nbsp; PersonID = Mid$(Person, 1, InStr(Person, ":") - 1)
+&nbsp;&nbsp;&nbsp; tf = CallStrLS(Term, "query(" + Relationship + "(X, " + PersonID + "), PID, Surname, Midname, Firstname)")
+
+&nbsp;&nbsp;&nbsp; If tf = False Then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RelatedPersonsList.AddItem "No " + Relationship + " for " + Right$(Person, Len(Person) - (InStr(Person, ":") + 1))
+&nbsp;&nbsp;&nbsp; End If
+
+&nbsp;&nbsp;&nbsp; ' Loop getting all the people who have that relationship
+&nbsp;&nbsp;&nbsp; ' and add them to the related persons list
+&nbsp;&nbsp;&nbsp; While (tf)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PID = GetIntArgLS(Term, 2)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Surname = GetStrArgLS(Term, 3)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Midname = GetStrArgLS(Term, 4)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Firstname = GetStrArgLS(Term, 5)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrVal = Format$(PID, "###") + ": " + Firstname + " " + Midname + " " + Surname
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RelatedPersonsList.AddItem StrVal
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tf = RedoLS()
+&nbsp;&nbsp;&nbsp; Wend
+End Sub
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Close Down Amzi Prolog When the Exit Button is Pressed
+'
+Private Sub Exit_Click()
+&nbsp;&nbsp;&nbsp; Dim tf As Integer
+&nbsp;&nbsp;&nbsp; Dim Term As Long
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; ' Close the ODBC database
+&nbsp;&nbsp;&nbsp; tf = ExecStrLS(Term, "db_close")
+&nbsp;&nbsp;&nbsp; If tf &lt;> True Then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MsgBox "Unable to close ODBC database 'gene'"
+&nbsp;&nbsp;&nbsp; End If
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; ' Close the Prolog runtime, releasing all resources
+&nbsp;&nbsp;&nbsp; CloseLS
+&nbsp;&nbsp;&nbsp; End
+End Sub
+
+''''''''''''''''''''''''''''''''''''''''''''
+' Main Form Handler Starts up Amzi! Prolog
+'
+Private Sub Form_Load()
+&nbsp;&nbsp;&nbsp; Dim rc As Integer, tf As Integer
+&nbsp;&nbsp;&nbsp; Dim Term As Long
+&nbsp;&nbsp;&nbsp; Dim xplname As String
+
+&nbsp;&nbsp;&nbsp; ' Setup our xpl and help file pathnames
+&nbsp;&nbsp;&nbsp; xplname = App.Path + "\DBGENE.XPL"
+&nbsp;&nbsp;&nbsp; App.HelpFile = App.Path + "\DBGENEVB.HLP"
+
+&nbsp;&nbsp;&nbsp; ' Initialize the runtime and load DBGENE.XPL, which contains
+&nbsp;&nbsp;&nbsp; ' all the rules and expertise for this application
+&nbsp;&nbsp;&nbsp; ' Also load the ODBC LSX
+&nbsp;&nbsp;&nbsp; InitLS (xplname)
+&nbsp;&nbsp;&nbsp; AddLSX ("ls4odbc")
+&nbsp;&nbsp;&nbsp; LoadLS (xplname)
+
+&nbsp;&nbsp;&nbsp; ' Turn off backslash processing in strings and atoms (so pathnames work)
+&nbsp;&nbsp;&nbsp; tf = CallStrLS(Term, "set_mode(string_esc, off)")
+&nbsp;&nbsp;&nbsp; If tf &lt;> True Then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MsgBox "Unable to turn of string escape processing"
+&nbsp;&nbsp;&nbsp; End If
+
+&nbsp;&nbsp;&nbsp; ' Open the ODBC database, gene
+&nbsp;&nbsp;&nbsp; tf = ExecStrLS(Term, "db_open('gene')")
+&nbsp;&nbsp;&nbsp; If tf &lt;> True Then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MsgBox "Unable to open the ODBC database 'gene'; check your ODBC setup in the control panel"
+&nbsp;&nbsp;&nbsp; End If
+
+&nbsp;&nbsp;&nbsp; ' Display the Persons and Relations lists
+&nbsp;&nbsp;&nbsp; tf = Persons()
+&nbsp;&nbsp;&nbsp; tf = Relations()
+
+End Sub
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Close Down Amzi Prolog When the Main Form Closes
+'
+Private Sub Form_Unload(CANCEL As Integer)
+&nbsp;&nbsp;&nbsp; Dim tf As Integer
+&nbsp;&nbsp;&nbsp; Dim Term As Long
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; ' Close the ODBC database
+&nbsp;&nbsp;&nbsp; tf = ExecStrLS(Term, "db_close")
+&nbsp;&nbsp;&nbsp; If tf &lt;> True Then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MsgBox "Unable to close ODBC database 'gene'"
+&nbsp;&nbsp;&nbsp; End If
+
+&nbsp;&nbsp;&nbsp; ' Close the Prolog runtime, releasing all resources
+&nbsp;&nbsp;&nbsp; Call CloseLS
+End Sub
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Display Help When Button is Pressed
+'
+Private Sub Help_Click()
+&nbsp;&nbsp;&nbsp; Dim retval As Integer
+&nbsp;&nbsp;&nbsp; retval = ShellExecute(0, ByVal "open", ByVal "dbgenevb.htm", "", "", 1)
+End Sub
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Display All the Family Members in the First List Box
+'
+Private Function Persons() As Integer
+&nbsp;&nbsp;&nbsp; Dim rc As Integer, tf As Integer
+&nbsp;&nbsp;&nbsp; Dim Term As Long
+&nbsp;&nbsp;&nbsp; Dim PID As Integer
+&nbsp;&nbsp;&nbsp; Dim StrVal, Firstname, Midname, Surname As String
+
+&nbsp;&nbsp;&nbsp; ' Clear the list first
+&nbsp;&nbsp;&nbsp; PersonList.Clear
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; ' Issue the Prolog query:&nbsp; person(X)
+&nbsp;&nbsp;&nbsp; tf = CallStrLS(Term, "fullname(Pid, Surname, Midname, Firstname)")
+
+&nbsp;&nbsp;&nbsp; ' Check if there are any people
+&nbsp;&nbsp;&nbsp; If (tf &lt;> True) Then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Persons = 0
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exit Function
+&nbsp;&nbsp;&nbsp; End If
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; ' Loop through all the family members, adding them to the list
+&nbsp;&nbsp;&nbsp; While (tf = True)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PID = GetIntArgLS(Term, 1)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Surname = GetStrArgLS(Term, 2)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Midname = GetStrArgLS(Term, 3)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Firstname = GetStrArgLS(Term, 4)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrVal = Format$(PID, "###") + ": " + Firstname + " " + Midname + " " + Surname
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PersonList.AddItem StrVal
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tf = RedoLS()
+&nbsp;&nbsp;&nbsp; Wend
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; Persons = 1
+
+End Function
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Display Relations When the Query Button is Pressed
+'
+Private Sub Query_Click()
+&nbsp;&nbsp;&nbsp; Query.Enabled = False
+&nbsp;&nbsp;&nbsp; Call DisplayRelations
+&nbsp;&nbsp;&nbsp; Query.Enabled = True
+End Sub
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Display All the Possible Relationships in the Second List Box
+'
+Private Function Relations() As Integer
+&nbsp;&nbsp;&nbsp; Dim rc As Integer, tf As Integer
+&nbsp;&nbsp;&nbsp; Dim Term As Long, TList As Long
+&nbsp;&nbsp;&nbsp; Dim StrVal As String
+
+&nbsp;&nbsp;&nbsp; ' Clear the list first
+&nbsp;&nbsp;&nbsp; RelationshipList.Clear
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; ' Issue the Prolog query:&nbsp; relations(X)
+&nbsp;&nbsp;&nbsp; tf = CallStrLS(Term, "relations(X)")
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; ' Check if there are any relationships
+&nbsp;&nbsp;&nbsp; If (tf &lt;> True) Then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Relations = 0
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Return
+&nbsp;&nbsp;&nbsp; End If
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; ' Loop through all the relationships adding them to the list
+&nbsp;&nbsp;&nbsp; Call GetArgLS(Term, 1, bTERM, TList)
+&nbsp;&nbsp;&nbsp; Do
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rc = PopListLS(TList, bSTR, StrVal)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (rc = 0) Then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RelationshipList.AddItem StrVal
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If
+&nbsp;&nbsp;&nbsp; Loop While (rc = 0)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; Relations = 1
+
+End Function</font></pre>
+
+<pre>
+<hr WIDTH="100%"></pre>
+
+<center><i><font size=-1>Copyright &copy;1996-98 Amzi! inc. All Rights
+Reserved.</font></i></center>
+
+<p><br>
+</body>
+</html>

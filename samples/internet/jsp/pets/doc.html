@@ -1,0 +1,58 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (WinNT; U) [Netscape]">
+   <title>Pets JSP Sample</title>
+</head>
+<body bgcolor="#FFFFFF">
+<h1> <font color="#0000FF">Pets JSP Sample</font></h1>
+This example adopts the very simple pet identification system to Java Server Pages. 
+The source code is in:
+<ul>
+  <li> PetsJSPBean.java - This Java bean encapsulates calling the Amzi! Logic 
+    Server to load pets.xpl and get the animal type from the sound it makes.</li>
+  <li> PetsJSP.jsp - The Java Server Page that invokes PetsJSPBean.class.</li>
+  <li> pets.pro - The logicbase that identifies a pet from its sound.</li>
+</ul>
+<h2>Building the Sample</h2>
+<p>To build the sample:</p>
+<ol>
+  <li> Build pets.xpl by compiling and linking pets.pro.</li>
+  <li>Change the pathname in the call to ls.Load to match your webserver (see 
+    below). </li>
+  <li> Build PetsJSPBean.class by compiling PetsJSPBean.java with javac</li>
+  <li> Organize the files into the proper directories for your JSP/web server 
+    software. You will also need to put amzi.dll and amzijni.dll (Windows) or 
+    libamzi.so and libamzijni.so (Unix) where the JSP/web server can find it.</li>
+</ol>
+<h2>Running the Sample</h2>
+<h3>Tomcat</h3>
+<p> Tomcat generally installs in a directory named Apache Group/Tomcat<i> X.X</i>. 
+</p>
+<p>In order to run this servlet under Tomcat (where <i>X.X</i> is replaced by 
+  the version of Tomcat you are running, and <i>N.N</i> by the version of Java 
+  you are running):</p>
+<ol>
+  <li> Create a sudirectory in ...Apache Group/Tomcat <i>X.X</i>/webapps named 
+    'amzi' (or use another name like amzi1 if you already have an amzi subdirectory).</li>
+  <li>Copy the amzi/samples/internet/jsp/pets/WEB-INF subdirectory tree to ...Tomcat 
+    <i>X.X</i>/webapps/amzi.</li>
+  <li>Create a directory named 'pets' under the 'classes' subdirectory resulting 
+    in ...Tomcat <i>X.X</i>/webapps/amzi/WEB-INF/classes/pets.</li>
+  <li>Copy PetsJSPBean.class to ...Tomcat <i>X.X</i>/webapps/amzi/WEB-INF/classes/pets.</li>
+  <li>Copy pets.xpl to ...Tomcat <i>X.X</i>/webapps/amzi</li>
+  <li>Copy amzi.dll, amzijni.dll (from amzi/bin) to ...Tomcat <i>X.X</i>/webapps/amzi/WEB-INF/classes. 
+    Alternatively, you can load these libraries (and LSXs) explicitly in Java 
+    with Runtime.getRuntime().load(<i>libraryPath</i>) or loadLibrary(<i>libraryName</i>). 
+  </li>
+  <li>Copy the entire amzi/ls subdirectory tree (from amzi/lsapis/java20) to ...Tomcat 
+    <i>X.X</i>/webapps/amzi/WEB-INF/classes (so you now have the Logic Server 
+    .class files in Tomcat <i>X.X</i>/webapps/amzi/WEB-INF/classes/amzi/ls).</li>
+  <li>Stop and restart Tomcat.</li>
+  <li>In your browser type, http://localhost:8080/amzi/PetsJSP.jsp. Enter a sound, 
+    e.g. 'woof' when prompted.<br>
+    &nbsp; </li>
+</ol>
+</body>
+</html>

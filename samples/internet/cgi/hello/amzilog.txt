@@ -1,0 +1,6 @@
+Amzi! Log File  April 24, 2010  05:51 PM
+
+Using Locale: English_United States.1252
+Shutting Down
+Closing engine components
+Flushing log at shutdown

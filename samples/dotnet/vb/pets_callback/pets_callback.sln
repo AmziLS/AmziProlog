@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "pets_callback", "pets_callback.vbproj", "{621748A5-93CE-4F5B-A29B-4B959B979E57}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{621748A5-93CE-4F5B-A29B-4B959B979E57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{621748A5-93CE-4F5B-A29B-4B959B979E57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{621748A5-93CE-4F5B-A29B-4B959B979E57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{621748A5-93CE-4F5B-A29B-4B959B979E57}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

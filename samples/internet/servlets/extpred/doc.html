@@ -1,0 +1,89 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; I) [Netscape]">
+   <title>Extended Predicate Java Servlet</title>
+</head>
+<body bgcolor="#FFFFFF">
+<h1> <font color="#0000FF">Extended Predicate Java Servlet</font></h1>
+<p>This servlet was developed using Java 1.3 and Tomcat 4.0. There are two source 
+  code files named ExtPred.java (the main servlet) and AmziPreds.java (the extended 
+  predicate). It supports both a GET and POST operation. The GET puts up a simple 
+  form for you to enter the full pathname of HTMLDOC.XPL. The POST calls the Amzi! 
+  Logic Server which in turn calls the extended predicate, user_info, and displays 
+  the result. </p>
+<h2>Building the Sample</h2>
+<ol>
+  <li>Set JAVA_HOME=c:\jdk<i>N.N</i></li>
+  <li>Set the CLASSPATH to include .;\amzi\lsapis\java20 and servlet.jar. For 
+    Tomcat, servlet.jar is found in jakarta-tomcat-<i>X.X</i>\common\lib.</li>
+  <li> Compile ExtPred.java and AmziPreds.java with javac (or open and build the 
+    JBuilder project extpred.jpx).</li>
+  <li>Compile htmldoc.pro with acmp (or the Amzi! IDE) and link it into htmldoc.xpl 
+    with alnk (or the Amzi! IDE).</li>
+</ol>
+<h3>JRUN</h3>
+<p>In order to run this servlet under JRUN, you need to modify ExtPred.java in 
+  the method doGet() to read 
+<blockquote> 
+  <pre> out.println(&quot;&lt;form method=post action=\&quot;/servlet/ExtPred\&quot;&gt;&quot;);
+</pre>
+</blockquote>
+<p>instead of:</p>
+<blockquote>
+  <pre> out.println(&quot;&lt;form method=post action=\&quot;/amzi/ExtPred\&quot;&gt;&quot;);
+</pre>
+</blockquote>
+<p>This is because the default URL for servlets under JRUN is /servlet.</p>
+<h2>Running the Sample</h2>
+<h3>Tomcat</h3>
+<p>Under Unix, Tomcat generally installs in a directory named jakarta-tomcat-<i>X.X</i>. 
+  Under Windows, the directory is called 'Apache Tomcat <i>X.X</i>. The examples 
+  below use the Windows naming. If you are running under Unix, make the appropriate 
+  substitutions.</p>
+<p>In order to run this servlet under Tomcat (where <i>X.X</i> is replaced by 
+  the version of Tomcat you are running, and <i>N.N</i> by the version of Java 
+  you are running):</p>
+<ol>
+  <li> Create a sudirectory in ...Apache Tomcat <i>X.X</i>\webapps named 'amzi'.</li>
+  <li>Copy the amzi\samples\internet\servlets\extpred\WEB-INF subdirectory tree 
+    to ...Apache Tomcat <i>X.X</i>\webapps\amzi.</li>
+  <li>Copy ExtPred.class and AmziPreds.class to ...Apache Tomcat <i>X.X</i>\webapps\amzi\WEB-INF\classes</li>
+  <li>Copy htmldoc.xpl to ...Apache Tomcat <i>X.X</i>\webapps\amzi</li>
+  <li>Copy amzi.dll, amzijni.dll (from amzi\bin) to ...Apache Tomcat <i>X.X</i>\webapps\amzi\WEB-INF\classes. 
+    Alternatively, you can load these libraries (and LSXs) explicitly in Java 
+    with Runtime.getRuntime().load(<i>libraryPath</i>) or loadLibrary(<i>libraryName</i>). 
+  </li>
+  <li>Copy the amzi/ls subdirectory tree (from amzi\lsapis\java20) to ...Apache 
+    Tomcat <i>X.X</i>\webapps\amzi\WEB-INF\classes</li>
+  <li>Stop and restart Tomcat</li>
+  <li>In your browser type, http://localhost:8080/amzi/Extpred. Enter '\\...Apache 
+    Tomcat <i>X.X</i>\\webapps\\amzi' when prompted for the directory with htmldoc.xpl 
+    in it.</li>
+</ol>
+<h3>JRUN</h3>
+<p>In order to run this servlet under JRUN (where <i>X.X</i> is replaced by the 
+  version of JRUN you running): 
+<ol>
+  <li> Make sure that amzi.dll and amzijni.dll are on the system PATH. (They are 
+    both located in the amzi\bin directory). Alternatively, you can load these 
+    libraries (and LSXs) explicitly in Java with Runtime.getRuntime().load(<i>libraryPath</i>) 
+    or loadLibrary(<i>libraryName</i>).</li>
+  <li> Copy the amzi\ls directory tree from amzi\lib\java20 to jrun\<i>X.X</i>\classes.</li>
+  <li> Copy ExtPred.class and AmziPreds.class to jrun\<i>X.X</i>\jsm-default\services\jse\servlets 
+    (or whatever directory you use to hold your servlets under JRUN).</li>
+  <li>In your browser type, http://localhost/servlet/ExtPred</li>
+</ol>
+
+<h2>References</h2>
+<p>See the Java Tutorial to learn <a href="http://java.sun.com/docs/books/tutorial/servlets/index.html">How 
+  to Write Servlets</a>.</p>
+<p>To learn about configuring servlets under Tomcat, see the <a href="http://java.sun.com/docs/books/tutorial/servlets/servletrunner/index.html">Java 
+  Tutorial Lesson on Running Servlets</a>.</p>
+<p>For information on how to install and run Tomcat under IIS and Windows see 
+  <a href="http://members.ozemail.com.au/~lampante/howto/tomcat/iisnt/index.html">How 
+  To Setup TOMCAT 4.0.1 on Windows 2000 with IIS and NT Service</a><br>
+  &nbsp; </p>
+</body>
+</html>

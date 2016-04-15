@@ -1,0 +1,17 @@
+all: _tcltk
+
+_tcltk:
+	-md $(APLS_RELEASE)\lsapis\tcltk
+	devenv tcltk.sln /rebuild Release|Win32
+	xcopy lib $(APLS_RELEASE)\lsapis\tcltk\lib\ /S /Y
+#	xcopy bin $(APLS_RELEASE)\bin\
+
+clean:
+	devenv odbc.sln /clean Release
+	devenv odbc.sln /clean Debug
+	-del /Q *.ncbp
+	-del /Q *.pdb
+
+remove_cvs:
+	-rmdir /S /Q CVS
+

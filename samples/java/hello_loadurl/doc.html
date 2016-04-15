@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>Java Hello Load XPL from URL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1><font color="#0000FF">Java Hello Load XPL from URL</font></h1>
+<p> This example demonstrates the use of the LSAPI function LoadFromMemory and 
+  the Java-specific method LoadFromURL. Both allow an XPL file to be loaded from 
+  memory, which means the XPL file can be delivered in a JAR file, another binary 
+  archive or over the Internet.</p>
+<p></p>
+<h2>Building the Sample</h2>
+<ol>
+  <li> Compile and link hello.pro into hello.xpl</li>
+  <li>Compile HelloMain.java and HelloLoadURL.java</li>
+  <li>Make a JAR file with HelloMain.class, HelloLoadURL.class, hello.xpl, amzi/ls/LogicServer.class, 
+    amzi/ls/LSException.class, meta-inf/Manifest.mf<br>
+  </li>
+</ol>
+<h2>Running the Sample</h2>
+<ol>
+  <li> Type: java -jar hello_loadurl.jar</li>
+</ol>
+<!-- #BeginLibraryItem "/docs/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2004 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server and e-Prolog are trademarks 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p>&nbsp; </p>
+</body>
+</html>

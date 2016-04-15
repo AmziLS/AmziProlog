@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>ASP VB/ODBC Pets Sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1><font color="#0000FF">ASP VB/ODBC Pets Sample</font> </h1>
+<p>This sample illustrates using ODBC from Amzi! Prolog in an ASP application 
+  written using an ActiveX control in Visual Basic.</p>
+<h2>Building the Sample</h2>
+<p>
+<OL>
+  <LI>Open the pets_odbc.vbp project in VB and build pets_odbc.dll. Then copy 
+    it to your Scripts directory (usually /InetPub/Scripts).</LI>
+  <LI>Register pets_odbc.dll by typing 'regsvr32 pets_odbc.dll' at the command 
+    line from the Scripts directory.</LI>
+  <LI>Open the pets_odbc.ppj project then compile and link pets_odbc.pro with 
+    the library aodbc.plm into pets_odbc.xpl and copy pets_odbc.xpl to your Scripts 
+    directory.</LI>
+  <LI>Copy pets_odbc.asp to your Scripts directory.</LI>
+  <LI>Copy pets.mdb to your Scripts directory.</LI>
+  <LI>In your Control Panel create a new ODBC data source named 'pets' and point 
+    it to pets.mdb in the Scripts directory.</LI>
+  <LI>(Note: amzi.dll and aodbc.lsx must be somewhere in your PATH or in your 
+    Scripts directory).</LI>
+</OL>
+<h2> Running the Sample</h2>
+<ol>
+  <li>Invoke pets_odbc.asp in your browser. This is usually done by typing http://localhost/Scripts/pets_odbc.asp</li>
+</ol>
+<p>&nbsp;</p>
+</body>
+</html>

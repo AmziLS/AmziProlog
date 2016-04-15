@@ -1,0 +1,54 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (X11; I; SunOS 5.7 sun4u) [Netscape]">
+<title>Hello CGI Sample</title></head>
+<body bgcolor="#FFFFFF">
+<h1> <font color="#0000FF">Hello CGI&nbsp;Sample</font></h1>
+<p>This is the simplist possible CGI program. When invoked it displays a greeting 
+  in the browser. </p>
+<h2>Building the Sample</h2>
+<p>To build the sample:</p>
+<ol>
+  <li>Write your CGI script. Compile it and link it with the libraries acgi and 
+    list into an .xpl file.</li>
+</ol>
+<h2>Running the Sample</h2>
+<p>Installing CGI programs can be complex, and depends on the web server you are 
+  using. Regardless of the web server, the following tasks must be completed: 
+<ol>
+  <li> Copy the CGI script and the executable acgi[.exe] (from amzi/lsapis/cgi) 
+    to the directory your web server runs CGI programs from (usually cgi-bin under 
+    Unix or Scripts under Windows).</li>
+  <li> Rename acgi[.exe] to have the same name as your XPL file. For example, 
+    hellocgi.exe runs hellocgi.xpl.</li>
+  <li> Ensure the process that runs your web server can find the Amzi! Logic Server 
+    (amzi.dll or libamzi.so). This might mean putting the library on your path 
+    or another environment variable, or copying it to cgi-bin or the /usr/lib 
+    directory.</li>
+  <li> If you are using a .cfg file, ensure the web server process can find it. 
+    This might mean putting it in cgi-bin or having the AMZI_DIR&nbsp;environment 
+    variable set for the web server process.</li>
+  <li> Ensure your web server process and read and/or execute access to all of 
+    the above files.</li>
+</ol>
+To help in debugging CGI scripts, you will want to consult the error log
+files for your server.
+<p>Following are some sample set-ups. 
+<p>
+<h3> Windows with IIS/PWS </h3>
+<p> Copy the .xpl file, the .exe (copied from acgi.exe), amzi.dll and amzi.cfg 
+  to the /InetPub/Scripts directory. Also, using the IIS or PWS Manager enable 
+  both &quot;Scripts&quot; and &quot;Executables&quot; on the Scripts directory.</p>
+<h3>Windows with Netscape FastTrack</h3>
+Copy the .xpl file, the .exe (copied from acgi.exe), amzi.dll and amzi.cfg in 
+the cgi-bin directory. <br>
+<h3> Solaris with Apache</h3>
+Copy the .xpl file and acgi (renamed) to the /apache/cgi-bin directory.
+Use Apache directives to tell it where to find libamzi.so or copy libamzi.so
+to /lib. Use the Apache setEnv or passEnv directives to set the value of
+AMZI_DIR and put your amzi.cfg file in /amzi/config.
+<br>&nbsp;
+</body>
+</html>

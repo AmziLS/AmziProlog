@@ -1,0 +1,27 @@
+SOURCE=$(APLS_SOURCE)
+RELEASE=$(APLS_RELEASE)
+MYSQL_LIB=/usr/lib64/mysql
+MYSQL_INCLUDE=/usr/include/mysql
+
+
+ifdef DEBUG
+C_FLAGS = -c -g -fpic -Wimplicit
+else
+C_FLAGS = -c -fpic -Wimplicit
+endif
+
+CC = gcc
+
+$(RELEASE)/lib/amysql.lsx: amysql.o amysql.pro
+	$(CC) -L$(RELEASE)/lib -L$(MYSQL_LIB) -shared -o amysql.lsx amysql.o -lamzi -lmysqlclient
+	cp amysql.lsx $(RELEASE)/lib/
+	acmp amysql.pro
+	cp amysql.plm $(RELEASE)/abin/
+	cp amysql.lsx $(RELEASE)/lib/
+
+
+amysql.o: amysql.c
+	$(CC) -I$(RELEASE)/include -I$(MYSQL_INCLUDE) -DBSD $(C_FLAGS) -o amysql.o amysql.c
+
+clean:
+	rm *.o

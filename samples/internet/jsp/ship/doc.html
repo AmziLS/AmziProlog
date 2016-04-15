@@ -1,0 +1,63 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (WinNT; U) [Netscape]">
+   <title>Shipping Advisor JSP Sample</title>
+</head>
+<body bgcolor="#FFFFFF">
+<h1> <font color="#0000FF">Shipping Advisor JSP Sample</font></h1>
+This example adopts shipping advisor to Java Server Pages. The source code is 
+in: 
+<ul>
+  <li> shipPageBean.java - This Java bean encapsulates calling the Amzi! Logic 
+    Server to load ship.xpl and get the list of shipping options from the user's 
+    requirements. It is in a package named 'ship'.</li>
+  <li> shipPage.jsp and shipErrorPage.jsp - The Java Server Page that invokes 
+    ship.shipPageBean.class.</li>
+  <li> ship.pro - The logicbase that finds all possible shipping options for a 
+    set of inputs.</li>
+</ul>
+<h2>Building the Sample</h2>
+<p>To build the sample:</p>
+<ol>
+  <li> Build ship.xpl by compiling and linking ship.pro.</li>
+  <li>Change the pathname in shipPageBean.java for the call to ls.Load to match 
+    your webserver (see below). </li>
+  <li> Build shipPageBean.class by compiling shipPageBean.java with javac</li>
+  <li> Organize the files into the proper directories for your JSP/web server 
+    software. You will also need to put amzi.dll and amzijni.dll (Windows) or 
+    libamzi.so and libamzijni.so (Unix) where the JSP/web server can find it.</li>
+</ol>
+<h2>Running the Sample</h2>
+<h3>Tomcat</h3>
+<p>Tomcat generally installs in a directory named Apache Group/Tomcat<i> X.X</i>. 
+</p>
+<p>In order to run this servlet under Tomcat (where <i>X.X</i> is replaced by 
+  the version of Tomcat you are running, and <i>N.N</i> by the version of Java 
+  you are running):</p>
+<ol>
+  <li> Create a sudirectory in ...Apache Group/Tomcat <i>X.X</i>/webapps named 
+    'ship'.</li>
+  <li>Copy the amzi/samples/internet/jsp/ship/WEB-INF subdirectory tree to ...Tomcat 
+    <i>X.X</i>/webapps/ship.</li>
+  <li>Create a directory named 'classes/ship' under the 'WEB-APPS' subdirectory 
+    resulting in ...Tomcat <i>X.X</i>/webapps/ship/WEB-INF/classes/ship.</li>
+  <li>Copy shipPageBean.class to ...Tomcat <i>X.X</i>/webapps/ship/WEB-INF/classes/ship.</li>
+  <li>Copy ship.xpl to ...Tomcat <i>X.X</i>/webapps/ship (this pathname should 
+    match the one you edited into shipPageBean.java under 'Building the Sample'). 
+  </li>
+  <li>Copy amzi.dll, amzijni.dll (from amzi/bin) to ...Tomcat <i>X.X</i>/webapps/ship/WEB-INF/classes. 
+    Alternatively, you can load these libraries (and LSXs) explicitly in Java 
+    with Runtime.getRuntime().load(<i>libraryPath</i>) or loadLibrary(<i>libraryName</i>). 
+  </li>
+  <li>Copy the entire amzi/ls subdirectory tree (from amzi/lsapis/java20) to ...Tomcat 
+    <i>X.X</i>/webapps/ship/WEB-INF/classes (so you now have the Logic Server 
+    .class files in Tomcat <i>X.X</i>/webapps/ship/WEB-INF/classes/amzi/ls).</li>
+  <li>Stop and restart Tomcat.</li>
+  <li>In your browser type, http://localhost:8080/ship/shipPage.jsp. Fill in the 
+    prompts and press the button.<br>
+    &nbsp; </li>
+</ol>
+</body>
+</html>

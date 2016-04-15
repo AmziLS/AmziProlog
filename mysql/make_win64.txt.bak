@@ -1,0 +1,11 @@
+all: _mysql
+
+_mysql:
+	devenv amysql.sln /rebuild Release|Win32
+
+clean:
+	devenv amysql.sln /clean Release
+	devenv amysql.sln /clean Debug
+	-del /Q *.ncb
+	-del /Q *.pdb
+

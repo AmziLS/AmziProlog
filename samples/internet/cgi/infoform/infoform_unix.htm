@@ -1,0 +1,69 @@
+<HTML>
+<HEAD>
+<TITLE>Amzi! Information Request</TITLE>
+</HEAD>
+<BODY bgcolor=#FFFFEE text=#000000>
+
+<H2>Amzi! Information Request</H2>
+
+<FORM METHOD=POST ACTION="/cgi-bin/infoform">
+
+<I>This CGI application was built with the <A HREF="http://www.amzi.com/products">Amzi! Logic Server</A></I>
+<P>
+What would you like us to do (please check all items that apply)?
+<BR>
+<INPUT NAME="request" TYPE="CHECKBOX" VALUE="catalog">Send me a catalog
+<BR>
+<INPUT NAME="request" TYPE="CHECKBOX" VALUE="newsletters">Add me onto the mailing list for Amzi! newsletters
+<BR>
+<INPUT NAME="request" TYPE="CHECKBOX" VALUE="webls">Add me onto the WebLS mailing list
+
+<P>
+<TABLE BORDER=0>
+<TR><TD>First Name: </TD><TD><INPUT NAME="firstname" TYPE="TEXT" ROWS=1 SIZE="20"></TD></TR>
+<TR><TD>Last Name:</TD><TD><INPUT NAME="lastname" TYPE="TEXT" ROWS=1 SIZE="30"></TD></TR>
+<TR><TD>E-Mail:</TD><TD><INPUT NAME="email" TYPE="TEXT" ROWS=1 SIZE="60"></TD></TR>
+<TR><TD>Organization/Company:</TD><TD><INPUT NAME="organization" TYPE="TEXT" ROWS=1 SIZE="40"></TD></TR>
+<TR><TD>Title (Optional):</TD><TD><INPUT NAME="title" TYPE="TEXT" ROWS=1 SIZE="45"></TD></TR>
+<TR><TD>Address:</TD><TD><INPUT NAME="address1" TYPE="TEXT" ROWS=1 SIZE="40"></TD></TR>
+<TR><TD></TD><TD><INPUT NAME="address2" TYPE="TEXT" ROWS=1 SIZE="40"></TD></TR>
+<TR><TD>City:</TD><TD><INPUT NAME="city" TYPE="TEXT" ROWS=1 SIZE="45"></TD></TR>
+<TR><TD>Region:</TD><TD><INPUT NAME="region" TYPE="TEXT" ROWS=1 SIZE="35"></TD></TR>
+<TR><TD>Zip/Postal Code:</TD><TD><INPUT NAME="postalcode" TYPE="TEXT" ROWS=1 SIZE="15"></TD></TR>
+<TR><TD>Country:</TD><TD><INPUT NAME="country" TYPE="TEXT" ROWS=1 SIZE="35"></TD></TR>
+<TR><TD>Phone:</TD><TD><INPUT NAME="phone" TYPE="TEXT" ROWS=1 SIZE="25"></TD></TR>
+<TR><TD>Fax:</TD><TD><INPUT NAME="fax" TYPE="TEXT" ROWS=1 SIZE="25"></TD></TR>
+</TABLE>
+
+<P>
+Please tell us where you first learned about us...
+<BR>
+<INPUT NAME="contactsource" TYPE="RADIO" VALUE="associate" SIZE="30">an associate or friend
+<BR>
+<INPUT NAME="contactsource" TYPE="RADIO" VALUE="internet" SIZE="30">an Internet site <INPUT NAME="internetname" TYPE="TEXT" ROWS=1 SIZE="30">
+<BR>
+<INPUT NAME="contactsource" TYPE="RADIO" VALUE="magazine">an ad in <INPUT NAME="magazinename" TYPE="TEXT" ROWS=1 SIZE="30">
+<BR>
+<INPUT NAME="contactsource" TYPE="RADIO" VALUE="article" SIZE="30">an article in <INPUT NAME="articlename" TYPE="TEXT" ROWS=1 SIZE="30">
+<BR>
+<INPUT NAME="contactsource" TYPE="RADIO" VALUE="dealer" SIZE="30">a dealer named <INPUT NAME="dealername" TYPE="TEXT" ROWS=1 SIZE="30">
+<BR>
+<INPUT NAME="contactsource" TYPE="RADIO" VALUE="other" SIZE="30">other (please specify) <INPUT NAME="othername" TYPE="TEXT" ROWS=1 SIZE="30">
+
+<P>
+Other information/comments:
+<BR>
+<TEXTAREA NAME="comments" ROWS=5 COLS=60></TEXTAREA>
+
+<P>
+<INPUT NAME="submitProblem" TYPE="Submit"> <INPUT TYPE="Reset">
+</FORM>
+
+<P>
+<HR>
+<CENTER>
+<I><A HREF="http://www.amzi.com/products">Logic Server</A></I> by Amzi!
+</CENTER>
+
+</BODY>
+</HTML>

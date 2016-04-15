@@ -1,0 +1,13 @@
+all: _odbc
+
+_odbc:
+	devenv odbc.sln /rebuild Release|Win32
+	acmp aodbc
+	copy aodbc.plm $(APLS_RELEASE)\abin\aodbc.plm
+
+clean:
+	devenv odbc.sln /clean Release
+	devenv odbc.sln /clean Debug
+	-del /Q *.ncb
+	-del /Q *.pdb
+	-del /Q *.plm

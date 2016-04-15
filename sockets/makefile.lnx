@@ -1,0 +1,23 @@
+ifdef DEBUG
+C_FLAGS = -c -g -fpic -Wimplicit
+else
+C_FLAGS = -c -fpic -Wimplicit
+endif
+
+all: $(AMZI_DEV_DIR)/lib/sockets.lsx 
+
+$(AMZI_DEV_DIR)/lib/sockets.lsx: sockets.o $(AMZI_DEV_DIR)/abin/asock.plm
+	$(CC) -L$(AMZI_DEV_DIR)/lib -shared -o asock.lsx sockets.o -lamzi
+	cp asock.lsx $(AMZI_DEV_DIR)/lib/
+
+sockets.o: sockets.c
+	$(CC) -I$(AMZI_DEV_DIR)/include $(C_FLAGS) -o sockets.o sockets.c
+
+$(AMZI_DEV_DIR)/abin/asock.plm: asock.pro
+	acmp asock
+	cp asock.plm $(AMZI_DEV_DIR)/abin/
+
+clean:
+	rm *.o
+	rm *.plm
+

@@ -1,0 +1,52 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; U) [Netscape]">
+   <title>Events -- ODBC Sample</title>
+</head>
+<body bgcolor="#FFFFFF">
+<h1> <font color="#0000FF">EVENTS -- ODBC Sample</font></h1>
+<p>Events illustrates the use of date and time fields using ODBC from Prolog.</p>
+<p>It also illustrates the use of directives to create the runtime environment 
+  for the application, instead of amzi.cfg to load 'aodbc.lsx' and the linker 
+  to load 'aodbc.plm'.</p>
+
+<p>To run it you need to first:</p>
+<ol>
+  <li> Make sure ODBC 2.0 or later is installed. (This is usually found in your 
+    Control Panel, sometimes under Administrative Tools. Later versions of Windows 
+    disable the Administrative Tools by default and you need to change the flag.)</li>
+  <li> Create adata source named 'events' defined in your 32-bit ODBC administrator 
+    (in the Control Panel) that uses the events.mdb database included with this 
+    demo.</li>
+</ol>
+<p>To run it:</p>
+<pre>
+?- consult(events).
+yes
+
+?- main.
+?- consult(events).
+
+yes
+?- main.
+Duke:Clemson date(1997, 1, 12) time(14, 30, 0)
+Florida State:Georgia Tech date(1997, 1, 12) time(20, 15, 0)
+Maryland:North Carolina date(1997, 1, 14) time(13, 0, 0)
+NC State:Virginia date(1997, 1, 14) time(14, 0, 0)
+Wake Forest:Duke date(1997, 1, 14) time(19, 0, 0)
+Clemson:Florida State date(1997, 1, 17) time(15, 0, 0)
+Georgia Tech:Maryland date(1997, 1, 18) time(20, 0, 0)
+North Carolina:NC State date(1997, 1, 18) time(14, 15, 0)
+Virginia:Wake Forest date(1997, 1, 18) time(14, 0, 0)
+
+yes
+</pre>
+<!-- #BeginLibraryItem "/docs/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2004 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server and e-Prolog are trademarks 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --></body>
+</html>

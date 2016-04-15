@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>Xarray Logic Server Extension Sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1><font color="#0000FF">Xarray Logic Server Extension Sample</font></h1>
+<p>Xarray is a simple example of a Logic Server eXtension (LSX) shared object 
+  (dll or so). It implements, in C, three predicates for dealing with arrays from 
+  Prolog. The program is built as a DLL under Windows and a shared object under 
+  Unix.</p>
+<h2>Building the Sample Under Windows</h2>
+<p>Under Windows, open up Visual C++ and build the project xarray.dsw. If you 
+  don't have Visual C++, you can create a project in the C development tool of 
+  your choice, with the following parameters:</p>
+<ul>
+  <li>Environment variable AMZI_DIR pointing to a valid amzi distribution.</li>
+  <li>A single source file, xarray.c</li>
+  <li>Link with $(AMZI_DIR)/lib/amzi.lib (Borland users use amzib.lib)</li>
+  <li>Include directory $(AMZI_DIR)/include</li>
+  <li>Output DLL is in current directory and named xarray.lsx</li>
+</ul>
+<h2>Building the Sample Under Unix </h2>
+<ol>
+  <li>Use the makefile, makefile.lnx, to build xarray.lsx in the source directory.
+    <pre><font color="#000080">make -f makefile.lnx</font></pre>
+  </li></ol>
+<h2>Running the Sample</h2>
+<p>Given that xarray.lsx built correctly in the xarray directory, you need to 
+  ensure that it gets loaded by Prolog. One way to do this is by having the following 
+  line in amzi.cfg, which is how the sample is configured:</p>
+<blockquote>
+  <pre><font color="#000080">lsxload = xarray</font></pre>
+</blockquote>
+<p>test the program from alis:</p>
+<blockquote>
+  <pre><font color="#000080">alis</font></pre>
+</blockquote>
+<p>Under Windows you'll see a message box appear indicating the xarray was loaded 
+  OK.</p>
+<p>Then consult and run the test program, xarray.pro, which creates an array, 
+  sets and gets two values, and deletes the array:</p>
+<blockquote>
+  <pre><font color="#000080">?- [xarray].
+yes
+?- main.
+element 3 is 9
+element 4 is 16</font></pre>
+</blockquote>
+</body>
+</html>

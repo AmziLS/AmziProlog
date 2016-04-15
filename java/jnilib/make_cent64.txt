@@ -1,0 +1,32 @@
+# interfaces lsapis java20 jnilib
+
+JAVA_INCLUDE = /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/include
+JAVA_LINUX_INCLUDE = /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/include/linux
+FILES = amzijni.cpp
+
+HEADERS = amzijni.h amzi_ls_LogicServer.h amzi_ls_LSException.h
+# Note, on the Mac jni.h is also in the Developer/SDKs/... path
+#I_DIRS = -I$(APLS_RELEASE)/include -I/usr/java/include -I/usr/java/include/solaris
+I_DIRS = -I$(APLS_RELEASE)/include -I$(JAVA_INCLUDE) -I$(JAVA_LINUX_INCLUDE)
+L_DIRS = -L$(APLS_RELEASE)/lib -L$(APLS_SOURCE)/engine
+WARNINGS = -w
+
+C_FLAGS = -D_UNICODE -c -O3 -fpic -w
+
+CC = gcc
+
+all: $(APLS_RELEASE)/lib/libamzijni.so
+
+#$(AMZI_DEV_DIR)/lib/libamzijni.so: $(FILES) $(HEADERS)
+#	$(CC) -o $(AMZI_DEV_DIR)/lib/libamzijni.so \
+#		$(I_DIRS) $(L_DIRS) $(C_FLAGS) $(FILES)
+
+$(APLS_RELEASE)/lib/libamzijni.so: amzijni.o $(HEADERS)
+	$(CC) $(L_DIRS) -shared -o libamzijni.so -lamzi -lstdc++ amzijni.o
+	cp libamzijni.so $(APLS_RELEASE)/lib/libamzijni.so
+
+
+amzijni.o: amzijni.cpp
+	$(CC)  $(I_DIRS) $(C_FLAGS) $(WARNINGS) -o amzijni.o amzijni.cpp
+
+

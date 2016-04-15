@@ -1,0 +1,18 @@
+BIN = $(APLS_RELEASE)\bin
+
+all: _dotnet
+
+_dotnet:
+	cd amzinet
+	devenv amzinet.sln /rebuild Release|Win32
+	cd ..
+
+clean:
+	cd amzinet
+	devenv amzinet.sln /clean Release
+	devenv amzinet.sln /clean Debug
+	-del /Q *.ncb
+	-del /Q *.pdb
+
+
+	
