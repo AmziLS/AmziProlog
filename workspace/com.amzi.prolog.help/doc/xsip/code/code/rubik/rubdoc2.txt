@@ -1,0 +1,142 @@
+This document describes the design of the cube solver. Comments
+in the code should fill in the remaining blanks.  The
+descriptions of the predicates which control windows, menus, etc
+are also contained within the source code.
+
+The program is divided into seven modules, as follows:
+
+     rubik.pro   - the main control loop
+                 - manual mode 
+                 - solve mode
+                 - utility predicates for manipulating the cube
+
+     rubmov.pro  - the basic moves
+
+     rubdata.pro - the data for the table driven heuristics
+
+     rubdisp.pro - the cube display
+                 - the screen field i/o
+                 - the horizontal menus
+
+     rubhist.pro - records history
+
+     rubedit.pro - the cube editor
+
+     rubhelp.pro - the help file
+                
+
+The most critical design issue of a puzzle solving program is the
+state representation, and the operators which manipulate the
+state.  In this case, the major questions are: how to represent
+the cube, how to perform moves, and how to analyze the state to
+see if various sub goals are met.  Since the trick is to get a
+solution this century, a representation that allows fast
+manipulation will probably be optimal.
+
+To meet this goal, the cube was represented as a flat structure
+with 54 arguments, one for each tile.  The order is fixed for the
+cube, with the six center tiles coming first, the tiles for the
+corner pieces next, and the edge pieces last.  The particular
+order doesn't matter, but its constancy does.
+
+Each piece can be uniquely named by the sides its faces are on
+when it is in the solved position.  For example, there is only
+one p('U','L'), or edge piece between the up and left sides.
+There are two arguments of the state which represent the piece in
+the p('U','L') position.  When the cube is in its solved state,
+then the piece will be the same.  When the cube is scrambled some
+other piece might occupy that position, for example p('B','R'),
+the piece from the bottom-right edge.
+
+The state does not preserve this concept of pieces and uses
+simply the tiles.  The solved state or goal state is defined by
+the initial database clause:
+
+     ghoul( cube('F','R','U','B','L','D', ...)).
+
+(note - the sides are translated to colors for display purposes)
+
+This simple structure allows for fast and easy move
+representation through the magic of Prolog unification.  This is
+the process by which Prolog matches two structures and binds
+variables accordingly.  See any Prolog text for details on
+unification if you are unclear about it.  For example, the move
+which rotates the entire cube about the front is represented by
+the database clause: 
+
+     rot(rf, cube(X1, X2, X3, X4, X5, X6, ...),
+             cube(X1, X3, X5, X4, X6, X2, ...)).
+
+Unification will keep like values with like variable names.  Thus
+if we apply a "rf" rotation to the goal cube under the
+interpreter, it would look something like this:
+
+     ?- ghoul(State),rot(rf,State,NewState).
+      
+        NewState = cube('R','U','L','B','D','F', ...)
+
+In this case "State", which is bound, will be unified with the
+second arguement of the "rot" clause.  Since the variable names of
+the third arguement are the same (but in a different order), it
+will also be bound with the same values.  The net effect is a
+powerful concise method of performing state transformations.  The
+down side is, it may not be intuitively understandable.  This
+illustrates at the same time both the tremendous power of Prolog,
+as well as a degree of inacessability.
+
+Since Prolog allows predicates to be used in multiple ways, the
+same rotation can be used in the opposit sense as well:
+
+     ?- ghoul(State),rot(rf,NewState,State).
+
+This allows the definition of a higher level move predicate which
+takes a sign as well.
+
+     move(+M, OldState, NewState):-
+          rot(M, OldState, NewState).
+     move(-M, OldState, NewState):-
+          rot(M, NewState, OldState).
+
+The actual move predicates used are only slightly more complex.
+
+Unification is also used to allow for rapid analysis of proposed
+solutions.  The problem on the cube is to put a new piece in
+place, without disturbing a piece which is already in place.
+This is easily represented by a structure which is partially
+bound.  That is, the structure starts out full of variables.  As
+pieces are put in place, only those tiles are bound.  Thus each
+cycle of solving for a piece begins with the binding of one more
+piece of the criteria structure.  The search routines then try
+moves until they find a sequence which unifies with the criteria
+structure. 
+
+The tile notation is good for the primitive operations, however
+for the heuristics it is necessary to deal with the cube on a
+piece basis, not a tile basis.  Again using unification there is
+a predicate called pieces which maps the tile notation onto a
+list of pieces (and of course, visa versa).  It looks like this:
+
+     pieces(cube(... X39, X40, X41, X42, ...),
+            [... p(X39,X40), p(X41,X42), ...]).
+
+This list can now be searched and manipulated to look for various
+pieces.  The program freely switches from one notation to the
+other depending on the situation.
+
+Thus, throughout the program, there are two critical structures
+which are saved in the database and manipulated during the course
+of finding a solution.  They are "state", which is the current
+state of the cube, and "crit" which is the partially bound
+current criteria used for searching.
+
+The bulk of the heuristics used in the program are stored in
+tables.  These tables are in "rubdata.pro".  These predicates
+define things such as the preferred orientation of the cube
+during a given stage, the list of pieces to be solved for in a
+given stage, or the moves which should be used in the search
+during a given stage.
+
+With this underlying understanding of the program, and the in
+code comments, you should be able to get a feel for both what's
+clever and what's stupid in this program.
+

@@ -1,0 +1,346 @@
+<toc label="Building Expert Systems in Prolog">
+  <topic label="John Stannard on the first free ascent of Foops-1967" href="doc/xsip/00faceplate.htm">
+  </topic>
+  <topic label="Preface" href="doc/xsip/00preface.htm">
+  </topic>
+ <topic label="Acknowledgements" href="doc/xsip/00preface.htm#acknowledgements">
+ </topic>
+ <topic label="1 Introduction" href="doc/xsip/01introduction.htm">
+  <topic label="1.1 Expert Systems" href="doc/xsip/01introduction.htm#expertsystems">
+  </topic>
+  <topic label="1.2 Expert System Features" href="doc/xsip/01introduction.htm#expertsystemfeatures">
+  </topic>
+  <topic label="Goal-Driven Reasoning" href="doc/xsip/01introduction.htm#goaldrivenreasoning">
+  </topic>
+  <topic label="Uncertainty" href="doc/xsip/01introduction.htm#uncertainty">
+  </topic>
+  <topic label="Data Driven Reasoning" href="doc/xsip/01introduction.htm#datadrivenreasoning">
+  </topic>
+  <topic label="Data Representation" href="doc/xsip/01introduction.htm#datarepresentation">
+  </topic>
+  <topic label="User Interface" href="doc/xsip/01introduction.htm#userinterface">
+  </topic>
+  <topic label="Explanations" href="doc/xsip/01introduction.htm#explanations">
+  </topic>
+  <topic label="1.3 Sample Applications" href="doc/xsip/01introduction.htm#sampleapplications">
+  </topic>
+  <topic label="1.4 Prolog" href="doc/xsip/01introduction.htm#prolog">
+  </topic>
+  <topic label="1.5 Assumptions" href="doc/xsip/01introduction.htm#assumptions">
+  </topic>
+ </topic>
+ <topic label="2 Using Prolog's Inference Engine" href="doc/xsip/02usingprolog.htm">
+  <topic label="2.1 The Bird Identification System" href="doc/xsip/02usingprolog.htm#thebirdidentificationsystem">
+  </topic>
+  <topic label="Rule formats" href="doc/xsip/02usingprolog.htm#ruleformats">
+  </topic>
+  <topic label="Rules about birds" href="doc/xsip/02usingprolog.htm#rulesaboutbirds">
+  </topic>
+  <topic label="Rules for hierarchical relationships" href="doc/xsip/02usingprolog.htm#rulesforhierarchicalrelationships">
+  </topic>
+  <topic label="Rules for other relationships" href="doc/xsip/02usingprolog.htm#rulesforotherrelationships">
+  </topic>
+  <topic label="2.2 User Interface" href="doc/xsip/02usingprolog.htm#userinterface">
+  </topic>
+  <topic label="Attribute Value pairs" href="doc/xsip/02usingprolog.htm#attributevaluepairs">
+  </topic>
+  <topic label="Asking the user" href="doc/xsip/02usingprolog.htm#askingtheuser">
+  </topic>
+  <topic label="Remembering the answer" href="doc/xsip/02usingprolog.htm#rememberingtheanswer">
+  </topic>
+  <topic label="Multi-valued answers" href="doc/xsip/02usingprolog.htm#multivaluedanswers">
+  </topic>
+  <topic label="Menus for the user" href="doc/xsip/02usingprolog.htm#menusfortheuser">
+  </topic>
+  <topic label="Other enhancements" href="doc/xsip/02usingprolog.htm#otherenhancements">
+  </topic>
+  <topic label="2.3 A Simple Shell" href="doc/xsip/02usingprolog.htm#asimpleshell">
+  </topic>
+  <topic label="Command loop" href="doc/xsip/02usingprolog.htm#commandloop">
+  </topic>
+  <topic label="A tool for non-programmers" href="doc/xsip/02usingprolog.htm#atoolfornonprogrammers">
+  </topic>
+  <topic label="2.4 Summary" href="doc/xsip/02usingprolog.htm#summary">
+  </topic>
+  <topic label="Exercises" href="doc/xsip/02usingprolog.htm#exercises">
+  </topic>
+ </topic>
+ <topic label="3 Backward Chaining with Uncertainty" href="doc/xsip/03backwarduncertainty.htm">
+  <topic label="3.1 Certainty Factors" href="doc/xsip/03backwarduncertainty.htm#certaintyfactors">
+  </topic>
+  <topic label="An Example" href="doc/xsip/03backwarduncertainty.htm#anexample">
+  </topic>
+  <topic label="Rule Uncertainty" href="doc/xsip/03backwarduncertainty.htm#ruleuncertainty">
+  </topic>
+  <topic label="User Uncertainty" href="doc/xsip/03backwarduncertainty.htm#useruncertainty">
+  </topic>
+  <topic label="Combining Certainties" href="doc/xsip/03backwarduncertainty.htm#combiningcertainties">
+  </topic>
+  <topic label="Properties of Certainty Factors" href="doc/xsip/03backwarduncertainty.htm#propertiesofcertaintyfactors">
+  </topic>
+  <topic label="3.2 MYCINs Certainty Factors" href="doc/xsip/03backwarduncertainty.htm#mycinscertaintyfactors">
+  </topic>
+  <topic label="Determining Premise CF" href="doc/xsip/03backwarduncertainty.htm#determiningpremisecf">
+  </topic>
+  <topic label="Combining Premise CF and Conclusion CF" href="doc/xsip/03backwarduncertainty.htm#combiningpremisecfandconclusioncf">
+  </topic>
+  <topic label="Premise Threshold CF" href="doc/xsip/03backwarduncertainty.htm#premisethresholdcf">
+  </topic>
+  <topic label="Combining CFs" href="doc/xsip/03backwarduncertainty.htm#combiningcfs">
+  </topic>
+  <topic label="3.3 Rule Format" href="doc/xsip/03backwarduncertainty.htm#ruleformat">
+  </topic>
+  <topic label="3.4 The Inference Engine" href="doc/xsip/03backwarduncertainty.htm#theinferenceengine">
+  </topic>
+  <topic label="Working Storage" href="doc/xsip/03backwarduncertainty.htm#workingstorage">
+  </topic>
+  <topic label="Find a Value for an Attribute" href="doc/xsip/03backwarduncertainty.htm#findavalueforanattribute">
+  </topic>
+  <topic label="Attribute Value Already Known" href="doc/xsip/03backwarduncertainty.htm#attributevaluealreadyknown">
+  </topic>
+  <topic label="Ask User for Attribute Value" href="doc/xsip/03backwarduncertainty.htm#askuserforattributevalue">
+  </topic>
+  <topic label="Deduce Attribute Value from Rules" href="doc/xsip/03backwarduncertainty.htm#deduceattributevaluefromrules">
+  </topic>
+  <topic label="3.5 Making the Shell" href="doc/xsip/03backwarduncertainty.htm#makingtheshell">
+  </topic>
+  <topic label="Starting the Inference" href="doc/xsip/03backwarduncertainty.htm#startingtheinference">
+  </topic>
+  <topic label="3.6 English-like Rules" href="doc/xsip/03backwarduncertainty.htm#englishlikerules">
+  </topic>
+  <topic label="Exercises" href="doc/xsip/03backwarduncertainty.htm#exercises">
+  </topic>
+ </topic>
+ <topic label="4 Explanation" href="doc/xsip/04explanation.htm">
+   <topic label="Value of Explanations to the User" href="doc/xsip/04explanation.htm#valueofexplanationstotheuser">
+   </topic>
+   <topic label="Value of Explanations to the Developer" href="doc/xsip/04explanation.htm#valueofexplanationstothedeveloper">
+   </topic>
+   <topic label="Types of Explanation" href="doc/xsip/04explanation.htm#typesofexplanations">
+   </topic>
+  <topic label="4.1 Explanation in Clam" href="doc/xsip/04explanation.htm#explanationinclam">
+  </topic>
+  <topic label="Tracing" href="doc/xsip/04explanation.htm#tracing">
+  </topic>
+  <topic label="How Explanations" href="doc/xsip/04explanation.htm#howexplanations">
+  </topic>
+  <topic label="Why Questions" href="doc/xsip/04explanation.htm#whyquestions">
+  </topic>
+  <topic label="4.2 Native Prolog Systems" href="doc/xsip/04explanation.htm#nativeprologsystems">
+  </topic>
+  <topic label="Exercises" href="doc/xsip/04explanation.htm#exercises">
+  </topic>
+ </topic>
+ <topic label="5 Forward Chaining" href="doc/xsip/05forward.htm">
+  <topic label="5.1 Production Systems" href="doc/xsip/05forward.htm#productionsystems">
+  </topic>
+  <topic label="5.2 Using Oops" href="doc/xsip/05forward.htm#usingoops">
+  </topic>
+  <topic label="5.3 Implementation" href="doc/xsip/05forward.htm#implementation">
+  </topic>
+  <topic label="5.4 Explanations for Oops" href="doc/xsip/05forward.htm#explanationforoops">
+  </topic>
+  <topic label="5.5 Enhancements" href="doc/xsip/05forward.htm#enhancements">
+  </topic>
+  <topic label="5.6 Rule Selection" href="doc/xsip/05forward.htm#ruleselection">
+  </topic>
+  <topic label="Generating the conflict set" href="doc/xsip/05forward.htm#generatingtheconflictset">
+  </topic>
+  <topic label="Time stamps" href="doc/xsip/05forward.htm#timestamps">
+  </topic>
+  <topic label="5.7 LEX" href="doc/xsip/05forward.htm#lex">
+  </topic>
+  <topic label="Changes in the Rules" href="doc/xsip/05forward.htm#changesintherules">
+  </topic>
+  <topic label="Implementing LEX" href="doc/xsip/05forward.htm#implementinglex">
+  </topic>
+  <topic label="5.8 MEA" href="doc/xsip/05forward.htm#MEA">
+  </topic>
+  <topic label="Exercises" href="doc/xsip/05forward.htm#exercises">
+  </topic>
+ </topic>
+ <topic label="6 Frames" href="doc/xsip/06frames.htm">
+  <topic label="6.1 The Code" href="doc/xsip/06frames.htm#thecode">
+  </topic>
+  <topic label="6.2 Data Structure" href="doc/xsip/06frames.htm#datastructures">
+  </topic>
+  <topic label="6.3 The Manipulation Predicates" href="doc/xsip/06frames.htm#themanipulationpredicates">
+  </topic>
+  <topic label="6.4 Using Frames" href="doc/xsip/06frames.htm#usingframes">
+  </topic>
+  <topic label="6.5 Summary" href="doc/xsip/06frames.htm#summary">
+  </topic>
+  <topic label="Exercises" href="doc/xsip/06frames.htm#exercises">
+  </topic>
+ </topic>
+ <topic label="7 Integration" href="doc/xsip/07integration.htm">
+  <topic label="7.1 Foops (Frames and Oops)" href="doc/xsip/07integration.htm#foops">
+  </topic>
+  <topic label="Instances" href="doc/xsip/07integration.htm#instances">
+  </topic>
+  <topic label="Rules for frinsts" href="doc/xsip/07integration.htm#rulesforfrints">
+  </topic>
+  <topic label="Adding Prolog to Foops" href="doc/xsip/07integration.htm#addingprologtofoops">
+  </topic>
+  <topic label="7.2 Room Configuration" href="doc/xsip/07integration.htm#roomconfiguration">
+  </topic>
+  <topic label="Furniture frames" href="doc/xsip/07integration.htm#furnitureframes">
+  </topic>
+  <topic label="Frame Demons" href="doc/xsip/07integration.htm#framedemons">
+  </topic>
+  <topic label="Initial Data" href="doc/xsip/07integration.htm#initialdata">
+  </topic>
+  <topic label="Input Data" href="doc/xsip/07integration.htm#inputdata">
+  </topic>
+  <topic label="The Rules" href="doc/xsip/07integration.htm#therules">
+  </topic>
+  <topic label="Output Data" href="doc/xsip/07integration.htm#outputdata">
+  </topic>
+  <topic label="7.3 A Sample Run" href="doc/xsip/07integration.htm#asamplerun">
+  </topic>
+  <topic label="7.4 Summary" href="doc/xsip/07integration.htm#summary">
+  </topic>
+  <topic label="Exercises" href="doc/xsip/07integration.htm#exercises">
+  </topic>
+ </topic>
+ <topic label="8 Performance" href="doc/xsip/08performance.htm">
+  <topic label="8.1 Backward Chaining Indexes" href="doc/xsip/08performance.htm#backwardchainingindexes">
+  </topic>
+  <topic label="8.2 Rete Match Algorithm" href="doc/xsip/08performance.htm#retematchalgorithm">
+  </topic>
+  <topic label="Network Nodes" href="doc/xsip/08performance.htm#networknodes">
+  </topic>
+  <topic label="Network Propagation" href="doc/xsip/08performance.htm#networkpropogation">
+  </topic>
+  <topic label="Example of Network Propagation" href="doc/xsip/08performance.htm#exampleofnetworkpropagation">
+  </topic>
+  <topic label="Performance Improvements" href="doc/xsip/08performance.htm#performanceimprovements">
+  </topic>
+  <topic label="8.3 The Rete Graph Data Structures" href="doc/xsip/08performance.htm#theretegraphdatastructures">
+  </topic>
+  <topic label="8.4 Propagating Tokens" href="doc/xsip/08performance.htm#propagatingtokens">
+  </topic>
+  <topic label="8.5 The Rule Compiler" href="doc/xsip/08performance.htm#therulecompiler">
+  </topic>
+  <topic label="8.6 Integration with Foops" href="doc/xsip/08performance.htm#integrationwithfoops">
+  </topic>
+  <topic label="8.7 Design Tradeoffs" href="doc/xsip/08performance.htm#designtradeoffs">
+  </topic>
+  <topic label="Exercises" href="doc/xsip/08performance.htm#exercises">
+  </topic>
+ </topic>
+ <topic label="9 User Interface" href="doc/xsip/09userinterface.htm">
+  <topic label="9.1 Object Oriented Window Interface" href="doc/xsip/09userinterface.htm#objectorientedwindowinterface">
+  </topic>
+  <topic label="9.2 Developer's Interface to Windows" href="doc/xsip/09userinterface.htm#developersinterfacetowindows">
+  </topic>
+  <topic label="9.3 High-Level Window Implementation" href="doc/xsip/09userinterface.htm#highlevelwindowimplementation">
+  </topic>
+  <topic label="Message Passing" href="doc/xsip/09userinterface.htm#messagepassing">
+  </topic>
+  <topic label="Inheritance" href="doc/xsip/09userinterface.htm#inheritance">
+  </topic>
+  <topic label="9.4 Low-Level Window Implementation" href="doc/xsip/09userinterface.htm#lowlevelwindowimplementation">
+  </topic>
+  <topic label="Exercises" href="doc/xsip/09userinterface.htm#exercises">
+  </topic>
+ </topic>
+ <topic label="10 Two Hybrids" href="doc/xsip/10hybrids.htm">
+  <topic label="10.1 CVGEN" href="doc/xsip/10hybrids.htm#cvgen">
+  </topic>
+  <topic label="10.2 The Knowledge Base" href="doc/xsip/10hybrids.htm#theknowledgebase">
+  </topic>
+  <topic label="Rule for parameters" href="doc/xsip/10hybrids.htm#ruleforparameters">
+  </topic>
+  <topic label="Rules for derived information" href="doc/xsip/10hybrids.htm#rulesforderivedinformation">
+  </topic>
+  <topic label="Questions for the user" href="doc/xsip/10hybrids.htm#questionsfortheuser">
+  </topic>
+  <topic label="Default rules" href="doc/xsip/10hybrids.htm#defaultrules">
+  </topic>
+  <topic label="Rules for edits" href="doc/xsip/10hybrids.htm#rulesforedits">
+  </topic>
+  <topic label="Static information" href="doc/xsip/10hybrids.htm#staticinformation">
+  </topic>
+  <topic label="10.3 Inference Engine" href="doc/xsip/10hybrids.htm#inferenceengine">
+  </topic>
+  <topic label="10.4 Explanations" href="doc/xsip/10hybrids.htm#explanations">
+  </topic>
+  <topic label="10.5 Environment" href="doc/xsip/10hybrids.htm#environment">
+  </topic>
+  <topic label="10.6 AIJMP" href="doc/xsip/10hybrids.htm#aijmp">
+  </topic>
+  <topic label="10.7 Summary" href="doc/xsip/10hybrids.htm#summary">
+  </topic>
+  <topic label="Exercises" href="doc/xsip/10hybrids.htm#exercises">
+  </topic>
+ </topic>
+ <topic label="11 Prototyping" href="doc/xsip/11prototyping.htm">
+  <topic label="11.1 The Problem" href="doc/xsip/11prototyping.htm#theproblem">
+  </topic>
+  <topic label="11.2 The Sales Advisor Knowledge Base" href="doc/xsip/11prototyping.htm#thesalesadvisorknowledgebase">
+  </topic>
+  <topic label="Qualifying" href="doc/xsip/11prototyping.htm#qualifying">
+  </topic>
+  <topic label="Objectives-Benefits-Features" href="doc/xsip/11prototyping.htm#objectivesbenefitsfeatures">
+  </topic>
+  <topic label="Situation Analysis" href="doc/xsip/11prototyping.htm#situationanalysis">
+  </topic>
+  <topic label="Competitive Analysis" href="doc/xsip/11prototyping.htm#competitiveanalysis">
+  </topic>
+  <topic label="Miscellaneous Advice" href="doc/xsip/11prototyping.htm#miscellaneousadvice">
+  </topic>
+  <topic label="User Queries" href="doc/xsip/11prototyping.htm#userqueries">
+  </topic>
+  <topic label="11.3 The Inference Engine" href="doc/xsip/11prototyping.htm#theinferenceengine">
+  </topic>
+  <topic label="11.4 User Interface" href="doc/xsip/11prototyping.htm#userinterface">
+  </topic>
+  <topic label="11.5 Summary" href="doc/xsip/11prototyping.htm#summary">
+  </topic>
+  <topic label="Exercises" href="doc/xsip/11prototyping.htm#exercises">
+  </topic>
+ </topic>
+ <topic label="12 Rubik's Cube" href="doc/xsip/12rubikscube.htm">
+  <topic label="12.1 The Problem" href="doc/xsip/12rubikscube.htm#theproblem">
+  </topic>
+  <topic label="12.2 The Cube" href="doc/xsip/12rubikscube.htm#thecube">
+  </topic>
+  <topic label="12.3 Rotation" href="doc/xsip/12rubikscube.htm#rotation">
+  </topic>
+  <topic label="12.4 High Level Rules" href="doc/xsip/12rubikscube.htm#highlevelrules">
+  </topic>
+  <topic label="12.5 Improving the State" href="doc/xsip/12rubikscube.htm#improvingthestate">
+  </topic>
+  <topic label="12.6 The Search" href="doc/xsip/12rubikscube.htm#thesearch">
+  </topic>
+  <topic label="12.7 More Heuristics" href="doc/xsip/12rubikscube.htm#moreheuristics">
+  </topic>
+  <topic label="12.8 User Interface" href="doc/xsip/12rubikscube.htm#userinterface">
+  </topic>
+  <topic label="12.9 On the Limits of Machines" href="doc/xsip/12rubikscube.htm#onthelimitsofmachines">
+  </topic>
+  <topic label="Exercises" href="doc/xsip/12rubikscube.htm#exercises">
+  </topic>
+  <topic label="Appendix-Full Source Code" href="doc/xsip/appendix.htm">
+  </topic>
+  <topic label="Native" href="doc/xsip/appendix.htm#native">
+  </topic>
+  <topic label="Clam" href="doc/xsip/appendix.htm#clam">
+  </topic>
+  <topic label="Oops" href="doc/xsip/appendix.htm#oops">
+  </topic>
+  <topic label="Foops" href="doc/xsip/appendix.htm#foops">
+  </topic>
+  <topic label="Rete-Foops" href="doc/xsip/appendix.htm#retefoops">
+  </topic>
+  <topic label="Windows" href="doc/xsip/appendix.htm#windows">
+  </topic>
+  <topic label="Rubik" href="doc/xsip/appendix.htm#rubik">
+  </topic>
+  <topic label="Taxes (Bonus Code)" href="doc/xsip/appendix.htm#taxes">
+  </topic>
+ </topic>
+<topic label="Index" href="doc/xsip/xsipidx_xml.htm">
+</topic>
+</toc>

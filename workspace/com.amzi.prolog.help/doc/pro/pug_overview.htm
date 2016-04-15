@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Quick Overview</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="AQuickOverview"></A><FONT COLOR="#D2AA00">Quick Overview</FONT> </h1>
+<P><!AMZI_INDEX = plm Files; ppj Files; lib Files; dll Files; pro Files; xpl Files; cfg Files; err Files>Amzi! 
+  Prolog + Logic Server consists of core components that are available on all 
+  platforms, and additional components that are platform dependent. This overview 
+  discusses the components and how they work together to create Prolog applications, 
+  either for stand-alone or embedded use.</P>
+<ul>
+  <li><a href="#Components">The Components</a></li>
+  <li><a href="#RelationshipOfComponents">The Relationship of the Components</a></li>
+  <li><a href="#ListenerDebugger">Listener/Debugger</a></li>
+  <li><a href="#Compiler">Compiler</a></li>
+  <li><a href="#Linker">Linker</a></li>
+  <li><a href="#IDE">Interactive Development Environment (IDE)</a></li>
+  <li><a href="#StandAloneRuntime">Stand-Alone Runtime</a></li>
+  <li><a href="#EmbeddedApplications">Embedded Applications</a></li>
+</ul>
+
+<H2><A NAME="Components"></A><FONT COLOR="#0000FF">
+Components</FONT></H2>
+<!AMZI_INDEX = Components; Tools>
+<P>The core components are:</P>
+<ul>
+  <li><b>Logic Server</b> - The virtual machine that runs Prolog code.</li>
+  <li><b>Logic Server Application Program Interface (API)</b> - The interface 
+    that allows application programs written in other environments to easily integrate 
+    with Prolog.</li>
+  <li><b>Compiler</b> - Compiles Prolog source to machine-independent byte codes.</li>
+  <li><b>Linker</b> - Links multiple Prolog byte-code files into a single unit.</li>
+  <li><b>Listener/Debugger</b> - Interactive environment for testing Prolog code.</li>
+  <li><b>Runtime</b> - A simple shell that uses the LSAPI to run Prolog code as 
+    a stand-alone console based application.</li>
+</ul>
+<p>Some common additional platform-dependent components are:</p>
+<ul>
+  <li><b>Language-specific Logic Server APIs</b> - Wrappers on the Logic Server 
+    API for languages such as C/C++, Java, VB, and Delphi.</li>
+  <li><b>Database support </b>- Interface, implemented using Logic Server API, 
+    between Prolog and external databases.</li>
+  <li><b>Internet tools</b> - CGI, JSP, ASP etc. samples and tools.</li>
+  <li><b>Interactive Development Environment (IDE)</b> - A graphical environment 
+    for developing and testing Prolog programs.</li>
+</ul>
+
+<H2><A NAME="RelationshipOfComponents"></A><FONT COLOR="#0000FF">
+Relationship of Files and Components</FONT></H2>
+
+<!AMZI_INDEX = Components; Tools; File Types>
+<P align="center"><IMG SRC="aover.gif"> </P>
+
+<ul>
+  <li>Prolog source code is first written into Prolog source files (.pro).</li>
+  <li>The listener/debugger is used to test and debug the source files.</li>
+  <li>The compiler generates Prolog byte code files (.plm) from source files.</li>
+  <li>The linker combines multiple .plm files into a single unit (.xpl).</li>
+  <li>The stand-alone runtime can run a .xpl file, starting from its main/0 predicate. 
+    It can also then load additional .plm and/or consult .pro files.</li>
+  <li>The .xpl file can be loaded from a host language program (Java, VB, etc.) 
+    using the Logic Server API, and its predicates called from that host program. 
+    Additional .plm and .pro files can also be loaded/consulted.</li></ul>
+
+    <H2><A NAME="ListenerDebugger"></A><FONT COLOR="#0000FF"> Listener/Debugger</FONT></H2>
+
+<P>
+  <!AMZI_INDEX = alis; Listener; Debugger>
+  Normally Prolog code is developed using a Prolog interpreter, also called a 
+  &quot;listener.&quot; The <a href="pug_listener.htm">listener</a> directly executes 
+  source code, which is stored in a plain text file (.pro file), or typed in directly 
+  at the ?- prompt. Developing an interpreted Amzi! Prolog module consists of 
+  these steps: </P>
+
+<P align="center"><IMG SRC="alis.gif"> </P>
+
+<OL>
+  <LI>If using the IDE, create a project</LI>
+  <LI>Enter and edit your source code</LI>
+  <LI>Run your source code file under the listener or source code debugger</LI>
+  <LI>Issue Prolog queries to test your code</LI>
+  <LI>Respond to runtime errors and syntax errors</LI>
+  <LI>Modify your source code to fix the problems </LI>
+  <LI>Re-run your source code file under the listener or source code debugger</LI>
+  <LI>Goto step 3 until your module works </LI>
+</OL>
+
+<H3><A NAME="Debugger"></A><FONT COLOR="#000080">Debugger</FONT></H3>
+
+<P> 
+  <!AMZI_INDEX = Debugger>
+  The Amzi! <a href="pug_debugger_ide.htm">Source Code Debugger</a> is used to 
+  find and identify errors. It works on interpreted, compiled and remote Prolog 
+  components. Other debugging tools are available for use outside of the listener 
+  environment. See <a href="pug_debugging.htm">Debugging Programs</a>.</P>
+<H3><A NAME="IntermixingInterpretedandCompi"></A><FONT COLOR="#000080">Intermixing
+Interpreted and Compiled Code</FONT></H3>
+
+<P><!AMZI_INDEX = Intermixing dynamic and static(compiled) Code; Logicbase; Compiling>The 
+  Amzi! listener allows you to load static (compiled .plm) code as well as consulting 
+  dynamic (source .pro) code. You can intermix both in the same application and listener 
+  session. This allows you to keep code under development in source form, and 
+  debugging code in compiled form. </P>
+
+
+<H2><A NAME="Compiler"></A><FONT COLOR="#0000FF">
+Compiler</FONT></H2>
+
+<P><!AMZI_INDEX =Compiler; acmp>Interpreted code is normally used only for dynamic 
+  data, debugging and experimentation. Once a module is completed, it is usually 
+  <a href="pug_compiler.htm">compiled</a> into an object module (.plm file). No 
+  source code changes are required before compiling. </P>
+
+<P>The development cycle is extended with the following steps to compile
+working modules, while keeping modules under development interpreted (in
+source form): </P>
+
+<P align="center"><IMG SRC="acmp.gif"> </P>
+
+<OL START=8>
+<LI>Compile working source files into object files, which can be consulted
+into the listener along with the source files still under development </LI>
+
+<LI>Repeat steps 1-9 until all the modules in the application are working
+</LI>
+</OL>
+
+<P>Compiling has a number of advantages. Compiled code runs faster than interpreted 
+  code. Compiled programs that have recursive calls will run longer before exhausting 
+  stack and heap resources. </P>
+
+<P>The object file contains byte code instructions for the Logic Server, which 
+  is a Prolog virtual machine. The Amzi! Logic Server is an implementation of 
+  David Warren's Abstract Prolog Machine (WAM). In the Amzi! implementation, the 
+  byte code format of compiled files is machine independent, so compiled Amzi! 
+  code can be run on any platform that has an implementation of the Amzi! Logic 
+  Server. </P>
+
+<H2><A NAME="Linker"></A><FONT COLOR="#0000FF">
+Linker</FONT></H2>
+
+<P><!AMZI_INDEX = Linker; alnk>Once an application has been debugged, the object 
+  files (.plm) are linked into a single executable load module (.xpl file) that 
+  can be embedded in a C/C++, Java, Visual Basic, Delphi, Web Server or other 
+  program, or run as a standalone program.</P>
+<P>The final two steps of Prolog development are then:</P>
+<P align="center"><img src="alnk.gif" width="190" height="244"></P>
+
+<OL START=10>
+<LI>Link the .plm files together into a single .xpl file. </LI>
+
+<LI>That file is now ready for use with the stand-alone runtime, or for an embedded Logic Server API application.
+</LI>
+</OL>
+
+
+<P>The <a href="pug_linker.htm">linker</a> automatically links in a copy of the 
+  standard Amzi! library alib.plm into each .xpl file. You may also want to link 
+  in other libraries such as the list utilities library. </P>
+
+<H2><A NAME="IDE"></A><FONT COLOR="#0000FF">
+Interactive Development Environment (IDE)</FONT></H2>
+
+<P> 
+  <!AMZI_INDEX = IDE; Interactive Development Environment; wideA; wideW>
+  The tools just described are all available from the operating system command 
+  line using the specified program names. The tools are also gathered together 
+  along with many additional capabilities under the <a href="pug_ide.htm">Eclipse 
+  Integrated Development Environment (IDE)</a>. </P>
+
+<H2><A NAME="StandAloneRuntime"></A><FONT COLOR="#0000FF">
+Stand-Alone Runtime</FONT></H2>
+
+<P><!AMZI_INDEX = Runtime; Stand-Alone Runtime; arun>The Amzi! runtime is a simple 
+  program that loads a .xpl file and executes its main/0 predicate. The simplest 
+  distributable application is made up of the runtime, the Logic Server, and an 
+  application .xpl file.</P>
+
+<P>Summarizing, the full steps for building a stand-alone Prolog application are 
+  as illustrated.</P>
+
+<P align="center"><IMG SRC="arun.gif" > </P>
+
+
+
+<P>An Amzi! application must have one .xpl file, and only one .xpl file. However, 
+  that .xpl file can consult as many additional source files (.pro) and compiled 
+  object files (.plm) as needed. </P>
+
+<P>An Amzi! application might also include a <a href="pug_runtime.htm#ConfigurationFiles">configuration 
+  file</a> (.cfg file) which specifies the sizes of the heaps and stacks, and gives 
+  you control over other operational parameters of the Amzi! runtime. </P>
+
+<H2><A NAME="EmbeddedApplications"></A><FONT COLOR="#0000FF">
+Embedded Applications</FONT></H2>
+
+
+
+<P><!AMZI_INDEX = Logic Server API; Embedded Applications; Multiple Logic Servers>The programming interface to the Amzi! runtime is called the <a href="../ls/lsfrtop.htm">Logic 
+  Server API</a>. It provides over 50 functions that, in large part, mimic the 
+  functionality of the Prolog listener. You can load source and object code, issue 
+  queries, map the results of those queries to variables, assert new facts, build/decompose 
+  lists and structures and more. </P>
+
+<P>The Logic Server API is provided on all platforms as a native C/C++ interface. 
+  It is also available, depending on platform, for other languages such as Java, 
+  VB, and Delphi. Many customers have accessed it from other tools and languages 
+  as well, using that tool's or language's capabilities for interfacing with dynamic 
+  libraries (.dll under Windows, .so under Unix).</P>
+
+<P align="center"><IMG SRC="alsxdll.gif"> </P>
+
+<P>The Logic Server API also lets you define your own extended predicates for 
+  Prolog, in effect, letting you customize the Prolog runtime environment. The 
+  database extensions to Amzi! are an example of this type of use.</P>
+
+<P>The Logic Server supports multiple, simultaneous Prolog sessions, so one Logic 
+  Server can service multiple users in a server-based architecture. From object-oriented 
+  languages, such as C++ and Java, this is done simply by specifying a 'new' instance 
+  of the Logic Server class.</P>
+
+<H2><A NAME="WheretoGoNext"></A><FONT COLOR="#0000FF">Where to Go Next?</FONT></H2>
+
+<P>Next, we recommend you run through &quot;<A HREF="pug_tutorial.htm">A Quick 
+  Tutorial</A>&quot; which follows next, then the &quot;<a href="pug_ide_quickstart.htm">IDE 
+  Quick Start</a>&quot;. If you plan to embed Prolog code in other applications, 
+  you can follow the tutorial for the appropriate 'hello' samples which are described 
+  in the Logic Server API section. </P>
+
+<P>There is also a detailed introduction and reference section for each
+of the tools described above. </P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I> </I></P>
+
+</BODY>
+</HTML>

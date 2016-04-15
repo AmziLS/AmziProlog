@@ -1,0 +1,83 @@
+The cube solver will generate a sequence of moves that will
+solve any given cube (if solvable).  See rubdoc1.txt for
+notes on the method.
+
+
+MAIN MENU OPTIONS
+
+Solve - solves three types of cubes (from submenu)
+
+      random - generate a random cube to solve
+      manual - allows you to scramble your own
+      edit   - allows you to describe a real cube
+
+        with option (prompts)
+
+      stepmode - stops after each sequence
+
+Manual - allows manipulation of cube (useful to see the
+         effects of all the legal moves)
+
+Scroll - allows scrolling of the history window
+
+Help   - this stuff
+
+Exit   - return to dos
+
+
+
+NOTES ON NOTATION
+
+The cube is unfolded so all six sides are visible.  All moves are
+labeled by the side they affect.  The letters used are:
+
+                 B - back
+       L - left  U - up    R - right
+                 F - front
+                 D - down
+
+Directions - + clockwise, - counterclockwise
+
+Pieces are referred to by color.  The colors are:
+
+         W - white, G - green, B - blue, Y - yellow,
+         R - red (PC magenta), O - orange (PC red) 
+
+Moves - three types
+
+     Side moves - basic, represented by single side letter
+                  ex. +r, -f
+     Rotations - rotate entire cube, preface side with r
+                 ex. -ru, +rr (used to exploit symmetry)
+     Sequences - sequence of moves by name ex. +ct1
+                 (use manual mode to learn effects)
+
+
+
+SOLVING A REAL CUBE
+
+If you have an old cube which never got unscrambled, select solve and edit.
+Type in lines of letters separated by spaces corresponding to the layout
+of the cube used in the display.  The letters should be the first letter
+of the colors on your cube.
+
+(WARNING - if you make a mistake entering the tiles
+the solve program might never find a solution.  The
+program does not check for legal tile configurations.)
+
+Check the rubik.ini file to make sure a logfile is specified, such as
+rubik.log.  The logfile will have a transcript of the session which
+can be used to apply the moves to your cube.  You can check your
+progress at each stage.
+
+
+
+SOLVE DISPLAY FIELDS
+
+Stage - the current stage (see rubdoc1.txt)
+
+Target - the piece (in color notation) being solved for
+
+Rotation - the chosen sequence of moves for the current goal
+
+

@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>ODBC Support</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="ODBCSupport"></A><FONT COLOR="#D2AA00">ODBC Support</FONT></h1>
+<P>
+  <!AMZI_INDEX=  ODBC; Extended Predicates>The tools for extended predicates have been used to implement ODBC support for 
+  Prolog. The full source code for the ODBC support is included so you can modify 
+  and enhance it as you see fit.</P>
+
+<P>The ODBC predicates are defined in two layers.</P>
+
+<UL>
+  <LI>Extended predicates that provide direct access to ODBC functions. These 
+    are defined in aodbc.lsx.</LI>
+
+  <LI>A Prolog shell that makes it easy to map Prolog predicates to database tables, 
+    so that Prolog can easily backtrack through database tables as easily as Prolog 
+    facts. These are defined in aodbc.plm. </LI>
+</UL>
+
+The source code for each is provided in the directory \src\lsx\odbc. 
+<P>There is also a customer-contributed ODBC interface that covers
+the full ODBC API. It is available on an as-is basis on our web site and
+can be modified as you see fit.
+</P>
+
+<H2><A NAME="PrologInterface"></A><FONT COLOR="#0000FF">Prolog Interface</FONT></H2>
+
+<P>
+  <!AMZI_INDEX=  ODBC; db_query>
+  The high-level ODBC interface is designed to present an easy mapping of Prolog 
+  predicates to database queries. <B>db_query/2</B> is the main predicate that 
+  provides a mapping from a simple Prolog query format with backtracking to the 
+  rows of a database table. Multiple <b>db_query/2</b> statements can be nested 
+  to form arbitrarily complex joins. Internally each keeps track of its own ODBC 
+  cursor. </P>
+
+<P><b>db_query/2</b> maps the Prolog query to an SQL query, using the bound variables 
+  in the <i>where</i> clause. This utilizes the query capabilities of the particular 
+  ODBC driver. Normal Prolog unification can be used on top of that to fine tune 
+  the resulting set of records. </P>
+
+<DL> 
+  <DT><B>db_open(DBSource)</B> </DT>
+  <DD>Open the named ODBC source with no user id or password. DBSource should 
+    be an atom or a string. </DD>
+  <DT><B>db_open(DBSource, UserID)</B> </DT>
+  <DD>Open the named ODBC source for UserID. Both arguments should be atoms or 
+    strings. </DD>
+  <DT><B>db_open(DBSource, UserID, Password)</B> </DT>
+  <DD>Open the named ODBC source for UserID and Password. All arguments are atoms 
+    or strings. </DD>
+  <DT><B>db_close</B> </DT>
+  <DD>Closes the open ODBC connection, freeing all open queries. (Open queries 
+    are <b>db_query</b> queries that did backtrack through all solutions.)</DD>
+  <DT><B>db_query(Table, QueryList)</B> </DT>
+  <DD>Pose the QueryList to the named Table, unifying the variables as appropriate. 
+    The QueryList is a list of column names and Prolog terms separated by '=' 
+    signs. It is expected the application will backtrack through all solutions 
+    as the cursor is kept open. (Use <b>db_queryonce</b> for single solutions, 
+    see <b>db_freeall</b> for dealing with incomplete queries.) The following 
+    example uses the dbgene sample:</DD>
+  <pre> ?- db_query(person, [pid=P, surname='Bear', name=N]).
+ P = 5
+ N = `Phillip` ;
+ 
+ P = 13
+ N = `Edward` 
+</pre>
+  <DT><B>db_queryonce(Table, QueryList)</B> </DT>
+  <DD>Like <b>db_query/2</b>, except it is intended to be executed just once, 
+    and the cursor is closed after the call.</DD>
+  <DT><B>db_query(SQL, Input, Format, Output)</B> </DT>
+  <DD>A version of <b>db_query</b> that lets the program specify an arbitrary 
+    SQL statement. Input is a list of values to replace '?' in the query, Format 
+    is a list of format specifications of the expected output values, and Output 
+    is a list of variables that will be bound to the results. The following example 
+    uses the dbgene sample:</DD>
+  <pre> ?- db_query(`select pid, name from person where surname = ?`, ['Bear'], [i, s40], [PID, NAME]).
+ 
+ PID = 5
+ NAME = `Phillip` ;
+ 
+ PID = 13
+ NAME = `Edward` ;
+</pre>
+  <DT><B>db_queryonce(SQL, Input, Format, Output)</B> </DT>
+  <DD>Like <b>db_query/4</b>, except it is intended to be executed just once, 
+    and the cursor is closed after the call.</DD>
+  <DT><B>db_table(Table, Column, Type)</B> </DT>
+  <DD>User-defined descriptions of ODBC tables used by db_query to build queries. 
+    One db_table/3 fact must be entered for each column that will be used in db_query/2 
+    queries. </DD>
+  <DL> 
+    <DT>Table </DT>
+    <DD>the name of the table </DD>
+    <DT>Column </DT>
+    <DD>the name of the column </DD>
+    <DT>Type </DT>
+    <DD>a variable type and length. The types are 
+      <UL>
+        <LI>i - integer</LI>
+        <LI>a - atom</LI>
+        <LI>s - string</LI>
+        <LI>t - time</LI>
+        <LI>d - date</LI>
+        <LI>f - single float</LI>
+        <LI>g - double float</LI>
+      </UL>
+      The type indicates what Prolog type is mapped to the table column. Atoms 
+      and strings need a length as well, such as a10 for a 10 character atom or 
+      s25. Date and time fields map into Prolog structures date/3 and time/3 respectively.</DD>
+  </DL>
+</DL>
+
+<H2><A NAME="PrologInterfaceExample"></A><FONT COLOR="#0000FF">Prolog Interface
+Example</FONT></H2>
+
+<!AMZI_INDEX=  ODBC; C++> This example program poses a query against a database 
+of basketball games that include the date and time of each game. It backtracks 
+through the games printing each as it goes. 
+<blockquote>
+  <PRE><font color="#000080">db_table(games, home, a20).
+db_table(games, away, a20).
+db_table(games, day, d).    % date data type
+db_table(games, time, t).   % time data type
+
+main :-
+  db_open(events),
+  db_query(games, [home=H, away=A, day=D, time=T]),
+  write(H:A), tab(1), write(D),
+  tab(1), write(T), nl,
+  fail.
+main :- db_close.</font></PRE>
+  <PRE><font color="#000080">?- main.
+Duke : Clemson date(1997,1,12) time(14,30,0)
+Florida State : Georgia Tech date(1997,1,12) time(20,15,0)
+Maryland : North Carolina date(1997,1,14) time(13,0,0)</font>
+</PRE>
+</blockquote>
+<P>There are a number of samples illustrating the ODBC connection in the Samples 
+  directory. samples\odbc\dbgene contains a Prolog program that can be run in 
+  the IDE and that accesses an ODBC database. See the samples documentation for 
+  details on how to set it up.</P>
+
+<H2><A NAME="ExtendedPredicates"></A><FONT COLOR="#0000FF">
+Extended Predicates</FONT></H2>
+
+<P><!AMZI_INDEX=  ODBC; Extended Predicates; db_query; db_fetch>The direct
+ODBC extended predicates provide a lower level connection between Prolog
+and ODBC. The basic loop is to call db_query/5, specifying an SQL query,
+followed by epeated calls to db_fetch/2 retrieve the database fields and
+map them to Prolog terms. The Prolog ODBC shell provides an interface to
+this basic loop that maps more naturally to Prolog backtracking search.
+</P>
+
+<DL> 
+  <DT><B>db_init</B> </DT>
+  <DD>Initialize the ODBC environment. This predicate is called only once as only 
+    one ODBC environment is necessary for multiple connections. </DD>
+  <DT><B>db_free</B> </DT>
+  <DD>Closes the DB environment. There should be one of these calls to balance 
+    every db_init. </DD>
+  <DT><B>db_connect(HDBC, DataSource, UserID, Password)</B> </DT>
+  <DD>Connects to the ODBC DataSource, using UserID and Password, all strings 
+    or atoms. HDBC should be an unbound variable which is bound with the address 
+    of the connection. </DD>
+  <DT><B>db_disconnect(HDBC)</B> </DT>
+  <DD>Disconnect the specified ODBC connection. There should be one db_disconnect 
+    for every db_connect. </DD>
+  <DT><B>db_query(HDBC, QAddr, SQL, WhereList, FieldTypes)</B> </DT>
+  <DD>Using connection HDBC, <b>db_query/5</b> prepares and executes the SQL statement, 
+    using the Prolog terms in the WhereList to bind with the where clause, and 
+    mapping the requested database fields to the types listed in the FieldTypes 
+    list. The internal address of the query is returned in QAddr, for use in subsequent 
+    db_fetch calls. </DD>
+  <DT><B>db_fetch(QAddr, AnsList)</B> </DT>
+  <DD>Fetches the next row which satisfied the query identified by QAddr. The 
+    database fields specified in the SQL query are mapped to the Prolog terms 
+    in the AnsList. </DD>
+  <dt><b>db_freeq(QAddr)</b> </dt>
+  <dd>Frees the internal resources associated with the query identified by QAddr. 
+    This is only necessary if the query has not been exhausted through repeated 
+    calls to <b>db_fetch/2</b>. (Even then it is not totally necessary, as all 
+    of the memory still allocated will be freed when the ODBC connection is closed.) 
+  </dd>
+  <dt><b>db_freeall</b></dt>
+  <dd>Frees all the open queries. If an application uses cut (!) to trim the search 
+    tree on database queries, then it is recommended that db_freeall be called 
+    periodically to free up ODBC resources being used to hold unfinished queries. 
+    Failure to do so can result in system errors in the ODBC drivers that can 
+    hang an application.</dd>
+  <dt>&nbsp;</dt>
+  <!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><DT>&nbsp;</DT>
+</DL>
+<p>&nbsp;</p>
+</BODY>
+</HTML>

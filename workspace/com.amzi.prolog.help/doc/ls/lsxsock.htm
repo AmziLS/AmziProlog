@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Sockets LSX</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<H1><A NAME="SocketsLSX"></A><FONT COLOR="#D2AA00">Sockets LSX</FONT></H1>
+
+<P><!AMZI_INDEX=  Sockets; LSXs>The Sockets LSX implements the Sockets API for 
+  communicating via TCP/IP, notably over Internet. For Windows only the synchronous 
+  calls are implemented as the asynchronous calls do not make sense to use from 
+  Prolog. </P>
+
+<P>This section assumes that you are very familiar with the Windows or
+Berkeley Sockets API and its use. If you'd like to learn more about sockets
+programming, we suggest &quot;Developing for the Internet with Winsock&quot;
+by Dave Roberts from Coriolis Group Books. There are also other texts as
+well as copious information on Internet. </P>
+
+<H2><A NAME="Executables"></A><FONT COLOR="#0000FF">Executables</FONT><!AMZI_INDEX=  Sockets></H2>
+
+<P>Asock.lsx is the C side of the interface, asock.plm is the Prolog side. You 
+  can load the LSX by adding:</P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">lsxload=asock.lsx</FONT></PRE>
+</UL>
+
+<P>to your.cfg&nbsp;file or by calling AddLSX(). You can use the predicates from 
+  the listener by creating an amzi.cfg file with the above line, and by adding 
+  asock.plm as a library to your project.</P>
+
+<H2><A NAME="SourceCode"></A><FONT COLOR="#0000FF">Source Code</FONT><!AMZI_INDEX=  Sockets ></H2>
+
+<P>The source code for the Sockets LSX is provided in two primary files. Sockets.c 
+  is the C program that the LSX is built from. It provides all the extended predicates. 
+  asock.pro (asock_sol.pro for Solaris) is an 'include' file that provides a convenient 
+  means for using the predefined constants from Prolog. </P>
+
+<H2><A NAME="Examples"></A><FONT COLOR="#0000FF">Examples</FONT><!AMZI_INDEX=  Sockets ></H2>
+
+<P>There are two Prolog samples for the Sockets interface. Finger.pro implements
+a simple finger client. You specify a finger client to connect to and then
+provide a user-id, and it returns the 'finger' information for that user.
+</P>
+
+<P>Sserver.pro and sclient.pro demonstrate a very simple server and its
+client. You need two machines running TCP/IP to run it. The server greets
+the client, accepts a command. If the command is 'shutdown' then the server
+exits, otherwise it waits for another command. </P>
+
+<H2><A NAME="ExtendedPredicates"></A><FONT COLOR="#0000FF">Extended Predicates</FONT><!AMZI_INDEX=  Sockets; Extended Predicates></H2>
+
+<P>The Sockets LSX closely follows the Berkeley Sockets implementation with the 
+  following differences: </P>
+
+<UL>
+<LI>getsockopt return 0 if linger is disabled and the amount of time to
+wait if enabled </LI>
+
+<LI>setsockopt disables linger if the value is 0 and enables it for non-zero
+using the value as the amount of time to wait </LI>
+
+<LI>sa_family in sockaddr is always assumed to be AF_INET </LI>
+
+<LI>the type parameter for get__by__ and socket are always PF_INET </LI>
+</UL>
+
+<P>In addition, from Prolog, the following conventions are followed: </P>
+
+<UL>
+<LI>Network addresses are passed always in network byte order </LI>
+
+<LI>Protocol and port numbers are passed always in host byte order </LI>
+</UL>
+
+<P>This means you do not have to do any conversions on these values if
+you pass exactly what you receive from one function to another. </P>
+
+<P>The arguments to the predicates listed in the following sections are
+followed by a capital letter indicating the type as follows: I (Integer),
+L (List), S (String), and V (Variable). </P>
+
+<P>Asock.pro (asock_sol.pro under Solaris) provides the definitions for the many 
+  constants used in the Sockets API. You can include it in your project, or consult 
+  asock.plm (or asock_sol.plm under Solaris) at runtime. </P>
+
+<H3><A NAME="StartupShutdownPredicates"></A><FONT COLOR="#000080">Startup/Shutdown
+Predicates</FONT></H3>
+
+<P><!AMZI_INDEX=  Sockets ; Extended Predicates>These predicates are used
+to start, stop and get error information from Windows sockets. These are
+the only 'wsa' routines that are implemented. The remainder of the extended
+predicates implement the standard (Berkeley) Sockets API. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">wsaStartup(VersionReqI, VersionV, HighVersionV, DescriptionStrV, StatusStrV,
+MaxSocketsV, MaxUdpDgV)
+wsaCleanup
+wsaGetLastError(ErrorNumV)</FONT></PRE>
+</UL>
+
+<H3><A NAME="ConversionPredicates"></A><FONT COLOR="#000080">Conversion
+Predicates</FONT></H3>
+
+<P><!AMZI_INDEX=  Sockets; Extended Predicates>These predicates convert
+between the various data formats. (Note htonl, htons, ntohl, ntohs are
+not needed because network addresses are always kept in network byte order
+and protocol and port numbers are always kept in host byte order. The extended
+predicates internally do any conversions needed.) </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">inet_addr(DotHostNameS, HostAddrV)
+inet_ntoa(HostAddrI, DotHostNameV)</FONT></PRE>
+</UL>
+
+<H3><A NAME="DatabasePredicates"></A><FONT COLOR="#000080">Database Predicates</FONT></H3>
+
+<P><!AMZI_INDEX=  Sockets ; Extended Predicates>These predicates get host,
+protocol and server names and address. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">gethostbyaddr(HostAddrI, AliasListV, AddrListV)
+gethostbyname(HostNameS, AliasListV, AddrListV)
+gethostname(HostNameStrV)
+getprotobyname(ProtoS, ProtoNumV, AliasListV)
+getprotobynumber(ProtoI, ProtoNameV, AliasListV)
+getservbyname(ServNameS, ProtoNameS, ServPortNumV, ServAliasListV)
+getservbyport(PortnumI, ProtoNameS, ServNameV, ServAliasListV) </FONT></PRE>
+</UL>
+
+<H3><A NAME="SocketPredicates"></A><FONT COLOR="#000080">Socket Predicates</FONT></H3>
+
+<P><!AMZI_INDEX=  Sockets; Extended Predicates>These predicates create,
+manages and close sockets. Instead of passing the sockaddr structure, instead
+the relevant elements of that structure are passed and returned as separate
+arguments. These elements can be any combination of the address, port and/or
+socket numbers. And the values can be for either the remote host or the
+local host. </P>
+
+<P>The select predicate uses a Prolog list of socket numbers instead of
+the fd_set structure. In practice, this makes it very easy to write recursive
+predicates to manage socket activity. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">accept(SocketI, RemoteHostAddrNumV, RemoteHostPortNumV, NewSocketNumV)
+bind(SocketI, LocalHostAddrI, LocalPortI)
+closesocket(SocketI)
+connect(SocketI, RemoteHostAddrI, RemoteHostPortI)
+getpeername(SocketI, RemoteHostAddrV, RemoteHostPortV)
+getsockname(SocketI, LocalHostAddrV, LocalHostPortV)
+getsockopt(SocketI, LevelI, OptionI, ValueNumV)
+ioctlsocket(SocketI, CmdI, ArgI, ValueV)
+listen(SocketI, BacklogI)
+recv(SocketI, DataStrV, DataLenI, FlagsI, ReceivedLenV)
+recvfrom(SocketI, DataStrV, DataLenI, FlagsI, FromAddrV, FromPortNumV, ReceivedLenV)
+select(ReadSocketsL, WriteSocketsL, ErrorSocketsL, WaitSecondsI, WaitThousSecsI, ReadSocketsResultListV, WriteSocketsResultListV, ErrorSocketsResultListV)
+send(SocketI, DataS, FlagsI, SentLenV)
+sendto(SocketI, DataS, FlagsI, ToAddrI, ToPortI, SentLenV)
+setsockopt(SocketI, LevelI, OptionI, ValueI)
+shutdown(SocketI, HowI)
+socket(SocketType, I, SocketProtocolI, SocketNumV) </FONT></PRE>
+</UL>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P>&nbsp; </P>
+
+</BODY>
+</HTML>

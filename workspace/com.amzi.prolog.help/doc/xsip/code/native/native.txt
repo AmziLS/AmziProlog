@@ -1,0 +1,74 @@
+ABOUT
+-----
+
+Prolog, as is, is very close to a rule language for an expert system.  It
+needs a few extra things to make it an expert system.  These include
+the ability to explain and the ability to remember answers to questions.
+
+NATIVE.PRO is a shell that provides those added functions.
+
+
+USE
+---
+
+From DOS type:
+
+	c:\> native
+
+From the listener consult either the source file, NATIVE.PRO, or the compiled
+module NATIVE.PLM.  To start it, type:
+
+	?- [native].	% equivalent to consult('native.pro').
+	?- main.
+
+At the > prompt enter various commands, always ending in . because they
+are Prolog terms being read.
+
+help.	Lists the legal commands.
+
+load.	Prompts for the name of the knowledge base to load.  must be a
+	Prolog term meaning lots of punctuation. For example 'birds.nkb'.
+
+solve.	Starts a consultation with the loaded knowledge base.
+
+	Answer the questions with either a yes or no or by giving a number
+	in answer to menu type questions.
+
+	You can also answer why. to a question.  in this case the list of
+	goals trying to be proved is displayed.  After the reason is 
+	displayed, you should enter the answer to the question at the > 
+	prompt.
+
+how(g). Once the answer is known, how(goal) lets you find out the
+	reasoning that led to that goal.  The top goal is birds for birds
+	so the command is how(bird(black_footed_albatross)).
+
+	Once the goals are shown, how can be asked again, such as 
+	how(order(tubenose)).
+
+whynot(g). Lets you find out why a goal was discarded.
+
+quit.	Exits.
+
+
+PROJECTS
+--------
+
+Fix reads so they don't require periods at the end.
+
+Fix read in load so you can just enter first part of file name - e.g. birds
+	-- and you add the .nkb extension automatically.
+
+Fix explanations that are ask or menuask do give a wiser answer like you
+	told me or something.
+
+After a why it should reask the question.
+
+Have it lead you through the logical sequence of things - what knowledge
+	base do you want to load, then automatically start the consultation.
+
+Have the knowledge base include an intro that is called first - to describe
+	the particular knowledge base.
+
+Improve error handling.
+

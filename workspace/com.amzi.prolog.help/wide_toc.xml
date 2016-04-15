@@ -1,0 +1,108 @@
+<toc label="Amzi! Windows IDE (original)">
+ <topic label="Original Amzi! Windows IDE" href="doc/wide/wide_contents.htm">
+ </topic>
+ <topic label="IDE" href="doc/wide/wide_overview.htm">
+  <topic label="Interface" href="doc/wide/wide_overview.htm#IDEInterface">
+  </topic>
+  <topic label="Unicode and ASCII" href="doc/wide/wide_overview.htm#UnicodeAndASCII">
+  </topic>
+  <topic label="File Menu" href="doc/wide/wide_overview.htm#FileMenu">
+  </topic>
+  <topic label="Edit Menu" href="doc/wide/wide_overview.htm#EditMenu">
+  </topic>
+  <topic label="View Menu" href="doc/wide/wide_overview.htm#ViewMenu">
+  </topic>
+  <topic label="Listener Menu" href="doc/wide/wide_overview.htm#ListenerMenu">
+  </topic>
+  <topic label="Build Menu" href="doc/wide/wide_overview.htm#BuildMenu">
+  </topic>
+  <topic label="Window Menu" href="doc/wide/wide_overview.htm#WindowMenu">
+  </topic>
+  <topic label="Help" href="doc/wide/wide_overview.htm#Help">
+  </topic>
+ </topic>
+ <topic label="Quick Overview" href="doc/wide/wide_quick_overview.htm">
+  <topic label="Listener" href="doc/wide/wide_quick_overview.htm#alis">
+   <topic label="Debugger" href="doc/wide/wide_quick_overview.htm#Debugger">
+   </topic>
+   <topic label="Intermixing Interpreted and Compiled Code" href="doc/wide/wide_quick_overview.htm#IntermixingInterpretedandCompi">
+   </topic>
+  </topic>
+  <topic label="Compiler" href="doc/wide/wide_quick_overview.htm#acmp">
+  </topic>
+  <topic label="Linker" href="doc/wide/wide_quick_overview.htm#alnk">
+  </topic>
+  <topic label="IDE" href="doc/wide/wide_quick_overview.htm#IDE">
+  </topic>
+  <topic label="Amzi! Runtime" href="doc/wide/wide_quick_overview.htm#arun">
+  </topic>
+  <topic label="Dynamic/Shared Libraries" href="doc/wide/wide_quick_overview.htm#LIBDLL">
+  </topic>
+  <topic label="Where to Go Next?" href="doc/wide/wide_quick_overview.htm#WheretoGoNext">
+  </topic>
+ </topic>
+ <topic label="Quick Tutorial" href="doc/wide/wide_quick_tutorial.htm">
+  <topic label="Duck World" href="doc/wide/wide_quick_tutorial.htm#DuckWorld">
+  </topic>
+  <topic label="Starting the Listener" href="doc/wide/wide_quick_tutorial.htm#StartingtheListener">
+  </topic>
+  <topic label="Creating a Source File" href="doc/wide/wide_quick_tutorial.htm#CreatingaSourceFile">
+  </topic>
+  <topic label="Consulting a Source File" href="doc/wide/wide_quick_tutorial.htm#ConsultingaSourceFile">
+  </topic>
+  <topic label="Using the Listener" href="doc/wide/wide_quick_tutorial.htm#UsingtheListener">
+  </topic>
+  <topic label="Debugging" href="doc/wide/wide_quick_tutorial.htm#Debugging">
+  </topic>
+  <topic label="Modules" href="doc/wide/wide_quick_tutorial.htm#Modules">
+  </topic>
+  <topic label="Running a Modular Application" href="doc/wide/wide_quick_tutorial.htm#RunningaModularApplication">
+   <topic label="Using alis and BAT Files" href="doc/wide/wide_quick_tutorial.htm#UsingalisandBATFiles">
+   </topic>
+   <topic label="Using Projects" href="doc/wide/wide_quick_tutorial.htm#UsingProjectsintheIDE">
+   </topic>
+  </topic>
+  <topic label="Compiling" href="doc/wide/wide_quick_tutorial.htm#Compiling">
+  </topic>
+  <topic label="Running" href="doc/wide/wide_quick_tutorial.htm#Running">
+  </topic>
+  <topic label="Linking and Running" href="doc/wide/wide_quick_tutorial.htm#LinkingandEXEGeneration">
+  </topic>
+  <topic label="Distributing an Application" href="doc/wide/wide_quick_tutorial.htm#DistributinganApplication">
+  </topic>
+  <topic label="Interfacing with Other Tools" href="doc/wide/wide_quick_tutorial.htm#InterfacingwithOtherTools">
+  </topic>
+ </topic>
+ <topic label="Projects" href="doc/wide/wide_projects.htm">
+  <topic label="Creating a Project" href="doc/wide/wide_projects.htm#CreatingAProject">
+  </topic>
+  <topic label="Dialog Box" href="doc/wide/wide_projects.htm#ProjectDialogBox">
+  </topic>
+  <topic label="Consulting/Loading" href="doc/wide/wide_projects.htm#BuildingAProject">
+  </topic>
+  <topic label="Building" href="doc/wide/wide_projects.htm#BuildingAProject">
+  </topic>
+ </topic>
+ <topic label="Debugger" href="doc/wide/wide_debugger.htm">
+  <topic label="Box Model" href="doc/wide/wide_debugger.htm#BoxModelofProcedureFlow">
+  </topic>
+  <topic label="Starting and Exiting" href="doc/wide/wide_debugger.htm#StartingandLeavingtheDebugger">
+  </topic>
+  <topic label="Display" href="doc/wide/wide_debugger.htm#DebuggerDisplay">
+   <topic label="portray(GOAL)" href="doc/wide/wide_debugger.htm#portrayGOAL">
+   </topic>
+  </topic>
+  <topic label="Debug Port Options" href="doc/wide/wide_debugger.htm#DebugPortOptions">
+  </topic>
+  <topic label="Spypoints" href="doc/wide/wide_debugger.htm#Spypoints">
+  </topic>
+  <topic label="Leashing Debug Ports" href="doc/wide/wide_debugger.htm#LeashingDebugPorts">
+  </topic>
+  <topic label="Logging" href="doc/wide/wide_debugger.htm#Logging">
+  </topic>
+  <topic label="Example" href="doc/wide/wide_debugger.htm#DebuggerExample">
+  </topic>
+ </topic>
+<topic label="Index" href="doc/wide/wdindex_xml.htm">
+</topic>
+</toc>

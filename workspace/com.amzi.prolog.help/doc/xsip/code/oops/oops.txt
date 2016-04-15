@@ -1,0 +1,53 @@
+ABOUT
+-----
+
+OOPS is a simple OPS5-like production system (which is where it gets its
+name from, not from object-oriented programming).  It is pure forward
+chaining using Prolog structures to represent the facts and Prolog goals
+to represent the actions.  As such it has a more powerful knowledge
+representation than OPS5.
+
+It is the precurser system to FOOPS, which adds a frame system for added
+representation and RETEFOOP which uses the a rete net to get improved
+performance.
+
+
+USE
+---
+
+From DOS type:
+
+	c:\> oops
+
+To start up OOPS from the listener, type:
+
+	?- [oops].	% equivalent to consult('oops.pro').
+	?- main.
+
+OOPS rules are relatively simple and made readable through the use of
+Prolog operators.  They are each pure Prolog structures.  The .OKB files
+are examples of rules in OOPS.
+
+ANIMAL.OKB can prompt for all its data, or use a fully defined initial
+condition.  See the comments.
+
+At the command prompt in OOPS there are four options, LOAD, GO, LIST and 
+EXIT.  
+
+LOAD	expects the name of a file, since it reads a Prolog term the
+	file name must be enclosed in single quotes and ended with a period.
+
+GO 	starts the inferencing, and, at least with the ROOM.OKB knowledge base
+	begins a dialog initiated by the knowledge base.
+
+LIST	lists the current memory.
+
+EXIT 	ends the session.
+
+
+PROJECTS
+--------
+
+The I/O initiated by the ROOM.OKB knowledge base is pretty kludgy.  OOPS
+	could be enhanced to have better ways to ask for data from the 
+	user and better error checking implemented with OOPS rules.

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-build
+      autobuild="false"
+      scrub-output="true"
+      use-console="true">
+   <feature id="com.amzi.prolog" version="4.5.10001"/>
+</site-build>

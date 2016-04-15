@@ -1,0 +1,42 @@
+ABOUT
+-----
+
+RETEFOOP adds a a rete net for improved perfomance to FOOPS.
+
+
+USE
+---
+
+From DOS type:
+
+	c:\> retefoop
+
+To start up RETEFOOP from the listener, type:
+
+	?- load([retefoop,retepred]).	
+	?- main.
+
+At the command prompt in OOPS there are four options, LOAD, GO, LIST
+and EXIT.  
+
+LOAD	expects the name of a file, since it reads a Prolog term the
+	file name must be enclosed in single quotes and ended with a period.
+
+COMPILE	compiles rules into a rete network.
+
+DISPLAYNET displays the rete network.
+
+GO 	starts the inferencing, and, at least with the ROOM.OKB knowledge 
+	base begins a dialog initiated by the knowledge base.
+
+LIST	lists working memory.
+
+OPTIONS	allows the setting of message levels.
+
+EXIT 	ends the session.
+
+
+PROJECTS
+--------
+
+

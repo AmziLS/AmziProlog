@@ -1,0 +1,185 @@
+% A version of the birds knowledge base for use with FRAMES.  FRAMES
+% can be used to identify birds and answer queries about birds.
+
+frame(tubenose, [
+     level-[val order],
+     nostrils-[val external_tubular],
+     live-[val at_sea],
+     bill-[val hooked] ]).
+
+frame(waterfowl, [
+     level-[val order],
+     feet-[val webbed],
+     bill-[val flat] ]).
+
+frame(falconiforms, [
+     level-[val order],
+     eats-[val meat],
+     feet-[val curved_talons],
+     bill-[val sharp_hooked] ]).
+
+frame(passerformes, [
+     level-[val order],
+     feet-[val one_long_backward_toe] ]).
+
+frame(albatross, [
+     level-[val family],
+     ako-[val tubenose],
+     size-[val large],
+     wings-[val long_narrow] ]).
+
+frame(swan, [
+     level-[val family],
+     ako-[val waterfowl],
+     neck-[val long],
+     color-[val white],
+     flight-[val ponderous] ]).
+
+frame(goose, [
+     level-[val family],
+     ako-[val waterfowl],
+     size-[val plump],
+     flight-[val powerful] ]).
+
+frame(duck, [
+     level-[val family],
+     ako-[val waterfowl],
+     feed-[val on_water_surface],
+     flight-[val agile] ]).
+
+frame(vulture, [
+     level-[val family],
+     ako-[val falconiforms],
+     feed-[val scavange],
+     wings-[val broad] ]).
+
+frame(falcon, [
+     level-[val family],
+     ako-[val falconiforms],
+     wings-[val long_pointed],
+     head-[val large],
+     tail-[val narrow_at_tip] ]).
+
+frame(flycatcher, [
+     level-[val family],
+     ako-[val passerformes],
+     bill-[val flat],
+     eats-[val flying_insects] ]).
+
+frame(swallow, [
+     level-[val family],
+     ako-[val passerformes],
+     wings-[val long_pointed],
+     tail-[val forked],
+     bill-[val short] ]).
+
+frame(laysan_albatross, [
+     level-[val bird],
+     ako-[val albatross],
+     color-[val white] ]).
+
+frame(black_footed_albatross, [
+     level-[val bird],
+     ako-[val albatross],
+     color-[val dark] ]).
+
+frame(fulmar, [
+     level-[val bird],
+     ako-[val tubenose],
+     size-[val medium],
+     flight-[val flap_glide] ]).
+
+frame(whistling_swan, [
+     level-[val bird],
+     ako-[val swan],
+     voice-[val muffled_musical_whistle] ]).
+
+frame(trumpeter_swan, [
+     level-[val bird],
+     ako-[val swan],
+     voice-[val loud_trumpeting] ]).
+
+frame(canada_goose, [
+     level-[val bird],
+     ako-[val goose],
+     season-[val winter],
+     country-[val united_states],
+     head-[val black],
+     cheek-[val white] ]).
+
+frame(canada_goose, [
+     level-[val bird],
+     ako-[val goose],
+     season-[val summer],
+     country-[val canada],
+     head-[val black],
+     cheek-[val white] ]).
+
+frame(snow_goose, [
+     level-[val bird],
+     ako-[val goose],
+     color-[val white] ]).
+
+frame(mallard, [
+     level-[val bird],
+     ako-[val duck],
+     voice-[val quack],
+     head-[val green] ]).
+
+frame(mallard, [
+     level-[val bird],
+     ako-[val duck],
+     voice-[val quack],
+     color-[val mottled_brown] ]).
+
+frame(pintail, [
+     level-[val bird],
+     ako-[val duck],
+     voice-[val short_whistle] ]).
+
+frame(turkey_vulture, [
+     level-[val bird],
+     ako-[val vulture],
+     flight_profile-[val v_shaped] ]).
+
+frame(california_condor, [
+     level-[val bird],
+     ako-[val vulture],
+     flight_profile-[val flat] ]).
+
+frame(sparrow_hawk, [
+     level-[val bird],
+     ako-[val falcon],
+     eats-[val insects] ]).
+
+frame(peregrine_falcon, [
+     level-[val bird],
+     ako-[val falcon],
+     eats-[val birds] ]).
+
+frame(great_crested_flycatcher, [
+     level-[val bird],
+     ako-[val flycatcher],
+     tail-[val long_rusty] ]).
+
+frame(ash_throated_flycatcher, [
+     level-[val bird],
+     ako-[val flycatcher],
+     throat-[val white] ]).
+
+frame(barn_swallow, [
+     level-[val bird],
+     ako-[val swallow],
+     tail-[val forked] ]).
+
+frame(cliff_swallow, [
+     level-[val bird],
+     ako-[val swallow],
+     tail-[val square] ]).
+
+frame(purple_martin, [
+     level-[val bird],
+     ako-[val swallow],
+     color-[val dark] ]).
+
+

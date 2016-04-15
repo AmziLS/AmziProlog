@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<introContent>
+  <!-- Extension to the SDK Overview Page. -->
+  <extensionContent alt-style="css/swt.properties" style="css/overview.css" path="overview/page-content/overview-links/jdtAnchor">
+    <link label="Prolog development" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.amzi.prolog.help/doc/amzidoc.htm" id="prolog">
+      <text>Documentation, Articles and Tutorials for learning how to use Amzi! Prolog + Logic Server</text>
+    </link>
+  </extensionContent>
+</introContent>

@@ -1,0 +1,11 @@
+a#prolog img { background-image : url(graphics/obj_48/prologdev_obj.gif); }
+a#prolog:hover img { background-image : url(graphics/obj_48/prologdevhov_obj.gif); }
+
+a#prolog-ide img { background-image : url(graphics/obj_48/prologscreen_obj.gif); }
+a#prolog-ide:hover img { background-image : url(graphics/obj_48/prologscreenhov_obj.gif); }
+
+a#screen img { background-image : url(graphics/obj_48/screen_obj.gif); }
+a#screen:hover img { background-image : url(graphics/obj_48/screenhov_obj.gif); }
+
+a#squirrel img { background-image : url(graphics/obj_48/squirrel_obj.gif); }
+a#squirrel:hover img { background-image : url(graphics/obj_48/squirrelhov_obj.gif); }

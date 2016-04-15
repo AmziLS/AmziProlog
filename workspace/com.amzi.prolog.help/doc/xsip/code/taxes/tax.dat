@@ -1,0 +1,246 @@
+%------------------
+% supporting data
+%------------------
+
+
+%----- 1040 -----
+
+%status(single).
+status(married_joint).
+%status(married_separate).
+%status(head_house).
+%status(qual_widow).
+
+children(2).
+
+wages(X) :-
+	status(married_joint),
+	w2_wages(A),
+	spouse_w2_wages(D),
+	X is A + D, !.
+wages(X) :-
+	status(married_separate),
+	w2_wages(X).
+	
+withheld(X) :-
+	status(married_joint),
+	w2_withheld(A),
+	spouse_w2_withheld(B),
+	X is A + B, !.
+withheld(X) :-
+	status(married_separate),
+	w2_withheld(X).
+
+estimated_paid(384).
+
+%   ---
+
+w2_wages(33761).
+
+spouse_w2_wages(579).
+
+w2_withheld(5309).
+spouse_w2_withheld(14).
+
+%----- a -----
+
+medical_fees(X) :-
+	health_insurance(A),
+	doctors(B),
+	dentists(C),
+	X is A + B + C.
+
+health_insurance(2207).
+
+real_estate_taxes(X) :-
+	vac_home_tax(A),
+	house_tax(B),
+	X is A + B.
+
+excise_taxes(16).			% in check book
+
+mortgage_interest(982).
+
+personal_interest(27).		% mc + visa
+
+%   ---
+
+doctors(X) :-
+	smith(A),
+	jones(B),
+	X is A + B.
+
+smith(60).
+jones(250).
+
+dentists(X) :-
+	X is 2654 + 506 .
+
+vac_home_tax(676).
+
+house_tax(2925).
+
+%----- b -----
+
+interest_income(Z) :-
+	mass_interest_income(X),
+	non_mass_interest_inc(Y),
+	Z is X + Y.
+
+int_inc_tab :-
+	get_int_inc(Account,Amount),
+	tabto(5),write(Account),write(':'),
+	tabto(40),write(Amount),nl,
+	fail.
+int_inc_tab.
+
+%   ---
+
+mass_interest_income(X) :-
+	bagof(A,T^int_inc(T,A),L),
+	list_sum(L,X).
+
+non_mass_interest_inc(X) :-
+	bagof(A,T^non_mass_int_inc(T,A),L),
+	list_sum(L,X).
+
+get_int_inc(Acc,Am) :- int_inc(Acc,Am).
+get_int_inc(Acc,Am) :- non_mass_int_inc(Acc,Am).
+
+int_inc('forth bank',186).
+int_inc('twelveth bank',170).
+int_inc('eighth bank',124).
+int_inc('wife''s bank two',79) :- status(married_joint).
+int_inc('wife''s bank one',721) :-
+	status(married_joint).
+	
+non_mass_int_inc('wife''s bank',812) :- 
+	status(married_joint).
+
+%----- c-----
+
+gross_receipts(X) :-
+	royalties(A),
+	consulting(B),
+	X is A + B.
+
+returns(0).
+
+cost_of_goods(0).
+
+other_income(X) :-
+	bus_interest(X).
+
+deduct('advertising',0).
+deduct('bank charges',0).
+deduct('car expenses',X) :-
+	standard_miles(X).
+deduct('dues & pubs',50).
+deduct('insurance',X) :-
+	car_percent(P),
+	car_insurance(A),
+	X is integer( A * P / 100 + 0.5 ).
+deduct('office expense',435).
+deduct('rent',X) :-
+	rental(X).
+deduct('travel',54).
+deduct('meals & entertainment',16).
+deduct('utilities & phone',X) :-
+	utils(X).
+
+%   ---
+
+royalties(X) :-
+	royal(L),
+	list_sum(L,X).
+
+royal([317,402,352,378,135,523,349,496,166,66,161]).	% royalties
+
+consulting(5615).
+
+bus_interest(X) :-
+	bagof(N,A^bus_int(A,N),L),
+	list_sum(L,X).
+	
+bus_int('third bank',82).
+bus_int('fourth bank',70).
+
+% note - for utilities and rent, my office is considered 1/7 of the
+% full apartment.
+
+utils(XX) :-
+	phone(A),
+	gas_total(B),
+	elec_total(C),
+	oil_total(D),
+	X is A + (B + C + D) / 7,
+	XX is integer(X + 0.5).
+
+phone(0).
+
+gas_total(X) :-
+	gas(L),
+	list_sum(L,X).
+
+gas([34,28,49,36,36,54]).
+
+elec_total(X) :-
+	elec(L),
+	list_sum(L,X).
+
+elec([30,59,42,22,34,30,40,34]).
+
+oil_total(X) :-
+	oil(L),
+	list_sum(L,X).
+
+oil([87,131,18,176,181]).
+
+rental(X) :-
+	XX is 12 * 950 / 7,			% 1/7 of 30 pembroke st
+	ZZ is 950 / 7,				% finders fee for apartment
+	X is integer(XX + ZZ + 0.5).
+
+standard_miles(X) :-
+	miles(M),
+	M =< 15000,
+	XX is 0.225 * M,
+	X is integer(XX + 0.5), !.
+standard_miles(X) :-
+	miles(M),
+	MM is M - 15000,
+	XX is 0.225 * 15000 + 0.11 * MM,
+	X is integer(XX + 0.5).
+
+miles(4328).
+
+car_insurance(618).
+
+car_percent(75).
+
+
+%----- 4562 depreciation -----
+
+listed_prop_tab :-
+	listed_prop(A,B,C,D,E,F,G,H),
+	tabto(5),write_list([A,B,C,D,E,F,G,H]),
+	fail.
+listed_prop_tab.
+
+depreciation_prop_179(X) :-
+	bagof(Z,A^B^C^D^E^F^G^listed_prop(A,B,C,D,E,F,G,Z),L),
+	list_sum(L,X).
+	
+depreciation(0).
+
+%   ---
+
+listed_prop('1976 BMW','3/84','50%',5000,'','','',0).	% standard miles
+listed_prop('NEC 386 computer','10/87','100%',4574,0,0,0,4574).
+listed_prop('disk drive','12/87','100%',161,0,0,0,161).
+
+%----- mass taxes -----
+
+mass_tax(500) :- guess('mass tax').
+                                                                                                                 
+

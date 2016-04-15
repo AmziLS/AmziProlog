@@ -1,0 +1,219 @@
+<html>
+<head>
+<title>IDE Quick Start</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1><a name="IDE_QuickStart"></a><font color="#D2AA00">Eclipse IDE Quick Start</font></h1>
+<ul>
+  <li><a href="#beginning_users">Beginning Users</a></li>
+  <li><a href="#advanced_users">Advanced Users</a></li>
+</ul>
+<h2><font color="#0000FF"><a name="beginning_users"></a>Beginning Users</font></h2>
+<p>See the online videos for quick tutorials:</p>
+<ul>
+  <li><a href="http://www.amzi.com/videos/eclipse_first_use/eclipse_first_use.html">Getting Started</a></li>
+  <li>    <a href="http://www.amzi.com/videos/eclipse_project_debug/Eclipse_project_debug.html">Projects and Debugging</a></li>
+</ul>
+<p> 
+  <!AMZI_INDEX = IDE>
+  <font size="+1"><i><b>Eclipse is project-based (not file-based). You must create 
+  or import a project before creating or editing source files.</b></i></font></p>
+<table width="100%" border="1" cellspacing="0" cellpadding="3">
+  <tr valign="top" align="left"> 
+    <td width="15%"><b>Create a New Project</b></td>
+    <td> 
+      <p>Select <b>File | New Project...</b></p>
+      <p>Click on <b>Prolog</b> and <b>Project</b></p>
+      <p>Click <b>Next -&gt;</b> you will see:</p>
+      <p><img src="prolog_project_dialog.gif" width="479" height="394"></p>
+      <p>Enter the Project name. This is also the name of the directory that will 
+        be created in the workspace directory (as you can see in the dimmed Directory 
+        box).</p>
+      <p>Click <b>Finish</b></p>    </td>
+  </tr>
+  <tr valign="top" align="left"> 
+    <td width="15%"><b>Open an Existing Project</b></td>
+    <td> 
+      <p>Select <b>File | Import...</b></p>
+      <p>Click on <b>Existing Project into Workspace</b></p>
+      <p>Click <b>Next -&gt;</b> you will see:</p>
+      <p><img src="import_project_dialog.gif" width="519" height="450"></p>
+      <p>Click <b>Browse...</b> and select the directory that contains the project 
+        you want to re-open (or type in the pathname).</p>
+      <p>Click <b>Finish</b></p>    </td>
+  </tr>
+  <tr valign="top" align="left"> 
+    <td width="15%"><b>Create a Source File</b></td>
+    <td> 
+      <p>Select <b>File | New | File</b> you will see:</p>
+      <p><img src="file_new_dialog.gif" width="373" height="415"></p>
+      <p>Make sure the project you want to create the file in is highlighted.</p>
+      <p>Enter the File name ending in .pro.<b></b></p>
+      <p>Click <b>Finish</b></p>    </td>
+  </tr>
+  <tr valign="top" align="left">
+    <td width="15%" height="132"><b>Add an Existing Source File to a Project</b></td>
+    <td height="132">
+      <p>Click on the name of a project you want to import the file into in the 
+        Navigator View (see <a href="#navigator_view">below</a>).</p>
+      <p>Select <b>File | Import | File</b> <b>system</b> you will see:</p>
+      <p><img src="import_file_dialog.gif" width="546" height="584"></p>
+      <p>Click the <b>Browse</b> button on the upper right to navigate to the 
+        directory containing the files you want to add to the project.</p>
+      <p>Tick the box in front of the names of the files (and directories) you 
+        want to add to the named project/folder. (You can press the Browse button 
+        to the right of &quot;Into folder&quot; to select another project.)</p>
+      <p>Click <b>Finish</b></p>    </td>
+  </tr>
+  <tr valign="top" align="left"> 
+    <td width="15%" height="132"><b><a name="navigator_view">Open a Source 
+      File</a></b></td>
+    <td height="132"> 
+      <p><img src="navigator_view.gif" width="150" height="206" align="left">When 
+        you create a new file, it will be opened in the Editor View.</p>
+      <p>Otherwise, in the Navigator View, double-click on the name of the file 
+        you want to edit. It will open in the Editor View.</p>
+      <p>Type in your code.</p>    </td>
+  </tr>
+  <tr valign="top" align="left"> 
+    <td width="15%" height="429"><b>Save a Source File</b></td>
+    <td height="429"> 
+      <p>Select <b>File | Save</b></p>
+      <p>When you save a file, a new outline is generated and the source file 
+        is checked for syntax errors. Check the Problems View to see the errors:</p>
+      <p><img src="task_view.gif" width="525" height="167"></p>
+      <p>Any errors will be highlighted in your Edit View. You can click on the 
+        red boxes in the right margin.</p>
+      <p><img src="edit_view.gif" width="387" height="148"></p>    </td>
+  </tr>
+  <tr valign="top" align="left"> 
+    <td width="15%"><b>Run a Single Source File</b></td>
+    <td> 
+      <p>Open a source file for editing (or click on the file name in the <a href="#navigator_view">Navigator 
+        View</a>). </p>
+      <p>Select <b>Run | Run As | Interpreted Single File (pro)</b></p>
+      <p><img src="run_menu.gif" width="408" height="251"></p>
+      <p>This start the Prolog Listener in the Listener View:</p>
+      <p><img src="listener_view.gif" width="579" height="227"></p>
+      <p>After the ?- type the goal you want to execute (in this case main.). 
+        You can use the arrow keys to retrieve and edit the goals you entered 
+        previously.</p>
+      <p>Type <b>debug.</b> to use the classic box-model debugger.</p>
+      <p>Type <b>quit.</b> to exit.</p>    </td>
+  </tr>
+  <tr valign="top" align="left"> 
+    <td width="15%"><b>Debug a Single Source File</b></td>
+    <td> 
+      <p>Open a source file for editing (or click on the file name in the <a href="#navigator_view">Navigator 
+        View</a>). </p>
+      <p>Select <b>Run | Debug As | Interpreted Single File (pro)</b></p>
+      <p>This opens the Debug Perspective (you were previously in the Prolog Perspective):</p>
+      <p><img src="debugger_screen.gif" width="754" height="753"></p>
+      <p>After the ?- type the goal you want to debug (in this case 'main.' followed by the command 'goto(yard).'.) The currently executing line is highlighted with a  <strong><font color="#66FF00">C</font></strong> for call,  <font color="#FFFF00"><strong>R</strong></font> for redo,  <font color="#FF0000"><strong>F</strong></font> for fail, <font color="#666666">E</font> for exit and <strong><font color="#0000FF">I</font></strong> for info. Pausing at each of those debug ports is controlled by the buttons in the Debug View. </p>
+      <p>The use the buttons in the Debug View in the upper left to <img src="resume_co.gif" width="16" height="16"> 
+        run, <img src="suspend_co.gif" width="16" height="16"> suspend, <img src="terminate_co.gif" width="16" height="16"> 
+        stop and <img src="stepinto_co.gif" width="16" height="16"> <img src="stepover_co.gif" width="16" height="16"> 
+        <img src="stepreturn_co.gif" width="16" height="16"> step your program. 
+        This view also displays the Prolog call stack.</p>
+      <p>The Variables View in the upper right shows your variable bindings at 
+        each level of the call stack.</p>
+      <p>To set a breakpoint, double-click in the left margin of the source file 
+        (see the blue dot).</p>
+      <p>Press <img src="terminate_co.gif" width="16" height="16"> or type <b>quit.</b> 
+        to exit. Type [Ctrl]-C to break user input. </p>
+      <p>Click on the paw in the left margin of the Eclipse Window to return to 
+        the Prolog Perspective. </p>    </td>
+  </tr>
+</table>
+<h2><font color="#0000FF"><a name="advanced_users"></a>Advanced Users</font></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="3">
+  <tr valign="top"> 
+    <td width="15%"><b>Create a Project with Existing Source Files</b></td>
+    <td> 
+      <p>Select <b>File | New Project...</b></p>
+      <p>Click on <b>Prolog</b> and <b>Project</b></p>
+      <p>Click <b>Next -&gt;</b> you will see:</p>
+      <p><img src="prolog_project_dir_dialog.gif" width="488" height="395"></p>
+      <p>Uncheck the Use default box.</p>
+      <p>Click <b>Browse...</b> to locate the directory containing the .pro source 
+        files you want in the new project.</p>
+      <p>Click <b>Finish</b></p>
+      <p>This creates .project, build.properties and amzi.cfg files in the specified 
+        directory and opens the project in the workspace.</p>
+      <p>Right-click on the project name and select <b>Refresh</b> to see the 
+        existing files in the Navigator View.</p>
+    </td>
+  </tr>
+  <tr valign="top"> 
+    <td width="15%"><b>Run a Multiple File Project</b></td>
+    <td> 
+      <p>In the Prolog Perspective, click on the project name.</p>
+      <p>Select <b>Run | Run As | Interpreted Project (pro)</b></p>
+    </td>
+  </tr>
+  <tr valign="top"> 
+    <td width="15%"><b>Debug a Multiple File Project</b></td>
+    <td> 
+      <p>In the Prolog Perspective, click on the project name.</p>
+      <p>Select <b>Run | Run As | Interpreted Project (pro)</b></p>
+    </td>
+  </tr>
+  <tr valign="top"> 
+    <td width="15%"><b>Set Project Properties</b></td>
+    <td> 
+      <p>Select <b>Project | Properties</b> or right-click on the project name 
+        in the <a href="#navigator_view">Navigator View</a>. </p>
+      <p>Click on <b>Build Executable/Libraries</b>. You will see:</p>
+      <p><img src="project_properties.gif" width="542" height="595"></p>
+      <p>Default Output Folder -- the folder where plm (compiled) and xpl (compiled 
+        and linked) files are generated.</p>
+      <p>Executable File Type -- use Debug for debugging compiled or remote projects. 
+        Use Release to ship your code.</p>
+      <p>Executable File or Path Name -- the name of the xpl file in the Default 
+        Output Folder, or the fullpathname to the xpl file.</p>
+      <p>List of Source Files to Exclude -- utility and test files to exclude 
+        from the build and run/debug sessions.</p>
+      <p>Prolog Libraries -- the Prolog libraries to link into your xpl file.</p>
+      <p>Runtime Logic Server Extensions -- the lsx files to load at runtime. 
+        Note, you will need to load these by calling the Logic Server API or using 
+        an amzi.cfg file when you ship your code.</p>
+    </td>
+  </tr>
+  <tr valign="top"> 
+    <td width="15%"><b>Build Project</b></td>
+    <td> 
+      <p>Right-click on the project name, select <b>Build Project </b>or select<b> 
+        Project | Rebuild All</b></p>
+      <p>Any errors will be displayed in the Task View.</p>
+    </td>
+  </tr>
+  <tr valign="top"> 
+    <td width="15%"><b>Run Compiled Project</b></td>
+    <td>Select <b>Run | Run As | Compiled Project (xpl)</b></td>
+  </tr>
+  <tr valign="top"> 
+    <td width="15%"><b>Debug Compiled Project</b></td>
+    <td> 
+      <p>Set Project Properties, Executable Build Type to debug.</p>
+      <p>Rebuild the project.</p>
+      <p>Select <b>Run | Debug As | Compiled Project (xpl)</b></p>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td width="15%"><b>Run a Cross Reference on a Project</b></td>
+    <td><img src="cross_reference_view.gif" width="215" height="457" align="left">Select 
+      an open editor or a project on the <a href="#navigator_view">Navigator View</a>. 
+      Then click on the Cross Reference View and click on the <b>Refresh</b> button 
+      or select <b>Refresh</b> on the menu.</td>
+  </tr>
+</table>
+<p><!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p></p>
+</body>
+</html>

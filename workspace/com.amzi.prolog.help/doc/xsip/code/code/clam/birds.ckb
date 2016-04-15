@@ -1,0 +1,299 @@
+goal bird.
+
+rule 1 
+  if    nostrils is external_tubular and
+        live is at_sea and
+        bill is hooked 
+  then  order is tubenose cf 80.
+
+rule 2 
+  if    feet is webbed and
+        bill is flat 
+  then  order is waterfowl cf 80.
+
+rule 3 
+  if    eats is meat and
+        feet is curved_talons and
+        bill is sharp_hooked 
+  then  order is falconiforms cf 80.
+
+rule 4 
+  if    feet is one_long_backward_toe 
+  then  order is passerformes cf 80.
+
+rule 5
+  if    order is tubenose and
+        size is large and
+        wings is long_narrow 
+  then  family is albatross cf 80.
+
+rule 6 
+  if    order is waterfowl and
+        neck is long and
+        color is white and
+        flight is ponderous 
+  then  family is swan cf 80.
+
+rule 7
+  if    order is waterfowl and
+        size is plump and
+        flight is powerful 
+  then  family is goose cf 80.
+
+rule 8
+  if    order is waterfowl and
+        feed is on_water_surface and
+        flight is agile 
+  then  family is duck cf 80.
+
+rule 9 
+  if    order is falconiforms and
+        feed is scavange and
+        wings is broad 
+  then  family is vulture cf 80.
+
+rule 10
+  if    order is falconiforms and
+        wings is long_pointed and
+        head is large and
+        tail is narrow_at_tip 
+  then  family is falcon cf 80.
+
+rule 11
+  if    order is passerformes and
+        bill is flat and
+        eats is flying_insects 
+  then  family is flycatcher cf 80.
+
+rule 12
+  if    order is passerformes and
+        wings is long_pointed and
+        tail is forked and
+        bill is short 
+  then  family is swallow cf 80.
+
+rule 13
+  if    family is albatross and
+        color is white 
+  then  bird is laysan_albatross cf 80.
+
+rule 14
+  if    family is albatross and
+        color is dark 
+  then  bird is black_footed_albatross cf 80.
+
+rule 15
+  if    order is tubenose and
+        size is medium and
+        flight is flap_glide 
+  then  bird is fulmar cf 80.
+
+rule 16
+  if    family is swan and
+        voice is muffled_musical_whistle 
+  then  bird is whistling_swan cf 80.
+
+rule 17
+  if    family is swan and
+        voice is loud_trumpeting 
+  then  bird is trumpeter_swan cf 80.
+
+rule 18
+  if    family is goose and
+        season is winter and
+        country is united_states and
+        head is black and
+        cheek is white 
+  then  bird is canada_goose cf 80.
+
+rule 19
+  if    family is goose and
+        season is summer and
+        country is canada and
+        head is black and
+        cheek is white 
+  then  bird is canada_goose cf 80.
+
+rule 20
+  if    family is goose and
+        color is white 
+  then  bird is snow_goose cf 80.
+
+rule 21
+  if    family is duck and
+        voice is quack and
+        head is green 
+  then  bird is mallard cf 80.
+
+rule 22
+  if    family is duck and
+        voice is quack and
+        color is mottled_brown 
+  then  bird is mallard cf 80.
+
+rule 23
+  if    family is duck and
+        voice is short_whistle 
+  then  bird is pintail cf 80.
+
+rule 24
+  if    family is vulture and
+        flight_profile is v_shaped 
+  then  bird is turkey_vulture cf 80.
+
+rule 25
+  if    family is vulture and
+        flight_profile is flat 
+  then  bird is california_condor cf 80.
+
+rule 26
+  if    family is falcon and
+        eats is insects 
+  then  bird is sparrow_hawk cf 80.
+
+rule 27
+  if    family is falcon and
+        eats is birds 
+  then  bird is peregrine_falcon cf 80.
+
+rule 28
+  if    family is flycatcher and
+        tail is long_rusty 
+  then  bird is great_crested_flycatcher cf 80.
+
+rule 29
+  if    family is flycatcher and
+        throat is white 
+  then  bird is ash_throated_flycatcher cf 80.
+
+rule 30
+  if    family is swallow and
+        tail is forked 
+  then  bird is barn_swallow cf 80.
+
+rule 31
+  if    family is swallow and
+        tail is square 
+  then  bird is cliff_swallow cf 80.
+
+rule 32
+  if    family is swallow and
+        color is dark 
+  then  bird is purple_martin cf 80.
+
+rule 33
+  if    region is new_england 
+  then  country is united_states.
+
+rule 34
+  if    region is south_east 
+  then  country is united_states.
+
+rule 35
+  if    region is mid_west 
+  then  country is united_states.
+
+rule 36
+  if    region is south_west 
+  then  country is united_states.
+
+rule 37
+  if    region is north_west 
+  then  country is united_states.
+
+rule 38
+  if    region is mid_atlantic 
+  then  country is united_states.
+
+rule 39
+  if    region is ontario 
+  then  country is canada.
+
+rule 40
+  if    region is quebec 
+  then  country is canada.
+
+ask	bill
+menu	(hooked flat sharp_hooked short other)
+prompt	'What type of bill?'.
+
+ask	cheek
+menu	(white other)
+prompt	'What type of cheek?'.
+
+ask	color
+menu	(white dark mottled_brown other)
+prompt	'What color is it?'.
+
+ask	region
+menu	(new_england south_east mid_west south_west
+	 north_west mid_atlantic ontario quebec other)
+prompt	'What region was it seen in?'.
+
+ask	eats
+menu	(meat flying_insects insects birds other)
+prompt	'What does it eat?'.
+
+ask	feed
+menu	(on_water_surface scavange other)
+prompt	'Where does it feed?'.
+
+ask	feet
+menu	(webbed curved_talons one_long_backward_toe other)
+prompt	'What type of feet?'.
+
+ask	flight
+menu	(ponderous powerful agile flap_glide other)
+prompt	'What type of flight?'.
+
+ask	flight_profile
+menu	(v_shaped flat other)
+prompt	'What is the flight profile?'.
+
+ask	head
+menu	(large black green other)
+prompt	'What type of head?'.
+
+ask	live
+menu	(at_sea other)
+prompt	'Where does it live?'.
+
+ask	neck
+menu	(long other)
+prompt	'What type of neck does it have?'.
+
+ask	nostrils
+menu	(external_tubular other)
+prompt	'What type of nostrils?'.
+
+ask	season
+menu	(summer fall winter spring)
+prompt	'What season was it seen in?'.
+
+ask	size
+menu	(large medium small plump other)
+prompt	'What size is it?'.
+
+ask	tail
+menu	(narrow_at_tip forked long_rusty square other)
+prompt	'What type of tail?'.
+
+ask	throat
+menu	(white other)
+prompt	'What type of throat?'.
+
+ask	voice
+menu	(muffled_musical_whistle loud_trumpeting quack short_whistle other)
+prompt	'What type of voice?'.
+
+ask	wings
+menu	(long_narrow broad long_pointed other)
+prompt	'What type of wings does it have?'.
+
+multivalued voice.
+
+multivalued color.
+
+multivalued eats.
+                                                                         
+

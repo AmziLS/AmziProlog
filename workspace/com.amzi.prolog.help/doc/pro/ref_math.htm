@@ -1,0 +1,1018 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Numbers and Math</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="NumbersandMath"></A><FONT COLOR="#D2AA00">Numbers and Math</FONT> 
+</h1>
+<p>This section covers mathematical expressions and number types in Amzi! Prolog</p>
+<MENU>
+
+<LI><A HREF="#EvaluatingMathematicalExpressions">Evaluating Mathematical Expressions</A> </LI>
+<LI><A HREF="#MathematicalComparisons">Mathematical Comparisons</A> </LI>
+<LI><A HREF="#MathematicalOperators">Mathematical Operators</A> </LI>
+<LI><A HREF="#BitwiseOperators">Bitwise Operators</A> </LI>
+<LI><A HREF="#TrigonometryFunctions">Trigonometry Functions</A> </LI>
+  <LI><A HREF="#MathematicalFunctions">Mathematical Functions</A> </LI>
+
+  <LI><A HREF="#BuiltinAtoms">Built-in Mathematical Atoms</A> </LI>
+  <LI><A HREF="#NumberTypes">Numeric Type Testing</A> </LI>
+  <LI><A HREF="#MixedMode">Mixed Mode Expressions</A> </LI>
+  <LI><A HREF="#MathematicalGames">Mathematical Games</A> </LI>
+
+</MENU>
+
+
+
+<h2><a name="EvaluatingMathematicalExpressions"></a><font color="#0000ff">Evaluating 
+  Mathematical Expressions</font></h2>
+<!AMZI_INDEX= is/2; evaluable mathematical expressions; expressions, mathematical; mathematical expressions;
+ operators, mathematical; mathematical operators>
+
+<p>The various math symbols, such as + - * /, are defined as operators in Prolog. 
+  See section on <a href="ref_terms.htm#Operators">operators</a> for discussion of 
+  operators in Prolog. This means you can write expressions such as:</p>
+<ul><font color="#000080"><pre>
+5 + 3 / (2 * 6)
+</pre></font></ul>
+
+<p>As such, these are just Prolog structures, no different from any other structures 
+  represented using operator syntax.</p>
+<ul><font color="#000080"><pre>
+?- X = 3 + 2.
+X = 3 + 2
+yes
+
+?- 5 = 3 + 2.
+no
+</pre></font></ul>
+
+<p>In other words, for most Prolog processing, the term 3 + 2 (internally +(3,2)) 
+  is treated no differently than say pet(duck,leona).</p>
+<p>To evaluate mathematical expressions, you need the built-in predicate <b>is/2</b>. 
+  The mathematical comparson operators also do mathematical evaluation.</p>
+
+<H3><A NAME="XisY"></A><FONT COLOR="#000080">X is Y</FONT></H3>
+
+<P><!AMZI_INDEX= is/2><b>is/2</b> succeeds if X can be unified with the value 
+  of Y evaluated as an arithmetic expression.</P>
+
+<ul><font color="#000080"><pre>
+?- X is 3 + 2.
+X = 5 
+yes
+
+?- 5 is 3 + 2.
+yes
+
+?- X is (3 + 2) / 4 * 6.
+X = 7.5 
+yes
+
+?- X = 3.1 + 2, Y is X.
+X = 3.1 + 2
+Y = 5.1
+</pre></font></ul>
+
+<p><i>==>Note that there is no 'assignment' in Prolog, and variables always unify, 
+  so you cannot say X is X + 1 because it is impossible for the two Xs to unify. 
+  You can say XX is X + 1, and proceed to use the new variable.</i></p>
+
+<H2><A NAME="MathematicalComparisons"></A><font color="#0000ff">Mathematical Comparisons</font></H2>
+
+<!AMZI_INDEX= &gt; ; &gt;'=' ; &lt; ; '='&lt; ; '=:='; '=/='>
+
+<p>Each of the following operators first performs mathematical evaluation of both 
+  sides, as described above, and then does a mathematical comparison of the results. 
+  These operators should be used for comparing numbers, even if they are not part 
+  of an expression.</p>
+<p><i><img src="arrowrt.gif" height=18 width=18 align=BOTTOM> Unification, either 
+  implicit between goals and heads of clause, or explicit with =/2, may fail for 
+  different numeric types that represent the same number. For this reason unification 
+  should NOT be used to test for equality of two numbers.</i></p>
+<P>Examples</P>
+<ul><font color="#000080"><pre>
+% An integer doesn't unify with a float.
+?- 1 = 1.0e0.  
+no
+
+% But 1 is mathmatically equal to 1,
+% no matter how its stored.
+?- 1 =:= 1.0e0.
+yes
+
+% These are two different,
+% non-evaluated expressions.
+?- 3 + 4 = 2 + 5.
+no
+
+% But evaluated they are arithmetically
+% equal.
+?- 3 + 4 =:= 2 + 5.
+yes
+</pre></font></ul>
+
+<H3><!AMZI_INDEX= Arithmetic Comparisons; Mathematical Comparisons><A NAME="XgteY"></A><FONT COLOR="#000080">X
+&gt;= Y</FONT></H3>
+
+<P><!AMZI_INDEX=  &gt;=>Evaluate each side and test for greater or equal. </P>
+
+<H3><A NAME="XlteY"></A><FONT COLOR="#000080">X =&lt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= '='&lt;>Evaluate each side and test for less than or equal. </P>
+
+<H3><A NAME="XgtY"></A><FONT COLOR="#000080">X &gt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= &gt;>Evaluate each side and test for greater than. </P>
+
+<H3><A NAME="XltY"></A><FONT COLOR="#000080">X &lt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= &lt;>Evaluate each side and test for less than. </P>
+
+<H3><A NAME="XeqcoleqY"></A><FONT COLOR="#000080">X =:= Y</FONT></H3>
+
+<P><!AMZI_INDEX= '=:='>Evaluate each side and test for numerical equality.</P>
+
+<H3><A NAME="XeqsleqY"></A><FONT COLOR="#000080">X =\= Y</FONT></H3>
+
+<P>
+  <!AMZI_INDEX= '=\='>
+  Evaluate each side and test for numerical inequality. </P>
+<h3><a name="almost_equal"></a><font color="#000080">X ~= Y</font></h3>
+<p> 
+  <!AMZI_INDEX= ~=;almost equal>
+  Evaluate each side and test if the two sides are almost equal. Useful for comparing 
+  non-integer values.</p>
+<H2><A NAME="MathematicalOperators"></A><font color="#0000ff">Mathematical Operators</font></H2>
+
+<p><!AMZI_INDEX= Mathematical Operators>There are a number of mathematical operators that can be used in evaluable mathematical expressions.</p>
+<H3><A NAME="XplusY"></A><FONT COLOR="#000080">X
++ Y</FONT></H3>
+
+<P><!AMZI_INDEX= Addition; +>Sum of values of X and Y. </P>
+
+<H3><A NAME="XminusY"></A><FONT COLOR="#000080">X&nbsp;-&nbsp; Y</FONT></H3>
+
+<P><!AMZI_INDEX= Subtraction; ->Value of X minus value of Y. </P>
+
+<H3><A NAME="NegativeX"></A><FONT COLOR="#000080">-&nbsp; X</FONT></H3>
+
+<P><!AMZI_INDEX= Negative; - >Evaluates to the negative of X evaluated.
+</P>
+
+<H3><A NAME="XtimesY"></A><FONT COLOR="#000080">X * Y</FONT></H3>
+
+<P><!AMZI_INDEX= Multiplication; *>Value of X multiplied by value of Y.
+</P>
+
+<H3><A NAME="XdivY"></A><FONT COLOR="#000080">X&nbsp;/&nbsp; Y</FONT></H3>
+
+<P><!AMZI_INDEX= Division; />Value of X divided by value of Y. </P>
+
+<H3><A NAME="XpowerY"></A><FONT COLOR="#000080">X ** Y</FONT></H3>
+
+<P><!AMZI_INDEX= Exponent; Power; **>Evaluates to X raised to the Y power. When 
+  X is a fractional real (infinite precision) number, the precision of the result 
+  is limited by the Prolog flag, <a href="pug_runtime.htm#SettableFlags">epsilon</a>.</P>
+
+<H3><A NAME="XdivdivY"></A><FONT COLOR="#000080">X&nbsp;//&nbsp;Y</FONT></H3>
+
+<P><!AMZI_INDEX= Division; //>Integer division of X by Y means the result is truncated to the absolute integer.</P>
+<ul><font color="#000080"><pre>
+?- X is 11 // 4.
+X = 2
+yes
+
+?- X is -11 // 4.
+X = -2 
+yes
+</pre></font></ul>
+
+<H3><A NAME="XdivsY"></A><FONT COLOR="#000080">X divs Y</FONT></H3>
+
+<P><!AMZI_INDEX= Division; divs>Integer division with a rounded rather than truncated 
+  answer, or more formally, such that the remainder is &gt;= -Y/2 and &lt; Y/2. 
+</P>
+<ul><font color="#000080"><pre>
+?- X is 11 divs 4.
+X = 3 
+yes
+
+?- X is 11 divs 3.
+X = 4 
+yes
+
+?- X is -11 divs 4.
+X = -3 
+yes
+
+?- X is 13 divs 4.
+X = 3 
+yes
+</pre></font></ul>
+
+<H3><A NAME="XdivuY"></A><FONT COLOR="#000080">X divu Y</FONT></H3>
+
+<P><!AMZI_INDEX= Division; divu>Integer division that is truncated. Works the 
+  same as // for positive integers, but for negative ones it ensures that the 
+  result times Y is less than X, or stated another way, the remainder is always 
+  positive. </P>
+<ul><font color="#000080"><pre>
+?- X is 11 divu 4.
+X = 2 
+yes
+
+?- X is 13 divu 4.
+X = 3 
+yes
+
+?- X is -11 divu 4.
+X = -3 
+yes
+</pre></font></ul>
+
+<H3><A NAME="maxXY"></A><FONT COLOR="#000080">max(X,Y)</FONT></H3>
+
+<P><!AMZI_INDEX= max; maximum>The maximum of X and Y.</P>
+<ul><font color="#000080"><pre>
+?- X is max(5,4).
+X = 5 
+yes
+</pre></font></ul>
+
+<H3><A NAME="minXY"></A><FONT COLOR="#000080">min(X,Y)</FONT></H3>
+
+<P><!AMZI_INDEX= min; minimum>The minimum of X and Y.</P>
+<ul><font color="#000080"><pre>
+?- X is min(5,4).
+X = 4 
+yes
+</pre></font></ul>
+
+<H3><A NAME="XmodY"></A><FONT COLOR="#000080">X mod Y</FONT></H3>
+
+<P><!AMZI_INDEX= Modulus; Remainder; mod>The positive remainder after dividing 
+  the value of X by the value of Y. Corresponds with divu.</P>
+<ul><font color="#000080"><pre>
+?- X is 11 mod 4.
+X = 3 
+yes
+
+?- X is -11 mod 4.
+X = 1 
+yes
+</pre></font></ul>
+
+<H3><A NAME="XmodsY"></A><FONT COLOR="#000080">X mods Y</FONT></H3>
+
+<P><!AMZI_INDEX= Modulus; Remainder; mods>The remainder after rounded integer 
+  division (divs), or more formatlly, constrained so that the result is &gt;= 
+  -Y/2 and &lt; Y/2. </P>
+<ul><font color="#000080"><pre>
+?- X is 11 mods 4.
+X = -1 
+yes
+
+?- X is -11 mods 4.
+X = 1 
+yes
+
+?- X is 13 mods 4.
+X = 1 
+yes
+</pre></font></ul>
+
+<H3><A NAME="XmoduY"></A><FONT COLOR="#000080">X modu Y</FONT></H3>
+
+<P><!AMZI_INDEX= Modulus; Remainder; modu>The remainder, constrained so that the 
+  result is positive, corresponding to divu.</P>
+<ul><font color="#000080"><pre>
+?- X is 11 modu 4.
+X = 3 
+yes
+
+?- X is -11 modu 4.
+X = 1 
+yes
+
+?- X is 13 modu 4.
+X = 1 
+yes
+</pre></font></ul>
+
+<H2><A NAME="BitwiseOperators"></A><font color="#0000ff">Bitwise Operators</font></H2>
+<P><!AMZI_INDEX= Bit Arithmetic>For the following bitwise operators the arguments must be integers. </P>
+
+<H3><A NAME="XandY"></A><FONT COLOR="#000080">X&nbsp;/\&nbsp; Y</FONT></H3>
+
+<P><!AMZI_INDEX= And; /\ >Bitwise &quot;and&quot; of value of X and value of Y. 
+</P>
+<ul><font color="#000080"><pre>
+?- X is 1 /\ 2.
+X = 0 
+yes
+
+?- X is 1 /\ 3.
+X = 1 
+yes
+
+?- X is 0xffffffff /\ 47.
+X = 47 
+yes
+
+?- X is -1 /\ 47.
+X = 47 
+yes
+
+?- X is 0xfffe /\ 47.
+X = 46 
+yes
+?- 
+</pre></font></ul>
+
+<H3><A NAME="XorY"></A><FONT COLOR="#000080">X&nbsp;\/&nbsp; Y</FONT></H3>
+
+<P><!AMZI_INDEX= Or; \/>Bitwise &quot;or&quot; of value of X and value
+of Y. </P>
+<ul><font color="#000080"><pre>
+?- X is 1 \/ 3.
+X = 3 
+yes
+
+?- X is 1 \/ 2.
+X = 3 
+yes
+</pre></font></ul>
+
+<H3><A NAME="XltltY"></A><FONT COLOR="#000080">X &lt;&lt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= Shift; &lt;&lt;>Evaluates to X bit-shifted left by Y places.</P>
+<ul><font color="#000080"><pre>
+?- X is 1 << 4.
+X = 16 
+yes
+</pre></font></ul>
+
+<H3><A NAME="XgtgtY"></A><FONT COLOR="#000080">X &gt;&gt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= Shift; &gt;&gt;>Evaluates to X bit-shifted right by Y
+places.</P>
+<ul><font color="#000080"><pre>
+?- X is 16 >> 3.
+X = 2 
+yes
+</pre></font></ul>
+
+<H3><A NAME="ComplementX"></A><FONT COLOR="#000080">\ X</FONT></H3>
+
+<P><!AMZI_INDEX= Complement; \ >Evaluates to the bitwise complement of
+X (i.e., all those bits which were 1 become 0 and vice versa). </P>
+<ul><font color="#000080"><pre>
+?- X is \ 1.
+X = -2 
+yes
+
+?- X is \ -2.
+X = 1 
+yes
+</pre></font></ul>
+
+<H3><A NAME="XxorY"></A><FONT COLOR="#000080">X xor Y</FONT></H3>
+
+<P><!AMZI_INDEX= Shift; xor>Evaluates to X exclusively or'd with Y.</P>
+<ul><font color="#000080"><pre>
+?- X is 3 xor 2.
+X = 1 
+yes
+</pre></font></ul>
+
+<H2><A NAME="TrigonometryFunctions"></A><font color="#0000ff">Trigonometry Functions</font></H2>
+<!AMZI_INDEX= Trigonometry Functions>
+
+
+<p>The trigonomety functions all work with radians. You can use the built-in constants, 
+  degtorad and radtodeg to convert from radians to degrees and back.</p>
+<ul><font color="#000080"><pre>
+?- X is sin( 30 * degtorad ).
+X = 5.000000e-001 
+yes
+
+?- X is radtodeg * asin( 1/2 ).
+X = 3.000000e+001 
+yes
+</pre></font></ul>
+<p>The trigonometry functions all work internally using double precision floating point numbers. If the 'decimals' Prolog flag is set to 'real', then the answer is converted to a real, but there will only be 15 digits of accuracy.</p>
+
+<H3><A NAME="sinX"></A><FONT COLOR="#000080">sin(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  sin><B>sin</B> evaluates to the sine of X (in radians).
+</P>
+
+<H3><A NAME="cosX"></A><FONT COLOR="#000080">cos(X)</FONT></H3>
+
+<P><!AMZI_INDEX=   cos><B>cos</B> evaluates to the cosine of X (in radians)
+</P>
+
+<H3><A NAME="tanX"></A><FONT COLOR="#000080">tan(X)</FONT></H3>
+
+<P><!AMZI_INDEX= tan><B>tan</B> evaluates to the tangent of X (in radians). </P>
+
+<H3><A NAME="asinX"></A><FONT COLOR="#000080">asin(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  asin><B>asin</B> evaluates to the angle (in radians)
+whose arcsine is X. </P>
+
+<H3><A NAME="acosX"></A><FONT COLOR="#000080">acos(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  acos><B>acos</B> evaluates to the angle (in radians)
+whose arccosine is X. </P>
+
+<H3><A NAME="atanX"></A><FONT COLOR="#000080">atan(X)</FONT></H3>
+
+<P><!AMZI_INDEX= atan><B>atan</B> evaluates to the angle (in radians) whose
+arctangent is X. </P>
+<H2><A NAME="MathematicalFunctions"></A><font color="#0000ff">Mathematical Functions</font></H2>
+<!AMZI_INDEX= Mathematical Functions>
+
+<H3><A NAME="absX"></A><FONT COLOR="#000080">abs(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  abs><B>abs</B> evaluates to the absolute value of X. </P>
+
+<H3><A NAME="ceilingX"></A><FONT COLOR="#000080">ceiling(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  ceiling><B>ceiling</B> evaluates to the smallest integer >= X. </P>
+
+<H3><A NAME="expX"></A><FONT COLOR="#000080">exp(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  exp><B>exp</B> evaluates to e raised to the power of
+X evaluated. </P>
+
+<H3><A NAME="floatX"></A><FONT COLOR="#000080">float(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  float><B>float</B> converts X to a double precision floating
+point number. </P>
+
+<H3><A NAME="floorX"></A><FONT COLOR="#000080">floor(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  floor><B>floor</B> evaluates to the largest integer =< X. </P>
+
+<H3><A NAME="integerX"></A><FONT COLOR="#000080">integer(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  integer><B>integer</B> converts X to an integer (truncating
+any fractional part). </P>
+
+<H3><A NAME="lnX"></A><FONT COLOR="#000080">ln(X), log(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  ln, log><B>ln and log</B> both evaluate to the natural log (loge()) of X evaluated. Use log10(X) for log base 10.
+</P>
+
+<H3><A NAME="log10X"></A><FONT COLOR="#000080">log10(X)</FONT></H3>
+
+<P><!AMZI_INDEX= log10><B>log10</B> evaluates to the natural log (loge()) of X evaluated. Use log10(X) for log base 10.
+</P>
+
+<H3><A NAME="realX"></A><FONT COLOR="#000080">real(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  real><B>real</B> converts X to a real number.
+</P>
+
+<H3><A NAME="roundX"></A><FONT COLOR="#000080">round(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  round><B>round</B> rounds X to the nearest integer and returns that value.
+</P>
+
+<H3><A NAME="signX"></A><FONT COLOR="#000080">sign(X)</FONT></H3>
+
+<P><!AMZI_INDEX= sign><B>sign</B> evaluates to 1 for positive numbers and -1 for negative numbers. </P>
+
+<H3><A NAME="sqrtX"></A><FONT COLOR="#000080">sqrt(X)</FONT></H3>
+
+<P><!AMZI_INDEX= sqrt><B>sqrt</B> evaluates to the square root of X. When X is 
+  a real (infinite precision) number, the fractional precision is limited by the 
+  setting of the Prolog flag, <a href="pug_runtime.htm#SettableFlags">epsilon</a>.</P>
+
+<H2><A NAME="BuiltinAtoms"></A><font color="#0000ff">Built-in Atoms</font></H2>
+
+<P><!AMZI_INDEX= Built-In Atoms; Atoms; cputime; e; pi; random; radtodeg; degtorad; inf;>There are a number 
+  of built-in atoms, which have predetermined values that can be used in arithmetic 
+  expression. </P>
+
+<DL> 
+  <DT><B>cpuclock</B> </DT>
+  <DD>A an integer with the number of milliseconds ticks expired. It is useful 
+    for timing functions, for example: </DD>
+  <DD><font color="#000080">
+    <pre>?- T1 is cpuclock, dothing, T is (T1 - cpuclock)/1000, write(time:T). </pre>
+    </font></DD>
+  <DD>The predicate<a href="ref_system.htm#timerTicks"> timer/1</a> provides a 
+    similar function.</DD>
+  <DT><B>cputime</B> </DT>
+  <DD>A floating point number with the number of CPU seconds expired. It is useful 
+    for timing functions, for example: </DD>
+  <DD><font color="#000080">
+    <pre>?- T1 is cputime, dothing, T is T1 - cputime, write(time:T).</pre>
+    </font> </DD>
+  <DD>The predicate<a href="ref_system.htm#timerTicks"> timer/1</a> provides a 
+    similar function.</DD>
+  <DT><B>e </B></DT>
+  <DD>The value &quot;e&quot; (2.718281828459045) </DD>
+  <DT><B>pi </B></DT>
+  <DD>The value &quot;pi&quot; (3.141592653589793) </DD>
+  <DT><B>inf </B></DT>
+  <DD>A value representing a floating point number larger than the largest possible
+  representation, displayed as 1.#INF.</DD>
+  <DD><font color="#000080">
+    <pre>?- X is inf.
+	X = 1.#INF</pre>
+    </font></DD>
+
+  <DT><B>degtorad </B></DT>
+  <DD>The constant for converting degrees to radians, useful for trig functions. 
+    2*pi/360. </DD>
+  <DT><B>radtodeg </B></DT>
+  <DD>The constant for converting radians to degrees, useful for trig functions. 
+    360/2*pi. </DD>
+  <DT><B>random</B> </DT>
+  <DD>A random floating point number &gt;= 0.0 and &lt; 1.0. For example, here's 
+    how to generate random rolls of 6-sided dice:</DD>
+  <DD><font color="#000080">
+    <pre>ROLL is integer( random*6 + 1 )</pre>
+    </font></DD>
+  <DD>The seed (start) of the random sequence is always the same, but you can 
+    change it using <b>seed_random/1</b>. See below.</DD>
+</DL>
+
+<H3><A NAME="seedrandomI"></A><FONT COLOR="#000080">seed_random(I)</FONT></H3>
+
+<P><!AMZI_INDEX=  seed_random; Random Numbers><B>seed_random/1</B> is a predicate 
+  that seeds the random number generator with an integer argument. Random numbers, 
+  by default, always start from the same seed. This is often good for generating 
+  repeating test runs of an application. But non-test use of the program might 
+  require different random sequences each time. Here is one way to generate a 
+  unique seed at the start of a program: </P>
+<ul><font color="#000080"><pre>
+main :-
+  date(YEAR,MON,DAY),
+  time(HOUR,MIN,SEC),
+  SEED is YEAR + MON + DAY + HOUR + MIN + SEC + cpuclock,
+  seed_random(SEED),
+  start_work...
+</pre></font></ul>
+
+<h2><a name="NumberTypes"></a><font color="#0000ff">Number Types</font></h2>
+<!AMZI_INDEX=  Number Types; Integer; Float(single);
+Float(double); Real(fixed); Real(long)>
+<p>Internally, Amzi! uses five types of numbers (see <a href="ref_terms.htm#Numbers">overview</a>):</p>
+<ul>
+  <li><b>Integers</b> - Classic 32-bit (on 32-bit machines) integers ranging from 
+    -2,147,483,648 to 2,147,483,647. Integers are stored efficiently in Prolog.</li>
+  <li><b>Float(single)</b> - Classic 32-bit floating point numbers, with ranges 
+    (depending on machine) like 3.4e +/- 38 and approximately 7 digits of precision. 
+    Single precision floats are stored efficiently in Prolog.</li>
+  <li><b>Float(double)</b> - Classic 64-bit floating point numbers, with ranges 
+    (depending on machine) like 1.7e +/- 308 and approximately 15 digits of precision. 
+    Double precision floats require more overhead to store in Prolog.</li>
+  <li><b>Real(fixed)</b> - Decimal numbers with 9 digits on either side of the 
+    decimal place so they range from +- 999999999.999999999. Fixed real numbers 
+    are stored efficiently in Prolog.</li>
+  <li><b>Real(long)</b> - Decimal numbers with infinite precision on either side 
+    of the decimal place. Long real numbers require more overhead to store in 
+    Prolog. Internally, long real numbers are stored as arrays of <b>gigadigits</b>, 
+    or <b>gigits</b>, which range from 0 to 999999999. In other words, they are 
+    stored as numbers with base one billion, 10**9.</li>
+</ul>
+<p>Only one type of float is used in a session, either single or double, depending 
+  on how the Prolog flag, <b>floats</b>, is set. Single precision floats can be 
+  stored in an internal Prolog cell, which is efficient, whereas double precision 
+  floats require their own storage.</p>
+<p>Both types of reals are used. The fixed reals are just a special case of a 
+  real that can fit into an internal Prolog cell, which is more efficient, rather 
+  than requiring its own storage.</p>
+
+<p>The following predicates that can be used for type testing of numbers.</p>
+<H3><A NAME="numerictypeNT"></A><FONT COLOR="#000080">numeric_type(N,T)</FONT></H3>
+
+<P><!AMZI_INDEX=  numeric_type/2><B>numeric_type/2</B> returns the type, T, of 
+  the number N. The type returned can be: integer, single_float, double_float, 
+  float, fixed_real, long_real, real. On backtracking, both the specific and more 
+  general types will be returned.</P>
+<ul><font color="#000080"><pre>
+?- numeric_type(3.3e, T).
+T = single_float ;
+T = float ;
+no
+
+?- numeric_type(3.3r, T).
+T = fixed_real ;
+T = real ;
+no
+</pre></font></ul>
+<p>numeric_type/2 fails if N is not a number, or if T is specified with the wrong 
+  type.</p>
+<p>Here is an example, showing the use of the Prolog flags, decimals and floats, and numeric_type.</p>
+<ul><font color="#000080"><pre>
+?- current_prolog_flag(decimals, D).
+D = float 
+yes
+
+?- current_prolog_flag(floats, F).
+F = single 
+yes
+
+?- X = 3.3, numeric_type(X,T).
+X = 3.3
+T = single_float 
+yes
+
+?- set_prolog_flag(decimals, real).
+yes
+
+?- X = 3.3, numeric_type(X,T).
+X = 3.3
+T = fixed_real 
+yes
+
+?- X = 3.3e, numeric_type(X,T).
+X = 3.3
+T = single_float 
+yes
+</pre></font></ul>
+
+<H3><A NAME="integerN"></A><FONT COLOR="#000080">integer(N)</FONT></H3>
+
+<P><!AMZI_INDEX=  integer/1><B>integer/1</B> succeeds if N is of numeric type 'integer'.  Note that integer/1 is a type test. To test if a decimal number is mathematically an integer, use is_integer/1.</P>
+<ul><font color="#000080"><pre>
+?- integer(3).
+yes
+
+?- integer(3.0e).
+no
+</pre></font></ul>
+<H3><a name="is_fraction"></a><font color="#000080">is_fraction(N)</font></H3>
+<p> 
+  <!AMZI_INDEX=  is_fraction/1>
+  <b>is_fraction/1</b> succeeds if N is mathematically a fraction.</p>
+<H3><A NAME="isintegerN"></A><FONT COLOR="#000080">is_integer(N)</FONT></H3>
+
+<P><!AMZI_INDEX=  is_integer/1><B>is_integer/1</B> succeeds if N is mathematically an integer, so both 3 and 3.0 succeed as arguments.</P>
+<ul><font color="#000080"><pre>
+?- is_integer(3).
+yes
+
+?- is_integer(3.0e).
+yes
+</pre></font></ul>
+
+<H3><a name="is_odd"></a><font color="#000080">is_odd(N)</font></H3>
+<p> 
+  <!AMZI_INDEX=  is_odd/1>
+  <b>is_odd/1</b> succeeds if N is mathematically an odd number.</p>
+<h3><a name="is_number"></a><font color="#000080">is_number(N)</font></h3>
+<p> 
+  <!AMZI_INDEX=  is_number/1>
+  <b>is_number/1</b> succeeds if N is a number.</p>
+<H3><A NAME="floatN"></A><FONT COLOR="#000080">float(N)</FONT></H3>
+
+<P><!AMZI_INDEX=  float/1><B>float/1</B> succeeds if N is of numeric type 'float', either single or double.</P>
+
+<H3><A NAME="single_floatN"></A><FONT COLOR="#000080">single_float(N)</FONT></H3>
+
+<P><!AMZI_INDEX=  single_float/1><B>single_float/1</B> succeeds if N is of numeric type 'single_float'.</P>
+
+<H3><A NAME="double_floatN"></A><FONT COLOR="#000080">double_float(N)</FONT></H3>
+
+<P><!AMZI_INDEX=  double_float/1><B>double_float/1</B> succeeds if N is of numeric type 'double_float'.</P>
+
+<H3><A NAME="realN"></A><FONT COLOR="#000080">real(N)</FONT></H3>
+
+<P><!AMZI_INDEX=  real/1><B>real/1</B> succeeds if N is of numeric type 'real', either fixed or long.</P>
+
+<H3><A NAME="fixed_realN"></A><FONT COLOR="#000080">fixed_real(N)</FONT></H3>
+
+<P><!AMZI_INDEX=  fixed_real/1><B>fixed_real/1</B> succeeds if N is of numeric type 'fixed_real'.</P>
+
+<h3><a name="long_realN"></a><font color="#000080">long_real(N)</font></h3>
+<p><!AMZI_INDEX=  long_real/1><b>long_real/1</b> succeeds if N is of numeric type 
+  'long_real'.</p>
+
+<h2><a name="MixedMode"></a><font color="#0000ff">Mixed Mode Expressions</font></h2>
+<!AMZI_INDEX=  Mixed Mode Math>
+<p>Mixed mode expressions, involving integers and/or floats and/or reals, will 
+  promote the result to the more complex type. This means that the result of an 
+  expression will only be an integer if all the variables are integers, and any 
+  functions called can return an integer. Some functions, such as trigonometric 
+  ones, can only return floating point or real values.</p>
+<p>Mathematical expressions involving reals will always see if the answer can 
+  be stored as a fixed real instead of as a long real.</p>
+<p>Mathematical expressions involving floats are always calculated using double 
+  precision, but the result is stored as either single or double depending on 
+  the setting of the Prolog flag, 'floats'.</p>
+<p>Mixed mode involving floats and reals will promote to whichever one is specified 
+  as the default in the 'decimals' Prolog flag.</p>
+
+<h2><a name="MathematicalGames"></a><font color="#0000ff">Mathematical Games</font></h2>
+<!AMZI_INDEX=  Mathematical Games; prime numbers; modulo arithmetic; rational arithmetic; series calculations; continued fractions; fractions>
+
+<p>Thanks to our resident mathematician, Ray Reeves, there are a number of features 
+  in Amzi! Prolog designed for mathematical experimentation. Many of these are 
+  illustrated in his library of samples, <a href="../../samples/chezray/doc.html">ChezRay</a>. 
+  Other comments follow:</p>
+<ul>
+  <li><a href="#modulo_arithmetic">Modulo Arithmetic</a></li>
+  <li><a href="#NotesOnRealsAndGigdigits">Notes on Reals and Gigadigits (gigits)</a></li>
+  <li><a href="#PrimeNumbers">Prime Numbers</a></li>
+  <li><a href="#rational_numbers">Rational Numbers</a></li>
+  <li><a href="#ContinuedFractions">Continued Fractions</a></li>
+</ul>
+<h3><font color="#000080"><a name="modulo_arithmetic"></a>Modulo Arithmetic</font></h3>
+<p>Using arithmetic on the domain of integers (Z) it is a straightforward matter 
+  to perform calculations that do not involve numbers exceeding 32 bits (including 
+  the sign bit). However, many expressions involve the quotient of two integers 
+  and even though the sought-for solution is within that range the sub-expressions 
+  may exceed it. That is where modulo arithmetic comes in.</p>
+<p>It may come as a suprise to hear that if all calculations are performed modulo 
+  some prime (domain Zm) and the true solution is less than that prime then the 
+  result will be the same.</p>
+<p>To this end, Amzi! Prolog has a 'modulo' flag which defaults to zero but can 
+  be set to some integer. If it is set to integer M not zero then the arithmetic 
+  operations +, -, * will be performed modulo M. You will notice that // was not 
+  included among those operators. This is because when M is prime the operations 
+  are being performed on an integer ring, and for every element in that ring there 
+  is a unique inverse. Multiplying a number by it's inverse corresponds to division 
+  in Z arithmetic.</p>
+<p>Built in to Amzi! Prolog is a set of primes which are as large as possible 
+  and of a particularly useful form for abstract fourier transforms, called fourier 
+  primes.</p>
+<blockquote>
+  <pre><font color="#000080">fourierPrime(Index, Prime)</font></pre>
+</blockquote>
+<p>At present, the Index runs from 1 to 11, the highest first. The inverse of 
+  an element E is found with the (bilateral) primitives:</p>
+<blockquote>
+  <pre><font color="#000080">inverse(E, M, Inverse)
+inverse(E, Inverse)</font></pre>
+</blockquote>
+<p>In the second case the modulo flag value is used for M.</p>
+<p>Some typical applications of the method are nPr/2, nCr/2, mS1r/2 and mS2r/2 
+  from my integer library, which count permutations, combinations and subsets. 
+  It is also used in the solution of simultaneous equations with integer coefficents, 
+  by means of determinants.</p>
+<p>If the solution itself is not within the 32-bit range the method can still 
+  be used with a set of primes, and from the set of solutions so obtained the 
+  Chinese Remainder Algorithm (cra) can be used to find the large unique solution. 
+  This works provided the product of the primes employed is greater than the solution, 
+  which in turn requires some insight into the probable result.</p>
+<p>To avoid that there is a cra which increments the prime set automatically until 
+  redundancy is detected. The primes are drawn from the set of fourier primes. 
+  When the result is large it cannot be denoted by a single integer, so it is 
+  presented as a list of gigadigits, which are integers less than 1 billion.</p>
+<p>Each gigadigit represents nine decimal digits, and if there are less than that 
+  a padding of prefixed zeroes is implied. This format is used because it conforms 
+  to a denotation of a 'real' integer, which is a new data type that Amzi! supports 
+  for large numbers. Thus the cra can be embedded in real data expressions, if 
+  required, or simply printed out in a real number format.</p>
+
+<h3><font color="#000080"><A NAME="NotesOnRealsAndGigdigits"></A>Notes on Reals 
+  and Gigadigits</font></h3>
+<p>Amzi! Prolog allows arithmetic of high precision. Real numbers are kept in 
+  a non-standard floating point format with a mantissa and exponent. The mantissa 
+  is an integer in an array of up to 2048 32-bit gigadigits. The exponent is a 
+  signed integer in twelve bits.</p>
+<p>For fun, run the following program which goes forever calculating factorials 
+  of increasingly large numbers. You'll need to [CTRL-Break] to end it. Note that 
+  the G exponents refer to 9 zeroes, not one, 1g1 is 1.0e9.</p>
+<blockquote>
+  <pre><font color="#000080">main :-
+  go(1,1).
+
+go(N,T) :-
+  write(N:T), nl,
+  NN is N + 1,
+  TT is T * NN,
+  go(NN, TT). </font></pre>
+</blockquote>
+<p>A real number is said to be normalized if there are no leading zeros and no 
+  trailing zeros in the mantissa, unless the real number is actually zero. The 
+  result of any real arithmetic operation is normalized.</p>
+<p>The base of the exponentiation is 1,000,000,000 (1 billion), so the numbers 
+  in the exponent are typically small. It's purpose is to efficiently pack large 
+  numbers with leading or trailing gigadigits that are zeroes.</p>
+<p>A gigadigit is a positive integer less than 1 billion. Think of the decimal 
+  digits in the denotation as the name of that gigadigit. There are 1 billion 
+  names.</p>
+<p>Gigadigits do not totally exploit 32-bit words but this has practical advantages 
+  because they facilitate the interface between decimal numbers and 32-bit words. 
+  Given an ordinary arithmetic number, each block of nine decimal digits in either 
+  direction from the decimal point denotes a gigadigit. Conversely, displaying 
+  a real number is just a concatenation of the displays of the individual digits.</p>
+<p>Generally, familiar integer operations will work on real integers, but 'for' 
+  (and maybe other things) have a limited range of 1 gigadigit.</p>
+<p>Integers and floats are still supported in addition to reals and are denoted 
+  the same way as before, but denotation of a number beyond the range of an integer 
+  will automatically produce a real. Integer or float denotions ending in 'G' 
+  will also produce a real.</p>
+<p>In addition, there is an exponential notation using the letter 'g' to denote 
+  reals. Thus 1g-1 denotes 0.000000001, and 1g2 succintly denotes 1 000000000 
+  000000000.</p>
+<p>A real number may also be denoted by a prolog list of gigadigits (bounded integers) 
+  and optionally containing a decimal point ('.'), and optionally containing a 
+  leading negative sign ('-'). The advantage is that no leading (decimal) zeroes 
+  in the gigadigits are required or displayed.</p>
+<p>Real numbers are normally displayed in ordinary arithmetic style, with no punctuation 
+  or spaces. However, <b>display/1</b> will display them as lists, so that long 
+  numbers are more easily read. Remember that each element in such a list denotes 
+  nine decimal digits, so if less than that are displayed then there are implicit 
+  leading zeros. eg: </p>
+<blockquote>
+  <pre><font color="#000080">display([1,1]*[1,1]). 
+[1,2,1] % ie: 1000000002000000001</font></pre>
+</blockquote>
+<p><b><!AMZI_INDEX= integer; real; is_integer; fraction></b>As always, <b>integer/1</b> succeeds 
+  only if the argument is of type integer. <b>real/1</b> is a predicate that succeeds 
+  if the argument is of type real. To determine if a number (real, float or integer) 
+  is a mathematical integer use <b>is_integer/1</b>. <b>is_fraction/1</b> is a 
+  predicate that succeeds if the argument is of type real (or float) and it's 
+  exponent is negative.</p>
+<p><b><!AMZI_INDEX= is_odd></b>Real bit operations 
+  are limited to xor, but the predicate<b> is_odd/1</b> will check the last bit 
+  of an integer or real in column zero.</p>
+<p> <b><!AMZI_INDEX= set_prolog_flag; delta (flag)></b>Real number division 
+  can produce an infinite length, so the quotient length is limited to: length(num) 
+  + length(denom) + delta where delta is the current value of the <b>set_prolog_flag</b> 
+  delta (initially 2). ie. the precision of the quotient is limited to the precision 
+  of the given arguments plus delta.</p>
+<p><b><!AMZI_INDEX= truncate; set_prolog_flag; epsilon (flag)>truncate/2</b> attempts 
+  to derive a real from a real with reduced length such that the new exponent 
+  is not less than that defined by the <b>set_prolog_flag</b> epsilon (initially 
+  -2). However, it will not reduce the number of gigadigits to be less than two. 
+  The main purpose of epsilon is to provide the user with a stopping criterion 
+  when generating convergent series.</p>
+<p><b><!AMZI_INDEX= integer_real; float_real></b>Mixed mode arithmetic involving a real and an integer 
+  or float works by internally promoting all operands to reals, if necessary. 
+  There are explicit <b>integer_real/2</b> and <b>float_real/2</b> bilateral primitives 
+  for the user. Note: converting from real to integer or float may not succeed.</p>
+<p><b><!AMZI_INDEX= nth></b>It is anticipated that real arrays may be useful 
+  beyond real number representation, and then a way of indexing into the array 
+  may be needed. The tool for this purpose is:</p>
+<blockquote>
+  <pre><font color="#000080">nth(Index, Real, Gigit)</font></pre>
+</blockquote>
+<p>For example:</p>
+<blockquote> 
+  <pre><font color="#000080">?- nth(1, 234093420983203.24309823409823490823409g, X). <br>X = 234090000</font></pre>
+</blockquote>
+<p>The internal format of a real array is:</p>
+<blockquote>
+  <pre><font color="#000080">Descriptor, LSG, ... , MSG
+0,          1,         Length</font></pre>
+</blockquote>
+<p>where Descriptor is packed with Exponent, Sign and Length, LSG is the least 
+  significant mantissa gigadigit, MSG is the most significant mantissa gigadigit.</p>
+<p>Thus, in nth, the acceptable range of Index for gigadigits is the closed interval 
+  1 to Length, and Index == 0 gets the Descriptor. <b>nth/3</b> can also be applied 
+  to lists. Descriptor may be unpacked with: realDescr(Descriptor, Length, Exponent, 
+  Sign).</p>
+
+<H3><A NAME="PrimeNumbers"></A>
+<FONT COLOR="#000080">Prime Numbers</FONT></H3>
+<!AMZI_INDEX = prime numbers; makeprimes/1; primes/2; prime/2; isPrime/1; primeFactors/2>
+
+<p></p>
+
+<p><strong>makeprimes(N) </strong></p>
+
+<p>Generates offline array of primes up to <strong>N</strong>. </p>
+
+<p>Each new allocation will free any old one, so prime is a unique array that
+needs no handle to access. </p>
+
+<p></p>
+
+<p><strong>primes(LastIndex, HighPrime) </strong></p>
+
+<p><strong>HighPrime</strong> is the prime at the <strong>LastIndex</strong>
+of the prime array. </p>
+
+<p></p>
+
+<p><strong>prime(Index, Prime)</strong> </p>
+
+<p><strong>Prime</strong> is the prime at the <strong>Index</strong> of the
+prime array. </p>
+
+<p></p>
+
+<p><strong>isPrime(P) </strong></p>
+
+<p>Naive test for prime, using asserted prime array. </p>
+
+<p></p>
+
+<p><strong>primeFactors(N, F) </strong></p>
+
+<p>Naive trial and error factoring using prime array. </p>
+
+<p><strong>F</strong> is a list of  the prime factors of  <strong>N</strong>,
+in the form: [P**Exponent, ... ]. </p>
+
+<blockquote>
+  <pre><font color="#000080">?- primes(20).<br></font><font color="#000080">?- M = 2130706433, M1 is M - 1, primeFactors(M1,X).<br></font><font color="#000080">X = [2 ** 24,127 ]</font></pre>
+</blockquote>
+<h3><font color="#000080"><a name="rational_numbers"></a>Rational Numbers</font></h3>
+<p>
+  <!AMZI_INDEX = prodq/3; sumq/3; compareq/3>
+  These built-in predicates support rational number arithmetic, where a rational 
+  number is represented by a numerator and denominator using the '/' operator. 
+  The predicates always return the simplest form of the rational number.</p>
+<p><b>prodq/3</b> - can be used to multiply or divide rational numbers. The first 
+  two arguments are the multiplicands, the last the product. At least two of the 
+  three must be bound to either a rational or integer number.</p>
+<p><b>sumq/3</b> - can be used to add and subtract rational numbers.</p>
+<p><b>compareq/3</b> - compares rational numbers for testing. The first two arguments 
+  are the rational numbers, the third is an operator indicating the results of 
+  the comparison.</p>
+<p>Examples:</p>
+<blockquote> 
+  <pre><font color="#000080">?- prodq(2/3,1/2,X).
+X = 1/3 
+yes<br>
+?- prodq(X,1/2,1/3).
+X = 2/3 
+yes<br>
+?- prodq(1/2,X,1/3).
+X = 2/3 
+yes<br>
+?- prodq(16/32,32/64,X).
+X = 1/4 
+yes<br>
+?- compareq(2/3,4/6,OP).
+OP = = 
+yes<br>
+?- compareq(2/3,1/2,OP).
+OP = > 
+yes<br>
+?- compareq(2/3,4/6,>).
+no
+<br>?- sumq(2/3,5/6,X).
+X = 3/2 
+yes
+<br>?- sumq(X,5/6,3/2).
+X = 2/3 
+yes</font>
+</pre>
+</blockquote>
+<H3><A NAME="ContinuedFractions"></A>
+<FONT COLOR="#000080">Continued Fractions</FONT></H3>
+<!AMZI_INDEX = continued fractions; epsilon; truncate/2>
+
+<p></p>
+
+<p>A simple continued fraction of length n may be denoted  by a Prolog list
+of integers in the following form:</p>
+
+<blockquote>
+  <p><font color="#000080">[cf, a0, a1, ... an]</font></p>
+  </blockquote>
+<p></p>
+
+<p>The atom cf is there to distinguish the cf list from an evaluable list of
+gigadigits.</p>
+
+<p>A continued fraction can be produced from a rational fraction q by
+<strong>q_cf/2</strong> , which is a bilateral relationship.</p>
+
+<p></p>
+
+<p>Irrational numbers may be represented by infinite continued fractions
+which repeat over the last p integers, where p is the length of the periodic
+part. Therefore they can be finitely represented. This is done here by
+denoting the periodic part as a sub-list:</p>
+
+<blockquote>
+  <p><font color="#000080">[cf, a0, a2, ... [p0, p1, ...]]</font></p>
+  </blockquote>
+<p></p>
+
+<p>The program rootn.pro denotes the irrational square roots of non-square
+integers up to 50, in this way with sqrtcf/2. This can be transformed to a
+rational with <strong>q_cf</strong> and the rational evaluated as decimal
+with <strong>is</strong>.</p>
+
+<p></p>
+
+<p>Since the evaluation of a periodic continued fraction does not terminate
+we use the prolog flag <strong>epsilon</strong> to determine the desired
+precision. Be aware that the above procedure will be an approximation limited
+by epsilon and so the user should call <strong>truncate/2 </strong>(which
+also consults epsilon) on the result to extract the valid part.</p>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I></I> </P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,129 @@
+# makefile for docs, copies files to be distributed
+
+CP = cp
+MD = -mkdir
+RM = -rm
+XC = cp -Rf
+
+# For unix, $(CP) the file, make these the definitions:
+# CP = cp
+# MD = -mkdir
+# RM = -rm
+# change all / to /
+# put a ; after each command following a cd and remove last cd
+# change xcopy /S /I to cp -Rf
+
+DEV_DIR = $(APLS_SOURCE)
+RUN_DIR = $(APLS_RELEASE)
+DOC_DIR = $(APLS_RELEASE)/docs
+XML_DIR = $(AIDE_SOURCE)/workspace/com.amzi.prolog.help
+ECL_DIR = $(AIDE_SOURCE)/workspace/com.amzi.prolog.help/doc
+ACMP = $(APLS_RELEASE)/bin/acmp.exe
+ALNK = $(APLS_RELEASE)/bin/alnk.exe
+ARUN = $(APLS_RELEASE)/bin/arun.exe
+
+
+docs : _dirs _htmlidx _lsdoc _prodoc _aip _xsip _libsdoc _articles
+	$(CP) amzidoc_eclipse.htm $(RUN_DIR)/docs/amzidoc.htm
+	$(CP) license.txt $(RUN_DIR)/docs
+	$(CP) *.htm $(DOC_DIR)
+	$(CP) amzidoc_eclipse.htm $(ECL_DIR)/amzidoc.htm
+	$(CP) license.txt $(ECL_DIR)
+	$(CP) *.htm $(ECL_DIR)
+	$(CP) amzi_toc.xml $(XML_DIR)
+	$(CP) plugin.xml $(XML_DIR)
+	$(CP) .eclipseextension $(RUN_DIR)/docs/eclipse
+	$(RM) $(DOC_DIR)/amzidoc_eclipse.htm
+	- $(CP) *.gif $(DOC_DIR)
+	- $(CP) *.txt $(DOC_DIR)
+	- $(CP) *.gif $(ECL_DIR)
+	- $(CP) *.txt $(ECL_DIR)
+
+_dirs:
+	$(MD) $(APLS_RELEASE)/docs
+	$(MD) $(APLS_RELEASE)/docs/eclipse
+	$(MD) $(APLS_RELEASE)/docs/eclipse/plugins
+	$(MD) $(APLS_RELEASE)/docs/eclipse/plugins/com.amzi.prolog.doc_1.0.0
+	$(MD) $(APLS_RELEASE)/docs/eclipse/plugins/com.amzi.prolog.doc_1.0.0/doc	
+
+_htmlidx : $(DEV_DIR)/docs/htmlidx/htmlidx.pro $(RUN_DIR)/abin/alib.plm
+	cd $(DEV_DIR)/docs/htmlidx; acmp htmlidx; alnk htmlidx htmlidx list misc
+   
+_lsdoc :
+	$(MD) $(DOC_DIR)/ls
+	$(MD) $(ECL_DIR)/ls
+	$(CP) htmlidx/htmlidx.xpl $(DEV_DIR)/docs/ls/htmlidx.xpl
+	$(CP) htmlidx/htmlidx.cfg $(DEV_DIR)/docs/ls/htmlidx.cfg
+	cd $(DEV_DIR)/docs/ls; arun htmlidx
+	cd $(DEV_DIR)/docs; $(CP) ls/ls_toc.xml $(XML_DIR)
+	cd $(DEV_DIR)/docs; $(CP) ls/*.htm $(DOC_DIR)/ls; $(CP) ls/*.gif $(DOC_DIR)/ls
+	cd $(DEV_DIR)/docs; $(CP) ls/*.htm $(ECL_DIR)/ls; $(CP) ls/*.gif $(ECL_DIR)/ls
+
+_prodoc :
+	$(MD) $(DOC_DIR)/pro
+	$(MD) $(ECL_DIR)/pro
+	$(CP) htmlidx/htmlidx.xpl $(DEV_DIR)/docs/pro/htmlidx.xpl
+	$(CP) htmlidx/htmlidx.cfg $(DEV_DIR)/docs/pro/htmlidx.cfg
+	cd $(DEV_DIR)/docs/pro; arun htmlidx;
+	cd $(DEV_DIR)/docs; $(CP) pro/pro_toc.xml $(XML_DIR)
+	cd $(DEV_DIR)/docs; $(CP) pro/*.htm $(DOC_DIR)/pro; $(CP) pro/*.gif $(DOC_DIR)/pro
+	cd $(DEV_DIR)/docs; $(CP) pro/*.htm $(ECL_DIR)/pro; $(CP) pro/*.gif $(ECL_DIR)/pro
+
+_aip :
+	$(MD) $(DOC_DIR)/aip
+	$(MD) $(ECL_DIR)/aip
+	$(CP) htmlidx/htmlidx.xpl $(DEV_DIR)/docs/aip/htmlidx.xpl
+	$(CP) htmlidx/htmlidx.cfg $(DEV_DIR)/docs/aip/htmlidx.cfg
+	cd $(DEV_DIR)/docs/aip; arun htmlidx
+	cd $(DEV_DIR)/docs; $(CP) aip/aip_toc.xml $(XML_DIR)
+	cd $(DEV_DIR)/docs; $(CP) aip/*.htm $(DOC_DIR)/aip; $(CP) aip/*.gif $(DOC_DIR)/aip
+	cd $(DEV_DIR)/docs; $(CP) aip/*.htm $(ECL_DIR)/aip; $(CP) aip/*.gif $(ECL_DIR)/aip
+
+_xsip :
+	$(MD) $(DOC_DIR)/xsip
+	$(MD) $(ECL_DIR)/xsip
+	$(CP) htmlidx/htmlidx.xpl $(DEV_DIR)/docs/xsip/htmlidx.xpl
+	$(CP) htmlidx/htmlidx.cfg $(DEV_DIR)/docs/xsip/htmlidx.cfg
+	cd $(DEV_DIR)/docs/xsip; arun htmlidx
+	cd $(DEV_DIR)/docs; $(CP) xsip/xsip_toc.xml $(XML_DIR)
+	cd $(DEV_DIR)/docs; $(CP) xsip/*.htm $(DOC_DIR)/xsip; $(CP) xsip/*.gif $(DOC_DIR)/xsip; $(XC) xsip/code $(DOC_DIR)/xsip/code
+	cd $(DEV_DIR)/docs; $(CP) xsip/*.htm $(ECL_DIR)/xsip; $(CP) xsip/*.gif $(ECL_DIR)/xsip; $(XC) xsip/code $(ECL_DIR)/xsip/code
+
+
+_libsdoc :
+	$(MD) $(DOC_DIR)/libs
+	$(MD) $(ECL_DIR)/libs
+	$(CP) $(DEV_DIR)/libs/date_time.pro libs/date_time.htm
+	$(CP) $(DEV_DIR)/libs/list.pro libs/list.htm
+	$(CP) $(DEV_DIR)/libs/misc.pro libs/misc.htm
+	$(CP) $(DEV_DIR)/libs/xml.pro libs/xml.htm
+	$(CP) libs/libs_toc.xml $(DOC_DIR)/libs
+	$(CP) libs/doc.html $(DOC_DIR)/libs
+	$(CP) libs/*.htm $(DOC_DIR)/libs
+	$(CP) libs/libs_toc.xml $(ECL_DIR)/libs
+	$(CP) libs/doc.html $(ECL_DIR)/libs
+	$(CP) libs/*.htm $(ECL_DIR)/libs
+	$(CP) libs/*.xml $(XML_DIR)
+
+
+_articles :
+	$(MD) $(DOC_DIR)/articles
+	$(CP) articles/doc.html $(DOC_DIR)/articles
+	$(MD) $(ECL_DIR)/articles
+	$(CP) articles/doc.html $(ECL_DIR)/articles
+	$(CP) articles/articles_toc.xml $(XML_DIR)
+	$(CP) articles/*.htm $(DOC_DIR)/articles
+	$(CP) articles/*.gif $(DOC_DIR)/articles
+	$(CP) articles/*.htm $(ECL_DIR)/articles
+	$(CP) articles/*.gif $(ECL_DIR)/articles
+
+clean:
+	cd $(DEV_DIR)/docs/htmlidx; $(RM) *.plm; $(RM) *.xpl; $(RM) temp1.pro; $(RM) temp2.pro
+	cd $(DEV_DIR)/docs/ls; $(RM) *.plm; $(RM) *.xpl; $(RM) temp1.pro; $(RM) temp2.pro; $(RM) *.cfg
+	cd $(DEV_DIR)/docs/pro; $(RM) *.plm; $(RM) *.xpl; $(RM) temp1.pro; $(RM) temp2.pro; $(RM) *.cfg
+	cd $(DEV_DIR)/docs/aip; $(RM) *.plm; $(RM) *.xpl; $(RM) temp1.pro; $(RM) temp2.pro; $(RM) *.cfg
+	cd $(DEV_DIR)/docs/news; $(RM) *.plm; $(RM) *.xpl; $(RM) temp1.pro; $(RM) temp2.pro; $(RM) *.cfg
+	cd $(DEV_DIR)/docs/libs; $(RM) *.plm; $(RM) *.xpl; $(RM) temp1.pro; $(RM) temp2.pro; $(RM) *.cfg
+	cd $(DEV_DIR)/docs/articles; $(RM) *.plm; $(RM) *.xpl; $(RM) temp1.pro; $(RM) temp2.pro; $(RM) *.cfg
+	
+

@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Prolog Directives</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<h1><A NAME="PrologDirectives"></A><FONT COLOR="#D2AA00">Prolog Directives</FONT></h1>
+
+<P>Amzi! has a number of directives that specify operators, properties of Prolog 
+  predicates, goals to be executed and the organization of predicates into modules. 
+  The module directives are described in <a href="ref_modules.htm">Modules</a>. 
+  The rest of the directives are described here:</P>
+<ul>
+  <li>discontiguous</li>
+  <li>dynamic, indexed, sorted</li>
+  <li>multifile</li>
+  <li>ensure_loaded</li>
+  <li>op</li>
+  <li>set_prolog_flag</li>
+  <li>latent expressions</li>
+</ul>
+<H2> <a name="DynamicClausesinCompiledCode"></a><font color="#0000FF">Dynamic 
+  Clauses in Compiled Code</font></H2>
+<p>
+  <!AMZI_INDEX = Compiling; Clauses; dynamic>
+  Sometimes it is desireable to have 
+some predicates in an application be static (compiled) and others dynamic  (interpreted).
+ The dynamic directives, <strong><a href="ref_logicbase.htm#DynamicPredicateStorageOptions">dynamic, sorted, indexed</a>,</strong> let you tell the compiler 
+which clauses are to remain dynamic in the logicbase, so they can be manipulated 
+dynamically by the application.</p>
+
+<h2> <a name="MultifileClauses"></a><font color="#0000FF">Multifile Directive</font></h2>
+<!AMZI_INDEX = Compiling; Clauses; multifile>Sometimes it is desireable to have 
+the clauses that define a predicate to be split between several files. If this 
+is the case, you must let the compiler know with the <b>multifile</b> directive. 
+<p>It's syntax is: 
+<ul>
+  <pre><font color="#000080">:- multifile f1/a1, f2/a2, ... fn/an.</font></pre>
+</ul>
+You can have multiple multifile directives if you prefer. 
+<h2> <a name="DiscontiguousClauses"></a><font color="#0000FF">Discontiguous Directive</font></h2>
+<!AMZI_INDEX = Compiling; Clauses; discontiguous; Large Predicates>
+<p>The discontiguous directive is needed when the clauses of a static (compiled) 
+  predicate cannot be compiled as a single unit. This happens when the clause 
+  definitions are:</p>
+<ul>
+  <li>Not contiguous</li>
+  <li>Exceed the maximum number of clauses</li>
+</ul>
+<p>So, if the clauses are discontiguous, or there are a very large number of clauses 
+  for a predicate, that predicate needs to be declared as <b>discontiguous</b>. 
+</p>
+<p>It's syntax is: 
+<ul>
+  <pre><font color="#000080">:- discontiguous f1/a1, f2/a2, ... fn/an.</font></pre>
+</ul>
+<p>You can have multiple discontiguous directives if you prefer. </p>
+<p><i><img src="arrowrt.gif" height=18 width=18 align=BOTTOM> Large numbers of 
+  clauses (1000s) usually only occur for data/facts, and those clauses might better 
+  be handled <a href="ref_logicbase.htm#DynamicPredicateStorageOptions">dynamically, 
+  maybe as indexed or sorted</a> if performance is an issue.</i></p>
+<h2> <a name="Include"></a><font color="#0000FF">Include Directive</font> </h2>
+<p><!AMZI_INDEX = include>The include directive consults a Prolog source file 
+  (.pro) at the point where the include is specified. In the interpreter it is 
+  consulted. In the compiler, it is read in and compiled.</p>
+<blockquote>
+  <pre><font color="#000080">:- include('myops.pro').</font></pre>
+</blockquote>
+
+<h2> <a name="EnsureLoaded"></a><font color="#0000FF">Ensure Loaded Directive</font> </h2>
+<p><!AMZI_INDEX = ensure_loaded>The ensure_loaded directive makes sure that the mentioned 
+  file is loaded. In a consulted file, it acts just like a latent expression to 
+  load the named .plm file. In compiled code, whether in a .plm or .xpl, it waits 
+  until the end of a load, and then checks to see if the named file has been loaded. 
+  If not, it loads it.</p>
+<p>It is particularly useful for library modules, ensuring that they are there 
+  whether the program is being tested in the interpreter or run as a compiled 
+  program. </p>
+<blockquote>
+  <pre><font color="#000080">:- ensure_loaded(list).</font></pre>
+</blockquote>
+<p>Typically, you will need an import directive as well, such as:</p>
+<blockquote>
+  <pre><font color="#000080">:- import(list).</font></pre>
+</blockquote>
+<p>for the example above. See <a href="ref_modules.htm">modules</a> for details.</p>
+
+
+<h2> <a name="Operators"></a><font color="#0000FF">Op Directive</font> </h2>
+<p><!AMZI_INDEX = op>Prolog operators are defined with the op/3 directive. This 
+  is described fully under <a href="ref_terms.htm#Operators">Prolog Terms</a>. 
+  The op/3 directive establishes operator definitions for the program. It is both 
+  a compiler directive and a latent expression, so its result is used both during 
+  compilation and running.</p>
+
+<h2> <a name="PrologFlag"></a><font color="#0000FF">Set Prolog Flag</font> </h2>
+<p><!AMZI_INDEX = set_prolog_flag/2>Allows the setting of Prolog flags. It is both 
+  a compiler directive and a latent expression, so its result is used both during 
+  compilation and running. The example sets the default behavior for processing decimal numbers for both the compiler and the runtime.</p>
+<blockquote>
+  <pre><font color="#000080">:- set_prolog_flag(decimals, real).</font></pre>
+</blockquote>
+
+<h2> <a name="LatentExpressions"></a><font color="#0000FF">Latent Expressions</font></h2>
+<!AMZI_INDEX = Compiling; Latent Expressions; op>
+<p>A latent expression is a term which again represents a goal. However latent 
+  expressions are executed <i>as the file is loaded</i>. A latent expression is 
+  indicated using the prefix <b>:-</b>. The compiler translates :- body. to the 
+  special goal latent_exp :- body. The Prolog loader knows that as it encounters 
+  latent_exp :- .. clauses they are to be <i>executed</i> and <i>not added</i> 
+  to the logicbase.</p>
+
+<p>For example consider: 
+<ul>
+  <pre><font color="#000080">:- write('Starting loading the file\n').
+a :- b.
+:- write('Half way through\n').
+b :- c.
+:- write('All done').</font></pre>
+</ul>
+This file is compiled. When it is loaded (either as part of an application or 
+as a single Prolog Object file) it will print out three lines at the terminal: 
+<ul>
+  <pre><font color="#000080">Starting loading the file
+Half way through
+All done</font></pre>
+</ul>
+<p>while loading the two clauses. Then the listener will be entered.</p>
+<p>Because latent expressions are run as they are encountered, if they refer to 
+  any predicates that are NOT built-in predicates, then those predicates must 
+  be defined before the latent expression is executed.</p>
+In this example, the greeting message will be displayed as the last action when 
+the file is consulted or loaded. If the the latent-expression was put first in 
+the file, it would fail, because <b>greeting/0</b> would not be defined. 
+<ul>
+  <pre><font color="#000080">go :-
+  write(`program running`), nl.
+
+greeting :-
+  write(`Type go to start the program`), nl.
+
+:- greeting.</font></pre>
+</ul>
+<p><i><img src="arrowrt.gif" height=18 width=18 align=BOTTOM> Two goals are both 
+  treated as compiler directives and as latent expressions. These are <b>op/3</b> 
+  and <b>set_prolog_flag/2</b>. Both of these are executed by the compiler and 
+  the results used in compilation, as well as being included as latent expressions 
+  to be executed at runtime as well.</i> 
+<P> <!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p></P>
+
+<P>&nbsp; </P>
+
+</BODY>
+</HTML>

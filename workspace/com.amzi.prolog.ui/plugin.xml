@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="4.5"?>
+<plugin>
+
+     <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="Prolog"
+            icon="icons/amzi_paw.gif"
+            class="com.amzi.prolog.ui.PrologPerspective"
+            id="com.amzi.prolog.ui.prologPerspective">
+      </perspective>
+   </extension>
+   <extension
+         id="PrologNature"
+         name="Prolog Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="com.amzi.prolog.ui.build.PrologProject">
+         </run>
+      </runtime>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.projectNatureImages">
+      <image
+            icon="icons/little_p.gif"
+            natureId="com.amzi.prolog.ui.PrologNature"
+            id="com.amzi.prolog.ui.PrologNatureImage">
+      </image>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Prolog"
+            id="com.amzi.prolog.ui.wizards.PrologProjectCategory">
+      </category>
+      <wizard
+            name="Project"
+            icon="icons/amzi_paw.gif"
+            category="com.amzi.prolog.ui.wizards.PrologProjectCategory"
+            class="com.amzi.prolog.ui.wizards.NewProject"
+            project="true"
+            finalPerspective="com.amzi.prolog.ui.prologPerspective"
+            id="com.amzi.prolog.ui.wizards.NewProject">
+         <description>
+            %NewProjectDescription
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         id="PrologBuilder"
+         name="Prolog Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder>
+         <run
+               class="com.amzi.prolog.ui.build.PrologBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            objectClass="org.eclipse.core.resources.IProject"
+            name="Build Executable/Libraries"
+            class="com.amzi.prolog.ui.build.ProjectPropertyPage"
+            id="com.amzi.prolog.ui.build.ProjectPropertyPage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="%PrologEditorName"
+            icon="icons/amzi_pro.gif"
+            extensions="pro"
+            contributorClass="com.amzi.prolog.ui.editor.actions.PrologEditorActionContributor"
+            class="com.amzi.prolog.ui.editor.PrologEditor"
+            id="com.amzi.prolog.ui.editor.PrologEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.documentProviders">
+      <provider
+            extensions=".pro"
+            class="com.amzi.prolog.ui.editor.PrologDocumentProvider"
+            id="com.amzi.prolog.ui.editor.PrologDocumentProvider">
+      </provider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+            targetID="#PrologRulerContext"
+            id="com.amzi.prolog.ui.editor.EditorPopupActions">
+         <action
+               label="Add Task"
+               helpContextId="org.eclipse.ui.AddTask_action_context"
+               class="org.eclipse.ui.texteditor.TaskRulerAction"
+               menubarPath="add"
+               id="org.eclipse.ui.texteditor.TaskRulerAction">
+         </action>
+         <action
+               label="Add Bookmark"
+               helpContextId="org.eclipse.ui.bookmark_action_context"
+               class="org.eclipse.ui.texteditor.BookmarkRulerAction"
+               menubarPath="add"
+               id="org.eclipse.ui.texteditor.BookmarkRulerAction">
+         </action>
+      </viewerContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Prolog"
+            id="com.amzi.prolog.ui.views">
+      </category>
+      <view
+            name="Listener"
+            icon="icons/question_dash.gif"
+            category="com.amzi.prolog.ui.views"
+            class="com.amzi.prolog.ui.launch.ListenerView"
+            id="com.amzi.prolog.ui.launch.ListenerView"
+            allowMultiple="false">
+      </view>
+      <view
+            name="Cross Reference"
+            icon="icons/amzi_paw.gif"
+            category="com.amzi.prolog.ui.views"
+            class="com.amzi.prolog.ui.views.XrefView"
+            id="com.amzi.prolog.ui.views.XrefView"
+            allowMultiple="false">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="Amzi! Prolog Listener"
+            description="Runs the Prolog Listener"
+            visible="true"
+            id="com.amzi.prolog.ui.action.prolog">
+         <menu
+               label="%MenuRun"
+               path="additions"
+               id="org.eclipse.ui.run">
+            <separator
+                  name="prologGroup">
+            </separator>
+            <groupMarker
+                  name="prologListenerGroup">
+            </groupMarker>
+         </menu>
+         <action
+               label="Listener"
+               icon="icons/question_dash.gif"
+               helpContextId="com.amzi.prolog.ui.empty_listener"
+               tooltip="Starts the Prolog Listener"
+               class="com.amzi.prolog.ui.launch.ListenerActionDelegate"
+               menubarPath="org.eclipse.ui.run/prologListenerGroup"
+               toolbarPath="Normal/additions"
+               id="com.amzi.prolog.ui.action.prolog.listener">
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="Amzi! Prolog Version"
+            description="Displays Amzi! version details"
+            visible="true"
+            id="com.amzi.prolog.ui.HelpAboutActionSet">
+         <action
+               label="Amzi! Version"
+               class="com.amzi.prolog.ui.actions.AboutActionDelegate"
+               menubarPath="help/helpEnd"
+               id="com.amzi.prolog.ui.HelpAboutAction">
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="Amzi! License Key Manager"
+            description="Buy or Enter License Key"
+            visible="true"
+            id="com.amzi.prolog.ui.FileLicenseActionSet">
+         <action
+               label="Activate License"
+               helpContextId="com.amzi.prolog.ui.license"
+               class="com.amzi.prolog.ui.actions.LicenseActionDelegate"
+               menubarPath="file/open.ext"
+               id="com.amzi.prolog.ui.FileLicenseAction">
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.sourceLocators">
+      <sourceLocator
+            name="Prolog Source Lookup Director"
+            class="com.amzi.prolog.ui.launch.PrologSourceLookupDirector"
+            id="com.amzi.prolog.sourceLocator">
+      </sourceLocator>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.sourcePathComputers">
+      <sourcePathComputer
+            class="com.amzi.prolog.ui.launch.PrologSourcePathComputerDelegate"
+            id="com.amzi.prolog.sourcePathComputer">
+      </sourcePathComputer>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            name="Interpreted Single File (pro)"
+            sourceLocatorId="com.amzi.prolog.sourceLocator"
+            sourcePathComputerId="com.amzi.prolog.sourcePathComputer"
+            delegate="com.amzi.prolog.ui.launch.FileListenerLaunchConfigurationDelegate"
+            modes="run, debug"
+            public="true"
+            id="com.amzi.prolog.ui.launch.prologFileListener">
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            name="Interpreted Project (pro)"
+            sourceLocatorId="com.amzi.prolog.sourceLocator"
+            sourcePathComputerId="com.amzi.prolog.sourcePathComputer"
+            delegate="com.amzi.prolog.ui.launch.ListenerLaunchConfigurationDelegate"
+            modes="run, debug"
+            public="true"
+            id="com.amzi.prolog.ui.launch.prologListener">
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            name="Compiled Project (xpl)"
+            sourceLocatorId="com.amzi.prolog.sourceLocator"
+            sourcePathComputerId="com.amzi.prolog.sourcePathComputer"
+            delegate="com.amzi.prolog.ui.launch.RunLaunchConfigurationDelegate"
+            modes="run, debug"
+            public="true"
+            id="com.amzi.prolog.ui.launch.prologRuntime">
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            name="Remote Prolog Application"
+            sourceLocatorId="com.amzi.prolog.sourceLocator"
+            sourcePathComputerId="com.amzi.prolog.sourcePathComputer"
+            delegate="com.amzi.prolog.ui.launch.RemoteLaunchConfigurationDelegate"
+            modes="debug"
+            public="true"
+            id="com.amzi.prolog.ui.launch.prologRemote">
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            icon="icons/file_question_dash.gif"
+            configTypeID="com.amzi.prolog.ui.launch.prologFileListener"
+            id="com.amzi.prolog.ui.listener.prologFileListenerImage">
+      </launchConfigurationTypeImage>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            icon="icons/question_dash.gif"
+            configTypeID="com.amzi.prolog.ui.launch.prologListener"
+            id="com.amzi.prolog.ui.listener.prologListenerImage">
+      </launchConfigurationTypeImage>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            icon="icons/monitor.gif"
+            configTypeID="com.amzi.prolog.ui.launch.prologRuntime"
+            id="com.amzi.prolog.ui.listener.prologRuntimeImage">
+      </launchConfigurationTypeImage>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            icon="icons/remote.gif"
+            configTypeID="com.amzi.prolog.ui.launch.prologRemote"
+            id="com.amzi.prolog.ui.listener.prologRemoteImage">
+      </launchConfigurationTypeImage>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="com.amzi.prolog.ui.launch.prologListener"
+            class="com.amzi.prolog.ui.launch.ListenerConfigurationTabGroup"
+            id="com.amzi.prolog.ui.launch.ListenerConfigurationTabGroup">
+         <launchMode
+               description="Debug Interpreted Source Files in the Listener"
+               perspective="org.eclipse.debug.ui.DebugPerspective"
+               mode="debug">
+         </launchMode>
+         <launchMode
+               description="Run Interpreted Source Files in the Listener"
+               perspective="com.amzi.prolog.ui.prologPerspective"
+               mode="run">
+         </launchMode>
+      </launchConfigurationTabGroup>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="com.amzi.prolog.ui.launch.prologRuntime"
+            class="com.amzi.prolog.ui.launch.RunConfigurationTabGroup"
+            id="com.amzi.prolog.ui.launch.RunConfigurationTabGroup">
+         <launchMode
+               description="Debug Compiled Executables"
+               perspective="org.eclipse.debug.ui.DebugPerspective"
+               mode="debug">
+         </launchMode>
+         <launchMode
+               description="Run Compiled Executables"
+               perspective="com.amzi.prolog.ui.prologPerspective"
+               mode="run">
+         </launchMode>
+      </launchConfigurationTabGroup>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="com.amzi.prolog.ui.launch.prologFileListener"
+            class="com.amzi.prolog.ui.launch.FileConfigurationTabGroup"
+            id="com.amzi.prolog.ui.launch.FileConfigurationTabGroup">
+         <launchMode
+               description="Debug One Interpreted Source File"
+               perspective="org.eclipse.debug.ui.DebugPerspective"
+               mode="debug">
+         </launchMode>
+         <launchMode
+               description="Run One Interpreted Source File"
+               perspective="com.amzi.prolog.ui.prologPerspective"
+               mode="run">
+         </launchMode>
+      </launchConfigurationTabGroup>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="com.amzi.prolog.ui.launch.prologRemote"
+            class="com.amzi.prolog.ui.launch.RemoteConfigurationTabGroup"
+            id="com.amzi.prolog.ui.launch.RemoteConfigurationTabGroup">
+         <launchMode
+               description="Debug Prolog Modules Running Remotely"
+               perspective="org.eclipse.debug.ui.DebugPerspective"
+               mode="debug">
+         </launchMode>
+      </launchConfigurationTabGroup>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            label="Compiled Project (xpl)"
+            icon="icons/monitor.gif"
+            helpContextId="com.amzi.prolog.ui.runtime"
+            modes="run,debug"
+            class="com.amzi.prolog.ui.launch.RunShortcut"
+            id="com.amzi.prolog.ui.launch.runShortcut">
+         <perspective
+               id="com.amzi.prolog.ui.prologPerspective">
+         </perspective>
+         <perspective
+               id="org.eclipse.debug.ui.DebugPerspective">
+         </perspective>
+         <contextualLaunch>
+            <contextLabel
+                  label="Compiled Project (xpl)"
+                  mode="run"/>
+            <contextLabel
+                  label="Compiled Project (xpl)"
+                  mode="debug"/>
+            <enablement>
+               <with variable="selection">
+                  <count value="1"/>
+               </with>
+            </enablement>
+         </contextualLaunch>         
+      </shortcut>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            label="Interpreted Project (pro)"
+            icon="icons/question_dash.gif"
+            helpContextId="com.amzi.prolog.ui.listener_debugger"
+            modes="run, debug"
+            class="com.amzi.prolog.ui.launch.ListenerShortcut"
+            id="com.amzi.prolog.ui.launch.listenerShortcut">
+         <perspective
+               id="com.amzi.prolog.ui.prologPerspective">
+         </perspective>
+         <perspective
+               id="org.eclipse.debug.ui.DebugPerspective">
+         </perspective>
+         <contextualLaunch>
+            <contextLabel
+                  label="Interpreted Project (pro)"
+                  mode="run"/>
+            <contextLabel
+                  label="Interpreted Project (pro)"
+                  mode="debug"/>
+            <enablement>
+               <with variable="selection">
+                  <count value="1"/>
+               </with>
+            </enablement>
+         </contextualLaunch>         
+      </shortcut>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            label="Interpreted Single File (pro)"
+            icon="icons/file_question_dash.gif"
+            helpContextId="com.amzi.prolog.ui.listener_debugger"
+            modes="run, debug"
+            class="com.amzi.prolog.ui.launch.FileListenerShortcut"
+            id="com.amzi.prolog.ui.launch.fileListenerShortcut">
+         <perspective
+               id="com.amzi.prolog.ui.prologPerspective">
+         </perspective>
+         <perspective
+               id="org.eclipse.debug.ui.DebugPerspective">
+         </perspective>
+         <contextualLaunch>
+            <contextLabel
+                  label="Interpreted Single File (pro)"
+                  mode="run"/>
+            <contextLabel
+                  label="Interpreted Single File (pro)"
+                  mode="debug"/>
+            <enablement>
+               <with variable="selection">
+                  <count value="1"/>
+                  <iterate>
+                    <or>
+                      <test property="org.eclipse.debug.ui.matchesPattern" value="*.pro"/>
+                      <test property="org.eclipse.debug.ui.matchesPattern" value="*.PRO"/>
+                    </or>
+                  </iterate>
+               </with>
+            </enablement>
+         </contextualLaunch>         
+      </shortcut>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            label="Remote Prolog Application"
+            icon="icons/remote.gif"
+            helpContextId="com.amzi.prolog.ui.remote_debugger"
+            modes="debug"
+            class="com.amzi.prolog.ui.launch.RemoteShortcut"
+            id="com.amzi.prolog.ui.launch.remoteShortcut">
+         <perspective
+               id="com.amzi.prolog.ui.prologPerspective">
+         </perspective>
+         <perspective
+               id="org.eclipse.debug.ui.DebugPerspective">
+         </perspective>
+         <contextualLaunch>
+            <contextLabel
+                  label="Remote Prolog Application"
+                  mode="debug"/>
+            <enablement>
+               <with variable="selection">
+                  <count value="1"/>
+               </with>
+            </enablement>
+         </contextualLaunch>         
+      </shortcut>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="Prolog"
+            class="com.amzi.prolog.ui.preferences.PrologPreferencePage"
+            id="com.amzi.prolog.pluginPreferences">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+         <initializer class="com.amzi.prolog.ui.preferences.PrologPreferenceInitializer"/>
+   </extension>
+   <extension
+         point="org.eclipse.team.core.fileTypes">
+      <fileTypes
+            type="text"
+            extension="pro">
+      </fileTypes>
+      <fileTypes
+            type="text"
+            extension="cfg">
+      </fileTypes>
+      <fileTypes
+            type="binary"
+            extension="plm">
+      </fileTypes>
+      <fileTypes
+            type="binary"
+            extension="xpl">
+      </fileTypes>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>

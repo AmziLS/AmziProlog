@@ -1,0 +1,725 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Quick Tutorial</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="AQuickTutorial"></A><FONT COLOR="#D2AA00">Amzi! Quick Tutorial</FONT> 
+</h1>
+<P>This section is a tutorial introduction to the Amzi! Prolog development
+tools. It is not intended to be an introduction to Prolog. If you need
+an introduction to the Prolog language we recommend <I>Adventure in Prolog</I>.
+</P>
+
+<P>The tutorial makes use of a simple adventure game, Duck World, to illustrate
+how to use the Amzi! tools to build complex applications. Accordingly,
+it is composed of a number of files. </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>(Why Duck World? 
+  Because Amzi! inc. was located in an old farm house backed up on conservation 
+  land. We bought ducks out of whimsy one day, which were later discovered by 
+  the fox in the woods. The ducks proved to be an adventure.)</I> </P>
+
+<P>The tutorial demonstrates both the command-line and the Amzi! Eclipse IDE interfaces 
+  to Amzi! Prolog. </P>
+
+<P>This tutorial starts by testing some of the basic predicates of Duck
+World in the listener. It then goes through the full example, showing how
+the program is modularized, how it is compiled and run using the listener,
+and how it is linked into a distributable application. </P>
+
+<P>The source code for Duck World can be found in the samples/prolog/ducks sub-directory.</P>
+<P>Quick Tutorial Contents:</P>
+<UL>
+  <LI><a href="#DuckWorld">Duck World overview</a></LI>
+  <LI><a href="#StartingtheListener">Starting the listener</a></LI>
+  <LI><a href="#CreatingaSourceFile">Creating a simple source file</a></LI>
+  <LI><a href="#ConsultingaSourceFile">Consulting the source file</a></LI>
+  <LI><a href="#UsingtheListener">Running interpreted in the Listener</a></LI>
+  <LI><a href="#Debugging">Debugging</a></LI>
+  <LI><a href="#Modules">A more complex multi-file modular version</a></LI>
+  <LI><a href="#RunningaModularApplication">Running interpreted multi-file programs</a></LI>
+  <LI><a href="#UsingProjectsintheIDE">Using projects in the Windows IDE</a></LI>
+  <LI><a href="#Compiling">Compiling</a></LI>
+  <LI><a href="#LinkingandEXEGeneration">Linking and Running compiled code</a></LI>
+  <LI><a href="#DistributinganApplication">Distributing applications</a></LI>
+  <LI><a href="#InterfacingwithOtherTools">Embedding applications</a></LI>
+</UL>
+
+<H2><A NAME="DuckWorld"></A><FONT COLOR="#0000FF">Duck World</FONT></H2>
+
+<P><!AMZI_INDEX = Tutorial; Duck World>An adventure game is a simulation
+of an environment, real or imagined, that the user explores, usually with
+some goal in mind. Duck World is a simple adventure game, where the objective
+is to go from the house, through the yard, to the duck pen to get an egg,
+and back to the house again, without losing any ducks to the fox. </P>
+
+<P>The commands for manipulating the environment are all entered as legal
+Prolog goals (ending in periods). </P>
+
+<P>They are: </P>
+
+<MENU>
+<LI>goto(X) - moves you to place X, where X can be either house, yard or
+pen. </LI>
+
+<LI>take(X) - takes something if it's where you are; the egg is the only
+thing you're supposed to take. </LI>
+
+<LI>chase(ducks) - how to get the ducks back in their pen. </LI>
+
+<LI>quit - this, or any illegal command, will quit the game for you. </LI>
+</MENU>
+
+<P>When you have brought the egg into the house the game ends. </P>
+
+<H2><A NAME="StartingtheListener"></A><FONT COLOR="#0000FF">Starting the
+Listener</FONT></H2>
+
+<P><!AMZI_INDEX = alis; Listener; IDE>Amzi! Prolog programs can be run in interpreted 
+  mode using one of two different methods: </P>
+
+<UL>
+  <LI>The command line listener, alis. </LI>
+
+  <LI>The Amzi! Eclipse Interactive Development Environment (IDE). </LI>
+</UL>
+
+<P>To start the listener from the operating system command-line, type the input 
+  shown in the left box. To do this within the IDE, select the menu items shown 
+  in the right box. General instructions are given in <I>italics</I>. </P>
+<P>The IDE supports multiple <i>perspectives</i>. A perspective is an arrangement 
+  of <i>views</i> on the screen. For developing Prolog code, we will use the Amzi! 
+  Prolog and the Debugging perspectives. Perspectives are also available for C++, 
+  Java and many other languages and capabilities. A <i>view</i> is a window on 
+  the screen. Each view can optionally have its own tool bar and menu. Examples 
+  of views are the Project Navigator, Listener, editors and Outline.</P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+  <TR valign="top"> 
+    <TD width="50%">Command-Line alis</TD>
+
+    <TD width="50%">Amzi! Eclipse IDE</TD>
+</TR>
+
+  <TR valign="top"> 
+    <TD width="50%"> 
+      <PRE><FONT COLOR="#000080">c&gt;  alis</FONT></PRE>
+</TD>
+
+    <TD width="50%"> 
+      <PRE><I><FONT COLOR="#000080">Double-Click on Icon for the
+Amzi! Eclipse IDE
+</FONT></I><font color="#000080">Run / Listener
+  <i>or</i>
+?- button</font></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>The copyright message will be displayed followed by the prompt, <B>?-</B>
+</P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+      <PRE><FONT COLOR="#000080">Amzi! Prolog &lt;version information&gt;
+Amzi! Prolog Listener
+Copyright (c)1987-2002 Amzi! inc. All Rights Reserved.
+Type  'quit.'  to exit
+?-</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>You are now in a Prolog listener, which is awaiting your command. Try
+out this classic, being careful to remember the single quotes and the ending
+period. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- write('Hello World').
+Hello World</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Note: You can use 
+  the up and down arrow keys in the IDE listeners to bring up the prior commands 
+  you typed in and edit them.</I></P>
+
+<P>To exit the listener, type &quot;quit.&quot;</P>
+
+<H2><A NAME="CreatingaSourceFile"></A><FONT COLOR="#0000FF">Creating a
+Source File</FONT></H2>
+
+<P><!AMZI_INDEX =  Duck World; Tutorial; Source Files; pro Files>Before
+looking at the Duck World source code, create a small experimental file
+called dw.pro. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+  <TR valign="top"> 
+    <TD width="50%">Command-Line alis</TD>
+
+    <TD width="50%">Amzi! Eclipse IDE</TD>
+</TR>
+
+  <TR valign="top"> 
+    <TD width="50%"> 
+      <PRE><I><FONT COLOR="#000080">Use an editor to type in your code
+Save your file as dw.pro </FONT></I></PRE>
+</TD>
+
+    <TD width="50%"> 
+      <PRE><FONT COLOR="#000080"><i>Create a Prolog Project</i>
+File / New / Project / Prolog
+<i>Enter the project name</i>: duckworld
+File / New / File
+<i>Enter the file name:</i> dw.pro
+<I>Type your code into the window
+</I>File / Save 
+  <i>or</i>
+Save Button</FONT></PRE>
+    </TD>
+</TR>
+</TABLE>
+
+<P>Type the following lines of Prolog code into dw.pro: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+    <TD> 
+      <PRE><FONT COLOR="#000080">:- dynamic loc/2.<br>
+% Experiments
+nextto(house, yard).
+nextto(yard, pen).
+
+loc(you, house).
+
+move(Place) :-
+  retract( loc(you, _) ),
+  assert( loc(you, Place) ).</FONT></PRE>
+    </TD>
+</TR>
+</TABLE>
+
+
+
+<p>In the IDE, you will see an outline for your Prolog code to the right of the 
+  editors. There is also a cross-referencing tool available in the view with the 
+  same name. To run the Cross Reference for your project, press the Refresh button 
+  or select the Refresh command from the Cross Reference View menu (a view menu 
+  is the menu under the black, down-facing triangle in the upper right corner 
+  of the view).</p>
+<H2><A NAME="ConsultingaSourceFile"></A><FONT COLOR="#0000FF">Consulting
+a Source File</FONT></H2>
+
+<P> 
+  <!AMZI_INDEX = Source Files; pro Files; Duck World; alis; IDE>
+  To play with dw.pro, consult it into the listener as shown: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+  <TR>
+    <TD width="50%">Command-Line alis</TD>
+
+    <TD width="50%">Amzi! Eclipse IDE</TD>
+</TR>
+
+<TR>
+    <TD width="50%"> 
+      <PRE><FONT COLOR="#000080">?- consult(dw).
+yes</FONT></PRE>
+</TD>
+
+    <TD width="50%"> 
+      <PRE><font color="#000080">Run / Run As / Interpreted Project
+  <i>or</i>
+Run / Run As / Interpreted Single File</font></PRE>
+    </TD>
+</TR>
+</TABLE>
+
+<P>You are now in the listener with dw.pro consulted. </P>
+
+<H2><A NAME="UsingtheListener"></A><FONT COLOR="#0000FF">Using the Listener</FONT></H2>
+
+<P><!AMZI_INDEX = alis; Tutorial; Duck World; listing; add; move; goto>Now
+that you've reached the listener, make sure your file was consulted by
+using <B>listing</B>. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- listing.</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>This will show you the predicates of dw.pro, although they will look a little 
+  different because the variables are renamed with an _X and a number, e.g. _X0. 
+</P>
+
+<P>You can try various queries from the listener. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- loc(you, X).
+X = house</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>You can test move. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- move(yard), loc(you, X).
+X = yard
+?- move(foobar), loc(you, X).
+X = foobar</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Because <B>move</B> doesn't check to see if the move makes sense, you
+might decide to add a <B>goto</B> predicate with more intelligence. You
+can enter it directly in the listener using <B>add</B>. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- add.
+|  goto(P) :-
+loc(you, X),
+nextto(X, P),
+move(P).
+|  quit.
+?-</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>This is a useful technique for quick experiments, but the code typed
+in the listener is not entered into your source file. Because we want <B>goto</B>
+to be part of the game it is best to type it directly into the source file
+and then reconsult it. </P>
+
+<P>This can be done by moving from the listener to the editor. You can use the 
+  built-in IDE editor, or invoke the editor of your choice. You can use reconsult/1, 
+  or exit out of and restart the listener.</P>
+
+<P>(You need to reconsult, rather than consult, because consulting will simply 
+  add a second copy of your program to the Prolog workspace. Listing would show 
+  two of every predicate.) </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+  <TR valign="top"> 
+    <TD width="50%">Command-Line alis</TD>
+
+    <TD width="50%">Amzi! Eclipse IDE</TD>
+</TR>
+
+  <TR valign="top"> 
+    <TD width="50%"> 
+      <PRE><I><FONT COLOR="#000080">Edit dw.pro in an editor
+then in the listener:
+</FONT></I><FONT COLOR="#000080">?- reconsult(dw).
+yes</FONT></PRE>
+</TD>
+
+    <TD width="50%"> 
+      <PRE><FONT COLOR="#000080"><I>Edit dw.pro in its window
+</I>File / Save
+  <i>or</i>
+Save Button
+?- reconsult(dw).
+<i>or type 'quit.' in the listener then:</i>
+Run / Run As / Interpreted Project</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>You can then test it. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">?- goto(yard).
+yes
+?- goto(pen).
+yes
+?- goto(yard).
+no</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>It didn't work right, which leads to the next section. </P>
+
+<H2><A NAME="Debugging"></A><FONT COLOR="#0000FF">Debugging</FONT></H2>
+
+<P> 
+  <!AMZI_INDEX = Tutorial; Duck World; Debugging>
+  <B>goto</B> lets you get into the pen, but doesn't let you get back out. In 
+  order to figure out why, you need to start the debugger and set-up the state 
+  required for testing. The steps are performed in a different order depending 
+  upon whether you are using the command-line or IDE. Note, starting the debugger 
+  takes you out of the Prolog Perspective and displays the Debug Perspective instead. 
+  You can switch back to the Prolog Perspective with Window / Open Perspective 
+  or by pressing on the Paw button on the left, vertical tool bar.</P>
+<P>To make sure the game is in the state required for testing, enter the goals 
+  to place you in the pen. The listener gives you the ability to dynamically adjust 
+  the state of your application, effectively putting you in the middle of it. 
+  This, by itself, is a powerful tool for debugging. </P>
+
+<P>You can now trace the execution of goto(yard) to see why it is failing. To 
+  do this you also need to start the debugger. Type: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+  <TR valign="top"> 
+    <TD width="50%">Command-Line alis</TD>
+
+    <TD width="50%">Amzi! Eclipse IDE</TD>
+</TR>
+
+  <TR valign="top"> 
+    <TD width="50%"> 
+      <PRE><FONT COLOR="#000080">?- retract(loc(you, _)), assert(loc(you, pen)).
+yes
+?- debug.</FONT></PRE>
+    </TD>
+
+    <TD width="50%"> 
+      <PRE><font color="#000080"><i>Type 'quit.' in the listener then:</i>
+Run / Debug As / Interpreted Project
+  <i>or</i>
+Run / Debug As / Interpreted Single File
+?- assert(loc(you, pen)).</font></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>The command line debugger is line-oriented, and is controlled from the keyboard. 
+  In the IDE, a separate debugger perspective is opened, which is controlled with 
+  the mouse. You enter your normal interaction with the program in the debug listener 
+  window. </P>
+
+<P>Next, type in the goal to be traced at the listener's debugging prompt ??- 
+  or ?- for the IDE.</P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+      <PRE><FONT COLOR="#000080">??- goto(yard).</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>To step through the Prolog code type: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+  <TR valign="top"> 
+    <TD width="50%">Command-Line alis</TD>
+
+    <TD width="50%">Amzi! Eclipse IDE</TD>
+</TR>
+
+  <TR valign="top"> 
+    <TD width="50%"> 
+      <PRE><FONT COLOR="#000080">? c
+<I>Alternatively
+</I>? [Enter]</FONT></PRE>
+</TD>
+
+    <TD width="50%"> 
+      <PRE><I><FONT COLOR="#000080">Click on the 'Step Over' button</FONT></I></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Here is what the trace looks like for goto(yard). In the IDE you will see only 
+  the current call stack. You can click on any entry in the stack to see the associated 
+  variable bindings in the Variables view. Also in the IDE, the current line in 
+  your source file will be highlighted. The color of the highlight indicates if 
+  it is a call, redo, fail or exit.</P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">Calling: goto(yard)
+CALL:(1) goto(yard)    ? c
+   Calling: loc(you,H64)
+   CALL: loc(you,pen)    ? c
+   EXIT: loc(you,pen)    ? c
+   Calling: nextto(pen,yard)
+   FAIL: nextto(pen,yard)    ? c
+   FAIL: loc(you,pen)    ? c
+   FAIL: loc(you,H64)    ? c
+FAIL: goto(yard)    ? c
+FAIL: goto(yard)    ? c
+no</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>To leave the debugger:</P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+  <TR valign="top"> 
+    <TD width="50%">Command-Line alis</TD>
+
+    <TD width="50%">Amzi! Eclipse IDE</TD>
+</TR>
+
+  <TR valign="top"> 
+    <TD width="50%"> 
+      <PRE><FONT COLOR="#000080">??- quit.</FONT></PRE>
+</TD>
+
+    <TD width="50%"> 
+      <PRE><FONT COLOR="#000080"><I>Click on the 'Stop' button</I></FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>The trace reveals that, although we've defined nextto(yard,pen), we haven't 
+  defined nextto(pen, yard). To get our program to work, we need a predicate that 
+  equates the two. The solution chosen for Duck World is the predicate <B>connect/2</B>, 
+  which is used instead of <B>nextto/2</B> in the <B>goto/1</B> definition. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">connect(X, Y) :- nextto(X, Y).
+connect(X, Y) :- nextto(Y, X).</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>This code can be added to the source file and the development process
+continues. This is the normal way to develop a Prolog application. Predicates
+are gradually added to the source file as the application grows. The application
+can be tested at any point during the development process and individual
+predicates can be tested and their execution traced to understand why the
+application is working the way it does. </P>
+
+<H2><A NAME="Modules"></A><FONT COLOR="#0000FF">Modules</FONT></H2>
+
+<P><!AMZI_INDEX = Tutorial; Modules; Duck World; consult; loc; main; dynamic; goto>As 
+  an application grows, it is natural to want to break it up into modules. At 
+  the simplest this means splitting the predicate definitions among various source 
+  files. These files can be <B>consult</B>ed together and the application run 
+  from the listener.</P>
+<P>However, it is often preferred to keep some of the predicates hidden within 
+  a file and to allow only certain predicates to be called from other source files. 
+  This is done with a variety of directives that define modules and the predicates 
+  that are imported and exported from them. See <a href="ref_modules.htm">modules</a> 
+  for details.</P>
+
+<P>In the directory samples/prolog/duckworld there are two versions of Duck World. 
+  'duckym.pro' has all of the modules in one file. It is also broken up into three 
+  files for purposes of illustration here. The three files, and their modules, 
+  are: </P>
+
+<ul>
+  <li><b>dw_main.pro</b> - default 'user' module, the main entry point, control 
+    loop and instructions. </li>
+  <li><b>dw_rules.pro</b> - 'rules' module, the rules that define what can and 
+    cannot be done.</li>
+  <li><b>dw_data.pro</b> - 'data' module, the data defining the state of the game.</li>
+</ul>
+<P>The files have many comments that explain the use of modules in Prolog.</P>
+
+<H2><A NAME="RunningaModularApplication"></A><FONT COLOR="#0000FF">Running
+a Modular Application</FONT></H2>
+
+<P><!AMZI_INDEX = Tutorial; Duck World; Modules; consult; main>You can run the 
+  modularized Duck World from inside the listener by <B>consult</B>ing it and 
+  calling <B>main/0</B>, the predicate that starts it running. (You can also call 
+  any of the other predicates of Duck World to see if they're working and trace 
+  them if they're not.) </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="50%" >
+<TR>
+<TD>
+      <PRE><FONT COLOR="#000080">?- consult([dw_main, dw_rules, dw_data]).
+?- main.
+Welcome to Duck World
+Go get an egg
+&gt;&gt; goto(yard).
+You are in the yard
+&gt;&gt; .....</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+
+<H2><A NAME="UsingProjectsintheIDE"></A><FONT COLOR="#0000ff">Using Projects in 
+  the IDE</FONT></H2>
+
+<P> 
+  <!AMZI_INDEX = Tutorial; Duck World; IDE>
+  You created a Prolog Project file (.project) in the IDE as described above. 
+  You can modify the project's properties by right-clicking on the project and 
+  selecting 'Properties'. These properties include:</p>
+<ul>
+  <li>The XPL pathname</li>
+  <li>The directory to put the binary files in</li>
+  <li>The Prolog libraries to include in the project</li>
+  <li>The Logic Server Extensions (lsx's) to include in the project</li>
+  <li>Source files to exclude from the project</li>
+  <li>Other projects to include in this project</li>
+</ul>
+<p>Anytime you start the listener, all the project files (except the exclusions) 
+  are automatically consulted for you. Also when you build a project all the source 
+  files and libraries are compiled and linked as needed into an executable file 
+  (.xpl).</p>
+<H2><A NAME="Compiling"></A><FONT COLOR="#0000FF">Compiling</FONT></H2>
+
+<P><!AMZI_INDEX = Compiling; Duck World; Tutorial>Compiling Duck World
+is easily done: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+  <TR valign="top"> 
+    <TD width="50%">Command-Line alis</TD>
+
+    <TD width="50%">Amzi! Eclipse IDE</TD>
+</TR>
+
+  <TR valign="top"> 
+    <TD width="50%"> 
+      <PRE><FONT COLOR="#000080">c&gt;  acmp dw_main
+c&gt;  acmp dw_rules
+c&gt;  acmp dw_data</FONT></PRE>
+</TD>
+
+    <TD width="50%"> 
+      <PRE><font color="#000080">Project / Build All
+  or
+Project / Rebuild All</font></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Note, under the IDE we simply build the project. This causes all the modified 
+  source files in the project to be recompiled. </P>
+
+<P>acmp can also be invoked with no arguments, in which case it will prompt
+you for the names of the files. See the Compiler section for more details.
+</P>
+
+<P>The result of compiling is Prolog object files, in this case, dw_main.plm, 
+  dw_rules.plm and dw_data.plm.</P>
+
+
+<H2><A NAME="LinkingandEXEGeneration"></A><FONT COLOR="#0000FF">Linking
+and Running</FONT></H2>
+
+<P><!AMZI_INDEX = Linking; Packaging; EXE Files; Tutorial; Duck World>To
+build a stand-alone application first create a Prolog load module (.xpl
+file) with the Amzi! Prolog linker, alnk. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+  <TR valign="top"> 
+    <TD width="50%">Command-Line alis</TD>
+
+    <TD width="50%">Amzi! Eclipse IDE</TD>
+</TR>
+
+  <TR valign="top"> 
+    <TD width="50%"> 
+      <PRE><FONT COLOR="#000080">c&gt;  alnk dw dw_main dw_rules dw_data</FONT></PRE>
+</TD>
+
+    <TD width="50%"> 
+      <PRE><font color="#000080">Project / Build All
+  or
+Project / Rebuild All</font></PRE>
+    </TD>
+</TR>
+</TABLE>
+
+<P>Note, under the IDE when a project is built, it is linked to create an .xpl 
+  file. </P>
+
+<P>Using alnk, the first argument is the name of the .xpl file. The next
+two files are the .plm files that are linked together. </P>
+
+<P>The .plm files are linked with abin/alib.plm, the Prolog portion of the Amzi! 
+  runtime engine, to form an application.</P>
+
+<P>Alnk can also be invoked with no arguments, in which case it will prompt you 
+  for inputs. See the <a href="pug_linker.htm">Linker section</a> for more details. 
+</P>
+
+<P>To run Duck World, just type: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 WIDTH="100%" >
+  <TR valign="top"> 
+    <TD width="50%">Command-Line alis</TD>
+
+    <TD width="50%">Amzi! Eclipse IDE</TD>
+</TR>
+
+  <TR valign="top"> 
+    <TD width="50%"> 
+      <PRE><FONT COLOR="#000080">c&gt; arun dw</FONT></PRE>
+</TD>
+
+    <TD width="50%"> 
+      <PRE><font color="#000080">Run / Run As / Compiled Project</font></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<p>Instead of typing arun dw, you can create a copy of arun(.exe) and name it 
+  dw(.exe). It will then, after examining its own name, automatically run dw.xpl. 
+  So the application can be started simply by typing dw.</p>
+<H2><A NAME="DistributinganApplication"></A><FONT COLOR="#0000FF">Distributing
+an Application</FONT></H2>
+
+<P><!AMZI_INDEX = Duck World; tutorial; Distributing>If you decided to
+distribute Duck World, then to do so, you need these files for command-line
+environments: </P>
+
+<ul>
+  <li>dw(.exe) - A renamed copy of arun.exe</li>
+  <li>dw.xpl - The Prolog load module</li>
+  <li>amzi.dll - The Amzi! runtime engine</li>
+</ul>
+
+<P>For applications where Prolog is embedded in another tool/language, then dw(.exe) 
+  is not necessary.</P>
+
+<H2><A NAME="InterfacingwithOtherTools"></A><FONT COLOR="#0000FF">Interfacing
+with Other Tools</FONT></H2>
+
+<P> 
+  <!AMZI_INDEX =  C++; Delphi>
+  You can enhance the Prolog engine with your own built-in predicates written 
+  in C/C++, Java, Delphi or Visual Basic. </P>
+
+<P>For example, you might want to use a graphical interface for Duck World
+with quacking ducks and the like. In this case the Logic Server API allows
+you to either extend the Prolog language with graphics predicates written
+in C/C++ that are called directly by the Prolog code, or to write the user
+interface to the code in C/C++ (or Visual Basic under Windows) and call
+embedded Prolog for the logic. You can combine the techniques, both extending
+and embedding Prolog in the same application. </P>
+
+<P>The <a href="../ls/lsfrtop.htm">section on the Logic Server API</a> tells how 
+  integrate Prolog with other languages. </P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P>&nbsp;</P>
+
+</BODY>
+</HTML>

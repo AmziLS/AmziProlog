@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+    <extension
+         id="ide"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="Amzi! Prolog + Logic Server IDE">
+         <property
+               name="appName"
+               value="Amzi! Prolog + Logic Server IDE"/>
+         <property
+               name="aboutImage"
+               value="squirrel_words_250px.jpg">
+         </property>
+         <property
+               name="windowImages"
+               value="squirrel_16.png,squirrel_32.png,squirrel_48.png,squirrel_64.png,squirrel_128.png">
+         </property>
+         <property
+               name="aboutText"
+               value="Amzi! Prolog + Logic Server 4.5.10001&#x0A;(c) 1986-2016 Amzi! inc., all rights reserved&#x0A;http://www.amzi.com&#x0A;&#x0A;Eclipse Platform&#x0A;(c) Copyright Eclipse contributors and others, 2000, 2009. All rights reserved.&#x0A;http://www.eclipse.org/platform&#x0A;&#x0A;This product includes software developed by the&#x0A;Apache Software Foundation&#x0A;http://www.apache.org/">
+         </property>
+      </product>
+   </extension>
+
+<!--
+   <extension
+         point="org.eclipse.ui.intro">
+      <intro
+            class="org.eclipse.ui.intro.config.CustomizableIntroPart"
+            id="org.eclipse.platform.intro"
+            icon="amzi_paw.gif">
+      </intro>
+      <introProductBinding
+            introId="org.eclipse.ui.intro.universal"
+            productId="com.amzi.prolog.ide">
+      </introProductBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.intro.configExtension">
+      <configExtension
+            content="$nl$/overviewExtensionContent.xml"
+            configId="org.eclipse.platform.introConfig">
+      </configExtension>
+      <configExtension
+            content="$nl$/tutorialsExtensionContent.xml"
+            configId="org.eclipse.platform.introConfig">
+      </configExtension>
+      <configExtension
+            content="$nl$/samplesExtensionContent.xml"
+            configId="org.eclipse.platform.introConfig">
+      </configExtension>
+      <configExtension
+            content="$nl$/newsExtensionContent.xml"
+            configId="org.eclipse.platform.introConfig">
+      </configExtension>
+   </extension>
+-->
+
+</plugin>

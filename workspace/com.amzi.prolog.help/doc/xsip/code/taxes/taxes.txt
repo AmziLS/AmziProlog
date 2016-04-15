@@ -1,0 +1,517 @@
+	 
+     ,_O<  Amzi! inc.    40 Samuel Prescott Dr.   >O_,
+     ( )                   Stow, MA 01775, USA     ( )
+ ~~~~~~~~~--------------------------------------~~~~~~~~~~~
+  tel 508/897-7332     www.amzi.com      fax 508/897-2784
+
+
+Technical Note: TAXES
+Mar95
+
+This is the text of an article that was originally published
+in PCAI magazine in 1988.  The tax code that is referenced
+is from that time, but the ideas are still valid.
+
+The source code for the tax program is part of the Cogent
+Prolog samples and also included with the Building Expert
+Systems in Prolog disk.
+
+
+Introduction
+
+
+Prolog is extremely well suited to laying out tax forms.
+This is because the forms are really just composed of rules 
+for filling out various lines.  Those rules map almost directly 
+into Prolog syntax, giving a very desirably small "semantic 
+gap".
+
+Semantic gap refers to the difference between expressing a 
+problem in its own domain, and expressing it in some 
+programming environment.  For example, the tax program could 
+have been written in C or Assembler.  Assembler would have 
+the largest semantic gap, since the semantics of assembler 
+are concerned with moving and manipulating bits and bytes.  
+This is far from the semantics of the tax form which are 
+concerned with relationships between monetary values.  A C 
+program would have a semantic gap somewhere in between that 
+of Assembler and Prolog.
+
+The programmer's job is to map a problem specified in problem 
+domain semantics into the programming environment semantics.  
+The smaller the semantic gap, the easier the job.  The 
+greater the semantic gap, the higher the salary the 
+programmer commands.
+
+A tax program also requires a database of raw data, and the 
+ability to bring that data into the tax forms.  Prolog's 
+built-in database of facts and rules is ideally suited to 
+this purpose.  The raw data is represented as simple facts, 
+and rules express more complex relationships between the 
+data.
+
+The architecture used had two files.  The first had the 
+rules for filling out the lines of the tax form that were 
+relevant for my situation.  The second had the data which was 
+referred to by the rules.
+
+This basic structure was extremely well suited to the "what-
+if" types of games associated with financial hacking.  The 
+program could be run for various cases by simply changing the 
+data.
+
+It is also well suited for getting estimated results.  
+Guesses can be filled in for values which are not initially 
+known, and the program run to get a feel for what your tax 
+situation will be.
+
+There are other advantages as well.  The program and its data 
+become a clean record for the taxes of that year.  If you 
+need to file estimated taxes, just plugging in new data for 
+the current year and running the program gives as accurate a 
+picture as possible for quarterly estimates.
+
+The final advantage is, if you buy a Prolog to do your taxes, 
+you can write off the cost on your taxes.  (I won't go to the 
+audit with you, but bring your code, maybe the IRS will buy a 
+copy of your program.)
+
+
+The Basic Idea
+
+Let's start with an oversimplification, and fantasize about a 
+simple tax form, 1040F in figure 1.
+
+
+line 1  wages                        |   |
+line 2  tax - enter 5% of line 1     |   |
+line 3  withheld                     |   |
+line 4  refund (line 3 - line 2)     |   |
+
+Figure 1 - Fantasy Tax Form, 1040F
+
+
+Each line of the tax form can be represented as a rule, with 
+the name line.  The line predicate has four arguments: the 
+form name, the line number, a description, and a value.  The 
+rules for each line will refer to the database and to each 
+other as necessary.  Given this, here is a Prolog program to 
+compute taxes for form 1040F.  (Remember, terms beginning 
+with upper case are variables.)
+
+ tax:-
+  line('1040F', 4, refund, X),
+  write('They owe you: '), write(X), nl.
+
+ line('1040F', 1, wages, X) :- wages(X).
+ line('1040F', 2, tax, X) :-
+  line('1040F', 1, _, WAGES),
+  X is .05 * WAGES.
+ line('1040F', 3, withheld, X) :- withheld(X).
+ line('1040F', 4, refund, X) :-
+  line('1040F', 2, _, TAX),
+  line('1040F', 3, _, WITHHELD),
+  X is WITHHELD - TAX.
+
+ wages(30000).
+
+ withheld(2000).
+
+In this program, tax is the top level predicate which is 
+called in a query to start the program.  In true business 
+like fashion, it immediately asks for the bottom line.  The 
+rule for line 4 calls rules for line 3 and 2, which call 
+other line rules etc.  This program accesses data from the 
+predicates wages and withheld.
+
+This basic scheme can be applied to the entire tax form, 
+however there are a few changes to be made which make the 
+total job simpler.  First, this program computes the bottom 
+line, but doesn't "remember" the numbers that go on all of 
+the other lines of the tax form.  In addition, if the same 
+line is needed more than once either due to backtracking, or 
+just the nature of the tax law, this program will recompute 
+it.
+
+Instead of having each line refer directly to other lines, we 
+can add an intermediate predicate which "remembers" the value 
+of each line as it is computed.  It will then use the 
+remembered value if it is available, or if not,  compute it 
+and remember the answer in the database.
+
+The intermediate predicate is getl, which is called by the 
+lines in the tax form when a value from another line is 
+needed.  If a line hasn't been called before, getl will call 
+the line and save the result in the predicate lin (using 
+assertz).  If the line has been called, getl will simply 
+get the saved value from lin.  Since every line that is 
+called should have a value, getl returns an error message if 
+it fails to come up with an answer.
+
+ getl(Form, Line, X) :-
+  lin(Form, Line, _, X), !.
+ getl(Form, Line, X) :-
+  line(Form,  Line,  Description, X),
+  assertz( lin(Form, Line, Description, X) ), 
+  !.
+ getl(Form, Line, X) :-
+  write(' *** error on: '), write(Form-Line), 
+  write(' ***'), nl.
+
+The predicate getl is then used in the tax form rules instead 
+of direct references to other lines.
+
+ line('1040F', 1, wages, X) :- wages(X).
+ line('1040F', 2, tax, X) :-
+  getl('1040F', 1, WAGES),
+  X is .05 * WAGES.
+ line('1040F', 3, withheld, X) :- withheld(X).
+ line('1040F', 4, refund, X) :-
+  getl('1040F',2,TAX),
+  getl('1040F', 3, WITHHELD),
+  X is WITHHELD - TAX.
+
+Now that the data for each line has been saved, we can write 
+a report predicate which lays out the tax form as it needs 
+to be filled out.  Note that even though we start at the 
+bottom line, the first line actually computed is  line 1.  
+Seeing as getl uses assertz to add things to the end of the 
+database, the clauses for lin (stored by getl) are generally 
+in the correct order for the report.
+
+ report(Form) :-
+  write('----- '), write(Form), write(' -----'), nl,
+  lin(Form, Number, Description, Value),
+  write(Number),
+  tabto(10), write(Description), 
+  tabto(40), write(Value), nl,
+  fail.
+ report(_).
+
+Since many of the lines of the tax form involve adding 
+together multiple other lines, or taking the difference of 
+two lines, it would be useful to write two utility predicates 
+which perform these functions, so that the readability of the 
+program is not adversely affected.
+
+The first is sum_lines which takes for arguments a form name 
+and a list of line numbers on the form.  It returns the sum 
+of all of the values from those lines.  It uses a secondary 
+predicate sumlin to ensure a more efficient tail recursive 
+execution.
+
+sum_lines(F,L,X) :- sumlin(F,L,0,X).
+
+sumlin(F,[],X,X).
+sumlin(F,[H|T],X,Y) :-
+ getl(F,H,A),
+ XX is X + A,
+ sumlin(F,T,XX,Y).
+
+The second is line_dif which computes the difference between 
+two lines on a given form.
+
+line_dif(F,A,B,X) :-
+ getl(F,A,AX),
+ getl(F,B,BX),
+ X is AX - BX.
+
+To use the program, the goal tax is first used to get the 
+bottom line.  Then the report predicate is used to get a 
+detailed listing.
+
+ ?- tax.
+ They owe you:  500
+
+ ?- report('1040F').
+ ----- 1040F -----
+ 1 wages   30000
+ 2 tax   1500
+ 3 withheld  2000
+ 4 refund  500
+
+The same tax formulas can be used with different data.  To 
+use the program for a different individual, simply change the  
+data values for wages and withheld.
+
+
+Back to Reality
+
+Given this basic strategy, and the tools developed so far, 
+one can easily build a customized tax program covering those 
+forms and lines applicable to a particular case.  Lets look 
+at various excerpts from the program in listing 1.
+
+The dependent calculations indicate how to use multiple 
+versions of a line to cover different situations.  The two 
+clauses for line 6b represent the two cases  of a spouse 
+exemption depending on whether the status is married joint or 
+not.   Line 6e shows how sum_lines is used.  This segment of 
+code makes use of two data section predicates, status and 
+children.
+
+line(1040,'6a','exemption self',1).
+line(1040,'6b','exemption spouse',1) :-
+ status(married_joint).
+line(1040,'6b','',0).
+line(1040,'6c','dependent children',X) :-
+ children(X).
+line(1040,'6e','total dependents',X) :-
+ sum_lines(1040,['6a','6b','6c'],X).
+
+The income calculations on form 1040 show how calculations 
+from different forms are tied together.  In this case data is 
+drawn in from schedules B and C.
+
+line(1040,7,'wages salaries etc',X) :-
+ wages(X).
+line(1040,8,'interest income',X) :-
+ getl(b,3,X).
+line(1040,13,'business profit or loss',X) :-
+ getl(c,31,X).
+line(1040,22,'total income',X) :-
+ sum_lines(1040,[7,8,13], X).
+
+The following rules from the adjusted income section of 1040 
+and the medical deductions for schedule A, show how straight 
+forwardly Prolog represents some confusing intertwined tax 
+code.  The rule is, you can deduct the minimum of either: 25% 
+of your health insurance, or your income from a business from 
+taxable income.  However, if you take a deduction on line 
+1040 - 25, then you must not include that amount in schedule 
+A.
+
+line(1040,25,'health insurance',X) :-
+ health_insurance(A),
+ B is integer( 0.25 * A + 0.5 ),
+ getl(c,31,C),
+ minimum([B,C],X).
+line(1040,30,'adjusted gross income',X) :-
+ line_dif(1040,22,25,X).
+
+line(a,2,'medical fees',X) :-
+  medical_fees(A),
+  getl(1040,25,B),
+  X is A - B.
+line(a,3,'7.5% of income',X) :-
+  getl(1040,31,A),
+  X is integer(0.075 * A + 0.5).
+line(a,4,'total medical',X) :-
+  line_dif(a,2,3,X).
+
+Here is the code that calls schedule A to get itemized 
+deductions, calculates the appropriate standard deduction, 
+and makes the right decision on which to use for the tax 
+form.
+
+line(1040,'33a','itemized deductions',X) :- 
+  getl(a,26,X).
+line(1040,'33b','standard deduction',2540) :- 
+  status(single).
+line(1040,'33b','standard deduction',3760) :- 
+  status(married_joint).
+line(1040,'33b','standard deduction',1880) :- 
+  status(married_separate).
+line(1040,34,'less itemized deductions',X) :-
+  getl(1040,'33a',A),
+  getl(1040,'33b',B),
+  A > B,
+  line_dif(1040,31,'33a',X), !.
+line(1040,34,'less standard deductions',X) :-
+  line_dif(1040,31,'33b',X).
+
+The tax computation is done by another predicate which knows 
+how to build tax tables.  It breaks income into a step 
+function in $50 increments and uses the formulas for the 
+midpoints of the steps.  An excerpt is included here:
+
+line(1040,37,'tax computation',X) :-
+ getl(1040,36,A),
+ compute_tax(A,X).
+
+compute_tax(A,Tax) :-    % adjust for tax table calc
+ B is integer(A / 50),
+ C is B * 50 + 25,
+ comput_tax(C,Tax).
+
+comput_tax(A,Tax) :-
+ status(single),
+ rate_single(A,T), !,
+ Tax is integer(T + 0.5).
+
+rate_single(A,T) :-
+ A =< 1800,
+ T is 0.11 * A.
+rate_single(A,T) :-
+ A =< 16800,
+ T is 198 + 0.15 * (A - 1800).
+
+Some forms require tabular information to be filled in on the 
+form.  So far, the tax program does not handle this case.  To 
+include it, certain lines have as their value a Prolog data 
+structure of the form table(TableName).  TableName is the 
+name of a predicate in the data section which will write the 
+required table.  The report predicate calls TableName when 
+it encounters this type of value.
+
+For example, on schedule B - 2, you must list all of the 
+banks you earned interest from.  The clause for line B-2 has 
+as its value table(int_inc_tab).  This means there is a 
+predicate int_inc_tab in the database which displays the 
+banks and interest.
+
+line(b,2,'interest accounts',table(int_inc_tab)).
+line(b,3,'total interest income',X) :-
+ getl(b,2,_),
+ interest_income(X).
+
+The report predicate is modified to call a predicate 
+process to deal with the Value.  If  Value is a structure 
+of the form table(T), then the predicate T is called.  
+Otherwise the Value is printed as before.
+
+report(Form) :-
+ nl,
+ write('----- '),write(Form),write(' -----'),nl,nl,
+ lin(Form,Line,Desc,Value),
+ process(Line,Desc,Value),
+ fail.
+report(_).
+
+process(Line,Desc,table(T)) :-
+ write(Line),
+ tabto(5),write(Desc),nl,
+ T, !.
+process(Line,Desc,Amount) :-
+ write(Line),
+ tabto(5),write(Desc),
+ tabto(45),write(Amount),nl.
+
+Next let's look at the data portion of the program.  On the 
+fantasy form we saw how simple data such as wages and 
+withheld are stored in the data section.  Let's look now at 
+the messy case of interest income.    With the Prolog 
+database, the data need not just contain data, but can 
+contain rules as well.
+
+Besides having to provide a table, interest income is further 
+complicated in Taxachusetts by the necessity of having to 
+distinguish between interest from Massachusetts banks and 
+non-Massachusetts banks.  However, the tax form program is 
+unaware of the underlying complexity and simply goes to the 
+database for int_inc_tab and interest_income.  It does not 
+know if these are simple facts, or more complex rules.
+
+% ----- data for schedule b -----
+
+interest_income(Z) :-
+ mass_interest_income(X),
+ non_mass_interest_inc(Y),
+ Z is X + Y.
+
+int_inc_tab :-
+ get_int_inc(Account,Amount),
+ tabto(5),write(Account),write(':'),
+ tabto(40),write(Amount),nl,
+ fail.
+int_inc_tab.
+
+%   ---
+
+mass_interest_income(X) :-
+ bagof(A,T^int_inc(T,A),L),
+ list_sum(L,X).
+
+non_mass_interest_inc(X) :-
+ bagof(A,T^non_mass_int_inc(T,A),L),
+ list_sum(L,X).
+
+get_int_inc(Acc,Am) :- int_inc(Acc,Am).
+get_int_inc(Acc,Am) :- non_mass_int_inc(Acc,Am).
+
+int_inc('first bank',186).
+int_inc('second bank',170).
+int_inc('wife''s checking',79) :- 
+  status(married_joint).
+int_inc('wife''s savings',721) :- 
+  status(married_joint).
+ 
+non_mass_int_inc('other bank',812) :-  
+  status(married_joint).
+
+The bagof predicate is used to assemble the separate clauses 
+into a list.  It is a built-in predicate of Prolog which 
+was used for this program, but most Prolog's have a similar 
+predicate, usually findall.  (If not, Programming in Prolog 
+by Clocksin & Mellish has the code for writing your own.)
+
+Notice how even the data can have rules associated with it.  
+Some of the int_inc clauses will be included only if the 
+filing status is married_joint.
+
+It is useful in the data section to distinguish between those 
+predicates which are required by the tax form predicates, and 
+those which support other data predicates.  This way there 
+are no errors when the data is replaced since it is clear 
+which data predicates need to have a value.
+
+The data section is especially useful for keeping track of 
+business expenses.  Again the data contains the rules for the 
+specific case.  In my case I use 1/7 of my apartment for my 
+home business.   This figure is built into the rules which 
+calculate the utility expense which winds up as a line item 
+on schedule C.  For next year I simply need to plug in the 
+new values for the electric bills.  This data could also have 
+been saved in the separate clause format used for interest 
+income if preferred.
+
+utils(XX) :-
+ phone(A),
+ gas_total(B),
+ elec_total(C),
+ oil_total(D),
+ X is A + (B + C + D) / 7,
+ XX is integer(X + 0.5).
+
+elec_total(X) :-
+ elec(L),
+ list_sum(L,X).
+
+elec([30,59,42,22,34,30,40,34]).
+
+
+Conclusions
+
+Prolog's use of logic to express programming constructs is 
+exceptionally well suited to financial applications.  This is 
+due to the fact that financial applications are made up of 
+rules for relating data.  This is exactly the paradigm that 
+Prolog uses.
+
+In the case of a tax program, the advantage is even more 
+significant.  The tax law is made up of many logical (this 
+could be debated) rules.  The rules are represented almost 
+verbatim in Prolog code.
+
+One issue that must always be raised is performance.  It 
+seems as if this year I had one of everything the IRS cares 
+about.  As a result my program had to deal with seven 
+different forms.  The tax computation on a 
+Macintosh SE was under two seconds.
+
+There is an opportunity to utilize Prolog for developing 
+intelligent financial applications.  In particular a 
+commercial tax program might also include various rules which 
+give advice above and beyond the IRS rules.  That is, it 
+would become an integrated tax program and expert system.
+
+In addition, the straight forward rule syntax of Prolog makes 
+for code which is very easy to modify from year to year.  The 
+proliferation of Prolog's on various machines makes the code 
+reasonably easy to port from machine to machine.  In short, 
+the vendor working with Prolog has a tremendous advantage 
+over vendor's working with more conventional languages.
+
+
+
+

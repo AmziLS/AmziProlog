@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="feature_export" name="build">
+	<target name="feature_export">
+		<pde.exportFeatures destination="C:\amzi\dev\a9\eclipse_install_3-5-9001h" exportSource="false" exportType="directory" features="com.amzi.prolog" useJARFormat="true"/>
+	</target>
+</project>

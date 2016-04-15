@@ -1,0 +1,384 @@
+% ROOM - a version of the room knowledge base for FOOPS.  Much of the
+% knowledge about furniture is stored in frames, thus simplifying
+% the rule portion of the knowledge base.
+
+frame(furniture, [
+	legal_types - [val [couch,chair,coffee_table,end_table,standing_lamp,
+		table_lamp,tv,knickknack]],
+	position - [def none, add pos_add],
+	length - [def 3],
+	place_on - [def floor],
+	can_hold - [def 0]]).
+
+frame(couch, [
+	ako - [val furniture],
+	length - [def 6]]).
+
+frame(chair, [
+	ako - [val furniture],
+	length - [def 3]]).
+
+% A table is different from most furniture in that it can hold things
+% on it.
+
+frame(table, [
+	ako - [val furniture],
+	space - [def 4],
+	length - [def 4],
+	can_support - [def yes],
+	holding - [def []]]).
+
+frame(end_table, [
+	ako - [val table],
+	length - [def 2]]).
+
+frame(coffee_table, [
+	ako - [val table],
+	length - [def 4]]).
+
+% electric is used as a super class for anything electrical.  It contains
+% the defaults for those attributes unique to electrical things.
+
+frame(electric, [
+	needs_outlet - [def yes]]).
+
+frame(lamp, [
+	ako - [val [furniture, electric]]]).
+
+frame(standing_lamp, [
+	ako - [val lamp]]).
+
+frame(table_lamp, [
+	ako - [val lamp],
+	place_on - [def table]]).
+
+frame(tv, [
+	ako - [val [furniture, electric]],
+	place_on - [calc tv_support]]).
+
+frame(knickknack, [
+	ako - [val furniture],
+	length - [def 1],
+	place_on - [def table]]).
+
+frame(wall, [
+	length - [def 10],
+	outlets - [def 0],
+	space - [calc space_calc],
+	holding - [def []]]).
+
+frame(door, [
+	ako - [val furniture],
+	length - [def 4]]).
+
+frame(goal, []).
+
+frame(recommend, []).
+
+% calculate the available space if needed.  The available space is
+% computed from the length of the item minus the sum of the lengths of
+% the items it is holding.  The held items are in the holding list.
+% The items in the list are identified only by their unique names.
+% This is used by walls and tables.
+
+space_calc(C,N,space-S) :-
+	getf(C,N,[length-L,holding-HList]),
+	sum_lengths(HList,0,HLen),
+	S is L - HLen.
+
+sum_lengths([],L,L).
+sum_lengths([C/N|T],X,L) :-
+	getf(C,N,[length-HL]),
+	XX is X + HL,
+	sum_lengths(T,XX,L).
+
+% When placing the tv, check with the user to see if it goes on the
+% floor or a table.
+
+tv_support(tv,N,place_on-table) :-
+	nl,
+	write('Should the TV go on a table? '),
+	read(yes),
+	uptf(tv,N,[place_on-table]).
+tv_support(tv,N,place_on-floor) :-
+	uptf(tv,N,[place_on-floor]).
+
+% Whenever a piece is placed in position, update the holding list of the
+% item which holds it (table or wall) and the available space.  If something
+% is placed in front of something else, then do nothing.
+
+pos_add(_,_,position-frontof(X)) :-
+	uptf(C,N,[holding-[X]]).
+pos_add(C,N,position-CP/P) :-
+	getf(CP,P,[space-OldS]),
+	getf(C,N,[length-L]),
+	NewS is OldS - L,
+	NewS >= 0,
+	uptf(CP,P,[holding-[C/N],space-NewS]).
+pos_add(C,N,position-CP/P) :-
+	nl,write_line(['Not enough room on',CP,P,for,C,N]),
+	!,fail.
+
+% The forward chaining rules of the system.  They make use of call
+% to activate some pure Prolog predicates at the end of the knowledge
+% base.  In particular, data gathering, and wall space calculations
+% are done in Prolog.
+
+% These are the terms which are initially stored in working storage.
+% They set a goal used to force firing of certain preliminary rules,
+% and various facts about the problem domain used by the actual
+% configuration rules.
+
+initial_data([goal - gather_data,
+	wall - north with [opposite-south,right-west,left-east],
+	wall - south with [opposite-north,right-east,left-west],
+	wall - east with [opposite-west,right-north,left-south],
+	wall - west with [opposite-east,right-south,left-north] ]).
+
+% first gather data, then try the couch first.
+
+rule 1:
+	[goal - gather_data]
+	==>
+	[call(gather_data),
+	 assert( goal - couch_first )].
+
+% Rules f1-f13 illustrate the strength of rule based programming.
+% Each rule captures a rule of thumb used in configuring furniture
+% in a living room.  The rules are all independent, transparent,
+% and can be easily maintained.  Complexity can be added without
+% concern for the flow of control.
+
+% f1, f2 - place the couch first, it should be either opposite the
+% door, or to its right, depending on which wall has more space.
+
+rule f1:
+	[goal - couch_first,
+	 couch - C with [position-none,length-LenC],
+	 door - D with [position-wall/W],
+	 wall - W with [opposite-OW,right-RW],
+	 wall - OW with [space-SpOW],
+	 wall - RW with [space-SpRW],
+	 SpOW >= SpRW,
+	 LenC =< SpOW]
+	==>
+	[update(couch - C with [position-wall/OW])].
+
+rule f2:
+	[goal - couch_first,
+	 couch - C with [position-none,length-LenC],
+	 door - D with [position-wall/W],
+	 wall - W with [opposite-OW,right-RW],
+	 wall - OW with [space-SpOW],
+	 wall - RW with [space-SpRW],
+	 SpRW >= SpOW,
+	 LenC =< SpRW]
+	==>
+	[update(couch - C with [position-wall/RW])].
+
+% f3 - f3a the tv should be opposite the couch.  if it needs a table, an
+% end table should be placed under it, if no table is available put
+% it on the floor anyway and recommend the purchase of a table.  The rules
+% first check to see if the couch has been placed.
+
+rule f3:
+	[couch - C with [position-wall/W],
+	 wall - W with [opposite-OW],
+	 tv - TV with [position-none,place_on-floor]]
+	==>
+	[update(tv - TV with [position-wall/OW])].
+
+rule f4:
+	[couch - C with [position-wall/W],
+	 wall - W with [opposite-OW],
+	 tv - TV with [position-none,place_on-table],
+	 end_table - T with [position-none]]
+	==>
+	[update(end_table - T with [position-wall/OW]),
+	 update(tv - TV with [position-end_table/T])].
+
+rule f4a:
+	[tv - TV with [position-none,place_on-table]]
+	==>
+	[assert(recommend - R with [buy-['table for tv']])].
+
+	 
+% f5 - the coffee table should be in front of the couch.
+
+rule f5:
+	[coffee_table - CT with [position-none],
+	 couch - C]
+	==>
+	[update(coffee_table - CT with [position-frontof(couch/C)])].
+
+% f6, f7 - chairs should be on adjacent walls from the couch, which ever
+% has the most space
+
+rule f6:
+	[chair - Ch with [position-none],
+	 couch - C with [position-wall/W],
+	 wall - W with [right-RW,left-LW],
+	 wall - RW with [space-SpR],
+	 wall - LW with [space-SpL],
+	 SpR >= SpL]
+	==>
+	[update(chair - Ch with [position-wall/RW])].
+	
+rule f7:
+	[chair - Ch with [position-none],
+	 couch - C with [position-wall/W],
+	 wall - W with [right-RW,left-LW],
+	 wall - RW with [space-SpR],
+	 wall - LW with [space-SpL],
+	 SpL > SpR]
+	==>
+	[update(chair - Ch with [position-wall/LW])].
+	
+
+% put end_tables next to the couch first, then on the walls with
+% the chairs
+
+rule f9:
+	[end_table - ET with [position-none],
+	 not tv - TV with [position-none,place_on-table],
+	 couch - C with [position-wall/W],
+	 not end_table - ET2 with [position-wall/W]]
+	==>
+	[update(end_table - ET with [position-wall/W])].
+
+rule f10:
+	[end_table - ET with [position-none],
+	 not tv - TV with [position-none,place_on-table],
+	 chair - C with [position-wall/W],
+	 not end_table - ET2 with [position-wall/W]]
+	==>
+	[update(end_table - ET with [position-wall/W])].
+
+% put the table lamps on the end tables
+
+rule f11:
+	[table_lamp - TL with [position-none],
+	 end_table - ET with [position-wall/W]]
+	==>
+	[update( table_lamp - TL with [position-end_table/ET] )].
+
+% put the knickknacks on anything which will hold them.
+
+rule f11a:
+	[knickknack - KK with [position-none],
+	 Table - T with [can_support-yes, position-wall/W]]
+	==>
+	[update( knickknack - KK with [position-Table/T] )].
+
+% get extension cords if needed
+
+rule f12:
+	[Thing - X with [needs_outlet-yes, position-wall/W],
+	 wall - W with [outlets-0]]
+	==>
+	[assert(recommend - R with [buy-['extension cord'-W]])].
+
+rule f13:
+	[Thing - X with [needs_outlet-yes, position-C/N],
+	 C - N with [position-wall/W],
+	 wall - W with [outlets-0]]
+	==>
+	[assert(recommend - R with [buy-['extension cord'-Thing/W]])].
+
+% When no other rules fire, here is the summary
+
+rule f14:
+	[]
+	==>
+	[call(output_data)].
+
+% Prolog predicates called by various rules to perform functions better
+% handled by Prolog.
+
+% Gather the input data from the user.
+
+gather_data :-
+	read_furniture,
+	read_walls.
+
+read_furniture :-
+	get_frame(furniture,[legal_types-LT]),
+	write('Enter name of furniture at the prompt.  It must be one of:'),nl,
+	write(LT),nl,
+	write('Enter ''end.'' to stop input.'),nl,
+	write('At the length prompt enter ''y.'' or a new number.'),nl,
+	repeat,
+	write('>'),read(X),
+	process_furn(X), !.
+
+process_furn(end).
+process_furn(X) :-
+	get_frame(X,[length-DL]),
+	write(length-DL),write('>'),
+	read(NL),
+	get_length(NL,DL,L),
+	addf(X,_,[length-L]),fail.
+
+get_length(y,L,L) :- !.
+get_length(L,_,L).
+
+read_walls :-
+	nl,write('Enter data for the walls.'),nl,
+	write('What is the length of the north & south walls? '),
+	read(NSL),
+	uptf(wall,north,[length-NSL]),
+	uptf(wall,south,[length-NSL]),
+	write('What is the length of the east & west walls? '),
+	read(EWL),
+	uptf(wall,east,[length-EWL]),
+	uptf(wall,west,[length-EWL]),
+	write('Which wall has the door? '),
+	read(DoorWall),
+	write('What is its length? '),
+	read(DoorLength),
+	addf(door,D,[length-DoorLength]),
+	uptf(door,D,[position-wall/DoorWall]),
+	write('Which walls have outlets? (a list)'),
+	read(PlugWalls),
+	process_plugs(PlugWalls).
+
+process_plugs([]) :- !.
+process_plugs([H|T]) :-
+	uptf(wall,H,[outlets-1]),
+	!, process_plugs(T).
+process_plugs(X) :-
+	uptf(wall,X,[outlets-1]).
+
+output_data :-
+	write('The final results are:'),nl,
+%	print_frames,
+	output_walls,
+	output_tables,
+	output_recommends,
+	output_unplaced.
+
+output_walls :-
+	getf(wall,W,[holding-HL]),
+	write_line([W,wall,holding|HL]),
+	fail.
+output_walls.
+
+output_tables :-
+	getf(C,N,[holding-HL]),
+	not C = wall,
+	write_line([C,N,holding|HL]),
+	fail.
+output_tables.
+
+output_recommends :-
+	getf(recommend,_,[buy-BL]),
+	write_line([purchase|BL]),
+	fail.
+output_recommends.
+
+output_unplaced :-
+	write('Unplaced furniture:'),nl,
+	getf(T,N,[position-none]),
+	write(T-N),nl,
+	fail.
+output_unplaced.                                   

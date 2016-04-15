@@ -1,0 +1,89 @@
+	 
+     ,_O<  Amzi! inc.        5861 Greentree Road   >O_,
+     ( )                  Lebanon, OH 45036  USA    ( )
+ ~~~~~~~~~--------------------------------------~~~~~~~~~~~
+  tel 513/425-8050                           info@amzi.com
+  fax 513/425-8025                     http://www.amzi.com
+
+
+ Expert Systems in Prolog
+ February 1996
+
+     These programs are prototype expert system shells, as described
+     in the book _Building Expert Systems in Prolog_ by Dennis
+     Merritt, published by Springer-Verlag.  ISBN 0-387-97016-9,
+     ISBN 3-540-97016-9.
+
+     As prototypes, the shells are designed to illustrate implementation
+     techniques and, although they all work, are not intended to be
+     finished products.
+
+     The book is available from Springer-Verlag, through technical
+     bookstores, and direct from Amzi! inc.
+
+     The book provides details on the construction of each of the
+     programs as well as the types of applications for which they
+     are well-suited.
+
+
+Installation
+---------------------------------------------------------------------
+
+     The XSiP files are distributed as a zip file.  When unzipped,
+     it will create a directory structure with source and executables
+     for each of the XSiP programs, plus an additional tax program.
+
+
+Files & Directories
+---------------------------------------------------------------------
+
+     The main directories and files installed are:
+
+     native -   program and sample knowledge base using Prolog's
+                native inferencing capabilities.  uses Prolog
+                syntax for rule specification.  (Chapter 2,4)
+
+     clam -     EMYCIN-like backward-chaining with uncertainty
+                program and sample knowledge base.  uses Prolog
+                DCG to define a free-form rule syntax. (Chapter 3,4)
+
+     oops -     OPS-like forward-chaining program with sample
+                knowledge base.  uses Prolog operators to implement
+                a formal, but intuitive rule syntax.  (Chapter 5)
+
+     foops -    integrates frame-based knowledge representation
+                with the OOPS inference engine.  (Chapter 6,7)
+
+     retefoop - implementation of a modified rete-algorithm to
+                allow compilation and rapid access of FOOPS knowledge
+                bases.  (Chapter 8)
+
+     window -   code implementing an object-oriented, text-mode,
+                menu and window user interface.  (Chapter 9)
+
+     taxes -    code implementing a portion of the tax law, with
+                descriptive article that first appeared in PCAI magazine.
+
+     rubik -    application for solving Rubik's cube.  (Chapter 12)
+
+
+General Notes
+---------------------------------------------------------------------
+
+     The source code is as close to Edinburgh standard as practical,
+     so with little or no modification, all of the programs will
+     run on any Edinburgh standard Prolog, as defined by
+     Clocksin & Mellish in _Programming in Prolog_.
+
+     In addition to source code, most of the expert system shells
+     include a Amzi! Prolog executable version as well.  This is the
+     .EXE / .XPL pair of files you find in the directory.  The executables
+     were generated as 32-bit DOS executables, so they require a 386 or
+     better PC to run.
+
+     The executables were generated with the 3.3 Jan96 release of Amzi!
+     Prolog + Logic Server.
+
+     This disk contains some minor bug fixes to the frame implementation
+     code.
+

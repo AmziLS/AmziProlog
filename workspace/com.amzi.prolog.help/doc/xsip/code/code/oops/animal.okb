@@ -1,0 +1,169 @@
+% from Winston & Horn's LISP
+
+% Rules for animal identification.  The first three rules are an
+% input loop.  Enter attributes that match the patterns in the rules.
+% For example: has(robie,hair), or lays_eggs(suzie).  These facts will
+% help identify robie and suzie.  Enter "end" to end the input loop.
+%
+% The attributes can also be put in the list of initial_data.
+% Example:
+%
+%initial_data([
+%	has(dennis,hair),
+%	has(dennis,hoofs),
+%	has(dennis,black_stripes),
+%	parent(dennis,diana)
+%	]).
+%
+% This should lead to the identification of dennis and diana as zebras.
+
+initial_data([goal(animal_id)]).
+
+rule 1:
+  [1: goal(animal_id)]
+  ==>
+  [assert(read_facts),
+   retract(1)].
+
+rule 2:
+  [1: end,
+   2: read_facts]
+  ==>
+  [retract(all)].
+
+rule 3:
+  [1: read_facts]
+  ==>
+  [prompt('Attribute ? ',X),
+   assert(X)].
+
+rule id1: 
+  [1: has(X,hair)]
+  ==>
+  [assert(isa(X,mammal)),
+   retract(all)].
+
+rule id2: 
+  [1: gives(X,milk)]
+  ==>
+  [assert(isa(X,mammal)),
+   retract(all)].
+
+rule id3: 
+  [1: has(X,feathers)]
+  ==>
+  [assert(isa(X,bird)),
+   retract(all)].
+
+rule id4: 
+  [1: flies(X),
+   2: lays_eggs(X)]
+  ==>
+  [assert(isa(X,bird)),
+   retract(all)].
+
+rule id5: 
+  [1: eats_meat(X)]
+  ==>
+  [assert(isa(X,carnivore)),
+   retract(all)].
+
+rule id6: 
+  [1: has(X,pointed_teeth),
+   2: has(X,claws),
+   3: has(X,forward_eyes)]
+  ==>
+  [assert(isa(X,carnivore)),
+   retract(all)].
+
+rule id7: 
+  [1: isa(X,mammal),
+   2: has(X,hoofs)]
+  ==>
+  [assert(isa(X,ungulate)),
+   retract(all)].
+
+rule id8: 
+  [1: isa(X,mammal),
+   2: chews_cud(X)]
+  ==>
+  [assert(isa(X,ungulate)),
+   assert(even_toed(X)),
+   retract(all)].
+
+rule id9: 
+  [1: isa(X,mammal),
+   2: isa(X,carnivore),
+   3: has(X,tawny_color),
+   4: has(X,dark_spots)]
+  ==>
+  [assert(isa(X,cheetah)),
+   retract(all)].
+
+rule id10: 
+  [1: isa(X,mammal),
+   2: isa(X,carnivore),
+   3: has(X,tawny_color),
+   4: has(X,black_stripes)]
+  ==>
+  [assert(isa(X,tiger)),
+   retract(all)].
+
+rule id11: 
+  [1: isa(X,ungulate),
+   2: has(X,long_neck),
+   3: has(X,long_legs),
+   4: has(X,dark_spots)]
+  ==>
+  [assert(isa(X,giraffe)),
+   retract(all)].
+
+rule id12: 
+  [1: isa(X,ungulate),
+   2: has(X,black_stripes)]
+  ==>
+  [assert(isa(X,zebra)),
+   retract(all)].
+
+rule id13: 
+  [1: isa(X,bird),
+   2: does_not_fly(X),
+   3: has(X,long_neck),
+   4: has(X,long_legs),
+   5: has_attr(X,black_and_white)]
+  ==>
+  [assert(isa(X,ostrich)),
+   retract(all)].
+
+rule id14: 
+  [1: isa(X,bird),
+   2: does_not_fly(X),
+   3: swims(X),
+   4: has_attr(X,black_and_white)]
+  ==>
+  [assert(isa(X,penguin)),
+   retract(all)].
+
+rule id15: 
+  [1: isa(X,bird),
+   2: flies_well(X)]
+  ==>
+  [assert(isa(X,albatross)),
+   retract(all)].
+
+rule id16: 
+  [1: isa(Animal,Type),
+   2: parent(Animal,Child)]
+  ==>
+  [assert(isa(Child,Type)),
+   retract(all)].
+
+rule id17: 
+  [1: even_toed(X),
+   2: has_attr(X,slow),
+   3: isa(X,ungulate)]
+  ==>
+  [assert(isa(X,sloth)),
+   retract(all)].
+                                                      
+

@@ -1,0 +1,346 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; U) [Netscape]">
+   <TITLE>Listener</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1>
+<A NAME="Listener"></A><FONT COLOR="#D2AA00">Listener</FONT></H1>
+<p><!AMZI_INDEX = alis; Listener>
+Prolog programs, unlike conventional programs, are collections of predicates, 
+  which are like logical rules. A Prolog program is constructed of an interconnected 
+  network of these predicates, referring to each other. So a Prolog program could 
+  be called a logic base instead.</p>
+<p>The Prolog listener is an interactive environment that allows a programmer 
+  to query any part of the Prolog logic base, or program. It is a powerful application 
+  development and test tool.</p>
+
+<p>Amzi! provides two listeners, one activated from the command line, the other 
+  from the Interactive Development Environment (IDE).</p>
+<ul>
+  <li><a href="#StartingStoppingListener">Starting and Stopping the Listener</a></li>
+  <li><a href="#EnteringCommands">Entering and Editing Commands</a></li>
+  <li><a href="#AddingRemovingClauses">Adding and Removing Clauses</a></li>
+  <li><a href="#ListingClauses">Listing Clauses</a></li>
+  <li><a href="#QueryingLogicBase">Querying the Logic Base</a></li>
+  <li><a href="#ConsultingPrologSourceFiles">Consulting Prolog Source Files</a></li>
+  <li><a href="#LoadingCompiledPrologCode">Loading Compiled Prolog Code</a></li>
+  <li><a href="#ListenerCommands">Listener Commands</a></li>
+</ul>
+<H2><A NAME="StartingStoppingListener"></A><FONT COLOR="#0000FF">
+Starting and Stopping the Listener
+</FONT></H2>
+<H3><A NAME="StartingIDEListener"></A><FONT COLOR="#000080">IDE</FONT></H3>
+  
+<p>To start the listener from the IDE without consulting any Prolog source files:</p>
+<ul>
+  <li>Select Run | Listener from the menu,<br>
+    or </li>
+  <li>Press <img src="question_dash.gif" width="16" height="16"> on the tool bar.<br>
+    or</li>
+  <li>Press <img src="start.gif" width="16" height="16"> on the Listener View 
+    tool bar.</li>
+</ul>
+<p>To start the listener consulting a single source file, open or highlight a 
+  .pro file and:</p>
+<ul>
+  <li>Select Run | Run As... | Interpreted Single File</li>
+</ul>
+<p>To start the listener consulting an entire project, open a .pro file in the 
+  project for editing or select the Prolog Project in the Navigator View:</p>
+<ul>
+  <li>Select Run | Run As... | Interpreted Project</li>
+</ul>
+<p></p>
+<p>This will consult all the .pro files in the project directory. If you want 
+  to exclude one or more files, specify them in your <a href="pug_ide.htm#SettingProjectProperties">Project 
+  Properties</a>. Also any libraries and Logic Server Extensions specified in 
+  the project are automatically loaded. All the consulted and loaded files are 
+  listed when the listener starts as shown below:</p>
+<p align="center"><img src="listener_view.gif" width="522" height="177"></p>
+<p>To exit the listener either:</p>
+<ul>
+  <li>Press the <img src="stop.gif" width="16" height="16"> button on the Listener 
+    View tool bar,<br>
+    or </li>
+  <li>Type <b>quit.</b> at the listener ?- prompt.</li>
+</ul>
+<h3> <a name="StartingCommandLineListener"></a><font color="#000080">Command Line</font></h3>
+<p>At the command line prompt enter the command <b>alis</b>. You will then see 
+  the ?- prompt. To exit, type <b>quit.</b></p>
+<ul>
+  <pre><font color="#000080">>alis
+
+Amzi! Prolog Listener
+Type 'quit.' to exit
+
+?- write(hello).
+hello
+yes
+?- quit.
+></font></pre>
+</ul>
+<h3></h3>
+<p> 
+  <!AMZI_INDEX = main/0>
+  When running the listener from the command line, you can optionally specify 
+  a list of files to be consulted as arguments. These files are then consulted 
+  before the listener prompt is shown.</p>
+<ul>
+  <pre><font color="#000080">>alis dw_main dw_rules dw_data</font></pre>
+</ul>
+<p><b>main/0</b> - if the files that are loaded from the command line contain 
+  a main/0 predicate, then it is called immediately. So <b>alis</b> can be used 
+  to immediately run a Prolog program from its main/0 predicate.
+
+<H2><a name="EnteringCommands"></a><font color="#0000FF"> Entering and Editing 
+  Commands</font></H2>
+You enter commands and queries after the ?- prompt. You can use the up/down arrows 
+to peruse the queue of prior lines that you typed into the listener. You can also 
+edit those lines using the left/right arrows and delete key. There are copy and 
+paste commands on the edit menu to copy some or all of the output. 
+<H2><A NAME="AddingRemovingClauses"></A><FONT COLOR="#0000FF"> Adding and Removing 
+  Clauses </FONT></H2>
+
+<!AMZI_INDEX = Clauses>Once in the listener, dynamic clauses can be added to the logicbase in a number of ways. 
+<H3>
+<A NAME="assert"></A><FONT COLOR="#000080">assert</FONT></H3>
+<p><b>assert</b>, <b>asserta</b>, and <b>assertz</b> can all be used to directly 
+  add clauses. By default, the clauses will be added to the default module, <b>user</b>. 
+  If other modules are available, then assert can take a module specifier as well.</p>
+<UL>
+<PRE><!AMZI_INDEX = assert><FONT COLOR="#000080">?- assert( likes(ella, crackers) ).
+yes</FONT></PRE>
+</UL>
+
+<H3> <A NAME="TypinginaRule"></A><FONT COLOR="#000080">Adding a Rule</FONT></H3>
+<!AMZI_INDEX = Rules>A term with a neck symbol, ":-", is a rule. If the
+rule has no body, then use the body true to ensure the clause is added.
+<UL>
+<PRE><FONT COLOR="#000080">?- likes(ella, pizza) :- true.
+Term asserted</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="Consultinguser"></A><FONT COLOR="#000080">Consulting user</FONT></H3>
+
+<UL>
+<PRE><!AMZI_INDEX = Consulting User><FONT COLOR="#000080">?- consult(user).
+|&nbsp; likes(leona, lettuce).
+|&nbsp; likes(leona, pool).
+|&nbsp; quit.
+yes</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="add"></A><FONT COLOR="#000080">add</FONT></H3>
+
+<UL>
+  <PRE><!AMZI_INDEX = add; replace><FONT COLOR="#000080">?- add.
+|&nbsp; likes(basil, carrots).
+|&nbsp; likes(basil, hay).
+|&nbsp;&nbsp;quit.
+yes</FONT></PRE>
+</UL>
+Clauses can be replaced by using <B>replace</B>, just like add. The only
+difference is the old clauses for the predicate are removed first, and
+replaced with the new ones.
+<H3>
+<A NAME="RemovingClauses"></A><FONT COLOR="#000080">Removing Clauses</FONT></H3>
+<!AMZI_INDEX = Clauses>Once in the logicbase, dynamic clauses can be removed with 
+any of the built-in predicates that provide that service, such as retract and 
+abolish. See the <A HREF="ref_logicbase.htm">Prolog Logicbase</A> section for details. 
+<UL>
+<PRE><FONT COLOR="#000080">?- retractall( likes(basil, X) ).
+yes</FONT></PRE>
+</UL>
+
+<H2><A NAME="ListingClauses"></A><FONT COLOR="#0000FF">
+Listing Clauses
+</FONT></H2>
+
+<!AMZI_INDEX = listing; Clauses; pp>The <b>listing</b> predicate displays a listing 
+of your clauses. It has a few forms. 
+<MENU> 
+  <LI> <B>listing</B> - list all of the dynamic clauses in the logicbase</LI>
+  <LI><b>listing</b>(Module) - list all of the clause in module Module.</LI>
+  <LI> <B>listing</B>([Module:]Name) - list all of the clauses of predicate Name 
+    in optionally specified Module. Note that this will display clauses of different 
+    arities that have the same name.</LI>
+  <LI> <B>listing</B>([Module:]Name/Arity) - list all of the clauses of Name/Arity 
+    in optionally specified Module.</LI>
+</MENU>
+<p>For example, after adding the clauses as shown in the section above:</p>
+<UL>
+  <PRE><FONT COLOR="#000080">?- listing.
+
+user:likes(ella, crackers).
+user:likes(ella, pizza).
+user:likes(leona, lettuce).
+user:likes(leona, pool).
+user:likes(basil, carrots).
+user:likes(basil, hay).
+
+yes</FONT></PRE>
+</UL>
+
+<p>Note that the clauses were all asserted to the default module, <b>user</b>.</p>
+<p>The listing is displayed using the built-in predicate <A HREF="ref_system.htm">pp/1</A>, 
+  the "pretty printer." You can define your own pretty printer and call it <A HREF="ref_system.htm">user_pp/1</A>. 
+  If so, listing and other built-in predicates will use your pretty printer.</p>
+
+<P><i><img src="arrowrt.gif" height=18 width=18 align=BOTTOM> Variable names are 
+  not preserved when clauses are asserted to the logicbase, so <B>listing</B> 
+  generates new names for the variables as it displays. The names are of the form 
+  _n where n is an integer.</i> 
+<H2><A NAME="QueryingLogicBase"></A><FONT COLOR="#0000FF">
+Querying the Logic Base
+</FONT></H2>
+
+<p><!AMZI_INDEX = Listener; Goals>
+At the listener prompt "<B>?-</B>" You may
+enter any Prolog goal, including compound conjunctions of goals, separated
+by ",", and disjunctions, separated by ";".</p>
+
+<P>The listener attempts to prove the goal, returning values of any variables. 
+  You can then enter:
+<ul>
+  <li>semi-colon (;) - request backtracking to look for more answers.</li>
+  <li>Enter key - to return to the listener prompt.</li>
+</ul>
+<p>When there are no more answers, the listener responds with <b>no</b> and returns 
+  to the <b>?-</b> prompt.</p> 
+<P>Examples:
+<UL>
+  <PRE><FONT COLOR="#000080">?- likes(ella, X).
+X = crackers ;
+X = pizza ;
+no
+
+?- likes(X, Y).
+X = ella
+Y = crackers ;
+X = ella
+Y = pizza&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;% [Enter] key pressed
+yes
+
+?- likes(X, A), likes(X, B), A \= B.
+X = ella
+A = crackers
+B = pizza ;
+X = leona
+A = lettuce
+B = pool ;
+no</FONT></PRE>
+</UL>
+If the value of a variable is undefined, then the internal notation for
+the variable is displayed. It is of the form Hn, where n is an integer.
+For example
+<UL>
+  <PRE><FONT COLOR="#000080">?- X = foo(A,B,A).
+X = foo(H8,H9,H8)
+A = H8
+B = H9</FONT></PRE>
+</UL>
+
+
+
+<H2><A NAME="ConsultingPrologSourceFiles"></A><FONT COLOR="#0000FF">
+Consulting Prolog Source Files
+</FONT></H2>
+<p> 
+  <!AMZI_INDEX = consult; reconsult>
+  Normally, you will run a single file or project from the Run | Run As... menu 
+  and let the IDE automatically consult your Prolog source code files. However, 
+  if you need to add or replace files, there are two ways to get predicates from 
+  a Prolog source file into the logicbase as dynamic predicates.</p>
+<ul>
+  <li><b>consult</b> - takes each clause from the source file and asserts it to 
+    the logicbase. After <b>consult</b>, <b>listing</b> will show all the 
+    clauses from the file. Using consult twice for the same source file will result 
+    in duplicate entries in the logicbase.</li>
+  <li><b>reconsult</b> - is similar to consult, but before the clauses for a predicate 
+    are asserted, any pre-existing clauses for that predicate are retracted. Reconsult 
+    is often used during program development, as changes are made to the source 
+    file, and the file then reconsulted. Reconsult can also be used for the first 
+    consult of a file, that is, consult is not really necessary.</li>
+</ul>
+<p><i><img src="arrowrt.gif" height=18 width=18 align=BOTTOM>Reconsult only retracts 
+  clauses for predicates that are about to be reconsulted. If a predicate in the 
+  logicbase does not have a replacement in the source file being reconsulted, 
+  then that predicate is not removed.</i></p>
+<p>Consult has a few forms:</p>
+<ul>
+  <li><b>consult(File)</b> - the specified file is consulted. If no extension 
+    is provided, then '.pro' is assumed.</li>
+  <li><b>consult( [File1, File2, ..., FileN] )</b> - consults each of the files 
+    in the list.</li>
+  <li><b>[File1, File2, ..., FileN]</b> - a shorthand just for the listener, if 
+    a list is given as a goal at the ?- prompt, the listener assumes it is a list 
+    of files to be consulted.</li>
+</ul>
+<p>Reconsult has two forms:</p>
+<ul>
+  <li><b>reconsult(File)</b> - the specified file is reconsulted. If no extension 
+    is provided, then '.pro' is assumed.</li>
+  <li><b>reconsult( [File1, File2, ..., FileN] )</b> - reconsults each of the 
+    files in the list.</li>
+</ul>
+<h2><A NAME="LoadingCompiledPrologCode"></A><FONT COLOR="#0000FF"> Loading Compiled 
+  Prolog Code </FONT></h2>
+<p><!AMZI_INDEX = load>
+From within the listener you can load compiled (.plm) Prolog files. The predicates 
+  can be used as goals, just as for consulted (.pro) files. The compiled predicates 
+  will be faster and use less stack and heap resources than the interpreted (consulted) 
+  predicates, but you will not be able to see them with listing or the debugger.</p>
+<p>There are a few ways to load a compiled (.plm) file:</p>
+<ul>
+  <li><b>load(File)</b> - loads the file, assuming an extension of .plm.</li>
+  <li><b>load( [File1, File2, ..., FileN] )</b> - loads each of the files in the 
+    list.</li>
+  <li><b>consult( 'file.plm' )</b> - for any form of consult, including command 
+    line and IDE options, if the file is a .plm file, then it will be loaded instead 
+    of consulted.</li>
+</ul>
+<H2><A NAME="ListenerCommands"></A><FONT COLOR="#0000FF">
+Listener Commands
+</FONT></H2>
+
+
+
+<p><!AMZI_INDEX= Listener; pp; user_pp>These predicates, except <b>pp</b> and 
+  <b>user_pp</b> can be entered only at the ?- prompt in the listener. </p>
+<h3><a name="add"></a><font color="#000080">add</font></h3>
+<p>
+  <!AMZI_INDEX=  add; Predicates>
+  Allows you to add dynamic clauses to the logicbase. This is equivalent to consult(user). 
+</p>
+<h3><a name="debug"></a><font color="#000080">debug</font></h3>
+<p> 
+  <!AMZI_INDEX=  debug; Debugger>
+  Enters the Command-Line Debugger. See the <a href="pug_debugger.htm">Command-Line 
+  Debugger</a> section for more information. There is also a <a href="pug_debugger_ide.htm">Source 
+  Code Debugger</a>.</p>
+<h3><a name="ppTermuserppTerm"></a><font color="#000080">pp(Term), user_pp(Term)</font></h3>
+<p><!AMZI_INDEX=  pp; user_pp><b>pp</b> first tries to prove <b>user_pp</b>(Term). 
+  If this fails then it will pretty print Term at the user terminal (labeling 
+  variables using <b>numbervars/3</b> and printing separate goals on separate 
+  lines). </p>
+<h3><a name="quit"></a><font color="#000080">quit</font></h3>
+<p>
+  <!AMZI_INDEX=  quit>
+  Exits the current listener. </p>
+<h3><a name="replace"></a><font color="#000080">replace</font></h3>
+<p><!AMZI_INDEX=  replace; reconsult; Clauses>Allows you to replace dynamic clauses in 
+  the logicbase. This is equivalent to <b>reconsult</b>. </p>
+<p><b>replace</b> expects a sequence of clauses, followed by [ctrl-z] or 'quit.' 
+  rather than a single clause.</p>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P>&nbsp; 
+</BODY>
+</HTML>

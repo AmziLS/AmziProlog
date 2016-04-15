@@ -1,0 +1,252 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; I) [Netscape]">
+   <TITLE>Installation</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1> <A NAME="RequirementsandInstallation"></A><FONT COLOR="#D2AA00">Requirements 
+&amp; Installation</FONT></H1><HR WIDTH="100%"> 
+<p>This document describes:</p>
+<ul>
+  <li> <a href="#Requirements">Requirements</a>: Required operating system versions 
+    and development tools.</li>
+  <li><a href="#Installation">Installation Instructions</a>: Installing Amzi! 
+    for the first time.</li>
+  <li><a href="#Updating">Updating to a New Version</a>: Upgrading an existing 
+    installation to a new version without un-installing.</li>
+  <li><a href="#Unlocking">Unlocking the Software</a>: Unlocking Amzi! and entering 
+    license information.</li>
+  <li><a href="#licensetransfer">Unregistering and Transferring Your License (Windows)</a>: 
+    How to transfer your license to a new PC.</li>
+  <li><a href="#Un-Install">Uninstalling the Software</a>: Removing Amzi! from 
+    your system.</li>
+  <li><a href="#DistributionContents">Distribution Files</a>: List of Amzi! distribution 
+    files.</li>
+</ul>
+<H2><A NAME="Requirements"></A><FONT COLOR="#0000FF">Requirements</FONT>
+  <!AMZI_INDEX = Requirements>
+</H2>
+<H3><A NAME="WindowsandDOSEditions"></A><FONT COLOR="#000080">Windows</FONT></H3>
+<!AMZI_INDEX =  Windows>
+Amzi! Prolog + Logic Server for the PC requires one of Windows XP, Vista, Windows 7 or later (it might still run on earlier versions, but it is not tested on those platforms). Installation of the full Amzi! system, including the libraries 
+for all the supported environments, requires approximately 18mb of disk space 
+for the core system plus 260mb of space for the Amzi! Eclipse IDE and Java. The 
+Eclipse IDE requires Java 1.4 or later. 
+<P>The Logic Server API supports: <UL> <LI> C 
+and C++ (Microsoft and Borland)</LI><LI> Java</LI><LI> Delphi</LI><LI> Visual 
+Basic</LI><LI>C#</LI>
+  <li> Web servers (ASP.NET, JSP, Servlets, CGI)</li>
+  <LI> .NET 
+and ASP.NET (Version 1.0.3705.288 (Service Pack 2))</LI><LI> MS-Office: Access, 
+Excel, Word</LI><LI> Any Windows development tool that can call a dynamic library 
+(.dll)</LI></UL><H3> <A NAME="LinuxEditions"></A><FONT COLOR="#000080">Linux</FONT></H3>
+<!AMZI_INDEX = Linux>
+Amzi! Prolog + Logic Server runs on Linux kernel 2.2.X or later. Installation 
+requires approximately 18mb of disk space for the core system plus 260mb of space 
+for the Amzi! Eclipse IDE and Java. The Eclipse IDE requires Java 1.4 or later.. 
+The Logic Server works with any compatible compiler including: 
+<ul> <li> Gnu C/C++ 3.2 or 
+later and associated libraries</li><li>Gnu Fortran, et. al.</li><li>Java</li><li>Web 
+servers (JSP, Servlets, CGI)</li><li>Any Unix development tool that can call a 
+shared object (.so)</li></ul>
+
+
+
+
+
+<h3><a name="OtherEditions"></a><font color="#000080">IBM AIX, Solaris, HP-UX, BSD and Other Platforms</font></h3>
+<p> Amzi! Prolog + Logic Server can be readily ported to any platform that supports 
+  C++, and might have already been ported for your environment. Let us know if you are interested.</p>
+<h2><a name="Installation"></a><font color="#0000FF">Installation Instructions</font></h2>
+<p> 
+<!AMZI_INDEX = Installation>
+ Amzi! Prolog + Logic Server is distributed as a packed 
+archive file or in an installation package. The full system will be installed in an 'amzi' directory with two subdirectories. One contains the core files, 'apls', and the other the IDE, 'ide', which is a version of Eclipse pre-setup for Prolog development. The two directories will look like:</p>
+<pre>
+amzi
+   apls            Set AMZI_DIR to this directory for Logic Server development
+      bin             Executables, put on your PATH to run command line utilities
+      abin            Prolog binaries
+      docs            Documentation
+      ...             Other directories
+   ide
+      eclipse(.exe)   The IDE
+      ...             Supporting directories for the IDE
+</pre>
+
+
+<p>To extract the files, 
+put the archive(s) in your root or user directory or whatever directory you want 
+to contain the directory tree. Then follow the appropriate instructions for your 
+operating system.</p>
+
+<H3> <A NAME="Windows"></A><FONT COLOR="#000080">Windows</FONT></H3>
+<p> 
+  <!AMZI_INDEX = Windows>
+  Follow the install intructions for the installation program. The installation will also attempt to modify the environment variables as follows:</p>
+<OL>
+  <li>Add the environment variable AMZI_DIR=<i>install_dir</i>\amzi\apls.</li>
+  <li>Add %AMZI_DIR%\bin to the start of your PATH environment variable.</li>
+  
+</OL>
+<p>Note that the environment variables are not necessary for running the IDE, but are useful when you are building applications with the Logic Server, or trying to run Amzi! from the command line.</p>
+<p>After installing the software you will have to activate it, using either the batch 'activate' command in the apls/bin directory, or from the File menu in the IDE.</p>
+
+<H3> <A NAME="Mac"></A><FONT COLOR="#000080">Mac</FONT></H3>
+<p> 
+  <!AMZI_INDEX = Mac OSX>
+  Follow the install intructions for the installation program.</p>
+<p>To use the command line environment, it might be useful to add the environment variable AMZI_DIR=<i>install_dir</i>/amzi/apls
+  and add $AMZI_DIR/bin to the start of your PATH environment variable. Depending on your use, you might also want to set LD_LIBRARY_PATH  to include the Amzi! library directory, $AMZI_DIR/lib.</p>
+
+<p>After installing the software you will have to activate it, using either the batch 'activate' command in the apls/bin directory, or from the File menu in the IDE, which will call the batch activate program.</p>
+
+
+
+<h4><a name="existing_eclipse_users"></a>Existing Eclipse Users</h4>
+<p>If you already have Eclipse and Java  
+  installed, then download and install just the core Amzi! download. When installed you will see a directory called apls...\eclipse_plugin. You can use the Eclipse facilities for adding a plug-in and point it to that directory. This will add the Amzi! Prolog plug-in to your current install.</p>
+<ol> <li>Start 
+Eclipse.</li>
+<li>Select Help | Software Updates | Find &amp; Install then click 'Search for New Features to Install'. </li>
+  <li>Click on 'New Local Site' and  open your amzi/apls/eclipse_plug-in directory.</li>
+  <li>Select your new site containing the Amzi! Prolog + Logic Server IDE.Accept the defaults for the 'Edit Local Site' dialog. </li>
+  <li>Ensure that the new site   is selected.Click 'Finish' and select the 'Amzi! Prolog + Logic Server IDE' option.</li>
+  <li>Click 'Install Now'.  </li>
+  <li>Restart Eclipse.</li>
+</ol>
+<H3> <a name="Unix; Solaris; Linux; HP/UX"></a><font color="#000080">Unix</font></H3>
+<ol>
+  <li> 
+    <!AMZI_INDEX = Linux; Solaris; HP/UX>
+    Gunzip the archive by typing 'gunzip amzi_N-N-N_linux.tgz'</li>
+  <li>Extract the file by typing 'tar -xvf amzi_N-N-N_linux.tar' to extract the 
+    files.</li>
+  <li> Add the environment variable AMZI_DIR=<i>install_dir</i>/amzi/apls where 
+    <i>install_dir</i> is the directory you installed Amzi! into.</li>
+  <li>Add $AMZI_DIR/bin onto your path. Alternatively, create links to the executables 
+    from a directory on your path.</li>
+  <li>Add $AMZI_DIR/lib to the LD_LIBRARY_PATH environment variable. </li>
+  <li>Java users, add $AMZI_DIR/lsapis/java20 on your CLASSPATH.</li>
+  <li>C/C++ users, add <i> </i>$AMZI_DIR/lib to your LIB environment variable 
+    and <i> </i>$AMZI_DIR/include to your INCLUDE environment variable. </li>
+</ol>
+<p>In 
+order to run the Amzi! Eclipse IDE you need to install:</p><ol> 
+  <li> Eclipse  (www.eclipse.org) </li>
+  <li>Java  (java.sun.com). This can be installed in eclipse/jre 
+or elsewhere on your system.</li>
+</ol><p>Next install the Amzi! Feature into Eclipse 
+as follows:</p>
+<ol>
+  <li>Start 
+    Eclipse.</li>
+  <li>Select Help | Software Updates | Find &amp; Install then click 'Search for New Features to Install'. </li>
+  <li>Click on 'New Local Site' and  open your amzi/apls_N-N-N/eclipse_plugin directory.</li>
+  <li>Select your new site containing the Amzi! Prolog + Logic Server IDE.</li>
+  <li>Click 'Finish'.</li>
+  <li>Restart Eclipse as a user that can write to the eclipse directory tree to 
+    install the Amzi! documentation.</li>
+</ol>
+<h2><a name="Updating"></a><font color="#0000FF">Updating to a New Version</font></h2>
+<p>First, <b>do not install a new version of Amzi! if your maintenance has expired</b>. 
+  In the Amzi! Eclipse IDE select Help | Amzi! Version or from the command-line 
+  type 'alis' to check your software maintenance and support status.</p>
+<p>You can un-install the old version of Amzi!, or rename your old amzi directory and install a new clean copy.</p>
+<p>You can revert to the previous version by simply changing the value of AMZI_DIR to point to the old directory.</p>
+
+<h2><a name="Un-Install"></a><font color="#0000FF">Uninstalling the Software</font> 
+</h2>
+<p> 
+  <!AMZI_INDEX = Uninstall>
+  Under Windows, to remove Amzi!, open the Control Panel and choose Add/Remove 
+  Programs. You may have to delete the amzi directory tree if you have modified 
+  any files within it (sources, samples, configs, workspace).</p>
+<p>To remove Amzi! from your computer 
+manually:</p><ol> 
+  <li>Delete the amzi directory tree.</li>
+  <li>Delete the AMZI_DIR environment variable and remove it from 
+    your PATH environment variable.</li>
+  <li>Windows users, delete the shortcuts 
+from the Start / Programs menu.</li></ol>
+<h2> <a name="DistributionContents"></a><font color="#0000FF">Distribution 
+Files</font></h2><p>Amzi! Prolog + Logic Server as a compressed archive file that 
+contains the following directory structure:</p>
+<blockquote> 
+  <P><font color="#000080">amzi/apls/<BR>
+    bin - executable files, and, under Windows, .dll and .lsx files.<BR>
+    </font><font color="#000080">&nbsp;&nbsp;&nbsp; acmp.exe - command line compiler<BR>
+    &nbsp;&nbsp;&nbsp; alis.exe - command line listener<BR>
+    &nbsp;&nbsp;&nbsp; alnk.exe - command line linker<BR>
+    &nbsp;&nbsp;&nbsp; arun.exe - command line runtime<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;unlock.exe - command to unlock Amzi! features <BR>
+    &nbsp;&nbsp;&nbsp; amzi.dll - Amzi! windows DLL (Windows)<br>
+    </font><font color="#000080">&nbsp;&nbsp;&nbsp; amzijni.dll - Java 2.0 interface DLL (Windows)<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;amzinet.dll - .NET interface DLL (Windows)<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;adebug.lsx - Remote debugger support (Windows)<BR>
+    &nbsp;&nbsp;&nbsp; aodbc.lsx - ODBC extended predicates (Windows)<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;aosutils.lsx - Operating system dependent extended 
+    predicates (Windows)<BR>
+    &nbsp;&nbsp;&nbsp; asock.lsx - Sockets interface LSX (Windows)<BR>
+    abin - Prolog executable files.<BR>
+    &nbsp;&nbsp;&nbsp; acmp.xpl - Compiler load module <BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;aidl.xpl - IDE listener load module<BR>
+    &nbsp;&nbsp;&nbsp; alis.xpl - Listener load module<BR>
+    &nbsp;&nbsp;&nbsp; acgi.plm - Prolog interface to CGI<BR>
+    &nbsp;&nbsp;&nbsp; alib.plm - Prolog library of built-ins<BR>
+    &nbsp;&nbsp;&nbsp; aodbc.plm - Prolog ODBC predicates<BR>
+    &nbsp;&nbsp;&nbsp; asock.plm - Sockets interface Prolog predicates<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;axrf.xpl - Cross referencing library<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;date_time.plm - Date/time predicates<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;debug64.plm - IDE source code debugger support (not 64-bits, just introduced at the 6-4 release level)<BR>
+    &nbsp;&nbsp;&nbsp; list.plm - List library predicates <BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;misc.plm - Miscellaneous predicates<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;xml.plm - XML parsing library <BR>
+    docs - HTML documentation (see src if it's not here).<BR>
+    &nbsp;&nbsp;&nbsp; amzidoc.htm - Master HTML document, points to all others 
+    <br>
+    eclipse_plugin - Files to install the Amzi! IDE into an existing copy of 
+    Eclipse <BR>
+    include - logicserver.h C/C++ header file.<BR>
+    &nbsp;&nbsp;&nbsp; amzi.h - Deprecated C/C++ include file <BR>
+    lib - under Unix, .so and .lsx files.<BR>
+    &nbsp;&nbsp;&nbsp; amzi.lib - Logic Server library for linking (Windows) <BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;amzib.lib - Borland version of Logic Server library 
+    (Windows)<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;libamzi.so (Unix)<br>
+    &nbsp;&nbsp;&nbsp; </font><font color="#000080"> libamzijni.so (Unix)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;libamzijide.so (Unix)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;libalnk.so (Unix)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;adebug.lsx - Remote debugger support (Unix)<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;aosutils.lsx - Operating system dependent extended 
+    predicates (Unix)<BR>
+    &nbsp;&nbsp;&nbsp; asock.lsx - Sockets interface LSX (Unix) <BR>
+    lsapis - Logic Server interfaces for other languages/tools.<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cgi - CGI executables<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delphi - Delphi component (Windows)<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;java20 - amzi/ls class libraries and JNI interface<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vb - VB module (Windows) <BR>
+    samples - various samples, including HTML documentation.<BR>
+    &nbsp;&nbsp;&nbsp; c - C samples chezray - An assortment of Ray Reeve's favorite 
+    programs<BR>
+    &nbsp;&nbsp;&nbsp; cgi - CGI samples<BR>
+    &nbsp;&nbsp;&nbsp; cpp - C++ samples<BR>
+    &nbsp;&nbsp;&nbsp; delphi - Delphi samples<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;dotnet - .NET samples<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;internet - Internet samples<br>
+    &nbsp;&nbsp;&nbsp; java - Java samples (JSP, servlets, ASP.NET, .NET and CGI)<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;lsx - Logic Server Extension samples<BR>
+    &nbsp;&nbsp;&nbsp; odbc - ODBC samples<BR>
+    &nbsp;&nbsp;&nbsp; prolog - Prolog samples<BR>
+    &nbsp;&nbsp;&nbsp; sockets - Sockets samples<BR>
+    &nbsp;&nbsp;&nbsp; vb - Visual Basic samples <BR>
+    src - source code for extensions and documentation.</font></P>
+</blockquote><!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I></I> 
+</BODY>
+</HTML>
