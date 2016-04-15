@@ -1,0 +1,138 @@
+<HTML><!-- #BeginTemplate "/Templates/alk.dwt" -->
+<HEAD>
+<!-- #BeginEditable "doctitle" --> 
+<TITLE>Listener</TITLE>
+<!-- #EndEditable -->
+<meta http-equiv="Content-Type" content="text/html; charset=">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+  <p><!-- #BeginEditable "Previous1" -->{Previous1}<!-- #EndEditable -->&nbsp <a href="../index.html">Start</a> 
+    &nbsp <a href="../toc.html">Contents</a> &nbsp <!-- #BeginEditable "Next1" -->{Next1}<!-- #EndEditable --></p>
+<hr>
+<h1><img src="../Images/paws.gif"><!-- #BeginEditable "Lesson" -->Interpretive 
+  Tools <!-- #EndEditable --> </h1>
+<!-- #BeginEditable "Body" -->
+<p>A logic base is queried much like a database, but because a logic base is not 
+  persistent, like a database is, it must first be loaded into memory.</p>
+<p>The logic base can be loaded either in an interpreted mode or compiled mode 
+  or in a mix of both. For production systems, the logic base is usually compiled, 
+  but for testing it is interpreted.</p>
+<p>Prolog implementations include an application called a <b>listener</b> that 
+  allows a user to interactively query a logic base. Amzi! provides two listeners, 
+  one that is run from the command line using the alis command, and the other 
+  which is part of the Amzi! IDE.</p>
+<p>Open <a href="../facts/amzi_air.pro">docs/alk/facts/amzi_air.pro</a> in either the 
+  Amzi! IDE (Windows) or a text/programming editor of your choice. Clicking on 
+  the link will open the IDE on some systems.</p>
+<h3>Windows IDE Listener</h3>
+<p>The Windows IDE comes in two flavours, amzi/bin/wideA.exe and amzi/bin/wideW.exe. 
+  The 'W' version is for versions of Windows that support wide characters, which 
+  includes all current versions of Windows. Some earlier versions of Windows, 
+  such as Windows 95 and 98 did not support wide characters, and the 'A' version 
+  is required for them.</p>
+<p>From the IDE you can use the <b>File/Open</b> menu or toolbar icon to open 
+  the test file, <b>docs/alk/facts/amzi_air.pro</b>.</p>
+<p>To start the listener select the menu item <b>Listener/Start</b> or the toolbar 
+  icon.</p>
+<h3>Command Line Listener</h3>
+<p>All supported Amzi! platforms have a command line listener called <b>alis</b> 
+  in the amzi/bin directory. To use it:</p>
+<ul>
+  <pre><font color="#000099">&gt;alis</font></pre>
+</ul>
+<h3>Consulting and Reconsulting</h3>
+<p>The listener provides an interactive interface with either compiled or interpreted 
+  Prolog predicates. Compiled predicates will be discussed in a later lesson.</p>
+<p>Predicates in a file can be entered in interpretive mode in the listener using 
+  one of two commands:</p>
+<ul>
+  <li><b>consult</b> - enters the predicates in the file into Prolog memory.</li>
+  <li><b>reconsult</b> - like consult, but removes predicates of the same name 
+    before entering the predicates in the file.</li>
+</ul>
+<p><i><b>NOTE ==&gt;</b> It is common error to consult a file for a second time 
+  and wonder why there are two copies of every fact in Prolog memory. There is 
+  no reason not to use reconsult all the time to avoid this problem.</i></p>
+<p>The listener presents the prompt:</p>
+<ul>
+  <pre><font color="#000099">?-</font></pre>
+</ul>
+<p>At this prompt you enter commands and queries. First reconsult the amzi_air.pro 
+  file:</p>
+<ul>
+  <pre><font color="#000099">?- reconsult(amzi_air).</font></pre>
+</ul>
+<p><b><i>NOTE ==&gt;</i></b><i> In the IDE this will only work as shown if the 
+  current directory is the one with the file in it. If not, you can use the <b>Listener/Reconsult</b> 
+  menu item and select the file. This will also set the current directory for 
+  future reconsults.</i></p>
+<p><b><i>NOTE ==&gt;</i></b><i> Each command or query MUST end in a <b>period 
+  and carriage return</b>. It is a common error to forget the period, in which 
+  case the listener will still be waiting for input. Because the listener accepts 
+  multiline input, you can simply enter the period and carriage return on the 
+  empty line.</i></p>
+<h3>Listing</h3>
+<p>Once a file is reconsulted, the <b>listing</b> command can be used to see all 
+  the predicates in Prolog memory. Here's a listing of amzi_air (... indicates 
+  :</p>
+<ul>
+  <pre><font color="#000099">
+?- listing.
+
+user:airport('I68', 'Lebanon, OH').
+user:airport('WDR', 'Winder, GA').
+user:airport('SPG', 'St. Petersburg, FL').
+...
+
+user:base_fare(aa01, 100).
+user:base_fare(aa02, 100).
+user:base_fare(aa03, 100).
+...
+
+user:flight(aa01, 'I68', 'WDR').
+user:flight(aa02, 'WDR', 'I68').
+user:flight(aa03, 'WDR', 'SPG').
+...
+yes</font>
+?- 
+</pre>
+</ul>
+<p>The listing represents the way the predicates are stored in Prolog memory. 
+  (... indicates repetitive content edited out for this document.)</p>
+<p>Amzi! Prolog supports ISO standard modules. If no module is specified, predicates 
+  are put in the default module, <b>user</b>. That is indicated for the facts 
+  in amzi_air by the 'user:' in front of each fact.</p>
+<p>The listener ends all commands or queries with <b>yes</b> or <b>no</b>, indicating 
+  success or failure of the command or query.</p>
+<p>Listing can take an argument to list just one predicate:</p>
+<ul>
+  <pre>
+<font color="#000099">?- listing(flight).
+user:flight(aa01, 'I68', 'WDR').
+user:flight(aa02, 'WDR', 'I68').
+user:flight(aa03, 'WDR', 'SPG').
+...
+user:flight(aa27, 'DCA', 'BED').
+user:flight(aa28, 'BED', 'DCA').
+
+yes</font>
+</pre>
+</ul>
+<h3>Quitting the Listener</h3>
+<p>To quit the listener, use the command quit:</p>
+<ul>
+  <pre>
+<font color="#000099">?- quit.</font>
+</pre>
+</ul>
+<p>IDE users can also exit the listener by simply closing the listener window.</p>
+<!-- #EndEditable --> 
+<hr>
+<!-- #BeginEditable "References" --><a href="../../pro/pug_ide.htm">Prolog User's 
+Guide: IDE</a><br>
+<a href="../../pro/pug_listener.htm">Prolog User's Guide: Listener</a><!-- #EndEditable --> 
+<p><!-- #BeginEditable "Previous2" -->{Previous2}<!-- #EndEditable -->&nbsp <a href="../index.html">Start</a> 
+    &nbsp <a href="../toc.html">Contents</a> &nbsp <!-- #BeginEditable "Next2" -->{Next2}<!-- #EndEditable --></p>
+</BODY>
+<!-- #EndTemplate --></HTML>

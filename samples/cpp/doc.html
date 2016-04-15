@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>C++ Samples</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1><font color="#0000FF">C++ Samples</font></h1>
+<p>These samples illustrate the use of the Amzi! Logic Server from C++.</p>
+<p><i>Note - At of the Gnu 3.2 release standard use of exception classes causes 
+  segmentation faults, so when C++ applications are built with Gnu, Logic Server 
+  exceptions are thrown as pointers to the exception objects, rather than as references.</i></p>
+<p><a href="hello/console/doc.html">Hello / Console</a> - The Hello Prolog example 
+  implemented as a C++ class running as a console application. Should be run from 
+  the console. </p>
+<p><a href="hello/win32_mfc/doc.html">Hello / Win32_MFC</a> - The Hello Prolog 
+  example implemented as a C++ class running in a simple MFC dialog application. 
+</p>
+<p><a href="pets/doc.html">Pets</a> - The trivial Pets expert system showing a 
+  simple architecture for expert system services. Should be run from the console. 
+</p>
+<p><a href="pets_callback/doc.html">Pets_Callback</a> - A slightly more complex 
+  version of Pets in which the Prolog program has a prompt/2 predicate used to 
+  get information from the user. In the example, it is used to ask the user for 
+  the sound the pet makes. </p>
+<p>prompt/2 is implemented as an extended predicate in the C++ class derived from 
+  LogicServer, illustrating the technique of having extended predicates associated 
+  with instances of classes derived from the Logic Server. 
+<p>This is a trivial console example, where there is no real point in having multiple 
+  instances of the prompt/2 predicate, but the technique is important for GUI 
+  applications where, for example, different instances of the Logic Server might 
+  be associated with different windows on the screen. 
+<p><a href="win32_rubik_multi/doc.html">Win32_Rubik_Multi</a> - The Win32_Rubik_Multi 
+  (MultiThreaded) sample is an MDI MFC application. Each child window has an unfolded 
+  view of a Rubik's cube and a 'Solve' button. When the button is pressed, the 
+  cube is randomly scrambled and then solved. 
+<p>The FILE/NEW menu item causes new child windows to be created, and each one 
+  is associated with a new Logic Server, running in a separate thread. 
+<p>When you click the 'Solve' button in multiple windows, each one shows a cube 
+  being solved at the same (or as close to same as NT multi-threading allows) 
+  time. 
+<p>This demo was derived from the Microsoft multi-threaded 'Bounce' sample, with 
+  solving Rubik's cube replacing the bouncing balls. 
+<p><!-- #BeginLibraryItem "/docs/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server and e-Prolog are trademarks 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --></body>
+</html>

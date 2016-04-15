@@ -1,0 +1,117 @@
+MAKE=make
+AMZI_MAKE=make_cent64.txt
+
+SOURCE=$(APLS_SOURCE)
+SUBDIRS = engine run link listen compile
+RELEASE=$(APLS_RELEASE)
+
+all: dirs engine run link osutils compile libs listen docs samples activate interfaces remove_me
+
+dirs: FORCE
+	echo ==Making directories==
+	-rm -r $(RELEASE)/bin
+	-rm -r $(RELEASE)/lib
+	-rm -r $(RELEASE)/abin
+	-rm -r $(RELEASE)/include
+	-rm -r $(RELEASE)/config
+	-mkdir $(RELEASE)/bin
+	-mkdir $(RELEASE)/lib
+	-mkdir $(RELEASE)/abin
+	-mkdir $(RELEASE)/include
+	-mkdir $(RELEASE)/config
+	cp $(SOURCE)/product_dennis.cfg $(RELEASE)/../product.cfg
+
+engine: FORCE
+	echo =================
+	echo =================
+	echo ==Making engine==
+	cd $(SOURCE)/engine; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+run: FORCE
+	echo =================
+	echo =================
+	echo ==Making run==
+	cd $(SOURCE)/run; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+link: FORCE
+	echo =================
+	echo =================
+	echo ==Making link==
+	cd $(SOURCE)/linkrun; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+osutils: FORCE
+	echo =================
+	echo =================
+	echo === making osutils ===
+	cd $(SOURCE)/osutils; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+listen: FORCE
+	echo =================
+	echo =================
+	echo ==Making listen==
+	cd $(SOURCE)/listen; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+compile: FORCE
+	echo =================
+	echo =================
+	echo ==Making compile==
+	cd $(SOURCE)/compile; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+	
+docs: FORCE
+	echo =================
+	echo =================
+	echo ==Making docs==
+	cd $(SOURCE)/docs; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+	
+samples: FORCE
+	echo =================
+	echo =================
+	echo ==Making samples==
+	cd $(SOURCE)/samples; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+libs: FORCE
+	echo =================
+	echo =================
+	echo ==Making libs==
+	cd $(SOURCE)/libs; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+	
+activate: FORCE
+	echo =================
+	echo =================
+	echo ==Making activate==
+	cd $(SOURCE)/batch_activate; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+interfaces: FORCE
+	echo =================
+	echo =================
+	echo ==Making interfaces==
+	cd $(SOURCE)/../interfaces; $(MAKE) -f $(AMZI_MAKE)
+	sleep 5
+
+remove_me: FORCE
+	echo =================
+	echo =================
+	echo ==removing me==
+	rm $(RELEASE)/../product.cfg
+
+clean: FORCE
+	for i in $(SUBDIRS); \
+	do \
+	  echo ==Making in $$i ; \
+	  (cd $(SOURCE)/$$i; $(MAKE) -f $(AMZI_MAKE) clean) ; \
+	done
+
+FORCE:
+
+
+

@@ -1,0 +1,7 @@
+_amzirun:
+	devenv wrun.sln /rebuild "Release|x64"
+
+clean:
+	devenv wrun.sln /clean "Release|x64"
+	devenv wrun.sln /clean Debug
+

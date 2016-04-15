@@ -1,0 +1,282 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; I) [Netscape]">
+   <TITLE>Java Class</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1>
+<A NAME="JavaClass"></A><FONT COLOR="#D2AA00">Java Class</FONT></H1>
+<!AMZI_INDEX= Java Class>Java is designed to be an object oriented language
+for deploying secure, multithreaded network applications (both clients
+and servers). Prolog is ideal for building intelligent components, expert
+systems and logic-bases. In combination, Java and Prolog are an ideal pair
+for delivering useful intelligent applications on the Internet. The Java
+Class encapsulates the Amzi! Logic Server for use by Java applications
+and applets. It includes:
+<UL>
+<LI>
+A Java Class Package the encapsulates a Logic Server Engine</LI>
+
+<LI>
+Methods that correspond to the Logic Server API Functions</LI>
+
+<LI>
+Use of Java's exception handling for API errors, and</LI>
+
+<LI>
+Java-like method interfaces.</LI>
+</UL>
+<p>The Java Logic Server methods are documented in the <a href="lsapirf.htm">LSAPI 
+  Reference</a>.</p>
+<p>In addition, you can extend the Java Class to allow Prolog to call methods 
+  in your Java code. </p>
+<p>The sections of this document are: </p>
+<ul>
+  <li><a href="#WheretoLearnAboutJava">Where to Learn About Java</a> - Where to 
+    get Java software, tutorials and information.</li>
+  <li><a href="#InstallingtheJavaClass">Installation</a> - How to install the 
+    Logic Server as a Java class.</li>
+  <li> <a href="#HelloPrologfromJava">Hello Prolog</a>- Getting the Hello Prolog 
+    application up and running from Java.</li>
+  <li> <a href="#JavaClassOverview">Overview</a> - Conceptual overview of the 
+    Java version of the Logic Server.</li>
+  <li> <a href="#UsingtheJavaClass">Using the Java Class</a> - How to use the 
+    Logic Server from Java.</li>
+  <li> <a href="#ImplementingExtendedPredicatesInJava">Implementing Extended Predicates</a> 
+    - How to add Prolog extended predicates written in Java.</li>
+  <li> <a href="#ConvertPrologLists">Converting Prolog Lists to Java Types </a> 
+    - Some sample methods that make it easier to work with Prolog lists.</li>
+  <li><a href="#Examples">Examples</a></li>
+</ul>
+<h2></h2>
+<H2>
+<A NAME="WheretoLearnAboutJava"></A><FONT COLOR="#0000FF">Where to Learn
+About Java</FONT></H2>
+<!AMZI_INDEX= Java>
+If you want to learn more about Java and Java Applets and JSP/Servlets, see java.sun.com. 
+You can also download Sun's Java Development Kit (JDK) from there. 
+<H2>
+<A NAME="InstallingtheJavaClass"></A><FONT COLOR="#0000FF">Installation</FONT></H2>
+<!AMZI_INDEX=Java Class>
+The Java Class and its samples are distributed for JDK 2.0. 
+<P>To use the Java Class, you must make these files accessible to the calling 
+  environment: 
+<UL>
+  <LI> <B>Amzi! Dynamic/Shared Library</B> - The Amzi! Logic Server, amzi.dll 
+    or libamzi.so, and the Amzi! Java interface, amzijni.dll, must be in your 
+    PATH or otherwise accessible to the calling environment. These files are in 
+    the amzi/\bin directory. You can load these libraries (and LSXs) explicitly 
+    in Java with Runtime.getRuntime().load(<i>libraryPath</i>) or loadLibrary(<i>libraryName</i>).</LI>
+
+  <LI> <B>Amzi! Java Classes</B> - The amzi/ls directory structure, containing 
+    the amzi.ls.* package must be accessible via your CLASSPATH. You can do this 
+    by adding amzi/lsapis/java20 to your CLASSPATH or copying the amzi/ls subdirectory 
+    structure to a directory already in your CLASSPATH.</LI>
+</UL>
+<IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Do not put any other 
+files in your amzi/ls directory as they will be included when you import amzi.ls.*; 
+and may cause naming conflicts.</I> 
+<H2>
+<A NAME="HelloPrologfromJava"></A><FONT COLOR="#0000FF">Hello Prolog</FONT></H2>
+<!AMZI_INDEX=Hello Prolog>
+To make sure the Amzi! Java interface is ready to use, run the Amzi! Hello sample 
+for Java. It is in the directory amzi\samples\java\hello. To build the Hello program 
+from Java, first open a 'DOS' window and change to the sample directory containing 
+Hello.java. To compile it, type: 
+<UL>
+<PRE><FONT COLOR="#000080">javac Hello.java</FONT></PRE>
+</UL>
+This will produce Hello.class which is simply run by typing:
+<UL>
+<PRE><FONT COLOR="#000080">java Hello</FONT></PRE>
+</UL>
+
+<H2>
+<A NAME="JavaClassOverview"></A><FONT COLOR="#0000FF">Overview</FONT></H2>
+<!AMZI_INDEX= Java Class>The Java Class is implemented using the Java Native
+Interface (JNI). This allows methods used in a Java class to be implemented
+in C/C++. In the case of Amzi!, the JNI is used to build a bridge to the
+Logic Server API, which is the external interface on the Amzi! Prolog engine.
+The bridge is necessary because many of the Logic Server API functions
+have to be changed slightly to conform to Java parameter passing and return
+conventions (such as accommodating the lack of pointer support in Java).
+
+<P>So, the Amzi! Java interface defines a Java class, LogicServer, whose methods 
+  are implemented by calls to C/C++ functions in a dynamic/shared libary that, 
+  in turn, calls the main Amzi! engine dynamic/shared library. This is illustrated 
+  in Figure 1. 
+<P align="center"><IMG SRC="javacls1.gif" HEIGHT=68 WIDTH=418> 
+<P align="center">Figure 1 
+<P>Working right to left in the diagram, amzi.dll is the Amzi! Logic Server (Prolog 
+  engine). amzijni.dll/libamzijni.so is the interface library that implements 
+  the Java versions of Logic Server API functions. Those, in turn are wrapped 
+  in the Java classes, LogicServer and LSException. 
+<H3>
+<A NAME="ObjectOriented"></A><FONT COLOR="#000080">Object Oriented</FONT></H3>
+<!AMZI_INDEX= Java>
+The Amzi! Logic Server is implemented as an object oriented program, so that each 
+Logic Server is an object and the Logic Server API functions are methods of that 
+object. It is natural, therefor, to provide object oriented interfaces to the 
+Logic Server for object oriented languages such as Java. (Amzi! is also available 
+in a .NET, C++ and Delphi class.) The Logic Server class can then be used as any 
+other class in an object oriented application, supporting, for example, subclassing, 
+embedding and multiple instances. This makes for an elegant approach to encapsulating 
+Prolog services in applications. (see "<A HREF="../articles/procpp.htm">Objects 
+and Logic-C++ Meets Prolog</A>", PC AI May/Jun 95) 
+<P>Figure 2 is an expanded architecture diagram that illustrates the package
+and its classes.
+
+<P align="center"><IMG SRC="javacls2.gif" HEIGHT=101 WIDTH=419> 
+<P align="center">Figure 2 
+<H3> <A NAME="PointerlessMethods"></A><font color="#000080">Representing Prolog 
+  Terms </font></H3>
+<!AMZI_INDEX= Java>
+A fundamental data type for the Prolog interface is a Prolog term. Internally, 
+a Prolog term is a pointer, but, since that pointer is not manipulated by the 
+application, it can be stored as an integer. For Java, it is stored in a 64-bit 
+integer so Java can support both 64- and 32-bit versions of the Amzi! Prolog engine.
+<H3>
+<A NAME="IssuingPrologQueries"></A><FONT COLOR="#000080">Issuing Prolog
+Queries</FONT></H3>
+<!AMZI_INDEX=Calling Prolog>The base LSAPI functions that issue Prolog
+queries return TRUE or FALSE, corresponding to Prolog success or failure,
+and use a pointer to the calling Prolog term to pass back the term resulting
+from the query. For example a function issuing the query 'available(com,
+Port)' will return true or false plus the term representing the query with
+the Port variable unified with the result.
+
+<P>For Java, the query LSAPI functions (Exec, ExecStr, Call, CallStr) return
+the term (a long) directly, instead of a true false. If the query fails,
+that is indicated by a zero (0) value returned. (Errors are indicated by
+LSExceptions.)
+<H3>
+<A NAME="StringConversion"></A><FONT COLOR="#000080">String Conversion</FONT></H3>
+<!AMZI_INDEX= Strings; Converting>The Java LSAPI automatically converts
+the internal Unicode Java representation of character strings to and from
+the Amzi! internal Unicode representation.
+<H3>
+<A NAME="Exceptions"></A><FONT COLOR="#000080">Exceptions</FONT></H3>
+<!AMZI_INDEX=Exceptions; Errors>Instead of returning error codes, all the
+LogicServer methods use Java's exception mechanism. The LSException class
+is thrown when an error occurs. LSException contains a number of methods
+for learning details about the exceptions.
+<H3>
+<A NAME="MultiThreaded"></A><FONT COLOR="#000080">Multi-Threaded</FONT></H3>
+<!AMZI_INDEX= Java; Multi-Threaded>Java allows you to start multiple threads
+in the same program, and Amzi! supports multiple simultaneous Prolog engines.
+So each instance of the Java Logic Server class will contain its own Prolog
+runtime environment.
+<H2>
+<A NAME="UsingtheJavaClass"></A><FONT COLOR="#0000FF">Using the Java Class</FONT></H2>
+<!AMZI_INDEX= Java Class>To use the LogicServer class you import the amzi.ls
+package into your Java program:
+<UL>
+<PRE><FONT COLOR="#000080">import amzi.ls.*;</FONT></PRE>
+</UL>
+<p>From there you can either instantiate a new LogicServer object and invoke its 
+  methods, or you can define a new class that extends the LogicServer class adding 
+  new methods and variables. </p>
+<h2> <A name="ImplementingExtendedPredicatesInJava"></A><font color="#0000FF">Implementing
+  Extended Predicates</font></h2>
+<!AMZI_INDEX= Extended Predicates>Java, like C/C++, Delphi and VB 5.0 (and later), 
+can be used to implement custom extended predicates to the Prolog language. These 
+custom extensions give the Prolog code the ability to directly access anything 
+Java can access. 
+<p>The Java methods that implement extended predicates, must be declared as returning 
+  type boolean, and as public. They can be added one at a time using the API function 
+  AddPred, which adds a single predicate at a time. If your extended predicate 
+  is in a package, then the package name must be included in the class name, delimited 
+  by forward slashes, to AddPred as follows:
+<blockquote>
+  <pre><font color="#000080">ls.AddPred("extpred", 1, "javapkg/jprolog", "extpred", this);</font></pre>
+</blockquote>
+<p>The parameters are:
+<ul>
+  <li>Predicate Name</li>
+  <li>Predicate Arity</li>
+  <li>Java Class Name (fully qualified including packages)</li>
+  <li>Java Method Name</li>
+  <li>Pointer to the Instance of the Class Object that contains the Method      
+  </li>
+</ul>
+<p><img src="arrowrt.gif" height=18 width=18><i> Note: Extended predicate definitions 
+  must always be added after calling InitLS and before calling LoadXPL.</i> 
+<p>The sample in directory /samples/java/pets_callback is an example of how to 
+  implement an extended predicate in Java. 
+<h3><a name="static_methods_as_extended_predicates" id="static_methods_as_extended_predicates"></a>Using Static Methods as Extended Predicates </h3>
+<p>You can use static methods as extended predicates by specifying null for the  pointer to the instance of the class. Static methods are a good choice when pooling Logic Servers in a Web application. </p>
+<h3><a name="controlling_jni_environment_pointer"></a>Controlling the JNI Environment Pointer for Extended Predicates</h3>
+<p>More complex applications may require finer control over the JNI environment pointer that is used to locate and call extended predicates. AddPred can be called with an additional parameter that specifies this, for example: 
+<blockquote>
+  <pre><font color="#000080">ls.AddPred("extpred", 1, "javapkg/jprolog", "extpred", this, LogicServer.ADD_PRED);</font></pre>
+</blockquote>
+<p>There are three options:</p>
+<ul>
+  <li>ADD_PRED &#8212; This uses the JNI environment pointer when AddPred is called. For this to work, the thread that called AddPred() needs to be the same thread that is calling the extended predicate. </li>
+  <li>CURRENT_THREAD  &#8212; This uses the JNI environment pointer for the currently executing thread. </li>
+  <li>EXEC_OR_CALL  &#8212; Not recommend. This option is available for backwards compatibility. It will not work in a multi-threaded environment. It uses the JNI environment pointer from the last Exec(), Call() or Redo(). This pointer is saved in a global variable for all threads using the Amzi! JNI Interface. </li>
+</ul>
+<p><img src="arrowrt.gif" height=18 width=18><i> Note: Extended predicates will fail (return false) if you use CURRENT_THREAD and the current thread is not attached to the Java virtual machine.</i>
+<H2> <a name="ConvertPrologLists"></a><font color="#0000FF">Converting Prolog 
+  Lists to Java Types</font> </H2>
+<p>Here are some useful Java methods that convert Prolog lists. The first takes 
+  each item in a Prolog list, converts it to a string and saves it in a String 
+  array. </p>
+<pre><font color="#000080">   	public static String[] prologListToStringArray(LogicServer ls, long list, int size) throws LSException
+   	{
+		List array = new ArrayList();
+
+      	// Check for the empty list or an atom
+      	long type = ls.GetTermType(list);
+
+      	if (type != LogicServer.pLIST) return new String[0];
+
+      	while (list != 0) {
+         	array.add(ls.TermToStr(ls.GetHead(list), size));
+
+         	list = ls.GetTail(list);
+      	}
+
+		String[] result= new String[array.size()];
+		array.toArray(result);
+		return result;
+   }</font></pre>
+<p>This method takes a Prolog list of the form [name1 : value1, name2 : value2... 
+  nameN: valueN] or [item(name1, value1), item(name2, value2)...item(nameN, valueN)] 
+  and converts it to a Java Properties list where the property name and value.</p>
+<pre><font color="#000080">   public static Properties prologListToProperties(LogicServer ls, long list, int size) throws LSException
+   {
+      Properties p = new Properties();
+      long element, name, value;
+
+      // Check for the empty list or an atom
+      long type = ls.GetTermType(list);
+      if (type != LogicServer.pLIST) return p;
+
+      while (list != 0) {
+         element = ls.GetHead(list);
+         name = ls.GetArg(element, 1);
+         value = ls.GetArg(element, 2);
+         if (ls.GetTermType(value) == LogicServer.pLIST)
+            p.setProperty(ls.TermToStr(name, size), ls.TermToStrQ(value, size));
+         else {
+			p.setProperty(ls.TermToStr(name, size), ls.TermToStr(value, size));
+         }
+
+         list = ls.GetTail(list);
+      }
+      return p;
+   }</font>
+</pre>
+<h2><a name="Examples"></a><font color="#0000FF">Examples</font></h2>
+<p>Samples for .NET can be found in samples\java and in samples\internet\jsp and 
+  samples\internet\servlets. </p>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p>&nbsp;</p>
+</BODY>
+</HTML>

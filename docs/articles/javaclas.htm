@@ -1,0 +1,410 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; U) [Netscape]">
+   <TITLE>Java Meets Prolog</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<H1>
+Java Meets Prolog<BR>
+for Advisors, Analysts and Agents</H1>
+[This article was originally published in PC AI magazine, Nov/Dec 1996.
+The magazine can be reached at PC AI, 3310 West Bell Rd., Suite 119, Phoenix
+AZ, USA 85023 Tel: (602) 971-1869, FAX: (602) 971-2321, E-Mail: info@pcai.com,
+Web: http://www.pcai.com/pcai]
+<H2>
+Introduction</H2>
+AI technology has often been thought to have the greatest benefits for
+na&iuml;ve users of computers. That is, AI can be used to provide more
+human-like services to individuals whose expertise is not computers themselves.
+The classical example of this is the early medical diagnostic systems designed
+to provide advice to doctors.
+
+<P>There are numerous examples of such services one can imagine implementing
+using AI tools, but the problem has always been how to make the service
+readily available and up-to-date for the end user.
+
+<P>Consider for example a travel advisor. Many AI students have written
+applications that reason about transportation schedules and provide advice
+to potential travelers. But this application is of strictly academic interest
+without 1) connections to live travel schedules and 2) easy access for
+the traveler.
+
+<P>The Internet provides both these missing pieces. The travel advisor
+can now be implemented on a server with live access to the latest transportation
+schedules and easy Web-based access for the traveler.
+
+<P>The potential is enormous. Consider technical support applications,
+with the same two problems. With the Internet, users can easily access
+diagnostic applications that are connected to the latest vendor information.
+An academically interesting application suddenly becomes extremely practical.
+
+<P>And wait until the marketeers of the world discover the potential for
+consumer advisors. The same travel advisor type application can be applied
+for any consumer products and services. Consumers can surf the Web and
+access applications that dispense advice on which model car to get, what
+type of insurance to buy, which TV cable services to sign up for, etc.
+
+<P>Diagnostic services for all areas of life can also be made available,
+for figuring out why there are brown spots on the lawn, or the faucets
+are leaking, or you're dissatisfied at work. Maybe these advisors would
+be on Web pages implemented by a fertilizer company, plumbing manufacturer,
+and job placement agency, or maybe they would be implemented by individuals
+adding their bits of expertise to the global community.
+
+<P>No matter whether academic, commercial or individual, all sorts of AI
+applications that weren't practical because they couldn't connect to current
+data, or couldn't be easily accessed by their target audience, suddenly
+become practical.
+<H3>
+The Tools</H3>
+We have always felt that AI technology is best implemented as embedded
+components in conventional applications, and for this reason built the
+Amzi! Prolog engine as a library, the Amzi! Logic Server, that can be called
+from other development environments, such as C++, Delphi and Visual Basic.
+(see "Vendor's Forum" PC AI Sep/Oct 94.)
+
+<P>For Internet applications with AI components, we've implemented a custom
+rule-engine (see "Building Custom Rule Engines" PC AI Mar/Apr 96) that
+uses CGI scripts for communication with Web pages (see "Web-Based Intelligent
+Tech Support" PC AI Sep/Oct 96) and, most recently a Java class.
+
+<P>Java is designed to be a simple, object-oriented language for deploying
+secure, multithreaded network applications (both clients and servers).
+Prolog is ideal for building the intelligent components, expert systems
+and logic-bases discussed above. In combination, Java and Prolog are an
+ideal pair for delivering useful advisor/analyst applications on the Internet.
+
+<P>This article focuses on the design, implementation and uses of a Java
+class that encapsulates Prolog services.
+<TABLE BORDER >
+<TR>
+<TD>Where to Learn About Java</TD>
+</TR>
+
+<TR>
+<TD>If you want to learn more about Java and Java Applets, see <A HREF="http://java.sun.com/doc">java.sun.com/doc</A>.
+You can also download Sun's Java Development Kit (JDK) from there. The
+Java Class and samples in this article are built with JDK 1.0.2. Netscape
+is developing its own interface for native methods called the Java Runtime
+Interface (JRI); also check out its new LiveWire and LiveConnect technology
+for integrating Java on both the client (Navigator) and server sides. For
+more information on it and Java Script see developer.netscape.com. Finally
+Microsoft is shipping Java support for their Internet Explorer at <A HREF="http://www.microsoft.com/ie/">www.microsoft.com/ie/</A>.&nbsp;</TD>
+</TR>
+</TABLE>
+
+<H2>
+Design of the Amzi! Java Class</H2>
+The Amzi! Logic Server is written in C/C++ and is delivered as a dynamic
+library (DLL under Windows, shared library under Solaris, BSDI Unix and
+Linux) that can be linked to any application that can call a dynamic library.
+It includes lsapis for specific development environments that make it
+easier to access from those environments, such as Delphi and Visual Basic.
+The Java class is a wrapper on the Logic Server designed for use from Java.
+
+<P>To build a Java class whose methods are not implemented in Java, one
+needs to build a new library that conforms to the calling conventions expected
+by the Java runtime. This was the first step in implementing the Amzi!
+Java class. The links from a Java program to the basic Amzi! library are
+shown in Figure 1.
+
+<P><IMG SRC="javacls1.gif" >
+<BR>Figure 1
+
+<P>Amzi32 is the Amzi! Logic Server. AmziJava is the new library that connects
+the Amzi! Java Class to the Amzi! Logic Server.
+
+<P>In addition to this underlying architecture, there are a number of features
+of the Java class that were dictated by the distinct characteristics of
+Java. These are detailed in the following sections.
+<H3>
+Object Oriented</H3>
+The Amzi! Logic Server has already been packaged for two object-oriented
+development languages, C++ and Delphi. These classes allow developers to
+derive their own application-specific classes that encapsulate Prolog services
+(see "Objects and Logic-C++ Meets Prolog", PC AI May/Jun 95)
+
+<P>The Java implementation borrows from the ideas in these classes. It
+includes a main 'LogicServer' class that encapsulates a Prolog engine and
+its API, and an 'LSException' class used for error handling. They are both
+included in a Java package, 'amzi.ls'. Figure 2 is an expanded architecture
+diagram that illustrates the package and its classes.&lt;
+
+<P><IMG SRC="javacls2.gif" >
+<BR>Figure 2
+
+<P>The LogicServer class includes all the methods that give the developer
+full control over the Prolog engine. These include methods to:
+<UL>
+<LI>
+setup, initialize, reset and close the Prolog engine</LI>
+
+<LI>
+load and/or consult Prolog programs</LI>
+
+<LI>
+issue Prolog queries</LI>
+
+<LI>
+assert/retract Prolog terms</LI>
+
+<LI>
+convert between Java strings and Prolog terms</LI>
+
+<LI>
+get values into Java variables from Prolog atoms, strings and numbers</LI>
+
+<LI>
+build and decompose Prolog lists</LI>
+
+<LI>
+build and decompose Prolog structures</LI>
+
+<LI>
+return information about errors</LI>
+</UL>
+The LSException class has no methods and is simply used to signal and catch
+errors as described in the section on 'Exceptions.'
+<H3>
+Pointerless Methods</H3>
+The biggest challenge in the design of the Amzi! Java class was the requirement
+for pointerless methods. The creators of Java wanted to keep their language
+simple, so they did not include support for pointers nor for passing parameters
+by reference. This meant all of the Java methods had to be implemented
+so they return a single value.
+
+<P>A fundamental data type for the Prolog interface is a Prolog term. Internally,
+a Prolog term is a pointer, but, since that pointer is not manipulated
+by the application, it can be stored as an integer, similar to how it is
+stored in the Visual Basic interface. Unlike VB, Java integers are 64-bits,
+which means they can be used for both 32- and 64-bit implementations of
+Amzi! Prolog.
+
+<P>Many Logic Server API (LSAPI) functions return error codes, and use
+argument pointers to pass values back and forth. The Java class, like other
+Amzi! lsapis, is designed to use exception handling for errors, with
+return values passed directly as return values, without using pointers.
+
+<P>There were a few LSAPI functions that required special treatment.
+<H4>
+Issuing Prolog Queries</H4>
+The LSAPI functions that issue Prolog queries return TRUE or FALSE, corresponding
+to Prolog success or failure, and return the unified query term as an argument.
+For example a function issuing the query 'available(com, Port)' will return
+true or false plus the term representing the query with the Port variable
+unified with the result.
+
+<P>This basic pattern is modified in the Java class, so that query methods
+return the Prolog term if the query was successful, and return 0 if the
+query fails.
+<H4>
+Retrieving Values from Prolog Lists</H4>
+The methods to retrieve values from a Prolog list also returned two items,
+the head of the list and a term representing the tail of the list. In this
+case the LSAPI was extended for Java to include two new methods, one for
+each of these values. One is called getHead and the other getTail.
+<H3>
+String Conversion</H3>
+Strings in Java are not C strings. Instead they are represented in Unicode
+to accommodate the wide range of non-ASCII characters. The LogicServer
+methods automatically convert strings between the two formats. The upcoming
+4.0 release of the Amzi! Logic Server will use Unicode strings making the
+conversion unnecessary.
+<H3>
+Exceptions</H3>
+Instead of returning error codes, all the LogicServer methods use Java's
+exception mechanism. The LSException class is thrown when an error occurs.
+The actual error message can be retrieved from an error catcher by calling
+the ErrMsg method for the LogicServer object that generated the error.
+<H3>
+Multi Threaded</H3>
+Java allows you to start multiple threads in the same program. The upcoming
+Amzi! 4.0 release readily accommodates this by allowing multiple, simultaneous
+Prolog engines. Internally each engine is represented by an engine id,
+but the Java class hides this as a private class variable. So each instance
+of the Java Logic Server class will contain its own Prolog runtime environment.
+<H2>
+Using the Amzi! Java Class</H2>
+To use the LogicServer class you import the amzi.ls package into your Java
+program. From there you can either instantiate a new LogicServer object
+and invoke its methods, or you can define a new class that extends the
+LogicServer class adding new methods and variables. For this article, we
+will use the first approach to implement an application that dispenses
+advice on how to ship a package.
+
+<P>The Prolog portion of the shipping advisor takes the type of package,
+its weight, UPS zone and a couple of shipping options as input. It then
+runs through a rule base that determines the various options their cost
+and delivery times. This application is one of the standard Amzi! samples,
+embedded without change, in a Java front end for this article.
+<H3>
+The User Interface</H3>
+For simplicity, the shipping information is gathered using Java's AWT (Alternative
+Window Toolkit) package. The user fills in the edit and list boxes on the
+top, presses the 'Go' button, and the program fills the main text box with
+the various options. Figure 3 shows the screen.
+
+<P><IMG SRC="javaship.gif" >
+<BR>Figure 3: The shipping advisor screen
+
+<P>The Java code for building the screen is cumbersome and dull. Future
+Java development environments will no doubt automate this process in a
+manner similar to Delphi, Visual Basic or C++. The interesting code is
+how Java interacts with the LogicServer class after the user presses 'Go'.
+<H3>
+Calling Prolog</H3>
+First, a new instance of the Amzi! LogicServer is created and initialized
+and the compiled Prolog code file (ship.xpl) is loaded:
+<PRE>LogicServer ls = new LogicServer();ls.Init("");ls.Load("ship.xpl");</PRE>
+Next, all the user inputs are asserted into Prolog's dynamic database as
+facts of the form 'known(Attribute, Value)'. Java's excellent string handling
+makes building the Prolog terms easy. In this case the strings are built
+using Java functions that retrieve text values from the user input form
+(see top of Figure 3).
+<PRE>ls.AssertaStr( "known(weight, " + weight.getText() + ")" );
+if (cod.getState())
+&nbsp;&nbsp;&nbsp; ls.AssertaStr( "known(cod, yes)" );
+else
+&nbsp;&nbsp;&nbsp; ls.AssertaStr( "known(cod, no)" );
+ls.AssertaStr( "known(declared_value, " + decvalue.getText() + ")" );
+ls.AssertaStr( "known(ups_zone, " + zone.getText()+")");
+ls.AssertaStr( "known(type, " + pkgtype.getSelectedItem() + ")" );
+ls.AssertaStr( "known(destination, 'USA')" );</PRE>
+Next the Prolog expert is consulted to provide a list of options. This
+is accomplished first by calling the option/4 predicate in the shipping
+advisor. It fires Prolog rules that result in a recommendation being returned
+in its four arguments, which represent the shipper, service, cost and delivery
+time. On backtracking, it returns other possible recommendations.
+
+<P>The query term is entered in the LSAPI function CallStr() just as it
+would be from a Prolog listener. As mentioned above, CallStr() returns
+the unified term, from which the arguments are extracted using the LSAPI
+GetStrArg() methods. The arguments are all extracted as text, which are
+added to the Java text area, named 'advice' in this application.
+<PRE>term = ls.CallStr("option(Shipper, Service, Cost, Delivery)");
+&nbsp;&nbsp;&nbsp; do
+&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; advice.appendText(ls.GetStrArg(term, 1));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; advice.appendText(" : ");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; advice.appendText(ls.GetStrArg(term, 2));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; advice.appendText("\n&nbsp; $");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; amt = ls.GetIntArg(term, 3);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; famt = amt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; advice.appendText(Float.toString(famt/100));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; advice.appendText(",&nbsp; ");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; advice.appendText(ls.GetStrArg(term, 4));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; advice.appendText("\n\n");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; } while (ls.Redo());</PRE>
+The call to Redo() is used to cause the Prolog engine to backtrack and
+reunify the query term with another recommendation. This continues until
+there are no more recommendations, and Redo() returns FALSE. At this point
+the text box is filled with all the available recommendations.
+
+<P>Finally the Prolog engine is closed:
+<PRE>ls.Close();</PRE>
+The full shipping advisor example is available for download, with the Java
+class, from the Amzi! Web site, http://www.amzi.com.
+<H3>
+Extending Prolog with Java Methods</H3>
+The Amzi! Logic Server provides tools that let you implement your own extended
+predicates. These allow you to write Prolog code that directly accesses
+anything you like. Extended predicates are simple to implement in languages
+that support function pointers, such as C/C++ and Delphi.
+
+<P>Java does not support function pointers but Java does provide a way
+for native 'C' methods to invoke Java methods. Extended Prolog predicates
+that call Java are implemented using this indirection. (See the Amzi! Java
+class documentation for details.)
+<H3>
+Alternative Architectures</H3>
+The above example was built as a standalone Java application for simplicity.
+There are a number of ways to use Java on both the client and server sides
+of an application. Here are a couple of alternative architectures worth
+noting.
+<H4>
+Java Client, Prolog Server</H4>
+The AWT user interface could be written as a Java Applet that communicates
+with a Prolog server by means of sockets. This is not allowed by many browsers
+for security reasons.
+<H4>
+Java Client, Java+Prolog Server</H4>
+Both the user interface and client-server communication could be written
+in Java, with the Logic Server embedded on the server side.
+<H4>
+HTML Client, Java+Prolog Server</H4>
+As the user interface is very straightforward, it could be handled entirely
+with HTML forms and a CGI program written in Java that accesses the Logic
+Server. Instead of CGI a direct connection could be made using Microsoft's
+ISAPI, or Netscape's NSAPI or LiveWire.
+<H4>
+JavaScript or VBScript + HTML Client, Java+Prolog Server</H4>
+The user interface could be enhanced with JavaScript or VBScript on the
+client-side to do some error checking such as ensuring a proper U.P.S.
+zone or weight specification.
+<H2>
+Future Possibilities with Prolog and Java</H2>
+All manner of intelligent components can be built for Java in Prolog. Here
+are some examples.
+<H3>
+Servers</H3>
+The shipping advisor is one example of using a Prolog logic-base to analyze
+a situation and give advice. This same architecture could be used for other
+advisors that act as a guide to an Internet site, provide travel advice
+or recommend products.
+
+<P>Prolog and Java can be used in combination for servers that diagnose
+problems, recommend configurations or schedule events. For example, Amzi!'s
+Web-based technical support system could be enhanced with JavaScript to
+provide an easier to use interface.
+<H3>
+Clients</H3>
+Prolog can also be used with Java on the client side to implement spider
+and robot applications that wander the net looking for information. Examples
+of this genre include the MetaCrawler program and ShopBot from the University
+of Washington (www.cs.washington.edu/research). MetaCrawler provides a
+value-added interface on the various search services and ShopBot looks
+for the best price for a product.
+<H3>
+Intelligent Agents</H3>
+Finally one of the hot buzzwords these days is 'agents.' Agents mean different
+things to different people, but whereas servers tend to be a source of
+some kind of information, resource or service which is accessed by clients,
+agents tend to work together on the same level to solve problems. An agent
+is kind of a mobile, mini-server. It knows how to solve small problems
+or a small portion of a large problem, like translate data from one format
+to another or schedule a particular event. It responds to requests from
+other agents to identify and perform the service(s) it provides. Much research
+is being conducted as to how to get agents to communicate with each other
+and with humans.
+
+<P>At the University of Otago in New Zealand, researchers are trying to
+demonstrate the benefits of using agents in the area of software tool integration,
+using university course administration as an experimental domain (divcom.otago.ac.nz:800/COM/INFOSCI/SECML/lab/sarg/).
+They are building agent lsapis for existing tools such as a VMS-based
+central records system, a dBase course database and various Delphi, DOS
+and Excel tools and applications for retrieving and formatting information
+such as student marks. They are using Java to write front-end programs
+for existing tools (such as Excel) so that they can communicate with other
+agents. Amzi! Prolog is being used in the heart of the facilitator agent
+to store information about other agents and their capabilities and needs.
+The facilitator agent is key to the operation of the system, because it
+is the center point where agents register the services they have to offer
+and submit requests to find other agents to perform particular services.
+<H2>
+Conclusion</H2>
+Java is a dynamic and exciting language. New development tools and libraries
+are being released every day as are new ways to connect and embed Java
+in Internet tools, clients and servers. The Java class is just one piece
+of an array of Amzi! Internet tools that include a sockets interface, CGI
+interface and ActiveX control. These tools let you use the power of Prolog
+to bring intelligence and reasoning to the Internet.
+
+<P><I>Mary Kroening is a founder of Amzi! and is responsible for their
+Internet-based development including the Java Class, a Sockets Interface
+and WebLS, a system for answering tech support questions, diagnosing problems
+and giving advice on Web pages. Mary can be reached at www.amzi.com. Amzi!
+can be found at http://www.amzi.com, ftp.amzi.com and www.amzi.com.</I>
+</BODY>
+</HTML>

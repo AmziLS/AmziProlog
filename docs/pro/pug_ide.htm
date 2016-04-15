@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Eclipse IDE</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="IDE"></A><FONT COLOR="#D2AA00">Eclipse IDE</FONT> </h1>
+<P> 
+  <!AMZI_INDEX = IDE>
+  The Amzi! IDE is an extension of the open-source Eclipse IDE project (<a href="http://www.eclipse.org">www.eclipse.org</a>). 
+  It is a Java application which provides a friendly GUI interface to Amzi! Prolog 
+  (and many other languages). The highlights of the Amzi! Eclipse IDE are:</P>
+<ul>
+  <li>Syntax coloring in the editor to highlight built-in predicates, strings, 
+    comments, etc.</li>
+  <li>Source file outliner and project cross referencer.</li>
+  <li>Source code bookmarks to indicate the locations of errors, to-do items, 
+    search text and more.</li>
+  <li>Full source code debugging showing variable bindings at each level in the 
+    call stack.</li>
+  <li>Full source code debugging of Prolog components embedded in other languages 
+    and tools, and those running on remote machines.</li>
+  <li>Portable projects that can optionally include other projects.</li>
+  <li>Automatic loading of libraries and lsx's in the Prolog listener, plus input 
+    line recall and editing.</li>
+</ul>
+<p>Some of the features of Eclipse that may interest you (see www.eclipse.org 
+  to download):</p>
+<ul>
+  <li>Separately downloadable plugins for developing Java, C++, COBOL, C#, PHP 
+    and other programs.</li>
+  <li>Automatic file backup.</li>
+  <li>Tools for modelling, graphical editing and testing.</li>
+  <li>Seamless connection to source control systems like CVS, Perforce, PVCS, 
+    MKS, ClearCase and more.</li>
+  <li>Tight integration with the Apache's Ant build tool.</li>
+</ul>
+<P>The Eclipse documentation provides detailed information on how to use it. Here 
+  we describe our adaptation for Amzi! Prolog:</P>
+<ul>
+  <li><a href="#ThePrologPerspective">The Prolog Perspective</a></li>
+  <li><a href="#PrologProjectsAndBuildingExecutables">Prolog Projects and Building 
+    Executables</a></li>
+  <li><a href="#RunningTheListenerAndPrologPrograms">Starting the Listener and 
+    Prolog Programs</a></li>
+  <li><a href="#RunningTheSourceCodeDebugger">Starting the Source Code Debugger</a></li>
+</ul>
+<h2><a name="ThePrologPerspective"></a><font color="#0000FF">The Prolog Perspective</font></h2>
+<P>Eclipse supports multiple language development environments. These are called 
+  'Perspectives'. You can open a perspective with the Window | Open Perspective 
+  command, or by pressing on the buttons in the vertical bar on the left edge. 
+  The Paw button displays the Prolog perspective. The Bug button displays the 
+  Debug perspective.</P>
+<P align="center"><img src="ide_screen.gif" width="866" height="721"></P>
+<p>The perspective you are currently working with is shown in the title of the 
+  window and in the shortcut bar as a pushed-in icon. A perspective consists of 
+  a set of views. For example, the Prolog perspective contains (by default) these 
+  views: Navigator, <a href="pug_editor.htm">Editor, Outline</a>, <a href="pug_xref.htm">Cross 
+  Reference</a>, <a href="pug_listener.htm">Listener</a> and Tasks. Many views 
+  have their own buttons and menus. The buttons are in the upper right of the 
+  view and the menu is under the black, down-facing triangle.</p>
+<p>You can move views and editors around the workbench by dragging their titlebars. 
+  You can also add more views to your current perspective by using Window | Show 
+  View. You can expand a view to the full window by double-clicking on the view's 
+  title bar.</p>
+<p><img src="arrowrt.gif" width="18" height="18"> <i>If you having problems, or 
+  cannot find a command or view, reset the perspective to its original state by 
+  choosing Window | Reset Perspective. </i></p>
+<p>The Prolog perspective has a project and file navigator on the left. This lets 
+  you see the contents of your projects and open files for editing. The navigator 
+  also lets you backup to a previous version of your file, check in/out files 
+  from source control and import/export files to/from the file system.</p>
+<p>The editors are in the middle view and use colors to highlight built-in predicates, 
+  strings, comments, et.al. You can set the colors under Window | Preferences 
+  | Prolog.</p>
+<p>The right hand side shows an outline for the currently open editor. It is also 
+  where the Cross Reference (the axrf tool) can be run. Click on the green lightening 
+  bolt to generate it. (This may take some time for large projects).</p>
+<p>The bottom has the list of problems, notably errors from listening, compiling 
+  and linking as well as your own bookmarks and to-do tasks. Also on the bottom 
+  is the Prolog Listener.</p>
+<p>You can press F1 in any view, or on most buttons and menus to get help.</p>
+<p><img src="arrowrt.gif" width="18" height="18"><i> We recommend that you do 
+  not overlay the Listener and Debug Listener views with other views that you 
+  need to access while running Prolog programs. </i></p>
+<h2><a name="PrologProjectsAndBuildingExecutables"></a><font color="#0000ff">Prolog 
+  Projects and Building Executables</font></h2>
+<p>Eclipse uses a workspace to keep track of all your files and projects. In order 
+  to work on a file, you need to have a Prolog project in the workspace. The contents 
+  of the workspace are shown in the Navigator View. One point that can be confusing 
+  is that projects and files in the workspace can be located in the workspace 
+  directory (under the main eclipse directory) and in other disks or directories. 
+  In the latter case the workspace has a link to the project or file, instead 
+  of the actual project or file (or a copy thereof).</p>
+<p>Eclipse allows you to have multiple projects opened at the same time (which 
+  can sometimes be confusing). In order to use a project or a file, you need to 
+  import it into the Eclipse workspace (if it already exists), or create it in 
+  the workspace. Once in the workspace, a project or file can be opened or closed. 
+  To remove a project or file from the Eclipse workspace, you delete it. See <a href="#OpeningClosingAndDeletingProjects">Opening, 
+  Closing and Deleting Projects</a> below.</p>
+<p>A Prolog project consists of all the source files in the project folder. Prolog 
+  source files must have a .pro extension. When building a project all the source 
+  files are compiled and linked into a .xpl file. By default the binary files 
+  are stored in a subdirectory named 'bin'. (Right-click and select 'Build Project' 
+  or use the Project menu to build a Prolog project. The automatic build option 
+  is turned off when using the Prolog perspective.</p>
+<h3><font color="#000080"><a name="SettingProjectProperties"></a>Setting Project 
+  Properties</font></h3>
+<p>You can set the project properties by right-clicking on the project in the 
+  navigator view on the right. </p>
+<p align="center"><img src="project_properties.gif" width="542" height="595"></p>
+<p>Under 'Build Executable/Libraries' you can set the:</p>
+<ul>
+  <li> Binary Output Directory &#151; the subdirectory of the project directory 
+    where the plm and xpl files are created</li>
+  <li>XPL Pathname &#151; the name of the xpl file in the binary output directory, 
+    or a full pathname to the xpl file</li>
+  <li>Executable File Type &#151; whether the xpl file is built in release or 
+    debug mode. The latter is required for local or remote debugging of compiled 
+    projects. </li>
+  <li>Prolog Libraries &#151; the Amzi! Prolog (plm) libraries to consult into 
+    the listener and link into your program</li>
+  <li> Logic Server Extensions &#151; the dynamic libraries (lsx) to load into 
+    the listener and load when your program is executed</li>
+  <li>Source Files to Exclude from Build and Consult &#151; a list of source file 
+    names that are not compiled and linked into the executable (xpl) file, and 
+    are not consulted into the Prolog listener.</li>
+</ul>
+<p>Also under project properties, you can refer to other Prolog projects. If you 
+  do this, then all the plm files in the referred project will be linked into 
+  your xpl file.</p>
+<h3><font color="#000080"><a name="CreatingProjects"></a>Creating Projects</font></h3>
+<p>To create a new project, select File | New Project, then Prolog Project. Projects 
+  can be created in the Eclipse workspace directory or in a different disk or 
+  directory. You can also create a new Prolog Project in an existing directory, 
+  in which case all .pro files in that directory will be included in the new project. 
+</p>
+<p>When you create a project, amzi.cfg from your amzi/config directory is copied 
+  into your project. You can set the size of the heaps and stacks and other parameters 
+  in this file. Logic Server Extensions are loaded explicitly and do not need 
+  to be set in amzi.cfg.</p>
+<h3><font color="#000080"><a name="OpeningClosingAndDeletingProjects"></a>Opening, 
+  Closing and Deleting Projects</font></h3>
+<p>To open or re-open an existing project, select File | Import | Existing Project 
+  into Workspace. This is a very useful command and is the way to open the Amzi! 
+  Samples. </p>
+<p>You can close a project in the navigator view by right-clicking on it and choosing 
+  Close Project. This stops the project from being rebuilt by Project | Rebuild 
+  All and shows the project as a closed folder.</p>
+<p>You can delete a project from the navigator view (and the Eclipse workspace) 
+  also by right-clicking and selecting Delete. This is a little disconcerting, 
+  but delete asks you whether or not to delete the actual project contents. By 
+  choosing not to do this, you simply remove the project from the navigator view 
+  and it can be re-opened later using Import.</p>
+<h2><a name="RunningTheListenerAndPrologPrograms"></a><font color="#0000ff">Starting 
+  the Listener and Prolog Programs</font></h2>
+<h3><font color="#000080"><a name="RunningTheListener"></a>Starting the Listener</font></h3>
+<p>Select Run | Listener to open an empty <a href="pug_listener.htm">Prolog Listener</a>.</p>
+<p>With a project or editor selected, choose Run | Run As | Interpreted Project 
+  to start the listener and consulting the source files in your project and load 
+  the libraries and Logic Server Extensions (lsxs).</p>
+<p>You can use the up/down arrows to peruse the queue of prior lines that you 
+  typed into one of the listeners. You can also edit those lines. </p>
+<p>Type 'quit.' to exit the listener.</p>
+<h3><font color="#000080"><a name="LaunchConfigurations"></a>Launch Configurations</font></h3>
+<p>The Run As and Debug As menus provide short-cuts for running interpreted and 
+  compiled Prolog projects. These short-cuts build an Eclipse Launch Configuration 
+  for the currently selected project. You can build your own Launch Configurations 
+  by selecting the Run... and Debug... menu items. A Launch Configuration defines 
+  the environment for running a program. It includes things like the project name, 
+  the directory to run from, which files to include and other items. See the <a href="pug_debugger_ide.htm#LaunchConfigurations">Source 
+  Code Debugger</a> section for details.</p>
+<p>You can rerun your last  session by selecting the launch configuration from either the Run | Run History menu or from the Run command button. </p>
+<h3><a name="RunningCompiledPrograms"></a><font color="#000080">Running Compiled 
+  Programs</font></h3>
+<p>To run a compiled/linked xpl file, select Run | Run As | Compiled Project.</p>
+<h2><a name="RunningTheSourceCodeDebugger"></a><font color="#0000ff">Starting 
+  the Source Code Debugger</font></h2>
+<p>With a project or editor selected, choose Debug | Debug As | Interpreted Project 
+  or Interpreted Single File to start the <a href="pug_debugger_ide.htm">Source 
+  Code Debugger</a>. (The 'Remote Prolog' menu option is for debugging xpl files 
+  running under other languages/systems such as Java, C++, Web Servers, etc.)</p>
+<p>The Debugger will open the Debug Perspective with a Debug Listener at the bottom 
+  of the screen. Like the Prolog Perspective you can add, resive and move views. 
+  For example, you can add the Basic | Navigator view in the same place as the 
+  Outline view.</p>
+<p>The goal you type is the goal that will be debugged. (So typing 'listing' will 
+  run under the debugger.) The buttons on the upper left view let you single-step 
+  or run your program. </p>
+<p>The upper left also shows the call stack. The upper right shows the binding 
+  of the Prolog variables at each level of the call stack. You can peruse them 
+  by clicking on any entry in the call stack. In the middle your source file is 
+  opened read-only (a second time if it is already open) and the current line 
+  is highlighted in a color to indicate whether it is a Prolog call, redo, fail 
+  or exit.</p>
+<p>See <a href="pug_debugger_ide.htm">Source Code Debugger</a> for detailed documentation.</p>
+<p><!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p></p>
+<P>&nbsp;</P>
+
+</BODY>
+</HTML>

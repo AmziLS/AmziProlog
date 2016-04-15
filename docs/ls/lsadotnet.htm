@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>.NET</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="DotNetInterface"></A><font color="#D2AA00"> .NET Wrapper Class</font> 
+</h1>
+<P>.NET is an emerging, machine-independent platform from Microsoft. It is similar 
+  in architecture to Amzi! Prolog and .NET in that it has its own virtual machine 
+  called the Common Language Runtime (CLR). The primary interface for the CLR 
+  is a managed wrapper class for amzi.dll, which is described here. As .NET continues 
+  to evolve, our interface(s) will meet Amzi!'s customer's needs. Please tell 
+  use about your needs by e-mailing us at www.amzi.com.</P>
+<P>The 
+.NET Class encapsulates the Amzi! Logic Server for use by .NET applications and 
+applets. It includes: </P><ul> <li> A .NET Class Package the encapsulates a Logic 
+Server Engine</li><li> Methods that correspond to the Logic Server API Functions</li><li> 
+Use of .NET's exception handling for API errors, and</li><li> .NET-like method 
+interfaces.</li></ul><p>In addition, you can extend the .NET Class to allow Prolog 
+to call methods in your .NET code. </p><p>The sections of this document are: </p>
+<ul>
+  <li><a href="#WheretoLearnAboutNET">Where to Learn About .NET</a> - Where to 
+    get .NET software, tutorials and information.</li>
+  <li><a href="#InstallingtheNETClass">Installation</a> - How to install the Logic 
+    Server as a .NET class.</li>
+  <li> <a href="#PetsCallbackSamples">Pets Callback Samples</a>- Getting the Pets 
+    expert system with an extended predicate up and running from .NET.</li>
+  <li> <a href="#NETClassOverview">Overview</a> - Conceptual overview of the .NET 
+    version of the Logic Server.</li>
+  <li> <a href="#UsingtheNETClass">Using the .NET Class</a> - How to use the Logic 
+    Server from .NET.</li>
+  <li> <a href="#ImplementingExtendedPredicatesInNET">Implementing Extended Predicates</a> 
+    - How to add Prolog extended predicates written in .NET.</li>
+  <li><a href="#Examples">Examples</a></li>
+</ul>
+<h2></h2><h2> <a name="WhereToLearnAboutNET"></a><font color="#0000FF">Where 
+to Learn About .NET</font></h2><!AMZI_INDEX= COM; Microsoft; MSDN> Documentation 
+about COM is plentiful. Microsoft's documentation can be found at <a href="http://msdn.microsoft.com">msdn.microsoft.com</a>. 
+<h2> <a name="InstallingtheNETClass"></a><font color="#0000FF">Installation</font></h2>
+<p><!AMZI_INDEX=.NET Class>To use the .NET Class, you must make the Amzi! dynamic library and .NET library 
+  files accessible to the calling environment: The Amzi! Logic Server, amzi.dll 
+  (any lsx's and amzi.cfg), and the Amzi! .NET interface, amzinet.dll, must be 
+  accessible to the calling environment. These files are in the amzi\bin directory. 
+  To do this: </p>
+<ol>
+  <li>Select 'Add Reference' to add amzinet.dll as a reference in your project. </li>
+  <li>Copy amzi.dll, amzi.cfg (optional) and any lsx files (optional) to your 
+    binary directory. <br>
+    (If you are running the original 1.0 version of the .NET Framework, you may 
+    need to copy these files to your Windows\System32 or WINNT\System32 directory 
+    instead).</li>
+</ol>
+<h2> 
+<a name="PetsCallbackSamples"></a><font color="#0000FF">Pets Callback Samples</font></h2><!AMZI_INDEX=Pets Callback> 
+In amzi/samples/dotnet are various samples for using the Amzi! Logic Server from 
+.NET. They are organized according to Visual Studio language, C++, C# and Visual 
+Basic. The Pets Callback samples demonstrate the basic features of the .NET class, 
+including calling extended predicates. <h2> <a name="NETClassOverview"></a><font color="#0000FF">Overview</font></h2>
+<p> 
+  <!AMZI_INDEX= .NET Class>
+  The .NET implementation of the Amzi! Logic Server adapts the LSAPI to the style 
+  of managed .NET wrapper classes. It implements the full LSAPI using managed 
+  types as return values and exceptions. All the methods are capable of throwing 
+  the managed LSException class. </p>
+<p>All the Logic Server methods are documented in the <a href="lsapirf.htm">LSAPI 
+  Reference</a> with these changes:</p>
+<ul>
+  <li>GetType() is called GetExceptType() in LSException</li>
+  <li>The enumerated values have been renamed:
+    <ul>
+      <li>pTYPE is pLSTYPE</li>
+      <li>dTYPE is dLSTYPE</li>
+      <li>exTYPE is exLSTYPE     </li>
+    </ul>
+  </li>
+</ul>
+<h3><a name="ObjectOriented"></a><font color="#000080">Object Oriented</font></h3>
+<!AMZI_INDEX= .NET>
+The Amzi! Logic Server is implemented as an object oriented program, so that each 
+Logic Server is an object and the Logic Server API functions are methods of that 
+object. It is natural, therefor, to provide object oriented interfaces to the 
+Logic Server for object oriented languages such as .NET. (Amzi! is also available 
+in a C++, Java and Delphi class.) The Logic Server class can then be used as any 
+other class in an object oriented application, supporting, for example, subclassing, 
+embedding and multiple instances. This makes for an elegant approach to encapsulating 
+Prolog services in applications.
+<h3> <a name="PointerlessMethods"></a><font color="#000080">Representing Prolog 
+  Terms</font></h3>
+<!AMZI_INDEX= .NET>
+A fundamental data type for the Prolog interface is a Prolog term. Internally, 
+a Prolog term is a pointer, but, since that pointer is not manipulated by the 
+application, it can be stored as an integer. For .NET, it is stored in a long 
+integer. 
+<h3> <a name="IssuingPrologQueries"></a><font color="#000080">Issuing Prolog Queries</font></h3>
+<!AMZI_INDEX=Calling Prolog>
+The base LSAPI functions that issue Prolog queries return TRUE or FALSE, corresponding 
+to Prolog success or failure, and use a pointer to the calling Prolog term to 
+pass back the term resulting from the query. For example a function issuing the 
+query 'available(com, Port)' will return true or false plus the term representing 
+the query with the Port variable unified with the result. 
+<p>For .NET, the query LSAPI functions (Exec, ExecStr, Call, CallStr) return the 
+  term (a long) directly, instead of a true false. If the query fails, that is 
+  indicated by a zero (0) value returned. (Errors are indicated by LSExceptions.) 
+<h3> <a name="StringConversion"></a><font color="#000080">String Conversion</font></h3>
+<!AMZI_INDEX= Strings; Converting>
+The .NET Class uses multi-byte characters throughout. 
+<h3> <a name="Exceptions"></a><font color="#000080">Exceptions</font></h3>
+<!AMZI_INDEX=Exceptions; Errors>
+Instead of returning error codes, all the LogicServer methods use .NET's exception 
+mechanism. The LSException class is thrown when an error occurs. LSException contains 
+a number of methods for learning details about the exceptions. 
+<h3> <a name="MultiThreaded"></a><font color="#000080">Multi-Threaded</font></h3>
+<!AMZI_INDEX= .NET; Multi-Threaded>
+.NET allows you to start multiple threads in the same program, and Amzi! supports 
+multiple simultaneous Prolog engines. So each instance of the .NET Logic Server 
+class will contain its own Prolog runtime environment.
+<h2> <a name="UsingtheNETClass"></a><font color="#0000FF">Using 
+the .NET Class</font></h2><!AMZI_INDEX= NET Class>
+The .NET class is implemented 
+in the 'amzinet' namespace and consists of the 'LogicServer' class and the 'LSException' 
+class. To use the classes, in general, you need to add a reference to the amznet.dll 
+in your project. 
+<P>From there you can either instantiate a new LogicServer class and invoke its 
+  methods, or you can define a new class that extends the LogicServer class adding 
+  new methods and variables. </P>
+<P><i><img src="arrowrt.gif" height=18 width=18> For Visual Basic, the LSException 
+  is wrapped inside an Exception and must be retrieved. See the pets_callback 
+  sample for details. </i></P>
+<h2> <a name="ImplementingExtendedPredicatesInNET"></a><font color="#0000FF">Implementing 
+Extended Predicates</font></h2><!AMZI_INDEX= Extended Predicates> .NET, like C/C++, 
+Delphi and VB 5.0 (and later), can be used to implement custom extended predicates 
+to the Prolog language. These custom extensions give the Prolog code the ability 
+to directly access anything .NET can access. <p>The .NET methods that implement 
+extended predicates, must be declared as returning type boolean, and as public. 
+They can be added one at a time using the API function AddPred, which adds a single 
+predicate at a time. 
+<p><img src="arrowrt.gif" height=18 width=18><i> Note: Extended predicate definitions 
+  must always be added after calling InitLS and before calling LoadXPL.</i> 
+<h2><a name="Examples"></a><font color="#0000FF">Examples</font></h2>
+<p>Samples for .NET can be found in samples\dotnet and in samples\internet\asp.net.</p>
+<p><!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><H2><I><FONT SIZE=-1></FONT></I></H2>
+
+</BODY>
+</HTML>

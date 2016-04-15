@@ -1,0 +1,551 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Untitled</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY>
+
+<H1><FONT COLOR="#0000FF">Integrating Prolog Services with C++ Objects
+</FONT></H1>
+
+<P>(<I>This article was originally published in PC AI magazine, Volume
+9, Number 3 May/June 1995. The magazine can be reached at PC AI, 3310 West
+Bell Rd., Suite 119, Phoenix AZ, USA 85023 Tel (602) 971-1869, FAX: (602)
+971-2321.) </I></P>
+
+<P>This article uses a classic Prolog programming example to illustrate
+how Prolog back-end services can be integrated with C++ front-end user
+interface code. The sample application is genealogy, with Prolog providing
+rules for family relationships and C++ the GUI interface to the application.
+The connection between the two is encapsulated in a C++ class that provides
+application-specific Prolog services to the rest of the C++ application.
+</P>
+
+<H2><FONT COLOR="#000080">The Prolog Code </FONT></H2>
+
+<P>For this application the Prolog code provides four types of logic services
+to the host application. The first two are basically the same type of services
+a database can provide. They are: 1) accessing and manipulating the attributes
+of a person, and 2) maintaining a collection of persons in a particular
+family tree. The second two services draw on Prolog's strength for rule-based
+programming. They are: 1) answering queries about relationships in the
+data, and 2) providing semantic integrity checks on entered and updated
+data. For those who haven't spent much time in the database world, semantic
+integrity checks go beyond normal input- field validation. In this case,
+for example, they check to see if a person in the database is their own
+ancestor. If that is true, the individual data records might be valid,
+but the database does not make semantic sense as a genealogical tree. </P>
+
+<P>Let's look at these four sections. </P>
+
+<H3>Person Data </H3>
+
+<P>This sample genealogical code has been written many times for many beginning
+Prolog books. While they all have the same types of rules for relationships,
+those rules are always based on some fundamental information. The choice
+of what is fundamental and what is derived varies from program to program.
+For this version of the program, I've decided the primitive fact will be
+person/5, where the five arguments are: Name, Gender, Mother, Father, Spouse.
+Because this is a decision that might change in the future, only a few
+primitive relationship rules are defined using the knowledge of the basic
+person information. </P>
+
+<P>These relations are: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">person(X) :- 
+  person(X,_,_,_,_). 
+male(X) :- 
+  person(X,male,_,_,_). 
+female(Y) :- 
+  person(Y,female,_,_,_). 
+mother(M,C) :- 
+  person(C,_,M,_,_). 
+father(F,C) :- 
+  person(C,_,_,F,_). 
+parent(P,C) :- 
+  (mother(P,C) ; father(P,C)). 
+spouse(S,P) :- 
+  person(P,_,_,_,S), 
+  S \= single. </FONT></PRE>
+</UL>
+
+<P>By building all of the other rules on these basic building blocks, it
+becomes easy to add or modify the basic data structure. For example, if
+we wanted to keep the date-of-birth for a person, that change would only
+impact these basic definitions. </P>
+
+<H3>Family Database </H3>
+
+<P>The next service provided by the Prolog program is maintenance of the
+collection of persons in a family. These predicates add a new person, delete
+a person, load the person database from file, and save it back to file.
+The add/5 predicate is designed to back out an update on backtracking,
+so that it can be easily used by the semantic integrity checking add_person/5
+predicate.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">add(Name,Gender,Mother,Father,Spouse):- 
+  assert(person(Name,Gender,Mother,Father,Spouse)). 
+add(Name,_,_,_,_) :-
+  delete(Name), fail. 
+delete(Name) :- 
+  retract(person(Name, _, _, _, _)). 
+save(FileName) :- 
+  tell(FileName), 
+  listing(person), 
+  told. 
+open(FileName) :- 
+  consult(FileName). </FONT></PRE>
+</UL>
+
+<P>Like the rules providing access to individual person data, these rules
+provide access to the family database. For this example, the person data
+is stored in the Prolog database, using asserts and retracts. </P>
+
+<H3>Relationship Query Rule-Base </H3>
+
+<P>We now get to the rule-base portion of the application. These query
+rules allow more complex information to be derived from the data. These
+are all the classic rules for grandparents, siblings, uncles, aunts, ancestors,
+etc. Some examples of these rules are shown here. Notice that they all
+build on the same set of primitive information so that changes to the underlying
+structure of the data in the application will not affect the relationship
+rule-base. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">ancestor(A,P) :- 
+  parent(A,P). 
+ancestor(A,P) :- 
+  parent(X,P), 
+  ancestor(A,X). </FONT></PRE>
+</UL>
+
+<UL>
+<PRE><FONT COLOR="#000080">full_sibling(S1, S2) :- 
+  mother(M,S2), 
+  mother(M,S1), 
+  S1 \= S2, 
+  father(F,S1), 
+  father(F,S2). </FONT></PRE>
+
+<PRE><FONT COLOR="#000080">uncle(U,X) :- 
+  parent(P,X), 
+  brother(U,P). </FONT></PRE>
+
+<PRE><FONT COLOR="#000080">aunt(A,X) :- 
+  parent(P,X), 
+  sister(A,P). </FONT></PRE>
+</UL>
+
+<P>The query rule-base has one additional fact that can be used by the
+host program. It contains a list of all the defined relationships. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">relations([parent, wife, husband, ancestor, .....]). </FONT></PRE>
+</UL>
+
+<P>It can be used in a generic relationship rule that can find out how
+two people are related, among other things. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">relation(R, X, Y) :- 
+  relations(Rs), 
+  member(R,Rs), 
+  Q =.. [R,X,Y], 
+  call(Q). </FONT></PRE>
+</UL>
+
+<H3><FONT SIZE=+1>Semantic Integrity Rule-Base </FONT></H3>
+
+<P>The final service the Prolog module provides is semantic integrity checking.
+This means checking a proposed update or change to the database against
+the rest of the database to ensure it makes sense. Examples include checking:
+a person's mother and father are the right gender, someone is not their
+own ancestor, and spouses are not blood relatives. While this last is not
+really a genealogical rule, I've included the rule as an example of relatively
+complex semantic integrity checking on a database. </P>
+
+<P>Here are some of the rules from the integrity rule-base portion of the
+Prolog code. Because this Prolog code is designed to be passively called
+from a host application, error messages are simply asserted to the database
+for the host program to retrieve in case an update fails. (Alternatively
+it could have been designed to take a more active role in the application,
+calling the host program directly when an error occurs.) </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">add_person(Name,Gender,Mother,Father,Spouse) :- 
+  retractall(message(_)), 
+  dup_check(Name), 
+  add(Name,Gender,Mother,Father,Spouse), 
+  ancestor_check(Name), 
+  mother_check(Name, Gender, Mother), 
+  father_check(Name, Gender, Father), 
+  spouse_check(Name, Spouse). </FONT></PRE>
+
+<PRE><FONT COLOR="#000080">ancestor_check(Name) :- 
+  ancestor(Name,Name), 
+  assert(message($Person is their own ancestor/descendent$)), 
+  !, fail. 
+ancestor_check(_). </FONT></PRE>
+
+<PRE><FONT COLOR="#000080">spouse_check(Name, Spouse) :- 
+  spouse(Name, X), 
+  X \= Spouse, 
+  assert(message($Person is already someone else's spouse$)), 
+  !, fail. 
+spouse_check(Name, Spouse) :- 
+  blood_relative(Name, Spouse), 
+  assert(message($Person is a blood relative of spouse$)), 
+  !, fail. 
+  spouse_check(_,_). </FONT></PRE>
+
+<PRE><FONT COLOR="#000080">blood_relative(X,Y) :- (ancestor(X,Y); ancestor(Y,X)). 
+blood_relative(X,Y) :- sibling(X,Y). 
+blood_relative(X,Y) :- cousin(X,Y). 
+blood_relative(X,Y) :- (uncle(X,Y); uncle(Y,X)). 
+blood_relative(X,Y) :- (aunt(X,Y); aunt(Y,X)). </FONT></PRE>
+</UL>
+
+<H3>Summing Up the Prolog Code </H3>
+
+<P>As we can see from the above discussion, the Prolog code for this application
+is in four distinct sections. Two sections clearly behave as objects. These
+are the individual person object, and the collection of persons, or family
+object. The rules that manipulate these objects are all localized in the
+code. The other two sections are rule-bases that reason over the objects.
+One provides queries looking for relationships in the collection, and the
+other provides queries that verify relationships between persons are as
+they should be. In the next section we'll talk about encapsulating the
+entire Prolog program and its services as a C++ object that can be part
+of a larger application. </P>
+
+<H2><FONT COLOR="#000080"><FONT SIZE=+2>Calling Prolog Services from C++
+</FONT></FONT></H2>
+
+<P>For this example, the Prolog services will be accessed from a Windows
+C++ program that provides a GUI interface to the user. The GUI interface
+will let the user load and save family databases, use list-boxes to pose
+relationship queries, and use dialog-boxes to update the family database.
+</P>
+
+<P>C++ is well suited to GUI programming, as it allows for the natural
+encapsulation of the various objects that comprise the interface. In this
+example, there are objects that correspond to each of the dialogs the application
+has with the user. </P>
+
+<P>C++ is also well-suited for interfacing with Prolog, as it enables the
+application programmer to implement an object that encapsulates the Prolog
+services. In this way the C++ interface to the Prolog services is well
+defined, and the implementation can be maintained without impacting the
+rest of the application. </P>
+
+<P>The example code was implemented using Microsoft Visual C++, the Microsoft
+Foundation Classes, and the Amzi! Prolog Logic Server API, however, these
+same ideas apply to any C++ implementation, GUI tool-kit, and Prolog with
+a host language interface. </P>
+
+<H3>The C++ Header Information </H3>
+
+<P>A C++ header file defines the interface to C++ classes. Because the
+program maps person information between C++ and Prolog, the C++ program
+first defines a structure called Person. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">struct Person { 
+  CString name; 
+  CString mother; 
+  CString father; 
+  CString spouse; 
+  CString genderS; }; </FONT></PRE>
+</UL>
+
+<P>It will be used to hold and pass person information in the C++ portion
+of the program. (CString is a string class defined in the MFC. Other C++
+vendors provide similar classes.) </P>
+
+<P>Next, consider the class that defines the interface to the Prolog portion
+of the code. It is called ProGene, and in this case is derived from a vendor-provided
+class that provides generic Prolog services. The ProGene class extends
+those generic services with functions particular to this specific Prolog
+program. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">class ProGene : public CLSEngine 
+{ 
+public: 
+  ProGene();                         // constructor initializes 
+Prolog and loads program 
+  ~ProGene();                        // destructor cleans up 
+Prolog environment </FONT></PRE>
+
+<PRE><FONT COLOR="#000080">// Manipulate the family database 
+  BOOL Open(const char *); 
+  BOOL Save();                       // Save the current family file </FONT></PRE>
+
+<PRE><FONT COLOR="#000080">// Map Prolog generated information to list-boxes 
+  BOOL Persons(CList-box *); 
+  BOOL Relationships(CList-box *); 
+  BOOL Answers(CList-box *, char * relation, char * name); </FONT></PRE>
+
+<PRE><FONT COLOR="#000080">// Provide update services 
+  BOOL PersonData(Person *); 
+  BOOL AddPerson(); 
+  BOOL DelPerson(char *); 
+  BOOL SaveValid(Person *); </FONT></PRE>
+
+<PRE><FONT COLOR="#000080">// Process Prolog errors 
+private: 
+  void PrologError(char * s, RC rc = 0); 
+}; </FONT></PRE>
+</UL>
+
+<P>Because the Prolog services might be available to a number of other
+classes, a global object is created for the Prolog object. When the application
+starts up, the object is created, and when the application closes down,
+the object is destroyed. This is all done automatically by one line of
+code in the beginning of the program. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">ProGene proGene;       // Interface to Prolog Program </FONT></PRE>
+</UL>
+
+<H3>Using the ProGene Class </H3>
+
+<P>Let's now look at some of the code that makes use of this interface.
+</P>
+
+<P>First a family file must be opened. This is done by using the File/Open
+menu choice of the application which causes the following code to be executed.
+The code uses the familiar Windows file open dialog to let the user select
+a file containing a family tree. That file name is then passed to the Prolog
+server, which opens the file. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">void GeneWnd::OnFileOpen() 
+{ 
+  CString sFile; </FONT></PRE>
+
+<PRE><FONT COLOR="#000080">// Use the file open dialog to get a file name 
+  CFileDialog fileDlg(TRUE, &quot;.fam&quot;, NULL,.... 
+... 
+  if (fileDlg.DoModal() != IDOK) return; 
+  sFile = fileDlg.GetPathName(); </FONT></PRE>
+
+<PRE><FONT COLOR="#000080">// Call the Prolog server to open a family database file 
+  bOpen = proGene.Open((const char *)sFile); 
+} </FONT></PRE>
+</UL>
+
+<P>Once the database is open, it is ready to be queried about family relationships.
+The query dialog-box contains the three list-boxes shown in the screen
+image. The first list-box is initialized with the names of the individuals
+in the family, and the second with the possible relationships. The third
+list-box is filled with the results of queries constructed from choices
+in the first and second list-boxes. </P>
+
+<P>In each case, the query dialog simply passes a pointer to a list- box
+to the proGene server object, which then populates the list- box with the
+appropriate information. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">BOOL QueryDlg::OnInitDialog() 
+{ 
+  CList-box *lb; 
+// get first list-box pointer 
+  lb = (CList-box*)GetDlgItem(IDC_LIST1); 
+// fill the list-box 
+  if (!proGene.Persons(lb)) return FALSE; 
+// second list-box pointer 
+  lb = (CList-box*)GetDlgItem(IDC_LIST2); 
+// fill it as well 
+  if (!proGene.Relationships(lb)) return FALSE; 
+...} </FONT></PRE>
+</UL>
+
+<P>The queries are posed by selecting a name and relationship from the
+first two list-boxes. That data is passed to the Prolog server, which then
+populates the 'answers' list-box with the returned relatives. Because all
+of the information for the list- boxes is derived from the Prolog program,
+any changes to the Prolog data, additions of new relationships, etc. is
+all done in Prolog. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">afx_msg void QueryDlg::OnDoQuery() 
+{ 
+  CList-box *lbNames, *lbRelations, *lbAnswers; 
+  char name[NAMELEN]; 
+  char relation[NAMELEN]; </FONT></PRE>
+
+<PRE><FONT COLOR="#000080">... 
+// extract relation and name from first two list-boxes 
+// and pass information to server 
+  proGene.Answers(lbAnswers, relation, name); </FONT></PRE>
+</UL>
+
+<P>The last point of interest is the update dialog. After the user has
+entered the fields of a new person record, this function maps the dialog-box
+data to C++ variables, in this case the person structure defined earlier.
+This example includes some of the automatic field validation capabilites
+of the Microsoft Foundation Classes, but these validation edits only apply
+to field specific attributes such as length of a name, value of a number
+etc.</P>
+
+<P>The full semantic integrity checking is provided by the 'SaveValid'
+function of the proGene Prolog server. This function passes the proposed
+new record to Prolog to either add to the database, or report an error
+causing the user to have to try again. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">void EditDlg::DoDataExchange(CDataExchange *pDX) 
+{ 
+  DDX_Text(pDX, IDC_EDIT1, m_person.name); 
+  DDV_MaxChars(pDX, m_person.name, NAMELEN); 
+  ... 
+// call Prolog to verify and update 
+  if (! proGene.SaveValid(&amp;m_person)) 
+// use MFC failure mechanism if integrity checks failed 
+   pDX-&gt;Fail(); </FONT></PRE>
+</UL>
+
+<P>Notice that these code fragments simply maintain the user interface
+widgets of the application. They put up list-boxes, respond to buttons,
+get selected values from list-boxes, but nowhere have any &quot;understanding&quot;
+of what is contained in the user interface. That information is provided
+entirely by the Prolog portion of the application. </P>
+
+<P>Conversely, the Prolog code has no &quot;understanding&quot; of the
+type of user interface being employed. It provides the services asked of
+it. </P>
+
+<P>The user interface C++ code and rule-based Prolog code are cleanly isolated
+from each other, with the proGene server object providing the communication
+between them. </P>
+
+<H2><FONT COLOR="#000080">The Prolog Server </FONT></H2>
+
+<P>Finally, we'll look inside the Prolog server object to see how it connects
+C++ to the genealogical Prolog code. This particular example uses the Amzi!
+Prolog Logic Server API functions to call Prolog from C, but similar code
+can be implemented with any Prolog that provides a C interface. </P>
+
+<P>The open is accomplished by sending a 'consult' query to the Prolog
+engine with the name of the file (containing a family tree) to be opened.
+</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">BOOL ProGene::Open(const char * sFile) 
+{ 
+// build a query string 
+  sprintf(buf, &quot;consult('%s')&quot;, sFile); 
+// call Prolog with the string 
+tf = CallStr(&amp;t, buf); 
+  ... </FONT></PRE>
+</UL>
+
+<P>The persons list-box is populated by finding all answers to the Prolog
+query 'person(X)' and adding those answers to the list-box. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">BOOL ProGene::Persons(CList-box *lb) 
+{ 
+  tf = CallStr(&amp;t,&quot;person(X)&quot;);    // pose the initial query 
+  while(tf) { 
+    GetArg(t, 1, cSTR, buf);         // get the answer from the query 
+    lb-&gt;AddString(buf);              // add it to the list-box 
+    tf = Redo();                     // redo the query until it fails 
+    } 
+  return TRUE; 
+} </FONT></PRE>
+</UL>
+
+<P>The relations list-box is similarly populated by getting the list of
+all relationships (from the relations/1 fact we saw earlier) and popping
+elements from the list into the list-box. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">BOOL ProGene::Relationships(CList-box *lb) 
+{ 
+ TERM tList; 
+
+ tf = CallStr(&amp;t, &quot;relations(X)&quot;); // pose the query 
+ if (tf) { 
+   GetArg(t, 1, cTERM, &amp;tList); // get the answer list 
+   while (OK == PopList(&amp;tList, cSTR, buf)) // pop each element 
+     lb-&gt;AddString(buf); 
+ } 
+ return TRUE; 
+} </FONT></PRE>
+</UL>
+
+<P>The answers list-box works similar to the persons list-box. In this
+case a more complex query is posed, and then redone until all of the answers
+have been retrieved and placed in the answer list- box. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">BOOL ProGene::Answers(CList-box *lb, 
+  char * relation, char * name) 
+{ 
+  sprintf(buf, &quot;%s(X,'%s')&quot;, relation, name); // build the query 
+  tf = CallStr(&amp;t, buf); //pose the query 
+  while (tf) { 
+   GetArg(t, 1, cSTR, buf); // get the first argument answer 
+   lb-&gt;AddString(buf); // add it to the list-box 
+   tf = Redo(); // get the next answer 
+   } 
+  return TRUE; 
+} </FONT></PRE>
+</UL>
+
+<P>The final piece to look at here is the code that performs the semantic
+integrity checking and update of the database. It also builds a Prolog
+query that calls add_person/5, which either adds the record or posts an
+error message. This code picks up the error message if the integrity checks
+fail, displays it for the user and then lets the caller deal with the error
+situation. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">BOOL ProGene::SaveValid(Person *p) 
+{ 
+  char errmsg[BUFLEN];
+  
+  sprintf(buf,&quot;add_person('%s', '%s', '%s', '%s', '%s')&quot;, 
+                 (const char *)p-&gt;name, 
+                 (const char *)p-&gt;genderS, 
+                 (const char *)p-&gt;mother, 
+                 (const char *)p-&gt;father, 
+                 (const char *)p-&gt;spouse); 
+  tf = CallStr(&amp;t, buf); 
+  if (tf == FALSE) 
+  { 
+    CallStr(&amp;t, &quot;message(X)&quot;); 
+    GetArg(t, 1, cSTR, errmsg); 
+    sprintf(buf, &quot;Semantic Integrity Error:\n%s&quot;, errmsg); 
+    AfxMessageBox(buf); 
+    return FALSE; 
+  } 
+  return TRUE; 
+} </FONT></PRE>
+</UL>
+
+<P>These are the highlights of the Prolog server interface that provide
+a clean insulating layer between the Prolog code containing the basic logic
+of the application and the user interface code written in C++. </P>
+
+<H2><FONT COLOR="#000080">Conclusion </FONT></H2>
+
+<P>This sample application illustrates how the object-oriented capabilities
+of C++ can be used to create a clean bridge between C++ code and Prolog
+code. The resulting design allows C++ to be used for those aspect of an
+application its best suited for, and Prolog for those aspects its best
+suited for. C++ is used with Microsoft's GUI tools to develop a Windows
+front end, while Prolog is used as both a database and a rule-base. The
+architecture makes it easy to maintain the logic rules of the application,
+coded in declarative Prolog, and the GUI interface using the increasingly
+sophisticated GUI tools available from C++ vendors. The link between the
+two components is neatly encapsulated in a C++ object. <BR>
+</P>
+
+</BODY>
+</HTML>

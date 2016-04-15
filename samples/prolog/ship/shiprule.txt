@@ -1,0 +1,31 @@
+Brochures
+	International
+		Canada and Mexico always go small packets
+		1 oz or less, everywhere but S. America, Europe go 1st class 0.95,
+			S. America, Europe go small packets
+   	1.1 oz to 1.5 oz, anywhere but S. America go 1st class, S. America
+			goes small packets
+	U.S.
+		Sunday delivery needed, go Express Mail $10.50
+		Saturday delivery wanted, non-guaranteed $10.50
+		Saturday delivery required, guaranteed go Fed Ex or UPS
+		Otherwise go 1st class
+		If 2-day guaranteed needed go UPS blue
+
+Packages
+	International
+		Quickest, guaranteed delivery go Fed Ex or UPS, $40-$60
+		Quick, non-guaranteed delivery go Express Mail, $20-$40
+	   Less than 4 lbs and not Italy, go small packets
+	   Over 4lbs go Air Parcel Post
+	U.S.
+		U.S. New England, go UPS Ground for 1-day delivery
+		U.S. Northeast, go UPS Ground for 2-day delivery
+		If 2-day needed elsewhere, use UPS blue
+		If 1-day needed elsewhere, use UPS red
+		P.O. box use priority mail
+		Sunday delivery needed, go Express Mail $15
+		Saturday delivery wanted, non-guaranteed $15
+		Saturday delivery required, guaranteed go Fed Ex or UPS
+
+

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>No title</title>
+  <meta name="GENERATOR" content="amaya 5.2" />
+</head>
+
+<body xml:lang="en" lang="en">
+<h1>Matrices</h1>
+
+<p>Matrix algebra could be introduced to Prolog by implementing a data type
+<strong>matrix</strong> and extending the arithmetic operators to recognise
+it. The only drawback would be that applications would not be portable.</p>
+
+<p>We present here some matrix primitives when there is no
+<strong>matrix</strong> type and matrices are represented as nested lists.</p>
+
+<p>Let: [[A11, A12, ... , A1n], [A21, A22, ... , [A2n], ... [An1, An2, ... ,
+Ann]] denote a matrix in row-major order</p>
+
+<p>This implies that a simple list denotes a row vector and a list of row
+vectors is a matrix. By this definition a row vector is not a matrix and no
+denotation is provided for a column vector. However, a column vector can be
+represented by a matrix of singleton lists [[A1k], [A2k], ... , [Ank]] and
+similarly a row vector by:the matrix: [[Ak1, Ak2, ... , Akn]]. To perform
+matrix operations on vectors these are the denotations that should be
+used.</p>
+
+<p></p>
+
+<h3>ijth/4</h3>
+
+<p>ijth(A, I, J, AIJ) AIJ is the element at the Ith row and Jth column of
+A.</p>
+
+<p></p>
+
+<h3>rbind/3</h3>
+
+<p>rbind(A, B, C) appends the rows of B to the rows of A, to produce C,
+provided A and B are conforming matrices.</p>
+
+<p>rbind(K, B, C) if K is a number, appends the rows of B to a conforming row
+of Ks to produce C.</p>
+
+<p>rbind(A, K, C) if K is a number, appends a conforming row of Ks to the
+rows of A produce C.</p>
+
+<p></p>
+
+<h3>cbind/3</h3>
+
+<p>cbind(A, B, C) appends the columns of B to the columns of A, to produce C,
+provided A and B are conforming matrices.</p>
+
+<p>cbind(K, B, C) if K is a number, appends the columns of B to a conforming
+column of Ks to produce C.</p>
+
+<p>cbind(A, K, C) if K is a number, appends a conforming column of Ks to the
+columns of A to produce C.</p>
+
+<p></p>
+
+<h3>transpose/2</h3>
+
+<p>transpose(A, B) A and B are mutually transposed.</p>
+
+<p></p>
+
+<h3>minor/4</h3>
+
+<p>minor(A, I, J, M) M is the minor of element A(I, J).</p>
+
+<p></p>
+
+<h3><strong>matAdd/3</strong></h3>
+
+<p>matAdd(A, B, C) C is the sum of matrix A and conforming Matrix B.</p>
+
+<p></p>
+
+<h3><strong>matSub/3</strong></h3>
+
+<p>matAdd(A, B, C) subtracts matrix B from conforming Matrix A to produce
+C.</p>
+
+<p></p>
+
+<h3><strong>matMult/3</strong></h3>
+
+<p>matMult(A, B, C) C is the product of matrix A and conforming Matrix B .</p>
+
+<p></p>
+
+<h3>matKMult/3</h3>
+
+<p>matKMult(K, B, C) C is the product of constant K and Matrix B .</p>
+
+<p></p>
+
+<h3>detL/2</h3>
+
+<p>detL(D, N) N is the value of the determinant of D, obtained by Laplace
+expansion.</p>
+
+<p></p>
+
+<h3>detP/2</h3>
+
+<p>detP(D, N) N is the value of the determinant of D, obtained by pivotal
+condensation</p>
+
+<p></p>
+
+<h3>detS/2</h3>
+
+<p>detS(D, N) N is the value of the determinant of D, obtained by the sweep
+operation</p>
+
+<p></p>
+
+<h3>adj/2</h3>
+
+<p>adj(A, AdjA) AdjA is the adjugate (adjoint) of A</p>
+
+<p></p>
+
+<h3>matInv/2</h3>
+
+<p>matInv(A. B) A and B are mutually inverse.</p>
+
+<p>Notice: the adjugate of A is the inverse of A multiplied by the
+determinant of A.</p>
+
+<p></p>
+
+<h3>minor/4</h3>
+
+<p>minor(A, I, J, M) M is the minor od A(I,J).</p>
+
+<p></p>
+
+<h3>minors/2</h3>
+
+<p>minors(A, M) is a matrix of all the minors of A.</p>
+
+<p>.</p>
+
+<h3>sweep/4</h3>
+
+<p>sweep(K, Pivot, A, Sweep) Pivot is the Kth diagonal element and Sweep is
+the result of the  sweep operation with that pivot.</p>
+
+<p></p>
+
+<h3>sweeps/3</h3>
+
+<p>sweeps(A, D, B) B is the recursive sweep through all diagonals, and D is
+the determinant of A.</p>
+
+<p></p>
+
+<h3>pivCon/2</h3>
+
+<p>pivCon(A, Vector)    Vector is the pivotal condensation of A, as a column
+vector. If A is square Vector is one element.</p>
+
+<p></p>
+
+<p></p>
+
+<p>There is a new arithmetic operator <strong>sub</strong> (precedence 200)
+which performs matrix subscription:</p>
+
+<p>A <strong>sub</strong> [ I, *] returns the Ith row of A,</p>
+
+<p>A <strong>sub</strong> [*, J] returns the Jth column of A,</p>
+
+<p>A <strong>sub</strong> [I, J] returns the element of A at row I column
+J,</p>
+
+<p>A <strong>sub</strong> [I] returns the Ith element of vector A regardless
+of whether it is a row or a column vector,</p>
+
+<p>where I and J are integers.</p>
+</body>
+</html>

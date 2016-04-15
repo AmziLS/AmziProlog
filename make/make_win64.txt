@@ -1,0 +1,157 @@
+HERE = $(APLS_SOURCE)
+SOURCE = $(APLS_SOURCE)
+RELEASE = $(APLS_RELEASE)
+
+all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _wide _eclipse_plugin _interfaces
+
+_dirs:
+	-rmdir /S /Q $(RELEASE)\abin
+	-rmdir /S /Q $(RELEASE)\bin
+	-rmdir /S /Q $(RELEASE)\include
+	-rmdir /S /Q $(RELEASE)\config
+	-rmdir /S /Q $(RELEASE)\docs
+	-rmdir /S /Q $(RELEASE)\lib
+	-rmdir /S /Q $(RELEASE)\lsapis
+	-rmdir /S /Q $(RELEASE)\samples
+	-rmdir /S /Q $(RELEASE)\eclipse_plugin
+	-rmdir /S /Q $(RELEASE)\distributable
+	-md $(RELEASE)\abin
+	-md $(RELEASE)\bin
+	-md $(RELEASE)\include
+	-md $(RELEASE)\config
+	-md $(RELEASE)\docs
+	-md $(RELEASE)\lib
+	-md $(RELEASE)\lsapis
+	-md $(RELEASE)\samples
+	-md $(RELEASE)\eclipse_plugin
+	-md $(RELEASE)\eclipse_plugin\features
+	-md $(RELEASE)\eclipse_plugin\plugins
+	-md $(RELEASE)\distributable
+
+
+_engine:
+  @echo *************************************************************
+	@echo *********    making engine
+  @echo *************************************************************
+	cd $(SOURCE)\amzi-apls-engine
+	bmake -f make_win64.txt
+	cd $(HERE)
+
+_run:
+  @echo *************************************************************
+	@echo *********    making run
+  @echo *************************************************************
+	cd $(SOURCE)\amzi-apls-run
+	bmake -f make_win64.txt
+	cd $(HERE)
+
+_link:
+  @echo *************************************************************
+	@echo *********    making link
+  @echo *************************************************************
+	cd $(SOURCE)\amzi-apls-linkrun
+	bmake -f make_win64.txt
+	cd $(HERE)
+
+_osutils:
+  @echo *************************************************************
+	@echo *********    making osutils
+  @echo *************************************************************
+	cd $(SOURCE)\amzi-apls-osutils
+	bmake -f make_win64.txt
+	cd $(HERE)
+	
+_compile:
+  @echo *************************************************************
+	@echo *********    making compile
+  @echo *************************************************************
+	cd $(SOURCE)\amzi-apls-compile
+	bmake -f make_win32.txt clean
+	bmake -f make_win32.txt
+	cd $(HERE)
+
+_libs:
+  @echo *************************************************************
+	@echo *********    making libs
+  @echo *************************************************************
+	cd $(SOURCE)\amzi-apls-libs
+	bmake -f make_win32.txt clean
+	bmake -f make_win32.txt
+	cd $(HERE)
+
+_listen:
+  @echo *************************************************************
+	@echo *********    making listen
+  @echo *************************************************************
+	cd $(SOURCE)\amzi-apls-listen
+	bmake -f make_win32.txt clean
+	bmake -f make_win32.txt
+	cd $(HERE)
+
+_docs:
+  @echo *************************************************************
+	@echo *********    making docs
+  @echo *************************************************************
+	cd $(SOURCE)\amzi-apls-docs
+	bmake -f make_win32.txt
+	cd $(HERE)
+
+_samples:
+  @echo *************************************************************
+	@echo *********    making samples
+  @echo *************************************************************
+	cd $(SOURCE)\amzi-apls-samples
+	bmake -f make_win32.txt
+	cd $(HERE)
+
+_wide:
+  @echo *************************************************************
+	@echo *********    making wide
+  @echo *************************************************************
+	cd $(SOURCE)\amzi-apls-wide
+	bmake -f make_win64.txt
+	cd $(HERE)
+
+
+_eclipse_plugin:
+  @echo *************************************************************
+	@echo *********    copying eclipse plug-in
+  @echo *************************************************************
+	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\artifacts.jar $(RELEASE)\eclipse_plugin
+	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\content.jar $(RELEASE)\eclipse_plugin
+	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\site.xml $(RELEASE)\eclipse_plugin
+	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\features $(RELEASE)\eclipse_plugin\features
+	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\plugins $(RELEASE)\eclipse_plugin\plugins
+	copy $(RELEASE)\bin\*.lsx $(RELEASE)\distributable\*.lsx
+	copy $(RELEASE)\config\amzi.cfg $(RELEASE)\distributable\amzi.cfg
+	cd $(HERE)
+	
+_interfaces:
+  @echo *************************************************************
+	@echo *********    making interfaces
+  @echo *************************************************************
+	cd $(SOURCE)\..\interfaces\amzi-interfaces-make
+	bmake -f make_win64.txt
+	cd $(HERE)
+	
+clean:
+	cd engine
+	-bmake -f make_win32.txt clean
+	cd $(HERE)
+	cd libs
+	-bmake -f make_win32.txt clean
+	cd $(HERE)
+	cd link
+	-bmake -f make_win32.txt clean
+	cd $(HERE)
+	cd run
+	-bmake -f make_win32.txt clean
+	cd $(HERE)
+	cd compile
+	-bmake -f make_win32.txt clean
+	cd $(HERE)
+	cd listen
+	-bmake -f make_win32.txt clean
+	cd $(HERE)
+	cd activate
+	-bmake -f make_win32.txt clean

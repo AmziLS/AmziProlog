@@ -1,0 +1,340 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Amzi! Runtime</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="AmziPrologRuntime"></A><FONT COLOR="#D2AA00">Amzi! Runtime</FONT> 
+</h1>
+<P><!AMZI_INDEX = arun; Amzi! Runtime>The Amzi! runtime engine is a shared library, 
+  amzi.dll under Windows and libamzi.so under Unix. Amzi! Prolog is always run 
+  by a host language program that loads and starts the runtime engine.</P>
+<P>Arun is a command line interface to the engine that simply loads a compiled 
+  Prolog file (.xpl file) and calls its main/0 predicate. Arun is, therefore, 
+  the tool to use for running stand-alone command line Prolog programs.</P>
+<P>The source code for arun is included in the Amzi! src directory.</P>
+
+<H2><A NAME="StartingarunfromtheCommandLine"></A><FONT COLOR="#0000FF">Running
+arun from the Command-Line</FONT></H2>
+
+<P><!AMZI_INDEX = arun; Command-Line>Arun can be used in two ways. You can run 
+  it directly and specify the name of the .xpl file to execute as a parameter: 
+</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">c&gt;  arun wgene</FONT></PRE>
+</UL>
+
+<P>You can also copy arun to the same name as your application. In this
+case the .xpl file with the same name as the .exe will be executed: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">c&gt;  copy arun.exe wgene.exe
+c&gt;  wgene</FONT></PRE>
+</UL>
+
+<P>The command line listener, alis, and compiler, acmp, are examples of this.  Both of these development tools are Prolog programs.</P>
+
+<H2><A NAME="ConfigurationFiles"></A><FONT COLOR="#0000FF">Configuration Files</FONT></H2>
+
+<P><!AMZI_INDEX = Configuration Files; cfg Files>Configuration files (.cfg) give 
+  you the ability to customize your working environment on an application-by-application 
+  basis, most notably in deciding which runtime to use and what stacks to set. 
+  The .cfg files give you three layers of defaults. </P>
+
+<OL>
+<LI>The system as shipped has default values for stacks and the like that
+it uses if no .cfg files are found. </LI>
+
+<LI>The system looks first for a file called amzi.cfg. This is your tool
+for overriding the built-in system defaults. </LI>
+
+<LI>When an application runs, it first looks for a .cfg file with the same
+name as the application (.xpl file). If one exists, it is used to override
+the system defaults, either as set by you or built into the system. </LI>
+</OL>
+
+<P>A .cfg file is composed of lines of the form </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">parameter = value</FONT></PRE>
+</UL>
+
+<P>Comment lines begin with either '#' '%' or ';'. </P>
+
+<P>Configuration&nbsp;parameters can also be set from a host language program 
+  via arguments, rather than through a .cfg file. To do this, use the entry point 
+  lsInit2() rather than lsInit(), with the argument being the parameters in character 
+  string format. Many of the parameters have abbreviations which might be easier 
+  to use when using lsInit2. They are in () after the parameter name.</P>
+
+<H3><A NAME="CFGParameters"></A><FONT COLOR="#000080">Configuration Parameters</FONT></H3>
+
+<P><!AMZI_INDEX = cfg Files; heap; local; control; trail; heapbumper; readbuffer; readdepth; maxvars; maxclauses;
+ logfile; lsxload; apitrace; string_esc; macroheapsz; vars_sort_equal;
+ gcthingfreq; maxmemory; undefined_predicate>
+These parameters affect the 
+  various control stacks used during Prolog program execution. A Prolog <b>cell</b> 
+  is a small internal unit that holds Prolog primitives, such as atoms, numbers, 
+  and list and structure elements.</P>
+
+<MENU>
+  <LI><B>heap (h) -- </B>The number of cells in the Prolog heap stack. </LI>
+
+  <LI><B>local</B> <B>(l) -- </B>The number of cells in the local stack. </LI>
+
+  <LI><B>control</B> <B>(c) -- </B>The number of cells in the control stack. </LI>
+
+  <LI><B>trail</B> <b>(t) -- </b>The number of cells in the trail stack.</LI>
+
+  <LI><B>heapbumper (hb) -- </B>The percentage of the heap used as a garbage collection 
+    buffer.</LI>
+</MENU>
+
+<P>These parameters affect the size of Prolog terms that can be read or written, 
+  by either the listener, compiler, or any other Prolog program. </P>
+
+<MENU> 
+  <LI><B>readbuffer (rb) -- </B>The maximum size in bytes of a term or a string. 
+  </LI>
+  <LI><B>readdepth (rd) -- </B>The degree of complexity of a term. </LI>
+  <LI><B>maxclauses (mc) -- </B>The maximum number of compiled clauses that can 
+    be loaded as part of one predicate. </LI>
+</MENU>
+
+<P>These parameters that aid in debugging.</P>
+<MENU> 
+  <LI><B>logfile (lf) -- </B>Specifies the name of a log file and turns logging 
+    on. This parameter makes it possible to log a program's behavior without changing 
+    the program. </LI>
+  <LI><B>apitrace (at) -- </B>On or off, outputs the Logic Server API parameters 
+    and return values. You must specify a logfile for the trace to be written 
+    to. </LI>
+  <LI><b>debug_host</b> -- Specifies either the IP address or host name of the 
+    machine running Eclipse when using the Remote Debugger. Default is 127.0.0.1.</LI>
+  <LI><b>debug_port</b> -- Specifies the port number for the machine running the 
+    Eclipse Remote Debugger. Default is 8000.</LI>
+</MENU>
+<P>Other system parameters. </P>
+<MENU> 
+  <li><b>occurs_check (oc) --</b> Attempts to unify cyclic terms can lead to hard 
+    crashes of the Prolog engine. An example would be ?- A = f(A), B = f(B), A 
+    = B. The default is off because: 1) this sort of construct rarely occurs; 
+    2) many cyclic unifications are caught on output, such as simply ?- A = f(A). 
+    ; and 3) there is a 10% performance overhead to add the check. But sometimes 
+    it's nice to have.</li>
+  <li><b>double_quote_strings (dqs) --</b> Strings are normally delimited by backquotes 
+    (`) in Prolog, and doublequotes (&quot;) are used as a shorthand for lists 
+    of characters, useful for parsing applications. However, for some applications 
+    where non-programmers are entering data for Prolog applications, it is desirable 
+    to allow the use of the more common doublequotes (&quot;) for delimiting strings. 
+    When this flag is on, that happens, and there is no special syntax for character 
+    lists. The default is off.</li>
+  <li><b>preprocessor (prep) -- </b> The Amzi! preprocessor can be dynamically 
+    turned on and off using this flag. The default is off.</li>
+  <li><b>string_esc (se) --</b> For strings and atoms, the backslash (\), called 
+    an escape character, is used to denote special characters, such as a newline 
+    (\n). If a \ is desired as a real \, then \\ is used. This use of \ can be 
+    turned off, so that a \ is a \ by setting this flag to off. This is especially 
+    useful for applications that parse Windows path names. The default is on.</li>
+  <li><b>upper_case_atoms (uca) --</b> For applications where non-programmers 
+    are entering data for Prolog applications, the syntactical use of upper case 
+    for variables can be confusing. This flag changes the Prolog reader to accept 
+    both lower and upper case letters as legitimate starting characters for atoms. 
+    When this flag is on, the only way to represent a variable is with a leading 
+    underscore (_). The default is off.</li>
+  <LI><b>decimals (dn) -- </b>The type of number used to store non-explicit decimals, 
+    such as 43.56. The choices are <b>real</b>, for infinite-precision real numbers, 
+    or <b>float</b> for floating point numbers. The default is float.</LI>
+  <LI><b>floats (fl) -- </b>The precision of floating point number to use for 
+    floats. The choices are <b>single</b> (faster less-precise) or <b>double</b> 
+    (slower more-precise). The default is single.</LI>
+  <LI><b>decimal_places (dp) -- </b>The number of decimal places to display on 
+    write statements. A value of -1 is the default, which means display all available 
+    places. Does not affect writeq statements, which display all available decimal 
+    places.</LI>
+  <LI><B>lsxload (ll) -- </B>If you want to load .LSX files either in the IDE 
+    or your application, you use this parameter to list the names of the files 
+    to be loaded. Multiple names should be separated by a semicolon (;) with NO 
+    spaces. NOTE - These will only be loaded if the host application calls LoadLSX. 
+    This is done in the Amzi! IDE, alis, acmp and arun, so you can load LSX files 
+    for use in the development tools. For your own host language application, 
+    be sure to include the call to LoadLSX.</LI>
+  <LI><b>macroheapsz (mh) --</b> If you are using large complex macros, this parameter 
+    may need to be increased.</LI>
+  <LI><b>gcthingfreq (gcf) --</b> Some internal quantities take up additional 
+    memory, such as strings, double precision and very large real numbers. These 
+    entities are garbage collected after the number created exceeds this parameter.</LI>
+  <LI><b>maxfiles (mf) --</b> The maximum number of compiled files that can be 
+    loaded.</LI>
+  <LI><b>maxclauses (mf) --</b> The maximum number of clauses a static (compiled) 
+    non-discontiguous predicate can have. Note that compiled predicates declared 
+    <a href="ref_directives.htm#DiscontiguousClauses">discontiguous</a> will be 
+    broken up into smaller blocks of static (compiled) clauses that fit within 
+    the maxclauses limit.</LI>
+  <LI><b>maxmemory (mm)</b> -- Unix only, the maximum memory allowed for the Amzi! 
+    process, specified in Megabytes.</LI>
+  <LI><b>vars_sort_equal(vse)</b> -- Variables can be sorted as equals or by internal 
+    storage address. A value of <b>on</b>, means sort as equals, <b>off </b>means 
+    sort by address.</LI>
+  <LI><b>undefined_predicate(up)</b> -- Calls to undefined predicates can either 
+    fail or throw an error. The values are <b>fail</b> and <b>error</b>, with 
+    <b>fail</b> being the default.</LI>
+  <LI><strong>utf8io</strong> -- Sets the I/O to and from the engine to UTF-8. Userful for Internet applications.</LI>
+</MENU>
+
+
+<H3><A NAME="DefaultINIValues"></A><FONT COLOR="#000080">Default .cfg Values</FONT></H3>
+
+<P><!AMZI_INDEX = cfg Files>The system defaults are listed in the commented out 
+  lines for each parameter in the distributed amzi.cfg file.</P>
+
+
+<H2><A NAME="Flags"></A><FONT COLOR="#0000FF">Flags</FONT></H2>
+
+<P><!AMZI_INDEX = Flags; current_prolog_flag; set_prolog_flag;double_quote_strings;preprocessor;locale;
+ string_esc;upper_case_atoms;decimal_places;epsilon;delta;
+ modulo;bounded;char_conversion;debug;integer_rounding_function;
+ max_arity;max_integer;min_integer;vars_sort_equal;prolog_copyright;
+ prolog_date;prolog_name;prolog_version;undefined_predicate;
+>Like the configuration 
+  parameters, flags relate to various runtime parameters of Amzi! Prolog. But 
+  flags can be queried, and in some cases set, directly from Prolog.</P>
+<P>A flag are queried and set using two built-in predicates:</P>
+
+<h3><A NAME="current_prolog_flag"></A><FONT COLOR="#000080">current_prolog_flag(FLAG, VALUE)</FONT></h3>
+
+<P><!AMZI_INDEX= current_prolog_flag/2>
+<B>current_prolog_flag/2</B> returns the value of a given flag name, FLAG.  If FLAG is a variable, current_prolog_flag/2 will backtrack through all of the flags.
+
+<h3><A NAME="set_prolog_flag"></A><FONT COLOR="#000080">set_prolog_flag(FLAG, VALUE)</FONT></h3>
+
+<P><!AMZI_INDEX= set_prolog_flag/2>
+<B>set_prolog_flag/2</B> sets the value of the named flag, FLAG.
+
+<h3><A NAME="ConfigurationFlags"></A><font color="#000080">Configuration Flags</font></h3>
+<p><!AMZI_INDEX = Configuration Flags>All of the configuration parameters can be queried as flags. Some can also 
+  be set and they are listed with the settable flags below.</p>
+<h3><A NAME="SettableFlags"></A><font color="#000080">Settable Flags</font></h3>
+<p>The following flags can be dynamically set:</p>
+<p><b>Flags controlling Prolog parsing, sorting and I/O</b></p>
+<ul>
+  <li><b>locale --</b> A string representing the geographic locale setting used. 
+    The locale is initially set to the default locale for the operating system 
+    being used. To set the locale, provide a value that is a string representing 
+    the locale. Example: 
+    <blockquote> 
+      <pre><font color="#000080">set_prolog_flag(locale, `English`)</font></pre>
+    </blockquote>
+    To reset to the system's default locale, provide an empty string (``) as a 
+    value.</li>
+  <li><b>occurs_check --</b> Attempts to unify cyclic terms can lead to hard crashes 
+    of the Prolog engine. An example would be ?- A = f(A), B = f(B), A = B. The 
+    default is off because: 1) this sort of construct rarely occurs; 2) many cyclic 
+    unifications are caught on output, such as simply ?- A = f(A). ; and 3) there 
+    is a 10% performance overhead to add the check. But sometimes it's nice to 
+    have.</li>
+  <li><b>double_quote_strings --</b> Strings are normally delimited by backquotes 
+    (`) in Prolog, and doublequotes (&quot;) are used as a shorthand for lists 
+    of characters, useful for parsing applications. However, for some applications 
+    where non-programmers are entering data for Prolog applications, it is desirable 
+    to allow the use of the more common doublequotes (&quot;) for delimiting strings. 
+    When this flag is on, that happens, and there is no special syntax for character 
+    lists. The default is off.</li>
+  <li><b>preprocessor --</b> The Amzi! preprocessor can be dynamically turned 
+    on and off using this flag. The default is on.</li>
+  <li><b>string_esc --</b> For strings and atoms, the backslash (\), called an 
+    escape character, is used to denote special characters, such as a newline 
+    (\n). If a \ is desired as a real \, then \\ is used. This use of \ can be 
+    turned off, so that a \ is a \ by setting this flag to off. This is especially 
+    useful for applications that parse Windows path names. The default is on.</li>
+  <li><b>upper_case_atoms --</b> For applications where non-programmers are entering 
+    data for Prolog applications, the syntactical use of upper case for variables 
+    can be confusing. This flag changes the Prolog reader to accept both lower 
+    and upper case letters as legitimate starting characters for atoms. When this 
+    flag is on, the only way to represent a variable is with a leading underscore 
+    (_). The default is off.</li>
+  <li><b>vars_sort_equal --</b> Variables can either be sorted as equals or by 
+    internal storage location. A value of on means sort as equals, off means sort 
+    by location. The default is off.</li>
+  <li><b>undefined_predicate --</b> What happens when you try to execute an undefined 
+    predicate. A value can either be fail or error. The default is fail.</li>
+  <li><strong>utf8io</strong> -- Sets the I/O from the engine to UTF-8. Useful for Internet applications. If there is a UTF-8 source file, this can be set using set_prolog_flag/2 in a directive at the beginning of the file so the characters are read in correctly.</li>
+</ul>
+<p><b>Flags controlling arithmetic</b></p>
+<ul>
+  <li><b>decimals --</b> The type of number used for non-explicit decimals. For 
+    example, 1.1, 43.78, 0.6543. The choices are: 
+    <ul>
+      <li><b>real</b> - Infinite precision real numbers.</li>
+      <li><b>float</b> - Floating point numbers.</li>
+    </ul>
+  </li>
+  <li><b>floats --</b> The precision used for floating point numbers. The choices 
+    are: 
+    <ul>
+      <li><b>single</b> - Single precision floats.</li>
+      <li><b>double</b> - Double precision floats.</li>
+    </ul>
+  </li>
+  <li><b>decimal_places --</b> The number of decimal places displayed when writing 
+    numbers. -1 is the default, and means display all available decimal places. 
+    Does not affect writeq, which always displays all available decimal places.</li>
+  <li><b>epsilon --</b> The number of fractional decimal places of precision to 
+    use for internal real number series calculations that could exceed reasonable 
+    limits. In particular it affects the sqrt function and the power function 
+    for fractional numbers raised to large powers. It is expressed in as a negative 
+    exponent. For example a value of -18 means results are accurate to 10 ** (-18). 
+    Internally, it is stored as a power of gigadigits (base 10**9) so it is rounded 
+    to a multiple of 9. By default it is 0, which means power functions are exactly 
+    precise, no matter how many digits are required, and square root defaults 
+    to -72 digits.</li>
+  <li><b>delta --</b> When dividing two real numbers the precision of the answer 
+    might be a repeating decimal. In that case, 'delta' is used to determine how 
+    many of digits of precision to use. It is added to the maximum precision of 
+    either the numerator or denominator. The default is 18, so there are 18 digits 
+    of extra precision on divides. Internally, it is stored as a power of gigadigits 
+    (base 10**9) so it is rounded to a multiple of 9.</li>
+  <li><b>modulo --</b> If the modulo flag is non-zero and set to a prime number, 
+    then all integer arithmetic is performed modulo that number. See sections 
+    on prime numbers for more details.</li>
+</ul>
+<h3><font color="#000080">Information Flags</font></h3>
+<p>The following flags can be queried. Some are part of the ISO standard to allow 
+  applications to make adjustments based on implementation-specific details, such 
+  as whether integers are bounded or not.</p>
+<ul>
+  <li><b>bounded --</b> Whether integers must lie in a bounded interval. The value 
+    depends on the flag <b>decimals</b>. If <b>decimals</b> = <b>real</b>, then 
+    integers are unbounded (infinite precision), otherwise they are bounded (constrained 
+    to the internal size of an integer, usually 32 bits).</li>
+  <li><b>char_conversion --</b> Whether a user defined routine can be used for 
+    transforming read unquoted characters. For Amzi! the value is 'off', meaning 
+    character conversion is not supported.</li>
+  <li><b>debug --</b> Whether the application is running in debug mode or not.</li>
+  <li><b>integer_rounding_function --</b> The behavior to expect from integer 
+    division (//) with regards to rounding the result. For Amzi! the value is 
+    'toward_zero'. </li>
+  <li><b>max_arity --</b> The maximum arity of a structure. (255)</li>
+  <li><b>max_integer --</b> Since Amzi! is not bounded with respect to integers, 
+    the value of this ISO flag is 'not_applicable'.</li>
+  <li><b>min_integer --</b> Since Amzi! is not bounded with respect to integers, 
+    the value of this ISO flag is 'not_applicable'.</li>
+  <li><b>prolog_copyright --</b> The copyright for this Prolog.</li>
+  <li><b>prolog_date --</b> The date of the build.</li>
+  <li><b>prolog_name --</b> The name of this Prolog implementation.</li>
+  <li><b>prolog_version --</b> The version number.</li>
+  <li><b>unicode --</b> Whether the build supports Unicode (wide 16-bit) characters 
+    or not. For Amzi! the value is 'true'.</li>
+</ul>
+<p>&nbsp;</p>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I></I> </P>
+
+</BODY>
+</HTML>

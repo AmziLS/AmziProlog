@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Projects</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="Projects"></A><FONT COLOR="#D2AA00">Projects</FONT> </h1>
+<P><!AMZI_INDEX = Projects>Projects provide a useful way to organize and
+manage the creation of applications or components that consist of multiple
+files and/or libraries.</P>
+
+<P>Projects are created using the Windows-IDE. When a project is open a
+dialog box appears in the IDE with list boxes containing the files and
+libraries in the project. This dialog box stays open for the current project.
+Closing the dialog box closes the project.</P>
+
+<H2><A NAME="CreatingAProject"></A><FONT COLOR="#0000FF">Creating a Project</FONT></H2>
+
+<P><!AMZI_INDEX = Projects; ppj Files>To create a project select File /
+New Project. This displays the project dialog box. To save your project,
+select File / Save or close the dialog box. Project files are saved with
+a .ppj suffix.</P>
+
+<H2><A NAME="ProjectDialogBox"></A><FONT COLOR="#0000FF">Dialog Box</FONT></H2>
+
+<DL>
+<P><!AMZI_INDEX = Projects>Projects are edited via the project dialog box
+and saved using the normal File/Save or File/SaveAs menu items when the
+project dialog is the active window in the IDE. Projects are automatically
+saved when the project is closed. The project dialog box contains the following
+items:</P>
+
+  <DT>xpl&nbsp;File</DT>
+
+<DD>Enter the name of the .xpl file to be created when linking. This can
+be a full pathname.</DD>
+
+<DT>Project Directory</DT>
+
+<DD>The pathname for the directory to make current for all operations on
+the project.</DD>
+
+<DT>Operator Definitions</DT>
+
+<DD>The name of a Prolog file containing the <A HREF="pro/Rfprterm.htm">operator
+definitions</A> used by the source files in the project. This entry is
+optional, but if it is included it will be compiled or consulted first,
+so the operator definitions are known to all files in the project. (Note
+that operators defined in libraries are automatically applied first, so
+those operators do not have to be defined in either the project source
+files or the operator definition file.</DD>
+
+<DT>Project Files</DT>
+
+<DD>The list of .pro or .plm files included in the project. The extension
+is used when consulting the project into the listener. .pro Files are consulted
+as text files and .plm files are loaded as object files. The 'Add File'
+button adds one or more files. 'Remove File' removes a file from the project.
+The 'pro-&gt;plm' button changes a file extension.</DD>
+
+<DT>Library Files</DT>
+
+  <DD>The list of .plm files included in the project (usually from the amzi/abin 
+    directory).</DD>
+</DL>
+
+<H2><A NAME="BuildingAProject"></A><FONT COLOR="#0000FF">Consulting/Loading</FONT></H2>
+
+<P><!AMZI_INDEX = Consulting>In the Windows-IDE, you can consult and/or
+load all the files in your project into the listener by pressing the 'Re'
+button or by selecting Listener / Consult or Listener / Reconsult.</P>
+
+<P>All the .pro&nbsp;files are consulted, and the .plm files and libraries are 
+  loaded.</P>
+
+<H2><A NAME="BuildingAProject"></A><FONT COLOR="#0000FF">Building</FONT></H2>
+
+<P><! AMZI_INDEX = abld; Projects>Using the Windows-IDE, you can compile
+all the modified files, and link all the project files and libraries into
+an .xpl file by pressing the BLD button or by selecting Build / Build.</P>
+
+<P>Using the command-line, you can do the same by invoking abld&nbsp;on
+the project as follows:</P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">c&gt; abld ducky.ppj</FONT></PRE>
+</blockquote>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I></I> </P>
+
+</BODY>
+</HTML>

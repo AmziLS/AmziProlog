@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Overview</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="Overview"></A><FONT COLOR="#D2AA00">Overview</FONT><!AMZI_INDEX= Overview> 
+</h1>
+<H2><A NAME="PrologLogicBases"></A><FONT COLOR="#0000FF">Prolog Logicbases</FONT></H2>
+
+<P><!AMZI_INDEX= Prolog Logicbases>Prolog is a unique language in that
+it more closely resembles a database than a procedural programming language.
+In fact, the theoretical roots of Prolog are the same as those for relational
+database. For this reason, a Prolog program is more accurately referred to
+as a logicbase, that can be queried much the same way as a database.</P>
+
+<P>The Amzi! Logic Server takes advantage of this characteristic to present
+Prolog logicbases to other programming languages and environments in much
+the same way databases are presented. This approach lets the host language
+interface with Prolog in a manner that is very natural for both the host
+language and Prolog. </P>
+
+<P>The result is application programs can easily take advantage of Prolog's
+logical rules, pattern-matching and automatic search capabilities for adding
+services such as natural language processing, formal language processing,
+expert advisors, intelligent agents, smart help, or just plain application
+logic concisely coded in Prolog. </P>
+
+<H2><A NAME="AmziArchitecture"></A><FONT COLOR="#0000FF">Architecture</FONT></H2>
+
+<P><!AMZI_INDEX= Architecture>At the core of Amzi! is a runtime engine
+that can load and run compiled (static) and/or interpreted (dynamic) Prolog
+code. </P>
+
+<P>The developer writes, tests, debugs and compiles Prolog programs/logic-bases
+using either the Interactive Development Environment (IDE) or command line
+tools. </P>
+
+<P>Compiled Prolog is stored in binary files (.xpl Files) which can be loaded 
+  by the Prolog engine. Compile Prolog code can also be loaded from .plm files 
+  (after the .xpl file is loaded). Interpreted code is stored in text files and 
+  can be read (consulted) by any Prolog program. </P>
+
+<H2><A NAME="TheLogicServerEngineandAPI"></A><FONT COLOR="#0000FF">Logic
+Server Engine and LSAPI</FONT></H2>
+
+<P> 
+  <!AMZI_INDEX= Prolog Runtime; LSAPI>
+  The Logic Server is simply the Prolog runtime engine packaged as a dynamic library 
+  (.dll or .so) that can be linked with other applications. The Prolog engine 
+  is two classess: one for the engine and one for exception handling. These objects 
+  have a number of public methods, which correspond to the functions of the <a href="lsapirf.htm">Logic 
+  Server API</a> (LSAPI). </P>
+
+<P>Multiple engines are implemented simply by allocating a new Logic Server/Engine 
+  object. This can be done through either the native LSAPI interface, the C++ 
+  Logic Server class, or any of the environment specific lsapis, Delphi, VB, or 
+  Java. The application program interface (LSAPI) is the collection of methods 
+  exported by the Logic Server. </P>
+
+<P>The LSAPI includes a wide range of functions that let the host program
+load Prolog logic-bases and access them with the full range of capabilities
+a Prolog programmer has using a Prolog listener, including the ability
+to backtrack through multiple solutions to a query and assert and retract
+dynamic clauses. The LSAPI also makes it easy to map Prolog terms,
+structures, lists, and variables to the corresponding structures in the
+host language. </P>
+
+<H2><A NAME="ExtendingProlog"></A><FONT COLOR="#0000FF">Extending Prolog</FONT></H2>
+
+<P><!AMZI_INDEX= Extended Predicates>While the logical aspects of Prolog
+are what make it a powerful tool, it is the built-in predicates that provide
+functions that make Prolog a practical language. These built-in predicates
+provide extra-logical capabilities such as reading and writing from files.
+</P>
+
+<P>The Logic Server provides an interface for implementing custom built-in
+predicates, called extended predicates. Extended predicates make it possible
+for Prolog to directly access any services available to the host language,
+such as graphics, database, numerical analysis, or any other specialized
+functions. </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM><I> Extended predicates 
+  can only be implemented in languages that support function pointers, such as 
+  C/C++, Java, Delphi Visual Basic 6 or later.</I> </P>
+
+<P>Extended predicates can be implemented for specific applications, or packaged 
+  in dynamic/shared libraries, called LSXs (Logic Server eXtensions), that can 
+  be shared by different applications. </P>
+
+<H2><A NAME="SupportedEnvironments"></A><FONT COLOR="#0000FF">Supported
+Environments</FONT></H2>
+
+<P><!AMZI_INDEX= Supported Environments>Because the Logic Server is written
+in C++, it is extremely portable and can support a number of environments.
+Under Windows, support is provided for both regular and console applications.</P>
+
+<P>Because the Logic Server is written in C++, the core API is defined
+both as C functions and as C++ classes. These can be readily accessed by
+any environment that can call a dynamic library. </P>
+
+<P>Some environments are further served by language-specific classes, such as 
+  Java, Delphi and .NET. In these cases the Logic Server includes an additional 
+  component providing a mapping from the host language to the Logic Server dynamic/shared 
+  library. </P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P>&nbsp;</P>
+
+</BODY>
+</HTML>

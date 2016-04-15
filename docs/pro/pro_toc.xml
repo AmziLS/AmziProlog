@@ -1,0 +1,1058 @@
+<toc label="Amzi! Prolog User's Guide &amp; Reference">
+ <topic label="Contents" href="doc/pro/top.htm">
+ </topic>
+ <topic label="Purpose" href="doc/pro/top.htm#Purpose">
+ </topic>
+ <topic label="Quick Overview" href="doc/pro/pug_overview.htm">
+  <topic label="Components" href="doc/pro/pug_overview.htm#Components">
+  </topic>
+  <topic label="Relationship of Files and Components" href="doc/pro/pug_overview.htm#RelationshipOfComponents">
+  </topic>
+  <topic label="Listener/Debugger" href="doc/pro/pug_overview.htm#ListenerDebugger">
+   <topic label="Debugger" href="doc/pro/pug_overview.htm#Debugger">
+   </topic>
+   <topic label="Intermixing Interpreted and Compiled Code" href="doc/pro/pug_overview.htm#IntermixingInterpretedandCompi">
+   </topic>
+  </topic>
+  <topic label="Compiler" href="doc/pro/pug_overview.htm#Compiler">
+  </topic>
+  <topic label="Linker" href="doc/pro/pug_overview.htm#Linker">
+  </topic>
+  <topic label="Interactive Development Environment (IDE)" href="doc/pro/pug_overview.htm#IDE">
+  </topic>
+  <topic label="Stand-Alone Runtime" href="doc/pro/pug_overview.htm#StandAloneRuntime">
+  </topic>
+  <topic label="Embedded Applications" href="doc/pro/pug_overview.htm#EmbeddedApplications">
+  </topic>
+  <topic label="Where to Go Next?" href="doc/pro/pug_overview.htm#WheretoGoNext">
+  </topic>
+ </topic>
+ <topic label="Amzi! Quick Tutorial" href="doc/pro/pug_tutorial.htm">
+  <topic label="Duck World" href="doc/pro/pug_tutorial.htm#DuckWorld">
+  </topic>
+  <topic label="Starting the Listener" href="doc/pro/pug_tutorial.htm#StartingtheListener">
+  </topic>
+  <topic label="Creating a Source File" href="doc/pro/pug_tutorial.htm#CreatingaSourceFile">
+  </topic>
+  <topic label="Consulting a Source File" href="doc/pro/pug_tutorial.htm#ConsultingaSourceFile">
+  </topic>
+  <topic label="Using the Listener" href="doc/pro/pug_tutorial.htm#UsingtheListener">
+  </topic>
+  <topic label="Debugging" href="doc/pro/pug_tutorial.htm#Debugging">
+  </topic>
+  <topic label="Modules" href="doc/pro/pug_tutorial.htm#Modules">
+  </topic>
+  <topic label="Running a Modular Application" href="doc/pro/pug_tutorial.htm#RunningaModularApplication">
+  </topic>
+  <topic label="Using Projects in the IDE" href="doc/pro/pug_tutorial.htm#UsingProjectsintheIDE">
+  </topic>
+  <topic label="Compiling" href="doc/pro/pug_tutorial.htm#Compiling">
+  </topic>
+  <topic label="Linking and Running" href="doc/pro/pug_tutorial.htm#LinkingandEXEGeneration">
+  </topic>
+  <topic label="Distributing an Application" href="doc/pro/pug_tutorial.htm#DistributinganApplication">
+  </topic>
+  <topic label="Interfacing with Other Tools" href="doc/pro/pug_tutorial.htm#InterfacingwithOtherTools">
+  </topic>
+ </topic>
+ <topic label="Eclipse IDE Quick Start" href="doc/pro/pug_ide_quickstart.htm">
+  <topic label="Beginning Users" href="doc/pro/pug_ide_quickstart.htm#beginning_users">
+  </topic>
+  <topic label="Open a Source File" href="doc/pro/pug_ide_quickstart.htm#navigator_view">
+  </topic>
+  <topic label="Advanced Users" href="doc/pro/pug_ide_quickstart.htm#advanced_users">
+  </topic>
+ </topic>
+ <topic label="Editor and Outliner" href="doc/pro/pug_editor.htm">
+   <topic label="Editor Functions" href="doc/pro/pug_editor.htm#EditorFunctions">
+   </topic>
+   <topic label="Using Unicode" href="doc/pro/pug_editor.htm#EditorFunctions">
+   </topic>
+  <topic label="Outliner" href="doc/pro/pug_editor.htm#Outliner">
+  </topic>
+  <topic label="Preferences" href="doc/pro/pug_editor.htm#Preferences">
+  </topic>
+ </topic>
+ <topic label="Listener" href="doc/pro/pug_listener.htm">
+  <topic label="Starting and Stopping the Listener" href="doc/pro/pug_listener.htm#StartingStoppingListener">
+   <topic label="IDE" href="doc/pro/pug_listener.htm#StartingIDEListener">
+   </topic>
+   <topic label="Command Line" href="doc/pro/pug_listener.htm#StartingCommandLineListener">
+   </topic>
+  </topic>
+  <topic label="Entering and Editing Commands" href="doc/pro/pug_listener.htm#EnteringCommands">
+  </topic>
+  <topic label="Adding and Removing Clauses" href="doc/pro/pug_listener.htm#AddingRemovingClauses">
+   <topic label="assert" href="doc/pro/pug_listener.htm#assert">
+   </topic>
+   <topic label="Adding a Rule" href="doc/pro/pug_listener.htm#TypinginaRule">
+   </topic>
+   <topic label="Consulting user" href="doc/pro/pug_listener.htm#Consultinguser">
+   </topic>
+   <topic label="add" href="doc/pro/pug_listener.htm#add">
+   </topic>
+   <topic label="Removing Clauses" href="doc/pro/pug_listener.htm#RemovingClauses">
+   </topic>
+  </topic>
+  <topic label="Listing Clauses" href="doc/pro/pug_listener.htm#ListingClauses">
+  </topic>
+  <topic label="Querying the Logic Base" href="doc/pro/pug_listener.htm#QueryingLogicBase">
+  </topic>
+  <topic label="Consulting Prolog Source Files" href="doc/pro/pug_listener.htm#ConsultingPrologSourceFiles">
+  </topic>
+  <topic label="Loading Compiled Prolog Code" href="doc/pro/pug_listener.htm#LoadingCompiledPrologCode">
+  </topic>
+  <topic label="Listener Commands" href="doc/pro/pug_listener.htm#ListenerCommands">
+   <topic label="add" href="doc/pro/pug_listener.htm#add">
+   </topic>
+   <topic label="debug" href="doc/pro/pug_listener.htm#debug">
+   </topic>
+   <topic label="pp(Term), user_pp(Term)" href="doc/pro/pug_listener.htm#ppTermuserppTerm">
+   </topic>
+   <topic label="quit" href="doc/pro/pug_listener.htm#quit">
+   </topic>
+   <topic label="replace" href="doc/pro/pug_listener.htm#replace">
+   </topic>
+  </topic>
+ </topic>
+ <topic label="Source Code Debugger" href="doc/pro/pug_debugger_ide.htm">
+  <topic label="Box Model" href="doc/pro/pug_debugger_ide.htm#BoxModelofProcedureFlow">
+  </topic>
+  <topic label="Debugging Perspective" href="doc/pro/pug_debugger_ide.htm#DebuggingPerspective">
+  </topic>
+  <topic label="Running the Debugger" href="doc/pro/pug_debugger_ide.htm#RunningTheDebugger">
+   <topic label="Launch Configurations" href="doc/pro/pug_debugger_ide.htm#LaunchConfigurations">
+   </topic>
+   <topic label="Starting and Exiting" href="doc/pro/pug_debugger_ide.htm#StartingAndExiting">
+   </topic>
+  </topic>
+  <topic label="Remote Debugging" href="doc/pro/pug_debugger_ide.htm#RemoteDebugging">
+  </topic>
+  <topic label="Display" href="doc/pro/pug_debugger_ide.htm#DebuggerDisplay">
+  </topic>
+  <topic label="Debug Commands" href="doc/pro/pug_debugger_ide.htm#DebugCommands">
+  </topic>
+  <topic label="Breakpoints" href="doc/pro/pug_debugger_ide.htm#Breakpoints">
+  </topic>
+  <topic label="Breaking at Debug Ports" href="doc/pro/pug_debugger_ide.htm#LeashingDebugPorts">
+  </topic>
+  <topic label="Example" href="doc/pro/pug_debugger_ide.htm#DebuggerExample">
+  </topic>
+ </topic>
+ <topic label="Command-Line Debugger" href="doc/pro/pug_debugger.htm">
+  <topic label="Box Model" href="doc/pro/pug_debugger.htm#BoxModelofProcedureFlow">
+  </topic>
+  <topic label="Starting and Exiting" href="doc/pro/pug_debugger.htm#StartingandLeavingtheDebugger">
+  </topic>
+  <topic label="Display" href="doc/pro/pug_debugger.htm#DebuggerDisplay">
+   <topic label="portray(GOAL)" href="doc/pro/pug_debugger.htm#portrayGOAL">
+   </topic>
+  </topic>
+  <topic label="Debug Port Options" href="doc/pro/pug_debugger.htm#DebugPortOptions">
+  </topic>
+  <topic label="Spypoints" href="doc/pro/pug_debugger.htm#Spypoints">
+  </topic>
+  <topic label="Leashing Debug Ports" href="doc/pro/pug_debugger.htm#LeashingDebugPorts">
+  </topic>
+  <topic label="Logging" href="doc/pro/pug_debugger.htm#Logging">
+  </topic>
+  <topic label="Example" href="doc/pro/pug_debugger.htm#DebuggerExample">
+  </topic>
+ </topic>
+ <topic label="Compiler" href="doc/pro/pug_compiler.htm">
+  <topic label="Advantages" href="doc/pro/pug_compiler.htm#AdvantagesofCompiling">
+  </topic>
+  <topic label="Disadvantages" href="doc/pro/pug_compiler.htm#DisadvantagesofCompiling">
+  </topic>
+  <topic label="Requirements" href="doc/pro/pug_compiler.htm#RequirementsonCompiledFiles">
+  </topic>
+  <topic label="Directives" href="doc/pro/pug_compiler.htm#CompilerDirectives">
+  </topic>
+  <topic label="Running from the IDE" href="doc/pro/pug_compiler.htm#StartingtheCompilerfromtheWind">
+  </topic>
+  <topic label="Running from the Command-Line" href="doc/pro/pug_compiler.htm#StartingtheCompilerfromtheComm">
+  </topic>
+  <topic label="Messages" href="doc/pro/pug_compiler.htm#CompilerMessages">
+  </topic>
+  <topic label="Errors" href="doc/pro/pug_compiler.htm#CompilationErrors">
+   <topic label="Complex Clauses" href="doc/pro/pug_compiler.htm#ComplexClauses">
+   </topic>
+   <topic label="Complex Predicates" href="doc/pro/pug_compiler.htm#ComplexPredicates">
+   </topic>
+  </topic>
+  <topic label="Main Predicate" href="doc/pro/pug_compiler.htm#MainPredicate">
+  </topic>
+ </topic>
+ <topic label="Linker" href="doc/pro/pug_linker.htm">
+  <topic label="Running from the IDE" href="doc/pro/pug_linker.htm#StartingtheLinkerfromtheWindow">
+  </topic>
+  <topic label="Running from the Command-Line" href="doc/pro/pug_linker.htm#StartingtheLinkerfromtheComman">
+   <topic label="Libraries" href="doc/pro/pug_linker.htm#EnvironmentSpecificandUtilityL">
+   </topic>
+  </topic>
+ </topic>
+ <topic label="Cross Referencer and Syntax Checker" href="doc/pro/pug_xref.htm">
+  <topic label="Running" href="doc/pro/pug_xref.htm#running">
+  </topic>
+  <topic label="Warnings and Errors" href="doc/pro/pug_xref.htm#warnings_and_errors">
+  </topic>
+ </topic>
+ <topic label="Amzi! Runtime" href="doc/pro/pug_runtime.htm">
+  <topic label="Running arun from the Command-Line" href="doc/pro/pug_runtime.htm#StartingarunfromtheCommandLine">
+  </topic>
+  <topic label="Configuration Files" href="doc/pro/pug_runtime.htm#ConfigurationFiles">
+   <topic label="Configuration Parameters" href="doc/pro/pug_runtime.htm#CFGParameters">
+   </topic>
+   <topic label="Default.cfg Values" href="doc/pro/pug_runtime.htm#DefaultINIValues">
+   </topic>
+  </topic>
+  <topic label="Flags" href="doc/pro/pug_runtime.htm#Flags">
+   <topic label="current_prolog_flag(FLAG, VALUE)" href="doc/pro/pug_runtime.htm#current_prolog_flag">
+   </topic>
+   <topic label="set_prolog_flag(FLAG, VALUE)" href="doc/pro/pug_runtime.htm#set_prolog_flag">
+   </topic>
+   <topic label="Configuration Flags" href="doc/pro/pug_runtime.htm#ConfigurationFlags">
+   </topic>
+   <topic label="Settable Flags" href="doc/pro/pug_runtime.htm#SettableFlags">
+   </topic>
+  </topic>
+ </topic>
+ <topic label="Eclipse IDE" href="doc/pro/pug_ide.htm">
+  <topic label="The Prolog Perspective" href="doc/pro/pug_ide.htm#ThePrologPerspective">
+  </topic>
+  <topic label="Prolog Projects and Building Executables" href="doc/pro/pug_ide.htm#PrologProjectsAndBuildingExecutables">
+   <topic label="Setting Project Properties" href="doc/pro/pug_ide.htm#SettingProjectProperties">
+   </topic>
+   <topic label="Creating Projects" href="doc/pro/pug_ide.htm#CreatingProjects">
+   </topic>
+   <topic label="Opening, Closing and Deleting Projects" href="doc/pro/pug_ide.htm#OpeningClosingAndDeletingProjects">
+   </topic>
+  </topic>
+  <topic label="Starting the Listener and Prolog Programs" href="doc/pro/pug_ide.htm#RunningTheListenerAndPrologPrograms">
+   <topic label="Starting the Listener" href="doc/pro/pug_ide.htm#RunningTheListener">
+   </topic>
+   <topic label="Launch Configurations" href="doc/pro/pug_ide.htm#LaunchConfigurations">
+   </topic>
+   <topic label="Running Compiled Programs" href="doc/pro/pug_ide.htm#RunningCompiledPrograms">
+   </topic>
+  </topic>
+  <topic label="Starting the Source Code Debugger" href="doc/pro/pug_ide.htm#RunningTheSourceCodeDebugger">
+  </topic>
+ </topic>
+ <topic label="Original Amzi! Windows IDE" href="doc/pro/pug_wide.htm">
+ </topic>
+ <topic label="Quick Tutorial" href="doc/pro/pug_wide.htm#AQuickTutorial">
+  <topic label="Duck World" href="doc/pro/pug_wide.htm#DuckWorld">
+  </topic>
+  <topic label="Starting the Listener" href="doc/pro/pug_wide.htm#StartingtheListener">
+  </topic>
+  <topic label="Creating a Source File" href="doc/pro/pug_wide.htm#CreatingaSourceFile">
+  </topic>
+  <topic label="Consulting a Source File" href="doc/pro/pug_wide.htm#ConsultingaSourceFile">
+  </topic>
+  <topic label="Using the Listener" href="doc/pro/pug_wide.htm#UsingtheListener">
+  </topic>
+  <topic label="Debugging" href="doc/pro/pug_wide.htm#Debugging">
+  </topic>
+  <topic label="Modules" href="doc/pro/pug_wide.htm#Modules">
+  </topic>
+  <topic label="Running a Modular Application" href="doc/pro/pug_wide.htm#RunningaModularApplication">
+   <topic label="Using alis and BAT Files" href="doc/pro/pug_wide.htm#UsingalisandBATFiles">
+   </topic>
+   <topic label="Using Projects" href="doc/pro/pug_wide.htm#UsingProjectsintheIDE">
+   </topic>
+  </topic>
+  <topic label="Compiling" href="doc/pro/pug_wide.htm#Compiling">
+  </topic>
+  <topic label="Running" href="doc/pro/pug_wide.htm#Running">
+  </topic>
+  <topic label="Linking and Running" href="doc/pro/pug_wide.htm#LinkingandEXEGeneration">
+  </topic>
+  <topic label="Distributing an Application" href="doc/pro/pug_wide.htm#DistributinganApplication">
+  </topic>
+  <topic label="Interfacing with Other Tools" href="doc/pro/pug_wide.htm#InterfacingwithOtherTools">
+  </topic>
+ </topic>
+ <topic label="Windows IDE Interface" href="doc/pro/pug_wide.htm#WIDEControls">
+  <topic label="Interface" href="doc/pro/pug_wide.htm#WIDEInterface">
+  </topic>
+  <topic label="Unicode and ASCII" href="doc/pro/pug_wide.htm#UnicodeAndASCII">
+  </topic>
+  <topic label="File Menu" href="doc/pro/pug_wide.htm#FileMenu">
+  </topic>
+  <topic label="Edit Menu" href="doc/pro/pug_wide.htm#EditMenu">
+  </topic>
+  <topic label="View Menu" href="doc/pro/pug_wide.htm#ViewMenu">
+  </topic>
+  <topic label="Listener Menu" href="doc/pro/pug_wide.htm#ListenerMenu">
+  </topic>
+  <topic label="Build Menu" href="doc/pro/pug_wide.htm#BuildMenu">
+  </topic>
+  <topic label="Window Menu" href="doc/pro/pug_wide.htm#WindowMenu">
+  </topic>
+  <topic label="Help" href="doc/pro/pug_wide.htm#Help">
+  </topic>
+ </topic>
+ <topic label="Projects" href="doc/pro/pug_wide.htm#Projects">
+  <topic label="Creating a Project" href="doc/pro/pug_wide.htm#CreatingAProject">
+  </topic>
+  <topic label="Dialog Box" href="doc/pro/pug_wide.htm#ProjectDialogBox">
+  </topic>
+  <topic label="Consulting/Loading" href="doc/pro/pug_wide.htm#BuildingAProject">
+  </topic>
+  <topic label="Building" href="doc/pro/pug_wide.htm#BuildingAProject">
+  </topic>
+ </topic>
+ <topic label="Debugger" href="doc/pro/pug_wide.htm#TheDebugger">
+  <topic label="Box Model" href="doc/pro/pug_wide.htm#BoxModelofProcedureFlow">
+  </topic>
+  <topic label="Starting and Exiting" href="doc/pro/pug_wide.htm#StartingandLeavingtheDebugger">
+  </topic>
+  <topic label="Display" href="doc/pro/pug_wide.htm#DebuggerDisplay">
+   <topic label="portray(GOAL)" href="doc/pro/pug_wide.htm#portrayGOAL">
+   </topic>
+  </topic>
+  <topic label="Debug Port Options" href="doc/pro/pug_wide.htm#DebugPortOptions">
+  </topic>
+  <topic label="Spypoints" href="doc/pro/pug_wide.htm#Spypoints">
+  </topic>
+  <topic label="Leashing Debug Ports" href="doc/pro/pug_wide.htm#LeashingDebugPorts">
+  </topic>
+  <topic label="Logging" href="doc/pro/pug_wide.htm#Logging">
+  </topic>
+  <topic label="Example" href="doc/pro/pug_wide.htm#DebuggerExample">
+  </topic>
+ </topic>
+ <topic label="Debugging Your Programs" href="doc/pro/pug_debugging.htm">
+  <topic label="Initial Development for Embedded Modules" href="doc/pro/pug_debugging.htm#InitialDevForEmbeddedModules">
+  </topic>
+  <topic label="Tracking Prolog Errors" href="doc/pro/pug_debugging.htm#TrackingRuntimeErrorsinProlog">
+   <topic label="Logging" href="doc/pro/pug_debugging.htm#Logging">
+   </topic>
+   <topic label="Debugger-Like Output" href="doc/pro/pug_debugging.htm#DebuggerLikeIO">
+   </topic>
+   <topic label="catch and throw" href="doc/pro/pug_debugging.htm#catchandthrow">
+   </topic>
+   <topic label="Prolog Error File" href="doc/pro/pug_debugging.htm#PrologErrorFile">
+   </topic>
+  </topic>
+  <topic label="Writing Your Own Embedded Debugging Predicates" href="doc/pro/pug_debugging.htm#YourOwnDebuggingPredicates">
+  </topic>
+  <topic label="Tracking LSAPI Errors" href="doc/pro/pug_debugging.htm#DebuggingLogicServerAPIFunctio">
+   <topic label="Tracing LSAPI Calls" href="doc/pro/pug_debugging.htm#TracingAPICalls">
+   </topic>
+   <topic label="Checking LSAPI Error Codes" href="doc/pro/pug_debugging.htm#CheckingAPIErrorCodes">
+   </topic>
+   <topic label="Examining Prolog Terms" href="doc/pro/pug_debugging.htm#ExaminingPrologTerms">
+   </topic>
+  </topic>
+ </topic>
+ <topic label="Distributing Your Programs" href="doc/pro/pug_distribution.htm">
+  <topic label="Redistributable Files" href="doc/pro/pug_distribution.htm#RedistributableFiles">
+  </topic>
+ </topic>
+ <topic label="Preprocessor" href="doc/pro/pug_preprocessor.htm">
+  <topic label="Directives" href="doc/pro/pug_preprocessor.htm#Directives">
+   <topic label="#define" href="doc/pro/pug_preprocessor.htm#pound_define">
+   </topic>
+  </topic>
+ </topic>
+ <topic label="Prolog Directives" href="doc/pro/ref_directives.htm">
+  <topic label="Dynamic Clauses in Compiled Code" href="doc/pro/ref_directives.htm#DynamicClausesinCompiledCode">
+  </topic>
+  <topic label="Multifile Directive" href="doc/pro/ref_directives.htm#MultifileClauses">
+  </topic>
+  <topic label="Discontiguous Directive" href="doc/pro/ref_directives.htm#DiscontiguousClauses">
+  </topic>
+  <topic label="Include Directive" href="doc/pro/ref_directives.htm#Include">
+  </topic>
+  <topic label="Ensure Loaded Directive" href="doc/pro/ref_directives.htm#EnsureLoaded">
+  </topic>
+  <topic label="Op Directive" href="doc/pro/ref_directives.htm#Operators">
+  </topic>
+  <topic label="Set Prolog Flag" href="doc/pro/ref_directives.htm#PrologFlag">
+  </topic>
+  <topic label="Latent Expressions" href="doc/pro/ref_directives.htm#LatentExpressions">
+  </topic>
+ </topic>
+ <topic label="Prolog Terms" href="doc/pro/ref_terms.htm">
+  <topic label="Internationalization" href="doc/pro/ref_terms.htm#Internationalization">
+  </topic>
+  <topic label="Atoms" href="doc/pro/ref_terms.htm#Atoms">
+   <topic label="Symbol Set for Atoms" href="doc/pro/ref_terms.htm#CharacterSet">
+   </topic>
+  </topic>
+  <topic label="Escape Characters" href="doc/pro/ref_terms.htm#EscapeCharacters">
+   <topic label="Enabling and Disabling Escape Processing" href="doc/pro/ref_terms.htm#EnablingandDisablingEscapeProc">
+   </topic>
+   <topic label="Escape Codes" href="doc/pro/ref_terms.htm#EscapeCodes">
+   </topic>
+   <topic label="Using Escape Codes" href="doc/pro/ref_terms.htm#WhereEscapeCodesCanbeUsed">
+   </topic>
+  </topic>
+  <topic label="Strings" href="doc/pro/ref_terms.htm#Strings">
+  </topic>
+  <topic label="Variables" href="doc/pro/ref_terms.htm#Variables">
+  </topic>
+  <topic label="Numbers" href="doc/pro/ref_terms.htm#Numbers">
+   <topic label="Integers" href="doc/pro/ref_terms.htm#Integers">
+   </topic>
+   <topic label="Negative Numbers" href="doc/pro/ref_terms.htm#NegativeNumbers">
+   </topic>
+   <topic label="Decimal Numbers" href="doc/pro/ref_terms.htm#DecimalNumbers">
+   </topic>
+  </topic>
+  <topic label="Structures" href="doc/pro/ref_terms.htm#Structures">
+  </topic>
+  <topic label="Lists" href="doc/pro/ref_terms.htm#Lists">
+  </topic>
+  <topic label="Character Lists" href="doc/pro/ref_terms.htm#CharacterLists">
+   <topic label="Character Constants" href="doc/pro/ref_terms.htm#CharacterConstants">
+   </topic>
+  </topic>
+  <topic label="Comments" href="doc/pro/ref_terms.htm#Comments">
+  </topic>
+  <topic label="Operators" href="doc/pro/ref_terms.htm#Operators">
+   <topic label="Precedence" href="doc/pro/ref_terms.htm#Precedence">
+   </topic>
+   <topic label="Associativity" href="doc/pro/ref_terms.htm#Associativity">
+   </topic>
+   <topic label="op(Precedence, Associativity, Operator)" href="doc/pro/ref_terms.htm#opPrecedenceTypeOper">
+   </topic>
+   <topic label="current_op(Precedence, Associativity, Operator)" href="doc/pro/ref_terms.htm#currentOp3">
+   </topic>
+   <topic label="Predefined Prolog Operators" href="doc/pro/ref_terms.htm#PredefinedPrologOperators">
+   </topic>
+  </topic>
+ </topic>
+ <topic label="Prolog Execution" href="doc/pro/ref_execution.htm">
+  <topic label="Clauses" href="doc/pro/ref_execution.htm#Clauses">
+  </topic>
+  <topic label="Unification" href="doc/pro/ref_execution.htm#Unification">
+   <topic label="unify_with_occurs_check(X,Y)" href="doc/pro/ref_execution.htm#unify_with_occurs_check">
+   </topic>
+   <topic label="is_cyclic(Term)" href="doc/pro/ref_execution.htm#unify_with_occurs_check">
+   </topic>
+  </topic>
+  <topic label="Backtracking Search" href="doc/pro/ref_execution.htm#BacktrackingSearch">
+  </topic>
+  <topic label="Complex Goals" href="doc/pro/ref_execution.htm#ComplexGoals">
+   <topic label="X, Y" href="doc/pro/ref_execution.htm#XandY">
+   </topic>
+   <topic label="X; Y" href="doc/pro/ref_execution.htm#XorY">
+   </topic>
+   <topic label="Goal1-Goal2; Goal3" href="doc/pro/ref_execution.htm#IfThenElse">
+   </topic>
+   <topic label="call(Goal)" href="doc/pro/ref_execution.htm#callGoal">
+   </topic>
+   <topic label="not(Goal)" href="doc/pro/ref_execution.htm#notGoal">
+   </topic>
+   <topic label="\+ Goal" href="doc/pro/ref_execution.htm#notopGoal">
+   </topic>
+   <topic label="once(Goal)" href="doc/pro/ref_execution.htm#onceGoal">
+   </topic>
+   <topic label="findall(Instance, Goal, List)" href="doc/pro/ref_execution.htm#findallInstanceGoalList">
+   </topic>
+   <topic label="bagof(Instance, Goal, List)" href="doc/pro/ref_execution.htm#bagofInstanceGoalList">
+   </topic>
+   <topic label="setof(Instance, Goal, List)" href="doc/pro/ref_execution.htm#setofInstanceGoalList">
+   </topic>
+  </topic>
+  <topic label="Flow-of-Control" href="doc/pro/ref_execution.htm#FlowofControlPredicates">
+   <topic label="! Cut" href="doc/pro/ref_execution.htm#Cut">
+   </topic>
+   <topic label="repeat" href="doc/pro/ref_execution.htm#repeat">
+   </topic>
+   <topic label="fail" href="doc/pro/ref_execution.htm#fail">
+   </topic>
+   <topic label="true" href="doc/pro/ref_execution.htm#true">
+   </topic>
+   <topic label="for(Index, Start, End, Increment)" href="doc/pro/ref_execution.htm#forIndexStartEndIncrement">
+   </topic>
+   <topic label="catch(GOAL, ERROR, HANDLER)" href="doc/pro/ref_execution.htm#catch3">
+   </topic>
+   <topic label="throw(TERM)" href="doc/pro/ref_execution.htm#throw1">
+   </topic>
+   <topic label="halt" href="doc/pro/ref_execution.htm#halt">
+   </topic>
+  </topic>
+  <topic label="Counters" href="doc/pro/ref_execution.htm#Counters">
+   <topic label="cntr_get(Counter, Value)" href="doc/pro/ref_execution.htm#cntrgetCounterValue">
+   </topic>
+   <topic label="cntr_dec(Counter, Value)" href="doc/pro/ref_execution.htm#cntrdecCounterValue">
+   </topic>
+   <topic label="cntr_inc(Counter, Value)" href="doc/pro/ref_execution.htm#cntrincCounterValue">
+   </topic>
+   <topic label="cntr_set(Counter, Value)" href="doc/pro/ref_execution.htm#cntrsetCounterValue">
+   </topic>
+  </topic>
+ </topic>
+ <topic label="Modules" href="doc/pro/ref_modules.htm">
+  <topic label="Default User Module" href="doc/pro/ref_modules.htm#DefaultUserModule">
+  </topic>
+  <topic label="System Module" href="doc/pro/ref_modules.htm#SystemModule">
+  </topic>
+  <topic label="Defining Modules" href="doc/pro/ref_modules.htm#DefiningModules">
+   <topic label="Adding Predicates to a Module" href="doc/pro/ref_modules.htm#DefiningModules">
+   </topic>
+  </topic>
+  <topic label="Referring to Modules" href="doc/pro/ref_modules.htm#ReferringToModules">
+   <topic label="Exports" href="doc/pro/ref_modules.htm#Exports">
+   </topic>
+   <topic label="Imports" href="doc/pro/ref_modules.htm#Imports">
+   </topic>
+  </topic>
+  <topic label="Metapredicates" href="doc/pro/ref_modules.htm#Metapredicates">
+  </topic>
+ </topic>
+ <topic label="Manipulating Terms" href="doc/pro/ref_manipulating_terms.htm">
+  <topic label="Term Typing" href="doc/pro/ref_manipulating_terms.htm#TermClassification">
+   <topic label="term_type(TERM, TYPE)" href="doc/pro/ref_manipulating_terms.htm#termtype">
+   </topic>
+   <topic label="atomic(X)" href="doc/pro/ref_manipulating_terms.htm#atomicX">
+   </topic>
+   <topic label="atom(X)" href="doc/pro/ref_manipulating_terms.htm#atomX">
+   </topic>
+   <topic label="string(X)" href="doc/pro/ref_manipulating_terms.htm#stringX">
+   </topic>
+   <topic label="number(X)" href="doc/pro/ref_manipulating_terms.htm#numberX">
+   </topic>
+   <topic label="compound(X)" href="doc/pro/ref_manipulating_terms.htm#compoundX">
+   </topic>
+   <topic label="structure(X)" href="doc/pro/ref_manipulating_terms.htm#structureX">
+   </topic>
+   <topic label="list(X)" href="doc/pro/ref_manipulating_terms.htm#list">
+   </topic>
+   <topic label="is_list(X)" href="doc/pro/ref_manipulating_terms.htm#islistX">
+   </topic>
+   <topic label="var(X)" href="doc/pro/ref_manipulating_terms.htm#varX">
+   </topic>
+   <topic label="nonvar(X)" href="doc/pro/ref_manipulating_terms.htm#nonvarX">
+   </topic>
+  </topic>
+  <topic label="Equality of Terms" href="doc/pro/ref_manipulating_terms.htm#EqualityofTerms">
+   <topic label="X = Y" href="doc/pro/ref_manipulating_terms.htm#XeqY">
+   </topic>
+   <topic label="X \= Y" href="doc/pro/ref_manipulating_terms.htm#XneqY">
+   </topic>
+   <topic label="X == Y" href="doc/pro/ref_manipulating_terms.htm#XeqeqY">
+   </topic>
+   <topic label="X \== Y" href="doc/pro/ref_manipulating_terms.htm#XneqeqY">
+   </topic>
+   <topic label="not(not(X = Y))" href="doc/pro/ref_manipulating_terms.htm#notnotXeqY">
+   </topic>
+  </topic>
+  <topic label="Standard Order of Terms" href="doc/pro/ref_manipulating_terms.htm#StandardOrder">
+  </topic>
+  <topic label="Ordering of Terms" href="doc/pro/ref_manipulating_terms.htm#ComparisonofTerms">
+   <topic label="X @&lt; Y" href="doc/pro/ref_manipulating_terms.htm#XltY">
+   </topic>
+   <topic label="X @&gt; Y" href="doc/pro/ref_manipulating_terms.htm#XgtY">
+   </topic>
+   <topic label="X @=&lt; Y" href="doc/pro/ref_manipulating_terms.htm#XlteqY">
+   </topic>
+   <topic label="X @&gt;= Y" href="doc/pro/ref_manipulating_terms.htm#XgteqY">
+   </topic>
+   <topic label="compare(Result, Term1, Term2)" href="doc/pro/ref_manipulating_terms.htm#compareResultTermTerm">
+   </topic>
+  </topic>
+  <topic label="Term Creation and Decomposition" href="doc/pro/ref_manipulating_terms.htm#DissectingTerms">
+   <topic label="functor(TERM, FUNCTOR, ARITY)" href="doc/pro/ref_manipulating_terms.htm#functorTermFunctorN">
+   </topic>
+   <topic label="arg(N, Term, Argument)" href="doc/pro/ref_manipulating_terms.htm#argNTermArgument">
+   </topic>
+   <topic label="Term =.. List (univ)" href="doc/pro/ref_manipulating_terms.htm#TermListBunivB">
+   </topic>
+   <topic label="gensym(Root, Sym)" href="doc/pro/ref_manipulating_terms.htm#gensymRootSym">
+   </topic>
+   <topic label="copy_term(T1, T2)" href="doc/pro/ref_manipulating_terms.htm#copy_term">
+   </topic>
+  </topic>
+  <topic label="Variable Identification" href="doc/pro/ref_manipulating_terms.htm#VariableIdentification">
+   <topic label="string_query(QUERYSTRING, RESULTSTRING)" href="doc/pro/ref_manipulating_terms.htm#string_query2">
+   </topic>
+   <topic label="varlist_query(QUERYSTRING, LENGTH, RESULTLIST)" href="doc/pro/ref_manipulating_terms.htm#varlist_query3">
+   </topic>
+   <topic label="numbervars(TERM, START, END)" href="doc/pro/ref_manipulating_terms.htm#numbervarsTermStartEnd">
+   </topic>
+   <topic label="varlist(List)" href="doc/pro/ref_manipulating_terms.htm#varlistList">
+   </topic>
+   <topic label="varsof(Term, List)" href="doc/pro/ref_manipulating_terms.htm#varsofTermList">
+   </topic>
+  </topic>
+ </topic>
+ <topic label="Atoms, Lists and Strings" href="doc/pro/ref_text.htm">
+  <topic label="Atom Processing" href="doc/pro/ref_text.htm#AtomProcessing">
+   <topic label="atom_codes(Atom, CharList)" href="doc/pro/ref_text.htm#atomcodesAtomCharList">
+   </topic>
+   <topic label="atomlist_concat(AtomList, Atom)" href="doc/pro/ref_text.htm#atomlistconcatAtomListAtom">
+   </topic>
+   <topic label="atom_concat(Atom1, Atom2, AtomVar3)" href="doc/pro/ref_text.htm#atomconcatAtomAtomAtomVar">
+   </topic>
+   <topic label="atom_length(Atom, Length)" href="doc/pro/ref_text.htm#atomlengthAtomLength">
+   </topic>
+   <topic label="atom_uplow(AtomUpper, AtomLower)" href="doc/pro/ref_text.htm#atomuplowAtomUpperAtomLower">
+   </topic>
+   <topic label="is_atom(X)" href="doc/pro/ref_text.htm#is_atom">
+   </topic>
+   <topic label="name(Atom, CharList)" href="doc/pro/ref_text.htm#nameAtomCharList">
+   </topic>
+   <topic label="sub_atom(Atom, Index, Length, SubAtom)" href="doc/pro/ref_text.htm#subatomAtomIndexLengthSubAtom">
+   </topic>
+  </topic>
+  <topic label="List Processing" href="doc/pro/ref_text.htm#ListProcessing">
+   <topic label="is_member(Term, List)" href="doc/pro/ref_text.htm#ismember">
+   </topic>
+   <topic label="sort(List, SortedList)" href="doc/pro/ref_text.htm#sortListSortedList">
+   </topic>
+   <topic label="keysort(KeyedList, KeyedSortedList)" href="doc/pro/ref_text.htm#keysortListSortedList">
+   </topic>
+  </topic>
+  <topic label="String Processing" href="doc/pro/ref_text.htm#StringProcessing">
+   <topic label="is_string(X)" href="doc/pro/ref_text.htm#is_string">
+   </topic>
+   <topic label="nonblank_string(String)" href="doc/pro/ref_text.htm#nonblankstringString">
+   </topic>
+   <topic label="strcat(StringA, StringB, StringAB)" href="doc/pro/ref_text.htm#strcatStringAStringBStringAB">
+   </topic>
+   <topic label="stringlist_concat(StringList, String), stringlist_concat(StringList, Separator, String)" href="doc/pro/ref_text.htm#stringlistconcatStringListStri">
+   </topic>
+   <topic label="string_atom(String, Atom)" href="doc/pro/ref_text.htm#stringatomStringAtom">
+   </topic>
+   <topic label="string_float(String, Float)" href="doc/pro/ref_text.htm#string_float">
+   </topic>
+   <topic label="string_icomp(String1, String2)" href="doc/pro/ref_text.htm#stringicomp">
+   </topic>
+   <topic label="string_integer(String, Integer)" href="doc/pro/ref_text.htm#stringintegerStringInteger">
+   </topic>
+   <topic label="string_number(String, Number)" href="doc/pro/ref_text.htm#string_number">
+   </topic>
+   <topic label="string_length(String, Length)" href="doc/pro/ref_text.htm#stringlengthStringLength">
+   </topic>
+   <topic label="string_list(String, List)" href="doc/pro/ref_text.htm#stringlistStringList">
+   </topic>
+   <topic label="string_split(String, DelimitersS, List)" href="doc/pro/ref_text.htm#stringsplit">
+   </topic>
+   <topic label="string_term(String, Term)" href="doc/pro/ref_text.htm#stringtermStringTerm">
+   </topic>
+   <topic label="string_termq(StringQ, Term)" href="doc/pro/ref_text.htm#stringtermqStringQTerm">
+   </topic>
+   <topic label="is_string_term(String, Term)" href="doc/pro/ref_text.htm#isstringterm">
+   </topic>
+   <topic label="string_tokens(String, TokenList), string_tokens(String, TokenList, DelimitersS)" href="doc/pro/ref_text.htm#stringtokens">
+   </topic>
+   <topic label="string_trim(String, TrimmedString)" href="doc/pro/ref_text.htm#stringtrim">
+   </topic>
+   <topic label="sub_string(String, Index, Length, SubString)" href="doc/pro/ref_text.htm#substringStringIndexLengthSubS">
+   </topic>
+   <topic label="tilt_slashes(InAS, OutAS)" href="doc/pro/ref_text.htm#TiltSlashes">
+   </topic>
+  </topic>
+  <topic label="Character List Processing" href="doc/pro/ref_text.htm#character_list_processing">
+   <topic label="atom_chars(Number, CharList)" href="doc/pro/ref_text.htm#atom_chars">
+   </topic>
+   <topic label="char(X)" href="doc/pro/ref_text.htm#char">
+   </topic>
+   <topic label="char_code(Atom, CharList)" href="doc/pro/ref_text.htm#char_code">
+   </topic>
+   <topic label="number_chars(Number, CharList)" href="doc/pro/ref_text.htm#number_chars">
+   </topic>
+  </topic>
+ </topic>
+ <topic label="Numbers and Math" href="doc/pro/ref_math.htm">
+  <topic label="Evaluating Mathematical Expressions" href="doc/pro/ref_math.htm#EvaluatingMathematicalExpressions">
+   <topic label="X is Y" href="doc/pro/ref_math.htm#XisY">
+   </topic>
+  </topic>
+  <topic label="Mathematical Comparisons" href="doc/pro/ref_math.htm#MathematicalComparisons">
+   <topic label="X &gt;= Y" href="doc/pro/ref_math.htm#XgteY">
+   </topic>
+   <topic label="X =&lt; Y" href="doc/pro/ref_math.htm#XlteY">
+   </topic>
+   <topic label="X &gt; Y" href="doc/pro/ref_math.htm#XgtY">
+   </topic>
+   <topic label="X &lt; Y" href="doc/pro/ref_math.htm#XltY">
+   </topic>
+   <topic label="X =:= Y" href="doc/pro/ref_math.htm#XeqcoleqY">
+   </topic>
+   <topic label="X =\= Y" href="doc/pro/ref_math.htm#XeqsleqY">
+   </topic>
+   <topic label="X ~= Y" href="doc/pro/ref_math.htm#almost_equal">
+   </topic>
+  </topic>
+  <topic label="Mathematical Operators" href="doc/pro/ref_math.htm#MathematicalOperators">
+   <topic label="X + Y" href="doc/pro/ref_math.htm#XplusY">
+   </topic>
+   <topic label="X - Y" href="doc/pro/ref_math.htm#XminusY">
+   </topic>
+   <topic label="- X" href="doc/pro/ref_math.htm#NegativeX">
+   </topic>
+   <topic label="X * Y" href="doc/pro/ref_math.htm#XtimesY">
+   </topic>
+   <topic label="X / Y" href="doc/pro/ref_math.htm#XdivY">
+   </topic>
+   <topic label="X ** Y" href="doc/pro/ref_math.htm#XpowerY">
+   </topic>
+   <topic label="X // Y" href="doc/pro/ref_math.htm#XdivdivY">
+   </topic>
+   <topic label="X divs Y" href="doc/pro/ref_math.htm#XdivsY">
+   </topic>
+   <topic label="X divu Y" href="doc/pro/ref_math.htm#XdivuY">
+   </topic>
+   <topic label="max(X,Y)" href="doc/pro/ref_math.htm#maxXY">
+   </topic>
+   <topic label="min(X,Y)" href="doc/pro/ref_math.htm#minXY">
+   </topic>
+   <topic label="X mod Y" href="doc/pro/ref_math.htm#XmodY">
+   </topic>
+   <topic label="X mods Y" href="doc/pro/ref_math.htm#XmodsY">
+   </topic>
+   <topic label="X modu Y" href="doc/pro/ref_math.htm#XmoduY">
+   </topic>
+  </topic>
+  <topic label="Bitwise Operators" href="doc/pro/ref_math.htm#BitwiseOperators">
+   <topic label="X /\ Y" href="doc/pro/ref_math.htm#XandY">
+   </topic>
+   <topic label="X \/ Y" href="doc/pro/ref_math.htm#XorY">
+   </topic>
+   <topic label="X &lt;&lt; Y" href="doc/pro/ref_math.htm#XltltY">
+   </topic>
+   <topic label="X &gt;&gt; Y" href="doc/pro/ref_math.htm#XgtgtY">
+   </topic>
+   <topic label="\ X" href="doc/pro/ref_math.htm#ComplementX">
+   </topic>
+   <topic label="X xor Y" href="doc/pro/ref_math.htm#XxorY">
+   </topic>
+  </topic>
+  <topic label="Trigonometry Functions" href="doc/pro/ref_math.htm#TrigonometryFunctions">
+   <topic label="sin(X)" href="doc/pro/ref_math.htm#sinX">
+   </topic>
+   <topic label="cos(X)" href="doc/pro/ref_math.htm#cosX">
+   </topic>
+   <topic label="tan(X)" href="doc/pro/ref_math.htm#tanX">
+   </topic>
+   <topic label="asin(X)" href="doc/pro/ref_math.htm#asinX">
+   </topic>
+   <topic label="acos(X)" href="doc/pro/ref_math.htm#acosX">
+   </topic>
+   <topic label="atan(X)" href="doc/pro/ref_math.htm#atanX">
+   </topic>
+  </topic>
+  <topic label="Mathematical Functions" href="doc/pro/ref_math.htm#MathematicalFunctions">
+   <topic label="abs(X)" href="doc/pro/ref_math.htm#absX">
+   </topic>
+   <topic label="ceiling(X)" href="doc/pro/ref_math.htm#ceilingX">
+   </topic>
+   <topic label="exp(X)" href="doc/pro/ref_math.htm#expX">
+   </topic>
+   <topic label="float(X)" href="doc/pro/ref_math.htm#floatX">
+   </topic>
+   <topic label="floor(X)" href="doc/pro/ref_math.htm#floorX">
+   </topic>
+   <topic label="integer(X)" href="doc/pro/ref_math.htm#integerX">
+   </topic>
+   <topic label="ln(X), log(X)" href="doc/pro/ref_math.htm#lnX">
+   </topic>
+   <topic label="log10(X)" href="doc/pro/ref_math.htm#log10X">
+   </topic>
+   <topic label="real(X)" href="doc/pro/ref_math.htm#realX">
+   </topic>
+   <topic label="round(X)" href="doc/pro/ref_math.htm#roundX">
+   </topic>
+   <topic label="sign(X)" href="doc/pro/ref_math.htm#signX">
+   </topic>
+   <topic label="sqrt(X)" href="doc/pro/ref_math.htm#sqrtX">
+   </topic>
+  </topic>
+  <topic label="Built-in Atoms" href="doc/pro/ref_math.htm#BuiltinAtoms">
+   <topic label="seed_random(I)" href="doc/pro/ref_math.htm#seedrandomI">
+   </topic>
+  </topic>
+  <topic label="Number Types" href="doc/pro/ref_math.htm#NumberTypes">
+   <topic label="numeric_type(N,T)" href="doc/pro/ref_math.htm#numerictypeNT">
+   </topic>
+   <topic label="integer(N)" href="doc/pro/ref_math.htm#integerN">
+   </topic>
+   <topic label="is_fraction(N)" href="doc/pro/ref_math.htm#is_fraction">
+   </topic>
+   <topic label="is_integer(N)" href="doc/pro/ref_math.htm#isintegerN">
+   </topic>
+   <topic label="is_odd(N)" href="doc/pro/ref_math.htm#is_odd">
+   </topic>
+   <topic label="is_number(N)" href="doc/pro/ref_math.htm#is_number">
+   </topic>
+   <topic label="float(N)" href="doc/pro/ref_math.htm#floatN">
+   </topic>
+   <topic label="single_float(N)" href="doc/pro/ref_math.htm#single_floatN">
+   </topic>
+   <topic label="double_float(N)" href="doc/pro/ref_math.htm#double_floatN">
+   </topic>
+   <topic label="real(N)" href="doc/pro/ref_math.htm#realN">
+   </topic>
+   <topic label="fixed_real(N)" href="doc/pro/ref_math.htm#fixed_realN">
+   </topic>
+   <topic label="long_real(N)" href="doc/pro/ref_math.htm#long_realN">
+   </topic>
+  </topic>
+  <topic label="Mixed Mode Expressions" href="doc/pro/ref_math.htm#MixedMode">
+  </topic>
+  <topic label="Mathematical Games" href="doc/pro/ref_math.htm#MathematicalGames">
+   <topic label="Modulo Arithmetic" href="doc/pro/ref_math.htm#modulo_arithmetic">
+   </topic>
+   <topic label="Notes on Reals and Gigadigits" href="doc/pro/ref_math.htm#NotesOnRealsAndGigdigits">
+   </topic>
+   <topic label="Prime Numbers" href="doc/pro/ref_math.htm#PrimeNumbers">
+   </topic>
+   <topic label="Rational Numbers" href="doc/pro/ref_math.htm#rational_numbers">
+   </topic>
+   <topic label="Continued Fractions" href="doc/pro/ref_math.htm#ContinuedFractions">
+   </topic>
+  </topic>
+ </topic>
+ <topic label="Prolog Logicbase" href="doc/pro/ref_logicbase.htm">
+  <topic label="Modules" href="doc/pro/ref_logicbase.htm#Modules">
+   <topic label="current_module(MODULE)" href="doc/pro/ref_logicbase.htm#CurrentModule1">
+   </topic>
+  </topic>
+  <topic label="Predicates" href="doc/pro/ref_logicbase.htm#Predicates">
+   <topic label="current_predicate(M:F/A)" href="doc/pro/ref_logicbase.htm#CurrentPredicate1">
+   </topic>
+   <topic label="predicate_property(M:F/A, PROPERTY)" href="doc/pro/ref_logicbase.htm#PredicateProperty2">
+   </topic>
+  </topic>
+  <topic label="Static Predicates" href="doc/pro/ref_logicbase.htm#StaticPredicates">
+   <topic label="load(FileA), load([F1, F2,...])" href="doc/pro/ref_logicbase.htm#load">
+   </topic>
+   <topic label="load(memory, NAME, SIZE, ADDRESS)" href="doc/pro/ref_logicbase.htm#load4">
+   </topic>
+   <topic label="unload(FileA), unload([F1, F2,...])" href="doc/pro/ref_logicbase.htm#unload">
+   </topic>
+  </topic>
+  <topic label="Dynamic Predicate Storage Options" href="doc/pro/ref_logicbase.htm#DynamicPredicateStorageOptions">
+   <topic label=":-dynamic F/A" href="doc/pro/ref_logicbase.htm#DynamicDirective">
+   </topic>
+   <topic label=":-indexed F(I1, I2,...)" href="doc/pro/ref_logicbase.htm#IndexedDirective">
+   </topic>
+   <topic label=":-sorted F/A" href="doc/pro/ref_logicbase.htm#SortedDirective">
+   </topic>
+  </topic>
+  <topic label="Dynamic Predicates" href="doc/pro/ref_logicbase.htm#DynamicPredicates">
+   <topic label="abolish(M:F/A)" href="doc/pro/ref_logicbase.htm#abolishNameArity">
+   </topic>
+   <topic label="asserta(TERM)" href="doc/pro/ref_logicbase.htm#assertaTerm">
+   </topic>
+   <topic label="assertz(TERM)" href="doc/pro/ref_logicbase.htm#assertzTerm">
+   </topic>
+   <topic label="assert(TERM)" href="doc/pro/ref_logicbase.htm#assertTerm">
+   </topic>
+   <topic label="clause(HEAD, BODY)" href="doc/pro/ref_logicbase.htm#clauseHeadBody">
+   </topic>
+   <topic label="retract(TERM)" href="doc/pro/ref_logicbase.htm#retractTerm">
+   </topic>
+   <topic label="retractall(TERM)" href="doc/pro/ref_logicbase.htm#retractallTerm">
+   </topic>
+  </topic>
+ </topic>
+ <topic label="Input and Output" href="doc/pro/ref_io.htm">
+  <topic label="General Principles" href="doc/pro/ref_io.htm#GeneralPrinciples">
+   <topic label="Stream IDs" href="doc/pro/ref_io.htm#StreamID">
+   </topic>
+   <topic label="Backtracking and I/O" href="doc/pro/ref_io.htm#Backtracking">
+   </topic>
+   <topic label="End of File" href="doc/pro/ref_io.htm#endoffile">
+   </topic>
+  </topic>
+  <topic label="Streams" href="doc/pro/ref_io.htm#Streams">
+   <topic label="Standard Streams" href="doc/pro/ref_io.htm#StandardStreams">
+   </topic>
+   <topic label="Stream Properties" href="doc/pro/ref_io.htm#StreamProperties">
+   </topic>
+   <topic label="stream_property(STREAM, PROPERTY)" href="doc/pro/ref_io.htm#StreamProperty2">
+   </topic>
+   <topic label="String I/O" href="doc/pro/ref_io.htm#StringIO">
+   </topic>
+  </topic>
+  <topic label="Open and Closing Files" href="doc/pro/ref_io.htm#OpenAndClosingFiles">
+   <topic label="open(FILE, MODE, ID, OPTIONS)" href="doc/pro/ref_io.htm#Open4">
+   </topic>
+   <topic label="open(FILE, MODE, ID)" href="doc/pro/ref_io.htm#Open3">
+   </topic>
+   <topic label="close(ID)" href="doc/pro/ref_io.htm#Close1">
+   </topic>
+  </topic>
+  <topic label="Reading and Writing Prolog Terms" href="doc/pro/ref_io.htm#PrologTerms">
+   <topic label="read(TERM), read(ID, TERM)" href="doc/pro/ref_io.htm#readTermreadIDTerm">
+   </topic>
+   <topic label="write(TERM), write(ID, TERM)" href="doc/pro/ref_io.htm#writeTermwriteIDTerm">
+   </topic>
+   <topic label="writeq(Term), writeq(ID, Term)" href="doc/pro/ref_io.htm#writeqTermwriteqIDTerm">
+   </topic>
+   <topic label="listing, listing(PRED), listing(ID, PRED)" href="doc/pro/ref_io.htm#listing">
+   </topic>
+   <topic label="pp(TERM), pp(ID, TERM)" href="doc/pro/ref_io.htm#prettyprint">
+   </topic>
+   <topic label="consult(FILE), reconsult(FILE)" href="doc/pro/ref_io.htm#consult1">
+   </topic>
+   <topic label="display(Term)" href="doc/pro/ref_io.htm#displayTerm">
+   </topic>
+  </topic>
+  <topic label="Reading and Writing Strings and Characters" href="doc/pro/ref_io.htm#StringsAndCharacters">
+   <topic label="get(CODE), get(ID, CODE)" href="doc/pro/ref_io.htm#getChargetIDChar">
+   </topic>
+   <topic label="get0(CODE), get0(ID, CODE)" href="doc/pro/ref_io.htm#getChargetIDChar">
+   </topic>
+   <topic label="put(CODE), put(ID, CODE)" href="doc/pro/ref_io.htm#putCharputIDChar">
+   </topic>
+   <topic label="read_string(STRING), read_string(ID, STRING)" href="doc/pro/ref_io.htm#readstringStringreadstringIDSt">
+   </topic>
+  </topic>
+  <topic label="Special Purpose I/O Predicates" href="doc/pro/ref_io.htm#SpecialPurposeIO">
+   <topic label="at_end_of_stream(ID)" href="doc/pro/ref_io.htm#at_end_of_stream">
+   </topic>
+   <topic label="flush_output, flush_output(ID)" href="doc/pro/ref_io.htm#flushoutput">
+   </topic>
+   <topic label="nl, nl(ID)" href="doc/pro/ref_io.htm#nlnlID">
+   </topic>
+   <topic label="skip(CODE), skip(ID, CODE)" href="doc/pro/ref_io.htm#skipCharskipIDChar">
+   </topic>
+   <topic label="tab(N), tab(ID, N)" href="doc/pro/ref_io.htm#tabNtabIDN">
+   </topic>
+   <topic label="respkey(CHAR)" href="doc/pro/ref_io.htm#respkeyChar">
+   </topic>
+   <topic label="Repositioning Streams" href="doc/pro/ref_io.htm#Repositioning">
+   </topic>
+   <topic label="stream_property(ID, position(Position))" href="doc/pro/ref_io.htm#stream_property">
+   </topic>
+   <topic label="set_stream_position(ID, POSITION)" href="doc/pro/ref_io.htm#SetStreamPosition">
+   </topic>
+  </topic>
+  <topic label="Redirecting Streams" href="doc/pro/ref_io.htm#RedirectingStreams">
+   <topic label="current_input(ID)" href="doc/pro/ref_io.htm#currentinput">
+   </topic>
+   <topic label="current_output(ID)" href="doc/pro/ref_io.htm#currentoutput">
+   </topic>
+   <topic label="set_input(ID)" href="doc/pro/ref_io.htm#setinput">
+   </topic>
+   <topic label="set_output(ID)" href="doc/pro/ref_io.htm#setoutput">
+   </topic>
+   <topic label="see(ID), see(FILENAME), see(user)" href="doc/pro/ref_io.htm#seeStreamA">
+   </topic>
+   <topic label="seen" href="doc/pro/ref_io.htm#seen">
+   </topic>
+   <topic label="seeing(ID)" href="doc/pro/ref_io.htm#seeingSName">
+   </topic>
+   <topic label="tell(ID), tell(FILENAME), tell(user)" href="doc/pro/ref_io.htm#tellStreamA">
+   </topic>
+   <topic label="told" href="doc/pro/ref_io.htm#told">
+   </topic>
+   <topic label="telling(ID)" href="doc/pro/ref_io.htm#tellingSName">
+   </topic>
+  </topic>
+  <topic label="Binary I/O" href="doc/pro/ref_io.htm#BinaryIO">
+   <topic label="read_binary(ID, DATA_TYPE, DATA)" href="doc/pro/ref_io.htm#ReadBinary">
+   </topic>
+   <topic label="write_binary(ID, DATA_TYPE, DATA)" href="doc/pro/ref_io.htm#WriteBinary">
+   </topic>
+  </topic>
+  <topic label="Logging" href="doc/pro/ref_io.htm#Logging">
+   <topic label="openlog(Fname)" href="doc/pro/ref_io.htm#openlogFname">
+   </topic>
+   <topic label="closelog" href="doc/pro/ref_io.htm#closelog">
+   </topic>
+   <topic label="writelog(X)" href="doc/pro/ref_io.htm#writelogX">
+   </topic>
+   <topic label="nllog" href="doc/pro/ref_io.htm#nllog">
+   </topic>
+  </topic>
+ </topic>
+ <topic label="System Predicates" href="doc/pro/ref_system.htm">
+   <topic label="command_line(ArgsL)" href="doc/pro/ref_system.htm#commandlineArgsL">
+   </topic>
+   <topic label="date(MONTH, DAY, YEAR)" href="doc/pro/ref_system.htm#dateMonthNVDayNVYearNV">
+   </topic>
+   <topic label="time(HOUR, MIN, SEC)" href="doc/pro/ref_system.htm#timeHourMinSec">
+   </topic>
+   <topic label="gc" href="doc/pro/ref_system.htm#gc0">
+   </topic>
+   <topic label="highwater(Heap, Local, Control, Trail)" href="doc/pro/ref_system.htm#highwater">
+   </topic>
+   <topic label="loadlsx(FilenameA)" href="doc/pro/ref_system.htm#loadlsxFilenameA">
+   </topic>
+   <topic label="pro_heap(Top, Pos)" href="doc/pro/ref_system.htm#proheapTopPos">
+   </topic>
+   <topic label="pro_control(Top, Pos)" href="doc/pro/ref_system.htm#procontrolTopPos">
+   </topic>
+   <topic label="pro_local(Top, Pos)" href="doc/pro/ref_system.htm#prolocalTopPos">
+   </topic>
+   <topic label="pro_trail(Top, Pos)" href="doc/pro/ref_system.htm#protrailTopPos">
+   </topic>
+   <topic label="stack_sizes(Heap, Control, Local, Trail)" href="doc/pro/ref_system.htm#stacksizesHeapControlLocalTrai">
+   </topic>
+   <topic label="system(CmdA)" href="doc/pro/ref_system.htm#systemCmdA">
+   </topic>
+   <topic label="timer(Ticks)" href="doc/pro/ref_system.htm#timerTicks">
+   </topic>
+   <topic label="version(String)" href="doc/pro/ref_system.htm#versionString">
+   </topic>
+ </topic>
+ <topic label="O.S. Extended Predicates" href="doc/pro/ref_extensions.htm">
+   <topic label="File and Directory Name Parameters" href="doc/pro/ref_extensions.htm#FileampDirectoryPredicates">
+   </topic>
+   <topic label="chdir(DirL)" href="doc/pro/ref_extensions.htm#chdirDirL">
+   </topic>
+   <topic label="chdir(DirL, Err)" href="doc/pro/ref_extensions.htm#chdirDirLErr">
+   </topic>
+   <topic label="curdir(DirS)" href="doc/pro/ref_extensions.htm#curdirDirL">
+   </topic>
+   <topic label="delfile(PathL, Err)" href="doc/pro/ref_extensions.htm#delfilePathLErr">
+   </topic>
+   <topic label="mkdir(DirL, Err)" href="doc/pro/ref_extensions.htm#mkdirDirLErr">
+   </topic>
+   <topic label="rename(OldName, NewName, Err)" href="doc/pro/ref_extensions.htm#renameOldNameNewNameErr">
+   </topic>
+   <topic label="rmdir(DirL, Err)" href="doc/pro/ref_extensions.htm#rmdirDirLErr">
+   </topic>
+   <topic label="findfiles(Mask, Attr, FileInfo)" href="doc/pro/ref_extensions.htm#findfilesMaskAttrFileInfo">
+   </topic>
+   <topic label="stat(FileName,Atime,Ctime,Mtime,Size,Mode,NLink,Uid,Gid)" href="doc/pro/ref_extensions.htm#FileStat">
+   </topic>
+   <topic label="getdrive(Drive)" href="doc/pro/ref_extensions.htm#getdriveDrive">
+   </topic>
+   <topic label="setdrive(Drive)" href="doc/pro/ref_extensions.htm#setdriveDrive">
+   </topic>
+   <topic label="get_env_var(VARIABLE, VALUE)" href="doc/pro/ref_extensions.htm#get_env_var">
+   </topic>
+   <topic label="w_getfile(FileStr)" href="doc/pro/ref_extensions.htm#wgetfileFileStr">
+   </topic>
+   <topic label="w_msgbox(Term)" href="doc/pro/ref_extensions.htm#wmsgboxTerm">
+   </topic>
+   <topic label="w_tfmsgbox(Term)" href="doc/pro/ref_extensions.htm#wtfmsgboxTerm">
+   </topic>
+ </topic>
+ <topic label="Definite Clause Grammars (DCGs)" href="doc/pro/ref_dcg.htm">
+  <topic label="Parsing with Difference Lists" href="doc/pro/ref_dcg.htm#ParsingWithDifferenceLists">
+  </topic>
+  <topic label="Generating with Difference Lists" href="doc/pro/ref_dcg.htm#GeneratingWithDifferenceLists">
+  </topic>
+  <topic label="DCG Syntax" href="doc/pro/ref_dcg.htm#DCGSyntax">
+   <topic label="expand_term(DCGclause, PROLOGclause)" href="doc/pro/ref_dcg.htm#expandtermDCGclausePROLOGclaus">
+   </topic>
+  </topic>
+  <topic label="Applications of DCG and Difference Lists" href="doc/pro/ref_dcg.htm#ApplicationsDCGDifferenceLists">
+   <topic label="Language Translation" href="doc/pro/ref_dcg.htm#DCGTranslation">
+   </topic>
+   <topic label="Bill of Materials" href="doc/pro/ref_dcg.htm#DCGBillMaterials">
+   </topic>
+   <topic label="Command Language" href="doc/pro/ref_dcg.htm#DCGCommandLanguage">
+   </topic>
+   <topic label="XML" href="doc/pro/ref_dcg.htm#DCGXML">
+   </topic>
+  </topic>
+  <topic label="DCG Terminals" href="doc/pro/ref_dcg.htm#DCGTerminals">
+  </topic>
+  <topic label="Parsing Files" href="doc/pro/ref_dcg.htm#ParsingFiles">
+  </topic>
+ </topic>
+<topic label="Index" href="doc/pro/prindex_xml.htm">
+</topic>
+</toc>

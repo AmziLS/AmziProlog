@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Quick Overview</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="AQuickOverview"></A><FONT COLOR="#D2AA00">Quick Overview</FONT> </h1>
+<P><!AMZI_INDEX = plm Files; ppj Files; lib Files; dll Files; pro Files; xpl Files; cfg Files; err Files>Amzi!
+Prolog consists of five primary tools, two libraries and six file types.
+The tools are: </P>
+
+<P><IMG SRC="aover.gif" HEIGHT=456 WIDTH=634> </P>
+
+<P>Throughout this manual both the full name and generic names of the tools are 
+  used. For command-line environments, the generic names are also the names of 
+  the commands themselves (e.g. acmp.exe is the name of the compiler). For GUI-window 
+  environments, the tools are accessed from menus and tool bars. </P>
+
+<P>This section briefly introduces the Amzi! tools and file types. </P>
+
+<H2><A NAME="alis"></A><FONT COLOR="#0000FF">Listener</FONT></H2>
+
+<P><!AMZI_INDEX = alis; Listener>Normally Prolog code is developed using a Prolog 
+  interpreter, also called a &quot;listener.&quot; The listener directly executes 
+  source code, which is stored in a plain text file (.pro file), or typed in directly 
+  at the ?- prompt. So developing an interpreted Amzi! Prolog module consists 
+  of these steps (the corresponding IDE commands are given in parentheses): </P>
+
+<P><IMG SRC="alis.gif" HEIGHT=382 WIDTH=244> </P>
+
+<OL>
+<LI>Enter and edit your source code (using File/New to create a new file)
+</LI>
+
+<LI>Consult your source code file into the listener (using Listener/Consult)
+</LI>
+
+<LI>Issue Prolog queries to test your code and use the listener debugger,
+as needed (using Listener/Debug on) </LI>
+
+<LI>Respond to runtime errors by either continuing or failing </LI>
+
+<LI>Modify your source code to fix the problems </LI>
+
+<LI>Reconsult your source code file into the listener (using Listener/Reconsult,
+which will automatically save all modified source files/windows) </LI>
+
+<LI>Goto step 3 until your module works </LI>
+</OL>
+
+<H3><A NAME="Debugger"></A><FONT COLOR="#000080">Debugger</FONT></H3>
+
+<P><!AMZI_INDEX = Debugger>The Amzi! debugger is used to find and identify
+errors. It works on interpreted source code. The debugger can only be invoked
+from, and used within, the listener. In order to step through code, you
+need to consult the source code form of the module. </P>
+
+<H3><A NAME="IntermixingInterpretedandCompi"></A><FONT COLOR="#000080">Intermixing
+Interpreted and Compiled Code</FONT></H3>
+
+<P><!AMZI_INDEX = Intermixing Interpreted and Compiled Code; Dynamic Database; Compiling>The
+Amzi! listener differs from other Prolog listeners because you can consult
+both source code files and compiled object code files. In fact, you can
+intermix compiled and interpreted code in the same application and listener
+session. This allows you to keep code under development in source form,
+and debugged code in compiled form. </P>
+
+<P>The Listener is the heart of the Amzi! development tools. It is where
+you develop, test and debug your Prolog code. </P>
+
+<H2><A NAME="acmp"></A><FONT COLOR="#0000FF">Compiler</FONT></H2>
+
+<P><!AMZI_INDEX =Compiler; acmp>Interpreted code is normally used only
+for dynamic data, debugging and experimentation. Once a module is completed,
+it is usually compiled into an object module (.plm file). No source code
+changes are required before compiling. </P>
+
+<P>The development cycle is extended with the following steps to compile
+working modules, while keeping modules under development interpreted (in
+source form): </P>
+
+<P><IMG SRC="acmp.gif" HEIGHT=482 WIDTH=486> </P>
+
+<OL START=8>
+<LI>Compile working source files into object files, which can be consulted
+into the listener along with the source files still under development </LI>
+
+<LI>Repeat steps 1-9 until all the modules in the application are working
+</LI>
+</OL>
+
+<P>Compiling has a number of advantages. Compiled code runs at least 10
+times faster than interpreted code. Compiled programs that have recursive
+calls will run longer before exhausting stack and heap resources. Finally,
+predicates in compiled modules can be hidden, making it easier to build
+large, multi-file applications. </P>
+
+<P>The object file contains instructions for a Warren Abstract (Prolog)
+Machine (WAM). The WAM is the core of Amzi! Prolog, it is also called the
+Amzi! runtime, and is provided in both executable and library forms. The
+same Prolog object file (or source file) can be run on any version of the
+Amzi! runtime. </P>
+
+<H2><A NAME="alnk"></A><FONT COLOR="#0000FF">Linker</FONT></H2>
+
+<P><!AMZI_INDEX = Linker; alnk; Libraries>Once an application has been
+debugged, the object files (.plm) are linked into a single executable load
+module (.xpl file) that can be embedded in a C/C++, Java, Visual Basic,
+Delphi, Web Server or other program, or run as a standalone program. </P>
+
+<P>The linker automatically links in a copy of the standard Amzi! library
+alib.plm into each .xpl file. You may also want to link in a library such
+as the list utilities library LIST.PLM. </P>
+
+<P>An example of an executable load module is the file alis.xpl in your
+distribution files. It is the listener, which is itself an Amzi! Prolog
+application. </P>
+
+<H2><A NAME="IDE"></A><FONT COLOR="#0000FF">IDE</FONT></H2>
+
+<P><!AMZI_INDEX = IDE; Unicode; wideA; wideW>The tools just described
+are all available from the operating system command line using the specified
+program names. The tools are also gathered together under a single Integrated
+Development Environment (IDE) for Windows. </P>
+
+<P>The IDE allows you to run the listener with its debugger, the compiler,
+the linker and the runtime (see below). It also includes an editor and
+the ability to define projects (PPJ files). Projects provide a convenient
+means to organize multi-module applications. There are two IDEs: wideW
+supports the full Unicode character set, and wideA the ASCII character
+set.</P>
+
+<H2><A NAME="arun"></A><FONT COLOR="#0000FF">Amzi! Runtime</FONT></H2>
+
+<P><!AMZI_INDEX = Amzi! Runtime; arun; Unicode>The Amzi! runtime executes
+a Prolog load module (.xpl file) created by the linker. A distributable
+Amzi! application minimally consists of a runtime and a load module. </P>
+
+<P>The final steps, then, in building a Prolog application are: </P>
+
+<P><IMG SRC="arun.gif" HEIGHT=972 WIDTH=628> </P>
+
+<OL START=10>
+<LI>Link all the .plm files together to build an executable Prolog module
+(.xpl). </LI>
+
+<LI>Your .xpl file is ready to run on any of the forms of the Amzi! runtime:
+</LI>
+
+<UL>
+<LI>arun, which is incorporated into the Windows-IDE and is available
+as a standalone .exe in command-line environments </LI>
+
+<LI>A static or dynamic link library version of the runtime linked into
+a host language application, such as C++ or Visual Basic. </LI>
+</UL>
+</OL>
+
+<P>Separate runtimes are provided for each supported environment. arun
+is the .exe form of the runtime and allows for standalone Prolog application
+development. The dynamic library forms of the runtime allow for embedding
+the Amzi! runtime in other languages. </P>
+
+<P>An Amzi! application must have one .xpl file, and only one .xpl file.
+However, that .xpl file can consult as many other source files (.pro) and
+compiled object files (.plm) as needed. </P>
+
+<P>An Amzi! application might also include an initialization file (.cfg
+file) which specifies the sizes of the heaps and stacks, and gives you
+control over other operational parameters of the Amzi! runtime. The initialization
+(.cfg) file bears the same name as the load (.xpl) file. One file, amzi.cfg,
+can be used to set system-wide defaults. If there are no .cfg files then
+default values are used. </P>
+
+<P>The Amzi! runtime is a full Unicode implementation. This means that,
+internally, all strings are stored as wide (Unicode) character strings.
+Further, Prolog source text can be stored in Unicode format, enabling the
+inclusion of Unicode characters directly in Prolog programs. </P>
+
+<H2><A NAME="LIBDLL"></A><FONT COLOR="#0000FF">Dynamic/Shared Libraries</FONT></H2>
+
+<P><!AMZI_INDEX = lib Files; dll Files; Static Libraries; Dynamic Libraries>The 
+  Amzi! runtime is also embodied in dynamic/shared libraries which can be linked 
+  into and called from a variety of languages and tools. Like arun, these libraries 
+  execute an Amzi! load module (.xpl file). </P>
+
+<P>The programming interface to the Amzi! runtime is called the LSAPI.
+It provides over 50 functions that, in large part, mimic the functionality
+of the Prolog listener. You can load source and object code, issue queries,
+map the results of those queries to variables, assert new facts, build/decompose
+lists and structures and more. </P>
+
+<P>The Logic Server API is provided as a C interface, a C++ class library,
+a Java Class, a Delphi Component, a Visual Basic definitions module and
+a general purpose interface (for other non-pointer-based languages). </P>
+
+<P><IMG SRC="alibdll.gif" HEIGHT=678 WIDTH=496> </P>
+
+<P>Further, the Logic Server API lets you add your own predicates (functions)
+to Amzi! Prolog, thereby extending the Amzi! language implementation with
+your own C/C++ code. An example of this might be functions to access your
+database. </P>
+
+<P>The Amzi!&nbsp;Logic Server also supports multiple, simultaneous invocations.
+Multiple engines are implemented simply by allocating a new Logic Server
+object. This can be done through either the native LSAPI interface, the
+new C++ Logic Server class, or any of the environment specific lsapis,
+Delphi, VB, or Java. </P>
+
+<H2><A NAME="WheretoGoNext"></A><FONT COLOR="#0000FF">Where to Go Next?</FONT></H2>
+
+<P>Next, we recommend you run through &quot;<A HREF="wide_quick_tutorial.htm">A Quick Tutorial</A>&quot; 
+  which follows next. If you plan to embed Prolog code in other applications, 
+  you can follow the tutorial for the appropriate 'hello' samples which are described 
+  in the Logic Server API section. </P>
+
+<P>There is also a detailed introduction and reference section for each
+of the tools described above. </P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I> </I></P>
+
+</BODY>
+</HTML>

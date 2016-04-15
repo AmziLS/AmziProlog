@@ -1,0 +1,204 @@
+# Microsoft Developer Studio Generated Dependency File, included by wide.mak
+
+.\amziexcept.cpp : \
+	"..\..\include\amzi.h"\
+	".\amziexcept.h"\
+	".\cpwide.h"\
+	".\editdoc.h"\
+	".\mainfrm.h"\
+	".\stdafx.h"\
+	
+
+.\browbrow.cpp : \
+	".\browbrow.h"\
+	".\cpwide.h"\
+	".\stdafx.h"\
+	".\utils.h"\
+	
+
+.\compile.cpp : \
+	"..\..\include\amzi.h"\
+	".\compile.h"\
+	".\conview.h"\
+	".\cpwide.h"\
+	".\cpwin.h"\
+	".\project.h"\
+	".\proprog.h"\
+	".\stdafx.h"\
+	".\utils.h"\
+	
+
+.\conview.cpp : \
+	"..\..\include\amzi.h"\
+	".\conview.h"\
+	".\cpwide.h"\
+	".\mainfrm.h"\
+	".\prodoc.h"\
+	".\proprog.h"\
+	".\stdafx.h"\
+	
+
+.\cpwide.cpp : \
+	"..\..\include\amzi.h"\
+	".\amziexcept.h"\
+	".\compile.h"\
+	".\conview.h"\
+	".\cpwide.h"\
+	".\debug.h"\
+	".\editdoc.h"\
+	".\link.h"\
+	".\listen.h"\
+	".\mainfrm.h"\
+	".\peditvw.h"\
+	".\prodoc.h"\
+	".\project.h"\
+	".\proprog.h"\
+	".\stdafx.h"\
+	".\unlock.h"\
+	".\utils.h"\
+	
+
+.\cpwide.rc : \
+	".\RES\cogs.ico"\
+	".\RES\cpwide.ico"\
+	".\res\cpwide.rc2"\
+	".\RES\editdoc.ico"\
+	".\RES\IDR_MAIN.BMP"\
+	
+
+.\cpwin.cpp : \
+	"..\..\include\amzi.h"\
+	".\conview.h"\
+	".\cpwin.h"\
+	".\proprog.h"\
+	".\stdafx.h"\
+	
+
+.\debug.cpp : \
+	"..\..\include\amzi.h"\
+	".\conview.h"\
+	".\cpwide.h"\
+	".\debug.h"\
+	".\listen.h"\
+	".\mainfrm.h"\
+	".\proprog.h"\
+	".\spypoint.h"\
+	".\stdafx.h"\
+	
+
+.\editdoc.cpp : \
+	".\cpwide.h"\
+	".\editdoc.h"\
+	".\mainfrm.h"\
+	".\peditvw.h"\
+	".\project.h"\
+	".\stdafx.h"\
+	".\utils.h"\
+	
+
+.\link.cpp : \
+	"..\..\include\amzi.h"\
+	".\conview.h"\
+	".\cpwide.h"\
+	".\link.h"\
+	".\project.h"\
+	".\stdafx.h"\
+	".\utils.h"\
+	
+
+.\listen.cpp : \
+	"..\..\include\amzi.h"\
+	".\conview.h"\
+	".\cpwide.h"\
+	".\cpwin.h"\
+	".\debug.h"\
+	".\listen.h"\
+	".\mainfrm.h"\
+	".\prodoc.h"\
+	".\project.h"\
+	".\proprog.h"\
+	".\stdafx.h"\
+	".\utils.h"\
+	
+
+.\mainfrm.cpp : \
+	"..\..\include\amzi.h"\
+	".\conview.h"\
+	".\cpwide.h"\
+	".\listen.h"\
+	".\mainfrm.h"\
+	".\peditvw.h"\
+	".\project.h"\
+	".\proprog.h"\
+	".\stdafx.h"\
+	
+
+.\peditvw.cpp : \
+	".\cpwide.h"\
+	".\editdoc.h"\
+	".\mainfrm.h"\
+	".\peditvw.h"\
+	".\stdafx.h"\
+	
+
+.\prodoc.cpp : \
+	"..\..\include\amzi.h"\
+	".\conview.h"\
+	".\prodoc.h"\
+	".\proprog.h"\
+	".\stdafx.h"\
+	
+
+.\project.cpp : \
+	"..\..\include\amzi.h"\
+	".\conview.h"\
+	".\cpwide.h"\
+	".\cpwin.h"\
+	".\editdoc.h"\
+	".\listen.h"\
+	".\mainfrm.h"\
+	".\project.h"\
+	".\proprog.h"\
+	".\stdafx.h"\
+	".\utils.h"\
+	
+
+.\proprog.cpp : \
+	"..\..\include\amzi.h"\
+	".\amziexcept.h"\
+	".\conview.h"\
+	".\cpwide.h"\
+	".\cpwin.h"\
+	".\editdoc.h"\
+	".\mainfrm.h"\
+	".\peditvw.h"\
+	".\proprog.h"\
+	".\stdafx.h"\
+	
+
+.\spypoint.cpp : \
+	"..\..\include\amzi.h"\
+	".\conview.h"\
+	".\cpwide.h"\
+	".\listen.h"\
+	".\proprog.h"\
+	".\spypoint.h"\
+	".\stdafx.h"\
+	
+
+.\stdafx.cpp : \
+	".\stdafx.h"\
+	
+
+.\unlock.cpp : \
+	"..\..\include\amzi.h"\
+	".\cpwide.h"\
+	".\mainfrm.h"\
+	".\stdafx.h"\
+	".\unlock.h"\
+	
+
+.\utils.cpp : \
+	".\stdafx.h"\
+	".\utils.h"\
+	

@@ -1,0 +1,464 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Prolog Logicbase</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="PrologLogicbase"></A><FONT COLOR="#D2AA00">Prolog Logicbase</FONT> 
+</h1>
+<!AMZI_INDEX = Logicbase; Dynamic Database>
+<p>A Prolog <b>logicbase</b> is a collection of <b>modules</b>. Each <b>module</b> 
+  contains a collection of <b>predicates</b>, defined by a <b>functor</b> (name) 
+  and <b>arity</b> (number of arguments). A <b>predicate</b> is a collection of 
+  one or more <b>clauses</b>.</p>
+
+<H2><A NAME="Modules"></A>
+<FONT COLOR="#000080">Modules</FONT></H2>
+<!AMZI_INDEX = Modules>
+<p>There are at least two modules in every logicbase. These are the system module 
+  and the default user module, <b>user</b>. The system module contains the built-in 
+  predicates of the system. The user module contains the application or user predicates 
+  that are not specifically put in other modules. See the chapter on <a href="ref_modules.htm">modules</a> 
+  for details on using modules.</p>
+<p>The modules in the system can be examined using <b>current_module/1</b>.</p>
+
+<H3><A NAME="CurrentModule1"></A>
+<FONT COLOR="#000080">current_module(MODULE)</FONT></H3>
+<!AMZI_INDEX = current_module/1>
+<p><b>current_module/1</b> unifies MODULE with the currently defined modules in 
+  the logicbase. If MODULE is a variable, on backtracking, current_module/1 will 
+  return all the user-defined modules. For example, when the <a href="../../samples/prolog/doc.html">duckym</a> 
+  sample is consulted in the listener:</p>
+<ul><font color="#000080"><pre>
+?- current_module(M).
+
+M = user ;
+
+M = rules ;
+
+M = data ;
+no
+</pre></font></ul>
+<p>Notice that the system modules are not listed. They all begin with 'amzi' and 
+  you should avoid that naming convention for your modules.</p>
+
+<H2><A NAME="Predicates"></A><FONT COLOR="#0000FF">
+Predicates</FONT></H2>
+<!AMZI_INDEX = Predicates; Functor/Arity>
+
+<p>Each predicate in a module is defined by a functor and arity. The predicates 
+  can be listed using <b>current_predicate/1</b>.</p>
+
+<H3><A NAME="CurrentPredicate1"></A>
+<FONT COLOR="#000080">current_predicate(M:F/A)</FONT></H3>
+<!AMZI_INDEX = current_predicate/1; predicates>
+
+<p><b>current_predicate/1</b> unifies its argument with the functors(F) and arities(A) 
+  in the specified module(M). The module(M) must be bound to a valid module name. 
+  The example shows the first few predicates in the 'rules' module of the <a href="../../samples/prolog/doc.html">duckym</a> 
+  sample. </p>
+
+<ul><font color="#000080"><pre>
+?- current_predicate(rules:F/A).
+F = chase
+A = 1 ;
+
+F = connect
+A = 2 
+yes
+</pre></font></ul>
+
+
+<p>There are four types of predicates that can be stored in the logicbase:</p>
+<ul>
+  <li><b>dynamic</b> - These are predicates whose clauses can be dynamically asserted 
+    and retracted. When a source file (.pro) file is consulted, the predicates 
+    are stored as dynamic predicates.</li>
+  <li><b>static</b> - These are predicates that have been compiled. They execute 
+    faster, but cannot be dynamically changed, nor can their clauses be displayed. 
+    When a compiled file (.plm or .xpl) is loaded, the predicates are stored as 
+    static predicates, unless declared otherwise.</li>
+  <li><b>built_in</b> - These are predicates implemented directly in the runtime 
+    engine. (Note that this is a more precise definition of the term built-in, 
+    as many of the predicates called 'built-in' are actually implemented in Prolog 
+    as static predicates in the amzi_system module.)</li>
+  <li><b>extended</b> - These are predicates implemented external to Prolog using 
+    the <a href="../ls/lsovervw.htm#ExtendingProlog">Logic Server</a>.</li>
+</ul>
+<p>These, and other properties of predicates can be queried using <b>predicate_property/2</b>.</p>
+<H3><A NAME="PredicateProperty2"></A>
+<FONT COLOR="#000080">predicate_property(M:F/A, PROPERTY)</FONT></H3>
+<!AMZI_INDEX = predicate_property/2; dynamic; static; built_in; extended; import; export; defined_in> 
+<p><b>predicate_property/2</b> unifies PROPERTY with a property of the predicate 
+  in module M, with functor F and arity A. M:F/A must be bound. If just F/A is 
+  specified, the current module is used for M. If PROPERTY is a variable, on backtracking 
+  predicate_property/2 will return all properties of the predicate. The properties 
+  reported on are:</p>
+<ul>
+  <li><b>type</b> - dynamic, static, built_in, extended, see above for details.</li>
+  <li><b>defined_in(MOD)</b> - the module the predicate is defined in.</li>
+  <li><b>exported</b> - the predicate is exported from its module</li>
+  <li><b>imported_from(MOD)</b> - the import module if the predicate is defined 
+    in a different module from M.</li>
+  <li><b>metapredicate</b> - the predicate is a metapredicate</li>
+</ul>
+<p>For example:</p>
+<ul><font color="#000080"><pre>
+?- consult(duckym).
+yes
+
+?- predicate_property(rules:loc/2, P).
+P = imported_from(data) ;
+P = defined_in(data) ;
+P = dynamic ;
+P = exported ;
+no
+
+% load extended file predicates lsx
+?- loadlsx('aosutils.lsx').
+yes
+
+?- predicate_property(user:chdir/2, P).
+P = defined_in(user) ;
+P = extended ;
+no
+
+% look at some system predicates
+?- predicate_property(write/2, P).
+P = imported_from(amzi_system) ;
+P = defined_in(amzi_system) ;
+P = static ;
+no
+</pre></font></ul>
+
+<p>The above predicates can be used to collect lists of predicates. For example, 
+  here is a definition of a predicate that generates a list of all the dynamic 
+  predicates: </p>
+
+<ul><font color="#000080"><pre>
+get_dynamic_preds(LIST) :-
+   findall(M:F/A,
+      (
+         current_module(M),
+         current_predicate(M:F/A),
+         predicate_property(M:F/A, dynamic)
+      ),
+      LIST ).
+</pre></font></ul>
+<p>Running it with a consulted duckym.pro:</p>
+<ul><font color="#000080"><pre>
+?- get_dynamic_preds(L).
+L = [user:get_dynamic_preds/1, user:go/0,
+     user:init_state/0... rules:look/0,
+     rules:look_connect/1... data:loc/2,
+     data:nextto/2] 
+yes
+</pre></font></ul>
+
+<H2><A NAME="StaticPredicates"></A><FONT COLOR="#0000FF">
+Static Predicates</FONT></H2>
+<!AMZI_INDEX = Static Predicates>
+
+<p>Static predicates become part of the logicbase by being separately <a href="pug_compiler.htm">compiled</a>, 
+  and then loaded. Most commonly, the compiled files are <a href="pug_linker.htm">linked</a> 
+  into the application's .xpl file which is automatically loaded by <a href="pug_runtime.htm">arun</a>, 
+  or which is loaded by a host language application calling the <a href="../ls/lsprguid.htm#MainEntryPoints">Logic 
+  Server API</a>.</p>
+<p>Individual .plm files, containing compiled predicates corresponding to .pro files, can also be loaded and unloaded under program control, or from the listener. The following predicate provide that capability.</p>
+
+<H3><A NAME="load"></A><FONT COLOR="#000080">load(FileA), load([F1, F2,
+...])</FONT></H3>
+
+<P><!AMZI_INDEX = load/1; plm Files><B>load/1</B> is similar
+to consult, but it only loads object (.plm) files. If no
+file extension is given, and no files match the name, then it assumes the
+extension is PLM. </P>
+
+<P>For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- load([duck1, duck2]).   % loads duck1.plm and duck2.plm</FONT></PRE>
+</UL>
+
+<H3><A NAME="load4"></A><FONT COLOR="#000080">load(memory, NAME, SIZE, ADDRESS)</FONT></H3>
+<!AMZI_INDEX = load/4; load from memory>
+<p><b>load/4</b> allows you to load a .plm file from a block of memory. It is 
+  designed to be called from Logic Server applications that have special storage 
+  of .plm files.</p>
+
+<H3><A NAME="unload"></A><FONT COLOR="#000080">unload(FileA), unload([F1, F2,
+...])</FONT></H3>
+
+<P><!AMZI_INDEX = unload/1; plm Files><B>unload/1 </B>allows you to 
+  'unload' all of the clauses that resulted from a 'load' of the same file. This, 
+  along with multifile, lets you dynamically change the state of static predicates in the logicbase.</P>
+
+<P>For example, consider a tech support application with a predicate <b>rule/3</b>. 
+  If a problem area is determined to be a printer problem, then the file printer_rules.plm 
+  can be loaded. Once the problem is resolved, it can be unloaded, and then a 
+  different set of rules loaded for the next problem. </P>
+
+<H2><A NAME="DynamicPredicateStorageOptions"></A><FONT COLOR="#0000FF">
+Dynamic Predicate Storage Options</FONT></H2>
+<!AMZI_INDEX = Dynamic Predicates; dynamic storage; indexed clauses; sorted clauses>
+
+<p>When a file is <a href="ref_io.htm#consult1">consulted</a> into the logicbase, 
+  its predicates are all entered as dynamic predicates. A predicate defined in 
+  a file that is compiled, can be kept as a dynamic predicate by using the <b>dynamic</b> 
+  directive.</p>
+<p>Different storage option for dynamic predicates can also be specified. These 
+  are <b>indexed</b> and <b>sorted</b>, and both provide much faster access for 
+  predicates that have large numbers of clauses.</p>
+<p>The directives affecting dynamic storage are:</p>
+
+<H3><A NAME="DynamicDirective"></A> <FONT COLOR="#000080">:- dynamic F/A</FONT></H3>
+<!AMZI_INDEX = :- dynamic/1; dynamic/1 directive>
+<p>The <b>dynamic/1</b> directive specifies that the clauses of the predicate 
+  with functor F and arity A will be stored as dynamic. This directive is only 
+  needed by the compiler, to let it know which predicates NOT to compile. When 
+  a file is consulted, all predicates are dynamic.</p>
+<p>Multiple comma separated F/A pairs can be entered with a single dynamic directive.</p>
+
+<H3><A NAME="IndexedDirective"></A> <FONT COLOR="#000080">:- indexed F(I1, I2, 
+  ...)</FONT></H3>
+<!AMZI_INDEX = :- indexed/1; indexed/1; indexed directive; performance> 
+<p>The <b>indexed/1</b> directive lets you specify a key or composit key for a 
+  dynamic predicate. F is the functor of the predicate. Each Ix corresponds to 
+  an argument of the predicate. Each Ix has a value of either 1, indicating the 
+  argument is in the key, or 0, indicating the argument is not in the key. The 
+  key does not have to be unique.</p>
+<p>When a goal refers to the indexed predicate, and the arguments making up the 
+  key are bound, then access to the clauses will be direct and very fast. If any 
+  of the arguments making up the key are not bound, then access will be no different 
+  than with normal, unindexed dynamic clauses.</p>
+<p>For example, consider an application with a large number of clauses defining 
+  customers. The form of the clauses is:</p>
+<ul><font color="#000080"><pre>
+customer(ID, LAST_NAME, FIRST_NAME, PHONE, ADDRESS).
+</pre></font></ul>
+<p>If customers were retrieved primarily by ID, then this directive would make that first argument a key.</p>
+<ul><font color="#000080"><pre>
+:- indexed customer(1,0,0,0,0).
+</pre></font></ul>
+<p>If customers were retrieved primarily by the full name, then this directive would create a composit key from the second and third arguments.</p>
+<ul><font color="#000080"><pre>
+:- indexed customer(0,1,1,0,0).
+</pre></font></ul>
+<p>Benchmarks have shown that for predicates made up of a large number of clauses 
+  that are facts (have no bodies), indexed dynamic storage can be significantly 
+  faster than even compiled clauses, which include first argument indexing. This 
+  is because compiler indexing is designed for high performance for smaller numbers 
+  of clauses used as rules; whereas indexed dynamic storage is designed like database 
+  indexing for predicates which are more database like.</p>
+<p>The <b>indexed</b> directive implies <b>dynamic</b>, so indexed predicates 
+  do not have to be declared dynamic as well.</p>
+<H3><A NAME="SortedDirective"></A>
+<FONT COLOR="#000080">:- sorted F/A</FONT></H3>
+<!AMZI_INDEX = :- sorted/1; sorted/1; sorted directive>
+<p>The <b>sorted</b> directive allows you to specify that the clauses of a predicate 
+  with functor F and arity A, are stored in sorted order, according to <a href="ref_manipulating_terms.htm#StandardOrder">standard 
+  sort order</a>. This means that when retrieved, they will be retrieved in sort 
+  order.</p>
+<p>This also means that retrieval can be almost as fast as for indexed predicates, 
+  when the left-most arguments of a goal query are bound. For example if the customer/5 
+  predicate in the indexed section had its arguments rearranged like this:</p>
+<ul><font color="#000080"><pre>
+customer(LAST_NAME, FIRST_NAME, ID, PHONE, ADDRESS)
+</pre></font></ul>
+<p>Then the customers would display sorted by last name, then first (then ID, 
+  phone and address), and queries with either last name or last name and first 
+  name, would execute very fast. Queries where just ID was bound, would take the 
+  same time as for non-sorted dynamic predicates.</p>
+<p><b>assert/1</b>, <b>asserta/1</b>, and <b>assertz/1</b> all have the same effect 
+  with sorted predicates, and that is to insert the new clause in sorted order.</p>
+<p>Consider, for example this source file, petdata.pro:</p>
+<ul><font color="#000080"><pre>
+:- sorted(pet/2).
+
+pet(dog, susie).
+pet(duck, leona).
+pet(hampster, gus).
+pet(dog, sam).
+pet(rabbit, buns).
+pet(fish, jones).
+pet(duck, bif).
+pet(dog, jasmine).
+pet(fish, dow).
+</pre></font></ul>
+<p>Then consider this listener session, noting that the duck names returned from 
+  the findall are sorted.</p>
+<ul><font color="#000080"><pre>
+?- [petdata].
+yes
+
+?- listing(pet).
+user:pet(dog, jasmine).
+user:pet(dog, sam).
+user:pet(dog, susie).
+user:pet(duck, bif).
+user:pet(duck, leona).
+user:pet(fish, dow).
+user:pet(fish, jones).
+user:pet(hampster, gus).
+user:pet(rabbit, buns).
+yes
+
+?- assert( pet(duck,ivan) ).
+yes
+
+?- findall(X, pet(duck,X), L).
+ = H1
+L = [bif, ivan, leona] 
+yes
+</pre></font></ul>
+<p>Multiple comma separated F/A pairs can be entered with a single sorted directive.</p>
+
+<H2><A NAME="DynamicPredicates"></A><FONT COLOR="#0000FF">
+Dynamic Predicates</FONT></H2>
+<!AMZI_INDEX = Dynamic Predicates>
+<p>The clauses of dynamic predicates can be added and removed dynamically at run 
+  time.</p>
+<p><a href="ref_io.htm#consult1">consult/1</a> can be used to dynamically consult 
+  all the predicates in a source file.</p>
+<p><a href="ref_io.htm#listing">listing/0,1,2</a> can be used to display dynamic predicates.</p>
+<p>The following predicates provide finer control. Many have an argument of TERM, 
+  where TERM represents a clause. For a TERM to represent a clause, it must have 
+  a HEAD and may optionally have a BODY.</p>
+<p>A HEAD can be:</p>
+<ul>
+  <li>module:functor</li>
+  <li>module:functor(arg1, arg2, ... argN)</li>
+</ul>
+  
+<p>The module specification is optional, and the current module used if none is 
+  provided.</p>
+<p>A BODY is a list of goals. If a BODY is used, then it is separated from the 
+  HEAD by the neck operator, and the TERM is enclosed in parenthesis.</p>
+<p>Examples of TERMs used with assert/1:</p>
+<ul><font color="#000080">
+  <pre>
+assert( ducks ).
+assert( duck(leona) ).
+assert( pets:duck(leona) ).
+assert( (pet(duck) :- sound(quack)) ).
+</pre>
+  </font></ul>
+
+<H3><A NAME="abolishNameArity"></A><FONT COLOR="#000080">abolish(M:F/A)</FONT></H3>
+
+<P><!AMZI_INDEX = abolish; Clauses; Predicates><B>abolish/1</B> removes all dynamic 
+  clauses for the predicate with functor F and arity A, in module M. The module 
+  specification is optional. <b>abolish/1</b> is faster than <b>retractall/1</b> 
+  when it is desired to remove all the clauses for a predicate that is not being 
+  used. For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- abolish(expense/3).</FONT></PRE>
+</UL>
+<p>removes all of the dynamic expense/3 clauses.</p>
+<p><i><img src="arrowrt.gif" height=18 width=18 align=BOTTOM> <b>abolish/1</b> 
+  does not check if the predicate is being used, so if there are goals using the 
+  predicate which might be backtracked into, a system crash can result. <b>retractall/1</b> 
+  is safer but slower, as it guarantees proper failure if there are any goals 
+  which might backtrack into the predicate.</i></p>
+<H3><A NAME="assertaTerm"></A><FONT COLOR="#000080">asserta(TERM)</FONT></H3>
+
+<P><!AMZI_INDEX = asserta/1; Clauses><B>asserta/1</B> adds clauses at the 
+  front of the list of clauses defining a predicate. See legal values for TERM 
+  above.</P>
+<H3><A NAME="assertzTerm"></A><FONT COLOR="#000080">assertz(TERM)</FONT></H3>
+
+<P><!AMZI_INDEX = assertz/1; Clauses><B>assertz</B> is similar to <B>asserta</B> 
+  except the clause is added at the end of the list of clauses. See legal values 
+  for TERM above.</P>
+
+<H3><A NAME="assertTerm"></A><FONT COLOR="#000080">assert(TERM)</FONT></H3>
+
+<P><!AMZI_INDEX = assert/1; Clauses><B>assert/1</B> is a synonym for <B>assertz/1</B>.
+</P>
+
+<H3><A NAME="clauseHeadBody"></A><FONT COLOR="#000080">clause(HEAD, BODY)</FONT></H3>
+
+<P><!AMZI_INDEX = clause/2; Head; Body; Clauses><B>clause/2</B> succeeds if HEAD 
+  (see definition of HEAD and BODY above) can be unified with the head of a dynamic 
+  clause in the database, and BODY with its body. If clause is backtracked into, 
+  it will keep on succeeding as long as there is another clause whose head matches 
+  HEAD. </P>
+
+<P>HEAD must be sufficiently instantiatedthe name and arity of the structure must 
+  be apparent in Head. For example if the <a href="../../samples/prolog/doc.html">duckym</a> 
+  sample is consulted: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">
+?- clause(rules:connect(X,Y), BODY).
+X = H1
+Y = H2
+BODY = nextto(H1, H2) ;
+
+X = H1
+Y = H2
+BODY = nextto(H2, H1) ;
+no
+
+?- clause(go, X).
+X = done ;
+
+X = write(`>> `) ',' read(H85) ',' H85 \= quit ',' do(H85) ',' demons ',' '!' ',' go ;
+
+X = write(` Quitter `) ',' nl ;
+no
+</FONT></PRE>
+</UL>
+
+<H3><A NAME="retractTerm"></A><FONT COLOR="#000080">retract(TERM)</FONT></H3>
+
+<P><!AMZI_INDEX = retract; Terms; Clauses><B>retract</B>/1 removes clauses that 
+  unify with TERM. The same restrictions on TERM applies to retract as it does 
+  to assert. See introduction above for details.</P>
+<P>The first clause in the predicate which matches TERM is removed. For example 
+  to remove a specific clause: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- retract(pet(hampster, gus)).
+yes
+</FONT></PRE>
+</UL>
+<p>To remove clauses that match a pattern, a variable can be used in one or more 
+  arguments. The variable is bound with the value from the retracted clause. Backtracking 
+  will look for other clauses that match the pattern. For example, to remove just 
+  some pet ducks:</p>
+<UL>
+  <PRE><FONT COLOR="#000080">
+?- retract(pet(duck, X)).
+X = bif;
+X = leona;
+X = ivan;
+no</FONT></PRE>
+</UL>
+<p><b>retract/1</b> will fail if there are no clauses which match the pattern. 
+  If you want to ensure a certain pattern of clauses does not exist, use <b>retractall/1</b> 
+  instead. If you want to remove all dynamic clauses for a predicate, use <b>abolish/1</b>.</p>
+<H3><A NAME="retractallTerm"></A><FONT COLOR="#000080">retractall(TERM)</FONT></H3>
+
+<P><!AMZI_INDEX = retractall; Terms; Clauses><B>retractall/1</B> is similar to 
+  <B>retract/1</B> except all clauses which match TERM are removed, and it always 
+  succeeds. For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- retractall(pet(duck,_)).</FONT></PRE>
+</UL>
+<p>Because<b> retractall/1</b> always succeeds, it is a better than <b>retract/1</b> 
+  for making sure there are no clauses that match a particular pattern.</p>
+<p>If it is desired to remove all of the dynamic clauses for a predicate, not 
+  just those that match a particular pattern, <b>abolish/1</b> is more efficient.</p>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P>&nbsp; </P>
+
+</BODY>
+</HTML>

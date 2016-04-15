@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wide", "wide.vcproj", "{72FDCD10-1152-4626-8ED2-DDF1F8F0B915}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		DebugA|Win32 = DebugA|Win32
+		DebugW|Win32 = DebugW|Win32
+		ReleaseA|Win32 = ReleaseA|Win32
+		ReleaseW|Win32 = ReleaseW|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72FDCD10-1152-4626-8ED2-DDF1F8F0B915}.DebugA|Win32.ActiveCfg = DebugA|Win32
+		{72FDCD10-1152-4626-8ED2-DDF1F8F0B915}.DebugA|Win32.Build.0 = DebugA|Win32
+		{72FDCD10-1152-4626-8ED2-DDF1F8F0B915}.DebugW|Win32.ActiveCfg = DebugW|Win32
+		{72FDCD10-1152-4626-8ED2-DDF1F8F0B915}.DebugW|Win32.Build.0 = DebugW|Win32
+		{72FDCD10-1152-4626-8ED2-DDF1F8F0B915}.ReleaseA|Win32.ActiveCfg = ReleaseA|Win32
+		{72FDCD10-1152-4626-8ED2-DDF1F8F0B915}.ReleaseA|Win32.Build.0 = ReleaseA|Win32
+		{72FDCD10-1152-4626-8ED2-DDF1F8F0B915}.ReleaseW|Win32.ActiveCfg = ReleaseW|Win32
+		{72FDCD10-1152-4626-8ED2-DDF1F8F0B915}.ReleaseW|Win32.Build.0 = ReleaseW|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

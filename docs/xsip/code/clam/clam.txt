@@ -1,0 +1,63 @@
+ABOUT
+-----
+
+CLAM is an EMYCIN-type expert system shell supporting backward chaining
+with uncertainty and explanations.
+
+Unlike NATIVE, which uses native Prolog syntax for the knowledge,
+CLAM uses Definite Clause Grammar (DCG) rules to parse a rule syntax of
+its own design.
+
+
+USE
+---
+
+From DOS type:
+
+	c:\> clam
+
+To start up CLAM from the listener, type:
+
+	?- [clam].	% equivalent to consult('clam.pro').
+	?- main.
+
+An additional file is BLDRULES.PRO that uses DCG to convert a file of rules
+in Prolog syntax into CLAM syntax.  
+
+The commands are: consult, restart, load, list, trace, how, exit
+
+They are entered without the ending period after the > prompt except for 
+the load command which does a normal Prolog read(X) to get the file
+name.
+
+consult	Starts the consultation
+
+restart	Clears the knowledge base of known facts for rerunning a
+	consultation.
+
+load	Loads the knowledge base.  Other commands do not require Prolog
+	syntax but this one does.  Use 'car.ckb'. with the ending period.
+
+list	Lists the known facts in a consultation
+
+trace	Sets trace on or off, as in trace on or trace off
+
+how	For example, to get an explanation type:
+		how problem is battery
+
+exit	Exits.
+
+
+PROJECTS
+--------
+
+Fix file reader, so it is friendlier, make a general file reader for
+	all of the xsip programs.  read_fname(F) or read_fname(F,Ext) 
+	where Ext is default extension and maybe even 
+	read_fname(Path,F,Ext) where path is a default path if the 
+	file isn't found in the current directory.
+
+Get clam to work with nice user interface.
+
+Get bldrules to work with menu ask and multiple option rules in BIRDS.NKB.
+

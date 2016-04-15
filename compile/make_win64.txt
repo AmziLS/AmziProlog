@@ -1,0 +1,19 @@
+.SUFFIXES: .plm .pro
+
+OBJECTS = reader.plm
+ALIB = $(AMZI_DEV_DIR)\abin\alib.plm
+ACMP = $(AMZI_DEV_DIR)\abin\acmp.xpl
+
+all: $(ACMP)
+  
+.pro.plm:
+	acmp $<
+
+$(ACMP) : alib.plm $(OBJECTS)
+	copy acmp.xpl $(ACMP)
+	copy alib.plm $(ALIB)
+
+clean :
+	-del /Q *.plm
+
+

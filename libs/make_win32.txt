@@ -1,0 +1,22 @@
+ACMP = $(APLS_RELEASE)\bin\acmp.exe
+
+LIBS = \
+   list.plm \
+   misc.plm \
+   date_time.plm \
+   xml.plm
+
+.SUFFIXES: .plm .pro
+
+.pro.plm:
+	$(ACMP) $<
+
+_libs : $(LIBS)
+	copy *.plm $(APLS_RELEASE)\abin
+
+clean :
+	-del *.plm
+
+remove_cvs:
+	-rmdir /S /Q CVS
+

@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Preprocessor</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="Preprocessor"></A><FONT COLOR="#D2AA00">Preprocessor</FONT> </h1>
+<P><!AMZI_INDEX = Preprocessor>
+  Pre-processing is an ephemeral activity that takes 
+  place at read time, and none of the controls are ever seen by Prolog. It's purpose 
+  is to tailor a program for a specific environment, facilitate code sharing, 
+  and to provide succinct denotations (and hiding) of more complex code. It is 
+  based on the syntax and semantics of the C preprocessor. 
+  Preprocessor expressions are written in C functional style, not Prolog relational 
+  style.</P>
+<P>For example, consider this small program that has macros defined for tracing 
+  and rigorous error checking that are used during debug mode, but are disabled 
+  (set to the Prolog no-op true) when not debugging. It also illustrates use of 
+  the predefined macros for date, time and line numbers.</P>
+<blockquote>
+  <pre><font color="#000080">#define DEBUG
+
+#ifdef DEBUG
+#define TRACE(X) writeq(trace - X), nl
+#define CHECK(X,MSG) ( X -> true; throw(check(MSG, __LINE__)) )
+#else
+#define TRACE(X) true
+#define CHECK(X,MSG) true
+#endif
+
+main :-
+   write('Build date': __DATE__), nl,
+   write('Build time': __TIME__), nl,
+   catch(go, ERR, error(ERR)).
+
+error(check(MESSAGE, LINE)) :-
+   write('Error':MESSAGE),
+   tab(2), write('on line':LINE),
+   nl.
+
+go :-
+   A = 2,
+   TRACE(`calling square with A` = A),
+   CHECK(integer(A), `argument to square not an integer`),
+   square(A, AA),
+   write(answer:AA), nl,
+   B = hi,
+   TRACE(`calling square with B` = B),
+   CHECK(integer(B), `argument to square not an integer`),
+   square(B, BB),
+   write(answer:BB), nl.
+
+square(A, AA) :-
+   AA is A * A.  </font></pre></blockquote>
+<P>Running this program yields ths result:</P>
+<blockquote>
+  <pre><font color="#000080">Build date: 4/15/2002
+Build time:17:13:24
+trace - `calling square with A` = 2
+answer:4
+trace - `calling square with B` = hi
+Error:argument to square not an integer  on line:29</font></pre></blockquote>
+<P><b><img src="arrowrt.gif" height=18 width=18 align=BOTTOM> </b><i>Expanded 
+  macro definitions are read by Prolog and must be valid Prolog syntax, so the 
+  use of extant C macros beyond simple values requires careful consideration.</i> 
+</P>
+
+<H2><A NAME="Directives"></A><FONT COLOR="#0000FF">Directives</FONT></H2>
+
+<P><!AMZI_INDEX = Directives>A preprocessor control directive is denoted by '#' 
+  in column one: </P>
+<blockquote>
+  <pre><font color="#000080">#if, #ifdef, #ifndef, #else, #elif, #endif, 
+#define, #undef, 
+#error</font></pre></blockquote>
+<P>Controls can be block commented out. </P>
+<h3><font color="#000080"><a name="pound_define"></a>#define</font> <br>
+</h3>
+<p> <!AMZI_INDEX = #define; define>This defines a global macro which will be stored 
+  by Prolog. There can only be one macro with a given name. <br>
+  <br>
+  A macro is strictly text replacement, expanded at load time so the arguments 
+  are text, not values, and there is no other environment. A macro body should 
+  not contain text that denotes free Prolog variables, ie. variables that are 
+  not the names of it's own arguments or the names of other macros, unless it 
+  is defining a self-contained clause to be asserted.<br>
+  <br>
+  It consists of two parts, the definiend (head) and the definition (body). The 
+  definiend has a name and parameters, all of which must conform to Prolog syntax 
+  for variables; but they are neither, they are just names. There is a limit of 
+  15 parameters. Each argument takes up size+1 space and the total space available 
+  is only 64. This helps to ensure that a definiend does not need more than one 
+  line of text. <br>
+  <br> The rest of the line following the definiend is the definition, which shall 
+  be text, possibly containing references to parameter names. The definition is 
+  delimited by a line feed symbol, but may employ a backslash symbol to shield 
+  a linefeed from view. Then both the backslash symbol and the linefeed are elided. 
+  Thus, the definition is stored as a single line of text with no particular limit 
+  on size. <br>
+  <br>
+  A macro reference is a token which is the name of a defined macro,  
+  followed by its arguments (if any). It is never seen by Prolog. When a macro reference 
+  is encountered at load time it is replaced by the macro definition, which itself 
+  is expanded by replacing parameter references by arguments, and the result is 
+expected to be a fragment of syntactically acceptable Prolog. </p>
+<p> There is no particular limit to the size of a macro argument but it must be 
+  balanced with respect to quotes and parentheses. 
+  There is no syntactic reason for the definition itself to be balanced, but an 
+  unbalanced macro would be highly context dependent.<br>
+  <br>
+  Some macros are pre-defined because they are are 'dynamic'. Their semantics 
+are not constant text but depend upon hidden code at expansion time.</p>
+<p>The following macros are pre-defined: </p>
+<blockquote><table border="1" cellpadding="3">
+  <tr> 
+    <td valign="top"><b>Macro</b></td>
+    <td><b>Definition</b></td>
+  </tr>
+  <tr> 
+    <td valign="top">__DATE__ </td>
+    <td valign="top">expansion date</td>
+  </tr>
+  <tr> 
+    <td valign="top">__TIME__ </td>
+    <td valign="top">expansion time</td>
+  </tr>
+  <tr> 
+    <td valign="top">__LINE__ </td>
+    <td valign="top">line number</td>
+  </tr>
+</table>
+</blockquote>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I></I> </P>
+
+</BODY>
+</HTML>

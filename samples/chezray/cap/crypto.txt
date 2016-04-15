@@ -1,0 +1,30 @@
+Crypto-arithmetic (cap) problems make good prolog demonstrations. They are
+easy to understand yet difficult to solve by hand, and backtracking is 
+exactly what is required. Moreover, extended definite clause grammar (DCG)
+makes the prolog code particularly succint.
+
+For each problem a '.cry' file is prepared, which contains the problem text
+laid out exactly as a math puzzle problem, with no left or top margin. 
+Reading stops at eof or a blank line. No operators are required. If there is 
+one bar line then the problem is assumed to be one of addition, unless the 
+sum line is at least two digits longer than the longest summand line, in 
+which case it is assumed to be a product.  If there are two bar lines then 
+the problem is explicitly a product. In a cry file the symbol '.' means a 
+wild card, ie. any digit on the specified domain, whereas a '*' symbol means 
+an anonymous digit from the remaining domain.
+
+In addition there is a 'puzzles' file which contains a prolog list of terms
+identifying the available puzzles. If a term has an argument then that 
+argument describes the domain from which digits are to be drawn to solve that 
+puzzle, otherwise the domain is the digits 0 - 9. A '+' symbol before the
+domain means that digits will not be withdrawn from the domain.
+
+The cap processor compiles the chosen cry file into a prolog program in a file
+of the same name but with a '.pro' extension. Execution of that program
+solves the problem in what is believed to be an optimum manner.
+
+Basic DCG will draw the leading element from a difference list on demand.
+Extended DCG allows the user to specify what element is to be drawn. Here,
+every element of the list is available through backtracking.
+
+Acknowledgements to the unknown authors of these puzzles.

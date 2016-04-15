@@ -1,0 +1,23 @@
+# .bash_profile
+echo “Hello I’m running stuff in the ~/.bash_profile!”
+
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+export AMZI_WORK=/Users/dennis/Work/amzi/github/amzi
+export AMZI_BUILD=mac
+export AMZI_RELEASE=$AMZI_WORK/release/$AMZI_BUILD
+export APLS_RELEASE=$AMZI_RELEASE/apls
+export AMZI_DIR=$AMZI_WORK/release/$AMZI_BUILD/apls
+export APLS_SOURCE=$AMZI_WORK/source/apls
+export AIDE_SOURCE=$AMZI_WORK/source/eclipse/amzi-eclipse
+export AIDE_RELEASE=$AMZI_RELEASE/ide
+export AMZI_DEV_DIR=$AMZI_WORK/release/mac/apls
+export CLASSPATH=./:$CLASSPATH:$AMZI_DIR/lsapis/java
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$AMZI_DIR/lib
+export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$AMZI_DIR/lib
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:$PATH:$AMZI_DIR/bin:$AMZI_DIR/lib
+export PATH

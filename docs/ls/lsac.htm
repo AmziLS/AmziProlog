@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>C Interface</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (WinNT; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<h1><A NAME="CInterface"></A><FONT COLOR="#D2AA00">C Interface</FONT></h1>
+
+<P> 
+  <!AMZI_INDEX= C Interface>
+  The Logic Server library (.dll and .so) has a functional interface and an object-oriented 
+  interface. C programmers call the functional Logic Server interface directly. 
+  These are the functions that begin with 'ls' and that are documented in the 
+  <a href="lsapirf.htm">API Reference</a>. They are defined in logicserver.h.</P>
+<P>There are no special considerations when using the Logic Server from C.</P>
+
+<h2><A NAME="HelloPrologfromC"></A><font color="#0000FF">Hello Prolog</font></h2>
+
+<P><!AMZI_INDEX=  Hello Prolog>The sample program in the directory samples/c/hello 
+  is a console version of the basic hello program. It includes a make file for 
+  Visual C++ users. It is built by linking with the appropriate library in amzi/lib.</P>
+
+<P>
+  <!AMZI_INDEX=  Borland C++; amzib.lib>
+  Borland C++ users should link with amzi/lib/amzib.lib. This is a .lib file created 
+  by running Borland's 'implib' utility on amzi.dll.</P>
+
+<h2><A NAME="UnicodeSupport"></A><font color="#0000FF">Unicode Support</font></h2>
+<!AMZI_INDEX= Unicode> To build a Unicode application, #define _UNICODE for the 
+application.
+<P>All of the LSAPI functions that have character strings as arguments
+or return values have two versions.  One version ends in 'A' (for ANSI)
+and the other ends in 'W' (for wide).</P>
+
+<P>You still use the normal names of each function, but they are
+#defined to either the 'A' or 'W' version depending on whether or
+not _UNICODE is defined.  If you explicitly want to use an ANSI version
+of a function in a _UNICODE application, you can explicitly call the
+'A' version of the function.</P>
+
+<P>The functions mbstowcs() and wcstombs() are used to convert between
+wide and multibyte (ANSI) strings, so multibyte character sets can also
+be used with the Logic Server.</P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I> </I></P>
+
+</BODY>
+</HTML>

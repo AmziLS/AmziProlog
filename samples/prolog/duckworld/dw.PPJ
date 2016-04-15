@@ -1,0 +1,7 @@
+amzirel=4
+xplfile=dw.xpl
+directory=\amzi\source\apls\samples\prolog\duckworld
+opdefs=
+file=dw_data.pro
+file=dw_main.pro
+file=dw_rules.pro

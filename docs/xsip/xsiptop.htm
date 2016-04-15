@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Contents</TITLE>
+   <META NAME="Author" CONTENT="">
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+<title>Adventure in Prolog Tutorial
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="robots" content="all">
+<meta name="description" content="Tutorial explains Prolog concepts with text, diagrams and 
+specialized diagrams for illustrating flow-of-control. Uses 
+full program examples to lead you step-by-step 
+through writing: an adventure game, an intelligent data-base, 
+an expert system and an order entry program.">
+<meta name="keywords" content="Prolog, Prolog language, Prolog tutorial,
+Prolog programming, Prolog examples, free Prolog, Prolog interpreter, 
+logic, logic programming, 
+AI, artificial intelligence, rules, business rules, process rules, rule-based systems, 
+expert systems,  
+reasoning, inferencing, inference engines, intelligent software, 
+sample code, source code, 
+Amzi! Prolog, Amzi!, Amzi, Adventure in Prolog, Logic Explorer
+">
+<meta http-equiv="description" content="Tutorial explains Prolog concepts with text, diagrams and 
+specialized diagrams for illustrating flow-of-control. Uses 
+full program examples to lead you step-by-step 
+through writing: an adventure game, an intelligent data-base, 
+an expert system and an order entry program.">
+<meta http-equiv="keywords" content="Prolog, Prolog language, Prolog tutorial,
+Prolog programming, Prolog examples, free Prolog, Prolog interpreter, 
+logic, logic programming, 
+AI, artificial intelligence, rules, business rules, process rules, rule-based systems, 
+expert systems,  
+reasoning, inferencing, inference engines, intelligent software, 
+sample code, source code, 
+Amzi! Prolog, Amzi!, Amzi, Adventure in Prolog, Logic Explorer
+">
+</HEAD>
+<BODY BGCOLOR=#FFFFFF TEXT=#000000>
+<H1>Building Expert Systems in Prolog</H1>
+
+<HR>
+
+<H2><FONT COLOR=#E3BC00><A NAME="Contents"></A></FONT>Contents<FONT COLOR=#E3BC00> 
+  </FONT></H2>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 >
+<TR VALIGN=TOP>
+
+    <TD VALIGN=TOP width="313"> 
+      <DL> 
+        <DT><A HREF="00preface.htm#preface"> </A></DT>
+        <pre>
+ <a href="00preface.htm#preface" target="content">Preface</a>
+ <a href="00preface.htm#acknowledgements" target="content">Acknowledgements</a>
+
+1 Introduction
+ <a href="01introduction.htm#expertsystems" target="content">1.1 Expert Systems</a>
+ <a href="01introduction.htm#expertsystemfeatures" target="content">1.2 Expert System Features</a>
+    <a href="01introduction.htm#goaldrivenreasoning" target="content">Goal-Driven Reasoning</a>
+    <a href="01introduction.htm#uncertainty" target="content">Uncertainty</a>
+    <a href="01introduction.htm#datadrivenreasoning" target="content">Data Driven Reasoning</a>
+    <a href="01introduction.htm#datarepresentation" target="content">Data Representation</a>
+    <a href="01introduction.htm#userinterface" target="content">User Interface</a>
+    <a href="01introduction.htm#explanations" target="content">Explanations</a>
+    <a href="01introduction.htm#sampleapplications" target="content">1.3 Sample Applications</a>
+ <a href="01introduction.htm#prolog" target="content">1.4 Prolog</a>
+ <a href="01introduction.htm#assumptions" target="content">1.5 Assumptions</a>
+
+2 Using Prolog's Inference Engine&nbsp;&nbsp;&nbsp;
+ <a href="02usingprolog.htm#thebirdidentificationsystem" target="content">2.1 The Bird Identification System</a>
+    <a href="02usingprolog.htm#ruleformats" target="content">Rule formats</a>
+    <a href="02usingprolog.htm#rulesaboutbirds" target="content">Rules about birds</a>
+    <a href="02usingprolog.htm#rulesforhierarchicalrelationships" target="content">Rules for hierarchical relationships</a>
+    <a href="02usingprolog.htm#rulesforotherrelationships" target="content">Rules for other relationships</a>
+ <a href="02usingprolog.htm#userinterface" target="content">2.2 User Interface</a>
+    <a href="02usingprolog.htm#attributevaluepairs" target="content">Attribute Value pairs</a>
+    <a href="02usingprolog.htm#askingtheuser" target="content">Asking the user</a>
+    <a href="02usingprolog.htm#rememberingtheanswer" target="content">Remembering the answer</a>
+    <a href="02usingprolog.htm#multivaluedanswers" target="content">Multi-valued answers</a>
+    <a href="02usingprolog.htm#menusfortheuser" target="content">Menus for the user</a>
+    <a href="02usingprolog.htm#otherenhancements" target="content">Other enhancements</a>
+ <a href="02usingprolog.htm#asimpleshell" target="content">2.3 A Simple Shell</a>
+    <a href="02usingprolog.htm#commandloop" target="content">Command loop</a>
+    <a href="02usingprolog.htm#atoolfornonprogrammers" target="content">A tool for non-programmers</a>
+ <a href="02usingprolog.htm#summary" target="content">2.4 Summary</a>
+ <a href="02usingprolog.htm#exercises" target="content">Exercises</a>
+
+3 Backward Chaining with Uncertainty
+ <a href="03backwarduncertainty.htm#certaintyfactors" target="content">3.1 Certainty Factors</a>
+    <a href="03backwarduncertainty.htm#anexample" target="content">An Example</a>
+    <a href="03backwarduncertainty.htm#ruleuncertainty" target="content">Rule Uncertainty</a>
+    <a href="03backwarduncertainty.htm#useruncertainty" target="content">User Uncertainty</a>
+    <a href="03backwarduncertainty.htm#combiningcertainties" target="content">Combining Certainties</a>
+    <a href="03backwarduncertainty.htm#propertiesofcertaintyfactors" target="content">Properties of Certainty Factors</a>
+ <a href="03backwarduncertainty.htm#mycinscertaintyfactors" target="content">3.2 MYCINs Certainty Factors</a>
+    <a href="03backwarduncertainty.htm#determiningpremisecf" target="content">Determining Premise CF</a>
+    <a href="03backwarduncertainty.htm#combiningpremisecfandconclusioncf" target="content">Combining Premise CF and Conclusion CF</a>
+    <a href="03backwarduncertainty.htm#premisethresholdcf" target="content">Premise Threshold CF</a>
+    <a href="03backwarduncertainty.htm#combiningcfs" target="content">Combining CFs</a>
+ <a href="03backwarduncertainty.htm#ruleformat" target="content">3.3 Rule Format</a>
+ <a href="03backwarduncertainty.htm#theinferenceengine" target="content">3.4 The Inference Engine</a>
+    <a href="03backwarduncertainty.htm#workingstorage" target="content">Working Storage</a>
+    <a href="03backwarduncertainty.htm#findavalueforanattribute" target="content">Find a Value for an Attribute</a>
+    <a href="03backwarduncertainty.htm#attributevaluealreadyknown" target="content">Attribute Value Already Known</a>
+    <a href="03backwarduncertainty.htm#askuserforattributevalue" target="content">Ask User for Attribute Value</a>
+    <a href="03backwarduncertainty.htm#deduceattributevaluefromrules" target="content">Deduce Attribute Value from Rules</a>
+ <a href="03backwarduncertainty.htm#makingtheshell" target="content">3.5 Making the Shell</a>
+    <a href="03backwarduncertainty.htm#startingtheinference" target="content">Starting the Inference</a>
+ <a href="03backwarduncertainty.htm#englishlikerules" target="content">3.6 English-like Rules</a>
+ <a href="03backwarduncertainty.htm#exercises" target="content">Exercises</a>
+
+4 Explanation
+    <a href="04explanation.htm#valueofexplanationstotheuser" target="content">Value of Explanations to the User</a>
+    <a href="04explanation.htm#valueofexplanationstothedeveloper" target="content">Value of Explanations to the Developer</a>
+    <a href="04explanation.htm#typesofexplanations" target="content">Types of Explanation</a>
+ <a href="04explanation.htm#explanationinclam" target="content">4.1 Explanation in Clam</a>
+ <a href="04explanation.htm#tracing" target="content">Tracing</a>
+    <a href="04explanation.htm#howexplanations" target="content">How Explanations</a>
+    <a href="04explanation.htm#whyquestions" target="content">Why Questions</a>
+ <a href="04explanation.htm#nativeprologsystems" target="content">4.2 Native Prolog Systems</a>
+ <a href="04explanation.htm#exercises" target="content">Exercises</a>
+
+5 Forward Chaining
+ <a href="05forward.htm#productionsystems" target="content">5.1 Production Systems</a>
+ <a href="05forward.htm#usingoops" target="content">5.2 Using Oops</a>
+ <a href="05forward.htm#implementation" target="content">5.3 Implementation</a>
+ <a href="05forward.htm#explanationforoops" target="content">5.4 Explanations for Oops</a>
+ <a href="05forward.htm#enhancements" target="content">5.5 Enhancements</a>
+ <a href="05forward.htm#ruleselection" target="content">5.6 Rule Selection</a>
+    <a href="05forward.htm#generatingtheconflictset" target="content">Generating the conflict set</a>
+    <a href="05forward.htm#timestamps" target="content">Time stamps</a>
+ <a href="05forward.htm#lex" target="content">5.7 LEX</a>
+    <a href="05forward.htm#changesintherules" target="content">Changes in the Rules</a>
+    <a href="05forward.htm#implementinglex" target="content">Implementing LEX</a>
+ <a href="05forward.htm#MEA" target="content">5.8 MEA</a>
+ <a href="05forward.htm#exercises" target="content">Exercises</a>
+
+6 Frames
+ <a href="06frames.htm#thecode" target="content">6.1 The Code</a>
+ <a href="06frames.htm#datastructures" target="content">6.2 Data Structure</a>
+ <a href="06frames.htm#themanipulationpredicates" target="content">6.3 The Manipulation Predicates</a>
+ <a href="06frames.htm#usingframes" target="content">6.4 Using Frames</a>
+ <a href="06frames.htm#summary" target="content">6.5 Summary</a>
+ <a href="06frames.htm#exercises" target="content">Exercises</a></pre>
+      </DL>
+</TD>
+
+    <TD VALIGN=TOP width="139"> 
+      <DL> 
+        
+        <pre>
+7 Integration
+ <a href="07integration.htm#foops" target="content">7.1 Foops (Frames and Oops)</a>
+    <a href="07integration.htm#instances" target="content">Instances</a>
+    <a href="07integration.htm#rulesforfrints" target="content">Rules for frinsts</a>
+    <a href="07integration.htm#addingprologtofoops" target="content">Adding Prolog to Foops</a>
+ <a href="07integration.htm#roomconfiguration" target="content">7.2 Room Configuration</a>
+    <a href="07integration.htm#furnitureframes" target="content">Furniture frames</a>
+    <a href="07integration.htm#framedemons" target="content">Frame Demons</a>
+    <a href="07integration.htm#initialdata" target="content">Initial Data</a>
+    <a href="07integration.htm#inputdata" target="content">Input Data</a>
+    <a href="07integration.htm#therules" target="content">The Rules</a>
+    <a href="07integration.htm#outputdata" target="content">Output Data</a>
+ <a href="07integration.htm#asamplerun" target="content">7.3 A Sample Run</a>
+ <a href="07integration.htm#summary" target="content">7.4 Summary</a>
+ <a href="07integration.htm#exercises" target="content">Exercises</a>
+
+8 Performance
+ <a href="08performance.htm#backwardchainingindexes" target="content">8.1 Backward Chaining Indexes</a>
+ <a href="08performance.htm#retematchalgorithm" target="content">8.2 Rete Match Algorithm</a>
+    <a href="08performance.htm#networknodes" target="content">Network Nodes</a>
+    <a href="08performance.htm#networkpropogation" target="content">Network Propagation</a>
+    <a href="08performance.htm#exampleofnetworkpropagation" target="content">Example of Network Propagation</a>
+    <a href="08performance.htm#performanceimprovements" target="content">Performance Improvements</a>
+ <a href="08performance.htm#theretegraphdatastructures" target="content">8.3 The Rete Graph Data Structures</a>
+ <a href="08performance.htm#propagatingtokens" target="content">8.4 Propagating Tokens</a>
+ <a href="08performance.htm#therulecompiler" target="content">8.5 The Rule Compiler</a>
+ <a href="08performance.htm#integrationwithfoops" target="content">8.6 Integration with Foops</a>
+ <a href="08performance.htm#designtradeoffs" target="content">8.7 Design Tradeoffs</a>
+ <a href="08performance.htm#exercises" target="content">Exercises</a>
+
+9 User Interface
+ <a href="09userinterface.htm#objectorientedwindowinterface" target="content">9.1 Object Oriented Window Interface</a>
+ <a href="09userinterface.htm#developersinterfacetowindows" target="content">9.2 Developer's Interface to Windows</a>
+ <a href="09userinterface.htm#highlevelwindowimplementation" target="content">9.3 High-Level Window Implementation</a>
+    <a href="09userinterface.htm#messagepassing" target="content">Message Passing</a>
+    <a href="09userinterface.htm#inheritance" target="content">Inheritance</a>
+ <a href="09userinterface.htm#lowlevelwindowimplementation" target="content">9.4 Low-Level Window Implementation</a>
+ <a href="09userinterface.htm#exercises" target="content">Exercises</a>
+
+10 Two Hybrids
+ <a href="10hybrids.htm#cvgen" target="content">10.1 CVGEN</a>
+ <a href="10hybrids.htm#theknowledgebase" target="content">10.2 The Knowledge Base</a>
+    <a href="10hybrids.htm#ruleforparameters" target="content">Rule for parameters</a>
+    <a href="10hybrids.htm#rulesforderivedinformation" target="content">Rules for derived information</a>
+    <a href="10hybrids.htm#questionsfortheuser" target="content">Questions for the user</a>
+    <a href="10hybrids.htm#defaultrules" target="content">Default rules</a>
+    <a href="10hybrids.htm#rulesforedits" target="content">Rules for edits</a>
+    <a href="10hybrids.htm#staticinformation" target="content">Static information</a>
+ <a href="10hybrids.htm#inferenceengine" target="content">10.3 Inference Engine</a>
+ <a href="10hybrids.htm#explanations" target="content">10.4 Explanations</a>
+ <a href="10hybrids.htm#environment" target="content">10.5 Environment</a>
+ <a href="10hybrids.htm#aijmp" target="content">10.6 AIJMP</a>
+ <a href="10hybrids.htm#summary" target="content">10.7 Summary</a>
+ <a href="10hybrids.htm#exercises" target="content">Exercises</a>
+
+11 Prototyping
+ <a href="11prototyping.htm#theproblem" target="content">11.1 The Problem</a>
+ <a href="11prototyping.htm#thesalesadvisorknowledgebase" target="content">11.2 The Sales Advisor Knowledge Base</a>
+    <a href="11prototyping.htm#qualifying" target="content">Qualifying</a>
+    <a href="11prototyping.htm#objectivesbenefitsfeatures" target="content">Objectives - Benefits - Features</a>
+    <a href="11prototyping.htm#situationanalysis" target="content">Situation Analysis</a>
+    <a href="11prototyping.htm#competitiveanalysis" target="content">Competitive Analysis</a>
+    <a href="11prototyping.htm#miscellaneousadvice" target="content">Miscellaneous Advice</a>
+    <a href="11prototyping.htm#userqueries" target="content">User Queries</a>
+ <a href="11prototyping.htm#theinferenceengine" target="content">11.3 The Inference Engine</a>
+ <a href="11prototyping.htm#userinterface" target="content">11.4 User Interface</a>
+ <a href="11prototyping.htm#summary" target="content">11.5 Summary</a>
+ <a href="11prototyping.htm#exercises" target="content">Exercises</a>
+
+12 Rubik's Cube
+ <a href="12rubikscube.htm#theproblem" target="content">12.1 The Problem</a>
+ <a href="12rubikscube.htm#thecube" target="content">12.2 The Cube</a>
+ <a href="12rubikscube.htm#rotation" target="content">12.3 Rotation</a>
+ <a href="12rubikscube.htm#highlevelrules" target="content">12.4 High Level Rules</a>
+ <a href="12rubikscube.htm#improvingthestate" target="content">12.5 Improving the State</a>
+ <a href="12rubikscube.htm#thesearch" target="content">12.6 The Search</a>
+ <a href="12rubikscube.htm#moreheuristics" target="content">12.7 More Heuristics</a>
+ <a href="12rubikscube.htm#userinterface" target="content">12.8 User Interface</a>
+ <a href="12rubikscube.htm#onthelimitsofmachines" target="content">12.9 On the Limits of Machines</a>
+ <a href="12rubikscube.htm#exercises" target="content">Exercises</a>
+
+Appendix - Full Source Code
+ <a href="appendix.htm#native" target="content">Native</a>
+ <a href="appendix.htm#clam" target="content">Clam</a>
+ <a href="appendix.htm#oops" target="content">Oops</a>
+ <a href="appendix.htm#foops" target="content">Foops</a>
+ <a href="appendix.htm#retefoops" target="content">Rete-Foops</a>
+ <a href="appendix.htm#windows" target="content">Windows</a>
+ <a href="appendix.htm#rubik" target="content">Rubik</a>
+ <a href="appendix.htm#taxes" target="content">Taxes (Bonus Code)</a>
+     </pre>
+      </DL>
+</TD>
+</TR>
+</TABLE>
+
+<UL></UL>
+
+
+<P>
+<HR>
+
+<P>Published by:
+
+<P>Amzi! inc. <BR>
+5861 Greentree Road <BR>
+Lebanon, OH 45036 U.S.A.
+
+<P>phone +1-513-425-8050 <BR>
+fax +1-513-425-8025 <BR>
+web <A HREF="http://www.amzi.com">www.amzi.com</A>
+
+<P>Book Edition Copyright &copy;1989 by Springer-Verlag.<br>
+  On-line Edition Copyright &copy;2000 by Amzi! inc. All Rights Reserved. 
+<P>This document ("Work") is protected by copyright laws and international copyright 
+  treaties, as well as other intellectual property laws and treaties. You may 
+  use and distribute copies of this Work provided each copy of the Work is a true 
+  and complete copy, including all copyright and trademark notices, and each copy 
+  is accompanied by a copy of this notice. You may not distribute copies of this 
+  Work for profit either on a standalone basis or included as part of your own 
+  product or work without written permission from Amzi! You may not charge any 
+  fees for copies of this work including media or download fees. You may not include 
+  this Work as part of your own works. You may not rename, edit or create any 
+  derivative works from this Work. Contact Amzi! for additional licensing arrangements. 
+<P>Amzi! is a registered trademark and Logic Server, Active Prolog Tutor, Adventure 
+  in Prolog and the flying squirrel logo are trademarks of Amzi! inc. 
+<P>Last Updated: August 2000
+<P>
+<HR WIDTH="100%"><BR>
+</BODY>
+</HTML>

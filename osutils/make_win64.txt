@@ -1,0 +1,14 @@
+all: _osutils
+
+_osutils:
+	devenv wosutils.sln /rebuild Release|x64
+
+clean:
+	devenv wosutils.sln /clean Release
+	devenv wosutils.sln /clean Debug
+	-del /Q *.ncb
+	-del /Q *.pdb
+
+remove_cvs:
+	-rmdir /S /Q CVS
+

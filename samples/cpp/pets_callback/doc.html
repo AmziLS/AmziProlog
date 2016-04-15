@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>C++ Pets Sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1><font color="#0000FF">C++ Pets Callback Sample</font></h1>
+<p>This is a slightly more complex version of Pets in which the Prolog program 
+  has a prompt/2 predicate used to get information from the user. In the example, 
+  it is used to ask the user for the sound the pet makes. </p>
+<p>prompt/2 is implemented as an extended predicate in the C++ class derived from 
+  CLogicServer, illustrating the technique of having extended predicates associated 
+  with instances of classes derived from the Logic Server. 
+<p>This is a trivial console example, where there is no real point in having multiple 
+  instances of the prompt/2 predicate, but the technique is important for GUI 
+  applications where, for example, different instances of the Logic Server might 
+  be associated with different windows on the screen. 
+<h2>Windows</h2>
+<ol>
+  <li>Compile and link pets.pro into pets.xpl.
+    <ol>
+        <li>acmp pets</li>
+      <li>alnk pets pets</li>
+    </ol>
+  </li>
+  <li>Under Windows, open the Microsoft Visual C++ Project pets_callback and build 
+    pets_callback.exe.</li>
+  <li>Run pets_callback(.exe)</li>
+</ol>
+<h2>Unix/Mac</h2>
+<ol>
+  <li>Run the appropriate makefile  to build petscb</li>
+  <li>run: ./petscb</li>
+</ol>
+<p>
+
+<p>
+<!-- #BeginLibraryItem "/docs/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server and e-Prolog are trademarks 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p>&nbsp; </p>
+</body>
+</html>

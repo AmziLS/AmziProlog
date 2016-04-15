@@ -1,0 +1,30 @@
+SOURCE=$(APLS_SOURCE)
+RELEASE=$(APLS_RELEASE)
+
+.SUFFIXES: .plm .pro
+
+OBJECTS = register.plm assemb.plm builtins.plm cclause.plm cmain.plm compile.plm writeplm.plm reader.plm
+UNLOCK = $(RELEASE)/abin/unlock.xpl
+SRC_LIB = $(RELEASE)/src/acore/libs
+
+.pro.plm:
+	acmp $<
+
+all: $(RELEASE)/abin/alib.plm $(RELEASE)/abin/acmp.xpl
+
+$(RELEASE)/abin/alib.plm : alib.pro
+	acmp alib
+	cp alib.plm $(RELEASE)/abin/alib.plm
+
+$(RELEASE)/abin/acmp.xpl : $(OBJECTS)
+	alnk acmp $(OBJECTS)
+	cp acmp.xpl $(RELEASE)/abin/acmp.xpl
+
+$(UNLOCK): register.plm unlock.plm $(SRC_LIB)/date_time.plm
+	alnk unlock unlock register $(SRC_LIB)/date_time
+	cp unlock.xpl $(UNLOCK)
+
+#clean :
+#	-rm *.plm
+
+	

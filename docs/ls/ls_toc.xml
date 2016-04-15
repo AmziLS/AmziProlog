@@ -1,0 +1,616 @@
+<toc label="Amzi! Logic Server User's Guide &amp; Reference">
+ <topic label="Contents" href="doc/ls/lstop.htm">
+ </topic>
+ <topic label="Purpose" href="doc/ls/lstop.htm#Purpose">
+ </topic>
+ <topic label="Overview" href="doc/ls/lsovervw.htm">
+  <topic label="Prolog Logicbases" href="doc/ls/lsovervw.htm#PrologLogicBases">
+  </topic>
+  <topic label="Architecture" href="doc/ls/lsovervw.htm#AmziArchitecture">
+  </topic>
+  <topic label="Logic Server Engine and LSAPI" href="doc/ls/lsovervw.htm#TheLogicServerEngineandAPI">
+  </topic>
+  <topic label="Extending Prolog" href="doc/ls/lsovervw.htm#ExtendingProlog">
+  </topic>
+  <topic label="Supported Environments" href="doc/ls/lsovervw.htm#SupportedEnvironments">
+  </topic>
+ </topic>
+ <topic label="Programmer's Guide" href="doc/ls/lsprguid.htm">
+  <topic label="Main Entry Points" href="doc/ls/lsprguid.htm#MainEntryPoints">
+   <topic label="Engine ID Parameter" href="doc/ls/lsprguid.htm#EngineIDParameter">
+   </topic>
+  </topic>
+  <topic label="Logic Server Return Codes" href="doc/ls/lsprguid.htm#LogicServerReturnCodes">
+   <topic label="TF/Term-Success/Failure Return Codes" href="doc/ls/lsprguid.htm#TFSuccessFailureReturnCodes">
+   </topic>
+   <topic label="RC-Error Checking Return Codes" href="doc/ls/lsprguid.htm#RCErrorCheckingReturnCodes">
+   </topic>
+  </topic>
+  <topic label="Prolog Terms" href="doc/ls/lsprguid.htm#PrologTerms">
+   <topic label="Internals of Complex Terms" href="doc/ls/lsprguid.htm#TheInternalsofComplexTerms">
+   </topic>
+  </topic>
+  <topic label="String Passing Interface" href="doc/ls/lsprguid.htm#StringPassingInterface">
+   <topic label="Calling Prolog with a String Query" href="doc/ls/lsprguid.htm#CallingPrologwithaStringQuery">
+   </topic>
+   <topic label="Converting Terms to Strings" href="doc/ls/lsprguid.htm#ConvertingTermstoStrings">
+   </topic>
+   <topic label="Backtracking through Multiple Answers" href="doc/ls/lsprguid.htm#BacktrackingthroughMultipleAns">
+   </topic>
+   <topic label="Putting it All Togther" href="doc/ls/lsprguid.htm#Puttingitalltogther">
+   </topic>
+   <topic label="Examples" href="doc/ls/lsprguid.htm#Examples">
+   </topic>
+  </topic>
+  <topic label="Scope of Logic Server Terms" href="doc/ls/lsprguid.htm#ScopeOfLogicServerTerms">
+   <topic label="Safe Scoping Answer" href="doc/ls/lsprguid.htm#TheSafeScopingAnswer">
+   </topic>
+   <topic label="Nested Scoping Answer" href="doc/ls/lsprguid.htm#TheNestedScopingAnswer">
+   </topic>
+  </topic>
+  <topic label="Implementing a Simple Prolog Listener" href="doc/ls/lsprguid.htm#ImplementingASimplePrologListener">
+  </topic>
+  <topic label="Calling Terms" href="doc/ls/lsprguid.htm#CallingTerms">
+  </topic>
+  <topic label="Mapping Prolog Arguments to Host Variables" href="doc/ls/lsprguid.htm#MappingPrologArgumentsToHostVariables">
+   <topic label="Example" href="doc/ls/lsprguid.htm#Example">
+   </topic>
+  </topic>
+  <topic label="Making Simple Terms" href="doc/ls/lsprguid.htm#MakingSimpleTerms">
+  </topic>
+  <topic label="Handling Varying Prolog Types" href="doc/ls/lsprguid.htm#HandlingVaryingPrologTypes">
+  </topic>
+  <topic label="Manipulating Structures" href="doc/ls/lsprguid.htm#ManipulatingStructures">
+  </topic>
+  <topic label="Manipulating Lists" href="doc/ls/lsprguid.htm#ManipulatingLists">
+  </topic>
+  <topic label="Asserting and Retracting Dynamic Clauses" href="doc/ls/lsprguid.htm#AssertingAndRetracting">
+  </topic>
+  <topic label="Consulting Prolog Source Code" href="doc/ls/lsprguid.htm#ConsultingPrologSource">
+  </topic>
+  <topic label="Multiple Engines" href="doc/ls/lsprguid.htm#MultipleEngines">
+  </topic>
+  <topic label="Writing Extended Predicates" href="doc/ls/lsprguid.htm#WritingExtendedPredicates">
+   <topic label="Defining Extended Predicates" href="doc/ls/lsprguid.htm#DefiningExtendedPredicates">
+   </topic>
+   <topic label="Initializing the Extended Predicates" href="doc/ls/lsprguid.htm#InitializingtheExtendedPredica">
+   </topic>
+   <topic label="Example" href="doc/ls/lsprguid.htm#ExtendedPredicateExample">
+   </topic>
+  </topic>
+  <topic label="Extended Predicate Libraries (LSXs)" href="doc/ls/lsprguid.htm#ExtendedPredicateLibraries">
+   <topic label="Using LSXs" href="doc/ls/lsprguid.htm#UsingLSXs">
+   </topic>
+   <topic label="Example" href="doc/ls/lsprguid.htm#LSXExample">
+   </topic>
+  </topic>
+  <topic label="Capturing Prolog I/O" href="doc/ls/lsprguid.htm#CapturingPrologIO">
+   <topic label="I/O Functions" href="doc/ls/lsprguid.htm#TheIOFunctions">
+   </topic>
+   <topic label="Connecting Your Functions" href="doc/ls/lsprguid.htm#ConnectingYourFunctions">
+   </topic>
+   <topic label="Making Stream 3 the Default" href="doc/ls/lsprguid.htm#MakingStreamtheDefault">
+   </topic>
+   <topic label="Redirecting I/O Streams Example" href="doc/ls/lsprguid.htm#RedirectingIOStreamsExample">
+   </topic>
+  </topic>
+  <topic label="Error Handling" href="doc/ls/lsprguid.htm#ErrorHandling">
+   <topic label="Prolog Error Handling" href="doc/ls/lsprguid.htm#PrologErrorHandling">
+   </topic>
+   <topic label="LSAPI Error Handling" href="doc/ls/lsprguid.htm#LSAPIErrorHandling">
+   </topic>
+   <topic label="Class Error Handling" href="doc/ls/lsprguid.htm#CPPErrorHandling">
+   </topic>
+   <topic label="Break Handling" href="doc/ls/lsprguid.htm#BreakHandling">
+   </topic>
+   <topic label="Return Codes" href="doc/ls/lsprguid.htm#ReturnCodes">
+   </topic>
+  </topic>
+  <topic label="Miscellaneous Functions" href="doc/ls/lsprguid.htm#MiscellaneousAPIFunctions">
+  </topic>
+ </topic>
+ <topic label="LSAPI Introduction" href="doc/ls/lsaintro.htm">
+  <topic label="Libraries" href="doc/ls/lsaintro.htm#Libraries">
+  </topic>
+  <topic label="Getting Started" href="doc/ls/lsaintro.htm#GettingStarted">
+  </topic>
+  <topic label="Reference Sections" href="doc/ls/lsaintro.htm#ReferenceSections">
+  </topic>
+ </topic>
+ <topic label="Hello Prolog" href="doc/ls/lsahello.htm">
+  <topic label="Prolog Side of Hello Prolog" href="doc/ls/lsahello.htm#ThePrologSideofHelloProlog">
+   <topic label="Compiling and Linking" href="doc/ls/lsahello.htm#CompilingandLinkingHELLOPRO">
+   </topic>
+  </topic>
+  <topic label="Host Language Side of Hello Prolog" href="doc/ls/lsahello.htm#TheHostLanguageSideofHelloProl">
+  </topic>
+ </topic>
+ <topic label="LSAPI Reference" href="doc/ls/lsapirf.htm">
+   <topic label="Main entry points to set up Prolog environment (LogicServer Class)" href="doc/ls/lsapirf.htm#MainentrypointstosetupPrologen">
+   </topic>
+   <topic label="Calling Prolog from the host language (LogicServer Class)" href="doc/ls/lsapirf.htm#CallingPrologfromthehostlangua">
+   </topic>
+   <topic label="Logicbase asserting and retracting (LogicServer Class)" href="doc/ls/lsapirf.htm#Logicbaseassertingandret">
+   </topic>
+   <topic label="String/Term conversion functions (LogicServer Class)" href="doc/ls/lsapirf.htm#StringTermconversionfunctions">
+   </topic>
+   <topic label="Making Prolog types (LogicServer Class)" href="doc/ls/lsapirf.htm#MakingPrologtypes">
+   </topic>
+   <topic label="Getting values from Prolog terms (LogicServer Class)" href="doc/ls/lsapirf.htm#GettingCvaluesfromPrologterms">
+   </topic>
+   <topic label="Structure manipulation functions (LogicServer Class)" href="doc/ls/lsapirf.htm#Structurehackingfunctions">
+   </topic>
+   <topic label="List manipulation functions (LogicServer Class)" href="doc/ls/lsapirf.htm#Listhackingfunctions">
+   </topic>
+   <topic label="Parameter manipulating functions for building extended predicates (LogicServer Class)" href="doc/ls/lsapirf.htm#Parametermanipulatingfunctions">
+   </topic>
+   <topic label="Stream I/O functions (LogicServer Class)" href="doc/ls/lsapirf.htm#StreamIOfunctions">
+   </topic>
+   <topic label="Miscellaneous functions (LogicServer Class)" href="doc/ls/lsapirf.htm#Miscellaneousfunctions">
+   </topic>
+   <topic label="Error handling (LSException Class)" href="doc/ls/lsapirf.htm#Errorhandling">
+   </topic>
+ </topic>
+ <topic label="LSAPI Data Types" href="doc/ls/lsapirf.htm#LSAPIDataTypes">
+   <topic label="Return Values" href="doc/ls/lsapirf.htm#ReturnValues">
+    <topic label="TF" href="doc/ls/lsapirf.htm#TF">
+    </topic>
+    <topic label="RC" href="doc/ls/lsapirf.htm#RC">
+    </topic>
+   </topic>
+   <topic label="Prolog Term Types" href="doc/ls/lsapirf.htm#pTYPE">
+   </topic>
+   <topic label="Environment Data Types" href="doc/ls/lsapirf.htm#cTYPE">
+   </topic>
+   <topic label="Prolog Exeception Types" href="doc/ls/lsapirf.htm#ExType">
+   </topic>
+   <topic label="Prolog Stream Values" href="doc/ls/lsapirf.htm#STREAM">
+   </topic>
+   <topic label="LSAPI Function/Method Parameter Types" href="doc/ls/lsapirf.htm#LSAPIParameterTypes">
+    <topic label="ARITY" href="doc/ls/lsapirf.htm#ARITY">
+    </topic>
+    <topic label="BYTEptr" href="doc/ls/lsapirf.htm##BYTEptr">
+    </topic>
+    <topic label="CELL" href="doc/ls/lsapirf.htm#CELL">
+    </topic>
+    <topic label="double" href="doc/ls/lsapirf.htm#double">
+    </topic>
+    <topic label="ENGid" href="doc/ls/lsapirf.htm#ENGid">
+    </topic>
+    <topic label="ExtPred" href="doc/ls/lsapirf.htm#ExtPred">
+    </topic>
+    <topic label="int" href="doc/ls/lsapirf.htm#int">
+    </topic>
+    <topic label="intC" href="doc/ls/lsapirf.htm#intC">
+    </topic>
+    <topic label="intCH" href="doc/ls/lsapirf.htm#intCH">
+    </topic>
+    <topic label="STRING" href="doc/ls/lsapirf.htm#STRING">
+    </topic>
+    <topic label="TERM" href="doc/ls/lsapirf.htm#TERM">
+    </topic>
+    <topic label="TERMptr" href="doc/ls/lsapirf.htm#TERMptr">
+    </topic>
+    <topic label="uintC" href="doc/ls/lsapirf.htm#uintC">
+    </topic>
+    <topic label="uintCH" href="doc/ls/lsapirf.htm#uintCH">
+    </topic>
+    <topic label="VOIDptr" href="doc/ls/lsapirf.htm#VOIDptr">
+    </topic>
+   </topic>
+ </topic>
+ <topic label="LSAPI Function/Method Descriptions" href="doc/ls/lsapirf.htm#APIFunctionDescriptions">
+  <topic label="AddLSX" href="doc/ls/lsapirf.htm#AddLSX">
+  </topic>
+  <topic label="AddPred" href="doc/ls/lsapirf.htm#AddPred">
+  </topic>
+  <topic label="Asserta" href="doc/ls/lsapirf.htm#Asserta">
+  </topic>
+  <topic label="AssertaStr" href="doc/ls/lsapirf.htm#AssertaStr">
+  </topic>
+  <topic label="Assertz" href="doc/ls/lsapirf.htm#Assertz">
+  </topic>
+  <topic label="AssertzStr" href="doc/ls/lsapirf.htm#AssertzStr">
+  </topic>
+  <topic label="Call" href="doc/ls/lsapirf.htm#Call">
+  </topic>
+  <topic label="CallStr" href="doc/ls/lsapirf.htm#CallStr">
+  </topic>
+  <topic label="ClearCall" href="doc/ls/lsapirf.htm#ClearCall">
+  </topic>
+  <topic label="Close" href="doc/ls/lsapirf.htm#Close">
+  </topic>
+  <topic label="ErrRaise *" href="doc/ls/lsapirf.htm#ErrRaise">
+  </topic>
+  <topic label="Exec" href="doc/ls/lsapirf.htm#Exec">
+  </topic>
+  <topic label="ExecStr" href="doc/ls/lsapirf.htm#ExecStr">
+  </topic>
+  <topic label="GetArg" href="doc/ls/lsapirf.htm#GetArg">
+  </topic>
+  <topic label="GetArgType" href="doc/ls/lsapirf.htm#GetArgType">
+  </topic>
+  <topic label="GetArity" href="doc/ls/lsapirf.htm#GetArity">
+  </topic>
+  <topic label="GetExceptCallStack (LSException) GetCallStack" href="doc/ls/lsapirf.htm#GetExceptCallStack">
+  </topic>
+  <topic label="GetExceptMsg (LSException) GetMsg (LSException) GetMessage" href="doc/ls/lsapirf.htm#GetExceptMsg">
+  </topic>
+  <topic label="GetExceptReadBuffer (LSException) GetReadBuffer" href="doc/ls/lsapirf.htm#GetExceptReadBuffer">
+  </topic>
+  <topic label="GetExceptReadFileName (LSException) GetReadFileName" href="doc/ls/lsapirf.htm#GetExceptReadFileName">
+  </topic>
+  <topic label="GetExceptReadLineno (LSException) GetReadLineno" href="doc/ls/lsapirf.htm#GetExceptReadLineno">
+  </topic>
+  <topic label="GetExceptType (LSException) GetType" href="doc/ls/lsapirf.htm#GetExceptType">
+  </topic>
+  <topic label="GetExceptRC (LSException) GetRC" href="doc/ls/lsapirf.htm#GetExceptRC">
+  </topic>
+  <topic label="GetFA *" href="doc/ls/lsapirf.htm#GetFA">
+  </topic>
+  <topic label="GetFloatArg" href="doc/ls/lsapirf.htm#GetFloatArg">
+  </topic>
+  <topic label="GetFloatHead" href="doc/ls/lsapirf.htm#GetFloatHead">
+  </topic>
+  <topic label="GetFloatParm" href="doc/ls/lsapirf.htm#GetFloatParm">
+  </topic>
+  <topic label="GetFloatTerm" href="doc/ls/lsapirf.htm#GetFloatTerm">
+  </topic>
+  <topic label="GetFunctor" href="doc/ls/lsapirf.htm#GetFunctor">
+  </topic>
+  <topic label="GetHead" href="doc/ls/lsapirf.htm#GetHead">
+  </topic>
+  <topic label="GetIntArg" href="doc/ls/lsapirf.htm#GetIntArg">
+  </topic>
+  <topic label="GetIntHead" href="doc/ls/lsapirf.htm#GetIntHead">
+  </topic>
+  <topic label="GetIntParm" href="doc/ls/lsapirf.htm#GetIntParm">
+  </topic>
+  <topic label="GetIntTerm" href="doc/ls/lsapirf.htm#GetIntTerm">
+  </topic>
+  <topic label="GetParm" href="doc/ls/lsapirf.htm#GetParm">
+  </topic>
+  <topic label="GetParmType" href="doc/ls/lsapirf.htm#GetParmType">
+  </topic>
+  <topic label="GetStrArg" href="doc/ls/lsapirf.htm#GetStrArg">
+  </topic>
+  <topic label="GetStrHead" href="doc/ls/lsapirf.htm#GetStrHead">
+  </topic>
+  <topic label="GetStrParm" href="doc/ls/lsapirf.htm#GetStrParm">
+  </topic>
+  <topic label="GetStrTerm" href="doc/ls/lsapirf.htm#GetStrTerm">
+  </topic>
+  <topic label="GetStream *" href="doc/ls/lsapirf.htm#GetStream">
+  </topic>
+  <topic label="GetTail" href="doc/ls/lsapirf.htm#GetTail">
+  </topic>
+  <topic label="GetTerm *" href="doc/ls/lsapirf.htm#GetTerm">
+  </topic>
+  <topic label="GetTermType" href="doc/ls/lsapirf.htm#GetTermType">
+  </topic>
+  <topic label="GetVersion" href="doc/ls/lsapirf.htm#GetVersion">
+  </topic>
+  <topic label="Init" href="doc/ls/lsapirf.htm#Init">
+  </topic>
+  <topic label="Init2" href="doc/ls/lsapirf.htm#Init2">
+  </topic>
+  <topic label="InitLSX" href="doc/ls/lsapirf.htm#InitLSX">
+  </topic>
+  <topic label="InitPreds *" href="doc/ls/lsapirf.htm#InitPreds">
+  </topic>
+  <topic label="Load" href="doc/ls/lsapirf.htm#Load">
+  </topic>
+  <topic label="LoadFromMemory (URL)" href="doc/ls/lsapirf.htm#LoadFromMemory">
+  </topic>
+  <topic label="Main" href="doc/ls/lsapirf.htm#Main">
+  </topic>
+  <topic label="MakeAddr *" href="doc/ls/lsapirf.htm#MakeAddr">
+  </topic>
+  <topic label="MakeAtom" href="doc/ls/lsapirf.htm#MakeAtom">
+  </topic>
+  <topic label="MakeFA" href="doc/ls/lsapirf.htm#MakeFA">
+  </topic>
+  <topic label="MakeFloat" href="doc/ls/lsapirf.htm#MakeFloat">
+  </topic>
+  <topic label="MakeInt" href="doc/ls/lsapirf.htm#MakeInt">
+  </topic>
+  <topic label="MakeList" href="doc/ls/lsapirf.htm#MakeList">
+  </topic>
+  <topic label="MakeStr" href="doc/ls/lsapirf.htm#MakeStr">
+  </topic>
+  <topic label="PopList *" href="doc/ls/lsapirf.htm#PopList">
+  </topic>
+  <topic label="PushList" href="doc/ls/lsapirf.htm#PushList">
+  </topic>
+  <topic label="Redo" href="doc/ls/lsapirf.htm#Redo">
+  </topic>
+  <topic label="Reset" href="doc/ls/lsapirf.htm#Reset">
+  </topic>
+  <topic label="Retract" href="doc/ls/lsapirf.htm#Retract">
+  </topic>
+  <topic label="RetractStr" href="doc/ls/lsapirf.htm#RetractStr">
+  </topic>
+  <topic label="SetCommandArgs *" href="doc/ls/lsapirf.htm#SetCommandArgs">
+  </topic>
+  <topic label="SetInput *" href="doc/ls/lsapirf.htm#SetInput">
+  </topic>
+  <topic label="SetIOArg" href="doc/ls/lsapirf.htm#SetIOArg">
+  </topic>
+  <topic label="SetOutput" href="doc/ls/lsapirf.htm#SetOutput">
+  </topic>
+  <topic label="SetStream" href="doc/ls/lsapirf.htm#SetStream">
+  </topic>
+  <topic label="StrArgLen" href="doc/ls/lsapirf.htm#StrArgLen">
+  </topic>
+  <topic label="StrParmLen" href="doc/ls/lsapirf.htm#StrParmLen">
+  </topic>
+  <topic label="StrTermLen" href="doc/ls/lsapirf.htm#StrTermLen">
+  </topic>
+  <topic label="StrToTerm" href="doc/ls/lsapirf.htm#StrToTerm">
+  </topic>
+  <topic label="TermToStr" href="doc/ls/lsapirf.htm#TermToStr">
+  </topic>
+  <topic label="TermToStrQ" href="doc/ls/lsapirf.htm#TermToStrQ">
+  </topic>
+  <topic label="Unify *" href="doc/ls/lsapirf.htm#Unify">
+  </topic>
+  <topic label="UnifyArg *" href="doc/ls/lsapirf.htm#UnifyArg">
+  </topic>
+  <topic label="UnifyAtomArg" href="doc/ls/lsapirf.htm#UnifyAtomArg">
+  </topic>
+  <topic label="UnifyAtomParm" href="doc/ls/lsapirf.htm#UnifyAtomParm">
+  </topic>
+  <topic label="UnifyFloatArg" href="doc/ls/lsapirf.htm#UnifyFloatArg">
+  </topic>
+  <topic label="UnifyFloatParm" href="doc/ls/lsapirf.htm#UnifyFloatParm">
+  </topic>
+  <topic label="UnifyIntArg" href="doc/ls/lsapirf.htm#UnifyIntArg">
+  </topic>
+  <topic label="UnifyIntParm" href="doc/ls/lsapirf.htm#UnifyIntParm">
+  </topic>
+  <topic label="UnifyParm" href="doc/ls/lsapirf.htm#UnifyParm">
+  </topic>
+  <topic label="UnifyStrArg" href="doc/ls/lsapirf.htm#UnifyStrArg">
+  </topic>
+  <topic label="UnifyStrParm" href="doc/ls/lsapirf.htm#UnifyStrParm">
+  </topic>
+ </topic>
+ <topic label="C Interface" href="doc/ls/lsac.htm">
+  <topic label="Hello Prolog" href="doc/ls/lsac.htm#HelloPrologfromC">
+  </topic>
+  <topic label="Unicode Support" href="doc/ls/lsac.htm#UnicodeSupport">
+  </topic>
+ </topic>
+ <topic label="C ++ Class" href="doc/ls/lsacpp.htm">
+   <topic label="Hello Prolog" href="doc/ls/lsacpp.htm#HelloPrologfromC">
+   </topic>
+   <topic label="Encapsulating Prolog Services" href="doc/ls/lsacpp.htm#EncapsulatingPrologServices">
+   </topic>
+   <topic label="Multiple LogicServers" href="doc/ls/lsacpp.htm#MultipleLogicServers">
+   </topic>
+   <topic label="Implementing Extended Predicates" href="doc/ls/lsacpp.htm#ImplementingExtendedPredicates">
+   </topic>
+   <topic label="Unicode Support" href="doc/ls/lsacpp.htm#UnicodeSupport">
+   </topic>
+ </topic>
+ <topic label="Delphi Component" href="doc/ls/lsadelph.htm">
+  <topic label="Installation" href="doc/ls/lsadelph.htm#InstallingTheDelphiComponent">
+  </topic>
+  <topic label="Hello Prolog" href="doc/ls/lsadelph.htm#HelloPrologFromDelphi">
+  </topic>
+  <topic label="Overview" href="doc/ls/lsadelph.htm#DelphiComponentOverview">
+  </topic>
+  <topic label="Using the Component" href="doc/ls/lsadelph.htm#UsingTheDelphiComponent">
+  </topic>
+  <topic label="Implementing Extended Predicates" href="doc/ls/lsadelph.htm#ImplementingExtendedPredicatesInDelphi">
+  </topic>
+  <topic label="Reference" href="doc/ls/lsadelph.htm#DelphiComponentReference">
+   <topic label="Logic Server Types" href="doc/ls/lsadelph.htm#LogicServerTypes">
+   </topic>
+   <topic label="Logic Server Set-Up" href="doc/ls/lsadelph.htm#FunctionsToSetUpLogicServer">
+   </topic>
+   <topic label="Extended Predicates" href="doc/ls/lsadelph.htm#FunctionsForExtendedPredicates">
+   </topic>
+   <topic label="Calling Prolog" href="doc/ls/lsadelph.htm#FunctionsForCallingProlog">
+   </topic>
+   <topic label="Dynamic Clauses in Logicbase" href="doc/ls/lsadelph.htm#FunctionsForLogicbase">
+   </topic>
+   <topic label="Converting Strings/Terms" href="doc/ls/lsadelph.htm#FunctionsForStringTermConversion">
+   </topic>
+   <topic label="Making/Getting Prolog Types" href="doc/ls/lsadelph.htm#FunctionsForMakingGettingPrologTypes">
+   </topic>
+   <topic label="Manipulating Structures" href="doc/ls/lsadelph.htm#FunctionsForManipulatingStructures">
+   </topic>
+   <topic label="Manipulating Lists" href="doc/ls/lsadelph.htm#FunctionsForManipulatingLists">
+   </topic>
+   <topic label="Prolog Stream I/O" href="doc/ls/lsadelph.htm#FunctionsForPrologStreamIO">
+   </topic>
+   <topic label="Miscellaneous Functions" href="doc/ls/lsadelph.htm#MiscellaneousFunctions">
+   </topic>
+  </topic>
+ </topic>
+ <topic label=".NET Wrapper Class" href="doc/ls/lsadotnet.htm">
+  <topic label="Where to Learn About.NET" href="doc/ls/lsadotnet.htm#WhereToLearnAboutNET">
+  </topic>
+  <topic label="Installation" href="doc/ls/lsadotnet.htm#InstallingtheNETClass">
+  </topic>
+  <topic label="Pets Callback Samples" href="doc/ls/lsadotnet.htm#PetsCallbackSamples">
+  </topic>
+  <topic label="Overview" href="doc/ls/lsadotnet.htm#NETClassOverview">
+   <topic label="Object Oriented" href="doc/ls/lsadotnet.htm#ObjectOriented">
+   </topic>
+   <topic label="Representing Prolog Terms" href="doc/ls/lsadotnet.htm#PointerlessMethods">
+   </topic>
+   <topic label="Issuing Prolog Queries" href="doc/ls/lsadotnet.htm#IssuingPrologQueries">
+   </topic>
+   <topic label="String Conversion" href="doc/ls/lsadotnet.htm#StringConversion">
+   </topic>
+   <topic label="Exceptions" href="doc/ls/lsadotnet.htm#Exceptions">
+   </topic>
+   <topic label="Multi-Threaded" href="doc/ls/lsadotnet.htm#MultiThreaded">
+   </topic>
+  </topic>
+  <topic label="Using the.NET Class" href="doc/ls/lsadotnet.htm#UsingtheNETClass">
+  </topic>
+  <topic label="Implementing Extended Predicates" href="doc/ls/lsadotnet.htm#ImplementingExtendedPredicatesInNET">
+  </topic>
+  <topic label="Examples" href="doc/ls/lsadotnet.htm#Examples">
+  </topic>
+ </topic>
+ <topic label="Calling from ASP.NET, JSP and Java Servlets" href="doc/ls/lsajspasp.htm">
+  <topic label="ASP.NET" href="doc/ls/lsajspasp.htm#ASPdotNET">
+  </topic>
+  <topic label="JSP and Java Servlets" href="doc/ls/lsajspasp.htm#JSP">
+  </topic>
+ </topic>
+ <topic label="Java Class" href="doc/ls/lsajava.htm">
+  <topic label="Where to Learn About Java" href="doc/ls/lsajava.htm#WheretoLearnAboutJava">
+  </topic>
+  <topic label="Installation" href="doc/ls/lsajava.htm#InstallingtheJavaClass">
+  </topic>
+  <topic label="Hello Prolog" href="doc/ls/lsajava.htm#HelloPrologfromJava">
+  </topic>
+  <topic label="Overview" href="doc/ls/lsajava.htm#JavaClassOverview">
+   <topic label="Object Oriented" href="doc/ls/lsajava.htm#ObjectOriented">
+   </topic>
+   <topic label="Representing Prolog Terms" href="doc/ls/lsajava.htm#PointerlessMethods">
+   </topic>
+   <topic label="Issuing Prolog Queries" href="doc/ls/lsajava.htm#IssuingPrologQueries">
+   </topic>
+   <topic label="String Conversion" href="doc/ls/lsajava.htm#StringConversion">
+   </topic>
+   <topic label="Exceptions" href="doc/ls/lsajava.htm#Exceptions">
+   </topic>
+   <topic label="Multi-Threaded" href="doc/ls/lsajava.htm#MultiThreaded">
+   </topic>
+  </topic>
+  <topic label="Using the Java Class" href="doc/ls/lsajava.htm#UsingtheJavaClass">
+  </topic>
+  <topic label="Implementing Extended Predicates" href="doc/ls/lsajava.htm#ImplementingExtendedPredicatesInJava">
+   <topic label="Controlling the JNI Environment Pointer for Extended Predicates" href="doc/ls/lsajava.htm#controlling_jni_environment_pointer">
+   </topic>
+  </topic>
+  <topic label="Converting Prolog Lists to Java Types" href="doc/ls/lsajava.htm#ConvertPrologLists">
+  </topic>
+  <topic label="Examples" href="doc/ls/lsajava.htm#Examples">
+  </topic>
+ </topic>
+ <topic label="Visual Basic Module" href="doc/ls/lsavb.htm">
+  <topic label="Hello Prolog" href="doc/ls/lsavb.htm#HelloPrologFromVisualBasic">
+  </topic>
+  <topic label="Overview" href="doc/ls/lsavb.htm#LogicServerVBModuleOverview">
+  </topic>
+  <topic label="Using the Module" href="doc/ls/lsavb.htm#VisualBasicCallingTheLogicServerAPI">
+  </topic>
+  <topic label="Implementing Extended Predicates" href="doc/ls/lsavb.htm#ImplementingExtendedPredicatesInVB">
+  </topic>
+  <topic label="Reference" href="doc/ls/lsavb.htm#VBModuleReference">
+   <topic label="Logic Server Constants" href="doc/ls/lsavb.htm#LogicServerConstants">
+   </topic>
+   <topic label="Logic Server Set-Up" href="doc/ls/lsavb.htm#FunctionsToSetUpLogicServer">
+   </topic>
+   <topic label="Extended Predicates" href="doc/ls/lsavb.htm#FunctionsForExtendedPredicates">
+   </topic>
+   <topic label="Calling Prolog" href="doc/ls/lsavb.htm#FunctionsForCallingProlog">
+   </topic>
+   <topic label="Dynamic Clauses in the Logicbase" href="doc/ls/lsavb.htm#FunctionsForLogicbase">
+   </topic>
+   <topic label="Converting Strings/Terms" href="doc/ls/lsavb.htm#FunctionsForStringTermConversion">
+   </topic>
+   <topic label="Making/Getting Prolog Types" href="doc/ls/lsavb.htm#FunctionsForMakingGettingPrologTypes">
+   </topic>
+   <topic label="Manipulating Structures" href="doc/ls/lsavb.htm#FunctionsForManipulatingStructures">
+   </topic>
+   <topic label="Manipulating Lists" href="doc/ls/lsavb.htm#FunctionsForManipulatingLists">
+   </topic>
+   <topic label="Miscellaneous Functions" href="doc/ls/lsavb.htm#MiscellaneousFunctions">
+   </topic>
+  </topic>
+  <topic label="Examples" href="doc/ls/lsavb.htm#VBLogicServerExample">
+  </topic>
+ </topic>
+ <topic label="Calling from MS-Office" href="doc/ls/lsamsoff.htm">
+ </topic>
+ <topic label="CGI Interface" href="doc/ls/lsacgi.htm">
+  <topic label="Introduction" href="doc/ls/lsacgi.htm#Libraries">
+  </topic>
+  <topic label="Architecture" href="doc/ls/lsacgi.htm#Architecture">
+  </topic>
+  <topic label="Using the CGI Interface with Various Web Servers" href="doc/ls/lsacgi.htm#UsingTheCGIInterfaceWithVariousWebServers">
+  </topic>
+  <topic label="Implementation" href="doc/ls/lsacgi.htm#Implementation">
+  </topic>
+  <topic label="Building the C Program" href="doc/ls/lsacgi.htm#BuildingTheCProgram">
+  </topic>
+  <topic label="Writing the Prolog Script" href="doc/ls/lsacgi.htm#WritingThePrologScript">
+  </topic>
+  <topic label="CGI Variables" href="doc/ls/lsacgi.htm#CGIVariables">
+  </topic>
+  <topic label="CGI Predicates" href="doc/ls/lsacgi.htm#CGIPredicates">
+  </topic>
+ </topic>
+ <topic label="LSX Introduction" href="doc/ls/lsxintro.htm">
+ </topic>
+ <topic label="ODBC Support" href="doc/ls/lsxodbc.htm">
+  <topic label="Prolog Interface" href="doc/ls/lsxodbc.htm#PrologInterface">
+  </topic>
+  <topic label="Prolog Interface Example" href="doc/ls/lsxodbc.htm#PrologInterfaceExample">
+  </topic>
+  <topic label="Extended Predicates" href="doc/ls/lsxodbc.htm#ExtendedPredicates">
+  </topic>
+ </topic>
+ <topic label="Sockets LSX" href="doc/ls/lsxsock.htm">
+  <topic label="Executables" href="doc/ls/lsxsock.htm#Executables">
+  </topic>
+  <topic label="Source Code" href="doc/ls/lsxsock.htm#SourceCode">
+  </topic>
+  <topic label="Examples" href="doc/ls/lsxsock.htm#Examples">
+  </topic>
+  <topic label="Extended Predicates" href="doc/ls/lsxsock.htm#ExtendedPredicates">
+   <topic label="Startup/Shutdown Predicates" href="doc/ls/lsxsock.htm#StartupShutdownPredicates">
+   </topic>
+   <topic label="Conversion Predicates" href="doc/ls/lsxsock.htm#ConversionPredicates">
+   </topic>
+   <topic label="Database Predicates" href="doc/ls/lsxsock.htm#DatabasePredicates">
+   </topic>
+   <topic label="Socket Predicates" href="doc/ls/lsxsock.htm#SocketPredicates">
+   </topic>
+  </topic>
+ </topic>
+ <topic label="Tcl/Tk Support" href="doc/ls/lsxtcltk.htm">
+  <topic label="Overview" href="doc/ls/lsxtcltk.htm#overview">
+  </topic>
+  <topic label="Calling Tcl/Tk from a logicbase" href="doc/ls/lsxtcltk.htm#tcltk_calls_prolog">
+  </topic>
+  <topic label="Making logicbase queries from Tcl/Tk" href="doc/ls/lsxtcltk.htm#prolog_calls_tcltk">
+  </topic>
+  <topic label="Error Handling" href="doc/ls/lsxtcltk.htm#error_handling">
+  </topic>
+  <topic label="Distribution" href="doc/ls/lsxtcltk.htm#distribution">
+  </topic>
+  <topic label="Tutorial Example" href="doc/ls/lsxtcltk.htm#tutorial">
+  </topic>
+  <topic label="Implementation" href="doc/ls/lsxtcltk.htm#implementation">
+  </topic>
+  <topic label="References" href="doc/ls/lsxtcltk.htm#references">
+  </topic>
+ </topic>
+ <topic label="O.S. Specific Predicates" href="doc/ls/lsxexprd.htm">
+ </topic>
+ <topic label="Delphi GUI Predicates" href="doc/ls/lsxdelgu.htm">
+  <topic label="Using DelGUI" href="doc/ls/lsxdelgu.htm#UsingDelGUI">
+  </topic>
+  <topic label="Flow of Control Issue" href="doc/ls/lsxdelgu.htm#FlowofControlIssue">
+  </topic>
+  <topic label="Extended Predicates" href="doc/ls/lsxdelgu.htm#TheExtendedPredicates">
+  </topic>
+  <topic label="Prolog Predicates" href="doc/ls/lsxdelgu.htm#ThePrologPredicates">
+  </topic>
+  <topic label="Sample" href="doc/ls/lsxdelgu.htm#Sample">
+  </topic>
+ </topic>
+ <topic label="Command-Line Runtime Shell" href="doc/ls/lsxcmdsh.htm">
+ </topic>
+<topic label="Index" href="doc/ls/lsindex_xml.htm">
+</topic>
+</toc>

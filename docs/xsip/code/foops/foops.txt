@@ -1,0 +1,36 @@
+ABOUT
+-----
+
+FOOPS adds a frame system to OOPS for added data representation.
+
+
+USE
+---
+
+From DOS type:
+
+	c:\> foops
+
+To start up FOOPS from the listener, type:
+
+	?- load(foops).	
+	?- main.
+
+At the command prompt in FOOPS there are four options, LOAD, GO, LIST
+and EXIT.  
+
+LOAD	expects the name of a file, since it reads a Prolog term the
+	file name must be enclosed in single quotes and ended with a period.
+
+GO 	starts the inferencing, and, at least with the ROOM.OKB knowledge 
+	base begins a dialog initiated by the knowledge base.
+
+LIST	lists working memory.
+
+EXIT 	ends the session.
+
+
+PROJECTS
+--------
+
+

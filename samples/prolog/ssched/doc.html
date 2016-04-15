@@ -1,0 +1,273 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; U) [Netscape]">
+   <title>Sports Scheduling Sample</title>
+</head>
+<body bgcolor="#FFFFFF">
+<h1> <font color="#0000FF">Sports Scheduler Sample Application</font></h1>
+The SSCHED sample application is designed to both illustrate the use of
+Amzi! Prolog + Logic Server in scheduling applications and to provide a
+useful tool for anyone who has to schedule a round robin tournament.&nbsp;
+It is a simplified version of a program used to meet the extremely demanding
+constraints of scheduling the Atlantic Coast Conference college basketball
+schedule.&nbsp; (An article describing that application is available from
+the Amzi! web site.)
+<p>A round robin tournament is one in which each team/player plays each
+other team/player one or two times, and is the basis for regular season
+play for both professional and amateur sports.&nbsp; The problem is to
+create a schedule of games to be played each round so that no team has
+to play more than once a round and that at the end of N-1 rounds, where
+N is the number of teams, each team has played each other team exactly
+once.&nbsp; A round might correspond to a week with some sports, such as
+football, or a matter of hours in a table tennis tournament.
+<h2>
+Application Overview</h2>
+The Amzi! Sports Scheduling Demo is an abbreviated version of a program
+written to create schedules for the Atlantic Coast Conference (ACC) basketball
+season.&nbsp; The demo version does not enforce the strict constraints
+of the ACC application.&nbsp; It simply enforces the constraints of a valid
+round robin tournament, where each team plays each other once per cycle.
+<h2>
+Problem Representation</h2>
+The Prolog code relied heavily on lists to represent the games to be scheduled,
+the evolving schedule, and other items.&nbsp; Recursion is the primary
+control structure used, so, in essence, the main loop of the program is
+a classic recursion, with one Prolog rule for the boundary condition and
+one for the recursive case.&nbsp; The two main lists passed through the
+recursion are the list of games to be scheduled, and the evolving schedule.&nbsp;
+(See List Processing inProlog at the bottom of this document.)
+<p>Boundary Condition: When there are no more games to be scheduled, then
+the schedule passed to this point is the final schedule.
+<p>Recursive case: Take a days worth of games from the pending list and
+put them in the schedule list.&nbsp; Test to make sure no constraints are
+violated.&nbsp; If they are, backtrack, and if not make a recursive call
+with the rest of the pending list and the evolving schedule list.
+<p>Teams are represented by integers from 1 to N, where N is the number
+of teams.&nbsp; Games are represented by pairs of away and home teams separated
+by the '-' operator.&nbsp; For example 1-2 means 1 plays 2 at 2.&nbsp;
+If there are an odd number of teams, a special team 0 is added, called
+'bye', which is included in the schedule.
+<p>Given this, one can write a first approximation of the main predicates.
+<pre>main :-
+&nbsp; schedule([1-2, 1-3, 1-4, ... 2-1, 2-3, ...], [], SCHEDULE)
+&nbsp; output(SCHEDULE).
+
+schedule([], SCHEDULE, SCHEDULE).
+schedule(GAMES, PARTIAL_SCHEDULE, SCHEDULE) :-
+&nbsp; pick(GAMES, DAYS_GAMES, GAMES_LEFT),
+&nbsp; test(DAYS_GAMES, PARTIAL_SCHEDULE),
+&nbsp; schedule(GAMES_LEFT, [DAYS_GAMES|PARTIAL_SCHEDULE], SCHEDULE).</pre>
+pick - select match ups for a day in the schedule, and return the games
+left to play.&nbsp; Each day has enough games so that every team is playing,
+unless there is an odd number of teams, in which case the odd team out
+has a bye.
+<p>test - make sure the selected day's games combined with the partial
+schedule so far don't violate any of the constraints.&nbsp; (This is not
+used in the simple sports scheduler, but would be in one with more constraints.)
+<p>This program has all of the control structure needed to search for a
+valid schedule.&nbsp; The partial schedule starts out as the empty list.&nbsp;
+At each level of recursion, games are picked to add to the schedule, and
+then tested.&nbsp; If the games selected cause a constraint fault, then
+the program backtracks into pick to get another possible set of games.
+<p>If there are no sets of games available for a day, then the program
+backtracks to the previous level of recursion, and tries a different set
+of games.&nbsp; In this way, program execution continues forward and back,
+until finally a valid schedule is produced or all the choices are exhausted.&nbsp;
+For the simple sports schedule, the program generates a valid solution
+without backtracking.
+<h2>
+General Sports Schedule Constraints</h2>
+
+<p><br>There are some constraints that are inherent in a round robin scheduler.&nbsp;
+One is that each team play each other team, usually twice.&nbsp; In the
+first half of the season each team plays each other once, and in the second
+half they repeat with home and away teams reversed.&nbsp; Another is that
+no team can be playing two games at the same time.&nbsp; And another is
+that the schedule should be as compact as possible, so if there are eight
+teams, then there can be four games played each day.
+<p>The teams are represented by a list of integers.&nbsp; The games/1 predicate
+uses that list to generate a long list of all possible games.&nbsp; The
+generated list looks like
+<pre>[1-2, 1-3, ...2-1,&nbsp; 2-3, ...9-8]</pre>
+Because this list includes all of the games that need to be scheduled,
+the constraint about games is satisfied when all games on the list are
+scheduled.
+<p>One way to guarantee the right number of games for each day is to have
+the loop that picks games for each day programmed with this information.&nbsp;
+Another way is to provide a template for a day's games, in which the teams
+are represented by variables.&nbsp; This is the approach taken in the scheduling
+program.
+<p>The template for a days games is a Prolog pattern, or structure.&nbsp;
+If there were eight teams in the league, then a day's template would look
+like
+<pre>day(N, [T1-T2, T3-T4, T5-T6, T7-T8])</pre>
+Notice that the second argument is a list with four elements.&nbsp; Each
+is a possible game with different variables for each of the teams.&nbsp;
+The predicate that picks games walks this list of game templates, unifying
+the variables with actual teams.&nbsp; This guarantees each day has the
+right number of games.
+<p>The next constraint, that each team play each other once in the first
+half and once in the second half, leads to the first efficiency in the
+program.&nbsp; Because the first and second halves almost mirror each other,
+but have a slight difference, separate predicates are implemented for filling
+in each half.
+<p>The difference between the two halves is that, when a game is picked
+for the schedule in the first half, it's inverse game is also removed from
+the games-left-to-play list and put on a list of games to be scheduled
+in the second half.&nbsp; This ensures a rematch won't be considered during
+the first half.
+<p>The second half, of course, doesn't need to build this secondary list
+of games.
+<p>The overall structure of the program then looks like
+<pre>schedule(SCHEDULE) :-
+&nbsp; games(GAMES),
+&nbsp; first_half(GAMES, [], SCHEDULE_1, [], GAMES_2),
+&nbsp; second_half(GAMES_2, SCHEDULE_1, SCHEDULE).</pre>
+A major efficiency is added to the search in the predicate that picks the
+games for a given day.&nbsp; It makes a copy of the list of games that
+it drastically trims as each game is selected.&nbsp; Once two teams are
+playing, all other possible games with those two teams can be removed from
+the list of potential games for that day.&nbsp; (Backtracking automatically
+restores those games if necessary for further search.)
+<pre>get_games([], _).</pre>
+
+<pre>get_games([AWAY-HOME|GAMES], PICK_LIST) :-
+&nbsp; deal(AWAY-HOME, PICK_LIST, PICKS_LEFT),
+&nbsp; clean(AWAY-HOME, PICKS_LEFT, CLEANED_PICKS),
+&nbsp; get_games(GAMES, CLEANED_PICKS).</pre>
+The deal/3 predicate deletes an AWAY-HOME pattern from the list of games,
+thus unifying the variables in the template with the value for AWAY and
+HOME.&nbsp; The clean/3 predicate then uses those values to remove all
+other possible games from the list of games that involves either of these
+teams.
+<p>This picking can be further improved by ensuring that the picks are
+combinations of games rather than permutations.&nbsp; That is, once a four
+game set has been picked for a day, there is no reason to try different
+arrangements of those same four games.
+<h2>
+Useful Utilities for Scheduling</h2>
+Two list utility predicates provide all of the power for the low level
+predicates.&nbsp; One is delete/3 which deletes an element from a list
+and returns the list of remaining elements.&nbsp; It, like member/2, is
+very useful for generating selections from a list, but with the added advantage
+that it returns the rest of the list as well, for further processing.
+<br>&nbsp;
+<pre>delete(A,[A|X],X).</pre>
+
+<pre>delete(A,[B|X],[B|Y]) :- delete(A,X,Y).</pre>
+
+<p><br>The pick/2 predicate is very similar, but has the useful behavior
+of not including any elements in the returned list that occur before the
+element selected.&nbsp; It is used to generate combinations, not permutations.
+<br>&nbsp;
+<pre>pick(A,[A|X],X).</pre>
+
+<pre>pick(A,[B|X],Y) :- pick(A,X,Y).</pre>
+
+<h2>
+List Processing in Prolog</h2>
+A list in Prolog is represented by elements separated by commas within
+square brackets.&nbsp; A list of four arbitrary numbers in Prolog looks
+like this:
+<pre>[4, 23, 8, 17]</pre>
+When working with lists, it is often convenient to be able to consider
+the head element or elements of a list as distinct from the tail, or rest
+of the list.&nbsp; The vertical bar is used for that effect.&nbsp; This
+notation, in conjuction with Prolog variables, provides a powerful way
+to describe list manipulation.&nbsp; Variables in Prolog, represented by
+an initial upper case letter, are not simply representations of computer
+memory locations as in most languages, but instead represent variables
+in patterns that take on values based on Prolog's pattern-matching, called
+unification.
+<p>The most general form of pattern for matching against a list has two
+variables, one which matches/unifies with the head element of the list,
+and the other which unifies with the rest of the list.&nbsp; [H|T] is that
+representation.
+<p>Two Prolog terms, of which lists are a subset, can be explicitly unified
+with the '=' operator.&nbsp; Given all this, the following Prolog
+<br>statement
+<pre>[H|T] = [4, 23, 8, 17]</pre>
+triggers pattern matching that unifies (temporarily sets) the two variables
+with these values:
+<pre>H = 4</pre>
+
+<pre>T = [23, 8, 17]</pre>
+Note that a variable can unify with any arbitrarily complex Prolog term,
+including a list, as T does in this example.
+<p>The basic programmatic entity in Prolog is a predicate, which is composed
+of one or more clauses.&nbsp; Let's consider a simple recursive list processing
+predicate that checks if an element is a member of a list.&nbsp; It has
+the two clauses listed below.&nbsp; The first is the boundary condition
+and the second the recursive case.
+<pre>member(H, [H|T]).</pre>
+
+<pre>member(H, [X|T]) :- member(H, T).</pre>
+The way Prolog executes, the first clause of a predicate is tried and if
+it fails then the next clause is tried.&nbsp; In this case, the boundary
+condition clause says that an element is a member of a list if its the
+head of a list.&nbsp; The recursive clause says an element is a member
+of a list if, the ':-' simple can often be read as 'if', its a member of
+the tail of the list.
+<p>One last note, if the value of a variable is not really needed, but
+must be expressed to complete a pattern, then a simple _ is used to indicate
+a variable whose value is unimportant.&nbsp; The member predicate is often
+written using these 'anonymous' variables.
+<pre>member(H, [H|_]).</pre>
+
+<pre>member(H, [_|T]) :- member(H, T).</pre>
+You call a Prolog predicate by presenting it with a pattern that has the
+same name as the predicate.&nbsp; This is done implicitly after the ':-'
+symbol of a clause, but can also be done directly in a Prolog listener
+at the ?- prompt.&nbsp; For example
+<pre>?- member(4, [4, 23, 8, 17])</pre>
+will produce the answer yes right away, and
+<pre>?- member(8, [4, 23, 8, 17])</pre>
+will produce yes after two recursive calls from the second clause of member.&nbsp;
+On the other hand
+<pre>?- member(6, [4, 23, 8, 17])</pre>
+will produce no.
+<p>And now we get to the tricky part.&nbsp; In addition to the pattern-matching
+and recursion presented so far, Prolog has a feature called backtracking.&nbsp;
+Backtracking means that Prolog execution starts out in a forward direction,
+but if any calls fail, such as the third example of calling member above,
+execution backs up looking for other clauses in predicates that could be
+tried.
+<p>Backtracking, unification and recursion combine to provide some very
+powerful effects in Prolog.&nbsp; Consider
+<pre>member(X, [4, 23, 8, 17])</pre>
+The first time it is called, X will be unified with '4', because of the
+first clause.&nbsp; If for some reason failure occurs further down the
+line, execution will backtrack to the call to member, and the second clause
+will be tried instead, which recursively calls member again.&nbsp; It succeeds
+the second time with X = '23', and, because it succeeds, execution restarts
+in a forward direction with the new value of X.
+<p>In this way, the member predicate can be used to generate values of
+X from a given list.
+<p>One more example will provide the foundation needed to understand the
+schedule program.&nbsp; It is a predicate that reverses a list.&nbsp; For
+example, if given the list [1,2,3,4] it will generate a new list [4,3,2,1].&nbsp;
+Here is the definition of reverse.
+<pre>reverse([], R, R).</pre>
+
+<pre>reverse([H|T], PARTIAL, R) :-
+&nbsp; reverse(T, [H|PARTIAL], R).</pre>
+Like member, reverse works from the head of the list.&nbsp; Unlike member,
+reverse builds an output list as it works it way recursively down the input
+list.&nbsp; The second argument acts as an accumulator for the final result.&nbsp;
+When reverse is first called, it has an empty list as the second argument.&nbsp;
+Each level of recursion takes the head of the input list and makes it the
+head ot the partial list for the next call.&nbsp; In this way the partial
+list mirrors the input list, but in reverse.&nbsp; When the input list
+is empty, the boundary condition clause executes, forcing unification between
+the second and third arguments, thus setting the third argument to the
+reversed list.
+<p>This basic idea of using a accumulator list during recursion appears
+in many places in the scheduler code.
+<br>&nbsp;<i></i>
+<p><i>Copyright (c)1996 Amzi! inc.&nbsp; All Rights Reserved.</i>
+<br>&nbsp;
+<br>&nbsp;
+</body>
+</html>

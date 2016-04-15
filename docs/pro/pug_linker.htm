@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Linker</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<h1><A NAME="alnkTheLinker"></A><FONT COLOR="#D2AA00">Linker</FONT></h1>
+
+<P><!AMZI_INDEX = Linker; alnk>When a source file (.pro) is compiled the resulting 
+  object code is a .plm file. Several .plm files may be combined into one .xpl 
+  file using the Amzi! linker. The .xpl file contains all the code contained in 
+  the .plm files, plus the Amzi! Prolog library, alib.plm. See below for implications 
+  of this.</P>
+<P>Prolog executable (.xpl) files are executed directly by the Amzi! runtime, 
+  either from the operating system command line, the Windows-IDE or from a C/C++, 
+  Java, Delphi, Visual Basic or other program. They, unlike .plm files, cannot 
+  be executed under the listener. </P>
+
+<H2><A NAME="StartingtheLinkerfromtheWindow"></A><FONT COLOR="#0000FF">Running
+from the IDE</FONT></H2>
+
+<P> 
+  <!AMZI_INDEX = Linker; alnk; IDE>
+  Normally the linker is invoked when you build a project by either choosing Project 
+  | Build Project or Project | Rebuild Project. Build will compile and link only 
+  the modified files in the project, whereas Rebuild compiles and links all the 
+  files.</P>
+<P>The linker will includes all .pro files in the <a href="pug_ide.htm#SettingProjectProperties">Prolog 
+  Project Properties</a>. It will exclude any .pro files that are specified to 
+  be excluded in the project properties. Also any libraries checked in the project 
+  properties are included.</P>
+
+<P>If your Project Properties refers to other projects (under Project References) 
+  then all the plm files from the referenced projects will be linked into your 
+  xpl file.</P>
+
+<P>If there are any linker errors, they will be displayed in a window for you 
+  to peruse when the link is completed. </P>
+
+<H2><A NAME="StartingtheLinkerfromtheComman"></A><FONT COLOR="#0000FF">Running
+from the Command-Line</FONT></H2>
+
+<P><!AMZI_INDEX = Linker; alnk; Command-Line>The Prolog linker is named alnk. 
+  It may be invoked in one of three ways. The easiest is to simply type alnk and 
+  respond to the prompts. For example, to create a load module called ducks.xpl 
+  for stand-alone execution from the object modules duck1.plm and duck2.plm: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">c&gt;  alnk
+Amzi! Prolog Linker
+Copyright (c) 1987-2002 Amzi! inc. All Rights Reserved.
+Linked Module [.xpl]: ducks
+Compiled Code Module [.PLM]: duck1
+Compiled Code Module [.PLM]: duck2
+Compiled Code Module [.PLM]:    % [Enter] key pressed
+Reading Atom Table: duck1.PLM
+Reading Atom Table: duck2.PLM
+Reading Code Segments: duck1.PLM
+Reading Code Segments: duck2.PLM
+266 Global Atoms, 55 Local Atoms</FONT></PRE>
+</UL>
+
+<P>The arguments to alnk can also be listed on the command line. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">c&gt;  alnk ducks duck1 duck2</FONT></PRE>
+</UL>
+
+<P>The first argument is the name of the Prolog load module (.xpl) file to be 
+  created. The other arguments are the various Prolog object module (.plm) files. 
+</P>
+<P>Note that this means if you are linking a single file, you need to specify 
+  the name twice, once for the .xpl file and once for the .plm file. For example:</p>
+<ul><font color="#000080"><pre>
+c> alnk duckym duckym
+</pre></font></ul>
+
+<P>If you have a large number of files to link, you can create an input
+script file for the linker and pipe it in on the command line. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">c&gt;  alnk &lt; ducks.inp</FONT></PRE>
+</UL>
+
+<P>where ducks.inp contains </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">ducks
+duck1
+duck2</FONT></PRE>
+</UL>
+
+<p>You can also create a file for linker input and specify the file name after 
+  a -f option. For example, using the same ducks.inp above:</p>
+
+<ul><font color="#000080"><pre>
+c>alnk -f ducks.inp
+</pre></font></ul>
+<h3><A NAME="EnvironmentSpecificandUtilityL"></A><font color="#000080">Libraries</font></h3>
+
+<P><!AMZI_INDEX = Linker; Extended Predicates; Predicates; alnk; plm Files; Libraries>If 
+  you are using any of the predicates in list.plm, misc.plm or any of the other 
+  libraries, you will need to add that file to your project and/or link it in 
+  as well. </P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I> </I></P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,1 @@
+bmake -f makefile.win

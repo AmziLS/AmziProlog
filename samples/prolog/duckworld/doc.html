@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>duckworld - prolog sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1><font color="#0000FF">Duckworld - Prolog Sample</font></h1>
+<p>Duck World is described in the Quick Tutorial of the Amzi! Prolog User's Guide 
+  and Reference. It is a simple application used to demonstrate how to implement 
+  complex applications. Accordingly, it is composed of a number of files.</p>
+<p> The game:</p>
+<p>Duck World is a simple adventure game, where the objective is to go from the 
+  house, through the yard, to the duck pen to get an egg, and back to the house 
+  again, without losing any ducks to the fox.</p>
+<p>Once started, Duck World provides a '>>' prompt at which you enter commands 
+  in the format of legal Prolog goals (ending in periods). The commands are:</p>
+<ul>
+  <li>goto(X) - moves you to another place, either house, yard or pen.</li>
+  <li>take(X) - takes something if its where you are, the egg is the only thing 
+    you're supposed to take.</li>
+  <li>chase(ducks) - how to get the ducks back in their pen.</li>
+  <li>quit - this, or any illegal command, will quit the game for you. </li>
+</ul>
+<p>The game continues until you get the egg back to the house.</p>
+<p> The source files are:</p>
+<ul>
+  <li>dw_main.pro - the default 'user' module, containing main control loop. </li>
+  <li>dw_rules.pro - 'rules' module, implementing the rules controlling the game. 
+  </li>
+  <li>dw_data.pro - 'data' module, with both static and dynamic data. </li>
+</ul>
+
+<p>There is also a single file version which has all of the code in one file. 
+  It is duckym.pro.</p>
+<h3>Command Line</h3>
+
+<p>To run Duck World from inside the listener:</p>
+<pre>  alis
+  ?- consult([dw_main, dw_rules, dw_data]).
+  yes
+  ?- main.
+   Welcome to Duck World
+   Go get an egg
+  &gt;&gt;</pre>
+<p> Enter commands at the &gt;&gt;.</p>
+<p>To compile Duck World from the command line:</p>
+<pre>  acmp dw_main
+  acmp dw_rules
+  acmp dw_data</pre>
+<p>To link and then run from the command line:</p>
+<pre>  alnk dw dw_main dw_rules dw_data
+  arun dw
+    Welcome to Duck World...</pre>
+<p>You can make a copy of arun(.exe) and name it dw to have a stand-alone executable:</p>
+<pre>  copy \amzi\bin\arun.exe dw.exe (windows)
+  cp /amzi/bin/arun dw   (unix)</pre>
+<p>Now the program can be run simply by typing dw.</p>
+<p>There is a makefile that can be used to create ducks.xpl.</p>
+<h3>Windows IDE</h3>
+<p>To make a project in the Windows IDE:</p>
+<pre>
+  File/New Project
+  xpl file: dw.xpl
+  directory: the duckworld sample directory on your machine
+  add files: dw_main.pro dw_rules.pro dw_data.pro
+  File/Save As: dw.ppj</pre>
+<p>To run the project in the listener:</p>
+<pre>
+  listener/start or LIS button
+  listener/reconsult or Re button
+  ?- main.   % runs the program in the listener
+  ...
+  ?- quit.   % exits the listener
+</pre>
+<p>To compile, link and run the project:</p>
+<pre>
+  click the BLD button
+  click the RUN button
+</pre>
+<p>Close the project and IDE. </p>
+</body>
+</html>

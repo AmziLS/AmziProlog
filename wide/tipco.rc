@@ -1,0 +1,614 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""res\\cpwide.rc2""  // non-App Studio edited resources\r\n"
+    "\r\n"
+    "#include ""afxres.rc""  \t// Standard components\r\n"
+    "#include ""afxprint.rc""\t// printing/print preview resources\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "RES\\TCPWIDE.ICO"
+IDR_PROLOGTYPE          ICON    DISCARDABLE     "RES\\TEDITDOC.ICO"
+IDR_COGS                ICON    DISCARDABLE     "RES\\TCOGS.ICO"
+IDI_TIBCO               ICON    DISCARDABLE     "res\\tibco.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "RES\\IDR_MAIN.BMP"
+IDB_TIBCO               BITMAP  DISCARDABLE     "RES\\tibco.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "New Project",                 ID_PROJECT_NEW
+        MENUITEM "&New File\tCtrl+N",           ID_FILE_NEW
+        MENUITEM "&Open File...\tCtrl+O",       ID_FILE_OPEN
+        MENUITEM "Open Project...",             ID_FILE_OPENPROJECT
+        MENUITEM "&Close",                      ID_FILE_CLOSE
+        MENUITEM "Close All",                   ID_CLOSE_ALL
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save A&ll",                   ID_SAVE_ALL
+        MENUITEM "Save As...",                  ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "&Print\tCtrl+P",              ID_FILE_PRINT
+        MENUITEM "Print Pre&view",              ID_FILE_PREVIEW
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINTSETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Recent Edits",                ID_MRU_EDIT1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "Recent Projects",             ID_MRU_PROJECT1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo",                       ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM "&Delete\tDel",                ID_EDIT_CLEAR
+        MENUITEM "&Select All",                 ID_EDIT_SELECT_ALL
+        MENUITEM SEPARATOR
+        MENUITEM "&Find...",                    ID_EDIT_FIND
+        MENUITEM "Find &Next",                  ID_EDIT_REPEAT
+        MENUITEM "&Replace...",                 ID_EDIT_REPLACE
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR, CHECKED
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR, CHECKED
+        MENUITEM "Set Font...",                 ID_VIEW_SETFONT
+    END
+    POPUP "&Listener"
+    BEGIN
+        MENUITEM "&Start\tCtrl+I",              ID_LISTEN_START
+        MENUITEM "&End\tCtrl+Q",                ID_LISTEN_END
+        MENUITEM SEPARATOR
+        MENUITEM "&Consult...",                 ID_LISTEN_CONSULT
+        MENUITEM "&Reconsult\tCtrl+R",          ID_LISTEN_RECONSULT
+        MENUITEM SEPARATOR
+        MENUITEM "&Debug On\tCtrl+D",           ID_DEBUG_ON
+        MENUITEM "Debug O&ff",                  ID_DEBUG_OFF
+    END
+    POPUP "&Build"
+    BEGIN
+        MENUITEM "&Compile...",                 ID_BUILD_COMPILE
+        MENUITEM "&Link...",                    ID_BUILD_LINK
+        MENUITEM "&Build...",                   ID_BUILD_BUILD
+        MENUITEM "&Run...",                     ID_BUILD_RUN
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
+        MENUITEM "Tile &Horizontally",          ID_WINDOW_TILE_HORZ
+        MENUITEM "Tile &Vertically",            ID_WINDOW_TILE_VERT
+        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGE
+        MENUITEM "Close All",                   ID_CLOSE_ALL
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "TIB/InConcert Rules",         ID_HELP_TIBICRULES
+        MENUITEM SEPARATOR
+        MENUITEM "Prolog Language",             ID_HELP_PROLOG
+        MENUITEM "Logic Server",                ID_HELP_LOGICSERVER
+        MENUITEM SEPARATOR
+        MENUITEM "&About TIB/InConcert Rules IDE...", 57664
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "D",            ID_DEBUG_ON,            VIRTKEY, CONTROL, NOINVERT
+    "I",            ID_LISTEN_START,        VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
+    "Q",            ID_LISTEN_END,          VIRTKEY, CONTROL, NOINVERT
+    "R",            ID_LISTEN_RECONSULT,    VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    VK_F1,          ID_HELP,                VIRTKEY, NOINVERT
+    VK_F1,          ID_CONTEXT_HELP,        VIRTKEY, SHIFT, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 34, 22, 239, 97
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About TIB/InConcert Rules IDE"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "TIB/InConcert Rules\nIntegrated Development Environment\nLogic Server 5.0",
+                    IDC_STATIC,105,15,120,40,0,WS_EX_RIGHT
+    LTEXT           "Copyright © 1994-2002  Amzi! inc. \nAll Rights Reserved\nPortions Copyright © 1999 TIBCO Software Inc.",
+                    IDC_STATIC,10,60,150,28
+    DEFPUSHBUTTON   "OK",IDOK,195,70,32,14,WS_GROUP
+    CONTROL         112,IDC_STATIC,"Static",SS_BITMAP,10,15,75,25
+END
+
+IDD_PROJECT_EDIT DIALOG DISCARDABLE  36, 24, 265, 143
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Edit Project"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "File to Add to Project:",stc3,5,5,76,9
+    EDITTEXT        IDC_FILENAME,5,20,200,12,ES_AUTOHSCROLL | ES_OEMCONVERT
+    DEFPUSHBUTTON   "OK",IDOK,210,40,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,210,60,50,14,WS_GROUP
+    LISTBOX         IDC_PROJLIST,5,55,200,80,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Add",IDC_ADDBUTTON,210,80,50,14
+    PUSHBUTTON      "Delete",IDC_DELBUTTON,210,100,50,14
+    LTEXT           "Prolog Files in Project:",IDC_STATIC,5,40,93,8
+    PUSHBUTTON      ".pro <--> .plm",IDC_PROPLM,210,120,50,14
+    PUSHBUTTON      "Browse...",IDC_BROWSE,210,20,50,15
+END
+
+IDD_ENTERNAME DIALOG DISCARDABLE  0, 0, 186, 53
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_NEWPROJNAME,5,24,116,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,130,6,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,130,23,50,14
+    LTEXT           "Enter New Project Name:",IDC_STATIC,6,9,115,8
+END
+
+IDD_DEBUG DIALOG DISCARDABLE  0, 0, 185, 191
+STYLE WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_TRACE,0,5,140,180,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL | WS_HSCROLL
+    PUSHBUTTON      "&Creep",IDC_CREEP,145,5,30,10
+    PUSHBUTTON      "&Leap",IDC_LEAP,145,20,30,10
+    PUSHBUTTON      "&Skip",IDC_SKIP,145,35,30,10
+    PUSHBUTTON      "&Fail",IDC_FAIL,145,50,30,10
+    LTEXT           "Leash at",IDC_LEASH,145,65,30,8,NOT WS_GROUP
+    CONTROL         "CALL",IDC_LEASH_CALL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,145,75,33,10
+    CONTROL         "EXIT",IDC_LEASH_EXIT,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,145,85,40,10
+    CONTROL         "REDO",IDC_LEASH_REDO,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,145,95,40,10
+    CONTROL         "FAIL",IDC_LEASH_FAIL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,145,105,40,10
+    PUSHBUTTON      "Sp&y...",IDC_SPY,145,120,30,10
+    PUSHBUTTON      "Stop",IDC_STOP,145,135,30,10
+    GROUPBOX        "Format",IDC_FORMAT,145,150,30,35
+    CONTROL         "On",IDC_FON,"Button",BS_AUTORADIOBUTTON | WS_GROUP | 
+                    WS_TABSTOP,150,160,25,10
+    CONTROL         "Off",IDC_FOFF,"Button",BS_AUTORADIOBUTTON,150,170,25,10
+END
+
+IDD_SPYPOINTS DIALOG DISCARDABLE  0, 0, 243, 114
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Spypoints"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,105,15,35,15
+    PUSHBUTTON      "Cancel",IDCANCEL,105,95,35,15
+    LISTBOX         IDC_SPYPOINTS,145,15,90,95,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Spypoints",IDC_STATIC,165,5,35,8
+    PUSHBUTTON      "Delete",IDC_SPY_DELETE,105,55,35,15
+    PUSHBUTTON      "Clear All",IDC_SPY_CLEAR,105,75,35,15
+    PUSHBUTTON      "Add",IDC_SPY_ADD,105,35,35,14
+    LISTBOX         IDC_PREDICATES,5,15,95,95,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Predicates",IDC_STATIC,25,5,40,8
+END
+
+IDP_PROJECT DIALOG DISCARDABLE  0, 0, 171, 236
+STYLE WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDP_XPLFILE,50,5,110,14,ES_AUTOHSCROLL
+    LTEXT           "XPL File",IDC_STATIC,5,5,27,8
+    EDITTEXT        IDP_DIRECTORY,50,25,110,14,ES_AUTOHSCROLL
+    LTEXT           "Project Directory",IDC_STATIC,5,20,40,20
+    LTEXT           "Project Files",IDC_STATIC,5,70,45,8
+    LISTBOX         IDP_FILELIST,5,80,155,55,LBS_SORT | LBS_DISABLENOSCROLL | 
+                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    LTEXT           "Library Files",IDC_STATIC,5,155,45,8
+    LISTBOX         IDP_LIBLIST,5,166,155,40,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    LBS_DISABLENOSCROLL | WS_VSCROLL | WS_HSCROLL | 
+                    WS_TABSTOP
+    PUSHBUTTON      "Add File...",IDP_FILEADD,5,135,50,14
+    PUSHBUTTON      "Remove File",IDP_FILEDEL,55,135,50,14
+    PUSHBUTTON      "Add Library...",IDP_LIBADD,30,206,50,14
+    PUSHBUTTON      "Remove Lib",IDP_LIBDEL,90,206,50,14
+    PUSHBUTTON      "pro <--> plm",IDP_PROPLM,110,135,50,14
+    EDITTEXT        IDP_OPDEFS,50,45,110,14,ES_AUTOHSCROLL
+    LTEXT           "Operator\nDefinitions\n(optional)",IDC_STATIC,5,40,40,
+                    30
+END
+
+IDD_EXCEPT DIALOG DISCARDABLE  0, 0, 212, 175
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "TIB/InConcert Rules Exception"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_E_READBUF,5,70,200,90,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    ES_AUTOHSCROLL | WS_VSCROLL | WS_HSCROLL
+    LTEXT           "",IDC_E_MESSAGE,5,5,195,45
+    LTEXT           "Read Buffer",IDC_ES_READBUF,5,55,69,10
+    LTEXT           "Call Stack (approximate)",IDC_ES_CALLSTACK,5,55,84,8
+    LISTBOX         IDC_E_CALLSTACK,5,70,200,90,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+END
+
+IDD_UNLOCK DIALOG DISCARDABLE  0, 0, 202, 175
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Unlock TIB/InConcert Rules IDE"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_USERNAME,65,45,130,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ORGANIZATION,65,65,130,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_SERIALNO,65,85,130,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_UNLOCKCODE,65,105,130,15,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "I Accept",IDOK,115,155,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,30,155,50,14
+    LTEXT           "To unlock TIB/InConcert Rules IDE, enter your User Name, Organization, Serial # and Unlock Code exactly as they appear on your registration form.",
+                    IDC_STATIC,1,6,194,34
+    LTEXT           "User Name:",IDC_STATIC,0,50,60,8
+    LTEXT           "Organization:",IDC_STATIC,0,70,55,8
+    LTEXT           "Serial #:",IDC_STATIC,0,90,60,8
+    LTEXT           "Unlock Code:",IDC_STATIC,0,110,60,8
+    LTEXT           "Read carefully the license agreement.\nIf you accept the terms of the agreement, press the\n'I Accept' button to unlock the product.",
+                    IDC_STATIC,5,125,190,24
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR DISCARDABLE  17, 17
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    BUTTON      ID_SAVE_ALL
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+    BUTTON      ID_HELP_INDEX
+    SEPARATOR
+    BUTTON      ID_LISTEN_START
+    BUTTON      ID_LISTEN_RECONSULT
+    SEPARATOR
+    BUTTON      ID_DEBUG_ON
+    SEPARATOR
+    BUTTON      ID_BUILD_COMPILE
+    BUTTON      ID_BUILD_LINK
+    SEPARATOR
+    BUTTON      ID_BUILD_BUILD
+    BUTTON      ID_BUILD_RUN
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        RIGHTMARGIN, 238
+        BOTTOMMARGIN, 92
+    END
+
+    IDP_PROJECT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 164
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 229
+    END
+
+    IDD_EXCEPT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 205
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 168
+    END
+
+    IDD_UNLOCK, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 195
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 168
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "TIB/InConcert Rules IDE"
+    IDR_EDITTYPE            "\nEdit\nSource File\nSource Files (*.pro)\n.pro\nSource.Files\nSource Files"
+    IDR_PROGTYPE            "\nLoad\nLoad File\nLoad Files (*.xpl)\n.xpl\nLoad.File\nLoad File"
+    IDR_LISTENTYPE          "\nLoad\nLoad File\nLoad Files (*.xpl)\n.xpl\nLoad.File\nLoad File"
+    IDR_DEBUGTYPE           "\nLoad\nLoad File\nLoad Files (*.xpl)\n.xpl\nLoad.File\nLoad File"
+    IDR_LINKTYPE            "\nLoad\nLoad File\nLoad Files (*.xpl)\n.xpl\nLoad.File\nLoad File"
+    IDR_PROJTYPE            "\nProject\nProject File\nProject Files (*.ppj)\n.PPJ\nProject.Files\nProject Files"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "TIB/InConcert Rules IDE"
+    AFX_IDS_IDLEMESSAGE     "For Help, press F1"
+    AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new Prolog source (or text) file"
+    ID_FILE_OPEN            "Open an existing document"
+    ID_FILE_CLOSE           "Close the active document"
+    ID_FILE_SAVE            "Save the active document"
+    ID_FILE_SAVE_AS         "Save the active document with a new name"
+    ID_FILE_PAGE_SETUP      "Change the printing options"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options"
+    ID_FILE_PRINT           "Print the active document"
+    ID_FILE_PRINT_PREVIEW   "Display full pages"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright"
+    ID_APP_EXIT             "Quit the application; prompts to save documents"
+    ID_HELP_INDEX           "Display help topics"
+    ID_HELP_USING           "Display instructions about how to use help"
+    ID_CONTEXT_HELP         "Display help for clicked on buttons, menus and windows"
+    ID_HELP                 "Display help for current task or command"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane"
+    ID_PREV_PANE            "Switch back to the previous window pane"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_NEW           "Open another window for the active document"
+    ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window"
+    ID_WINDOW_CASCADE       "Arrange windows so they overlap"
+    ID_WINDOW_TILE_HORZ     "Arrange windows as non-overlapping tiles"
+    ID_WINDOW_TILE_VERT     "Arrange windows as non-overlapping tiles"
+    ID_WINDOW_SPLIT         "Split the active window into panes"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection"
+    ID_EDIT_CLEAR_ALL       "Erase everything"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard"
+    ID_EDIT_FIND            "Find the specified text"
+    ID_EDIT_PASTE           "Insert Clipboard contents"
+    ID_EDIT_REPEAT          "Repeat the last action"
+    ID_EDIT_REPLACE         "Replace specific text with different text"
+    ID_EDIT_SELECT_ALL      "Select the entire document"
+    ID_EDIT_UNDO            "Undo the last action"
+    ID_EDIT_REDO            "Redo the previously undone action"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+    AFX_IDS_MDICHILD        "Activate this window"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_LISTEN_OPENLOG       "Open a file to log a Prolog session"
+    ID_LISTEN_CLOSELOG      "Close the log file"
+    ID_LISTEN_SAVE_AS       "Save the listener session to a text file"
+    ID_LISTEN_PRINT         "Print the listener session"
+    ID_DEBUG_ON             "Turn on debugging"
+    ID_DEBUG_OFF            "Turn off debugging"
+    ID_DEBUG_SPY            "Set and remove debugging spypoints"
+    ID_DEBUG_LEASHING       "Set debugging ports that are leashed"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_BUILD_COMPILE        "Compile a Prolog file or project, creating Prolog .PLM object file(s)"
+    ID_BUILD_LINK           "Link a Prolog object file (.PLM) or project into a Prolog load file (.XPL)"
+    ID_BUILD_RUN            "Run a Prolog load module (.xpl)"
+    ID_LISTEN_START         "Start a Prolog listener (?-)"
+    ID_LISTEN_END           "Quit from the Prolog listener"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_LISTENER_CONSULT     "Consult a Prolog source file (.PRO)"
+    ID_LISTEN_CONSULT       "Initial consult of a Prolog source file (.PRO) or project (.PPJ)"
+    ID_BUILD_PROJECTNEW     "Create a new list of project files"
+    ID_BUILD_PROJECTEDIT    "Edit and existing list of project files"
+    ID_LISTEN_RECONSULT     "Reconsult last file/project consulted (override previous consulted versions)"
+    ID_BUILD_RUNDOS         "Run a DOS Prolog program"
+    ID_VIEW_SETFONT         "Change the font"
+    ID_VIEW_SETPRINTERFONT  "Change the printer font"
+    ID_BUILD_BUILD          "Compile and Link a file or project"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_PROJECT_NEW          "Create a new Prolog project"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_SAVE_ALL             "Save All Open Files"
+    ID_CLOSE_ALL            "Close All Open Files"
+    IDM_CHANGEBROWSER       "Select a different browser to use for displaying documentation"
+    ID_FILE_UNLOCK          "Unlock TIB/InConcert Rules IDE"
+    ID_FILE_OPENPROJECT     "Open a Prolog project"
+    ID_HELP_PROLOG          "Display help for Prolog language"
+    ID_HELP_LOGICSERVER     "Display help on the Logic Server API"
+    ID_HELP_TUTORIAL        "Display the Prolog language tutorial"
+    ID_HELP_NEWFEATURES     "Display details on new features in this release"
+    ID_HELP_LICENSE         "Display license information"
+    ID_BUILDVERBOSE         "Show detailed messages during compile"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_LISTENER            "TIB/InConcert Rules 2.0 Copyright (c) 1999 TIBCO Software Inc."
+    IDS_COMPILER            "TIB/InConcert Rules 2.0 Copyright (c) 1999 TIBCO Software Inc."
+    IDS_LINKER              "TIB/InConcert Rules 2.0 Copyright (c) 1999 TIBCO Software Inc."
+    IDS_BUILDER             "TIB/InConcert Rules 2.0 Copyright (c) 1999 TIBCO Software Inc."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "res\cpwide.rc2"  // non-App Studio edited resources
+
+#include "afxres.rc"  	// Standard components
+#include "afxprint.rc"	// printing/print preview resources
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

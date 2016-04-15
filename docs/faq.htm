@@ -1,0 +1,497 @@
+<html>
+<head>
+<title>Frequently Asked Questions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1><font color="#D2AA00">Frequently Asked Questions</font></h1>
+<hr width="100%">
+
+<p><b>Eclipse</b></p>
+<ul>
+  <li><a href="#ChangingDebugFont">Changing the Font in the Debug Views</a></li>
+</ul>
+<p><b>Errors</b></p>
+<ul>
+  <li><a href="#eclipseinitializationfailed">Amzi! Eclipse Initialization Failed</a></li>
+</ul>
+<p><b>Prolog</b></p>
+<ul>
+  <li><a href="#Performance">Performance</a></li>
+  <li><a href="#CompiledInterpretedCode">Program Runs Interpreted but not Compiled</a></li>
+  <li><a href="#ManyClausesWordnet">Predicates with Many Many Clauses e.g. Wordnet</a></li>
+  <li><a href="#XPLandRuntimeLibrary">XPL Files and Runtime Library</a></li>
+</ul>
+<p><b>Logic Server</b></p>
+<ul>
+  <li><a href="#LinkingBorlandCpp">Linking with Borland C++</a></li>
+</ul>
+<p><b>Logic Server Extensions and Extended Predicate</b></p>
+<ul>
+  <li><a href="#DelphiLSX">How to Make an LSX in Delphi</a></li>
+</ul>
+<p><b>Windows</b></p>
+<ul>
+  <li><a href="#BackslashPathnames">Backslash (/) Woes in Windows pathnames</a></li>
+  <li><a href="#WindowsEmbeddedIO">I/O in Embedded Windows Applications</a></li>
+</ul>
+
+<h2><font color="#0000FF"><a name="Eclipse"></a>Eclipse</font></h2>
+<h3><a name="ChangingDebugFont"></a><font color="#000080">Changing the Font in 
+  the Debug Views</font></h3>
+<p>The font for the Listener and Debug Listener views can be changed in Eclipse 
+  by selecting Window | Preferences | Workbench | Fonts. However, if you need 
+  to change the font for the views that display the Prolog stack and variables 
+  you need to change your 'Message Text' font in your operating system. For Windows, 
+  open the Control Panel | Display | Appearance and change the font for the 'Message 
+  Box'.</p>
+<h2><font color="#0000FF"><a name="Errors"></a>Errors</font></h2>
+<h3><a name="eclipseinitializationfailed"></a><font color="#000080">Amzi! Eclipse 
+  Initialization Failed</font></h3>
+<p>Check the following items:</p>
+<ol>
+  <li>At a command prompt (in a Windows command box, or Unix terminal window), 
+    type 'set' to check the setting of the AMZI_DIR environment variable. It should 
+    point to the directory path ....\amzi_X-X-X\ap+ls </li>
+  <li>Delete any old copies of amzi.dll or libamzi.so on your PATH (or LD_LIBRARY_PATH 
+    in Unix). Windows users check your windows\system or system32 directories.</li>
+  <li>If the message indicates a file could not be opened, check that file exists 
+    in your amzi_X-X-X/ap+ls/abin, bin or lib subdirectories and the file is not corrupted.</li>
+</ol>
+
+<h2><font color="#0000FF"><a name="Prolog"></a>Prolog</font></h2>
+<h3><A NAME="Performance"></A><font color="#000080">Performance</font></h3>
+
+<p>Those who remember Prolog from the mid 1980s probably remember both the tremendous 
+  excitement raised by a logic programming language, and the disappointment of 
+  poor performance. That perception lingers today.</p>
+<p>But the situation has changed. Prolog is still a tremendous tool for intelligent 
+  applications, and it is fast!</p>
+<p>Has Prolog technology gotten faster over the last decades? No, but in the 1980s 
+  a lot of effort was put into making Prolog as fast as it could be.</p>
+<p>And through the 1990s and into the 2000s machines have gotten incredibly fast.</p>
+<p>The Rubik's Cube sample included with Amzi! used to take 4-5 minutes to reach 
+  a solution in the mid 1980s. Solution times are now measured in milliseconds. 
+  That's a lot of intelligence and search applied in a very short amount of time.</p>
+<p>And the supporting software that runs on today's machines has gotten more complex, 
+  taking advantage of the faster machines. The result is Prolog is extremely fast 
+  when compared to other components.</p>
+<p>Customers running Amzi! as a back-end logic server to Internet applications 
+  report that Prolog execution times are insignificant compared to other parts 
+  of the system.</p>
+<p>It's all relative, but the result is, today, Prolog is extremely fast.</p>
+
+<h3><A NAME="CompiledInterpretedCode"></A><font color="#000080">Program Runs Interpreted 
+  but not Compiled</font></h3>
+
+<p>
+The main reason compiled code behaves different from interpreted code, is discontiguous clauses.  These are allowed in the interpreter (listener) but not in compiled code.</p>
+
+<p>Often times there are discontiguous clauses due to typing errors:</p>
+
+<pre>
+a(1,2,3).
+a(2,3,4).
+a(5,6,7).
+a(6,78).
+a(7,8,9).
+
+</pre>
+
+<p>This is three a/3 clauses followed by one a/2 clause followed by another a/3 clause, which will be lost be it is discontiguous from the other a/3 clauses.</p>
+
+<p>If you look closely at the compiler output you might notice a stray clause.</p>
+
+<p>If you really have intentional discontiguous 
+  clauses, you can specify that with a <a href="pro/ref_directives.htm#DiscontiguousClauses">discontiguous directive</a>:</p>
+<pre>
+:- discontiguous a/3.
+</pre>
+
+<p>The compiler then links separate code blocks together.</p>
+
+<h3><A NAME="ManyClausesWordnet"></A><font color="#000080">Predicates with Many 
+  Clauses e.g. Wordnet</font></h3>
+<p>The Wordnet files make an interesting test case of predicates with large numbers 
+  of clauses. One Wordnet file, the main dictionary, has 174,000 clauses. Wordnet 
+  is a thesauraus like database, with a Prolog version, that is fun to play with. 
+  <a href="http://www.cogsci.princeton.edu/~wn/wn1.6/">http://www.cogsci.princeton.edu/~wn/wn1.6/</a></p>
+<p>Some comments:</p>
+<ul>
+  <li>Amzi! compiled code is first argument indexed, but it is designed for more 
+    'code-like' predicates, rather than large 'data-like' predicates. Everything 
+    compiles into one 'chunk' of tight executable WAM codes, with the index hardwired 
+    in WAM codes inside.</li>
+  <li>Releases after Amzi! 6-1-71 can compile large predicates. They do this by 
+    internally breaking the predicate into chunks of 1000 clauses. You must declare 
+    the predicate as discontiguous for this to work. For example, with the largest 
+    Wordnet file, the directive ':- discontiguous s/6.' lets the file compile, 
+    although it takes a while.</li>
+  <li> The 6-1 and later releases have an indexing feature which is a real index. 
+    That is, it is an external structure that points to the clause(s) being indexed. 
+    It's infinitely expandable, within memory limits of the machine. These are 
+    some benchmark results from a test case that made 575 hits of the s/6 Wordnet 
+    predicate (174,000 clauses) scattered about from beginning to end of the predicate, 
+    with bound 3rd argument (the word). 
+    <ul>
+      <pre>
+                     loadtime runtime hits/sec
+consult s/6 plain       43.1    44.3      13
+indexed(s(0,0,1,0,0,0)) 51.5     0.04  14106
+compiled s/6            25.2    41.4      14
+</pre>
+    </ul>
+  </li>
+  <li>A new version of the s/6 Wordnet predicate was then created, which had the 
+    third argument as the first. As this is the actual word being looked up, it 
+    would allow first argument compiler indexing, as well as letting the 'sorted' 
+    option on dynamic predicates come into play. The same benchmarks with the 
+    rearranged s/6 predicate were: 
+    <ul>
+      <pre>
+                     loadtime runtime hits/sec
+sorted(s2/6)            48.2     0.05  11473
+compiled s2/6           22.9     7.2      80
+</pre>
+    </ul>
+  </li>
+  <li>So it looks like indexed queries might be the best option for Wordnet and 
+    similar Prolog databases, and don't require reorganizing of the predicates 
+    to take advantage of first argument indexing. Indexing multiple arguments, 
+    you really create one composit index, rather than multiple ones. (We'd like 
+    to add true multiple indices at some point.) And an index only has performance 
+    advantages when the index argument(s) are bound. </li>
+</ul>
+
+<h3><A NAME="XPLandRuntimeLibrary"></A><FONT COLOR="#0000FF"> <font color="#000080">XPL 
+  Files and Runtime Library</font></FONT></h3>
+
+<p><!AMZI_INDEX = alib; Runtime Library>Part of the Amzi! runtime is implemented in Prolog. That part is in alib.plm. 
+  Prolog will not run correctly unless alib.plm in loaded. The linker automatically 
+  links alib.plm with each .xpl file. This is why it is necessary to run .xpl 
+  files, that is, .xpl files have a copy of the required alib.plm runtime predicates.</p>
+<p>Sometimes it is desired to create an application architecture, called from 
+  a Logic Server host language program, that dynamically loads/consults Prolog 
+  modules. It still needs a .xpl file to start with to get alib.plm. To do this 
+  you can create a dummy .xpl file by calling alnk with just the argument 'dummy' 
+  or whatever else you want, and no .plm files.</p>
+<p>For example:</p>
+<ul><font color="#000080"><pre>
+D:\tests>alnk dummy
+
+Amzi! Prolog Linker 6.1.76
+
+Compiled Code Module [.plm]:
+Linking... dummy.xpl
+Reading Atom Table: alib.plm
+Reading Code Segments: alib.plm
+579 Global Atoms
+Done
+</pre></font></ul>
+<p>A Logic Server application can now load dummy.xpl, and then dynamically load/consult 
+  any other Prolog files as required.</p>
+<h2><a name="LogicServer"></a><font color="#0000FF">Logic Server</font></h2>
+<h3><a name="LinkingBorlandCpp"></a><font color="#000080">Linking with Borland 
+  C++</font></h3>
+<p>Borland C++ requires a different .lib format than Microsoft Visual C++. The 
+  amzi.lib file distributed with Amzi! is the Microsoft version.</p>
+<p>To link with Borland C++, you need to run Borland's <b>implib</b> utility on 
+  amzi.dll. This can be done from the command line:</p>
+<ul>
+  <pre>
+<font color="#000080">>implib amzib.lib amzi.dll
+</font></pre>
+</ul>
+<p>There should be a copy of amzib.lib in the amzi/lib directory.</p>
+<h2><font color="#0000FF"><a name="LSXsAndExtendedPredicates"></a>Logic Server 
+  Extensions and Extended Predicates</font></h2>
+
+<h3><A NAME="DelphiLSX"></A><font color="#000080">How to create an LSX in Delphi</font></h3>
+<p>This was contributed by a customer who figured out how to make an LSX in Delphi.</p>
+<ul><font color="#000080"><pre>
+library d5amzi;
+ 
+{ Introduction
+  ------------
+ 
+  I thought it would be useful if I could use extended predicates that I've written
+  in Delphi (5) from within the Amzi (5) listener, so I was interested to know whether
+  it's possible to generate an LSX library entirely using Delphi.  The following shows
+  how to do this and also demonstrates how the resulting LSX, called from the
+  Amzi listener, can be debugged from within the Delphi IDE.
+ 
+  This library implements two trivial extended predicates, upperstring/2 and
+  lowerstring/2 which operate on Atom and String parameters.
+ 
+  Preparation
+  -----------
+ 
+  1.  In the Amzi Bin directory, add
+ 
+      lsxload=d5amzi.dll
+ 
+  to the Amzi.Cfg file, creating the Cfg if necessary, of course.
+ 
+  Note the '.dll' extension.  The reason for that is although, by convention,
+  LSX libraries should have an .Lsx extension, in order to be able to debug the
+  library easily from within the Delphi IDE, it needs to retain the .Dll extension
+  Delphi gives it on compilation.
+ 
+  Fortunately, Amzi evidently respects an explicit extension in a loadlsx=
+  entry in the .Cfg file, so we can thereby get the Delphi and Amzi IDEs to
+  cooperate.
+ 
+  2.  Load this project into the D5 IDE.
+ 
+  3.  In the D5 IDE, go to Run|Parameters and, on the Local tab, set the
+      Host Application to Amzi's wideA.Exe.
+ 
+  4.  Set the Output directory on the Directories/Conditionals tab of the
+      D5 Project|Options tab to the Amzi Bin directory.
+ 
+  5.  Set a breakpoint on the line
+ 
+        Result := lsFalse;
+ 
+      of  UpperString below
+ 
+  6  Compile and run the project; the Amzi wideA IDE will start.  Start its
+     Listener in the usual way (Ctrl-I).
+ 
+  7.  In the Listener, enter:
+ 
+      upperstring($aaa$, S).
+ 
+  8.  The D5 breakpoint should trip, allowing you to step through UpperString
+      in the D5 IDE.
+ 
+
+  (c) Martyn Ayers, 2001, UK.  This source is provided as-is and without warranty
+      of any kind.  Use at your own risk.
+  Portions (c) Amzi.Inc    
+}
+ 
+
+uses
+  SysUtils,
+  Classes;
+ 
+{ - following are some declarations cut and pasted from Amzi.Pas. }
+ 
+const
+  lsfalse: integer = 0;
+  lstrue:  integer = 1;
+ 
+type
+  ELogicServer = class(Exception);
+ 
+  { Various types used by the Logic Server API calls }
+  TTerm = pointer;  { The basic Prolog term }
+  { Enumerated Prolog types and enumerated Delphi types, used for mapping
+    Prolog types to Delphi types }
+  TPType = (pATOM, pINT, pSTR, pFLOAT, pSTRUCT, pLIST, pTERM, pADDR, pVAR);
+  TDType = (dATOM, dSTR, dINT, dLONG, dSHORT, dFLOAT, dDOUBLE, dADDR, dTERM);
+  TTypeInt = integer; { Generic type for casting types in DLL calls }
+  { Enumerated stream identifier, used when redirecting Prolog I/O }
+  TPStream = (CUR_IN, CUR_OUT, CUR_ERR, USER_IN, USER_OUT, USER_ERR);
+  TPStreamInt = integer; { Generic type for stream identifiers in DLL calls}
+  TTFi = integer;  { Prolog T/F or error code return code }
+  TRC = integer;  { Integer return code }
+  TArity = Word;  { The arity of a functor }
+  TEngID = longint;  { ID for Engine, only one allowed now }
+  TExtPred = function(EngID: TEngID): TTFi; stdcall; { An extended predicate function }
+  TPutC = procedure(c: Integer);
+  TPutS = procedure(s: PChar);
+  TGetC = function: Integer;
+  TUngetC = procedure;
+  TPredInit = record
+    Pname: PChar;
+    Parity: TArity;
+    Pfunc: TExtPred;
+  end;
+  TPredInitPtr = ^TPredInit;
+ 
+function lsAddPredA(eng: TEngID; pname: PChar; parity: TArity; pfunc: TExtPred; ptr: Pointer): TRC; stdcall; external 'AMZI.DLL';
+function lsGetParm(eng: TEngID; n: integer; dt: TTypeInt; p: pointer): TRC; stdcall; external 'AMZI.DLL';
+function lsGetParmType(eng: TEngID; n: integer): TTypeInt; stdcall; external 'AMZI.DLL';
+function lsStrParmLen(eng: TEngID; n: integer): integer; stdcall; external 'AMZI.DLL';
+function lsUnifyParm(eng: TEngID; n: integer; dt: TTypeInt; p: pointer): TTFi; stdcall; external 'AMZI.DLL';
+ 
+{ upperstring/2 and lowerstring/2 }
+ 
+function UpperString(EngID: TEngID): TTFi; stdcall;
+var S1, S2 : string;
+  Len : Integer;
+  PT : TPType;
+  RC : TRC;
+  I : Integer;
+begin
+ 
+  Result := lsFalse;
+  I := lsGetParmType(EngID, 1);
+  PT := TPType(I);
+  if PT in  [pAtom, pStr] then begin
+    Len := lsStrParmLen(EngID, 1);
+    SetLength(S1, Len);  //  allocate space to receive the input parameter
+    RC := lsGetParm(EngID, 1, TTypeInt(dSTR), PChar(S1));
+    if RC <> 0 then Exit;
+    S2 := UpperCase(S1);
+ 
+{
+ (I think) we need to Unify S2 with the output parameter differently, depending
+ on whether the input parameter is an atom or a $string$, hence the following
+ case statement.
+ 
+ Interestingly, the Amzi runtime + listener handle the quoting of an
+ atom input param transparently.  To see what I mean, try
+ 
+      upperstring(aaa, S).
+ 
+      upperstring('aaa', S)
+ 
+ }
+ 
+    case PT of
+      pStr : begin
+        RC := lsUnifyParm(EngID, 2, Ord(dSTR), PChar(S2));
+        if RC = 1 then
+          Result := lsTrue;
+      end;
+      pAtom : begin
+        RC := lsUnifyParm(EngID, 2, Ord(dAtom), PChar(S2));
+        if RC = 1 then
+          Result := lsTrue;
+      end;
+    end; { case }
+  end;
+ 
+end;
+ 
+function LowerString(EngID: TEngID): TTFi; stdcall;
+var S1, S2 : string;
+  Len : Integer;
+  PT : TPType;
+  RC : TRC;
+  I : Integer;
+begin
+ 
+  Result := lsFalse;
+  I := lsGetParmType(EngID, 1);
+  PT := TPType(I);
+  if PT in  [pAtom, pStr] then begin
+    Len := lsStrParmLen(EngID, 1);
+    SetLength(S1, Len);
+    RC := lsGetParm(EngID, 1, TTypeInt(dSTR), PChar(S1));
+    if RC <> 0 then Exit;
+    S2 := LowerCase(S1);
+    case PT of
+      pStr : begin
+        RC := lsUnifyParm(EngID, 2, Ord(dSTR), PChar(S2));
+        if RC = 1 then
+          Result := lsTrue;
+      end;
+      pAtom : begin
+        RC := lsUnifyParm(EngID, 2, Ord(dAtom), PChar(S2));
+        if RC = 1 then
+          Result := lsTrue;
+      end;
+    end; { case }
+  end;
+ 
+end;
+ 
+// following is the function called by the Amzi runtime
+ 
+function InitPreds(EngID : TEngID; P : Pointer) : TRC; stdcall;
+begin
+  Result := lsAddPredA(EngID, 'upperstring', 2, UpperString, Pointer(EngID));
+  Result := Result + lsAddPredA(EngID, 'lowerstring', 2, LowerString, Pointer(EngID));
+end;
+ 
+exports InitPreds;
+ 
+begin
+end.
+</pre></font></ul>
+
+<H2><a name="Windows"></a>Windows</H2>
+<h3><A NAME="BackslashPathnames"></A><font color="#000080">Backslash (\) woes 
+  in Windows file names</font></h3>
+
+<p>This is all a very nasty business. I've often wondered how much further advanced 
+  computer technology would be if so many programmer hours weren't spent trying 
+  to sort out the \ in DOS paths, which is also the C symbol for escape sequences 
+  in strings. (Maybe its why Linux with its / in paths moved ahead so fast? :) 
+  )</p>
+<p>Amzi! is implemented using C++, so it uses the same string escape sequences. 
+  The flag, string_esc, can be used to turn off escape processing and allow \ 
+  to be an ordinary character.</p>
+<p>The part of the Amzi! system that cares about string_esc is the Prolog term 
+  reader. That is, the code that is called into action when presented with terms 
+  to read, such as when consulting a file, or compiling a file, or reading input 
+  from the ?- in the listener. So when you turn that flag on or off, it affects 
+  all terms read after the flag was set.</p>
+<p>A simpler solution to the problem of pathnames was introduced in the 6.x release. 
+  In that release, a forward slash (/) is allowed in file paths for Windows. In 
+  fact, either slash is allowed for filenames in running either Windows or Unix.</p>
+<p>And a built-in predicate tilt_slashes/2 is provided to allow the creation of 
+  the correct paths for a given platform. For use with other applications.</p>
+<h3><font color="#000080"><a name="WindowsEmbeddedIO"></a>I/O in Embedded Windows 
+  Applications</font></h3>
+<p>Windows does not support standard input/output, so without doing something 
+  special or tricky, <b>write/1</b>, <b>nl/1</b>, and other I/O statements will 
+  not work when encountered in an embedded program (Java, VB, Delphi, C++, etc.) 
+  running on Windows.</p>
+<p>Three options:</p>
+<h4>Return information in predicate arguments</h4>
+<p>Typically, the Prolog program is used as a 'knowledge' server, so the architecture 
+  of the program is the host language calls Prolog to get some answer.</p>
+<p>Consider a trivial example of a predicate to add two numbers. It might look 
+  like this in a stand-alone Prolog program:</p>
+<pre>add_numbers(A,B) :-
+    C is A + B,
+    write(C).</pre>
+<p>You might use this for an embedded version:</p>
+<pre>add_numbers(A,B,C) :-
+   C is A + B.</pre>
+<p>And your host language program calls add_numbers/3 and uses lsGetArg to pick 
+  up the third argument, which is the answer.</p>
+<h4>Provide your own I/O predicates</h4>
+<p>You can write your own extended predicates in the host language that provide 
+  I/O functions. See the Logic Server documentation on <a href="ls/lsprguid.htm#WritingExtendedPredicates">extended 
+  predicates</a> and various samples for the host language you will be using.</p>
+<p>You could define a predicate ext_output/1 in the host language that did whatever 
+  you wanted, say put up a message box, or write to a window. Your program would 
+  then call it for output, rather than write/1:</p>
+<pre>add_numbers(A,B) :-
+   C is A + B,
+   ext_output(C).</pre>
+<p>How can you run the same program both in pure Prolog (for testing for example) 
+  and embedded?</p>
+<p>Call your I/O output predicate a more generic name, like output/1:</p>
+<pre>add_numbers(A,B) :-
+   C is A + B,
+   output(C).</pre>
+<p>And define it to use ext_output/1 if it exists, otherwise use write/1:</p>
+<pre>output(X) :-
+   ext_output(X),
+   !.
+output(X) :-
+   write(X).</pre>
+<h4>Create your own Prolog I/O stream</h4>
+<p>You can create your own I/O stream that will accept normal Prolog I/O. See 
+  Logic Server documentation for <a href="ls/lsprguid.htm#CapturingPrologIO">details</a>.</p>
+<p> This is the special or tricky option, and is not generally recommended, except 
+  for special types of applications. One example of which is the Prolog listener 
+  in the Amzi! IDE. It creates a special I/O stream that allows Prolog I/O to 
+  read/write from a Window. <br>
+  <br>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p></p>
+</body>
+</html>

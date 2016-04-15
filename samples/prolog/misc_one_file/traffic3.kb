@@ -1,0 +1,34 @@
+% A knowledge base that can be read and processed
+% using the traffic3.pro reasoning engine.
+%
+% The rules are valid Prolog terms, defined using
+% operators.  The syntax is made more friendly for
+% non-Prolog programmers using the properNames, and
+% properQuotes options of Amzi! for allowing an
+% alternate syntax.
+%
+% That alternate syntax delimits strings using ", instead
+% of ` or $. It also allows atoms to begin with upper case
+% letters, and it only uses a leading _ to define variables.
+
+if traffic_light is green
+then action is "proceed through the light".
+
+if traffic_light is red
+then action is "stop at the line".
+
+if traffic_light is yellow and
+   driving is crazy
+then action is "close eyes and accelerate through intersection".
+
+if traffic_light is yellow and
+   driving is sane
+then action is "stop at the line".
+
+if city is _X and
+   _X oneof [Boston, Miami, 'New York']
+then driving is crazy
+else driving is sane.
+
+
+
