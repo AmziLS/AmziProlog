@@ -1,7 +1,7 @@
 # Building the *Amzi! Prolog + Logic Server* Core and Interfaces
 ### amzi_build.md
 
-These are the directions for building the **core** set of tools for *Amzi! Prolog*, and the various external *Amzi! Logic Server* **interfaces**.  Note that this does not build the Eclipse-based IDE, which is in a separate project, but does copy the plug-in files from that repository to the release.
+These are the directions for building the **core** set of tools for *Amzi! Prolog*, and the various external *Amzi! Logic Server* **interfaces**.  See separate directions in the **ide** project, which is the Eclipse plug-in for Amzi!.  (This project does copy over the plug-in from that one for distribution.)
 
 The *core* set of tools contains the command line interface for interpreting, compiling, linking and running Prolog modules, as well as the modules necessary for distributing applications.
 
@@ -13,25 +13,24 @@ The interfaces are of two different types.
 
 **Logic Server Extensions (LSXs)** which are dynamic libraries, DLLs under Windows, or .SOs under Unix, but always with the extension .LSX.  These are libraries that implement extended predicates which can be called from Prolog and implement connectivity to other services, such as operating system utilities, ODBC, Sockets, or MySQL.
 
-The build requires this directory structure for the various projects.  The build starts from amzi\apls\amzi-apls-make.
+The build requires this directory structure for the various projects.  The build starts from amzi\apls\make.
 
 ```
 amzi
   source
     apls
-      amzi-apls-make
-      amzi-apls-engine
-      amzi-apls-
+      make
+      engine
+      compile
       . . .
-    eclipse
-      amzi-eclipse
+    ide
     interfaces
-      amzi-interfaces-make
-      amzi-interfaces-cgi
-      amzi-interfaces-
+      make
+      cgi
+      java
       . . .
   release
-    amzi-apls-distribution
+    distribution
 ```
 
 The various makes for the various environments will create directories under amzi/release such as ‘mac’ ‘win64’ for the builds for those environments.
@@ -40,7 +39,7 @@ NOTE — the only portion of the system that is not open source is the Amzi! Com
 
 ## Using the top level makes
 
-The Amzi! *core* and *interfaces* are built using a hierarchy of make files.  The top level make files are in the project amzi-apls-make.  If everything is set up correctly, you can use them to build the whole system like so:
+The Amzi! *core* and *interfaces* are built using a hierarchy of make files.  The top level make files are in the project apls/make.  If everything is set up correctly, you can use them to build the whole system like so:
 
 **On a Mac:**
 ```
@@ -64,14 +63,14 @@ or
 
 ## Sub makes
 
-The top make files called similarly named make files in each of the individual projects that make up the whole Amzi! system.  For example, in amzi-apls-listen is a file called make_mac64.txt that is the make for the listener on the Mac.  In amzi-interfaces-java is the make for the Java interface to Amzi!.
+The top make files called similarly named make files in each of the individual projects that make up the whole Amzi! system.  For example, in apls/listen is a file called make_mac64.txt that is the make for the listener on the Mac.  In interfaces/java is the make for the Java interface to Amzi!.
 
 These sub-make files can be called individually for rebuilding just portions of the system, or for testing.
 
 There are two sections of projects.
 
-- The **core** projects.  These are all named amzi-apls-x and correspond to core components such as the listener, the compiler, and the engine.
-- The **interface** projects.  These are all named amzi-interface-x and correspond to the various supported external interfaces, such as Java and .NET.  They are platform independent, so, for example, .NET is not supported on the Mac.
+- The **core** projects.  These are all in the apls repository and correspond to core components such as the listener, the compiler, and the engine.
+- The **interface** projects.  These are all named interfaces repository and correspond to the various supported external interfaces, such as Java and .NET.  Most are platform dependent, so, for example, .NET is not supported on the Mac.  Java, however, is supported on most platforms.
 
 ## System Requirements
 
@@ -96,7 +95,7 @@ Visual Studio 2010 was used for the C++ portions of the system.  The Windows mak
 On Windows these environment variables are used by the make files for the core system:
 
 AIDE_RELEASE=%AMZI_TARGET%\ide
-AIDE_SOURCE=c:\Work\amzi\github\amzi\source\eclipse\amzi-eclipse
+AIDE_SOURCE=c:\Work\amzi\github\amzi\source\ide
 AMZI_DEV_DIR=%AMZI_TARGET%\apls
 AMZI_DIR=%AMZI_TARGET%\apls
 AMZI_TARGET=c:\Work\amzi\github\amzi\release\win64
@@ -122,7 +121,7 @@ export AMZI_RELEASE=$AMZI_WORK/release/$AMZI_BUILD
 export APLS_RELEASE=$AMZI_RELEASE/apls
 export AMZI_DIR=$AMZI_WORK/release/$AMZI_BUILD/apls
 export APLS_SOURCE=$AMZI_WORK/source/apls
-export AIDE_SOURCE=$AMZI_WORK/source/eclipse/amzi-eclipse
+export AIDE_SOURCE=$AMZI_WORK/source/ide
 export AIDE_RELEASE=$AMZI_RELEASE/ide
 export AMZI_DEV_DIR=$AMZI_WORK/release/mac/apls
 export CLASSPATH=./:$CLASSPATH:$AMZI_DIR/lsapis/java

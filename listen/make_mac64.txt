@@ -8,7 +8,7 @@ AIDL = $(RELEASE)/abin/aidl.xpl
 AXRF = $(RELEASE)/abin/axrf.xpl
 ALIB = $(RELEASE)/abin/alib.plm
 DEBUG64 = $(RELEASE)/abin/debug64.plm
-READER = ../amzi-apls-compile/reader.plm
+READER = ../compile/reader.plm
 
 OBJECTS = alis.plm debug.plm listen.plm axrf.plm probe.plm debug64.plm $(READER)
 
