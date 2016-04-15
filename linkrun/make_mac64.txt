@@ -2,7 +2,7 @@ SOURCE=$(APLS_SOURCE)
 RELEASE=$(APLS_RELEASE)
 
 AC_FLAGS = -DENVgm6 -D_UNICODE
-ENG = ../amzi-apls-engine
+ENG = ../engine
 
 FILES = alnk.cpp $(ENG)/lenv.cpp $(ENG)/ddbmem.cpp $(ENG)/lstring.cpp
 HEADERS = $(ENG)/env.h $(ENG)/defs.h $(ENG)/lenv.h $(ENG)/ddbmem.h

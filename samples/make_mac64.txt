@@ -2,7 +2,7 @@
 
 CP = cp
 MD = -mkdir
-SRC = $(APLS_SOURCE)/amzi-apls-samples
+SRC = $(APLS_SOURCE)/samples
 DST = $(APLS_RELEASE)/samples
 
 # For unix, copy the file, make these the definitions:
