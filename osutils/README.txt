@@ -1,3 +1,3 @@
-amzi-apls-osutils
+osutils
 
 This software is licensed under the MIT License

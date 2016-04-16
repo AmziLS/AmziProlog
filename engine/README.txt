@@ -1,2 +1,2 @@
-amzi-apls-engine
+engine
 Amzi! Prolog WAM engine

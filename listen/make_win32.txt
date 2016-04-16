@@ -8,7 +8,7 @@ ACMP = $(APLS_RELEASE)\bin\acmp.exe
 ALNK = $(APLS_RELEASE)\bin\alnk.exe
 DEBUG64 = $(APLS_RELEASE)\abin\debug64.plm
 AREG = $(APLS_RELEASE)\src\ap_ls\compile\register.plm
-READER = ..\amzi-apls-compile\reader.plm
+READER = ..\compile\reader.plm
 
 OBJECTS = alis.plm debug.plm debug64.plm listen.plm axrf.plm probe.plm $(READER)
 

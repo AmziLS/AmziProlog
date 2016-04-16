@@ -32,7 +32,7 @@ _engine:
   @echo *************************************************************
 	@echo *********    making engine
   @echo *************************************************************
-	cd $(SOURCE)\amzi-apls-engine
+	cd $(SOURCE)\engine
 	bmake -f make_win32.txt
 	cd $(HERE)
 
@@ -40,7 +40,7 @@ _run:
   @echo *************************************************************
 	@echo *********    making run
   @echo *************************************************************
-	cd $(SOURCE)\amzi-apls-run
+	cd $(SOURCE)\run
 	bmake -f make_win32.txt
 	cd $(HERE)
 
@@ -48,7 +48,7 @@ _link:
   @echo *************************************************************
 	@echo *********    making link
   @echo *************************************************************
-	cd $(SOURCE)\amzi-apls-linkrun
+	cd $(SOURCE)\linkrun
 	bmake -f make_win32.txt
 	cd $(HERE)
 
@@ -56,7 +56,7 @@ _osutils:
   @echo *************************************************************
 	@echo *********    making osutils
   @echo *************************************************************
-	cd $(SOURCE)\amzi-apls-osutils
+	cd $(SOURCE)\osutils
 	bmake -f make_win32.txt
 	cd $(HERE)
 	
@@ -64,7 +64,7 @@ _compile:
   @echo *************************************************************
 	@echo *********    making compile
   @echo *************************************************************
-	cd $(SOURCE)\amzi-apls-compile
+	cd $(SOURCE)\compile
 	bmake -f make_win32.txt clean
 	bmake -f make_win32.txt
 	cd $(HERE)
@@ -73,7 +73,7 @@ _libs:
   @echo *************************************************************
 	@echo *********    making libs
   @echo *************************************************************
-	cd $(SOURCE)\amzi-apls-libs
+	cd $(SOURCE)\libs
 	bmake -f make_win32.txt clean
 	bmake -f make_win32.txt
 	cd $(HERE)
@@ -82,7 +82,7 @@ _listen:
   @echo *************************************************************
 	@echo *********    making listen
   @echo *************************************************************
-	cd $(SOURCE)\amzi-apls-listen
+	cd $(SOURCE)\listen
 	bmake -f make_win32.txt clean
 	bmake -f make_win32.txt
 	cd $(HERE)
@@ -91,7 +91,7 @@ _docs:
   @echo *************************************************************
 	@echo *********    making docs
   @echo *************************************************************
-	cd $(SOURCE)\amzi-apls-docs
+	cd $(SOURCE)\docs
 	bmake -f make_win32.txt
 	cd $(HERE)
 
@@ -99,7 +99,7 @@ _samples:
   @echo *************************************************************
 	@echo *********    making samples
   @echo *************************************************************
-	cd $(SOURCE)\amzi-apls-samples
+	cd $(SOURCE)\samples
 	bmake -f make_win32.txt
 	cd $(HERE)
 	
@@ -107,7 +107,7 @@ _wide:
   @echo *************************************************************
 	@echo *********    making wide
   @echo *************************************************************
-	cd $(SOURCE)\amzi-apls-wide
+	cd $(SOURCE)\wide
 	bmake -f make_win32.txt
 	cd $(HERE)
 
@@ -128,7 +128,7 @@ _interfaces:
   @echo *************************************************************
 	@echo *********    making interfaces
   @echo *************************************************************
-	cd $(SOURCE)\..\interfaces\amzi-interfaces-make
+	cd $(SOURCE)\..\interfaces\make
 	bmake -f make_win32.txt
 	cd $(HERE)
 	

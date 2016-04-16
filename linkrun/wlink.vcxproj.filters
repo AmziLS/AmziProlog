@@ -18,13 +18,13 @@
     <ClCompile Include="alnk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\amzi-apls-engine\ddbmem.cpp">
+    <ClCompile Include="..\engine\ddbmem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\amzi-apls-engine\lenv.cpp">
+    <ClCompile Include="..\engine\lenv.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\amzi-apls-engine\lstring.cpp">
+    <ClCompile Include="..\engine\lstring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
