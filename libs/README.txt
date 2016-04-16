@@ -1,3 +1,3 @@
-amzi-apls-libs
+libs
 
 This software is licensed under the MIT License
