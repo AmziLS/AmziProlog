@@ -1,4 +1,4 @@
-# interfaces/amzi-interfaces-samples
+# interfaces/samples
 # makefile for samples, copies files to be distributed
 
 CP = cp

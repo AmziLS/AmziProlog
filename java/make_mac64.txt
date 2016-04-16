@@ -1,4 +1,4 @@
-# interfaces/amzi-interfaces-java
+# interfaces/java
 
 DIST = $(APLS_RELEASE)/lsapis/java
 #debug

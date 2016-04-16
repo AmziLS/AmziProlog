@@ -15,70 +15,70 @@ _sockets:
   @echo *************************************************************
 	@echo *********    making sockets
   @echo *************************************************************
-	cd $(HERE)\amzi-interfaces-sockets
+	cd $(HERE)\sockets
 	bmake -f make_win64.txt
 
 _mysql:
   @echo *************************************************************
 	@echo *********    making mysql
   @echo *************************************************************
-	cd $(HERE)\amzi-interfaces-mysql
+	cd $(HERE)\mysql
 	bmake -f make_win64.txt
 	
 _odbc:
   @echo *************************************************************
 	@echo *********    making odbc
   @echo *************************************************************
-	cd $(HERE)\amzi-interfaces-odbc
+	cd $(HERE)\odbc
 	bmake -f make_win64.txt
 
 _tcltk:
   @echo *************************************************************
 	@echo *********    making tcl/tk
   @echo *************************************************************
-	cd $(HERE)\amzi-interfaces-tcltk
+	cd $(HERE)\tcltk
 	bmake -f make_win64.txt
 	
 _dotnet:
   @echo *************************************************************
 	@echo *********    making .net
   @echo *************************************************************
-	cd $(HERE)\amzi-interfaces-dotnet
+	cd $(HERE)\dotnet
 	bmake -f make_win64.txt
 	
 _java:
   @echo *************************************************************
 	@echo *********    making java
   @echo *************************************************************
-	cd $(HERE)\amzi-interfaces-java
+	cd $(HERE)\java
 	bmake -f make_win64.txt
 
 _cgi:
   @echo *************************************************************
 	@echo *********    making cgi
   @echo *************************************************************
-	cd $(HERE)\amzi-interfaces-cgi
+	cd $(HERE)\cgi
 	bmake -f make_win64.txt
 
 _vb:
   @echo *************************************************************
 	@echo *********    making vb
   @echo *************************************************************
-	cd $(HERE)\amzi-interfaces-vb
+	cd $(HERE)\vb
 	bmake -f make_win32.txt
 	
 _delphi:
   @echo *************************************************************
 	@echo *********    making delphi
   @echo *************************************************************
-	cd $(HERE)\amzi-interfaces-delphi
+	cd $(HERE)\delphi
 	bmake -f make_win32.txt
 
 _samples:
   @echo *************************************************************
 	@echo *********    making samples
   @echo *************************************************************
-	cd $(HERE)\amzi-interfaces-samples
+	cd $(HERE)\samples
 	bmake -f make_win32.txt
 
 clean:

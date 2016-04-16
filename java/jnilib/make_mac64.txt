@@ -1,4 +1,4 @@
-# interfaces/amzi-interfaces-java/jnilib
+# interfaces/java/jnilib
 
 FILES = amzijni.cpp
 
