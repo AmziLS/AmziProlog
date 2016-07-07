@@ -3,7 +3,6 @@ package com.amzi.prolog.debug.remote;
 import com.amzi.prolog.core.PrologCorePlugin;
 import com.amzi.prolog.debug.PrologDebugPlugin;
 import com.amzi.prolog.debug.ui.RemoteConnectWaiter;
-import com.amzi.prolog.core.dialogs.UpgradeDialog;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
@@ -94,14 +93,8 @@ public class SocketConnection {
 			InetAddress remote = socket.getInetAddress();
 			InetAddress local = InetAddress.getByName("127.0.0.1");
 			
-			if (!remote.equals(local) && !PrologCorePlugin.actionAllowed(PrologCorePlugin.DEV_REMOTE_DEBUG)) {
-				Display.getDefault().asyncExec(new Runnable(){
-					public void run() {
-						UpgradeDialog upgradeDialog = new UpgradeDialog(Display.getDefault().getActiveShell());
-						upgradeDialog.open();
-					}
-				});
-
+			if (!remote.equals(local) ) {
+				
 				try {
 					socket.close();
 					socket = null;

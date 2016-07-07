@@ -1,7 +1,6 @@
 package com.amzi.prolog.ui.launch;
 
 import com.amzi.prolog.core.PrologCorePlugin;
-import com.amzi.prolog.core.dialogs.UpgradeDialog;
 import com.amzi.prolog.debug.core.model.PrologDebugTarget;
 
 import org.eclipse.core.resources.IProject;
@@ -41,18 +40,6 @@ public class RemoteLaunchConfigurationDelegate
 			monitor = new NullProgressMonitor();
 		}
 
-		// Is this allowed?
-		if (!PrologCorePlugin.actionAllowed(PrologCorePlugin.DEV_LOCAL_DEBUG)) {
-			monitor.done();
-			DebugPlugin.getDefault().getLaunchManager().removeLaunch(launch);
-			Display.getDefault().asyncExec(new Runnable(){
-				public void run() {
-					UpgradeDialog upgradeDialog = new UpgradeDialog(Display.getDefault().getActiveShell());
-					upgradeDialog.open();
-				}
-			});
-			return;
-		} 
 		
 		final String projectName = config.getAttribute("projectName", "");
 //		final String projectPathnam = config.getAttribute("projectPathname", "");

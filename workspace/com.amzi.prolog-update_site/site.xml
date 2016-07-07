@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <description url="http://www.amzi.com/download">
-      Download and Buy Amzi! Software
+   <description url="http://www.amzi.com">
+      All about Amzi!
    </description>
-   <feature url="features/com.amzi.prolog_4.5.10001.jar" id="com.amzi.prolog" version="4.5.10001">
+   <feature url="features/com.amzi.prolog_4.5.10004.jar" id="com.amzi.prolog" version="4.5.10004">
       <category name="amzi_eclipse_feature"/>
    </feature>
    <category-def name="amzi_eclipse_feature" label="Amzi! Eclipse Feature">

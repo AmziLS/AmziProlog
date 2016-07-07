@@ -154,38 +154,8 @@ public class ListenerView extends ViewPart implements VerifyListener, KeyListene
 
 		// Generate a greeting
 		
-		greeting = PrologCorePlugin.getProductName();
-		if (greeting != null) {
-			greeting += "\n";
-
-			String userName = PrologCorePlugin.getUserName();
-			int maintenanceDaysLeft = PrologCorePlugin.getMaintenanceDaysLeft();
-			int evaluationDaysLeft = PrologCorePlugin.getEvaluationDaysLeft();
-			greeting += "Licensed to " + userName + "\n";
-			if (PrologCorePlugin.isEvaluation()) {
-	//			license += "\nLicense Expires in " + new Integer(evaluationDaysLeft).toString() + " Days\n";
-				if (evaluationDaysLeft <= 0)
-					greeting += "Evaluation has Expired\n";
-				else
-					greeting += "Evaluation Expires in " + new Integer(evaluationDaysLeft) + " Days\n";
-			}
-			else if (PrologCorePlugin.isFree()) {
-				greeting += "Free Version\n";
-			}
-			else {			
-				if (maintenanceDaysLeft < -4000)
-					greeting += "Support and Maintenance Expire in an Unknown Number of Days\n";
-				else if (maintenanceDaysLeft <= 0)
-					greeting += "Support and Maintenance has Expired\n";
-				else
-					greeting += "Support and Maintenance Expire in " + new Integer(maintenanceDaysLeft).toString() + " Days\n";
-			}
-		}
-		else {
-			greeting = "";
-		}
-
-		
+		greeting = "";
+				
 		greeting += "\nInterpreting project: " + projectName + "\n";
 		if (xplPathname == null || xplPathname.length() == 0) {
 			if (lsxList == null) lsxList = "";

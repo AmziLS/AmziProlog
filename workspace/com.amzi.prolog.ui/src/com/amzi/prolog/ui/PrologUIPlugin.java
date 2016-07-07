@@ -1,7 +1,6 @@
 package com.amzi.prolog.ui;
 
 import com.amzi.prolog.core.PrologCorePlugin;
-import com.amzi.prolog.ui.actions.LicenseActionDelegate;
 
 import java.text.MessageFormat;
 import java.util.*;
@@ -43,18 +42,6 @@ public class PrologUIPlugin extends AbstractUIPlugin {
 		} catch (MissingResourceException x) {
 			resourceBundle = null;
 		}
-		
-		// If we're the free edition, put up our buy box
-		// no, let's not for now.
-		//String product = PrologCorePlugin.getProductType();
-		//if (product == null || product.charAt(2) == '_') {
-		//	LicenseActionDelegate licenseAction = new LicenseActionDelegate();
-		//	licenseAction.run(null);
-		//}
-		
-		// Initialize our preferences
-//		IPreferenceStore store = getPreferenceStore();
-//		PrologMainPreferencePage.initDefaults(store);
 	}
 	
 	/* (non-Javadoc)

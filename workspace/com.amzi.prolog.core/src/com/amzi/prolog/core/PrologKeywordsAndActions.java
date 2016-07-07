@@ -41,19 +41,19 @@ public class PrologKeywordsAndActions {
 		"/\\", "\\", "\\/", "<<", ">>" };
 	
 	private static HashMap infoMap;
-	private static int devActions;
-	private static int maintenanceDaysLeft;
-	private static int evaluationDaysLeft;
-	private static boolean evaluationExpired;
-	private static boolean evaluation;
-	private static boolean free;
-	private static boolean versionGtRenewDate;
+//	private static int devActions;
+//	private static int maintenanceDaysLeft;
+//	private static int evaluationDaysLeft;
+//	private static boolean evaluationExpired;
+//	private static boolean evaluation;
+//	private static boolean free;
+//	private static boolean versionGtRenewDate;
 	private static boolean lanEdition;
 	private static boolean connectedToServer;
-	private static String productType;
-	private static String productName;
-	private static String userName;
-	private static String fingerprint;
+//	private static String productType;
+//	private static String productName;
+//	private static String userName;
+//	private static String fingerprint;
 	private String amziDir;
 	
 	/**
@@ -93,80 +93,6 @@ public class PrologKeywordsAndActions {
      		
      		// Get all the predicate info
      		infoMap = buildPredicateInfo(ls);
-     		
-     		// Reset the security stuff
-     		term = ls.ExecStr("amzi_system:license$action(reload_license, _X)");
-     		
-     		// Get all our security stuff
-			term = ls.ExecStr("amzi_system:license$info(dev_rights, _DR)");
-			if (term != 0)
-				devActions = ls.GetIntArg(term, 2);
-			else
-				devActions = 0;
-				
-			term = ls.ExecStr("amzi_system:license$info(product_type_str, _EE)");
-			if (term != 0)
-				productType = ls.GetStrArg(term, 2);
-			if (productType == null) productType = "(unknown)";
-			term = ls.ExecStr("amzi_system:license$info(product_name_str, _EE)");
-			if (term != 0)
-				productName = ls.GetStrArg(term, 2);
-			if (productName == null) productName = "(unknown)";
-			term = ls.ExecStr("amzi_system:license$info(user_name_str, _EE)");
-			if (term != 0)
-				userName = ls.GetStrArg(term, 2);
-			if (userName == null) userName = "(none)";
-			term = ls.ExecStr("amzi_system:license$info(pc_fingerprint_str, _EE)");
-			if (term != 0)
-				fingerprint = ls.GetStrArg(term, 2);
-			if (fingerprint == null) userName = "(unknown)";
-
-			term = ls.ExecStr("amzi_system:license$info(eval, _E)");
-			if (term != 0) {
-				String tf = ls.GetStrArg(term, 2);
-				if (tf.equalsIgnoreCase("false")) evaluation = false;
-				else evaluation = true;
-			}
-			term = ls.ExecStr("amzi_system:license$info(free, _E)");
-			if (term != 0) {
-				String tf = ls.GetStrArg(term, 2);
-				if (tf.equalsIgnoreCase("false")) free = false;
-				else free = true;
-			}
-			term = ls.ExecStr("amzi_system:license$info(eval_expired, _EE)");
-			if (term != 0) {
-				String tf = ls.GetStrArg(term, 2);
-				if (tf.equalsIgnoreCase("false")) evaluationExpired = false;
-				else evaluationExpired = true;
-			}
-			term = ls.ExecStr("amzi_system:license$info(version_gt_renew_date, _EE)");
-			if (term != 0) {
-				String tf = ls.GetStrArg(term, 2);
-				if (tf.equalsIgnoreCase("false")) versionGtRenewDate = false;
-				else versionGtRenewDate = true;
-			}
-			term = ls.ExecStr("amzi_system:license$info(lan_edition, _LE)");
-			if (term != 0) {
-				String tf = ls.GetStrArg(term, 2);
-				if (tf.equalsIgnoreCase("false")) lanEdition = false;
-				else lanEdition = true;
-			}
-			term = ls.ExecStr("amzi_system:license$info(connected_to_server, _EE)");
-			if (term != 0) {
-				String tf = ls.GetStrArg(term, 2);
-				if (tf.equalsIgnoreCase("false")) connectedToServer = false;
-				else connectedToServer = true;
-			}
-			term = ls.ExecStr("amzi_system:license$info(maint_days_left, _MDL)");
-			if (term != 0)
-				maintenanceDaysLeft = ls.GetIntArg(term, 2);
-			else
-				maintenanceDaysLeft = 0;
-			term = ls.ExecStr("amzi_system:license$info(eval_days_left, _EDL)");
-			if (term != 0)
-				evaluationDaysLeft = ls.GetIntArg(term, 2);
-			else
-				evaluationDaysLeft = 0;
 
   		}
   		catch (LSException lsex) {
@@ -405,45 +331,6 @@ public class PrologKeywordsAndActions {
 		return ls;
 	}
 	
-	public int getDevActions() {
-		return devActions;
-	}
-	public int getMaintenanceDaysLeft() {
-		return maintenanceDaysLeft;
-	}
-	public boolean isEvaluationExpired() {
-		return evaluationExpired;
-	}
-	public boolean isEvaluation() {
-		return evaluation;
-	}
-	public boolean isFree() {
-			return free;
-	}
-	public int getEvaluationDaysLeft() {
-		return evaluationDaysLeft;
-	}
-	public boolean isVersionGtRenewDate() {
-		return versionGtRenewDate;
-	}
-	public String getProductType() {
-		return productType;
-	}
-	public String getProductName() {
-		return productName;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public String getFingerprint() {
-		return fingerprint;
-	}
-	public boolean isLanEdition() {
-		return lanEdition;
-	}
-	public boolean isConnectedToServer() {
-		return connectedToServer;
-	}
 	
 	private synchronized String[] prologListToStringArrayNoDups(LogicServer ls, long list, int size) throws LSException
 	{

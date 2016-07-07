@@ -45,30 +45,8 @@ public class AboutActionDelegate extends ActionDelegate
 				ls.Close();
 			}
 			
-//			type = PrologCorePlugin.getProductType();
-			edition = PrologCorePlugin.getProductName();
-			license = edition + " Edition   ";
+			license = "Open Source Edition   ";
 
-			// Display the username and calculate maintenance left
-			String userName = PrologCorePlugin.getUserName();
-			int maintenanceDaysLeft = PrologCorePlugin.getMaintenanceDaysLeft();
-			int evaluationDaysLeft = PrologCorePlugin.getEvaluationDaysLeft();
-			if (PrologCorePlugin.isEvaluation()) {
-//				license += "\nLicense Expires in " + new Integer(evaluationDaysLeft).toString() + " Days\n";
-				if (evaluationDaysLeft <= 0)
-					license += "Evaluation has Expired";
-				else
-					license += "Evaluation Expires in " + new Integer(evaluationDaysLeft) + " Days";
-			}
-			else {			
-				license += " Licensed to " + userName + "\n";
-				if (maintenanceDaysLeft < -4000)
-					license += "Support and Maintenance Expire in an Unknown Number of Days";
-				else if (maintenanceDaysLeft <= 0)
-					license += "Support and Maintenance has Expired";
-				else
-					license += "Support and Maintenance Expire in " + new Integer(maintenanceDaysLeft).toString() + " Days";
-			}
 
 			MessageDialog.openInformation(shell, "Amzi! Prolog + Logic Server",
 				version + "\n" + "Running from AMZI_DIR="+amziDir + "\n\n" +

@@ -175,22 +175,7 @@
          </action>
       </actionSet>
    </extension>
-   <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            label="Amzi! License Key Manager"
-            description="Buy or Enter License Key"
-            visible="true"
-            id="com.amzi.prolog.ui.FileLicenseActionSet">
-         <action
-               label="Activate License"
-               helpContextId="com.amzi.prolog.ui.license"
-               class="com.amzi.prolog.ui.actions.LicenseActionDelegate"
-               menubarPath="file/open.ext"
-               id="com.amzi.prolog.ui.FileLicenseAction">
-         </action>
-      </actionSet>
-   </extension>
+
    <extension
          point="org.eclipse.debug.core.sourceLocators">
       <sourceLocator

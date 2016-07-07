@@ -1,6 +1,5 @@
 package com.amzi.prolog.core;
 
-import com.amzi.prolog.core.dialogs.MaintenanceDialog;
 import com.amzi.prolog.core.utils.Utils;
 import amzi.ls.LogicServer;
 import amzi.ls.LSException;
@@ -155,21 +154,6 @@ public class PrologCorePlugin extends AbstractUIPlugin {
 		if (prologKeywords == null) {
 			prologKeywords = new PrologKeywordsAndActions(getAmziDir());
 		}
-
-		// Check if maintenance expired, if so, go boom
-		if (isVersionGtRenewDate()) {
-			if (shell != null)
-				MessageDialog.openWarning(shell,
-					"Maintenance Expired",
-					"You have installed a new version of this software after your maintenance has expired. "+
-					"Either revert back to your prior version or visit www.amzi.com "+
-					"to renew your maintenance and support."); 
-			throw new CoreException(new Status(Status.ERROR, "com.amzi.prolog.core", 400, "Prolog Initialization Failed", null));	
-		}
-		
-		// If we're a LAN edition and not connected, go boom
-		if (prologKeywords.isLanEdition() && !prologKeywords.isConnectedToServer())
-			throw new CoreException(new Status(Status.ERROR, "com.amzi.prolog.core", 400, "Prolog Initialization Failed", null));		
 		
 		IPreferenceStore prefs = getPreferenceStore();
 
@@ -211,19 +195,6 @@ public class PrologCorePlugin extends AbstractUIPlugin {
 		}
 */
 		
-		// Check if the evaluation has expired and invite purchase
-		boolean pEvalExpiredReminder = prefs.getBoolean("EVALUATION_EXPIRED_REMINDER");
-		if (isEvaluation() && isEvaluationExpired() && !pEvalExpiredReminder) {
-			if (shell != null) {
-				MessageDialog.openInformation(shell, "Evaluation",
-					"Your Evaluation has expired.\r\nEither visit www.amzi.com to purchase a license, or select File|Activate to activate the free version.");
-				prefs.setValue("EVALUATION_EXPIRED_REMINDER", true);	
-			}
-		}
-		//else
-			// Remind for maintenance
-			//doReminders();
-			//;
 	}
 
 	/* (non-Javadoc)
@@ -357,63 +328,7 @@ public class PrologCorePlugin extends AbstractUIPlugin {
 	/**
 	 * Returns what actions are allowed
 	 */
-	public static boolean actionAllowed(int action) {
-		if (prologKeywords == null || voidActions)
-			updateKeywordsAndActions();
-		if ((prologKeywords.getDevActions() & action) != 0) return true;
-		return false;
-	}
-	
-	public static int getMaintenanceDaysLeft() {
-		if (prologKeywords == null || voidActions)
-			updateKeywordsAndActions();
-		return prologKeywords.getMaintenanceDaysLeft();
-	}
-	public static boolean isEvaluationExpired() {
-		if (prologKeywords == null || voidActions)
-			updateKeywordsAndActions();
-		return prologKeywords.isEvaluationExpired();
-	}
-	public static boolean isEvaluation() {
-		if (prologKeywords == null || voidActions)
-			updateKeywordsAndActions();
-		return prologKeywords.isEvaluation();
-	}
-	public static boolean isFree() {
-		if (prologKeywords == null || voidActions)
-			updateKeywordsAndActions();
-		return prologKeywords.isFree();
-	}
-	public static int getEvaluationDaysLeft() {
-		if (prologKeywords == null || voidActions)
-			updateKeywordsAndActions();
-		return prologKeywords.getEvaluationDaysLeft();
-	}
-	public static boolean isVersionGtRenewDate() {
-		if (prologKeywords == null || voidActions)
-			updateKeywordsAndActions();
-		return prologKeywords.isVersionGtRenewDate();
-	}
-	public static String getProductType() {
-		if (prologKeywords == null || voidActions)
-			updateKeywordsAndActions();
-		return prologKeywords.getProductType();
-	}
-	public static String getProductName() {
-		if (prologKeywords == null || voidActions)
-			updateKeywordsAndActions();
-		return prologKeywords.getProductName();
-	}
-	public static String getUserName() {
-		if (prologKeywords == null || voidActions)
-			updateKeywordsAndActions();
-		return prologKeywords.getUserName();
-	}
-	public static String getFingerprint() {
-		if (prologKeywords == null || voidActions)
-			updateKeywordsAndActions();
-		return prologKeywords.getFingerprint();
-	}
+
 	
 	public static void updateKeywordsAndActions() {
 		prologKeywords = new PrologKeywordsAndActions(getAmziDir());
@@ -433,29 +348,6 @@ public class PrologCorePlugin extends AbstractUIPlugin {
 		
 		// See if we need any reminders
 		IDialogSettings choices = getDialogSettings();
-		if (getMaintenanceDaysLeft() <= 30 && getMaintenanceDaysLeft() > -60) {
-			
-			long now = new Date().getTime();
-
-			// Initialize reminder date preference
-			if (choices.get("maintenance_reminder_date") == null) 
-				choices.put("maintenance_reminder_date", 0);
-			
-			long reminderDate = choices.getLong("maintenance_reminder_date");
-			if (reminderDate != -1 && reminderDate <= now) {
-				if (shell != null) {
-					MaintenanceDialog mDialog = new MaintenanceDialog(shell,
-							getMaintenanceDaysLeft(), choices);
-					mDialog.open();
-
-					saveDialogSettings();
-				}
-			}			
-		} 
-		else {
-			// Reset reminder preferences if renewal occured
-			choices.put("maintenance_reminder_date", 0);
 		}
-	}
 	
 }

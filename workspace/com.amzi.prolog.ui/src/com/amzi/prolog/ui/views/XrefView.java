@@ -7,7 +7,6 @@ import com.amzi.prolog.ui.build.ProjectProperties;
 import com.amzi.prolog.ui.PrologUIPlugin;
 import com.amzi.prolog.ui.PrologPluginImages;
 import com.amzi.prolog.ui.internal.Find;
-import com.amzi.prolog.core.dialogs.UpgradeDialog;
 import com.amzi.prolog.core.utils.Utils;
 
 //import java.text.MessageFormat;
@@ -177,16 +176,6 @@ public class XrefView extends ViewPart {
 				long term, term2, xrefterm, ref, warning, list, list2;
 				String text;
 				TreeParent pred, uses, usedby;
-
-				if (PrologCorePlugin.isEvaluationExpired()) {
-					Display.getDefault().asyncExec(new Runnable(){
-						public void run() {
-							UpgradeDialog upgradeDialog = new UpgradeDialog(Display.getDefault().getActiveShell());
-							upgradeDialog.open();
-						}
-					});
-					return;
-				}
 
 				project = Find.getSelectedProject();
 				if (project == null) return;

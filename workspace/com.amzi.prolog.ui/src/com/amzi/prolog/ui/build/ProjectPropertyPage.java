@@ -226,7 +226,7 @@ public class ProjectPropertyPage extends PropertyPage
            	for (int i = 0 ; i < lsxFiles.length ; i++) {
 				if (!lsxFiles[i].getName().equalsIgnoreCase("adebug.lsx")) {
 					Button button = new Button(lsxGroup, SWT.CHECK | SWT.LEFT);
-					if (PrologCorePlugin.isEvaluationExpired() &&
+					if (
 						!lsxFiles[i].getName().equalsIgnoreCase("aosutils.lsx"))
 						button.setEnabled(false);
 					button.setText(lsxFiles[i].getName());

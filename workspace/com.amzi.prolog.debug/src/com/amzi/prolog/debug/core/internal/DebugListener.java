@@ -195,30 +195,6 @@ public class DebugListener extends Thread {
 					}
 				}
 	
-				// Turn off the monitor
-	//			monitor.done();
-				
-				// Turn on debugging
-	//			if (ls.ExecStr("debug64(on)") == 0)
-	//				displayError("Turning on debugging failed");
-					
-				// Display remaining uses for evaluation
-				term = ls.ExecStr("amzi_system:license$info(eval, _V)");
-				String eval = ls.GetStrArg(term, 2);
-				if (eval.equalsIgnoreCase("true")) {
-					term = ls.ExecStr("amzi_system:license$info(eval_expired, _V)");
-					String exp = ls.GetStrArg(term, 2);
-	//				term = ls.ExecStr("amzi_system:license$info(eval_uses_left, _V)");
-	//				term = ls.ExecStr("amzi_system:license$info(eval_days_left, _V)");
-	//				int cnt = ls.GetIntArg(term, 2) - 150;
-	//				if (exp.equalsIgnoreCase("false"))
-	//					user_put_string("\nStudent Edition Evaluation: " + new Integer(cnt).toString() + " Days Left");
-					if (exp.equalsIgnoreCase("true")) {
-						PrologCorePlugin.voidActions();
-						user_put_string("\nStudent Edition Evaluation Expired. Select File | Buy/Activate License to Upgrade");
-					}
-				}
-				
 				// Turn on debugging (throws an error on failure)
 				if (ls.ExecStr("amzi_system:debug64_init") == 0)
 					user_put_string("\nUnable to initialize debugger");

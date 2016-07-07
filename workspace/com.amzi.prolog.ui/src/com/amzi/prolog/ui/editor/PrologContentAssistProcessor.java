@@ -9,7 +9,6 @@ import amzi.ls.LogicServer;
 
 import com.amzi.prolog.core.PrologCorePlugin;
 import com.amzi.prolog.core.PrologKeywordsAndActions;
-import com.amzi.prolog.core.dialogs.UpgradeDialog;
 import com.amzi.prolog.ui.PrologPluginImages;
 
 import org.eclipse.jface.text.BadLocationException;
@@ -80,15 +79,6 @@ public class PrologContentAssistProcessor implements IContentAssistProcessor {
 	public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int documentOffset) {
 		String prefix = "";
 		
-		if (PrologCorePlugin.isEvaluationExpired()) {
-			Display.getDefault().asyncExec(new Runnable(){
-				public void run() {
-					UpgradeDialog upgradeDialog = new UpgradeDialog(Display.getDefault().getActiveShell());
-					upgradeDialog.open();
-				}
-			});
-			return null;
-		}
 		
 		// See if there is a word part we want to complete 
 		try {
@@ -298,9 +288,7 @@ public class PrologContentAssistProcessor implements IContentAssistProcessor {
 	 * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#getContextInformationAutoActivationCharacters()
 	 */
 	public char[] getContextInformationAutoActivationCharacters() {
-		if (PrologCorePlugin.isEvaluationExpired())
-			return null;
-		else
+		
 			return new char[] { '(', ',' };
 	}
 

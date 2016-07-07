@@ -148,10 +148,7 @@ public class PrologSourceViewerConfiguration extends SourceViewerConfiguration {
 	 * @see org.eclipse.jface.text.source.SourceViewerConfiguration#getTextHover(org.eclipse.jface.text.source.ISourceViewer, java.lang.String)
 	 */
 	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
-		if (PrologCorePlugin.isEvaluationExpired())
-			return null;
-		else
-			return new PrologTextHover();
+					return new PrologTextHover();
 	}
 
 	/* (non-Javadoc)
