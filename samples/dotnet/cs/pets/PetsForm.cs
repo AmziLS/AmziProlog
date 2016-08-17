@@ -133,7 +133,7 @@ namespace pets
 		private void GetPetButton_Click(object sender, System.EventArgs e)
 		{
 			LogicServer ls;
-			int term;
+			long term;
 
             term = 0;
 			try

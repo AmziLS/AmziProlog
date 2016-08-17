@@ -22,6 +22,16 @@ using System::Runtime::InteropServices::Marshal;
 #include "DExtPred.h"
 #include "LSException.h"
 
+// An integer that can hold a term, which is a pointer
+// all the 'long's, which are only 32-bits even in 64-bit mode,
+// are changed to INTTERMs
+// dcm  2016-08-16
+#ifdef _M_AMD64
+#define INTTERM __int64
+#else
+#define INTTERM int
+#endif
+
 //#define  DEBUG
 
 // To use: MessageBox(0, "LSException", "catch", 0);
@@ -188,7 +198,7 @@ public:
 
  	// Calling Prolog from .NET
 
-   long Exec(long term)
+   INTTERM Exec(INTTERM term)
    {
       TERM tterm = (TERM)term;
       TF tf = lsExec(m_eng, &tterm);
@@ -197,28 +207,29 @@ public:
       else return FALSE;
    }
 
-   long ExecStr(String ^s)
+   INTTERM ExecStr(String ^s)
    {
-      void  *term;
+      //void  *term;
+	  TERM term;
       
       char * pStr = static_cast<char*>(Marshal::StringToHGlobalAnsi(s).ToPointer());
       TF tf = lsExecStr(m_eng, &term, pStr);
       Marshal::FreeHGlobal(static_cast<IntPtr>(const_cast<void*>(static_cast<const void*>(pStr))));
       if (tf != TRUE && tf != FALSE) throw gcnew LSException(m_eng);
-      if (tf) return (long)term;
-      else return FALSE;
+      if (tf) return (INTTERM)term;
+      else return (INTTERM)FALSE;
    }
 
-   long Call(long term)
+   INTTERM Call(INTTERM term)
    {
       TERM tterm = (TERM)term;
       TF tf = lsCall(m_eng, &tterm);
       if (tf != TRUE && tf != FALSE) throw gcnew LSException(m_eng);
-      if (tf) return (long)tterm;
+      if (tf) return (INTTERM)tterm;
       else return FALSE;
    }
 
-   long CallStr(String ^s)
+   INTTERM CallStr(String ^s)
    {
       void  *term;
 
@@ -226,7 +237,7 @@ public:
       TF tf = lsCallStr(m_eng, &term, pStr);
       Marshal::FreeHGlobal(static_cast<IntPtr>(const_cast<void*>(static_cast<const void*>(pStr))));
       if (tf != TRUE && tf != FALSE) throw gcnew LSException(m_eng);
-      if (tf) return (long)term;
+      if (tf) return (INTTERM)term;
       else return FALSE;
    }
 
@@ -246,19 +257,19 @@ public:
 
    // Asserting and retracting
 
-   void Asserta(long term)
+   void Asserta(INTTERM term)
    {
       RC rc = lsAsserta(m_eng, (TERM)term);
       if (rc) throw gcnew LSException(m_eng);
    }
 
-	void Assertz(long term) 
+	void Assertz(INTTERM term) 
    {
       RC rc = lsAssertz(m_eng, (TERM)term);
       if (rc) throw gcnew LSException(m_eng);
    }
    
-   TF Retract(long term) 
+   TF Retract(INTTERM term) 
    {
       TF tf = lsRetract(m_eng, (TERM)term);
       if (tf != TRUE && tf != FALSE) throw gcnew LSException(m_eng);
@@ -292,7 +303,7 @@ public:
 
    // String/Term conversion functions
 
-   String ^TermToStr(long term, int len)
+   String ^TermToStr(INTTERM term, int len)
    {
       char  *s;
       String ^str;
@@ -309,7 +320,7 @@ public:
       return str;
    }
 
-   String ^TermToStrQ(long term, int len)
+   String ^TermToStrQ(INTTERM term, int len)
    {
       char  *s;
       String ^str;
@@ -326,7 +337,7 @@ public:
       return str;
    }
 
-   long StrToTerm(String ^s)
+   INTTERM StrToTerm(String ^s)
    {
       TERM term;
 
@@ -334,10 +345,10 @@ public:
       RC rc = lsStrToTerm(m_eng, &term, pStr);
       Marshal::FreeHGlobal(static_cast<IntPtr>(const_cast<void*>(static_cast<const void*>(pStr))));
       if (rc) throw gcnew LSException(m_eng);
-      return (long)term;
+      return (INTTERM)term;
    }
 
-   int StrTermLen(long term)
+   int StrTermLen(INTTERM term)
    {
       int len = lsStrTermLen(m_eng, (TERM)term);
       if (len == NOTOK) throw gcnew LSException(m_eng);
@@ -346,7 +357,7 @@ public:
 
 	// Making Prolog types
 
-	long MakeAtom(String ^atomstr) 
+	INTTERM MakeAtom(String ^atomstr) 
    {
       TERM term;
       
@@ -354,10 +365,10 @@ public:
       RC rc = lsMakeAtom(m_eng, &term, pStr);
       Marshal::FreeHGlobal(static_cast<IntPtr>(const_cast<void*>(static_cast<const void*>(pStr))));
       if (rc) throw gcnew LSException(m_eng);
-      return (long)term;
+      return (INTTERM)term;
    }
 
-   long MakeStr(String ^str) 
+   INTTERM MakeStr(String ^str) 
    {
       TERM term;
 
@@ -365,37 +376,37 @@ public:
       RC rc = lsMakeStr(m_eng, &term, pStr);
       Marshal::FreeHGlobal(static_cast<IntPtr>(const_cast<void*>(static_cast<const void*>(pStr))));
       if (rc) throw gcnew LSException(m_eng);
-      return (long)term;
+      return (INTTERM)term;
    }
 
-	long MakeInt(int num) 
+	INTTERM MakeInt(int num) 
    {
       TERM term;
 
       RC rc = lsMakeInt(m_eng, &term, num);
       if (rc) throw gcnew LSException(m_eng);
-      return (long)term;
+      return (INTTERM)term;
    }
 
-	long MakeFloat(float num) 
+	INTTERM MakeFloat(float num) 
    {
       TERM term;
 
       RC rc = lsMakeFloat(m_eng, &term, num);
       if (rc) throw gcnew LSException(m_eng);
-      return (long)term;
+      return (INTTERM)term;
    }
 
 	// Getting C++ values from Prolog terms
 
-	int GetTermType(long term)
+	int GetTermType(INTTERM term)
    {
       int pT = lsGetTermType(m_eng, (TERM)term);
       if (pT == pERR) throw gcnew LSException(m_eng);
       return pT;
    }
 
-	String ^GetStrTerm(long term)
+	String ^GetStrTerm(INTTERM term)
    {
       int len;
       char  *s;
@@ -414,7 +425,7 @@ public:
       return str;
    }
 
-	int GetIntTerm(long term)
+	int GetIntTerm(INTTERM term)
    {
       int i;
 
@@ -423,7 +434,7 @@ public:
       return i;
    }
 
-	float GetFloatTerm(long term)
+	float GetFloatTerm(INTTERM term)
    {
       float f;
 
@@ -434,12 +445,12 @@ public:
 
    // Get Parameters for Extended Predicates 
 
-   long GetParm(int num)
+   INTTERM GetParm(int num)
    {
       TERM term;
       RC rc = lsGetParm(m_eng, num, cTERM, &term);
       if (rc) throw gcnew LSException(m_eng);
-      return (long)term;
+      return (INTTERM)term;
    }
 
    String ^GetStrParm(int num)
@@ -493,7 +504,7 @@ public:
       return len;
    }
    
-   TF UnifyParm(int num, long term)
+   TF UnifyParm(int num, INTTERM term)
    {
       TERM tterm;
 
@@ -535,14 +546,14 @@ public:
       return tf;
    }
 
-   int GetArgType(long term, int num)
+   int GetArgType(INTTERM term, int num)
    {
       int pT = lsGetArgType(m_eng, (TERM)term, num);
       if (pT == pERR) throw gcnew LSException(m_eng);
       return pT;
    }
 
-   int StrArgLen(long term, int num)
+   int StrArgLen(INTTERM term, int num)
    {
       int len = lsStrArgLen(m_eng, (TERM)term, num);
       if (len == NOTOK) throw gcnew LSException(m_eng);
@@ -551,7 +562,7 @@ public:
 
 	// Structure hacking functions
 
-	String ^GetFunctor(long term)
+	String ^GetFunctor(INTTERM term)
    {
 //      int len;
       ARITY arity;
@@ -573,7 +584,7 @@ public:
       return str;
    }
 
-	int GetArity(long term)
+	int GetArity(INTTERM term)
    {
 //      int len;
       ARITY arity;
@@ -589,7 +600,7 @@ public:
       return arity;
    }
 
-	long MakeFA(String ^functor, int arity)
+	INTTERM MakeFA(String ^functor, int arity)
    {
       TERM term;
 
@@ -599,17 +610,17 @@ public:
       return (long)term;
    }
 
-	long GetArg(long term, int num)
+	INTTERM GetArg(INTTERM term, int num)
    {
       TERM argterm, tterm;
 
       tterm = (TERM)term;
       RC rc = lsGetArg(m_eng, tterm, num, cTERM, &argterm);
       if (rc) throw gcnew LSException(m_eng);
-      return (long)argterm;
+      return (INTTERM)argterm;
    }
 
-	String ^GetStrArg(long term, int num)
+	String ^GetStrArg(INTTERM term, int num)
    {
       char  *s;
       String ^str;
@@ -629,7 +640,7 @@ public:
       return str;
    }
 
-	int GetIntArg(long term, int num)
+	int GetIntArg(INTTERM term, int num)
    {
       int i;
 
@@ -638,7 +649,7 @@ public:
       return i;
    }
 
-	float GetFloatArg(long term, int num)
+	float GetFloatArg(INTTERM term, int num)
    {
       float f;
 
@@ -647,7 +658,7 @@ public:
       return f;
    }
 
-	long UnifyAtomArg(long term, int num, String ^str)
+	INTTERM UnifyAtomArg(INTTERM term, int num, String ^str)
    {
       TERM tterm;
 
@@ -656,10 +667,10 @@ public:
       TF tf = lsUnifyArg(m_eng, &tterm, num, cATOM, pStr);
       Marshal::FreeHGlobal(static_cast<IntPtr>(const_cast<void*>(static_cast<const void*>(pStr))));
       if (tf != TRUE && tf != FALSE) throw gcnew LSException(m_eng);
-      return (long)tterm;
+      return (INTTERM)tterm;
    }
 
-	long UnifyStrArg(long term, int num, String ^str)
+	INTTERM UnifyStrArg(INTTERM term, int num, String ^str)
    {
       TERM tterm;
 
@@ -668,60 +679,60 @@ public:
       TF tf = lsUnifyArg(m_eng, &tterm, num, cSTR, pStr);
       Marshal::FreeHGlobal(static_cast<IntPtr>(const_cast<void*>(static_cast<const void*>(pStr))));
       if (tf != TRUE && tf != FALSE) throw gcnew LSException(m_eng);
-      return (long)tterm;
+      return (INTTERM)tterm;
    }
 
-	long UnifyIntArg(long term, int num, int val)
+	INTTERM UnifyIntArg(INTTERM term, int num, int val)
    {
       TERM tterm;
 
       tterm = (TERM)term;
       TF tf = lsUnifyArg(m_eng, &tterm, num, cINT, &val);
       if (tf != TRUE && tf != FALSE) throw gcnew LSException(m_eng);
-      return (long)tterm;
+      return (INTTERM)tterm;
    }
 
-	long UnifyFloatArg(long term, int num, float val)
+	INTTERM UnifyFloatArg(INTTERM term, int num, float val)
    {
       TERM tterm;
 
       tterm = (TERM)term;
       TF tf = lsUnifyArg(m_eng, &tterm, num, cFLOAT, &val);
       if (tf != TRUE && tf != FALSE) throw gcnew LSException(m_eng);
-      return (long)tterm;
+      return (INTTERM)tterm;
    }
 
 	// List hacking functions
 
-	long MakeList()
+	INTTERM MakeList()
    {
       TERM term;
 
       RC rc = lsMakeList(m_eng, &term);
       if (rc) throw gcnew LSException(m_eng);
-      return (long)term;
+      return (INTTERM)term;
    }
 
-	long PushList(long listterm, long term)
+	INTTERM PushList(INTTERM listterm, INTTERM term)
    {
       TERM tlistterm;
 
       tlistterm = (TERM)listterm;
       RC rc = lsPushList(m_eng, &tlistterm, (TERM)term);
       if (rc) throw gcnew LSException(m_eng);
-      return (long)tlistterm;
+      return (INTTERM)tlistterm;
    }
 
-	long GetHead(long listterm)
+	INTTERM GetHead(INTTERM listterm)
    {
       TERM term;
 
       RC rc = lsGetHead(m_eng, (TERM)listterm, cTERM, &term);
       if (rc != OK && rc != NOTOK) throw gcnew LSException(m_eng);
-      return (long)term;
+      return (INTTERM)term;
    }
 
-	String ^GetStrHead(long listterm)
+	String ^GetStrHead(INTTERM listterm)
    {
       TERM term;
       int len;
@@ -743,7 +754,7 @@ public:
       return str;
    }
 
-	int GetIntHead(long listterm)
+	int GetIntHead(INTTERM listterm)
    {
       int i;
 
@@ -752,7 +763,7 @@ public:
       return i;
    }
 
-	float GetFloatHead(long listterm)
+	float GetFloatHead(INTTERM listterm)
    {
       float f;
 
@@ -761,10 +772,10 @@ public:
       return f;
    }
 
-	long GetTail(long listterm)
+	INTTERM GetTail(INTTERM listterm)
    {
       TERM term = lsGetTail(m_eng, (TERM)listterm);
-      return (long)term;
+      return (INTTERM)term;
    }
 
 	// Miscellaneous functions
