@@ -262,4 +262,6 @@ _Pvt_Extensions
 # Executables
 *.exe
 *.out
-*.app
+*.
+
+!bmake.exe
