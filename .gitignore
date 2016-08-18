@@ -265,3 +265,4 @@ _Pvt_Extensions
 *.
 
 !bmake.exe
+!implib.exe
