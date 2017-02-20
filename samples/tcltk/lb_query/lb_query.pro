@@ -47,6 +47,7 @@ create_gui :-
 
 initial_widgets(TclInterp) :-
    widgets(W),
+   reconsult('wides.lb'),
    do_tcl(TclInterp, W).
 
 % Tcl/Tk might throw errors that we can catch from Prolog
@@ -106,6 +107,7 @@ widgets([
              display $log $answer;
              set query ""; }`,
       `button .buts.first -text First -command {
+             display $log $query;
              set answer [ls_query first $query];
              display $log $answer;
              set query ""; }`,
@@ -116,6 +118,8 @@ widgets([
       `button .buts.clear -text Clear -command {
              set query "";
              ls_query clear; }`,
+      `button .buts.echo -text Echo -command {
+             display $log $query; }`,
              
 % A procedure to format the output list
 
@@ -132,13 +136,16 @@ widgets([
 % Create an output area for logging results.
 
       `frame .answer -padx 4 -pady 4`,
-      `set log [text .answer.log -height 10 -width 80 -relief raised -setgrid true -yscrollcommand {.answer.scroll set}]`,
+%      `set log [text .answer.log -height 10 -width 80 -relief raised -font MingLiU -setgrid true -yscrollcommand {.answer.scroll set}]`,
+      `set ufont MingLiU`,
+%      `set ufont "Cambria Math"`,
+      `set log [text .answer.log -height 10 -width 80 -relief raised -font $ufont -setgrid true -yscrollcommand {.answer.scroll set}]`,
       `scrollbar .answer.scroll -command {.answer.log yview}`,
       
 % Pack it all together.
 
       `pack .buts -side top`,
-      `pack .buts.once .buts.first .buts.next .buts.clear -side left`,
+      `pack .buts.once .buts.first .buts.next .buts.clear .buts.echo -side left`,
       `pack .query -side top -padx 4 -pady 2`,
       `pack .answer -side top -padx 4 -pady 2 -fill both -expand true`,
       `pack .answer.scroll -side right -fill y`,

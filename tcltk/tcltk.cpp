@@ -543,7 +543,7 @@ TF EXPFUNC p_tcl_eval(ENGid CurEng)
    //char buffer[10000];
    int rc;
    lsGetParm(CurEng, 1, cADDR, &terp);
-   len = lsStrParmLen(CurEng, 2);
+   len = 3 * lsStrParmLen(CurEng, 2);  // blatent hack in case utf8io flag set
    buffer = (char*)malloc( (len+1)*sizeof(char) );
    lsGetParm(CurEng, 2, cASTR, buffer);
    Tcl_Preserve(terp);

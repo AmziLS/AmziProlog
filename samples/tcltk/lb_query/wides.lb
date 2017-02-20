@@ -1,0 +1,33 @@
+wide(math, X) :-
+  string_list(X, [0w0041, 0w0042, 0w0043, 0w2211, 0w2200, 0w222b, 0w0058, 0w0059, 0w005a]).
+wide(kanji, X) :-
+  string_list(X, [0w0041, 0w0042, 0w0043, 0w38ab, 0w5c72, 0w51fa, 0w0058, 0w0059, 0w005a]).
+  
+test1(X, Y, Z) :-
+  atom_codes(X, [20013, 23666]), atom_codes(X, Y), to_numbers(Y, Z).
+test2(X, Y, Z) :-
+  atom_codes(X, [66, 67]), atom_codes(X, Y), to_numbers(Y, Z).
+
+
+
+char(a, 0w0041).
+char(b, 0w5c72).
+char(c, 0w4e2d).
+
+echo(X, X).
+
+numb(X, Y, Z, ZZ) :- atom_codes(X, Y), to_types(Y, Z), to_numbers(Y, ZZ).
+
+to_numbers([], []).
+to_numbers([X|Xs], [N|Ns]) :-
+  N is integer(X),
+  !, to_numbers(Xs,Ns).
+
+to_types([], []).
+to_types([X|Xs], [T|Ts]) :-
+  term_type(X,T),
+  !, to_types(Xs, Ts).
+to_types([X|Xs], [unknown|Ts]) :-
+  write(unknown = X), nl,
+  !, to_types(Xs, Ts).
+to_types(_, 'Not a list').
