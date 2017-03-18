@@ -3,12 +3,16 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
     <AMZI_DEV_DIR>$(SolutionDir)..\</AMZI_DEV_DIR>
+    <AMZI_DIR>$(SolutionDir)..\</AMZI_DIR>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />
   <ItemGroup>
     <BuildMacro Include="AMZI_DEV_DIR">
       <Value>$(AMZI_DEV_DIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="AMZI_DIR">
+      <Value>$(AMZI_DIR)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>
