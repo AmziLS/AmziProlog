@@ -1,5 +1,5 @@
 # amzi-apls
-###Amzi! Core Components
+### Amzi! Core Components
 
 Copyright (c) Amzi! inc. 2016
 Licensed under the MIT Open Source License

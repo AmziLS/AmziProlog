@@ -40,9 +40,9 @@ The rest of the Amzi! system can then be built using the compiler .xpl, acmp.xpl
 
 Ports to other platforms have been done in literally a matter of hours, all going well.  Other times, getting the right tools in place can require a couple of days.
 
-###Steps for porting Amzi!:
+### Steps for porting Amzi!:
 
-####amzi-apls-engine
+#### amzi-apls-engine
 
 The code is all ifdef'd to allow builds on various platforms. Potential problem areas: The engine uses the C++ standard template library, and makes heavy use of wide character functions, as all characters are Unicode internally.
 
@@ -66,7 +66,7 @@ This is the master include file. Different platforms might require different inc
 
 Once these files are set, then usually the engine should build OK. New makefiles are probably required for the platform.
 
-####amzi-apls-run
+#### amzi-apls-run
 
 arun is a very simple Logic Server program. It simply loads a .xpl and calls its main/0 predicate. The only confusion in the code is it figures some things out about its name. If its name is not arun(.exe) then it assumes you want to load the .xpl file of the same name. This lets you make stand-alone applications.
 
@@ -74,11 +74,11 @@ Once you've built arun and the engine, you should be able to run the listener, a
 
 If not, then the best testing thing is to build hello.xpl from hello.pro on a different platform, bring the hello.xpl file to the new platform, and try arun hello. You can use this method of testing for increasingly complex Prolog programs until you have arun working for alis.xpl and acmp.xpl.
 
-####amzi-apls-linkrun
+#### amzi-apls-linkrun
 
 The linker is a moderate sized C++ program that takes binary .plm files and combines them into a single .xpl file. It's make file uses the same env and lenv files as the engine, so it should build without much difficulty once the engine has built.
 
-####amzi-apls-compile
+#### amzi-apls-compile
 
 Now its time for the final exam, rebuilding the compiler.
 
@@ -92,7 +92,7 @@ Clean the compiler, removing the .plm files, and build it.
 
 That wasn't a typo. You have to do it three times to be sure that you've got everything working. It's quite possible to have the compiler quite happily build the compiler, but the resulting compiler is not quite right so the next build fails. And, don't ask, certain pathological cases can creep into the second one. Only three successive builds of the compiler ensures that you've got most of the system up and running correctly.
 
-####amzi-apls-listen
+#### amzi-apls-listen
 
 Once the compiler is built, the listener debugger is easy.
 
@@ -102,15 +102,15 @@ At this point the core Amzi! system is up and running. You can run the compiler,
 
 Next are the various add ons. Some common ones:
 
-####amzi-apls-osutils
+#### amzi-apls-osutils
 
 This is an LSX of machine dependent predicates for handling directories and files.
 
-####amzi-interfaces-java
+#### amzi-interfaces-java
 
 This is the Java wrapper on the Logic Server API (LSAPI). It requires building the C++ program which is the Java Native Interface (JNI) connection between the Java Logic Server classes and the Prolog engine.
 
-####amzi-apls-wide
+#### amzi-apls-wide
 
 This is the Windows MFC IDE. Good luck.
 
