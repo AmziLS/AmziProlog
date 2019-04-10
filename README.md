@@ -63,5 +63,8 @@ Issue - uninstalling the Amzi! Plug-in removes the feature, com.amzi.prolog, but
 --Dennis
 
 
+## See also
 
-
+Further relevant documentation can also be found here:
+https://github.com/AmziLS/apls/tree/master/devdocs
+https://github.com/AmziLS/apls/tree/master/docs
