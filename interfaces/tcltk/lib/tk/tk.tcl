@@ -13,8 +13,8 @@
 # of this file, and for a DISCLAIMER OF ALL WARRANTIES.
 
 # Insist on running with compatible versions of Tcl and Tk.
-package require -exact Tk 8.4
-package require -exact Tcl 8.4
+package require Tk 8.6
+package require Tcl 8.6
 
 # Create a ::tk namespace
 namespace eval ::tk {
