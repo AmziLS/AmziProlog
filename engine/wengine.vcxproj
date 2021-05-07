@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug - ARulesXL|Win32">
       <Configuration>Debug - ARulesXL</Configuration>
@@ -45,57 +45,68 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E86A6347-30D8-4347-984A-DEA234FABB9E}</ProjectGuid>
     <RootNamespace>wengine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug64|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - ARulesXL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - ARulesXL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug64|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - ARulesXL|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - ARulesXL|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -239,7 +250,6 @@
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>Ws2_32.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(APLS_RELEASE)\bin\amzi.dll</OutputFile>
-      <Version>9.2.5</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>.\amzi.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -248,6 +258,7 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <ImportLibrary>.\Release/amzi.lib</ImportLibrary>
+      <Version>9.2</Version>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -286,7 +297,6 @@
     <Link>
       <AdditionalDependencies>Ws2_32.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(APLS_RELEASE)\bin\amzi.dll</OutputFile>
-      <Version>7.6.10</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>.\amzi.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -296,6 +306,7 @@
       </DataExecutionPrevention>
       <ImportLibrary>.\Debug/amzi.lib</ImportLibrary>
       <TargetMachine>NotSet</TargetMachine>
+      <Version>9.2</Version>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -337,7 +348,6 @@
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>Ws2_32.lib;Iphlpapi.lib;Wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(APLS_RELEASE)\bin\amzi.dll</OutputFile>
-      <Version>9.2.1</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>.\amzi.def</ModuleDefinitionFile>
       <ProgramDatabaseFile>.\Release/amzi.pdb</ProgramDatabaseFile>
@@ -345,6 +355,7 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <ImportLibrary>$(Platform)\$(Configuration)/amzi.lib</ImportLibrary>
+      <Version>9.2</Version>
     </Link>
     <PostBuildEvent>
       <Command>copy amzi.h $(APLS_RELEASE)\include\amzi.h
@@ -388,7 +399,6 @@ rebase -b 0x68000000 $(APLS_RELEASE)\bin\amzi.dll
     <Link>
       <AdditionalDependencies>Ws2_32.lib;Iphlpapi.lib;Wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(APLS_RELEASE)\bin\amzi.dll</OutputFile>
-      <Version>9.2</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>.\amzi.def</ModuleDefinitionFile>
       <ProgramDatabaseFile>.\Release/amzi64.pdb</ProgramDatabaseFile>
@@ -397,6 +407,7 @@ rebase -b 0x68000000 $(APLS_RELEASE)\bin\amzi.dll
       </DataExecutionPrevention>
       <ImportLibrary>$(Platform)\$(Configuration)/amzi.lib</ImportLibrary>
       <TargetMachine>NotSet</TargetMachine>
+      <Version>9.2</Version>
     </Link>
     <PostBuildEvent>
       <Command>copy amzi.h $(APLS_RELEASE)\include\amzi.h
@@ -440,7 +451,6 @@ copy $(Platform)\$(Configuration)\amzi.lib $(APLS_RELEASE)\lib\amzi.lib
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>Ws2_32.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(APLS_RELEASE)\bin\amzi.dll</OutputFile>
-      <Version>7.6.10</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>.\arules.def</ModuleDefinitionFile>
       <ProgramDatabaseFile>.\Release/arules.pdb</ProgramDatabaseFile>
@@ -448,6 +458,7 @@ copy $(Platform)\$(Configuration)\amzi.lib $(APLS_RELEASE)\lib\amzi.lib
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <ImportLibrary>.\Release/amzi.lib</ImportLibrary>
+      <Version>9.2</Version>
     </Link>
     <PostBuildEvent>
       <Command>rebase -b 0x68000000 $(AMZI_DEV_DIR)\src\acore\engine\arules.dll
@@ -489,7 +500,6 @@ copy $(Platform)\$(Configuration)\amzi.lib $(APLS_RELEASE)\lib\amzi.lib
     <Link>
       <AdditionalDependencies>Ws2_32.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(APLS_RELEASE)\bin\amzi.dll</OutputFile>
-      <Version>5.0.1</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>.\arules.def</ModuleDefinitionFile>
       <ProgramDatabaseFile>.\Release/arules.pdb</ProgramDatabaseFile>
@@ -499,6 +509,7 @@ copy $(Platform)\$(Configuration)\amzi.lib $(APLS_RELEASE)\lib\amzi.lib
       <ImportLibrary>
       </ImportLibrary>
       <TargetMachine>NotSet</TargetMachine>
+      <Version>9.2</Version>
     </Link>
     <PostBuildEvent>
       <Command>rebase -b 0x68000000 $(AMZI_DEV_DIR)\src\acore\engine\arules.dll
@@ -539,7 +550,6 @@ copy $(Platform)\$(Configuration)\amzi.lib $(APLS_RELEASE)\lib\amzi.lib
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>Ws2_32.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(APLS_RELEASE)\bin\amzi.dll</OutputFile>
-      <Version>7.6.10</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>.\amzi.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -548,6 +558,7 @@ copy $(Platform)\$(Configuration)\amzi.lib $(APLS_RELEASE)\lib\amzi.lib
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <ImportLibrary>.\Release/amzi.lib</ImportLibrary>
+      <Version>9.2</Version>
     </Link>
     <PostBuildEvent>
       <Command>copy amzi.h $(AMZI_DEV_DIR)\include\amzi.h
@@ -589,7 +600,6 @@ copy Debug\amzi.lib $(AMZI_DEV_DIR)\lib\amzi.lib
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>Ws2_32.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(APLS_RELEASE)\bin\amzi.dll</OutputFile>
-      <Version>7.6.10</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>.\amzi.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -599,6 +609,7 @@ copy Debug\amzi.lib $(AMZI_DEV_DIR)\lib\amzi.lib
       </DataExecutionPrevention>
       <ImportLibrary>.\Debug/amzi.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
+      <Version>9.2</Version>
     </Link>
     <PostBuildEvent>
       <Command>copy amzi.h $(AMZI_DEV_DIR)\include\amzi.h
@@ -640,7 +651,6 @@ copy Debug\amzi.lib $(AMZI_DEV_DIR)\lib\amzi.lib
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>Ws2_32.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(APLS_RELEASE)\bin\amzi.dll</OutputFile>
-      <Version>7.6.10</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>.\amzi.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -649,6 +659,7 @@ copy Debug\amzi.lib $(AMZI_DEV_DIR)\lib\amzi.lib
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <ImportLibrary>.\Release/amzi.lib</ImportLibrary>
+      <Version>9.2</Version>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -690,7 +701,6 @@ copy Debug\amzi.lib $(AMZI_DEV_DIR)\lib\amzi.lib
       </AdditionalDependencies>
       <ShowProgress>LinkVerbose</ShowProgress>
       <OutputFile>$(APLS_RELEASE)\bin\amzi.dll</OutputFile>
-      <Version>7.6.10</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>.\amzi.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -700,6 +710,7 @@ copy Debug\amzi.lib $(AMZI_DEV_DIR)\lib\amzi.lib
       </DataExecutionPrevention>
       <ImportLibrary>.\Debug/amzi64.lib</ImportLibrary>
       <TargetMachine>NotSet</TargetMachine>
+      <Version>9.2</Version>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -707,7 +718,7 @@ copy Debug\amzi.lib $(AMZI_DEV_DIR)\lib\amzi.lib
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="amzi64.def" />
+    <None Include="amzi.def" />
     <None Include="arules.def" />
     <None Include="arulesrt.def" />
   </ItemGroup>

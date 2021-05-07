@@ -15,13 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="amzi64.def">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="arules.def">
       <Filter>Source Files</Filter>
     </None>
     <None Include="arulesrt.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="amzi.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
