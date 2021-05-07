@@ -2,7 +2,7 @@ all: _tcltk
 
 _tcltk:
 	-md $(APLS_RELEASE)\lsapis\tcltk
-	devenv tcltk.sln /rebuild Release|x86
+	devenv tcltk.sln /rebuild Release|Win32
 	xcopy lib $(APLS_RELEASE)\lsapis\tcltk\lib\ /S /Y
 #	xcopy bin $(APLS_RELEASE)\bin\
 
