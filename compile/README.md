@@ -1,4 +1,4 @@
-# amzi-apls-compile
+# Amzi! Prolog Compiler (binaries)
 The compiler binaries
 
 The compiler sources build acmp.xpl.  They are written in Amzi! Prolog.  (Prolog is a good language for compilers.)
