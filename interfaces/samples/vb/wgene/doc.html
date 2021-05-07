@@ -1,0 +1,138 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; I) [Netscape]">
+   <title>WGeneVB -- Visual Basic Genealogical Sample</title>
+</head>
+<body bgcolor="#FFFFFF">
+<h1> <b><font color="#0000FF">WGENEVB -- Visual Basic Genealogical Sample</font></b></h1>
+WGENEVB is an intelligent, genealogical application that illustrates the
+advantages of using Prolog rule-based modules in Visual Basic programs.
+The user interface is built entirely in Visual Basic, while the rules are
+written in Amzi! Prolog.
+<p>WGENEVB lets you load family trees, explore the relationships between
+people, add new people, and change existing people and relationships. The
+Prolog portion of the program does all the database manipulation, and ensures
+the integrity of the database, making sure that all the family members
+have relationships that make sense.
+<p><a href="#LoadingAndSaving">Loading and Saving Families</a>
+<p><a href="#Querying">Querying Relationships</a>
+<p><a href="#AddingChanging">Adding / Changing Family Members</a>
+<p><a href="#ApplicationArchitecture">Application Architecture and Source
+Code</a>
+<p><a href="http://www.amzi.com">www.amzi.com</a> - Additional demos, articles,
+freeware, evaluation copies and information about Amzi! Prolog + Logic
+Server.
+<p>We welcome any and all comments about this demo. Contact us at www.amzi.com 
+<h2>Building the Sample</h2>
+<p>To build it: 
+<ol>
+  <li>Compile gene.pro</li>
+  <li>Link gene.plm into gene.xpl.</li>
+  <li>Open the VB project wgenevb and build wgenevb.exe. </li>
+</ol>
+<h2>Running the Sample</h2>
+<p>To run it: 
+<ol>
+  <li> Run wgenevb.exe</li>
+</ol>
+<hr WIDTH="100%">
+<h2>
+<a NAME="LoadingAndSaving"></a><b>Loading and Saving Families</b></h2>
+<b>File / Open </b>This command loads a family database, which is actually
+a Prolog source code file containing the family data in the form of Prolog
+facts. The ruling families of England and Scotland are provided as an example.
+<p><b>File / Save (As) </b>This command saves the current family into a
+file.
+<p><b>.FAM Files </b>The following is an excerpt from the sample family:
+<ul>
+<pre><font color="#000080">person('Elizabeth I', female, 'Anne Boleyn', 'Henry VIII', single).&nbsp;
+person('Edward VI', male, 'Jane Seymour', 'Henry VIII', single).&nbsp;
+person('Lady Frances Brandon', female, 'Mary', 'Charles Brandon', 'Henry Grey').&nbsp;
+person('Mary Queen of Scots', female, 'Mary of Guise', 'James V', 'Henry Lord Darnley').</font></pre>
+</ul>
+Note, for each person we define their gender (male or female), their mother,
+their father, and their spouse or "single".
+<p>
+<hr WIDTH="100%">
+<h2>
+<a NAME="Querying"></a>Querying Relationships</h2>
+To find out the relationships between family members, simply click on a
+name in the first box, and on a relationship in the second box. The result
+is shown immediately in the third box.
+<p>
+<hr WIDTH="100%">
+<h2>
+<a NAME="AddingChanging"></a><b>Adding / Changing Family Members</b></h2>
+<b>Add </b>This adds a new member to the family. A pop-up form lets you
+enter the name of the new person, their gender, parents and spouse (if
+any).
+<p><b>Change </b>This allows you to modify an existing family member. The
+default is the currently highlighted person.
+<p><b>Delete </b>This lets you delete a family member.
+<p>
+<hr WIDTH="100%">
+<h2>
+<a NAME="ApplicationArchitecture"></a><b>Application Architecture and Source
+Code</b></h2>
+All the work of WGENEVB is done in Prolog. Each task is performed by a
+Prolog function, called a predicate. The major tasks are:
+<p>Represent each family member as relational-like record of the form:
+person(Name, Gender, Mother, Father, Spouse).
+<p>Add, save, delete and return information about family members. The add
+predicates call a set of rules that maintain the integretity of the database.
+For example, one rule makes sure a person is not their own ancestor or
+descendent.
+<p>Determining all the family members who have a specified relationship
+with a specified person. For example, sibling(Person, Sibling) can determine
+the siblings of the specified person.
+<p>The source code for WGENEVB is consists of these modules:
+<ul>
+<li>
+<a href="gene.pro">Prolog Code</a></li>
+
+<li>
+Visual Basic Code for the Main Form</li>
+
+<li>
+Visual Basic Code for the Person Information Form</li>
+
+<li>
+<a href="wgene.bas">Visual Basic Code that Encapsulates Various Prolog
+Functions</a></li>
+</ul>
+All the calls to the Visual Basic cover functions for the Logic Server
+API end with LS. A typical Prolog query looks like this:
+<ul>
+<pre><font color="#000080">' Issue the Prolog command &lt;relationship>(X, &lt;person>)</font></pre>
+
+<pre><font color="#000080">tf = CallStrLS(Term, Relationship + "(X, '" + Person + "')")</font></pre>
+
+<pre><font color="#000080">' Loop getting all the people who have that relationship&nbsp;
+' and add them to the related persons list</font></pre>
+
+<pre><font color="#000080">While (tf = True)&nbsp;
+&nbsp;&nbsp; GetArgLS(Term, 1, bSTR, StrVal)&nbsp;
+&nbsp;&nbsp; RelatedPersonsList.AddItem StrVal&nbsp;
+&nbsp;&nbsp; tf = RedoLS()&nbsp;
+Wend</font></pre>
+</ul>
+First, a string containing the query is constructed. In this case we are
+asking Prolog to tell us everyone who has a specific relationship to a
+specific person. So for example, if to determine siblings of James IV,
+the query would be:
+<ul>
+<pre><font color="#000080">sibling(X, James IV)</font></pre>
+</ul>
+Next, we call Prolog using CallStrLS and RedoLS to get all the siblings,
+one at a time. As the siblings are returned in place of the X in the query,
+GetArgLS is used to get the value of the first argument to sibling. As
+the siblings are retrieved they are added to the RelatedPersonsLists.
+<p>
+<hr WIDTH="100%">
+<center>
+<p><i><font size=-1>Copyright &copy;1996-2000 Amzi! inc. All Rights Reserved.</font></i></center>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>sockets - internet samples</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1><font color="#0000FF">Sockets Samples</font></h1>
+<p>Two things are required to run any sockets program from Prolog:</p>
+<ol>
+  <li>Load asock.lsx. One way is to include lsxload = asock in the amzi.cfg file.</li>
+  <li>Load asock.plm. This can be done with a load(asock) goal in a Prolog program, 
+    or it can be done by linking the library asock.plm with a compiled Prolog 
+    program.</li>
+</ol>
+<p>The samples:</p>
+<h2>Finger Sample</h2>
+<p>The simplest program to finger a host. If you are running under Unix you will 
+  need to change the sdefine/2 declaration at the top and comment out the Windows 
+  calls (wsaStartup and wsaCleanup).</p>
+<p> To run it from the listener:</p>
+<blockquote>
+  <pre><font color="#000033">?- load(asock).
+yes
+?- consult(finger).
+yes
+?- main.
+Host name to finger? %enter the host name
+...</font>
+</pre>
+</blockquote>
+<p>You should see the address echoed and then a request for a login ID, which 
+  if you have one, should then lead to some more information.</p>
+<h2>Client/Server Sample</h2>
+<p>A simple client/server example, where the clients send lines of text to the 
+  server, which echos the text. It can be run on one machine or multiple ones. 
+  If you are running under Unix you will need to change the sdefine/2 declaration 
+  at the top and comment out the Windows calls (wsaStartup and wsaCleanup). </p>
+<p>To run on a single machine, open two consoles and run alis in each.</p>
+<h3>Server</h3>
+<blockquote>
+  <pre><font color="#000033">?- load(asock).
+yes
+?- consult(sserver).
+yes
+?- main.</font>
+</pre>
+</blockquote>
+<h3>Client</h3>
+<blockquote>
+  <pre><font color="#000033">?- load(asock).
+yes
+?- consult(sclient).
+yes
+?- main.
+Send what? hello
+yes
+?-</font>
+</pre>
+</blockquote>
+<p>The server should then echo the 'hello'. From the client, type main again and 
+  send the string 'shutdown' to shut down the server. Or you can just crtl-C/break 
+  out of the server.<br>
+</p>
+<p><br>
+</p>
+</body>
+</html>

@@ -1,0 +1,17 @@
+#ifdef DEBUG
+#C_FLAGS = -c -g -fpic -Wimplicit
+#else
+C_FLAGS = -c -fpic -Wimplicit
+#endif
+
+CC = gcc
+
+$(AMZI_DEV_DIR)/lib/amysql.lsx: amysql.o
+	$(CC) -L$(AMZI_DEV_DIR)/lib -L/usr/local/lib/mysql -shared -o amysql.lsx amysql.o -lamzi -lmysqlclient
+	cp amysql.lsx $(AMZI_DEV_DIR)/lib/
+
+amysql.o: amysql.c
+	$(CC) -I$(AMZI_DEV_DIR)/include -I/usr/local/include/mysql -DBSD $(C_FLAGS) -o amysql.o amysql.c
+
+clean:
+	rm *.o

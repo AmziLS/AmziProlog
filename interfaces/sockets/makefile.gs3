@@ -1,0 +1,19 @@
+C_FLAGS = -c -fpic -Wimplicit
+
+CC = gcc
+
+$(AMZI_DEV_DIR)/lib/asock.lsx: sockets.o asock_sol.plm
+	$(CC) -L$(AMZI_DEV_DIR)/lib -lsocket -lnsl -shared -o asock.lsx sockets.o -lamzi
+	cp asock.lsx $(AMZI_DEV_DIR)/lib/
+	cp asock_sol.plm $(AMZI_DEV_DIR)/abin/asock.plm
+
+sockets.o: sockets.c
+	$(CC) -I$(AMZI_DEV_DIR)/include $(C_FLAGS) -o sockets.o sockets.c
+
+asock_sol.plm: asock_sol.pro
+	acmp asock_sol
+
+clean:
+	rm *.o
+	rm *.plm
+

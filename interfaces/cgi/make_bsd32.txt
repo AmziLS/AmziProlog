@@ -1,0 +1,18 @@
+#debug
+#C_FLAGS = -g
+#release
+C_FLAGS = -O6
+
+CC = gcc
+
+all: acgi
+
+acgi: amzicgi.c amzisub.c $(APLS_RELEASE)/lib/libamzi.so
+	$(CC) -DBSD -I$(APLS_RELEASE)/include -L$(APLS_RELEASE)/lib $(C_FLAGS) -o $(APLS_RELEASE)/lsapis/cgi/acgi \
+	   amzicgi.c amzisub.c -lamzi -lm -lstdc++
+	acmp acgi
+	cp acgi.plm $(APLS_RELEASE)/abin/acgi.plm
+
+clean:
+	-rm *.o
+

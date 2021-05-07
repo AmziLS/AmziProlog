@@ -1,0 +1,234 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; U) [Netscape]">
+   <title>DBGene -- ODBC C++ Genealogical Sample</title>
+</head>
+<body bgcolor="#FFFFFF">
+<h1> <b><font color="#0000FF">C++ ODBC Genealogical Sample</font></b></h1>
+<p>The DBGene sample application uses a classic Prolog application idea to illustrate 
+  how the Amzi! Logic Server can be used to provide the services of Prolog in 
+  conventional application environments. Given a genealogical database of information 
+  about people, the application lets you pose queries about various relationships, 
+  such as sister, uncle, grandparent, and ancestor. </p>
+<p>This implementation was built with three tools: </p>
+<ul>
+  <li> <b>Visual C++</b> was used for the GUI interface (other GUI tools such 
+    as Delphi or VB could have been used instead),</li>
+  <li> <b>Amzi! Prolog</b> was used to define the rules for family relationships, 
+    and</li>
+  <li> <b>Access</b> was used for the database of people (any database with an 
+    ODBC driver could be used).</li>
+</ul>
+The glue for the application is the Amzi! Logic Server. The application: 
+<ul>
+  <li> Uses the <b>Logic Server API </b>to get easy access from Visual C++ to 
+    the Prolog logic base, and</li>
+  <li> Uses the <b>Logic Server ODBC extension</b> to lets the Prolog rules reason 
+    directly over the database tables.</li>
+</ul>
+<p>To learn more see: </p>
+<p><a href="#stand_alone">Using DBGene as stand-alone Prolog</a> - How to run 
+  just the Prolog program.</p>
+<p><a href="#UsingDBGene">Using DBGene with C++ front-end</a> - How to use the 
+  sample, and how to put in your own family database. 
+<p><a href="#DBGeneApplicationArchitecture">Application Architecture</a> - Details 
+  on the implementation, including annotated source code. 
+<p><a href="http://www.amzi.com">www.amzi.com</a> - Additional demos, articles, 
+  freeware, evaluation copies and information about Amzi! Prolog + Logic Server. 
+<p>We welcome any and all comments about this demo. Contact us at <a href="mailto:info@amzi.com">info@amzi.com</a> 
+<h2><a name="stand_alone"></a>Running Stand-Alone Prolog version</h2>
+<p>Simply open the project in Eclipse and run the project, either interpreted 
+  or compiled. The dbgene.pro file can also be run as a single file. Follow the 
+  prompts.</p>
+<p>Running an Prolog program that uses ODBC requires two things: 1) to load the 
+  LSX amzi/bin/aodbc.lsx; and 2) to load the PLM amzi/abin/aodbc.plm. These can 
+  be done directly in the source code of the application file:</p>
+<pre>% Load the LSX that provides the extended predicates
+% for the ODBC interface. This could also be done
+% from amzi.cfg, or from a Logic Server host language
+% program.</pre>
+<pre>:- loadlsx('aodbc.lsx').</pre>
+<pre>% Make user the Prolog portion of the ODBC library,
+% which provides a Prolog-like interface to the
+% database, is loaded, and that its predicates are
+% imported.</pre>
+<pre>:- ensure_loaded(aodbc).
+:- import(aodbc).
+</pre>
+<p>AODBC.LSX could also be loaded using amzi.cfg, but the direct loading method 
+  above is easier. See Amzi! runtime documentation for details on using amzi.cfg 
+  for loading LSXs.</p>
+<p>AODBC.PLM could be linked with the program, which is preferred for running 
+  a compiled application. When that is done, the .plm is linked into the application 
+  .xpl file.</p>
+<p>In the Eclipse project for DBGENE, you can also specify in the project properties 
+  that AODBC LSX and PLM are needed, and then, when running or building in Eclipse, 
+  the correct files will be loaded. Note that using <b>ensure_loaded/1</b> means 
+  that aodbc.plm will be loaded only if it hasn't already been loaded, say by 
+  Eclipse or being linked into a .xpl file.</p>
+<h2>Building the C++ Sample</h2>
+<ol>
+  <li>Open the C++ Project in Visual Studio and build dbgene.exe</li>
+  <li>Build the Prolog project by compiling dbgene.pro and linking it with the 
+    aodbc library.</li>
+</ol>
+<h2>Running the C++ Sample</h2>
+<p>To run it you need: 
+<ol>
+  <li> ODBC 2.0 installed</li>
+  <li> AODBC.LSX somewhere in your path (it is in amzi\bin).</li>
+  <li> A data source named 'gene' defined in your 32-bit ODBC administrator (in 
+    the control panel) that uses the gene.mdb database included with this demo.</li>
+</ol>
+<p>
+<hr>
+<h2>
+<a NAME="UsingDBGene"></a>Using DBGene</h2>
+To use DBGene, you must have ODBC installed and the Microsoft Access driver.
+Use the ODBC control panel to add a data source named ‘gene’ that accesses
+the gene.mdb.
+<p>DBGene automatically loads the ODBC database, ‘gene’ and the logic base,
+‘dbgene’. The middle listbox contains the names of the people in the gene
+database. The left hand listbox contains a list of the relations the dbgene
+logic base knows about. If you select a relation and an individual and
+push the ‘Query’ button, the names of the people who satisfy that relation
+appear in the right hand box.
+<p>If you have the tools to modify the database, which was created using
+Microsoft Access, you can fill it with individuals from your own family
+tree. Or you can replace the gene database with an ODBC database of your
+own choosing.
+<p>
+<hr WIDTH="100%">
+<h2>
+<a NAME="DBGeneApplicationArchitecture"></a>DBGENE Application Architecture</h2>
+The DBGene application is composed of three components
+<ul>
+<li>
+the <b>Visual C++</b> user interface,</li>
+
+<li>
+the <b>Amzi! Prolog</b> logic base, and</li>
+
+<li>
+the <b>Access</b> database of people.</li>
+</ul>
+The <a href="#Database">database</a> contains two tables, one defining
+people, with information such as a unique ID number, name, date-of-birth,
+and parents, and the other defining marriages, with the ID numbers of the
+individuals in each marriage.
+<p>The <a href="#LogicBase">logic base</a> contains rules that define
+relationships based on the database. These are rules that express what
+it means to be a sibling, uncle, ancestor, etc. At the base of each of
+these rules are Prolog predicates that map directly to the database, using
+the Logic Server ODBC extension.
+<p>The <a href="#UserInterface">user interface</a> contains list boxes
+that present the pertinent information from the logic base. That information
+is obtained from a C++ class that encapsulates the logic base services.
+<p>
+<hr WIDTH="100%">
+<h2>
+<a NAME="Database"></a>Database</h2>
+The database used in this example is an Access database. If you have Access,
+you can edit it directly to reflect your own family tree. If you have a
+different database with an ODBC driver, you can create tables like these
+for your own family and assign the ODBC database name ‘gene’ to your database.
+<p>There are two tables in the database defined as follows.
+<p><b>Person</b>
+<ul>
+<pre><font color="#000080">*pid number (key)
+*surname text[40] (indexed)
+*midname....text[40]
+*name text[40]
+*gender text[1] m/f
+*mother number (indexed) (a pid)
+*father number (indexed) (a pid)
+dob text[10] (date yyyy-mm-dd)
+dod text[10] (date yyyy-mm-dd)
+birthplace text[50]
+nation text[40]
+note text[255]</font></pre>
+</ul>
+<b>Marriage</b>
+<ul>
+<pre><font color="#000080">*husband number (indexed) (a pid)
+*wife number (indexed) (a pid)
+married text[10] (date yyyy-mm-dd)
+divorced text[10] (date yyyy-mm-dd)
+note text[255]</font></pre>
+</ul>
+* - Fields that are used in this demonstration. Other fields are ignored.
+<h3>
+The Sample People</h3>
+The people in the sample database have decided to propagate maternal family
+names through the middle name, just as paternal family names are often
+propagated by the last name. That is, the children of a marriage take the
+middle name of the mother and the last name of the father. That way the
+daughters carry on the maternal family name and the sons carry on the paternal
+family names, and you can get a better sense by looking at the names who
+might be related to whom.
+<p>Individuals with the same middle and last name are the top of the ancestral 
+  tree and also have parents indicated by the PersonID 0. 
+<p>
+<hr WIDTH="100%">
+<h2> <a name="LogicBase"></a>Logic Base</h2>
+This is the Prolog code used to define the genealogical logic base. To use it 
+the host language must first open the ODBC connection by calling the db_open/1 
+predicate. 
+<p>The <a href="dbgene.pro">code</a> consists of these primary sections:
+<ul>
+<li>
+A list of relations, used by the host language to display the choices to
+the user.</li>
+
+<li>
+Database definitions used to build SQL queries from Prolog queries.</li>
+
+<li>
+The rules defining the primitive relationships that are based directly
+on the representation of people in the database. These rules make heavy
+use of the ODBC query predicate.</li>
+
+<li>
+The higher-level rules for more complex relationships, all defined using
+the primitive rules described above, so they are not affected by changes
+to the representation of a person.</li>
+</ul>
+The query interface designed for use from a host language program. Other
+versions of the program have different interfaces.
+<p>
+<hr WIDTH="100%">
+<h2>
+<a NAME="UserInterface"></a>User Interface</h2>
+The Visual C++ interface consists of a simple dialog box and a class that
+encapsulates the Prolog services portion of the application, used to populate
+the list boxes of the dialog.
+<p>Some of the files in the application are pure boiler plate generated
+by the application wizard of Visual C++. That code is not included here.
+The code listed is:
+<p><a href="progene.h">progene.h</a> - the header file for the class that
+encapsulates the Prolog services, based on the Logic Server C++ wrapper
+class.
+<p><a href="progene.cpp">progene.cpp</a> - the implementation file for
+the ProGene class. Its primary function is to take one of the three list
+boxes of the application as input and fill it with the appropriate information
+derived from the Logic Base. API calls that loop through lists and queries
+are used to generate all the information required for each list box.
+<p><a href="dbgendlg.cpp">dbgendlg.cpp</a> - the main dialog implementation
+that use the ProGene services. The OnInitDialog function calls ProGene
+to fill up the relations and individuals list boxes, and the OnQuery function
+passes the selected name and relation to ProGene, which then fills in the
+answers list box.
+<p>
+<hr WIDTH="100%">
+<center>
+  <!-- #BeginLibraryItem "/docs/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2004 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server and e-Prolog are trademarks 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --></center>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+Tcl/Tk Logicbase Query Sample
+
+This sample illustrates a simple Tcl/Tk interface that can
+be used to query a logicbase, where a logicbase is a collection
+of predicates designed to be queried like a database.
+
+It illustrates:
+   - setting up a GUI from a logic program, using Tcl/Tk, and
+   - making logicbase queries from Tcl/Tk.
+
+Use File/Open to open one of the sample logicbases, either
+gene.lb or pets.lb.
+
+Enter a query in the data entry box, such as:
+   pet(Type, Name)
+for pets.lb, or
+   sister(X, Y)
+for gene.lb.
+
+More complex queries can be used as well, such as:
+  pet(Type, Pet1), pet(Type, Pet2)
+to find all the pets of the same type.
+
+Select either button:
+   'Once' - Retrieve a single answer to the query, with no backtracking.
+   'First' - Retrieve the first answer to the query, expecting backtracking.
+
+If button 'first' was choosen, then follow up by selecting either:
+   'Next' - Retrieve the next answer to the query, or "no" if done.
+   'Clear' - Clear the query if no more answer are required, and
+              it wasn't exhausted using 'next'.
+
+The output from the queries is displayed in the log window.  The output
+is a Tcl list of the form:
+   { Variable Name, Value, ... }
+
+This can be used as is, or easily converted to a Tcl array where the variable
+names act as indices into the array.  The first two elements are 'result' and
+either 'true' or 'false'.
+
+Note that the pets each log their own sound when queried, showing an
+interaction from the logicbase back to the GUI.
+
+
+
+

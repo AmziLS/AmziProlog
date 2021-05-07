@@ -1,0 +1,23 @@
+HERE = $(APLS_SOURCE)/../interfaces
+MAKE=make
+AMZI_MAKE=make_cent64.txt
+
+SOURCE=$(APLS_SOURCE)
+SUBDIRS = engine run link listen compile
+RELEASE=$(APLS_RELEASE)
+
+all: lsapis samples
+
+lsx: FORCE
+	echo ==making lsx==
+	cd $(HERE)/lsx; $(MAKE) -f $(AMZI_MAKE)
+
+lsapis: FORCE
+	echo ==making lsapis==
+	cd $(HERE)/lsapis; $(MAKE) -f $(AMZI_MAKE)
+
+samples: FORCE
+	echo ==making samples==
+	cd $(HERE)/samples; $(MAKE) -f $(AMZI_MAKE)
+
+FORCE:

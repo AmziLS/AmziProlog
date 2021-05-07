@@ -1,0 +1,32 @@
+# interfaces/java/jnilib
+
+FILES = amzijni.cpp
+
+HEADERS = amzijni.h amzi_ls_LogicServer.h amzi_ls_LSException.h
+# Note, on the Mac jni.h is also in the Developer/SDKs/... path
+#I_DIRS = -I$(APLS_RELEASE)/include -I/usr/java/include -I/usr/java/include/solaris
+#I_DIRS = -I$(APLS_RELEASE)/include -I/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers
+I_DIRS = -I$(APLS_RELEASE)/include -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/darwin
+L_DIRS = -L$(APLS_RELEASE)/lib -L$(APLS_SOURCE)/engine
+WARNINGS = -w
+
+C_FLAGS = -D_UNICODE -c -O3 -fpic -Wimplicit
+
+CC = gcc
+
+all: $(APLS_RELEASE)/lib/libamzijni.jnilib
+
+#$(AMZI_DEV_DIR)/lib/libamzijni.jnilib: $(FILES) $(HEADERS)
+#	$(CC) -o $(AMZI_DEV_DIR)/lib/libamzijni.so \
+#		$(I_DIRS) $(L_DIRS) $(C_FLAGS) $(FILES)
+
+$(APLS_RELEASE)/lib/libamzijni.jnilib: amzijni.o $(HEADERS)
+	$(CC) $(L_DIRS) -shared -o libamzijni.jnilib -lamzi -lstdc++ amzijni.o
+	install_name_tool -change libamzi.so @loader_path/libamzi.so libamzijni.jnilib
+	cp libamzijni.jnilib $(APLS_RELEASE)/lib/libamzijni.jnilib
+
+
+amzijni.o: amzijni.cpp
+	$(CC)  $(I_DIRS) $(C_FLAGS) $(WARNINGS) -o amzijni.o amzijni.cpp
+
+

@@ -1,0 +1,105 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (X11; I; SunOS 5.7 sun4u) [Netscape]">
+<title>Infoform CGI Sample</title></head>
+<body bgcolor="#FFFFFF">
+<h1> <font color="#0000FF">Infoform CGI&nbsp;Sample</font></h1>
+<!AMZI_INDEX=CGI Interface; Infoform Sample>
+Infoform is a simple example of a form editting application. 
+<h2>Building the Sample</h2>
+<p>To build this sample:
+<ol>
+  <li>Compile infoform.pro and link it with the libraries acgi and list to create 
+    infoform.xpl</li>
+</ol>
+<p>The main entry point looks at the CGI variable request_method, which was asserted 
+  by the CGI executable shell, and calls processMethod with its value. Usually 
+  a 'get' request is used when the user wants to receive a form for the first 
+  time, and a 'post' request is used to submit information. You can control which 
+  type of request is used by setting 'method=' in your &lt;FORM ...> definition. 
+<blockquote>
+  <pre><font color="#000080">cgiMain :-
+&nbsp; cgi(request_method, RM),
+&nbsp; processMethod(RM).
+cgiMain :-
+&nbsp; throw($cgiMain failed\n$).</font></pre>
+</blockquote>
+The predicate processMethod/1 calls various helper predicates to check the information 
+on the form and either thanks the user or gives them the opportunity to edit and 
+fix the inputs. It generates HTML for the output form using the extended predicate 
+cgiSend/1. 
+<blockquote>
+  <pre><font color="#000080">%&nbsp;
+% For the initial get, simply return our HTML form
+%
+processMethod('GET') :-
+&nbsp; cgiSend($Content-type: text/html$),
+&nbsp; cgiSend($$),
+&nbsp; cgiSendLocalHTMLFile('infoform.htm').</font></pre>
+  <pre><font color="#000080">%&nbsp;
+% After the user has filled in the form, we need to check it, then&nbsp;
+% send a response back.&nbsp;
+%&nbsp;
+processMethod('POST') :-&nbsp;
+&nbsp; sendHeader,
+&nbsp; checkFacts,
+&nbsp; writeRequestLog,
+&nbsp; cgiSend($Thank you! Your information request has been successfully submitted!$),
+&nbsp; cgiSend($&lt;P>Return to &lt;A HREF="/index.html">Amzi!'s home page&lt;/A>.$),
+&nbsp; sendFooter.
+processMethod('POST') :-
+&nbsp; cgiSend($&lt;P>Press the 'Back' or '&amp;lt;-' button on your browser to change your form and resubmit it.$),
+&nbsp; sendFooter.</font></pre>
+</blockquote>
+Here is one of the checking predicates. It looks at the various fact/2 clauses 
+that were asserted in the dynamic database by the CGI executable shell. Each fact 
+represents an input field that was filled in on the original HTML form. In this 
+case it sees if the user has requested a catalog or newsletters. If not,then there 
+is no potential problem. If so, then make sure there is information entered for 
+the three address fields. 
+<blockquote>
+  <pre><font color="#000080">checkAddress :-
+&nbsp; fact(request, RL),
+&nbsp; not(member(catalog, RL)),
+&nbsp; not(member(newsletters, RL)),
+&nbsp; !.
+checkAddress :-
+&nbsp; fact(address1, A1),
+&nbsp; fact(city, C1),
+&nbsp; fact(country, C2),
+&nbsp; !.
+checkAddress :-
+&nbsp; cgiSend($Please fill in your mailing address including street, city, region and country.$),
+&nbsp; fail, !.</font></pre>
+</blockquote>
+<h2> Running the Sample</h2>
+<p>Installing CGI programs can be complex, and depends on the web server you are 
+  using. Regardless of the web server, the following tasks must be completed: 
+</p>
+<ol>
+  <li> Copy the CGI script and the executable acgi[.exe] (from amzi/lsapis/cgi) 
+    to the directory your web server runs CGI programs from (usually cgi-bin under 
+    Unix or Scripts under Windows).</li>
+  <li>Copy the appropriate infoform_&lt;platform&gt;.htm file to your CGI directory 
+    and call it infoform.htm. Make sure the pathname is correct in the &lt;FORM&gt; 
+    POST_ACTION. </li>
+  <li> Rename acgi[.exe] to have the same name as your XPL file. In this case, 
+    infoform.exe runs infoform.xpl.</li>
+  <li> Ensure the process that runs your web server can find the Amzi! Logic Server 
+    (amzi.dll or libamzi.so). This might mean putting the library on your path 
+    or another environment variable, or copying it to cgi-bin or the /usr/lib 
+    directory.</li>
+  <li> If you are using a .cfg file, ensure the web server process can find it. 
+    This might mean putting it in cgi-bin or having the AMZI_DIR&nbsp;environment 
+    variable set for the web server process.</li>
+  <li> Ensure your web server process and read and/or execute access to all of 
+    the above files.</li>
+</ol>
+<p>To help in debugging CGI scripts, you will want to consult the error log files 
+  for your server. </p>
+<p>Look in the <a href="../hello/doc.html">Hello Sample</a> for details on running 
+  CGI programs under various web servers.</p>
+</body>
+</html>

@@ -1,0 +1,1 @@
+<%@ Application Inherits="vb_pets.Global" Language="VB" %>

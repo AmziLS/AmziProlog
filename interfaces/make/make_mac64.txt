@@ -1,0 +1,29 @@
+HERE = $(APLS_SOURCE)/../interfaces
+MAKE=make
+AMZI_MAKE=make_mac64.txt
+
+MAKE=make
+AMZI_MAKE=make_mac64.txt
+
+SOURCE=$(APLS_SOURCE)
+SUBDIRS = engine run link listen compile
+RELEASE=$(APLS_RELEASE)
+
+all: clean _dirs _java samples
+
+_dirs:
+	-mkdir $(APLS_RELEASE)/lsapis
+	-mkdir $(APLS_RELEASE)/lsapis/java
+
+clean: FORCE
+	find $(HERE) -name *.o -exec rm {} \;
+
+_java:
+	@echo --- making java ---
+	cd $(HERE)/java; make -f make_mac64.txt
+
+samples: FORCE
+	echo ==making samples==
+	cd $(HERE)/samples; $(MAKE) -f $(AMZI_MAKE)
+
+FORCE:

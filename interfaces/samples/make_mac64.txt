@@ -1,0 +1,119 @@
+# interfaces/samples
+# makefile for samples, copies files to be distributed
+
+CP = cp
+MD = -mkdir
+SRC = $(APLS_SOURCE)/../interfaces/samples
+DST = $(APLS_RELEASE)/samples
+
+# For unix, copy the file, make these the definitions:
+# CP = cp
+# MD = -mkdir
+# SRC = $(AMZI_DEV_DIR)/src/samples
+# DST = $(AMZI_DEV_DIR)/samples
+# change all / to /
+# remove _windows from all:
+
+all: _common
+
+_common:
+	$(MD) $(DST)/internet
+	$(CP) $(SRC)/internet/doc.html           $(DST)/internet/doc.html
+	$(MD) $(DST)/internet/cgi
+	$(CP) $(SRC)/internet/cgi/doc.html            $(DST)/internet/cgi
+	$(MD) $(DST)/internet/cgi/hello
+	$(CP) $(SRC)/internet/cgi/hello/doc.html      $(DST)/internet/cgi/hello
+	$(CP) $(SRC)/internet/cgi/hello/hellocgi.pro  $(DST)/internet/cgi/hello
+	$(MD) $(DST)/internet/cgi/infoform
+	$(CP) $(SRC)/internet/cgi/infoform/doc.html      $(DST)/internet/cgi/infoform
+	$(CP) $(SRC)/internet/cgi/infoform/.project      $(DST)/internet/cgi/infoform
+	$(CP) $(SRC)/internet/cgi/infoform/amzi.cfg      $(DST)/internet/cgi/infoform
+	$(CP) $(SRC)/internet/cgi/infoform/build.properties  $(DST)/internet/cgi/infoform
+	$(CP) $(SRC)/internet/cgi/infoform/infoform.pro  $(DST)/internet/cgi/infoform
+	$(CP) $(SRC)/internet/cgi/infoform/infoform_unix.htm     $(DST)/internet/cgi/infoform
+	$(CP) $(SRC)/internet/cgi/infoform/infoform_windows.htm  $(DST)/internet/cgi/infoform
+	$(MD) $(DST)/internet/jsp
+	$(CP) $(SRC)/internet/jsp/doc.html      $(DST)/internet/jsp
+	$(MD) $(DST)/internet/jsp/pets
+	$(CP) $(SRC)/internet/jsp/pets/doc.html          $(DST)/internet/jsp/pets
+	$(CP) $(SRC)/internet/jsp/pets/pets.pro          $(DST)/internet/jsp/pets
+	$(CP) $(SRC)/internet/jsp/pets/PetsJSP.jsp       $(DST)/internet/jsp/pets
+	$(CP) $(SRC)/internet/jsp/pets/PetsJSPBean.java  $(DST)/internet/jsp/pets
+	$(MD) $(DST)/internet/jsp/pets/WEB-INF
+	$(CP) $(SRC)/internet/jsp/pets/WEB-INF/web.xml   $(DST)/internet/jsp/pets/WEB-INF
+	$(MD) $(DST)/internet/jsp/ship
+	$(CP) $(SRC)/internet/jsp/ship/doc.html          $(DST)/internet/jsp/ship
+	$(CP) $(SRC)/internet/jsp/ship/ship.pro          $(DST)/internet/jsp/ship
+	$(CP) $(SRC)/internet/jsp/ship/shipPage.jsp       $(DST)/internet/jsp/ship
+	$(CP) $(SRC)/internet/jsp/ship/shipErrorPage.jsp       $(DST)/internet/jsp/ship
+	$(CP) $(SRC)/internet/jsp/ship/shipPageBean.java  $(DST)/internet/jsp/ship
+	$(MD) $(DST)/internet/jsp/ship/WEB-INF
+	$(CP) $(SRC)/internet/jsp/ship/WEB-INF/web.xml   $(DST)/internet/jsp/ship/WEB-INF
+	$(MD) $(DST)/internet/servlets
+	$(CP) $(SRC)/internet/servlets/doc.html      $(DST)/internet/servlets
+	$(MD) $(DST)/internet/servlets/hello
+	$(CP) $(SRC)/internet/servlets/hello/doc.html      $(DST)/internet/servlets/hello
+	$(CP) $(SRC)/internet/servlets/hello/Hello.java    $(DST)/internet/servlets/hello
+	$(CP) $(SRC)/internet/servlets/hello/hello.pro     $(DST)/internet/servlets/hello
+	$(MD) $(DST)/internet/servlets/hello/WEB-INF
+	$(CP) $(SRC)/internet/servlets/hello/WEB-INF/web.xml       $(DST)/internet/servlets/hello/WEB-INF
+	$(MD) $(DST)/internet/servlets/hello/WEB-INF/classes
+	$(CP) $(SRC)/internet/servlets/hello/WEB-INF/classes/Hello.class   $(DST)/internet/servlets/hello/WEB-INF/classes
+	$(MD) $(DST)/internet/servlets/extpred
+	$(CP) $(SRC)/internet/servlets/extpred/doc.html        $(DST)/internet/servlets/extpred
+	$(CP) $(SRC)/internet/servlets/extpred/AmziPreds.java  $(DST)/internet/servlets/extpred
+	$(CP) $(SRC)/internet/servlets/extpred/ExtPred.java    $(DST)/internet/servlets/extpred
+	$(CP) $(SRC)/internet/servlets/extpred/extpred.jpx     $(DST)/internet/servlets/extpred
+	$(CP) $(SRC)/internet/servlets/extpred/htmldoc.pro       $(DST)/internet/servlets/extpred
+	$(MD) $(DST)/internet/servlets/extpred/WEB-INF
+	$(CP) $(SRC)/internet/servlets/extpred/WEB-INF/web.xml       $(DST)/internet/servlets/extpred/WEB-INF
+	$(MD) $(DST)/internet/servlets/extpred/WEB-INF/classes
+	$(CP) $(SRC)/internet/servlets/extpred/WEB-INF/classes/AmziPreds.class   $(DST)/internet/servlets/extpred/WEB-INF/classes
+	$(CP) $(SRC)/internet/servlets/extpred/WEB-INF/classes/ExtPred.class   $(DST)/internet/servlets/extpred/WEB-INF/classes
+	$(MD) $(DST)/internet/sockets
+	$(CP) $(SRC)/internet/sockets/doc.html      $(DST)/internet/sockets
+	$(CP) $(SRC)/internet/sockets/amzi.cfg      $(DST)/internet/sockets
+	$(CP) $(SRC)/internet/sockets/finger.pro    $(DST)/internet/sockets
+	$(CP) $(SRC)/internet/sockets/sclient.pro   $(DST)/internet/sockets
+	$(CP) $(SRC)/internet/sockets/sserver.pro   $(DST)/internet/sockets
+	$(MD) $(DST)/java
+	$(CP) $(SRC)/java/doc.html            $(DST)/java/doc.html
+	$(MD) $(DST)/java/hello
+	$(CP) $(SRC)/java/hello/doc.html      $(DST)/java/hello
+	$(CP) $(SRC)/java/hello/Hello.java    $(DST)/java/hello
+	$(CP) $(SRC)/java/hello/hello.pro     $(DST)/java/hello
+	$(CP) $(SRC)/java/hello/makefile      $(DST)/java/hello
+	$(MD) $(DST)/java/hello_loadurl
+	$(CP) $(SRC)/java/hello_loadurl/doc.html      $(DST)/java/hello_loadurl
+	$(CP) $(SRC)/java/hello_loadurl/HelloLoadURL.java    $(DST)/java/hello_loadurl
+	$(CP) $(SRC)/java/hello_loadurl/HelloMain.java    $(DST)/java/hello_loadurl
+	$(CP) $(SRC)/java/hello_loadurl/hello.pro     $(DST)/java/hello_loadurl
+	$(CP) $(SRC)/java/hello_loadurl/MANIFEST.MF      $(DST)/java/hello_loadurl
+	$(MD) $(DST)/java/pets_callback
+	$(CP) $(SRC)/java/pets_callback/doc.html      $(DST)/java/pets_callback
+	$(CP) $(SRC)/java/pets_callback/AmziPreds.java        $(DST)/java/pets_callback
+	$(CP) $(SRC)/java/pets_callback/Pets.java     $(DST)/java/pets_callback
+	$(CP) $(SRC)/java/pets_callback/pets.pro      $(DST)/java/pets_callback
+	$(MD) $(DST)/java/ship
+	$(MD) $(DST)/java/ship/java
+	$(MD) $(DST)/java/ship/prolog
+	$(CP) $(SRC)/java/ship/doc.html                 $(DST)/java/ship
+	$(CP) $(SRC)/java/ship/java/Ship.java           $(DST)/java/ship/java
+	$(CP) $(SRC)/java/ship/java/.project            $(DST)/java/ship/java
+	$(CP) $(SRC)/java/ship/java/.classpath          $(DST)/java/ship/java
+	$(CP) $(SRC)/java/ship/prolog/ship.pro          $(DST)/java/ship/prolog
+	$(CP) $(SRC)/java/ship/prolog/.project          $(DST)/java/ship/prolog
+	$(CP) $(SRC)/java/ship/prolog/amzi.cfg          $(DST)/java/ship/prolog
+	$(CP) $(SRC)/java/ship/prolog/build.properties  $(DST)/java/ship/prolog
+	$(MD) $(DST)/lsx
+	$(CP) $(SRC)/lsx/doc.html             $(DST)/lsx/doc.html
+	$(MD) $(DST)/lsx/xarray
+	$(CP) $(SRC)/lsx/xarray/doc.html      $(DST)/lsx/xarray
+	$(CP) $(SRC)/lsx/xarray/amzi.cfg      $(DST)/lsx/xarray
+	$(CP) $(SRC)/lsx/xarray/Makefile      $(DST)/lsx/xarray
+	$(CP) $(SRC)/lsx/xarray/makefile.lnx  $(DST)/lsx/xarray
+	$(CP) $(SRC)/lsx/xarray/makefile.sol  $(DST)/lsx/xarray
+	$(CP) $(SRC)/lsx/xarray/xarray.c      $(DST)/lsx/xarray
+	$(CP) $(SRC)/lsx/xarray/xarray.vcproj    $(DST)/lsx/xarray
+	$(CP) $(SRC)/lsx/xarray/xarray.sln    $(DST)/lsx/xarray
+	$(CP) $(SRC)/lsx/xarray/xarray.pro    $(DST)/lsx/xarray

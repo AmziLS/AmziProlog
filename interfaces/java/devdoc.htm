@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>java20</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1>java20</h1>
+<p>The Java builds require building a shared library (.dll or .so) for the Java 
+  Native Interface that connects the Logic Server shared library with the Logic 
+  Server Java classes.</p>
+<h2>Windows</h2>
+<p>The Java source is in the amzi\ls directory, because it will be the amzi.ls 
+  packet. The DLL source is in the dll directory with a MS VC++ project. The makefile 
+  does the following:</p>
+<ul>
+  <li>compiles the Java Logic Server classes,</li>
+  <li>uses javah to create the C/C++ header files for the classes, and</li>
+  <li>calls Microsoft nmake for building the amzijni.dll.</li>
+</ul>
+<p>You can build the DLL directly from Microsoft VC++, but if you are building 
+  it from the console, you must first open the project and export the .mak file 
+  with dependencies.</p>
+<p>&nbsp;</p>
+</body>
+</html>

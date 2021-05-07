@@ -1,0 +1,22 @@
+all: _acgi
+
+
+_acgi:
+	echo === making acgi ===
+	-md $(APLS_RELEASE)\lsapis\cgi
+	devenv wacgi.sln /rebuild Release|Win32
+	acmp acgi.pro
+	copy acgi.plm $(APLS_RELEASE)\abin\acgi.plm
+	del acgi.plm
+
+clean:
+	-del /Q Release\*.*
+	-del /Q Debug\*.*
+	-del /Q *.plm
+	-del /Q *.ncb
+	-del /Q *.pdb
+
+
+   
+
+

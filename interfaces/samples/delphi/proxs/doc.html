@@ -1,0 +1,298 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Contents</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<H1><font color="#0000FF">Delphi Prolog Expert System Sample</font></H1>
+
+<P>The PROXS sample application shows how a subset of Prolog rules can
+be used for a simple identification expert system (XS). The sample XS encodes
+a portion of a book on birds of North America. It is not meant to be complete,
+only a demonstration. </P>
+
+<P>There are two <B>Amzi!</B> Prolog parts to PROXS. One is the Prolog
+rules used to encode the knowledge, which, in the case of the sample XS,
+is bird identification knowledge. These rules use a subset of Prolog and,
+since they are interpreted in source code format, can be modified by a
+user of the system. </P>
+
+<P>The other part is a collection of compiled Prolog predicates that provide
+helping services to the expert system, such as querying the user when information
+is needed and remembering the answer to queries so they aren't asked again.
+These predicates also know how to answer questions about a given session,
+such as how was a result reached and why is a specific question being asked.
+</P>
+
+<P>The two Prolog parts are integrated with a <B>Delphi</B> user interface. </P>
+
+<P><A HREF="#PROXSKnowledgebases">PROXS Knowledgebases</A> - Some background
+on expert systems and where the PROXS knowledge bases fit in. </P>
+
+<P><A HREF="#PROXSApplicationArchitecture">PROXS Application Architecture</A>
+- Details on the application architecture, including annotated source listings.
+</P>
+
+<P><A HREF="http://www.amzi.com">www.amzi.com</A> - Additional demos, articles,
+freeware, evaluation copies and information about Amzi! Prolog + Logic
+Server.</P>
+
+<P>We welcome any and all comments about this demo. Contact us at www.amzi.com</P>
+
+<P>
+<h2>Building the Sample</h2>
+<ol>
+  <li>Compile proxs.pro and link it into proxs.xpl.</li>
+  <li>Open the Delphi Project proxs.dpr.</li>
+  <li>Build proxs.exe.</li>
+</ol>
+<h2>Running the Sample</h2>
+<ol>
+  <li>Open the Delphi Project proxs.dpr and run it, or double-click on proxs.exe 
+    that you built above.</li>
+  <li><B>File/Open</B> BIRDS.PXS. </li>
+  <li><B>LogicBase/Solve</B> - This will start a consultation that tries to solve 
+    top_goal, which in this case is bird(X). That is, it will try to find the 
+    type of bird based on information you provide it. </li>
+  <li> Answer the multiple choice questions by selecting your answers from the 
+    listbox. For the first run, we suggest you answer all questions with the first 
+    item in the list. This should lead you to bird(laysan_albatross) in the output 
+    box. </li>
+  <li> Find out how the system reached its answer by selecting <B>LogicBase/How</B> 
+    and picking bird(laysan_albatross). The output box will show you the rule 
+    used. You can find out more by KnowledgeBase/How and picking the other sub 
+    goals, such as order(tubenose). </li>
+  <li> Find out why it didn't pick some other bird by selecting <B>LogicBase/WhyNot</B> 
+    and picking another bird, order or family. </li>
+  <li> To see the answers to the questions you gave, select <B>LogicBase/Facts</B>. 
+  </li>
+  <li> Clear the knowledge base with <B>LogicBase/Clear</B>. </li>
+  <li> Start again using <B>LogicBase/Goal</B>, this time picking bird(X). When 
+    done, you can check the other goals, such as order(X) and family(X) as well. 
+  </li>
+  <li> Answer the questions as before, but this time try the <B>'why' </B>choice 
+    sometimes. You will see, in the output box, the line of reasoning that the 
+    system is currently trying. </li>
+  <li> The <B>'quit'</B> option will end the particular proof. </li>
+  <li><B>LogicBase/Rules</B> will show you the rules of BIRDS.PXS. These are in 
+    Prolog syntax. </li>
+  <li> Use <B>File/Exit</B> to exit the demo. </li>
+</ol>
+<P>
+<HR WIDTH="100%"><p></P>
+
+<H2><A NAME="PROXSKnowledgebases"></A>PROXS Knowledgebases</H2>
+
+<P>The terms 'expert system' and 'knowledge base' often refer to collections
+of rules that encode knowledge, or expertise, in a way it can be used by
+a computer. For example, the bird identification sample knowledge base
+has rules that were derived from the experts who wrote 'Birds of North
+America.' </P>
+
+<P>Many Amzi! customers have implemented more practical systems, such as
+Xircom's installation advisor that provides configuration advice when installing
+network cards on PCs, Arla's process control advisor that provides advice
+for tweaking the cheese manufacturing process to ensure a consistent product,
+and a major computer vendor's marketing CD that provides technical advice
+for prospects looking at their systems. </P>
+
+<P>The rules by themselves are useless. They need to refer to dynamic data,
+often called 'working memory,' which changes from run to run. For the bird
+identification system, this data is the collection of the user's responses
+to questions. The configuration advisor gets information from both the
+user and the PC directly, whereas the process control advisor gets its
+information from sensors connected to the manufacturing process. </P>
+
+<P>Finally, some type of control program is needed, to decide which rules
+to fire and when. This is called an 'inference engine.' The inference engine
+and related tools are often called an expert system shell. The rules and
+data of a particular application are the actual expert system or knowledge
+base. </P>
+
+<P>Each of these elements, the rules, the data and the inference engine,
+can range from the relatively simple to the quite complex, depending on
+application needs. A full discussion is beyond the scope of this document,
+but no matter what the needs, Prolog is an excellent tool for implementing
+any type of expert system. </P>
+
+<P>This document describes the components of the PROXS expert system shell
+and the birds knowledge base. </P>
+
+<H3>PROXS Data </H3>
+
+<P>The data representation in PROXS is the simplest kind, which is attribute(value)
+pairs. This representation is used throughout, from the highest level goals,
+such as bird(albatross) to the detailed information such as color(white).
+The syntax used is a natural Prolog syntax. </P>
+
+<P>The basic information is gathered from the user, who is asked if, for
+example, color:white is true or not for the bird in question, or who is
+given a list of menu choices from which to choose a value for size. </P>
+
+<H3>PROXS Rules </H3>
+
+<P>The rules in PROXS express relationships built from the underlying facts.
+The rules are a subset of Prolog syntax, sticking to attribute(value) clauses.
+For example, the following are the rules that will lead to identifying
+one of the two types of albatross in the system. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">order(tubenose) :-
+   nostrils(external_tubular),
+   live(at_sea),
+   bill(hooked).</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">family(albatross) :-
+   order(tubenose),
+   size(large),
+   wings(long_narrow).</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">bird(laysan_albatross) :-
+   family(albatross),
+   color(white).</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">bird(black_footed_albatross) :-
+   family(albatross),
+   color(dark).</FONT></PRE>
+</UL>
+
+<P>The first rule can be read as 'the order is tubenose if the nostrils
+are external tubular, the bird lives at sea and the bill is hooked.' (It
+is relatively easy to provide this type of rule syntax as well, which might
+be useful if the rules are to be viewed by non-technical individuals.)
+</P>
+
+<H3>PROXS Inference Engine </H3>
+
+<P>Prolog has an inference engine built into the language that can be used
+directly for many expert system applications. PROXS makes some modifications
+to normal Prolog inferencing, which we'll discuss later, but in general
+uses it as is. Given a goal, normal Prolog inferencing looks for rules
+that match the pattern of the goal on the left of the ':-' symbol (called
+the neck and read as 'if'). If it finds one, then it takes each of the
+list of goals to the right of the ':-' and uses it as a subgoal. </P>
+
+<P>If a subgoal fails, then it 'backtracks' and looks for other matches.
+</P>
+
+<P>For example, given the rules above and the goal bird(X), where X is
+a variable, Prolog will first try the rule for bird(laysan_albatross).
+</P>
+
+<P>The first subgoal is then family(albatross), and its first subgoal is
+order(tubenose) and its first subgoal is nostrils(external_tubular). </P>
+
+<H3>Communicating with the User </H3>
+
+<P>nostrils(external_tubular) does not have an inference rule as above.
+Rather, it is something that requires an answer from the user. In the rule
+base this is represented by a special rule like this </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">nostrils(X) :- ask(nostrils,X).</FONT></PRE>
+</UL>
+
+<P>which will trigger a simple yes/no query to the user. Some attributes
+have menu choices, represented like this </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">size(X) :- menuask(size,X,[large,plump,medium,small]).</FONT></PRE>
+</UL>
+
+<P>which will trigger a query with a menu. </P>
+
+<P>ask and menuask are called Prolog predicates, and they are implemented
+in the inference engine portion of PROXS. </P>
+
+<P>Say the system finds out that family(albatross) is true, while it's
+working on bird(laysan_albatross). The next goal is color(white). If the
+answer is yes, the bird is identified. If the answer is no, then the bird
+is not a laysan_albatross, and Prolog backtracking will try the next rule
+that matches bird(X), which is the one for bird(black_footed_albatross).
+</P>
+
+<H3>Remembering the Answers </H3>
+
+<P>This is where the PROXS system makes some modifications to normal Prolog
+inferencing. Ordinarily, once Prolog starts on bird(black_footed_albatross),
+it will start all over again with family(albatross) and ask all the same
+questions. To avoid this repetion, ask and menuask are designed to remember
+the answers to questions, so they don't have to be asked again. </P>
+
+<P>Given this, family(albatross) will silently succeed the second time,
+and the next question the user will see is color(dark). If the answer is
+yes, then the bird is identified as a black_footed_albatross. If the answer
+is no, then, given just the rules above, the system will stop in defeat.
+</P>
+
+<H3>Explanations </H3>
+
+<P>Some expert systems require various types of explanations as to how
+results were reached. Typically these are used either to educate or assure
+the user, or as diagnostic aids for the developers. The PROXS inference
+engine supports three types of explanations. </P>
+
+<P>'How' explanations are used to show the rule that applied to reach a
+result. So, asking how bird(black_footed_albatross) would show the rule
+that led to that conclusion. </P>
+
+<P>'Why' explanations are triggered when the user selects 'why' as an answer
+to a question. The why explanation shows the chain of inference that led
+to the question being asked. Ask 'why' to the first question posed by the
+bird system and you will see the goals from the rules above listed. </P>
+
+<P>'WhyNot' explanations are like 'how' explanations, only they show why
+certain results were not choosen. For example, if the answer was bird(black_footed_albatross)
+then whynot bird(laysan_albatross) would show that color(white) fails.
+</P>
+
+<H3>Summary </H3>
+
+<P>The PROXS rules and data representation use normal Prolog syntax. The
+PROXS inference engine is the basic Prolog inference engine with modifications
+that allow answers to questions to be remembered, and explanations of results
+and questions to be presented. </P>
+
+<P>
+<HR WIDTH="100%"><p></P>
+
+<H2><A NAME="PROXSApplicationArchitecture"></A>PROXS Application Architecture</H2>
+
+<P>The PROXS demo application is composed of three distinct parts. The
+core logic of the system is coded in Prolog. The user interface is coded
+in Delphi. The knowledge bases used with the system are coded in a subset
+of Prolog. </P>
+
+<P>Source code for each is available below. </P>
+
+<P><B><A HREF="proxs.pro">PROXS Engine</A></B> - The PROXS shell provides
+a few simple extensions to normal Prolog, that make it possible to create
+knowledge bases using simple Prolog rules. </P>
+
+<P><B><A HREF="pxmain.pas">PROXS User Interface</A></B> - The user interface
+is written in Delphi. It provides both the front end to the application
+and the back end. The front end is the normal menu and controls of the
+main form. The back end is the extended predicates implemented in Delphi
+that are called from the Prolog engine. These are either output predicates,
+or predicates that prompt the user for information. See also the <A HREF="goald.pas">dialog
+box for goal, how and whynot queries</A>. For each type of query, a different
+PROXS predicate is called to generate a list of choices for the user. The
+Prolog list is used to populate the list box.</P>
+
+<P><B><A HREF="birds.pxs">Birds Knowledgebase</A></B> - The sample bird
+identification knowledge base uses rules derived from a portion of 'Birds
+of North America' by Robbins, Bruum, Zim and Singer. The rules follow the
+normal animal heirarchy, with rules for order, family and individual bird.
+The attributes that require user input are listed at the end. The goal
+top_goal/1 is used by the PROXS inference engine when no specific goal
+is given. </P>
+
+<P>
+<HR WIDTH="100%"><p></P>
+
+<CENTER><P><I><FONT SIZE=-1>Copyright &copy;1996-98 Amzi! inc. All Rights
+Reserved.</FONT></I></P></CENTER>
+
+</BODY>
+</HTML>

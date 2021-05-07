@@ -1,0 +1,42 @@
+DIST = $(APLS_RELEASE)\lsapis\java20
+
+all: _dirs _java _amzijni
+
+_dirs:
+	-md $(DIST)
+	-md $(DIST)\amzi
+	-md $(DIST)\amzi\ls
+
+_java: amzi\ls\LogicServer.class _java_copy
+
+amzi\ls\LogicServer.class: amzi\ls\LogicServer.java amzi\ls\LSException.java
+	javac amzi\ls\LSException.java
+	javac amzi\ls\LogicServer.java
+
+_java_copy:
+	copy amzi\ls\LSException.class $(DIST)\amzi\ls\LSException.class
+	copy amzi\ls\LogicServer.class $(DIST)\amzi\ls\LogicServer.class
+	jar cvf amzi.jar amzi\ls\*.class
+	copy amzi.jar $(DIST)\amzi.jar
+	
+	
+_amzijni: jnilib\amzi_ls_LogicServer.h jnilib\amzi_ls_LSException.h _jnilib
+
+jnilib\amzi_ls_LogicServer.h: amzi\ls\LogicServer.java
+	javah -jni -d jnilib amzi.ls.LogicServer
+
+jnilib\amzi_ls_LSException.h: amzi\ls\LSException.java
+	javah -jni -d jnilib amzi.ls.LSException
+
+_jnilib:
+	cd jnilib
+	devenv wjnilib.sln /rebuild Release|x64
+	cd ..
+
+clean:
+	-del /Q amzi\ls\*.class
+	-del /Q jnilib\amzi_ls_LogicServer.h
+	-del /Q jnilib\amzi_ls_LSException.h
+	-del /Q jnilib\*.ncb
+	-del /Q jnilib\*.pdb
+

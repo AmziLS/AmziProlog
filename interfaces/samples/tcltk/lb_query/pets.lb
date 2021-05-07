@@ -1,0 +1,12 @@
+pet(duck, leona) :-
+   log(`QUACK QUACK`).
+pet(duck, ivan) :-
+   log(`quack quack`).
+pet(dog, maggie) :-
+   log(`yip yap`).
+pet(dog, dougie) :-
+   log(`hooooowwwwwlll`).
+pet(dog, sam) :-
+   log(`bow wow wow wow`).
+pet(fish, bruce) :-
+   log(`hi there`).
