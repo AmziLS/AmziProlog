@@ -1,4 +1,4 @@
-# amzi-apls
+# Amzi! Prolog
 ### Amzi! Core Components
 
 Copyright (c) Amzi! inc. 2016
