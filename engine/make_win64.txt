@@ -4,6 +4,6 @@ _amzidll:
 	copy amzi.cfg $(APLS_RELEASE)\config
 
 clean:
-	devenv wengine.sln /clean "Release|Win32"
+	devenv wengine.sln /clean "Release|x64"
 	devenv wengine.sln /clean Debug
 

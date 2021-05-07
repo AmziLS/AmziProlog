@@ -1,4 +1,4 @@
-; Amzi! Logic Server 32-bit DLL	for Console Apps
+; Amzi! Logic Server DLL for Console Apps
 ;
 ; The use of a .DEF file is necessary to create a DLL that
 ; can be accessed using __stdcall from non-C/C++ tools that

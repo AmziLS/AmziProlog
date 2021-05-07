@@ -414,17 +414,17 @@ typedef void  (lsCALLTYPE *pwUSER_PUT_STRING)(VOIDptr, wchar_t*);
 
 #ifdef _UNICODE
 typedef struct {
-     wchar_t*   Pname;
-     ARITY      Parity;
-     ExtPred    Pfunc;
+     const wchar_t* Pname;
+     ARITY          Parity;
+     ExtPred        Pfunc;
 } PRED_INITW;
 typedef PRED_INITW * PRED_INITWptr;
 #endif
 
 typedef struct {
-     char*      Pname;
-     ARITY      Parity;
-     ExtPred    Pfunc;
+     const char*    Pname;
+     ARITY          Parity;
+     ExtPred        Pfunc;
 } PRED_INITA;
 typedef PRED_INITA * PRED_INITAptr;
 
