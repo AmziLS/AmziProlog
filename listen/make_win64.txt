@@ -1,0 +1,35 @@
+.SUFFIXES: .plm .pro
+
+ALIS = $(APLS_RELEASE)\abin\alis.xpl
+AIDL = $(APLS_RELEASE)\abin\aidl.xpl
+AXRF = $(APLS_RELEASE)\abin\axrf.xpl
+ALIB = $(APLS_RELEASE)\abin\alib.plm
+ACMP = $(APLS_RELEASE)\bin\acmp.exe
+ALNK = $(APLS_RELEASE)\bin\alnk.exe
+DEBUG64 = $(APLS_RELEASE)\abin\debug64.plm
+AREG = $(APLS_RELEASE)\src\ap_ls\compile\register.plm
+READER = ..\compile\reader.plm
+
+OBJECTS = alis.plm debug.plm debug64.plm listen.plm axrf.plm probe.plm $(READER)
+
+all: $(DEBUG64) $(ALIS) $(AIDL) $(AXRF)
+
+.pro.plm:
+	$(ACMP) $<
+
+$(DEBUG64) : debug64.plm
+	copy debug64.plm $(DEBUG64)
+
+$(ALIS) : $(ALIB) $(DEBUG64) $(OBJECTS)
+	$(ALNK) $(ALIS) alis listen debug debug64 $(READER)
+
+$(AIDL) : $(ALIB) $(DEBUG64) $(OBJECTS)
+	$(ALNK) $(AIDL) listen debug debug64 $(READER)
+
+$(AXRF) : $(ALIB) $(OBJECTS)
+	$(ALNK) $(AXRF) axrf
+
+clean :
+	-del /Q *.plm
+
+	

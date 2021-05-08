@@ -1,0 +1,248 @@
+# makefile for samples, copies files to be distributed
+
+CP = copy
+MD = -md
+SRC = $(APLS_SOURCE)\samples
+DST = $(APLS_RELEASE)\samples
+
+# For unix, copy the file, make these the definitions:
+# CP = cp
+# MD = -mkdir
+# SRC = $(AMZI_DEV_DIR)\src\samples
+# DST = $(AMZI_DEV_DIR)\samples
+# change all \ to \
+# remove _windows from all:
+# change rmdir \S \Q to rm -Rf
+
+all: _common _windows
+
+_common:
+	$(CP) $(SRC)\doc.html             $(DST)\doc.html
+	$(MD) $(DST)\c
+	$(CP) $(SRC)\c\doc.html           $(DST)\c\doc.html
+	$(MD) $(DST)\c\hello
+	$(CP) $(SRC)\c\hello\doc.html     $(DST)\c\hello
+	$(CP) $(SRC)\c\hello\hello.c      $(DST)\c\hello
+	$(CP) $(SRC)\c\hello\hello.vcproj    $(DST)\c\hello
+	$(CP) $(SRC)\c\hello\hello.sln    $(DST)\c\hello
+	$(CP) $(SRC)\c\hello\hello.pro    $(DST)\c\hello
+	$(MD) $(DST)\c\pets
+	$(CP) $(SRC)\c\pets\doc.html     $(DST)\c\pets
+	$(CP) $(SRC)\c\pets\pets.c       $(DST)\c\pets
+	$(CP) $(SRC)\c\pets\pets.vcproj     $(DST)\c\pets
+	$(CP) $(SRC)\c\pets\pets.sln     $(DST)\c\pets
+	$(CP) $(SRC)\c\pets\pets.pro     $(DST)\c\pets
+	$(MD) $(DST)\cpp
+	$(CP) $(SRC)\cpp\doc.html        $(DST)\cpp\doc.html
+	$(MD) $(DST)\cpp\hello
+	$(MD) $(DST)\cpp\hello\console
+	$(CP) $(SRC)\cpp\hello\console\doc.html   $(DST)\cpp\hello\console
+	$(CP) $(SRC)\cpp\hello\console\chello.cpp $(DST)\cpp\hello\console
+	$(CP) $(SRC)\cpp\hello\console\chello.h   $(DST)\cpp\hello\console
+	$(CP) $(SRC)\cpp\hello\console\hello.vcproj  $(DST)\cpp\hello\console
+	$(CP) $(SRC)\cpp\hello\console\hello.sln  $(DST)\cpp\hello\console
+	$(CP) $(SRC)\cpp\hello\console\hello.pro  $(DST)\cpp\hello\console
+	$(CP) $(SRC)\cpp\hello\console\main.cpp   $(DST)\cpp\hello\console
+	$(MD) $(DST)\cpp\pets
+	$(CP) $(SRC)\cpp\pets\doc.html      $(DST)\cpp\pets
+	$(CP) $(SRC)\cpp\pets\pets.cpp      $(DST)\cpp\pets
+	$(CP) $(SRC)\cpp\pets\pets.vcproj      $(DST)\cpp\pets
+	$(CP) $(SRC)\cpp\pets\pets.sln      $(DST)\cpp\pets
+	$(CP) $(SRC)\cpp\pets\pets.pro      $(DST)\cpp\pets
+	$(MD) $(DST)\cpp\pets_callback
+	$(CP) $(SRC)\cpp\pets_callback\doc.html      $(DST)\cpp\pets_callback
+	$(CP) $(SRC)\cpp\pets_callback\pets.pro      $(DST)\cpp\pets_callback
+	$(CP) $(SRC)\cpp\pets_callback\pets_callback.vcproj     $(DST)\cpp\pets_callback
+	$(CP) $(SRC)\cpp\pets_callback\pets_callback.sln     $(DST)\cpp\pets_callback
+	$(CP) $(SRC)\cpp\pets_callback\petscb.cpp    $(DST)\cpp\pets_callback
+
+	$(MD) $(DST)\prolog
+	$(CP) $(SRC)\prolog\doc.html            $(DST)\prolog
+	$(MD) $(DST)\prolog\babel
+	$(CP) $(SRC)\prolog\babel\doc.html      $(DST)\prolog\babel
+	$(CP) $(SRC)\prolog\babel\.project      $(DST)\prolog\babel
+	$(CP) $(SRC)\prolog\babel\amzi.cfg      $(DST)\prolog\babel
+	$(CP) $(SRC)\prolog\babel\build.properties   $(DST)\prolog\babel
+	$(CP) $(SRC)\prolog\babel\babel.pro     $(DST)\prolog\babel
+	$(CP) $(SRC)\prolog\babel\english.pro   $(DST)\prolog\babel
+	$(CP) $(SRC)\prolog\babel\german.pro    $(DST)\prolog\babel
+	$(CP) $(SRC)\prolog\babel\japanese.pro  $(DST)\prolog\babel
+	$(CP) $(SRC)\prolog\babel\latin.pro     $(DST)\prolog\babel
+	$(CP) $(SRC)\prolog\babel\spanish.pro   $(DST)\prolog\babel
+	$(MD) $(DST)\prolog\configuration
+	$(CP) $(SRC)\prolog\configuration\*.html    $(DST)\prolog\configuration
+	$(CP) $(SRC)\prolog\configuration\*.pro     $(DST)\prolog\configuration
+	$(CP) $(SRC)\prolog\configuration\.project  $(DST)\prolog\configuration
+	$(CP) $(SRC)\prolog\configuration\amzi.cfg  $(DST)\prolog\configuration
+	$(CP) $(SRC)\prolog\configuration\build.properties  $(DST)\prolog\configuration
+	$(MD) $(DST)\prolog\chat_ontology
+	$(CP) $(SRC)\prolog\chat_ontology\doc.html      $(DST)\prolog\chat_ontology
+	$(CP) $(SRC)\prolog\chat_ontology\chat_ont.pro  $(DST)\prolog\chat_ontology
+	$(CP) $(SRC)\prolog\chat_ontology\.project      $(DST)\prolog\chat_ontology
+	$(CP) $(SRC)\prolog\chat_ontology\amzi.cfg      $(DST)\prolog\chat_ontology
+	$(CP) $(SRC)\prolog\chat_ontology\build.properties  $(DST)\prolog\chat_ontology
+	$(MD) $(DST)\prolog\tutorial_tests
+	$(CP) $(SRC)\prolog\tutorial_tests\*.html    $(DST)\prolog\tutorial_tests
+	$(CP) $(SRC)\prolog\tutorial_tests\*.pro     $(DST)\prolog\tutorial_tests
+	$(CP) $(SRC)\prolog\tutorial_tests\.project     $(DST)\prolog\tutorial_tests
+	$(CP) $(SRC)\prolog\tutorial_tests\amzi.cfg     $(DST)\prolog\tutorial_tests
+	$(CP) $(SRC)\prolog\tutorial_tests\build.properties     $(DST)\prolog\tutorial_tests
+	$(MD) $(DST)\prolog\duckworld
+	$(CP) $(SRC)\prolog\duckworld\doc.html      $(DST)\prolog\duckworld
+	$(CP) $(SRC)\prolog\duckworld\duckym.pro    $(DST)\prolog\duckworld
+	$(CP) $(SRC)\prolog\duckworld\dw_data.pro   $(DST)\prolog\duckworld
+	$(CP) $(SRC)\prolog\duckworld\dw_main.pro   $(DST)\prolog\duckworld
+	$(CP) $(SRC)\prolog\duckworld\dw_rules.pro  $(DST)\prolog\duckworld
+	$(CP) $(SRC)\prolog\duckworld\makefile      $(DST)\prolog\duckworld
+	$(CP) $(SRC)\prolog\duckworld\.project      $(DST)\prolog\duckworld
+	$(CP) $(SRC)\prolog\duckworld\amzi.cfg      $(DST)\prolog\duckworld
+	$(CP) $(SRC)\prolog\duckworld\build.properties  $(DST)\prolog\duckworld
+	$(MD) $(DST)\prolog\misc_one_file
+	$(CP) $(SRC)\prolog\misc_one_file\*.pro     $(DST)\prolog\misc_one_file
+	$(CP) $(SRC)\prolog\misc_one_file\doc.html      $(DST)\prolog\misc_one_file
+	$(CP) $(SRC)\prolog\misc_one_file\england.fam   $(DST)\prolog\misc_one_file
+	$(CP) $(SRC)\prolog\misc_one_file\traffic3.kb   $(DST)\prolog\misc_one_file
+	$(CP) $(SRC)\prolog\misc_one_file\.project      $(DST)\prolog\misc_one_file
+	$(CP) $(SRC)\prolog\misc_one_file\amzi.cfg      $(DST)\prolog\misc_one_file
+	$(CP) $(SRC)\prolog\misc_one_file\build.properties  $(DST)\prolog\misc_one_file
+	$(MD) $(DST)\prolog\mlist
+	$(CP) $(SRC)\prolog\mlist\mlist.pro     $(DST)\prolog\mlist
+	$(CP) $(SRC)\prolog\mlist\scan.inp      $(DST)\prolog\mlist
+	$(CP) $(SRC)\prolog\mlist\.project      $(DST)\prolog\mlist
+	$(CP) $(SRC)\prolog\mlist\amzi.cfg      $(DST)\prolog\mlist
+	$(CP) $(SRC)\prolog\mlist\build.properties  $(DST)\prolog\mlist
+	$(MD) $(DST)\prolog\proxs
+	$(CP) $(SRC)\prolog\proxs\doc.html      $(DST)\prolog\proxs
+	$(CP) $(SRC)\prolog\proxs\birds.pxs     $(DST)\prolog\proxs
+	$(CP) $(SRC)\prolog\proxs\proxs.pro     $(DST)\prolog\proxs
+	$(CP) $(SRC)\prolog\proxs\pxmain.pro    $(DST)\prolog\proxs
+	$(CP) $(SRC)\prolog\proxs\.project      $(DST)\prolog\proxs
+	$(CP) $(SRC)\prolog\proxs\amzi.cfg      $(DST)\prolog\proxs
+	$(CP) $(SRC)\prolog\proxs\build.properties  $(DST)\prolog\proxs
+	$(MD) $(DST)\prolog\ship
+	$(CP) $(SRC)\prolog\ship\doc.html      $(DST)\prolog\ship
+	$(CP) $(SRC)\prolog\ship\ship.pro      $(DST)\prolog\ship
+	$(CP) $(SRC)\prolog\ship\shiprule.txt  $(DST)\prolog\ship
+	$(CP) $(SRC)\prolog\ship\.project      $(DST)\prolog\ship
+	$(CP) $(SRC)\prolog\ship\amzi.cfg      $(DST)\prolog\ship
+	$(CP) $(SRC)\prolog\ship\build.properties  $(DST)\prolog\ship
+	$(MD) $(DST)\prolog\ssched
+	$(CP) $(SRC)\prolog\ssched\doc.html      $(DST)\prolog\ssched
+	$(CP) $(SRC)\prolog\ssched\ssched.pro    $(DST)\prolog\ssched
+	$(CP) $(SRC)\prolog\ssched\ssmain.pro    $(DST)\prolog\ssched
+	$(CP) $(SRC)\prolog\ssched\.project      $(DST)\prolog\ssched
+	$(CP) $(SRC)\prolog\ssched\amzi.cfg      $(DST)\prolog\ssched
+	$(CP) $(SRC)\prolog\ssched\build.properties  $(DST)\prolog\ssched
+	$(MD) $(DST)\prolog\taxes
+	$(CP) $(SRC)\prolog\taxes\tax.dat       $(DST)\prolog\taxes
+	$(CP) $(SRC)\prolog\taxes\tax.pro       $(DST)\prolog\taxes
+	$(CP) $(SRC)\prolog\taxes\.project      $(DST)\prolog\taxes
+	$(CP) $(SRC)\prolog\taxes\amzi.cfg      $(DST)\prolog\taxes
+	$(CP) $(SRC)\prolog\taxes\build.properties  $(DST)\prolog\taxes
+	$(MD) $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\blocks3.pro   $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\blocks3.txt   $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\blocks5.pro   $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\compile.pro   $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\compile2.pro  $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\flash.pro     $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\hungry.pro    $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\lube.pro      $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\lube2.pro     $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\nilsson.pro   $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\rich2.pro     $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\strips.pro    $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\warplan.pro   $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\wedding1.pro  $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\.project      $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\amzi.cfg      $(DST)\prolog\warplan
+	$(CP) $(SRC)\prolog\warplan\build.properties  $(DST)\prolog\warplan
+	$(MD) $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\doc.html      $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\makefile      $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\doc.html      $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\rubik.gif      $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\rubdata.pro   $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\rubdisp.pro   $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\rubedit.pro   $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\rubhelp.pro   $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\rubhist.pro   $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\.project      $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\amzi.cfg      $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\build.properties   $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\rubik.pro     $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\rubload.pro   $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\rubloadc.pro  $(DST)\prolog\rubik
+	$(CP) $(SRC)\prolog\rubik\rubmov.pro    $(DST)\prolog\rubik
+
+_windows:
+	$(MD) $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\doc.html      $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\chello.cpp    $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\chello.h      $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\hello.cpp     $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\hello.vcproj     $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\hello.sln     $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\hello.h       $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\hello.pro     $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\hello.rc      $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\helloDlg.cpp  $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\helloDlg.h    $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\resource.h    $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\StdAfx.cpp    $(DST)\cpp\hello\win32_mfc
+	$(CP) $(SRC)\cpp\hello\win32_mfc\StdAfx.h      $(DST)\cpp\hello\win32_mfc
+	$(MD) $(DST)\cpp\hello\win32_mfc\res
+	$(CP) $(SRC)\cpp\hello\win32_mfc\res\hello.ico     $(DST)\cpp\hello\win32_mfc\res
+	$(CP) $(SRC)\cpp\hello\win32_mfc\res\hello.rc2     $(DST)\cpp\hello\win32_mfc\res
+	$(MD) $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\doc.html      $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\CubeMT.cpp    $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\CubeMT.vcproj    $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\CubeMT.sln    $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\CubeMT.h      $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\CubeMT.rc     $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\CubeThread.cpp $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\CubeThread.h  $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\CubeWnd.cpp   $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\CubeWnd.h     $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\Inc.h         $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\Lstring.cpp   $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\Lstring.h     $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\MainFrm.cpp   $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\MainFrm.h     $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\Resource.h    $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\rubdata.pro   $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\rubedit.pro   $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\rubhelp.pro   $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\rubhist.pro   $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\Rubik.cpp     $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\Rubik.h       $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\rubik.pro     $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\rubmov.pro    $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\StdAfx.cpp    $(DST)\cpp\win32_rubik_multi
+	$(CP) $(SRC)\cpp\win32_rubik_multi\StdAfx.h      $(DST)\cpp\win32_rubik_multi
+	$(MD) $(DST)\cpp\win32_rubik_multi\res
+	$(CP) $(SRC)\cpp\win32_rubik_multi\res\CubeMT.ico    $(DST)\cpp\win32_rubik_multi\res
+	$(CP) $(SRC)\cpp\win32_rubik_multi\res\CubeMT.rc2    $(DST)\cpp\win32_rubik_multi\res
+	$(CP) $(SRC)\cpp\win32_rubik_multi\res\CubeMTDoc.ico  $(DST)\cpp\win32_rubik_multi\res
+
+_chezray:
+	$(MD) $(DST)\chezray
+	$(CP) $(SRC)\chezray\doc.html     $(DST)\chezray\doc.html
+	$(MD) $(DST)\chezray\cap
+	$(CP) $(SRC)\chezray\cap\*.*      $(DST)\chezray\cap
+	$(MD) $(DST)\chezray\hll
+	$(CP) $(SRC)\chezray\hll\*.*      $(DST)\chezray\hll
+	$(MD) $(DST)\chezray\joli
+	$(CP) $(SRC)\chezray\joli\*.*     $(DST)\chezray\joli
+	$(MD) $(DST)\chezray\mm
+	$(CP) $(SRC)\chezray\mm\*.*       $(DST)\chezray\mm
+	$(MD) $(DST)\chezray\polyplot
+	$(CP) $(SRC)\chezray\polyplot\*.* $(DST)\chezray\polyplot
+	$(MD) $(DST)\chezray\polyplot\displaypq
+	$(CP) $(SRC)\chezray\polyplot\displaypq\*.*   $(DST)\chezray\polyplot\displaypq
+	$(MD) $(DST)\chezray\tools
+	$(CP) $(SRC)\chezray\tools\*.*    $(DST)\chezray\tools
+	$(MD) $(DST)\chezray\xmas
+	$(CP) $(SRC)\chezray\xmas\*.*     $(DST)\chezray\xmas
+

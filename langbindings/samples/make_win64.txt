@@ -1,0 +1,328 @@
+# makefile for samples, copies files to be distributed
+
+CP = copy
+MD = -md
+SRC = $(APLS_SOURCE)\langbindings\samples
+DST = $(APLS_RELEASE)\samples
+
+# For unix, copy the file, make these the definitions:
+# CP = cp
+# MD = -mkdir
+# SRC = $(AMZI_DEV_DIR)\src\samples
+# DST = $(AMZI_DEV_DIR)\samples
+# change all \ to \
+# remove _windows from all:
+# change rmdir \S \Q to rm -Rf
+
+all: _common _windows
+
+_common:
+	$(CP) $(SRC)\doc.html             $(DST)\doc.html
+	$(MD) $(DST)\internet
+	$(CP) $(SRC)\internet\doc.html           $(DST)\internet\doc.html
+	$(MD) $(DST)\internet\cgi
+	$(CP) $(SRC)\internet\cgi\doc.html            $(DST)\internet\cgi
+	$(MD) $(DST)\internet\cgi\hello
+	$(CP) $(SRC)\internet\cgi\hello\doc.html      $(DST)\internet\cgi\hello
+	$(CP) $(SRC)\internet\cgi\hello\hellocgi.pro  $(DST)\internet\cgi\hello
+	$(MD) $(DST)\internet\cgi\infoform
+	$(CP) $(SRC)\internet\cgi\infoform\doc.html      $(DST)\internet\cgi\infoform
+	$(CP) $(SRC)\internet\cgi\infoform\.project      $(DST)\internet\cgi\infoform
+	$(CP) $(SRC)\internet\cgi\infoform\amzi.cfg      $(DST)\internet\cgi\infoform
+	$(CP) $(SRC)\internet\cgi\infoform\build.properties  $(DST)\internet\cgi\infoform
+	$(CP) $(SRC)\internet\cgi\infoform\infoform.pro  $(DST)\internet\cgi\infoform
+	$(CP) $(SRC)\internet\cgi\infoform\infoform_unix.htm     $(DST)\internet\cgi\infoform
+	$(CP) $(SRC)\internet\cgi\infoform\infoform_windows.htm  $(DST)\internet\cgi\infoform
+	$(MD) $(DST)\internet\jsp
+	$(CP) $(SRC)\internet\jsp\doc.html      $(DST)\internet\jsp
+	$(MD) $(DST)\internet\jsp\pets
+	$(CP) $(SRC)\internet\jsp\pets\doc.html          $(DST)\internet\jsp\pets
+	$(CP) $(SRC)\internet\jsp\pets\pets.pro          $(DST)\internet\jsp\pets
+	$(CP) $(SRC)\internet\jsp\pets\PetsJSP.jsp       $(DST)\internet\jsp\pets
+	$(CP) $(SRC)\internet\jsp\pets\PetsJSPBean.java  $(DST)\internet\jsp\pets
+	$(MD) $(DST)\internet\jsp\pets\WEB-INF
+	$(CP) $(SRC)\internet\jsp\pets\WEB-INF\web.xml   $(DST)\internet\jsp\pets\WEB-INF
+	$(MD) $(DST)\internet\jsp\ship
+	$(CP) $(SRC)\internet\jsp\ship\doc.html          $(DST)\internet\jsp\ship
+	$(CP) $(SRC)\internet\jsp\ship\ship.pro          $(DST)\internet\jsp\ship
+	$(CP) $(SRC)\internet\jsp\ship\shipPage.jsp       $(DST)\internet\jsp\ship
+	$(CP) $(SRC)\internet\jsp\ship\shipErrorPage.jsp       $(DST)\internet\jsp\ship
+	$(CP) $(SRC)\internet\jsp\ship\shipPageBean.java  $(DST)\internet\jsp\ship
+	$(MD) $(DST)\internet\jsp\ship\WEB-INF
+	$(CP) $(SRC)\internet\jsp\ship\WEB-INF\web.xml   $(DST)\internet\jsp\ship\WEB-INF
+	$(MD) $(DST)\internet\servlets
+	$(CP) $(SRC)\internet\servlets\doc.html      $(DST)\internet\servlets
+	$(MD) $(DST)\internet\servlets\hello
+	$(CP) $(SRC)\internet\servlets\hello\doc.html      $(DST)\internet\servlets\hello
+	$(CP) $(SRC)\internet\servlets\hello\Hello.java    $(DST)\internet\servlets\hello
+	$(CP) $(SRC)\internet\servlets\hello\hello.pro     $(DST)\internet\servlets\hello
+	$(MD) $(DST)\internet\servlets\hello\WEB-INF
+	$(CP) $(SRC)\internet\servlets\hello\WEB-INF\web.xml       $(DST)\internet\servlets\hello\WEB-INF
+	$(MD) $(DST)\internet\servlets\hello\WEB-INF\classes
+	$(CP) $(SRC)\internet\servlets\hello\WEB-INF\classes\Hello.class   $(DST)\internet\servlets\hello\WEB-INF\classes
+	$(MD) $(DST)\internet\servlets\extpred
+	$(CP) $(SRC)\internet\servlets\extpred\doc.html        $(DST)\internet\servlets\extpred
+	$(CP) $(SRC)\internet\servlets\extpred\AmziPreds.java  $(DST)\internet\servlets\extpred
+	$(CP) $(SRC)\internet\servlets\extpred\ExtPred.java    $(DST)\internet\servlets\extpred
+	$(CP) $(SRC)\internet\servlets\extpred\extpred.jpx     $(DST)\internet\servlets\extpred
+	$(CP) $(SRC)\internet\servlets\extpred\htmldoc.pro       $(DST)\internet\servlets\extpred
+	$(MD) $(DST)\internet\servlets\extpred\WEB-INF
+	$(CP) $(SRC)\internet\servlets\extpred\WEB-INF\web.xml       $(DST)\internet\servlets\extpred\WEB-INF
+	$(MD) $(DST)\internet\servlets\extpred\WEB-INF\classes
+	$(CP) $(SRC)\internet\servlets\extpred\WEB-INF\classes\AmziPreds.class   $(DST)\internet\servlets\extpred\WEB-INF\classes
+	$(CP) $(SRC)\internet\servlets\extpred\WEB-INF\classes\ExtPred.class   $(DST)\internet\servlets\extpred\WEB-INF\classes
+	$(MD) $(DST)\internet\sockets
+	$(CP) $(SRC)\internet\sockets\doc.html      $(DST)\internet\sockets
+	$(CP) $(SRC)\internet\sockets\amzi.cfg      $(DST)\internet\sockets
+	$(CP) $(SRC)\internet\sockets\finger.pro    $(DST)\internet\sockets
+	$(CP) $(SRC)\internet\sockets\sclient.pro   $(DST)\internet\sockets
+	$(CP) $(SRC)\internet\sockets\sserver.pro   $(DST)\internet\sockets
+	$(MD) $(DST)\java
+	$(CP) $(SRC)\java\doc.html            $(DST)\java\doc.html
+	$(MD) $(DST)\java\hello
+	$(CP) $(SRC)\java\hello\doc.html      $(DST)\java\hello
+	$(CP) $(SRC)\java\hello\Hello.java    $(DST)\java\hello
+	$(CP) $(SRC)\java\hello\hello.pro     $(DST)\java\hello
+	$(CP) $(SRC)\java\hello\makefile      $(DST)\java\hello
+	$(MD) $(DST)\java\hello_loadurl
+	$(CP) $(SRC)\java\hello_loadurl\doc.html      $(DST)\java\hello_loadurl
+	$(CP) $(SRC)\java\hello_loadurl\HelloLoadURL.java    $(DST)\java\hello_loadurl
+	$(CP) $(SRC)\java\hello_loadurl\HelloMain.java    $(DST)\java\hello_loadurl
+	$(CP) $(SRC)\java\hello_loadurl\hello.pro     $(DST)\java\hello_loadurl
+	$(CP) $(SRC)\java\hello_loadurl\MANIFEST.MF      $(DST)\java\hello_loadurl
+	$(MD) $(DST)\java\pets_callback
+	$(CP) $(SRC)\java\pets_callback\doc.html      $(DST)\java\pets_callback
+	$(CP) $(SRC)\java\pets_callback\AmziPreds.java        $(DST)\java\pets_callback
+	$(CP) $(SRC)\java\pets_callback\Pets.java     $(DST)\java\pets_callback
+	$(CP) $(SRC)\java\pets_callback\pets.pro      $(DST)\java\pets_callback
+	$(MD) $(DST)\java\ship
+	$(MD) $(DST)\java\ship\java
+	$(MD) $(DST)\java\ship\prolog
+	$(CP) $(SRC)\java\ship\doc.html                 $(DST)\java\ship
+	$(CP) $(SRC)\java\ship\java\Ship.java           $(DST)\java\ship\java
+	$(CP) $(SRC)\java\ship\java\.project            $(DST)\java\ship\java
+	$(CP) $(SRC)\java\ship\java\.classpath          $(DST)\java\ship\java
+	$(CP) $(SRC)\java\ship\prolog\ship.pro          $(DST)\java\ship\prolog
+	$(CP) $(SRC)\java\ship\prolog\.project          $(DST)\java\ship\prolog
+	$(CP) $(SRC)\java\ship\prolog\amzi.cfg          $(DST)\java\ship\prolog
+	$(CP) $(SRC)\java\ship\prolog\build.properties  $(DST)\java\ship\prolog
+	$(MD) $(DST)\lsx
+	$(CP) $(SRC)\lsx\doc.html             $(DST)\lsx\doc.html
+	$(MD) $(DST)\lsx\xarray
+	$(CP) $(SRC)\lsx\xarray\doc.html      $(DST)\lsx\xarray
+	$(CP) $(SRC)\lsx\xarray\amzi.cfg      $(DST)\lsx\xarray
+	$(CP) $(SRC)\lsx\xarray\Makefile      $(DST)\lsx\xarray
+	$(CP) $(SRC)\lsx\xarray\makefile.lnx  $(DST)\lsx\xarray
+	$(CP) $(SRC)\lsx\xarray\makefile.sol  $(DST)\lsx\xarray
+	$(CP) $(SRC)\lsx\xarray\xarray.c      $(DST)\lsx\xarray
+	$(CP) $(SRC)\lsx\xarray\xarray.vcproj    $(DST)\lsx\xarray
+	$(CP) $(SRC)\lsx\xarray\xarray.sln    $(DST)\lsx\xarray
+	$(CP) $(SRC)\lsx\xarray\xarray.pro    $(DST)\lsx\xarray
+
+_windows:
+
+	$(MD) $(DST)\delphi
+	$(CP) $(SRC)\delphi\doc.html             $(DST)\delphi\doc.html
+	$(MD) $(DST)\delphi\delgui
+	$(CP) $(SRC)\delphi\delgui\doc.html      $(DST)\delphi\delgui
+	$(CP) $(SRC)\delphi\delgui\delgui.pas    $(DST)\delphi\delgui
+	$(CP) $(SRC)\delphi\delgui\delgui.pro    $(DST)\delphi\delgui
+	$(CP) $(SRC)\delphi\delgui\dgmain.dfm    $(DST)\delphi\delgui
+	$(CP) $(SRC)\delphi\delgui\dgmain.pas    $(DST)\delphi\delgui
+	$(CP) $(SRC)\delphi\delgui\dgtemp.dpr    $(DST)\delphi\delgui
+	$(CP) $(SRC)\delphi\delgui\dgtemp.ppj    $(DST)\delphi\delgui
+	$(CP) $(SRC)\delphi\delgui\dgtemp.pro    $(DST)\delphi\delgui
+	$(CP) $(SRC)\delphi\delgui\dgtemp.res    $(DST)\delphi\delgui
+	$(MD) $(DST)\delphi\deltest
+	$(CP) $(SRC)\delphi\deltest\doc.html     $(DST)\delphi\deltest
+	$(CP) $(SRC)\delphi\deltest\test.dfm     $(DST)\delphi\deltest
+	$(CP) $(SRC)\delphi\deltest\test.pas     $(DST)\delphi\deltest
+	$(CP) $(SRC)\delphi\deltest\test.pro     $(DST)\delphi\deltest
+	$(CP) $(SRC)\delphi\deltest\testp.dpr    $(DST)\delphi\deltest
+	$(CP) $(SRC)\delphi\deltest\testp.res    $(DST)\delphi\deltest
+	$(MD) $(DST)\delphi\eq
+	$(CP) $(SRC)\delphi\eq\doc.html      $(DST)\delphi\eq
+	$(CP) $(SRC)\delphi\eq\doc.html      $(DST)\delphi\eq
+	$(CP) $(SRC)\delphi\eq\eq.dpr        $(DST)\delphi\eq
+	$(CP) $(SRC)\delphi\eq\eq.res        $(DST)\delphi\eq
+	$(CP) $(SRC)\delphi\eq\eqmain.dfm    $(DST)\delphi\eq
+	$(CP) $(SRC)\delphi\eq\eqmain.pas    $(DST)\delphi\eq
+	$(CP) $(SRC)\delphi\eq\equation.pro  $(DST)\delphi\eq
+	$(CP) $(SRC)\delphi\eq\p_draw.pas    $(DST)\delphi\eq
+	$(MD) $(DST)\delphi\hello
+	$(CP) $(SRC)\delphi\hello\doc.html      $(DST)\delphi\hello
+	$(CP) $(SRC)\delphi\hello\hello.dfm     $(DST)\delphi\hello
+	$(CP) $(SRC)\delphi\hello\hello.pas     $(DST)\delphi\hello
+	$(CP) $(SRC)\delphi\hello\hello.pro     $(DST)\delphi\hello
+	$(CP) $(SRC)\delphi\hello\hellop.dpr    $(DST)\delphi\hello
+	$(CP) $(SRC)\delphi\hello\hellop.res    $(DST)\delphi\hello
+	$(MD) $(DST)\delphi\proxs
+	$(CP) $(SRC)\delphi\proxs\doc.html      $(DST)\delphi\proxs
+	$(CP) $(SRC)\delphi\proxs\birds.pxs     $(DST)\delphi\proxs
+	$(CP) $(SRC)\delphi\proxs\goald.dfm     $(DST)\delphi\proxs
+	$(CP) $(SRC)\delphi\proxs\goald.pas     $(DST)\delphi\proxs
+	$(CP) $(SRC)\delphi\proxs\proxs.cfg     $(DST)\delphi\proxs
+	$(CP) $(SRC)\delphi\proxs\proxs.dpr     $(DST)\delphi\proxs
+	$(CP) $(SRC)\delphi\proxs\proxs.pro     $(DST)\delphi\proxs
+	$(CP) $(SRC)\delphi\proxs\proxs.res     $(DST)\delphi\proxs
+	$(CP) $(SRC)\delphi\proxs\pxmain.dfm    $(DST)\delphi\proxs
+	$(CP) $(SRC)\delphi\proxs\pxmain.pas    $(DST)\delphi\proxs
+	$(MD) $(DST)\delphi\ssched
+	$(CP) $(SRC)\delphi\ssched\doc.html      $(DST)\delphi\ssched
+	$(CP) $(SRC)\delphi\ssched\doc.html      $(DST)\delphi\ssched
+	$(CP) $(SRC)\delphi\ssched\main.dfm      $(DST)\delphi\ssched
+	$(CP) $(SRC)\delphi\ssched\main.pas      $(DST)\delphi\ssched
+	$(CP) $(SRC)\delphi\ssched\sched.pro     $(DST)\delphi\ssched
+	$(CP) $(SRC)\delphi\ssched\ssched.dpr    $(DST)\delphi\ssched
+	$(CP) $(SRC)\delphi\ssched\ssched.res    $(DST)\delphi\ssched
+	$(MD) $(DST)\dotnet
+	$(CP) $(SRC)\dotnet\doc.html             $(DST)\dotnet\doc.html
+	$(MD) $(DST)\dotnet\cs
+	$(MD) $(DST)\dotnet\cs\pets
+	$(CP) $(SRC)\dotnet\cs\pets\doc.html           $(DST)\dotnet\cs\pets
+	$(CP) $(SRC)\dotnet\cs\pets\App.ico            $(DST)\dotnet\cs\pets
+	$(CP) $(SRC)\dotnet\cs\pets\AssemblyInfo.cs    $(DST)\dotnet\cs\pets
+	$(CP) $(SRC)\dotnet\cs\pets\pets.csproj        $(DST)\dotnet\cs\pets
+	$(CP) $(SRC)\dotnet\cs\pets\pets.pro           $(DST)\dotnet\cs\pets
+	$(CP) $(SRC)\dotnet\cs\pets\pets.sln           $(DST)\dotnet\cs\pets
+	$(CP) $(SRC)\dotnet\cs\pets\PetsForm.cs        $(DST)\dotnet\cs\pets
+	$(CP) $(SRC)\dotnet\cs\pets\PetsForm.resx      $(DST)\dotnet\cs\pets
+	$(MD) $(DST)\dotnet\cs\pets_callback
+	$(CP) $(SRC)\dotnet\cs\pets_callback\doc.html              $(DST)\dotnet\cs\pets_callback
+	$(CP) $(SRC)\dotnet\cs\pets_callback\App.ico               $(DST)\dotnet\cs\pets_callback
+	$(CP) $(SRC)\dotnet\cs\pets_callback\AssemblyInfo.cs       $(DST)\dotnet\cs\pets_callback
+	$(CP) $(SRC)\dotnet\cs\pets_callback\InputDialog.cs        $(DST)\dotnet\cs\pets_callback
+	$(CP) $(SRC)\dotnet\cs\pets_callback\InputDialog.resx      $(DST)\dotnet\cs\pets_callback
+	$(CP) $(SRC)\dotnet\cs\pets_callback\pets.pro              $(DST)\dotnet\cs\pets_callback
+	$(CP) $(SRC)\dotnet\cs\pets_callback\pets_callback.sln     $(DST)\dotnet\cs\pets_callback
+	$(CP) $(SRC)\dotnet\cs\pets_callback\pets_callback.csproj  $(DST)\dotnet\cs\pets_callback
+	$(CP) $(SRC)\dotnet\cs\pets_callback\PetsCallbackForm.resx $(DST)\dotnet\cs\pets_callback
+	$(CP) $(SRC)\dotnet\cs\pets_callback\PetsCallbackForm.cs   $(DST)\dotnet\cs\pets_callback
+	$(MD) $(DST)\dotnet\vb
+	$(MD) $(DST)\dotnet\vb\pets
+	$(CP) $(SRC)\dotnet\vb\pets\doc.html           $(DST)\dotnet\vb\pets
+	$(CP) $(SRC)\dotnet\vb\pets\AssemblyInfo.vb    $(DST)\dotnet\vb\pets
+	$(CP) $(SRC)\dotnet\vb\pets\pets.vbproj        $(DST)\dotnet\vb\pets
+	$(CP) $(SRC)\dotnet\vb\pets\pets.pro           $(DST)\dotnet\vb\pets
+	$(CP) $(SRC)\dotnet\vb\pets\pets.sln           $(DST)\dotnet\vb\pets
+	$(CP) $(SRC)\dotnet\vb\pets\PetsForm.vb        $(DST)\dotnet\vb\pets
+	$(CP) $(SRC)\dotnet\vb\pets\PetsForm.resx      $(DST)\dotnet\vb\pets
+	$(MD) $(DST)\dotnet\vb\pets_callback
+	$(CP) $(SRC)\dotnet\vb\pets_callback\doc.html              $(DST)\dotnet\vb\pets_callback
+	$(CP) $(SRC)\dotnet\vb\pets_callback\AssemblyInfo.vb       $(DST)\dotnet\vb\pets_callback
+	$(CP) $(SRC)\dotnet\vb\pets_callback\pets.pro              $(DST)\dotnet\vb\pets_callback
+	$(CP) $(SRC)\dotnet\vb\pets_callback\pets_callback.sln     $(DST)\dotnet\vb\pets_callback
+	$(CP) $(SRC)\dotnet\vb\pets_callback\pets_callback.vbproj  $(DST)\dotnet\vb\pets_callback
+	$(CP) $(SRC)\dotnet\vb\pets_callback\PetsCallbackForm.resx $(DST)\dotnet\vb\pets_callback
+	$(CP) $(SRC)\dotnet\vb\pets_callback\PetsCallbackForm.vb   $(DST)\dotnet\vb\pets_callback
+	$(MD) $(DST)\internet\asp
+	$(CP) $(SRC)\internet\asp\doc.html       $(DST)\internet\asp\doc.html
+	$(MD) $(DST)\internet\asp\vb_odbc_pets
+	$(CP) $(SRC)\internet\asp\vb_odbc_pets\doc.html       $(DST)\internet\asp\vb_odbc_pets
+	$(CP) $(SRC)\internet\asp\vb_odbc_pets\pets.mdb       $(DST)\internet\asp\vb_odbc_pets
+	$(CP) $(SRC)\internet\asp\vb_odbc_pets\pets_odbc.asp  $(DST)\internet\asp\vb_odbc_pets
+	$(CP) $(SRC)\internet\asp\vb_odbc_pets\Pets_odbc.cls  $(DST)\internet\asp\vb_odbc_pets
+	$(CP) $(SRC)\internet\asp\vb_odbc_pets\pets_odbc.ppj  $(DST)\internet\asp\vb_odbc_pets
+	$(CP) $(SRC)\internet\asp\vb_odbc_pets\pets_odbc.pro  $(DST)\internet\asp\vb_odbc_pets
+	$(CP) $(SRC)\internet\asp\vb_odbc_pets\pets_odbc.vbp  $(DST)\internet\asp\vb_odbc_pets
+	$(MD) $(DST)\internet\asp\vb_pets
+	$(CP) $(SRC)\internet\asp\vb_pets\doc.html      $(DST)\internet\asp\vb_pets
+	$(CP) $(SRC)\internet\asp\vb_pets\asp_pets.vbp  $(DST)\internet\asp\vb_pets
+	$(CP) $(SRC)\internet\asp\vb_pets\asp_pets.vbw  $(DST)\internet\asp\vb_pets
+	$(CP) $(SRC)\internet\asp\vb_pets\pets.asp      $(DST)\internet\asp\vb_pets
+	$(CP) $(SRC)\internet\asp\vb_pets\Pets.cls      $(DST)\internet\asp\vb_pets
+	$(CP) $(SRC)\internet\asp\vb_pets\pets.pro      $(DST)\internet\asp\vb_pets
+	$(MD) $(DST)\internet\asp.net
+	$(CP) $(SRC)\internet\asp.net\doc.html          $(DST)\internet\asp.net\doc.html
+	$(MD) $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\doc.html  $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\AssemblyInfo.vb  $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\Global.asax      $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\Global.asax.resx $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\Global.asax.vb   $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\pets.pro         $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\Styles.css       $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\vb_pets.vbproj   $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\vb_pets.sln      $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\vb_pets.vbproj.webinfo  $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\vb_pets.vsdisco  $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\Web.config       $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\WebForm1.aspx    $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\WebForm1.aspx.resx  $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\WebForm1.aspx.vb $(DST)\internet\asp.net\vb_pets
+	$(MD) $(DST)\odbc
+	$(CP) $(SRC)\odbc\doc.html             $(DST)\odbc
+	$(MD) $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\doc.html      $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\amzi.cfg      $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\dbgendlg.cpp  $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\dbgendlg.h    $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\dbgene.cpp    $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\dbgene.vcproj    $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\dbgene.sln    $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\dbgene.h      $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\dbgene.pro    $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\dbgene.rc     $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\gene.mdb      $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\progene.cpp   $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\progene.h     $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\resource.h    $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\stdafx.cpp    $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\stdafx.h      $(DST)\odbc\dbgene
+	$(MD) $(DST)\odbc\dbgene\res
+	$(CP) $(SRC)\odbc\dbgene\res\Dbgene.ico    $(DST)\odbc\dbgene\res
+	$(CP) $(SRC)\odbc\dbgene\res\Dbgene.rc2    $(DST)\odbc\dbgene\res
+	$(MD) $(DST)\odbc\events
+	$(CP) $(SRC)\odbc\events\doc.html      $(DST)\odbc\events
+	$(CP) $(SRC)\odbc\events\events.mdb    $(DST)\odbc\events
+	$(CP) $(SRC)\odbc\events\events.pro    $(DST)\odbc\events
+	$(MD) $(DST)\odbc\vbgene
+	$(CP) $(SRC)\odbc\vbgene\doc.html      $(DST)\odbc\vbgene
+	$(CP) $(SRC)\odbc\vbgene\amzi.cfg      $(DST)\odbc\vbgene
+	$(CP) $(SRC)\odbc\vbgene\Constant.txt  $(DST)\odbc\vbgene
+	$(CP) $(SRC)\odbc\vbgene\dbgenevb.frm  $(DST)\odbc\vbgene
+	$(CP) $(SRC)\odbc\vbgene\declare.bas   $(DST)\odbc\vbgene
+	$(CP) $(SRC)\odbc\vbgene\gene.mdb      $(DST)\odbc\vbgene
+	$(CP) $(SRC)\odbc\vbgene\odbcgene.vbp  $(DST)\odbc\vbgene
+	$(MD) $(DST)\odbc\vbgene\prolog
+	$(CP) $(SRC)\odbc\vbgene\prolog\.project          $(DST)\odbc\vbgene\prolog
+	$(CP) $(SRC)\odbc\vbgene\prolog\build.properties  $(DST)\odbc\vbgene\prolog
+	$(CP) $(SRC)\odbc\vbgene\prolog\dbgene.pro        $(DST)\odbc\vbgene\prolog
+	$(MD) $(DST)\tcltk\lb_query
+	$(CP) $(SRC)\tcltk\doc.html                   $(DST)\tcltk
+	$(CP) $(SRC)\tcltk\lb_query\.project          $(DST)\tcltk\lb_query
+	$(CP) $(SRC)\tcltk\lb_query\amzi.cfg          $(DST)\tcltk\lb_query
+	$(CP) $(SRC)\tcltk\lb_query\build.properties  $(DST)\tcltk\lb_query
+	$(CP) $(SRC)\tcltk\lb_query\gene.lb           $(DST)\tcltk\lb_query
+	$(CP) $(SRC)\tcltk\lb_query\help.txt          $(DST)\tcltk\lb_query
+	$(CP) $(SRC)\tcltk\lb_query\doc.html          $(DST)\tcltk\lb_query
+	$(CP) $(SRC)\tcltk\lb_query\lb_query.pro      $(DST)\tcltk\lb_query
+	$(CP) $(SRC)\tcltk\lb_query\pets.lb           $(DST)\tcltk\lb_query
+	$(MD) $(DST)\vb
+	$(CP) $(SRC)\vb\doc.html              $(DST)\vb
+	$(MD) $(DST)\vb\extpred
+	$(CP) $(SRC)\vb\extpred\doc.html      $(DST)\vb\extpred
+	$(CP) $(SRC)\vb\extpred\msgbox.frm    $(DST)\vb\extpred
+	$(CP) $(SRC)\vb\extpred\msgbox.pro    $(DST)\vb\extpred
+	$(CP) $(SRC)\vb\extpred\msgbox.vbp    $(DST)\vb\extpred
+	$(CP) $(SRC)\vb\extpred\msgbox.vbw    $(DST)\vb\extpred
+	$(CP) $(SRC)\vb\extpred\pmsgbox.bas   $(DST)\vb\extpred
+	$(MD) $(DST)\vb\hello
+	$(CP) $(SRC)\vb\hello\doc.html      $(DST)\vb\hello
+	$(CP) $(SRC)\vb\hello\hello.frm     $(DST)\vb\hello
+	$(CP) $(SRC)\vb\hello\hello.pro     $(DST)\vb\hello
+	$(CP) $(SRC)\vb\hello\hello.vbp     $(DST)\vb\hello
+	$(CP) $(SRC)\vb\hello\hello.vbw     $(DST)\vb\hello
+	$(MD) $(DST)\vb\types
+	$(CP) $(SRC)\vb\types\doc.html      $(DST)\vb\types
+	$(CP) $(SRC)\vb\types\testvb.frm    $(DST)\vb\types
+	$(CP) $(SRC)\vb\types\testvb.pro    $(DST)\vb\types
+	$(CP) $(SRC)\vb\types\testvb.vbp    $(DST)\vb\types
+	$(MD) $(DST)\vb\wgene
+	$(CP) $(SRC)\vb\wgene\doc.html      $(DST)\vb\wgene
+	$(CP) $(SRC)\vb\wgene\england.fam   $(DST)\vb\wgene
+	$(CP) $(SRC)\vb\wgene\gene.pro      $(DST)\vb\wgene
+	$(CP) $(SRC)\vb\wgene\personfo.frm  $(DST)\vb\wgene
+	$(CP) $(SRC)\vb\wgene\wgene.bas     $(DST)\vb\wgene
+	$(CP) $(SRC)\vb\wgene\wgenevb.frm   $(DST)\vb\wgene
+	$(CP) $(SRC)\vb\wgene\wgenevb.vbp   $(DST)\vb\wgene

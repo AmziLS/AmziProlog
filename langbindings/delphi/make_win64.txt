@@ -1,0 +1,8 @@
+DIST = $(APLS_RELEASE)\langbindings\delphi
+
+all: _delphi
+
+_delphi:
+	copy amzi.pas $(DIST)\amzi.pas
+	copy amzi.dcr $(DIST)\amzi.dcr
+

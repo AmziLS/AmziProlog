@@ -1,0 +1,9 @@
+DIST = $(APLS_RELEASE)\langbindings\vb
+
+all: _vb
+
+_vb:
+	copy amzi.bas $(DIST)\amzi.bas
+
+clean:
+        echo "nothing to clean in VB"
