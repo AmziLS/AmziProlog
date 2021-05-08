@@ -31,14 +31,14 @@ NULL=nul
 OUTDIR=.\Release
 INTDIR=.\Release
 
-ALL : ".\$(AMZI_DEV_DIR)\lsapis\cgi\acgi.exe"
+ALL : ".\$(AMZI_DEV_DIR)\langbindings\cgi\acgi.exe"
 
 
 CLEAN :
 	-@erase "$(INTDIR)\amzicgi.obj"
 	-@erase "$(INTDIR)\amzisub.obj"
 	-@erase "$(INTDIR)\vc60.idb"
-	-@erase ".\$(AMZI_DEV_DIR)\lsapis\cgi\acgi.exe"
+	-@erase ".\$(AMZI_DEV_DIR)\langbindings\cgi\acgi.exe"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -82,12 +82,12 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\wacgi.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=$(AMZI_DEV_DIR)\lib\amzi.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ws2_32.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\acgi.pdb" /machine:I386 /out:"$(AMZI_DEV_DIR)\lsapis\cgi\acgi.exe" 
+LINK32_FLAGS=$(AMZI_DEV_DIR)\lib\amzi.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ws2_32.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\acgi.pdb" /machine:I386 /out:"$(AMZI_DEV_DIR)\langbindings\cgi\acgi.exe" 
 LINK32_OBJS= \
 	"$(INTDIR)\amzicgi.obj" \
 	"$(INTDIR)\amzisub.obj"
 
-".\$(AMZI_DEV_DIR)\lsapis\cgi\acgi.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+".\$(AMZI_DEV_DIR)\langbindings\cgi\acgi.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -100,7 +100,7 @@ INTDIR=.\Debug
 OutDir=.\Debug
 # End Custom Macros
 
-ALL : ".\$(AMZI_DEV_DIR)\lsapis\cgi\acgi.exe" "$(OUTDIR)\wacgi.bsc"
+ALL : ".\$(AMZI_DEV_DIR)\langbindings\cgi\acgi.exe" "$(OUTDIR)\wacgi.bsc"
 
 
 CLEAN :
@@ -112,8 +112,8 @@ CLEAN :
 	-@erase "$(INTDIR)\vc60.pdb"
 	-@erase "$(OUTDIR)\acgi.pdb"
 	-@erase "$(OUTDIR)\wacgi.bsc"
-	-@erase ".\$(AMZI_DEV_DIR)\lsapis\cgi\acgi.exe"
-	-@erase ".\$(AMZI_DEV_DIR)\lsapis\cgi\acgi.ilk"
+	-@erase ".\$(AMZI_DEV_DIR)\langbindings\cgi\acgi.exe"
+	-@erase ".\$(AMZI_DEV_DIR)\langbindings\cgi\acgi.ilk"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -164,12 +164,12 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=$(AMZI_DEV_DIR)\lib\amzi.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ws2_32.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\acgi.pdb" /debug /machine:I386 /out:"$(AMZI_DEV_DIR)\lsapis\cgi\acgi.exe" /pdbtype:sept 
+LINK32_FLAGS=$(AMZI_DEV_DIR)\lib\amzi.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ws2_32.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\acgi.pdb" /debug /machine:I386 /out:"$(AMZI_DEV_DIR)\langbindings\cgi\acgi.exe" /pdbtype:sept 
 LINK32_OBJS= \
 	"$(INTDIR)\amzicgi.obj" \
 	"$(INTDIR)\amzisub.obj"
 
-".\$(AMZI_DEV_DIR)\lsapis\cgi\acgi.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+".\$(AMZI_DEV_DIR)\langbindings\cgi\acgi.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -179,14 +179,14 @@ LINK32_OBJS= \
 OUTDIR=.\wacgi___Win32_Win32_Test_Release
 INTDIR=.\wacgi___Win32_Win32_Test_Release
 
-ALL : ".\$(AMZI_DEV_DIR)\lsapis\cgi\testcgi.exe"
+ALL : ".\$(AMZI_DEV_DIR)\langbindings\cgi\testcgi.exe"
 
 
 CLEAN :
 	-@erase "$(INTDIR)\amzicgi.obj"
 	-@erase "$(INTDIR)\amzisub.obj"
 	-@erase "$(INTDIR)\vc60.idb"
-	-@erase ".\$(AMZI_DEV_DIR)\lsapis\cgi\testcgi.exe"
+	-@erase ".\$(AMZI_DEV_DIR)\langbindings\cgi\testcgi.exe"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -235,7 +235,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\amzicgi.obj" \
 	"$(INTDIR)\amzisub.obj"
 
-".\$(AMZI_DEV_DIR)\lsapis\cgi\testcgi.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+".\$(AMZI_DEV_DIR)\langbindings\cgi\testcgi.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
