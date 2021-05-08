@@ -65,21 +65,21 @@ _vb:
 	@echo *********    making vb
   @echo *************************************************************
 	cd $(HERE)\vb
-	nmake -f make_win32.txt
+	nmake -f make_win64.txt
 	
 _delphi:
   @echo *************************************************************
 	@echo *********    making delphi
   @echo *************************************************************
 	cd $(HERE)\delphi
-	nmake -f make_win32.txt
+	nmake -f make_win64.txt
 
 _samples:
   @echo *************************************************************
 	@echo *********    making samples
   @echo *************************************************************
 	cd $(HERE)\samples
-	nmake -f make_win32.txt
+	nmake -f make_win64.txt
 
 clean:
 	cd sockets

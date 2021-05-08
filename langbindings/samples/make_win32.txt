@@ -120,7 +120,6 @@ _common:
 	$(CP) $(SRC)\lsx\xarray\xarray.pro    $(DST)\lsx\xarray
 
 _windows:
-
 	$(MD) $(DST)\delphi
 	$(CP) $(SRC)\delphi\doc.html             $(DST)\delphi\doc.html
 	$(MD) $(DST)\delphi\delgui
