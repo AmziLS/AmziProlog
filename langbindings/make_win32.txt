@@ -16,94 +16,94 @@ _sockets:
 	@echo *********    making sockets
   @echo *************************************************************
 	cd $(HERE)\sockets
-	bmake -f make_win32.txt
+	nmake -f make_win32.txt
 
 _mysql:
   @echo *************************************************************
 	@echo *********    making mysql
   @echo *************************************************************
 	cd $(HERE)\mysql
-	bmake -f make_win32.txt
+	nmake -f make_win32.txt
 	
 _odbc:
   @echo *************************************************************
 	@echo *********    making odbc
   @echo *************************************************************
 	cd $(HERE)\odbc
-	bmake -f make_win32.txt
+	nmake -f make_win32.txt
 
 _tcltk:
   @echo *************************************************************
 	@echo *********    making tcl/tk
   @echo *************************************************************
 	cd $(HERE)\tcltk
-	bmake -f make_win32.txt
+	nmake -f make_win32.txt
 	
 _dotnet:
   @echo *************************************************************
 	@echo *********    making .net
   @echo *************************************************************
 	cd $(HERE)\dotnet
-	bmake -f make_win32.txt
+	nmake -f make_win32.txt
 	
 _java:
   @echo *************************************************************
 	@echo *********    making java
   @echo *************************************************************
 	cd $(HERE)\java
-	bmake -f make_win32.txt
+	nmake -f make_win32.txt
 
 _cgi:
   @echo *************************************************************
 	@echo *********    making cgi
   @echo *************************************************************
 	cd $(HERE)\cgi
-	bmake -f make_win32.txt
+	nmake -f make_win32.txt
 
 _vb:
   @echo *************************************************************
 	@echo *********    making vb
   @echo *************************************************************
 	cd $(HERE)\vb
-	bmake -f make_win32.txt
+	nmake -f make_win32.txt
 	
 _delphi:
   @echo *************************************************************
 	@echo *********    making delphi
   @echo *************************************************************
 	cd $(HERE)\delphi
-	bmake -f make_win32.txt
+	nmake -f make_win32.txt
 
 _samples:
   @echo *************************************************************
 	@echo *********    making samples
   @echo *************************************************************
 	cd $(HERE)\samples
-	bmake -f make_win32.txt
+	nmake -f make_win32.txt
 
 clean:
 	cd sockets
-	bmake -f make_win32.txt clean
+	nmake -f make_win32.txt clean
 	cd $(HERE)
 	cd osutils
-	bmake -f make_win32.txt clean
+	nmake -f make_win32.txt clean
 	cd $(HERE)
 	cd odbc
-	bmake -f make_win32.txt clean
+	nmake -f make_win32.txt clean
 	cd $(HERE)
 	cd dotnet
-	-bmake -f make_win32.txt clean
+	-nmake -f make_win32.txt clean
 	cd $(HERE)
 	cd java20
-	-bmake -f make_win32.txt clean
+	-nmake -f make_win32.txt clean
 	cd $(HERE)
 	cd cgi
-	-bmake -f make_win32.txt clean
+	-nmake -f make_win32.txt clean
 	cd $(HERE)
 	cd vb
-	-bmake -f make_win32.txt clean
+	-nmake -f make_win32.txt clean
 	cd $(HERE)
-	-bmake -f make_win32.txt clean
+	-nmake -f make_win32.txt clean
 	cd $(HERE)
 	-del /Q wide\ReleaseW\*.*
 	-del /Q wide\ReleaseA\*.*
@@ -115,7 +115,7 @@ clean:
 	-del /Q wide\DebugTA\*.*
 	cd $(HERE)
 	cd lsapis
-	-bmake -f make_win32.txt clean
+	-nmake -f make_win32.txt clean
 	cd $(HERE)
 
 # new cleans destroy output as well, aargh.  distribution: clean
