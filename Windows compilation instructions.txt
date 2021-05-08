@@ -1,0 +1,16 @@
+0. Install prerequisites
+  - install Visual Studio 2017 or later
+  - install Tcl 8.6 into C:\Tcl
+  - install Java Development Kit
+
+1. Adapt the path in amzi_vars_win32.bat and amzi_vars_win64.bat to match your Visual Studio installation directory
+
+2. Open "Amzi Prolog 32 Bit Environment" or "Amzi Prolog 64 Bit Environment"
+
+3a. Enter the following commands for Win32:
+  cd make  
+  nmake -f make_win32.txt
+
+3b. Enter the following commands for Win64:
+  cd make  
+  nmake -f make_win64.txt
