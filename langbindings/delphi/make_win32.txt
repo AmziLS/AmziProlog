@@ -3,6 +3,8 @@ DIST = $(APLS_RELEASE)\langbindings\delphi
 all: _delphi
 
 _delphi:
-	copy amzi.pas $(DIST)\amzi.pas
-	copy amzi.dcr $(DIST)\amzi.dcr
+	copy amzi.pas $(DIST)
+	copy amzi.dcr $(DIST)
+	copy amzi_prolog.dpk $(DIST)
+	copy amzi_prolog.dproj $(DIST)
 
