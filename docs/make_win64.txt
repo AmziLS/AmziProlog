@@ -26,10 +26,8 @@ ARUN = $(APLS_RELEASE)\bin\arun.exe
 
 docs :  _htmlidx _lsdoc _prodoc _aip _xsip _libsdoc _articles
 	$(CP) amzidoc_eclipse.htm $(DOC_DIR)\amzidoc.htm
-	$(CP) license.txt $(DOC_DIR)
 	$(CP) *.htm $(DOC_DIR)
 	$(CP) amzidoc_eclipse.htm $(ECL_DIR)\amzidoc.htm
-	$(CP) license.txt $(ECL_DIR)
 	$(CP) *.htm $(ECL_DIR)
 	$(CP) amzi_toc.xml $(XML_DIR)
 	$(CP) .eclipseextension $(RUN_DIR)\docs\eclipse
@@ -98,11 +96,11 @@ _xsip :
 	$(CP) xsip\xsip_toc.xml $(XML_DIR)
 	$(CP) xsip\*.htm $(DOC_DIR)\xsip
 	$(CP) xsip\*.gif $(DOC_DIR)\xsip
-	xcopy /S /I xsip\code $(DOC_DIR)\xsip\code
+	xcopy /S /I /Y xsip\code $(DOC_DIR)\xsip\code
 	$(CP) xsip\*.htm $(ECL_DIR)\xsip
 	$(CP) xsip\*.gif $(ECL_DIR)\xsip
-	xcopy /S /I xsip\code $(ECL_DIR)\xsip\code
-	xcopy /S /I xsip\code $(DOC_DIR)\xsip\code
+	xcopy /S /I /Y xsip\code $(ECL_DIR)\xsip\code
+	xcopy /S /I /Y xsip\code $(DOC_DIR)\xsip\code
 
 _libsdoc :
 	$(MD) $(DOC_DIR)\libs
@@ -150,12 +148,6 @@ clean:
 	$(RM) temp2.pro
 	$(RM) *.cfg
 	cd $(DEV_DIR)\docs\aip
-	$(RM) *.plm
-	$(RM) *.xpl
-	$(RM) temp1.pro
-	$(RM) temp2.pro
-	$(RM) *.cfg
-	cd $(DEV_DIR)\docs\news
 	$(RM) *.plm
 	$(RM) *.xpl
 	$(RM) temp1.pro
