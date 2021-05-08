@@ -1,6 +1,7 @@
 _amzidll:
-	devenv wengine.sln /rebuild "Release|x64"	
-	implib $(APLS_RELEASE)\lib\amzib.lib $(APLS_RELEASE)\bin\amzi.dll
+	devenv wengine.sln /rebuild "Release|x64"
+# implib fails to handle new MSVC libs
+#	implib $(APLS_RELEASE)\lib\amzib.lib $(APLS_RELEASE)\bin\amzi.dll
 	copy amzi.cfg $(APLS_RELEASE)\config
 
 clean:
