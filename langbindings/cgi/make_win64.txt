@@ -3,8 +3,8 @@ all: _acgi
 
 _acgi:
 	echo === making acgi ===
-	-md $(APLS_RELEASE)\lsapis\cgi
-	devenv wacgi.sln /rebuild Release|x64
+	-md $(APLS_RELEASE)\langbindings\cgi
+	devenv wacgi.sln /rebuild "Release|x64"
 	acmp acgi.pro
 	copy acgi.plm $(APLS_RELEASE)\abin\acgi.plm
 	del acgi.plm

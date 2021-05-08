@@ -1,6 +1,6 @@
 all:
-	devenv wide.sln /rebuild ReleaseA|x64
-	devenv wide.sln /rebuild ReleaseW|x64
+	devenv wide.sln /rebuild "ReleaseA|x64"
+	devenv wide.sln /rebuild "ReleaseW|x64"
 
 clean:
 	devenv wide.sln /clean ReleaseA

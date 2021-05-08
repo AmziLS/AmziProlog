@@ -1,7 +1,7 @@
 all: _osutils
 
 _osutils:
-	devenv wosutils.sln /rebuild Release|x64
+	devenv wosutils.sln /rebuild "Release|x64"
 
 clean:
 	devenv wosutils.sln /clean Release

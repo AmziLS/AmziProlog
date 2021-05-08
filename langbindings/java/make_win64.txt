@@ -1,4 +1,4 @@
-DIST = $(APLS_RELEASE)\lsapis\java20
+DIST = $(APLS_RELEASE)\langbindings\java20
 
 all: _dirs _java _amzijni
 
@@ -30,7 +30,7 @@ jnilib\amzi_ls_LSException.h: amzi\ls\LSException.java
 
 _jnilib:
 	cd jnilib
-	devenv wjnilib.sln /rebuild Release|x64
+	devenv wjnilib.sln /rebuild "Release|x64"
 	cd ..
 
 clean:

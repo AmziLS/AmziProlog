@@ -1,7 +1,7 @@
 all: _odbc
 
 _odbc:
-	devenv odbc.sln /rebuild Release|Win32
+	devenv odbc.sln /rebuild "Release|Win32"
 	acmp aodbc
 	copy aodbc.plm $(APLS_RELEASE)\abin\aodbc.plm
 

@@ -1,9 +1,9 @@
 all: _tcltk
 
 _tcltk:
-	-md $(APLS_RELEASE)\lsapis\tcltk
-	devenv tcltk.sln /rebuild Release|x64
-	xcopy lib $(APLS_RELEASE)\lsapis\tcltk\lib\ /S /Y
+	-md $(APLS_RELEASE)\langbindings\tcltk
+	devenv tcltk.sln /rebuild "Release|x64"
+	xcopy lib $(APLS_RELEASE)\langbindings\tcltk\lib\ /S /Y
 #	xcopy bin $(APLS_RELEASE)\bin\
 
 clean:

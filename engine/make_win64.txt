@@ -1,9 +1,8 @@
 _amzidll:
-	devenv wengine.sln /rebuild "Release|x64"
+	devenv wengine.sln /rebuild "Release|x64"	
 	implib $(APLS_RELEASE)\lib\amzib.lib $(APLS_RELEASE)\bin\amzi.dll
 	copy amzi.cfg $(APLS_RELEASE)\config
 
 clean:
 	devenv wengine.sln /clean "Release|x64"
 	devenv wengine.sln /clean Debug
-

@@ -1,4 +1,4 @@
-DIST = $(APLS_RELEASE)\lsapis\delphi
+DIST = $(APLS_RELEASE)\langbindings\delphi
 
 all: _delphi
 

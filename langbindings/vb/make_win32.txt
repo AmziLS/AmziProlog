@@ -1,4 +1,4 @@
-DIST = $(APLS_RELEASE)\lsapis\vb
+DIST = $(APLS_RELEASE)\langbindings\vb
 
 all: _vb
 

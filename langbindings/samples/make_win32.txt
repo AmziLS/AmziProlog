@@ -2,7 +2,7 @@
 
 CP = copy
 MD = -md
-SRC = $(APLS_SOURCE)\..\interfaces\samples
+SRC = $(APLS_SOURCE)\langbindings\samples
 DST = $(APLS_RELEASE)\samples
 
 # For unix, copy the file, make these the definitions:

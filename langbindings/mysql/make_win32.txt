@@ -1,7 +1,7 @@
 all: _mysql
 
 _mysql:
-	devenv amysql.sln /rebuild Release|Win32
+	devenv amysql.sln /rebuild "Release|Win32"
 
 clean:
 	devenv amysql.sln /clean Release

@@ -1,7 +1,7 @@
 all: _sockets
 
 _sockets:
-	devenv wsock.sln /rebuild Release|Win32
+	devenv wsock.sln /rebuild "Release|Win32"
 	acmp asock.pro
 	copy asock.plm $(APLS_RELEASE)\abin\asock.plm
 
