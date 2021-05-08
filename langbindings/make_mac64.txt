@@ -12,8 +12,8 @@ RELEASE=$(APLS_RELEASE)
 all: clean _dirs _java samples
 
 _dirs:
-	-mkdir $(APLS_RELEASE)/lsapis
-	-mkdir $(APLS_RELEASE)/lsapis/java
+	-mkdir $(APLS_RELEASE)/langbindings
+	-mkdir $(APLS_RELEASE)/langbindings/java
 
 clean: FORCE
 	find $(HERE) -name *.o -exec rm {} \;

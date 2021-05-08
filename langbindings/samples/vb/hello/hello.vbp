@@ -1,7 +1,7 @@
 Type=Exe
 Form=HELLO.FRM
 Reference=*\G{00025E04-0000-0000-C000-000000000046}#3.5#0#..\..\..\..\..\..\Program Files\Common Files\Microsoft Shared\DAO\dao2535.tlb#Microsoft DAO 2.5/3.0 Compatibility Library
-Module=AmziLogicServer; ..\..\..\lsapis\vb\amzi.bas
+Module=AmziLogicServer; ..\..\..\langbindings\vb\amzi.bas
 IconForm="Form1"
 Startup="Form1"
 Title="HELLO"

@@ -16,7 +16,7 @@
 <h2>Building the Sample</h2>
 <ol>
   <li>Set JAVA_HOME=c:\jdk<i>N.N</i></li>
-  <li>Set the CLASSPATH to include .;\amzi\lsapis\java20 and servlet.jar. For 
+  <li>Set the CLASSPATH to include .;\amzi\langbindings\java and servlet.jar. For 
     Tomcat, servlet.jar is found in jakarta-tomcat-<i>X.X</i>\common\lib.</li>
   <li> Compile ExtPred.java and AmziPreds.java with javac (or open and build the 
     JBuilder project extpred.jpx).</li>
@@ -55,7 +55,7 @@
     Alternatively, you can load these libraries (and LSXs) explicitly in Java 
     with Runtime.getRuntime().load(<i>libraryPath</i>) or loadLibrary(<i>libraryName</i>). 
   </li>
-  <li>Copy the amzi/ls subdirectory tree (from amzi\lsapis\java20) to ...Apache 
+  <li>Copy the amzi/ls subdirectory tree (from amzi\langbindings\java) to ...Apache 
     Tomcat <i>X.X</i>\webapps\amzi\WEB-INF\classes</li>
   <li>Stop and restart Tomcat</li>
   <li>In your browser type, http://localhost:8080/amzi/Extpred. Enter '\\...Apache 
@@ -70,7 +70,7 @@
     both located in the amzi\bin directory). Alternatively, you can load these 
     libraries (and LSXs) explicitly in Java with Runtime.getRuntime().load(<i>libraryPath</i>) 
     or loadLibrary(<i>libraryName</i>).</li>
-  <li> Copy the amzi\ls directory tree from amzi\lib\java20 to jrun\<i>X.X</i>\classes.</li>
+  <li> Copy the amzi\ls directory tree from amzi\lib\java to jrun\<i>X.X</i>\classes.</li>
   <li> Copy ExtPred.class and AmziPreds.class to jrun\<i>X.X</i>\jsm-default\services\jse\servlets 
     (or whatever directory you use to hold your servlets under JRUN).</li>
   <li>In your browser type, http://localhost/servlet/ExtPred</li>

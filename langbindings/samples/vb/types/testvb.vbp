@@ -1,6 +1,6 @@
 Type=Exe
 Form=testvb.frm
-Module=AmziLogicServer; ..\..\..\lsapis\vb\amzi.bas
+Module=AmziLogicServer; ..\..\..\langbindings\vb\amzi.bas
 IconForm="TestVB"
 Startup="TestVB"
 ExeName32="testvb.exe"

@@ -1,6 +1,6 @@
 # interfaces/java
 
-DIST = $(APLS_RELEASE)/lsapis/java
+DIST = $(APLS_RELEASE)/langbindings/java
 #debug
 #C_FLAGS = -g
 #release

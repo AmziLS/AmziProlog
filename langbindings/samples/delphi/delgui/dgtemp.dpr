@@ -2,7 +2,7 @@ program DGtemp;
 
 uses
   Forms,
-  Amzi in '..\..\..\lsapis\delphi\amzi.pas',
+  Amzi in '..\..\..\langbindings\delphi\amzi.pas',
   DGmain in 'dgmain.pas' {mainform},
   DelGUI in 'delgui.pas';
 

@@ -502,10 +502,10 @@ TF EXPFUNC p_tcl_init(ENGid CurEng)
     {
         amzi_dir = Tcl_GetVar(terp, "env(AMZI_DIR)", TCL_GLOBAL_ONLY);
         strcpy(library, amzi_dir);
-        strcat(library, "\\lsapis\\tcltk\\lib\\tcl");
+        strcat(library, "\\langbindings\\tcltk\\lib\\tcl");
         Tcl_SetVar(terp, "tcl_library", library, TCL_GLOBAL_ONLY);
         strcpy(library, amzi_dir);
-        strcat(library, "\\lsapis\\tcltk\\lib\\tk");
+        strcat(library, "\\langbindings\\tcltk\\lib\\tk");
         Tcl_SetVar(terp, "tk_library", library, TCL_GLOBAL_ONLY);
     }
     else if (0 == strcmp(tcl_lib, "here"))

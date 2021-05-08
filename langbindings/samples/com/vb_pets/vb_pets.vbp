@@ -1,6 +1,6 @@
 Type=Exe
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\..\..\WINNT\System32\stdole2.tlb#OLE Automation
-Reference=*\G{76A1A45A-98F2-4F98-9663-91F1CFA0E6E8}#1.0#0#..\..\..\lsapis\com\amzicom.dll#amzicom Library
+Reference=*\G{76A1A45A-98F2-4F98-9663-91F1CFA0E6E8}#1.0#0#..\..\..\langbindings\com\amzicom.dll#amzicom Library
 Form=vb_pets.frm
 Startup="MainForm"
 ExeName32="vb_pets.exe"

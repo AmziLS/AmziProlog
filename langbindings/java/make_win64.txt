@@ -1,4 +1,4 @@
-DIST = $(APLS_RELEASE)\langbindings\java20
+DIST = $(APLS_RELEASE)\langbindings\java
 
 all: _dirs _java _amzijni
 

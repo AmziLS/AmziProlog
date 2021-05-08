@@ -1,4 +1,4 @@
-# interfaces lsapis java20 jnilib
+# interfaces langbindings java jnilib
 
 JAVA_INCLUDE = /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/include
 JAVA_LINUX_INCLUDE = /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/include/linux

@@ -1,4 +1,4 @@
-DIST = $(APLS_RELEASE)/lsapis/java20
+DIST = $(APLS_RELEASE)/langbindings/java
 #debug
 #C_FLAGS = -g
 #release
