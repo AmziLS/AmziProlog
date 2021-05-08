@@ -1,83 +1,83 @@
-HERE = $(APLS_SOURCE)\..\interfaces
+HERE = $(APLS_SOURCE)\langbindings
 RELEASE = $(APLS_RELEASE)
-LSAPIS = $(RELEASE)\lsapis
+LSAPIS = $(RELEASE)\langbindings
 
 all: _dirs _sockets _mysql _odbc _tcltk _dotnet _java _cgi _vb _delphi _samples
 
 _dirs:
-	-md $(RELEASE)\
+	-md $(RELEASE)
 	-md $(LSAPIS)\java
 	-md $(LSAPIS)\cgi
 	-md $(LSAPIS)\vb
 	-md $(LSAPIS)\delphi
 	
 _sockets:
-  @echo *************************************************************
+	@echo *************************************************************
 	@echo *********    making sockets
-  @echo *************************************************************
+	@echo *************************************************************
 	cd $(HERE)\sockets
 	nmake -f make_win32.txt
 
 _mysql:
-  @echo *************************************************************
+	@echo *************************************************************
 	@echo *********    making mysql
-  @echo *************************************************************
+	@echo *************************************************************
 	cd $(HERE)\mysql
 	nmake -f make_win32.txt
 	
 _odbc:
-  @echo *************************************************************
+	@echo *************************************************************
 	@echo *********    making odbc
-  @echo *************************************************************
+	@echo *************************************************************
 	cd $(HERE)\odbc
 	nmake -f make_win32.txt
 
 _tcltk:
-  @echo *************************************************************
+	@echo *************************************************************
 	@echo *********    making tcl/tk
-  @echo *************************************************************
+	@echo *************************************************************
 	cd $(HERE)\tcltk
 	nmake -f make_win32.txt
 	
 _dotnet:
-  @echo *************************************************************
+	@echo *************************************************************
 	@echo *********    making .net
-  @echo *************************************************************
+	@echo *************************************************************
 	cd $(HERE)\dotnet
 	nmake -f make_win32.txt
 	
 _java:
-  @echo *************************************************************
+	@echo *************************************************************
 	@echo *********    making java
-  @echo *************************************************************
+	@echo *************************************************************
 	cd $(HERE)\java
 	nmake -f make_win32.txt
 
 _cgi:
-  @echo *************************************************************
+	@echo *************************************************************
 	@echo *********    making cgi
-  @echo *************************************************************
+	@echo *************************************************************
 	cd $(HERE)\cgi
 	nmake -f make_win32.txt
 
 _vb:
-  @echo *************************************************************
+	@echo *************************************************************
 	@echo *********    making vb
-  @echo *************************************************************
+	@echo *************************************************************
 	cd $(HERE)\vb
 	nmake -f make_win32.txt
 	
 _delphi:
-  @echo *************************************************************
+	@echo *************************************************************
 	@echo *********    making delphi
-  @echo *************************************************************
+	@echo *************************************************************
 	cd $(HERE)\delphi
 	nmake -f make_win32.txt
 
 _samples:
-  @echo *************************************************************
+	@echo *************************************************************
 	@echo *********    making samples
-  @echo *************************************************************
+	@echo *************************************************************
 	cd $(HERE)\samples
 	nmake -f make_win32.txt
 
@@ -94,7 +94,7 @@ clean:
 	cd dotnet
 	-nmake -f make_win32.txt clean
 	cd $(HERE)
-	cd java20
+	cd java
 	-nmake -f make_win32.txt clean
 	cd $(HERE)
 	cd cgi
@@ -105,16 +105,16 @@ clean:
 	cd $(HERE)
 	-nmake -f make_win32.txt clean
 	cd $(HERE)
-	-del /Q wide\ReleaseW\*.*
-	-del /Q wide\ReleaseA\*.*
-	-del /Q wide\DebugW\*.*
-	-del /Q wide\DebugA\*.*
-	-del /Q wide\ReleaseTW\*.*
-	-del /Q wide\ReleaseTA\*.*
-	-del /Q wide\DebugTW\*.*
-	-del /Q wide\DebugTA\*.*
+	-del /S /Q wide\ReleaseW\*.*
+	-del /S /Q wide\ReleaseA\*.*
+	-del /S /Q wide\DebugW\*.*
+	-del /S /Q wide\DebugA\*.*
+	-del /S /Q wide\ReleaseTW\*.*
+	-del /S /Q wide\ReleaseTA\*.*
+	-del /S /Q wide\DebugTW\*.*
+	-del /S /Q wide\DebugTA\*.*
 	cd $(HERE)
-	cd lsapis
+	cd langbindings
 	-nmake -f make_win32.txt clean
 	cd $(HERE)
 
@@ -130,70 +130,70 @@ distribution:
 	xcopy /Q /S /I $(AMZI_DEV_DIR)\eclipse_install $(DIST)\eclipse_install
 	xcopy /Q /S /I $(AMZI_DEV_DIR)\include $(DIST)\include
 	xcopy /Q /S /I $(AMZI_DEV_DIR)\lib $(DIST)\lib
-	xcopy /Q /S /I $(AMZI_DEV_DIR)\lsapis $(DIST)\lsapis
-	-del /S /Q $(DIST)\lsapis\tcltk\lib\CVS
-	-rmdir /S /Q $(DIST)\lsapis\tcltk\lib\CVS
-	-del /S /Q $(DIST)\lsapis\tcltk\lib\tcl\CVS
-	-rmdir /S /Q $(DIST)\lsapis\tcltk\lib\tcl\CVS
-	-del /S /Q $(DIST)\lsapis\tcltk\lib\tk\CVS
-	-rmdir /S /Q $(DIST)\lsapis\tcltk\lib\tk\CVS	
+	xcopy /Q /S /I $(AMZI_DEV_DIR)\langbindings $(DIST)\langbindings
+	-del /S /Q $(DIST)\langbindings\tcltk\lib\CVS
+	-rmdir /S /Q $(DIST)\langbindings\tcltk\lib\CVS
+	-del /S /Q $(DIST)\langbindings\tcltk\lib\tcl\CVS
+	-rmdir /S /Q $(DIST)\langbindings\tcltk\lib\tcl\CVS
+	-del /S /Q $(DIST)\langbindings\tcltk\lib\tk\CVS
+	-rmdir /S /Q $(DIST)\langbindings\tcltk\lib\tk\CVS	
 	xcopy /Q /S /I $(AMZI_DEV_DIR)\samples $(DIST)\samples
 	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\acore\libs\*.pro $(DIST)\src\libs
 	-del /Q $(DIST)\src\libs\build.properties
 	copy $(AMZI_DEV_DIR)\src\acore\libs\devdoc.html $(DIST)\src\libs
 	copy $(AMZI_DEV_DIR)\src\acore\libs\makefile.* $(DIST)\src\libs
 	-del /S /Q $(DIST)\src\libs\CVS
-	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\lsapis\cgi $(DIST)\src\lsapis\cgi
-	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\lsapis\delphi $(DIST)\src\lsapis\delphi
-	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\lsapis\dotnet $(DIST)\src\lsapis\dotnet
-	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\lsapis\java20 $(DIST)\src\lsapis\java20
-	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\lsapis\vb $(DIST)\src\lsapis\vb
-  -del /S /Q $(DIST)\src\lsapis\CVS
-	-rmdir /S /Q $(DIST)\src\lsapis\CVS
-	-del /S /Q $(DIST)\src\lsapis\cgi\CVS
-	-rmdir /S /Q $(DIST)\src\lsapis\cgi\CVS
-	-del /S /Q $(DIST)\src\lsapis\cgi\Debug
-	-rmdir /S /Q $(DIST)\src\lsapis\cgi\Debug
-	-del /S /Q $(DIST)\src\lsapis\cgi\Release
-	-rmdir /S /Q $(DIST)\src\lsapis\cgi\Release
-	-del /Q $(DIST)\src\lsapis\cgi\*.ncb
-	-del /Q $(DIST)\src\lsapis\cgi\*.pdb
-	-del /S /Q $(DIST)\src\lsapis\dotnet\CVS
-	-rmdir /S /Q $(DIST)\src\lsapis\dotnet\CVS
-	-rmdir /S /Q $(DIST)\src\lsapis\dotnet\arulesnet
-	-del /S /Q $(DIST)\src\lsapis\dotnet\amzinet\CVS
-	-rmdir /S /Q $(DIST)\src\lsapis\dotnet\amzinet\CVS
-	-del /S /Q $(DIST)\src\lsapis\dotnet\amzinet\Debug
-	-rmdir $(DIST)\src\lsapis\dotnet\amzinet\Debug
-	-del /S /Q $(DIST)\src\lsapis\dotnet\amzinet\Release
-	-rmdir $(DIST)\src\lsapis\dotnet\amzinet\Release
-	-del /Q $(DIST)\src\lsapis\dotnet\amzinet\*.dll
-	-del /Q $(DIST)\src\lsapis\dotnet\amzinet\*.pdb
-	-del /Q $(DIST)\src\lsapis\dotnet\amzinet\*.ncb
-	-del /Q $(DIST)\src\lsapis\dotnet\amzinet\*.snk
-	-del /Q $(DIST)\src\lsapis\dotnet\amzinet\amzinet.vcproj.TOTORO.*
-	-del /S /Q $(DIST)\src\lsapis\delphi\CVS
-	-rmdir /S /Q $(DIST)\src\lsapis\delphi\CVS
-	-del /S /Q $(DIST)\src\lsapis\java20\CVS
-	-rmdir /S /Q $(DIST)\src\lsapis\java20\CVS
-	-del /S /Q $(DIST)\src\lsapis\java20\jnilib\CVS
-	-rmdir /S /Q $(DIST)\src\lsapis\java20\jnilib\CVS
-	-del /S /Q $(DIST)\src\lsapis\java20\jnilib\Debug
-	-rmdir $(DIST)\src\lsapis\java20\jnilib\Debug
-	-del /S /Q $(DIST)\src\lsapis\java20\jnilib\Release
-	-rmdir $(DIST)\src\lsapis\java20\jnilib\Release
-	-del /S /Q "$(DIST)\src\lsapis\java20\jnilib\Release - ArulesJNI"
-	-rmdir "$(DIST)\src\lsapis\java20\jnilib\Release - ArulesJNI"
-	-del /S $(DIST)\src\lsapis\java20\jnilib\*.dll
-	-del /S $(DIST)\src\lsapis\java20\jnilib\*.pdb
-	-del /S $(DIST)\src\lsapis\java20\jnilib\*.ncb
-	-del /S $(DIST)\src\lsapis\java20\jnilib\wjnilib.vcproj.TOTORO.*
-	-del /S /Q $(DIST)\src\lsapis\java20\amzi\CVS
-	-rmdir /S /Q $(DIST)\src\lsapis\java20\amzi\CVS
-	-del /S /Q $(DIST)\src\lsapis\java20\amzi\ls\CVS
-	-rmdir /S /Q $(DIST)\src\lsapis\java20\amzi\ls\CVS
-	-del /S /Q $(DIST)\src\lsapis\vb\CVS
-	-rmdir /S /Q $(DIST)\src\lsapis\vb\CVS
+	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\langbindings\cgi $(DIST)\src\langbindings\cgi
+	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\langbindings\delphi $(DIST)\src\langbindings\delphi
+	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\langbindings\dotnet $(DIST)\src\langbindings\dotnet
+	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\langbindings\java $(DIST)\src\langbindings\java
+	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\langbindings\vb $(DIST)\src\langbindings\vb
+	-del /S /Q $(DIST)\src\langbindings\CVS
+	-rmdir /S /Q $(DIST)\src\langbindings\CVS
+	-del /S /Q $(DIST)\src\langbindings\cgi\CVS
+	-rmdir /S /Q $(DIST)\src\langbindings\cgi\CVS
+	-del /S /Q $(DIST)\src\langbindings\cgi\Debug
+	-rmdir /S /Q $(DIST)\src\langbindings\cgi\Debug
+	-del /S /Q $(DIST)\src\langbindings\cgi\Release
+	-rmdir /S /Q $(DIST)\src\langbindings\cgi\Release
+	-del /Q $(DIST)\src\langbindings\cgi\*.ncb
+	-del /Q $(DIST)\src\langbindings\cgi\*.pdb
+	-del /S /Q $(DIST)\src\langbindings\dotnet\CVS
+	-rmdir /S /Q $(DIST)\src\langbindings\dotnet\CVS
+	-rmdir /S /Q $(DIST)\src\langbindings\dotnet\arulesnet
+	-del /S /Q $(DIST)\src\langbindings\dotnet\amzinet\CVS
+	-rmdir /S /Q $(DIST)\src\langbindings\dotnet\amzinet\CVS
+	-del /S /Q $(DIST)\src\langbindings\dotnet\amzinet\Debug
+	-rmdir $(DIST)\src\langbindings\dotnet\amzinet\Debug
+	-del /S /Q $(DIST)\src\langbindings\dotnet\amzinet\Release
+	-rmdir $(DIST)\src\langbindings\dotnet\amzinet\Release
+	-del /Q $(DIST)\src\langbindings\dotnet\amzinet\*.dll
+	-del /Q $(DIST)\src\langbindings\dotnet\amzinet\*.pdb
+	-del /Q $(DIST)\src\langbindings\dotnet\amzinet\*.ncb
+	-del /Q $(DIST)\src\langbindings\dotnet\amzinet\*.snk
+	-del /Q $(DIST)\src\langbindings\dotnet\amzinet\amzinet.vcproj.TOTORO.*
+	-del /S /Q $(DIST)\src\langbindings\delphi\CVS
+	-rmdir /S /Q $(DIST)\src\langbindings\delphi\CVS
+	-del /S /Q $(DIST)\src\langbindings\java\CVS
+	-rmdir /S /Q $(DIST)\src\langbindings\java\CVS
+	-del /S /Q $(DIST)\src\langbindings\java\jnilib\CVS
+	-rmdir /S /Q $(DIST)\src\langbindings\java\jnilib\CVS
+	-del /S /Q $(DIST)\src\langbindings\java\jnilib\Debug
+	-rmdir $(DIST)\src\langbindings\java\jnilib\Debug
+	-del /S /Q $(DIST)\src\langbindings\java\jnilib\Release
+	-rmdir $(DIST)\src\langbindings\java\jnilib\Release
+	-del /S /Q "$(DIST)\src\langbindings\java\jnilib\Release - ArulesJNI"
+	-rmdir "$(DIST)\src\langbindings\java\jnilib\Release - ArulesJNI"
+	-del /S $(DIST)\src\langbindings\java\jnilib\*.dll
+	-del /S $(DIST)\src\langbindings\java\jnilib\*.pdb
+	-del /S $(DIST)\src\langbindings\java\jnilib\*.ncb
+	-del /S $(DIST)\src\langbindings\java\jnilib\wjnilib.vcproj.TOTORO.*
+	-del /S /Q $(DIST)\src\langbindings\java\amzi\CVS
+	-rmdir /S /Q $(DIST)\src\langbindings\java\amzi\CVS
+	-del /S /Q $(DIST)\src\langbindings\java\amzi\ls\CVS
+	-rmdir /S /Q $(DIST)\src\langbindings\java\amzi\ls\CVS
+	-del /S /Q $(DIST)\src\langbindings\vb\CVS
+	-rmdir /S /Q $(DIST)\src\langbindings\vb\CVS
 	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\lsx\odbc $(DIST)\src\lsx\mysql
 	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\lsx\odbc $(DIST)\src\lsx\odbc
 	xcopy /Q /S /I $(AMZI_DEV_DIR)\src\lsx\osutils $(DIST)\src\lsx\osutils
