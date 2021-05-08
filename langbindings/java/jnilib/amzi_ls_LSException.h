@@ -8,9 +8,9 @@
 extern "C" {
 #endif
 #undef amzi_ls_LSException_serialVersionUID
-#define amzi_ls_LSException_serialVersionUID -3042686055658047285LL
+#define amzi_ls_LSException_serialVersionUID -3042686055658047285i64
 #undef amzi_ls_LSException_serialVersionUID
-#define amzi_ls_LSException_serialVersionUID -3387516993124229948LL
+#define amzi_ls_LSException_serialVersionUID -3387516993124229948i64
 #undef amzi_ls_LSException_BADENG
 #define amzi_ls_LSException_BADENG 0L
 #undef amzi_ls_LSException_ABORT
