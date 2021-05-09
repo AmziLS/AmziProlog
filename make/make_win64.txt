@@ -2,129 +2,135 @@ HERE = $(APLS_SOURCE)
 SOURCE = $(APLS_SOURCE)
 RELEASE = $(APLS_RELEASE)
 
-all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _wide _eclipse_plugin _langbindings
+all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _wide _langbindings
+#all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _wide _eclipse_plugin _langbindings
 
 _dirs:
-	-rd /S /Q $(RELEASE)\abin
-	-rd /S /Q $(RELEASE)\bin
-	-rd /S /Q $(RELEASE)\include
-	-rd /S /Q $(RELEASE)\config
-	-rd /S /Q $(RELEASE)\docs
-	-rd /S /Q $(RELEASE)\lib
-	-rd /S /Q $(RELEASE)\langbindings
-	-rd /S /Q $(RELEASE)\samples
-	-rd /S /Q $(RELEASE)\eclipse_plugin
-	-rd /S /Q $(RELEASE)\distributable
-	-rd /S /Q $(RELEASE)
-	-md $(RELEASE)
-	-md $(RELEASE)\abin
-	-md $(RELEASE)\bin
-	-md $(RELEASE)\include
-	-md $(RELEASE)\config
-	-md $(RELEASE)\docs
-	-md $(RELEASE)\lib
-	-md $(RELEASE)\langbindings
-	-md $(RELEASE)\samples
-	-md $(RELEASE)\eclipse_plugin
-	-md $(RELEASE)\eclipse_plugin\features
-	-md $(RELEASE)\eclipse_plugin\plugins
-	-md $(RELEASE)\distributable
+	$(info )
+	$(info *************************************************************)
+	$(info *********    emptying release directories )
+	$(info *************************************************************)
+	@-rd /S /Q $(RELEASE)\abin
+	@-rd /S /Q $(RELEASE)\bin
+	@-rd /S /Q $(RELEASE)\include
+	@-rd /S /Q $(RELEASE)\config
+	@-rd /S /Q $(RELEASE)\docs
+	@-rd /S /Q $(RELEASE)\lib
+	@-rd /S /Q $(RELEASE)\langbindings
+	@-rd /S /Q $(RELEASE)\samples
+	@-rd /S /Q $(RELEASE)\eclipse_plugin
+	@-rd /S /Q $(RELEASE)\distributable
+	@-rd /S /Q $(RELEASE)
+	@-md $(RELEASE)
+	@-md $(RELEASE)\abin
+	@-md $(RELEASE)\bin
+	@-md $(RELEASE)\include
+	@-md $(RELEASE)\config
+	@-md $(RELEASE)\docs
+	@-md $(RELEASE)\lib
+	@-md $(RELEASE)\langbindings
+	@-md $(RELEASE)\samples
+	@-md $(RELEASE)\eclipse_plugin
+	@-md $(RELEASE)\eclipse_plugin\features
+	@-md $(RELEASE)\eclipse_plugin\plugins
+	@-md $(RELEASE)\distributable
 
 
 _engine:
-	@echo *************************************************************
-	@echo *********    making engine
-	@echo *************************************************************
-	cd $(SOURCE)\engine
-	nmake -f make_win64.txt clean
-	nmake -f make_win64.txt
-	cd $(HERE)
+	$(info )
+	$(info *************************************************************)
+	$(info *********    making engine)
+	$(info  *************************************************************)
+	@cd $(SOURCE)\engine && \
+	  gmake -f make_win64.txt clean && \
+	  gmake -f make_win64.txt
 
 _run:
-	@echo *************************************************************
-	@echo *********    making run
-	@echo *************************************************************
-	cd $(SOURCE)\run
-	nmake -f make_win64.txt clean
-	nmake -f make_win64.txt
-	cd $(HERE)
+	$(info )
+	$(info *************************************************************)
+	$(info  *********    making run)
+	$(info *************************************************************)
+	@cd $(SOURCE)\run && \
+	  gmake -f make_win64.txt clean && \
+	  gmake -f make_win64.txt
 
 _link:
-	@echo *************************************************************
-	@echo *********    making link
-	@echo *************************************************************
-	cd $(SOURCE)\linkrun
-	nmake -f make_win64.txt clean
-	nmake -f make_win64.txt
-	cd $(HERE)
+	$(info )
+	$(info *************************************************************)
+	$(info *********    making link)
+	$(info *************************************************************)
+	@cd $(SOURCE)\linkrun && \
+	  gmake -f make_win64.txt clean && \
+	  gmake -f make_win64.txt
 
 _osutils:
-	@echo *************************************************************
-	@echo *********    making osutils
-	@echo *************************************************************
-	cd $(SOURCE)\osutils
-	nmake -f make_win64.txt clean
-	nmake -f make_win64.txt
-	cd $(HERE)
+	$(info )
+	$(info *************************************************************)
+	$(info *********    making osutils)
+	$(info *************************************************************)
+	@cd $(SOURCE)\osutils && \
+	  gmake -f make_win64.txt clean && \
+	  gmake -f make_win64.txt
 	
 _compile:
-	@echo *************************************************************
-	@echo *********    making compile
-	@echo *************************************************************
-	cd $(SOURCE)\compile
-	nmake -f make_win64.txt clean
-	nmake -f make_win64.txt
-	cd $(HERE)
+	$(info )
+	$(info *************************************************************)
+	$(info *********    making compile)
+	$(info *************************************************************)
+	@cd $(SOURCE)\compile && \
+	  gmake -f make_win64.txt clean && \
+	  gmake -f make_win64.txt
 
 _libs:
-	@echo *************************************************************
-	@echo *********    making libs
-	@echo *************************************************************
-	cd $(SOURCE)\libs
-	nmake -f make_win64.txt clean
-	nmake -f make_win64.txt
-	cd $(HERE)
+	$(info )
+	$(info *************************************************************)
+	$(info *********    making libs)
+	$(info *************************************************************)
+	@cd $(SOURCE)\libs && \
+	  gmake -f make_win64.txt clean && \
+	  gmake -f make_win64.txt
 
 _listen:
-	@echo *************************************************************
-	@echo *********    making listen
-	@echo *************************************************************
-	cd $(SOURCE)\listen
-	nmake -f make_win64.txt clean
-	nmake -f make_win64.txt
-	cd $(HERE)
+	$(info )
+	$(info *************************************************************)
+	$(info *********    making listen)
+	$(info *************************************************************)
+	@cd $(SOURCE)\listen && \
+	  gmake -f make_win64.txt clean && \
+	  gmake -f make_win64.txt
 
 _docs:
-	@echo *************************************************************
-	@echo *********    making docs
-	@echo *************************************************************
-	cd $(SOURCE)\docs
-	nmake -f make_win64.txt clean
-	nmake -f make_win64.txt
-	cd $(HERE)
+	$(info )
+	$(info *************************************************************)
+	$(info *********    making docs)
+	$(info *************************************************************)
+	@cd $(SOURCE)\docs && \
+	  gmake -f make_win64.txt clean && \
+	  gmake -f make_win64.txt
 
 _samples:
-	@echo *************************************************************
-	@echo *********    making samples
-	@echo *************************************************************
-	cd $(SOURCE)\samples
-	nmake -f make_win64.txt
-	cd $(HERE)
+	$(info )
+	$(info *************************************************************)
+	$(info *********    making samples)
+	$(info *************************************************************)
+	@cd $(SOURCE)\samples && \
+	  gmake -f make_win64.txt clean && \
+	  gmake -f make_win64.txt
 
 _wide:
-	@echo *************************************************************
-	@echo *********    making wide
-	@echo *************************************************************
-	cd $(SOURCE)\wide-IDE
-	nmake -f make_win64.txt clean
-	nmake -f make_win64.txt
-	cd $(HERE)
-
+	$(info )
+	$(info *************************************************************)
+	$(info *********    making wide)
+	$(info *************************************************************)
+	@cd $(SOURCE)\wide-IDE && \
+	  gmake -f make_win64.txt clean && \
+	  gmake -f make_win64.txt
 
 _eclipse_plugin:
-	@echo *************************************************************
-	@echo *********    copying eclipse plug-in
-	@echo *************************************************************
+	$(info )
+	$(info *************************************************************)
+	$(info *********    copying eclipse plug-in)
+	$(info *************************************************************)
 	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\artifacts.jar $(RELEASE)\eclipse_plugin
 	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\content.jar $(RELEASE)\eclipse_plugin
 	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\site.xml $(RELEASE)\eclipse_plugin
@@ -132,35 +138,49 @@ _eclipse_plugin:
 	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\plugins $(RELEASE)\eclipse_plugin\plugins
 	copy $(RELEASE)\bin\*.lsx $(RELEASE)\distributable\*.lsx
 	copy $(RELEASE)\config\amzi.cfg $(RELEASE)\distributable\amzi.cfg
-	cd $(HERE)
 	
 _langbindings:
-	@echo *************************************************************
-	@echo *********    making langbindings
-	@echo *************************************************************
-	cd $(SOURCE)\langbindings
-	nmake -f make_win64.txt clean
-	nmake -f make_win64.txt
-	cd $(HERE)
+	$(info )
+	$(info *************************************************************)
+	$(info *********    making langbindings)
+	$(info *************************************************************)
+	@cd $(SOURCE)\langbindings && \
+	  gmake -f make_win64.txt clean && \
+	  gmake -f make_win64.txt
 	
 clean:
-	cd engine
-	-nmake -f make_win64.txt clean
-	cd $(HERE)
-	cd libs
-	-nmake -f make_win64.txt clean
-	cd $(HERE)
-	cd link
-	-nmake -f make_win64.txt clean
-	cd $(HERE)
-	cd run
-	-nmake -f make_win64.txt clean
-	cd $(HERE)
-	cd compile
-	-nmake -f make_win64.txt clean
-	cd $(HERE)
-	cd listen
-	-nmake -f make_win64.txt clean
-	cd $(HERE)
-	cd activate
-	-nmake -f make_win64.txt clean
+	@cd $(SOURCE)\engine && \
+	  @gmake -f make_win64.txt clean
+	
+	@cd $(SOURCE)\run && \
+	  @gmake -f make_win64.txt clean
+	
+	@cd $(SOURCE)\linkrun && \
+	  @gmake -f make_win64.txt clean
+	
+	@cd $(SOURCE)\osutils && \
+	  @gmake -f make_win64.txt clean
+
+	@cd $(SOURCE)\compile && \
+	  @gmake -f make_win64.txt clean
+	
+	@cd $(SOURCE)\libs && \
+	  @gmake -f make_win64.txt clean
+	
+	@cd $(SOURCE)\listen && \
+	  @gmake -f make_win64.txt clean
+	
+	@cd $(SOURCE)\docs && \
+	  @gmake -f make_win64.txt clean
+	
+	@cd $(SOURCE)\samples && \
+	  @gmake -f make_win64.txt clean
+	
+	@cd $(SOURCE)\wide-IDE && \
+	  @gmake -f make_win64.txt clean
+	
+#	@cd $(SOURCE)\_eclipse_plugin && \
+#	  @gmake -f make_win64.txt clean
+	
+	@cd $(SOURCE)\langbindings && \
+	  @gmake -f make_win64.txt clean

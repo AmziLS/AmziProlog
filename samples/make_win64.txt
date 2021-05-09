@@ -246,3 +246,5 @@ _chezray:
 	$(MD) $(DST)\chezray\xmas
 	$(CP) $(SRC)\chezray\xmas\*.*     $(DST)\chezray\xmas
 
+clean:
+	@echo "nothing to clean in samples"

@@ -8,9 +8,9 @@ _sockets:
 clean:
 	devenv wsock.sln /clean Release
 	devenv wsock.sln /clean Debug
-	-del /Q *.plm
-	-del /Q *.ncb
-	-del /Q *.pdb
+	@-sildel /Q *.plm
+	@-sildel /Q *.ncb
+	@-sildel /Q *.pdb
 
 remove_cvs:
-	-rmdir /S /Q CVS
+	@-rmdir /S /Q CVS

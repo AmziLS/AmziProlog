@@ -6,4 +6,4 @@ _vb:
 	copy amzi.bas $(DIST)\amzi.bas
 
 clean:
-        echo "nothing to clean in VB"
+	@echo "nothing to clean in VB"

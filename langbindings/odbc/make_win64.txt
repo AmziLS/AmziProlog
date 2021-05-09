@@ -8,6 +8,6 @@ _odbc:
 clean:
 	devenv odbc.sln /clean Release
 	devenv odbc.sln /clean Debug
-	-del /Q *.ncb
-	-del /Q *.pdb
-	-del /Q *.plm
+	@-sildel /Q *.ncb
+	@-sildel /Q *.pdb
+	@-sildel /Q *.plm

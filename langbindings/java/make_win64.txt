@@ -16,7 +16,7 @@ amzi\ls\LogicServer.class: amzi\ls\LogicServer.java amzi\ls\LSException.java
 _java_copy:
 	copy amzi\ls\LSException.class $(DIST)\amzi\ls\LSException.class
 	copy amzi\ls\LogicServer.class $(DIST)\amzi\ls\LogicServer.class
-	jar cvf amzi.jar amzi\ls\*.class
+	jar cvf amzi.jar amzi\ls\LSException.class amzi\ls\LogicServer.class
 	copy amzi.jar $(DIST)\amzi.jar
 	
 	
@@ -29,14 +29,12 @@ jnilib\amzi_ls_LSException.h: amzi\ls\LSException.java
 	javah -jni -d jnilib amzi.ls.LSException
 
 _jnilib:
-	cd jnilib
-	devenv wjnilib.sln /rebuild "Release|x64"
-	cd ..
+	cd jnilib && \
+	  devenv wjnilib.sln /rebuild "Release|x64"
 
 clean:
-	-del /Q amzi\ls\*.class
-	-del /Q jnilib\amzi_ls_LogicServer.h
-	-del /Q jnilib\amzi_ls_LSException.h
-	-del /Q jnilib\*.ncb
-	-del /Q jnilib\*.pdb
-
+	@-sildel /Q amzi\ls\*.class
+	@-sildel /Q jnilib\amzi_ls_LogicServer.h
+	@-sildel /Q jnilib\amzi_ls_LSException.h
+	@-sildel /Q jnilib\*.ncb
+	@-sildel /Q jnilib\*.pdb

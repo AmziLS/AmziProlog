@@ -14,5 +14,5 @@ $(ACMP) : alib.plm $(OBJECTS)
 	copy alib.plm $(ALIB)	
 
 clean :
-	-del /Q *.plm
+	@-sildel /Q *.plm
 

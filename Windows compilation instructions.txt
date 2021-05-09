@@ -19,3 +19,5 @@
 3b. Enter the following commands for Win64:
   cd make  
   nmake -f make_win64.txt
+
+4. The build result will be available in \release

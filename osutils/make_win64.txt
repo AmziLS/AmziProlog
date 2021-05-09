@@ -6,9 +6,8 @@ _osutils:
 clean:
 	devenv wosutils.sln /clean Release
 	devenv wosutils.sln /clean Debug
-	-del /Q *.ncb
-	-del /Q *.pdb
+	@-sildel /Q *.ncb
+	@-sildel /Q *.pdb
 
 remove_cvs:
-	-rmdir /S /Q CVS
-
+	@-rmdir /S /Q CVS

@@ -9,8 +9,8 @@ _tcltk:
 clean:
 	devenv tcltk.sln /clean Release
 	devenv tcltk.sln /clean Debug
-	-del /Q *.ncbp
-	-del /Q *.pdb
+	@-sildel /Q *.ncbp
+	@-sildel /Q *.pdb
 
 remove_cvs:
 	-rmdir /S /Q CVS

@@ -2,7 +2,7 @@
 
 CP = copy
 MD = -md
-RM = -del /Q
+RM = sildel /Q
 
 # For unix, $(CP) the file, make these the definitions:
 # CP = cp
