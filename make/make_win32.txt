@@ -14,7 +14,6 @@ _dirs:
 	-rmdir /S /Q $(RELEASE)\lsapis
 	-rmdir /S /Q $(RELEASE)\samples
 	-rmdir /S /Q $(RELEASE)\eclipse_plugin
-	-rmdir /S /Q $(RELEASE)\distributable
 	md $(RELEASE)\abin
 	md $(RELEASE)\bin
 	md $(RELEASE)\include
@@ -26,7 +25,6 @@ _dirs:
 	md $(RELEASE)\eclipse_plugin
 	md $(RELEASE)\eclipse_plugin\features
 	md $(RELEASE)\eclipse_plugin\plugins
-	md $(RELEASE)\distributable
 
 _engine:
   @echo *************************************************************

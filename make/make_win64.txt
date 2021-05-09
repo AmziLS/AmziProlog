@@ -19,7 +19,6 @@ _dirs:
 	@-rd /S /Q $(RELEASE)\langbindings
 	@-rd /S /Q $(RELEASE)\samples
 	@-rd /S /Q $(RELEASE)\eclipse_plugin
-	@-rd /S /Q $(RELEASE)\distributable
 	@-rd /S /Q $(RELEASE)
 	@-md $(RELEASE)
 	@-md $(RELEASE)\abin
@@ -33,7 +32,6 @@ _dirs:
 	@-md $(RELEASE)\eclipse_plugin
 	@-md $(RELEASE)\eclipse_plugin\features
 	@-md $(RELEASE)\eclipse_plugin\plugins
-	@-md $(RELEASE)\distributable
 
 
 _engine:

@@ -3,8 +3,9 @@ all: _tcltk
 _tcltk:
 	-md $(APLS_RELEASE)\langbindings\tcltk
 	devenv tcltk.sln /rebuild "Release|x64"
-	xcopy lib $(APLS_RELEASE)\langbindings\tcltk\lib\ /S /Y
-#	xcopy bin $(APLS_RELEASE)\bin\
+	@xcopy lib $(APLS_RELEASE)\langbindings\tcltk\lib\ /S /Y
+	@copy ..\..\bin\win64\tcl86t.dll $(APLS_RELEASE)\bin\ /Y
+	@copy ..\..\bin\win64\tk86t.dll $(APLS_RELEASE)\bin\ /Y
 
 clean:
 	devenv tcltk.sln /clean Release
@@ -14,4 +15,3 @@ clean:
 
 remove_cvs:
 	-rmdir /S /Q CVS
-

@@ -3,15 +3,15 @@ all: _tcltk
 _tcltk:
 	-md $(APLS_RELEASE)\langbindings\tcltk
 	devenv tcltk.sln /rebuild "Release|Win32"
-	xcopy lib $(APLS_RELEASE)\langbindings\tcltk\lib\ /S /Y
-#	xcopy bin $(APLS_RELEASE)\bin\
+	@xcopy lib $(APLS_RELEASE)\langbindings\tcltk\lib\ /S /Y
+	@copy ..\..\bin\win32\tcl86t.dll $(APLS_RELEASE)\bin\ /Y
+	@copy ..\..\bin\win32\tk86t.dll $(APLS_RELEASE)\bin\ /Y
 
 clean:
 	devenv tcltk.sln /clean Release
 	devenv tcltk.sln /clean Debug
-	-del /Q *.ncbp
-	-del /Q *.pdb
+	@-sildel /Q *.ncbp
+	@-sildel /Q *.pdb
 
 remove_cvs:
 	-rmdir /S /Q CVS
-
