@@ -1,5 +1,5 @@
 _amzilnk:
-	devenv wlink.sln /rebuild Release|Win32
+	devenv wlink.sln /rebuild "Release|Win32"
 
 clean:
 	devenv wlink.sln /clean Release

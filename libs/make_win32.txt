@@ -15,7 +15,7 @@ _libs : $(LIBS)
 	copy *.plm $(APLS_RELEASE)\abin
 
 clean :
-	-del *.plm
+	@-sildel *.plm
 
 remove_cvs:
 	-rmdir /S /Q CVS

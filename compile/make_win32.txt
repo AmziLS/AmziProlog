@@ -5,14 +5,13 @@ ALIB = $(APLS_RELEASE)\abin\alib.plm
 ACMP = $(APLS_RELEASE)\abin\acmp.xpl
 
 all: $(ACMP)
-   
+  
 .pro.plm:
 	acmp $<
 
 $(ACMP) : alib.plm $(OBJECTS)
 	copy acmp.xpl $(ACMP)
-	copy alib.plm $(ALIB)	
+	copy alib.plm $(ALIB)
 
 clean :
 	@-sildel /Q *.plm
-

@@ -1,14 +1,13 @@
 all: _osutils
 
 _osutils:
-	devenv wosutils.sln /rebuild Release|Win32
+	devenv wosutils.sln /rebuild "Release|Win32"
 
 clean:
 	devenv wosutils.sln /clean Release
 	devenv wosutils.sln /clean Debug
-	-del /Q *.ncb
-	-del /Q *.pdb
+	@-sildel /Q *.ncb
+	@-sildel /Q *.pdb
 
 remove_cvs:
-	-rmdir /S /Q CVS
-
+	@-rmdir /S /Q CVS

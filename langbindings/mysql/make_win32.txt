@@ -6,6 +6,5 @@ _mysql:
 clean:
 	devenv amysql.sln /clean Release
 	devenv amysql.sln /clean Debug
-	-del /Q *.ncb
-	-del /Q *.pdb
-
+	@-sildel /Q *.ncb
+	@-sildel /Q *.pdb

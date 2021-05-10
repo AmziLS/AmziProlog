@@ -38,19 +38,17 @@ docs :  _htmlidx _lsdoc _prodoc _aip _xsip _libsdoc _articles
 	- $(CP) *.txt $(ECL_DIR)
 
 _htmlidx : $(DEV_DIR)\docs\htmlidx\htmlidx.pro $(RUN_DIR)\abin\alib.plm
-	cd $(DEV_DIR)\docs\htmlidx
-	$(ACMP) htmlidx
-	$(ALNK) htmlidx htmlidx list misc
-	cd $(DEV_DIR)\docs
+	cd $(DEV_DIR)\docs\htmlidx && \
+	  $(ACMP) htmlidx && \
+	  $(ALNK) htmlidx htmlidx list misc
    
 _lsdoc :
 	$(MD) $(DOC_DIR)\ls
 	$(MD) $(ECL_DIR)\ls
 	$(CP) htmlidx\htmlidx.xpl $(DEV_DIR)\docs\ls\htmlidx.xpl
 	$(CP) htmlidx\htmlidx.cfg $(DEV_DIR)\docs\ls\htmlidx.cfg
-	cd $(DEV_DIR)\docs\ls
-	$(ARUN) htmlidx
-	cd $(DEV_DIR)\docs
+	cd $(DEV_DIR)\docs\ls && \
+	  $(ARUN) htmlidx	
 	$(CP) ls\ls_toc.xml $(XML_DIR)
 	$(CP) ls\*.htm $(DOC_DIR)\ls
 	$(CP) ls\*.gif $(DOC_DIR)\ls
@@ -62,9 +60,8 @@ _prodoc :
 	$(MD) $(ECL_DIR)\pro
 	$(CP) htmlidx\htmlidx.xpl $(DEV_DIR)\docs\pro\htmlidx.xpl
 	$(CP) htmlidx\htmlidx.cfg $(DEV_DIR)\docs\pro\htmlidx.cfg
-	cd $(DEV_DIR)\docs\pro
-	$(ARUN) htmlidx
-	cd $(DEV_DIR)\docs
+	cd $(DEV_DIR)\docs\pro && \
+	  $(ARUN) htmlidx
 	$(CP) pro\pro_toc.xml $(XML_DIR)
 	$(CP) pro\*.htm $(DOC_DIR)\pro
 	$(CP) pro\*.gif $(DOC_DIR)\pro
@@ -76,9 +73,8 @@ _aip :
 	$(MD) $(ECL_DIR)\aip
 	$(CP) htmlidx\htmlidx.xpl $(DEV_DIR)\docs\aip\htmlidx.xpl
 	$(CP) htmlidx\htmlidx.cfg $(DEV_DIR)\docs\aip\htmlidx.cfg
-	cd $(DEV_DIR)\docs\aip
-	$(ARUN) htmlidx
-	cd $(DEV_DIR)\docs
+	cd $(DEV_DIR)\docs\aip && \
+	  $(ARUN) htmlidx
 	$(CP) aip\aip_toc.xml $(XML_DIR)
 	$(CP) aip\*.htm $(DOC_DIR)\aip
 	$(CP) aip\*.gif $(DOC_DIR)\aip
@@ -90,9 +86,8 @@ _xsip :
 	$(MD) $(ECL_DIR)\xsip
 	$(CP) htmlidx\htmlidx.xpl $(DEV_DIR)\docs\xsip\htmlidx.xpl
 	$(CP) htmlidx\htmlidx.cfg $(DEV_DIR)\docs\xsip\htmlidx.cfg
-	cd $(DEV_DIR)\docs\xsip
-	$(ARUN) htmlidx
-	cd $(DEV_DIR)\docs
+	cd $(DEV_DIR)\docs\xsip && \
+	  $(ARUN) htmlidx
 	$(CP) xsip\xsip_toc.xml $(XML_DIR)
 	$(CP) xsip\*.htm $(DOC_DIR)\xsip
 	$(CP) xsip\*.gif $(DOC_DIR)\xsip
@@ -130,40 +125,38 @@ _articles :
 	$(CP) articles\*.gif $(ECL_DIR)\articles
 
 clean:
-	cd $(DEV_DIR)\docs\htmlidx
-	$(RM) *.plm
-	$(RM) *.xpl
-	$(RM) temp1.pro
-	$(RM) temp2.pro
-	cd $(DEV_DIR)\docs\ls
-	$(RM) *.plm
-	$(RM) *.xpl
-	$(RM) temp1.pro
-	$(RM) temp2.pro
-	$(RM) *.cfg
-	cd $(DEV_DIR)\docs\pro
-	$(RM) *.plm
-	$(RM) *.xpl
-	$(RM) temp1.pro
-	$(RM) temp2.pro
-	$(RM) *.cfg
-	cd $(DEV_DIR)\docs\aip
-	$(RM) *.plm
-	$(RM) *.xpl
-	$(RM) temp1.pro
-	$(RM) temp2.pro
-	$(RM) *.cfg
-	cd $(DEV_DIR)\docs\libs
-	$(RM) *.plm
-	$(RM) *.xpl
-	$(RM) temp1.pro
-	$(RM) temp2.pro
-	$(RM) *.cfg
-	cd $(DEV_DIR)\docs\articles
-	$(RM) *.plm
-	$(RM) *.xpl
-	$(RM) temp1.pro
-	$(RM) temp2.pro
-	$(RM) *.cfg
-	
-
+	@cd $(DEV_DIR)\docs\htmlidx && \
+	  $(RM) *.plm && \
+	  $(RM) *.xpl && \
+	  $(RM) temp1.pro && \
+	  $(RM) temp2.pro
+	@cd $(DEV_DIR)\docs\ls  && \
+	  $(RM) *.plm && \
+	  $(RM) *.xpl && \
+	  $(RM) temp1.pro && \
+	  $(RM) temp2.pro && \
+	  $(RM) *.cfg
+	@cd $(DEV_DIR)\docs\pro && \
+	  $(RM) *.plm && \
+	  $(RM) *.xpl && \
+	  $(RM) temp1.pro && \
+	  $(RM) temp2.pro && \
+	  $(RM) *.cfg
+	@cd $(DEV_DIR)\docs\aip && \
+	  $(RM) *.plm && \
+	  $(RM) *.xpl && \
+	  $(RM) temp1.pro && \
+	  $(RM) temp2.pro && \
+	  $(RM) *.cfg
+	@cd $(DEV_DIR)\docs\libs  && \
+	  $(RM) *.plm && \
+	  $(RM) *.xpl && \
+	  $(RM) temp1.pro && \
+	  $(RM) temp2.pro && \
+	  $(RM) *.cfg
+	@cd $(DEV_DIR)\docs\articles  && \
+	  $(RM) *.plm && \
+	  $(RM) *.xpl && \
+	  $(RM) temp1.pro && \
+	  $(RM) temp2.pro && \
+	  $(RM) *.cfg

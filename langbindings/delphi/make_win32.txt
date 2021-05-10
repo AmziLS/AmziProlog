@@ -8,3 +8,5 @@ _delphi:
 	copy amzi_prolog.dpk $(DIST)
 	copy amzi_prolog.dproj $(DIST)
 
+clean:
+	@echo "nothing to clean in Delphi"

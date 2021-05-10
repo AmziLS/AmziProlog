@@ -1,8 +1,8 @@
 .SUFFIXES: .plm .pro
 
 OBJECTS = reader.plm
-ALIB = $(AMZI_DEV_DIR)\abin\alib.plm
-ACMP = $(AMZI_DEV_DIR)\abin\acmp.xpl
+ALIB = $(APLS_RELEASE)\abin\alib.plm
+ACMP = $(APLS_RELEASE)\abin\acmp.xpl
 
 all: $(ACMP)
   

@@ -325,3 +325,6 @@ _windows:
 	$(CP) $(SRC)\vb\wgene\wgene.bas     $(DST)\vb\wgene
 	$(CP) $(SRC)\vb\wgene\wgenevb.frm   $(DST)\vb\wgene
 	$(CP) $(SRC)\vb\wgene\wgenevb.vbp   $(DST)\vb\wgene
+
+clean:
+	@echo "nothing to clean in samples"

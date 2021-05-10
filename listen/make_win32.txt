@@ -30,6 +30,4 @@ $(AXRF) : $(ALIB) $(OBJECTS)
 	$(ALNK) $(AXRF) axrf
 
 clean :
-	-del /Q *.plm
-
-	
+	@-sildel /Q *.plm

@@ -7,16 +7,11 @@ _acgi:
 	devenv wacgi.sln /rebuild "Release|Win32"
 	acmp acgi.pro
 	copy acgi.plm $(APLS_RELEASE)\abin\acgi.plm
-	del acgi.plm
+	@-sildel acgi.plm
 
 clean:
-	-del /Q Release\*.*
-	-del /Q Debug\*.*
-	-del /Q *.plm
-	-del /Q *.ncb
-	-del /Q *.pdb
-
-
-   
-
-
+	@-sildel /Q Release\*.*
+	@-sildel /Q Debug\*.*
+	@-sildel /Q *.plm
+	@-sildel /Q *.ncb
+	@-sildel /Q *.pdb
