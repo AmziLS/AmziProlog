@@ -148,7 +148,7 @@ _langbindings:
 
 amzi_env:
 	@copy $(SOURCE)\bin\amzi_vars.bat $(RELEASE)\bin
-	@copy "$(SOURCE)\Amzi Prolog Environment.lnk" $(RELEASE)
+	@copy "$(SOURCE)\Amzi Prolog Environment (Release).lnk" $(RELEASE)
 
 clean:
 	@cd $(SOURCE)\engine && \
