@@ -22,7 +22,7 @@
     ````
     * for Win64:    
     ````
-    cd make  
+    cd make
     gmake -f make_win64.txt
     ````
 
