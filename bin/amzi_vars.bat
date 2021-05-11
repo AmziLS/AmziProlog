@@ -13,4 +13,4 @@ set PATH=%AMZI_DIR%\bin;%PATH%
 REM blank line
 echo[
 
-echo Environment initialized for Amzi! Prolog (Release)
+echo Environment initialized for Amzi! Prolog (release version)
