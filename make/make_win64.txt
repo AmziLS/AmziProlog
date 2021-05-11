@@ -2,8 +2,8 @@ HERE = $(APLS_SOURCE)
 SOURCE = $(APLS_SOURCE)
 RELEASE = $(APLS_RELEASE)
 
-all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _wide _langbindings amzi_env
-#all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _wide _eclipse_plugin _langbindings amzi_env
+all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _wide_IDE _langbindings amzi_env
+#all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _wide_IDE _eclipse_plugin _langbindings amzi_env
 
 _dirs:
 	$(info )
@@ -115,10 +115,10 @@ _samples:
 	  gmake -f make_win64.txt clean && \
 	  gmake -f make_win64.txt
 
-_wide:
+_wide_IDE:
 	$(info )
 	$(info *************************************************************)
-	$(info *********    making wide)
+	$(info *********    making wide-IDE)
 	$(info *************************************************************)
 	@cd $(SOURCE)\wide-IDE && \
 	  gmake -f make_win64.txt clean && \
