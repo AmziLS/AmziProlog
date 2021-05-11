@@ -12,7 +12,7 @@
     - ensure %MYSQL% is set to the desired MySQL installation directory containing the \include sub dir
     - adapt %JAVA_HOME% to point to desired JDK home directory (just above \bin sub dir)
 
-2. Open "Amzi Prolog 32 Bit Environment" or "Amzi Prolog 64 Bit Environment"
+2. Open "Amzi Prolog 32 Bit Environment (Source)" or "Amzi Prolog 64 Bit Environment (Source)"
 
 3. Enter the following commands:
     * for Win32:    
