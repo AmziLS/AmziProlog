@@ -270,3 +270,4 @@ _Pvt_Extensions
 /wide-IDE/DebugW
 /wide-IDE/ReleaseA
 /wide-IDE/ReleaseW
+/langbindings/java/amzi/ls/*.class
