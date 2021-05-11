@@ -266,3 +266,7 @@ _Pvt_Extensions
 
 !bmake.exe
 !implib.exe
+/wide-IDE/DebugA
+/wide-IDE/DebugW
+/wide-IDE/ReleaseA
+/wide-IDE/ReleaseW
