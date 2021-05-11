@@ -297,6 +297,7 @@ _windows:
 	$(CP) $(SRC)\tcltk\lb_query\doc.html          $(DST)\tcltk\lb_query
 	$(CP) $(SRC)\tcltk\lb_query\lb_query.pro      $(DST)\tcltk\lb_query
 	$(CP) $(SRC)\tcltk\lb_query\pets.lb           $(DST)\tcltk\lb_query
+	$(CP) $(SRC)\tcltk\lb_query\wides.lb           $(DST)\tcltk\lb_query
 	$(MD) $(DST)\vb
 	$(CP) $(SRC)\vb\doc.html              $(DST)\vb
 	$(MD) $(DST)\vb\extpred
