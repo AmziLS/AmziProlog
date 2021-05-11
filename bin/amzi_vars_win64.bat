@@ -29,4 +29,4 @@ set PATH=%JAVA_HOME%\bin;%APLS_SOURCE%\make;%APLS_RELEASE%\bin;%AMZI_DIR%\bin;%P
 REM blank line
 echo[
 
-echo Environment initialized for Amzi! Prolog
+echo Environment initialized for Amzi! Prolog (source version)
