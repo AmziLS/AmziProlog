@@ -18,12 +18,12 @@
     * for Win32:    
     ````
     cd make
-    nmake -f make_win32.txt
+    gmake -f make_win32.txt
     ````
     * for Win64:    
     ````
     cd make  
-    nmake -f make_win64.txt
+    gmake -f make_win64.txt
     ````
 
 4. The build result will be available in \release
