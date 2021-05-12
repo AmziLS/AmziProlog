@@ -356,12 +356,12 @@
       </DataExecutionPrevention>
       <ImportLibrary>$(Platform)\$(Configuration)/amzi.lib</ImportLibrary>
       <Version>9.2</Version>
+      <BaseAddress>0x68000000</BaseAddress>
     </Link>
     <PostBuildEvent>
       <Command>copy amzi.h $(APLS_RELEASE)\include\amzi.h
 copy logicserver.h $(APLS_RELEASE)\include\logicserver.h
 copy $(Platform)\$(Configuration)\amzi.lib $(APLS_RELEASE)\lib\amzi.lib
-rebase -b 0x68000000 $(APLS_RELEASE)\bin\amzi.dll
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
