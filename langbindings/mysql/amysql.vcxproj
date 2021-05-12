@@ -235,7 +235,7 @@
       </DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(AMZI_DIR)\lib\amzi.lib;$(MYSQL)\lib\opt\libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(AMZI_DIR)\lib\amzi.lib;$(MYSQL)\lib\libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(APLS_RELEASE)/bin/amysql.lsx</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>

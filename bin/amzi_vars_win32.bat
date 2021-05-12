@@ -6,8 +6,9 @@ REM ***** adapt lines below *****
 REM adapt path to match your VS installation directory
 call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
 
+REM IMPORTANT: make sure you have the 32-bit version installed (last known one is: MySQL Server 5.7.34)
 REM adapt path to match your MySQL installation directory
-set MYSQL=C:\Program Files\MySQL\MySQL Server 8.0
+set MYSQL=C:\Program Files (x86)\MySQL\MySQL Server 5.7
 
 REM disable or adapt path if needed (MUST point to a JDK)
 set JAVA_HOME=C:\Program Files (x86)\Java\jdk1.8.0_161\
