@@ -363,7 +363,7 @@ typedef enum
    LOAD,
    EXEC,
    READ,
-	ARITH,
+   ARITH,
    SECURITY,
    UNKNOWN
 } ExType;

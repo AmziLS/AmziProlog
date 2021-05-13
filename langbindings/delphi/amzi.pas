@@ -20,17 +20,26 @@ type
 
   { Various types used by the Logic Server API calls }
   TTerm = Pointer;  { The basic Prolog term }
+
   { Enumerated Prolog types and enumerated Delphi types, used for mapping
     Prolog types to Delphi types }
-  TPType = (pATOM, pINT, pSTR, pFLOAT, pSTRUCT, pLIST, pTERM, pADDR, pVAR, pWSTR, pWATOM, pREAL);
-  TDType = (dATOM, dSTR, dINT, dLONG, dSHORT, dFLOAT, dDOUBLE, dADDR, dTERM, dWSTR, dWATOM, dMOD, dGOAL);
+  TPType = (pERR = -1, pATOM, pINT, pSTR, pFLOAT, pSTRUCT, pLIST, pTERM, pADDR,
+    pVAR, pWSTR, pWATOM, pREAL);
+  TDType = (dAATOM, dASTR, dINT, dLONG, dSHORT, dFLOAT, dDOUBLE, dADDR, dTERM,
+    dWSTR, dWATOM, dMOD, dGOAL);
   TTypeInt = Integer; { Generic type for casting types in DLL calls }
+
   { Enumerated stream identifier, used when redirecting Prolog I/O }
   TPStream = (CUR_IN, CUR_OUT, CUR_ERR, USER_IN, USER_OUT, USER_ERR);
   TPStreamInt = Integer; { Generic type for stream identifiers in DLL calls}
   TTFi = Integer;  { Prolog T/F or error code return code }
   TRC = Integer;  { Integer return code }
+{$IFDEF WIN64}
+  TArity = Cardinal;
+{$ENDIF}
+{$IFDEF WIN32}
   TArity = Word;  { The arity of a functor }
+{$ENDIF}
   TEngID = Pointer;  { ID for Engine, only one allowed now }
   TExtPred = function (EngID: TEngID): TTFi; stdcall; { An extended predicate function }
 
