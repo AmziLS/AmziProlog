@@ -31,7 +31,7 @@ type
   TTFi = Integer;  { Prolog T/F or error code return code }
   TRC = Integer;  { Integer return code }
   TArity = Word;  { The arity of a functor }
-  TEngID = LongInt;  { ID for Engine, only one allowed now }
+  TEngID = Pointer;  { ID for Engine, only one allowed now }
   TExtPred = function (EngID: TEngID): TTFi; stdcall; { An extended predicate function }
 
   TPutC = procedure (P: Pointer; C: Integer); stdcall;
@@ -73,21 +73,21 @@ type
 {$ELSE}
     FAnsiBuf: array[0..100000] of AnsiChar;
 {$ENDIF}
-    procedure LSError(APIname: string; RC: Integer);
+    procedure LSError(const APIname: string; RC: Integer);
   protected
   public
     constructor Create(Owner: TComponent); override;
     destructor Destroy; override;
     { Main entry points to set up Prolog environment }
-    procedure Init(XPLName: string);
-    procedure InitLS(XPLName: string);
+    procedure Init(const XPLName: string);
+    procedure InitLS(const XPLName: string);
     procedure InitLSXP(P: Pointer);
     procedure InitLSX;
-    procedure AddLSX(LSXName: string);
-    procedure AddPred(PName: string; PArity: TArity; PFunc: TExtPred);
+    procedure AddLSX(const LSXName: string);
+    procedure AddPred(const PName: string; PArity: TArity; PFunc: TExtPred);
     procedure InitPreds(PIPtr: TPredInitPtr);
-    procedure Load(XPLName: string);
-    procedure LoadXPL(XPLName: string);
+    procedure Load(const XPLName: string);
+    procedure LoadXPL(const XPLName: string);
     function Main: Boolean;
     procedure Reset;
     procedure Close;
@@ -102,8 +102,8 @@ type
     function GetParmType(N: Integer): TPType;
     function StrParmLen(N: Integer): Integer;
     function UnifyParm(N: Integer; DT: TDType; P: Pointer): Boolean;
-    function UnifyPStrParm(N: Integer; S: string): Boolean;
-    function UnifyAtomParm(N: Integer; S: string): Boolean;
+    function UnifyPStrParm(N: Integer; const S: string): Boolean;
+    function UnifyAtomParm(N: Integer; const S: string): Boolean;
     function UnifyIntParm(N: Integer; I: Integer): Boolean;
     function UnifyLongParm(N: Integer; I: LongInt): Boolean;
     function UnifyShortParm(N: Integer; I: LongInt): Boolean;
@@ -111,10 +111,10 @@ type
     { Calling Prolog from Delphi }
     function Exec(var TP: TTerm): Boolean;
     function ExecStr(var TP: TTerm; S: PChar): Boolean;
-    function ExecPStr(var TP: TTerm; S: string): Boolean;
+    function ExecPStr(var TP: TTerm; const S: string): Boolean;
     function Call(var TP: TTerm): Boolean;
     function CallStr(var TP: TTerm; S: PChar): Boolean;
-    function CallPStr(var TP: TTerm; S: string): Boolean;
+    function CallPStr(var TP: TTerm; const S: string): Boolean;
     function Redo: Boolean;
     procedure ClearCall;
     { Asserting and retracting }
@@ -124,21 +124,21 @@ type
     procedure AssertaStr(S: PChar);
     procedure AssertzStr(S: PChar);
     procedure RetractStr(S: PChar);
-    procedure AssertaPStr(S: string);
-    procedure AssertzPStr(S: string);
-    procedure RetractPStr(S: string);
+    procedure AssertaPStr(const S: string);
+    procedure AssertzPStr(const S: string);
+    procedure RetractPStr(const S: string);
     { string/term conversion functions }
     procedure TermToStr(T: TTerm; S: PChar; N: Integer);
     procedure TermToStrQ(T: TTerm; S: PChar; N: Integer);
     procedure StrToTerm(var TP: TTerm; S: PChar);
     function TermToPStr(T: TTerm): string;
     function TermToPStrQ(T: TTerm): string;
-    procedure PStrToTerm(var TP: TTerm; S: string);
+    procedure PStrToTerm(var TP: TTerm; const S: string);
     function StrTermLen(T: TTerm): Integer;
     { Making Prolog types }
-    procedure MakeAtom(var TP: TTerm; S: string);
+    procedure MakeAtom(var TP: TTerm; const S: string);
     procedure MakeStr(var TP: TTerm; S: PChar);
-    procedure MakePStr(var TP: TTerm; S: string);
+    procedure MakePStr(var TP: TTerm; const S: string);
     procedure MakeInt(var TP: TTerm; I: LongInt);
     procedure MakeFloat(var TP: TTerm; F: Double);
     procedure MakeAddr(var TP: TTerm; P: Pointer);
@@ -154,10 +154,10 @@ type
     procedure GetFA(T: TTerm; var S: string; var AP: TArity);
     function GetFunctor(T: TTerm): string;
     function GetArity(T: TTerm): Integer;
-    procedure MakeFA(var TP: TTerm; S: string; A: TArity);
+    procedure MakeFA(var TP: TTerm; const S: string; A: TArity);
     function UnifyArg(var TP: TTerm; N: Integer; DT: TDType; P: Pointer): Boolean;
-    function UnifyPStrArg(var TP: TTerm; N: Integer; S: string): Boolean;
-    function UnifyAtomArg(var TP: TTerm; N: Integer; S: string): Boolean;
+    function UnifyPStrArg(var TP: TTerm; N: Integer; const S: string): Boolean;
+    function UnifyAtomArg(var TP: TTerm; N: Integer; const S: string): Boolean;
     function UnifyIntArg(var TP: TTerm; N: Integer; I: Integer): Boolean;
     function UnifyLongArg(var TP: TTerm; N: Integer; I: LongInt): Boolean;
     function UnifyShortArg(var TP: TTerm; N: Integer; I: LongInt): Boolean;
@@ -193,7 +193,7 @@ type
     procedure SetInput(PFunc1: TGetC; PFunc2: TUngetC);
     procedure SetOutput(PFunc1: TPutC; PFunc2: TPutS);
     { Miscellaneous functions }
-    procedure GetVersion(var s: string);
+    procedure GetVersion(var S: string);
     function GetPVersion: string;
     { Error handling functions }
     function GetExceptRC: TRC;
@@ -234,7 +234,7 @@ function lsAddLSX(Eng: TEngID; LSXName: PChar; P: Pointer): TRC; stdcall; extern
 
 function lsAddPredA(Eng: TEngID; PName: PAnsiChar; PArity: TArity; PFunc: TExtPred; Ptr: Pointer): TRC; stdcall; external AMZIDLL;
 function lsAddPredW(Eng: TEngID; PName: PWideChar; PArity: TArity; PFunc: TExtPred; Ptr: Pointer): TRC; stdcall; external AMZIDLL;
-function lsAddPred(Eng: TEngID; PName: PChar; PArity: TArity; PFunc: TExtPred; Ptr: Pointer): TRC; external AMZIDLL name 'lsAddPred' + AWSuffix;
+function lsAddPred(Eng: TEngID; PName: PChar; PArity: TArity; PFunc: TExtPred; Ptr: Pointer): TRC; stdcall; external AMZIDLL name 'lsAddPred' + AWSuffix;
 
 function lsInitPredsA(Eng: TEngID; PIPtr: TPredInitPtrA): TRC; stdcall; external AMZIDLL;
 function lsInitPredsW(Eng: TEngID; PIPtr: TPredInitPtrW): TRC; stdcall; external AMZIDLL;
@@ -387,17 +387,20 @@ end;
 
 { Main entry points to set up Prolog environment }
 
-procedure TLSEngine.Init(XPLName: string);
+procedure TLSEngine.Init(const XPLName: string);
 begin
   InitLS(XPLName);
 end;
 
-procedure TLSEngine.InitLS(XPLName: string);
+procedure TLSEngine.InitLS(const XPLName: string);
 begin
-  if not FCreatedB then LSError('LS not created', 0);
-  if FInitializedB then lsClose(FEng);
+  if not FCreatedB then
+    LSError('LS not created', 0);
+  if FInitializedB then
+    lsClose(FEng);
   FRC := lsInit(FEng, PChar(XPLName));
-  if FRC <> 0 then LSError('lsInit', FRC);
+  if FRC <> 0 then
+    LSError('lsInit', FRC);
   FInitializedB := True;
 end;
 
@@ -413,13 +416,13 @@ begin
   if FRC <>  0 then LSError('lsInitLSX', FRC);
 end;
 
-procedure TLSEngine.AddLSX(LSXName: string);
+procedure TLSEngine.AddLSX(const LSXName: string);
 begin
   FRC := lsAddLSX(FEng, PChar(LSXName), nil);
   if FRC <> 0 then LSError('lsAddLSX', FRC);
 end;
 
-procedure TLSEngine.AddPred(PName: string; PArity: TArity; PFunc: TExtPred);
+procedure TLSEngine.AddPred(const PName: string; PArity: TArity; PFunc: TExtPred);
 begin
   FRC := lsAddPred(FEng, PChar(PName), PArity, PFunc, Pointer(FEng));
   if FRC <> 0 then LSError('lsAddPred', FRC);
@@ -431,12 +434,12 @@ begin
   if FRC <> 0 then LSError('lsInitPreds', FRC);
 end;
 
-procedure TLSEngine.Load(XPLName: string);
+procedure TLSEngine.Load(const XPLName: string);
 begin
   LoadXPL(XPLName);
 end;
 
-procedure TLSEngine.LoadXPL(XPLName: string);
+procedure TLSEngine.LoadXPL(const XPLName: string);
 begin
   FRC := lsLoad(FEng, PChar(XPLName));
   if FRC <> 0 then LSError('lsLoad', FRC);
@@ -554,7 +557,7 @@ begin
   end;
 end;
 
-function TLSEngine.UnifyPStrParm(N: Integer; S: string): Boolean;
+function TLSEngine.UnifyPStrParm(N: Integer; const S: string): Boolean;
 begin
   Result := False;
 
@@ -571,7 +574,7 @@ begin
   end;
 end;
 
-function TLSEngine.UnifyAtomParm(N: Integer; S: string): Boolean;
+function TLSEngine.UnifyAtomParm(N: Integer; const S: string): Boolean;
 begin
   Result := False;
 
@@ -659,7 +662,7 @@ begin
   end;
 end;
 
-function TLSEngine.ExecPStr(var TP: TTerm; S: string): Boolean;
+function TLSEngine.ExecPStr(var TP: TTerm; const S: string): Boolean;
 begin
   Result := False;
   FRC := lsExecStr(FEng, TP, PChar(S));
@@ -692,7 +695,7 @@ begin
   end;
 end;
 
-function TLSEngine.CallPStr(var TP: TTerm; S: string): Boolean;
+function TLSEngine.CallPStr(var TP: TTerm; const S: string): Boolean;
 begin
   Result := False;
 
@@ -759,19 +762,19 @@ begin
   if FRC <> 0 then LSError('lsRetractStr', FRC);
 end;
 
-procedure TLSEngine.AssertaPStr(S: string);
+procedure TLSEngine.AssertaPStr(const S: string);
 begin
   FRC := lsAssertaStr(FEng, PChar(S));
   if FRC <> 0 then LSError('lsAssertaStr', FRC);
 end;
 
-procedure TLSEngine.AssertzPStr(S: string);
+procedure TLSEngine.AssertzPStr(const S: string);
 begin
   FRC := lsAssertzStr(FEng, PChar(S));
   if FRC <> 0 then LSError('lsAssertzStr', FRC);
 end;
 
-procedure TLSEngine.RetractPStr(S: string);
+procedure TLSEngine.RetractPStr(const S: string);
 begin
   FRC := lsRetractStr(FEng, PChar(S));
   if FRC <> 0 then LSError('lsRetractStr', FRC);
@@ -825,7 +828,7 @@ begin
   Result := PChar(res);
 end;
 
-procedure TLSEngine.PStrToTerm(var TP: TTerm; S: string);
+procedure TLSEngine.PStrToTerm(var TP: TTerm; const S: string);
 begin
   FRC := lsStrToTerm(FEng, TP, PChar(S));
   if FRC <> 0 then LSError('lsStrToTerm', FRC);
@@ -838,7 +841,7 @@ end;
 
 { Making Prolog types }
 
-procedure TLSEngine.MakeAtom(var TP: TTerm; S: string);
+procedure TLSEngine.MakeAtom(var TP: TTerm; const S: string);
 begin
   FRC := lsMakeAtom(FEng, TP, PChar(S));
   if FRC <> 0 then LSError('lsMakeAtom', FRC);
@@ -850,7 +853,7 @@ begin
   if FRC <> 0 then LSError('lsMakeStr', FRC);
 end;
 
-procedure TLSEngine.MakePStr(var TP: TTerm; S: string);
+procedure TLSEngine.MakePStr(var TP: TTerm; const S: string);
 begin
   FRC := lsMakeStr(FEng, TP, PChar(S));
   if FRC <> 0 then LSError('lsMakeStr', FRC);
@@ -987,7 +990,7 @@ begin
   Result := AP;
 end;
 
-procedure TLSEngine.MakeFA(var TP: TTerm; S: string; A: TArity);
+procedure TLSEngine.MakeFA(var TP: TTerm; const S: string; A: TArity);
 begin
   FRC := lsMakeFA(FEng, TP, PChar(S), A);
   if FRC <> 0 then LSError('lsMakeFA', FRC);
@@ -1004,7 +1007,7 @@ begin
   end;
 end;
 
-function TLSEngine.UnifyPStrArg(var TP: TTerm; N: Integer; S: string): Boolean;
+function TLSEngine.UnifyPStrArg(var TP: TTerm; N: Integer; const S: string): Boolean;
 begin
   Result := False;
 
@@ -1023,7 +1026,7 @@ begin
   end;
 end;
 
-function TLSEngine.UnifyAtomArg(var TP: TTerm; N: Integer; S: string): Boolean;
+function TLSEngine.UnifyAtomArg(var TP: TTerm; N: Integer; const S: string): Boolean;
 begin
   Result := False;
 
@@ -1425,7 +1428,7 @@ end;
   This is important as it frees up all the memory allocated
   by the logic server. }
 
-procedure TLSEngine.LSError(APIName: string; RC: Integer);
+procedure TLSEngine.LSError(const APIName: string; RC: Integer);
 var
   S: string;
 begin
