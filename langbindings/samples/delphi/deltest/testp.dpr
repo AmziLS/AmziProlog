@@ -2,7 +2,7 @@ program Testp;
 
 uses
   Forms,
-  Amzi,
+  Amzi in '..\..\..\delphi\amzi.pas',
   Test in 'test.pas' {LogicServerTest};
 
 {$R *.RES}

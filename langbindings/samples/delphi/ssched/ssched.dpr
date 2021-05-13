@@ -2,7 +2,8 @@ program Ssched;
 
 uses
   Forms,
-  Main in 'main.pas' {MainForm};
+  main in 'main.pas' {MainForm},
+  amzi in '..\..\..\delphi\amzi.pas';
 
 {$R *.RES}
 

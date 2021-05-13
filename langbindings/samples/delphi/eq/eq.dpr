@@ -3,7 +3,8 @@ program Eq;
 uses
   Forms,
   p_draw in 'p_draw.pas',
-  Eqmain in 'eqmain.pas' {MF};
+  eqmain in 'eqmain.pas' {MF},
+  amzi in '..\..\..\delphi\amzi.pas';
 
 {$R *.RES}
 

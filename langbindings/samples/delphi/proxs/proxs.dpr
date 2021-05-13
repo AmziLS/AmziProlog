@@ -2,8 +2,9 @@ program Proxs;
 
 uses
   Forms,
-  Pxmain in 'PXMAIN.PAS' {MainForm},
-  Goald in 'GOALD.PAS' {GoalDlg};
+  PXMAIN in 'PXMAIN.PAS' {MainForm},
+  GOALD in 'GOALD.PAS' {GoalDlg},
+  amzi in '..\..\..\delphi\amzi.pas';
 
 {$R *.RES}
 

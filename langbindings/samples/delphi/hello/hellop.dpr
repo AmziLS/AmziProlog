@@ -2,7 +2,8 @@ program Hellop;
 
 uses
   Forms,
-  Hello in 'hello.pas' {Form1};
+  hello in 'hello.pas' {Form1},
+  amzi in '..\..\..\delphi\amzi.pas';
 
 {$R *.RES}
 
