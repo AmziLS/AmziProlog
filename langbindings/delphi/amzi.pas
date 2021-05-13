@@ -9,12 +9,11 @@ unit Amzi;
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls, Forms,
-  Dialogs;
+  SysUtils, Windows, Classes;
 
 const
-  lsfalse: Integer = 0;
-  lstrue: Integer = 1;
+  lsFalse: Integer = 0;
+  lsTrue: Integer = 1;
 
 type
   ELogicServer = class(Exception);
@@ -25,7 +24,7 @@ type
     Prolog types to Delphi types }
   TPType = (pATOM, pINT, pSTR, pFLOAT, pSTRUCT, pLIST, pTERM, pADDR, pVAR, pWSTR, pWATOM, pREAL);
   TDType = (dATOM, dSTR, dINT, dLONG, dSHORT, dFLOAT, dDOUBLE, dADDR, dTERM, dWSTR, dWATOM, dMOD, dGOAL);
-  TTypeInt = integer; { Generic type for casting types in DLL calls }
+  TTypeInt = Integer; { Generic type for casting types in DLL calls }
   { Enumerated stream identifier, used when redirecting Prolog I/O }
   TPStream = (CUR_IN, CUR_OUT, CUR_ERR, USER_IN, USER_OUT, USER_ERR);
   TPStreamInt = Integer; { Generic type for stream identifiers in DLL calls}
@@ -36,16 +35,31 @@ type
   TExtPred = function (EngID: TEngID): TTFi; stdcall; { An extended predicate function }
 
   TPutC = procedure (P: Pointer; C: Integer); stdcall;
-  TPutS = procedure (P: Pointer; S: PAnsiChar); stdcall;
+  TPutSA = procedure (P: Pointer; S: PAnsiChar); stdcall;
+  TPutSW = procedure (P: Pointer; S: PWideChar); stdcall;
+  TPutS = procedure (P: Pointer; S: PChar); stdcall;
   TGetC = function (P: Pointer): Integer; stdcall;
   TUngetC = procedure (P: Pointer); stdcall;
 
-  TPredInit = record
+  TPredInitA = record
     PName: PAnsiChar;
     PArity: TArity;
     PFunc: TExtPred;
   end;
-  TPredInitPtr = ^TPredInit;
+  TPredInitPtrA = ^TPredInitA;
+  TPredInitW = record
+    PName: PWideChar;
+    PArity: TArity;
+    PFunc: TExtPred;
+  end;
+  TPredInitPtrW = ^TPredInitW;
+{$IFDEF UNICODE}
+  TPredInit = TPredInitW;
+  TPredInitPtr = TPredInitPtrW;
+{$ELSE}
+  TPredInit = TPredInitA;
+  TPredInitPtr = TPredInitPtrA;
+{$ENDIF}
 
   { The Logic Server component, a class that encapsulates all of the API
     calls as methods }
@@ -54,7 +68,11 @@ type
     FEng: TEngID;
     FRC: TRC;
     FInitializedB, FCreatedB: BOOL;
+{$IFDEF UNICODE}
+    FWideBuf: array[0..100000] of WideChar;
+{$ELSE}
     FAnsiBuf: array[0..100000] of AnsiChar;
+{$ENDIF}
     procedure LSError(APIname: string; RC: Integer);
   protected
   public
@@ -92,10 +110,10 @@ type
     function UnifyFloatParm(N: Integer; F: Double): Boolean;
     { Calling Prolog from Delphi }
     function Exec(var TP: TTerm): Boolean;
-    function ExecStr(var TP: TTerm; S: PAnsiChar): Boolean;
+    function ExecStr(var TP: TTerm; S: PChar): Boolean;
     function ExecPStr(var TP: TTerm; S: string): Boolean;
     function Call(var TP: TTerm): Boolean;
-    function CallStr(var TP: TTerm; S: PAnsiChar): Boolean;
+    function CallStr(var TP: TTerm; S: PChar): Boolean;
     function CallPStr(var TP: TTerm; S: string): Boolean;
     function Redo: Boolean;
     procedure ClearCall;
@@ -103,23 +121,23 @@ type
     procedure Asserta(T: TTerm);
     procedure Assertz(T: TTerm);
     procedure Retract(T: TTerm);
-    procedure AssertaStr(S: PAnsiChar);
-    procedure AssertzStr(S: PAnsiChar);
-    procedure RetractStr(S: PAnsiChar);
+    procedure AssertaStr(S: PChar);
+    procedure AssertzStr(S: PChar);
+    procedure RetractStr(S: PChar);
     procedure AssertaPStr(S: string);
     procedure AssertzPStr(S: string);
     procedure RetractPStr(S: string);
     { string/term conversion functions }
-    procedure TermToStr(T: TTerm; S: PAnsiChar; N: Integer);
-    procedure TermToStrQ(T: TTerm; S: PAnsiChar; N: Integer);
-    procedure StrToTerm(var TP: TTerm; S: PAnsiChar);
+    procedure TermToStr(T: TTerm; S: PChar; N: Integer);
+    procedure TermToStrQ(T: TTerm; S: PChar; N: Integer);
+    procedure StrToTerm(var TP: TTerm; S: PChar);
     function TermToPStr(T: TTerm): string;
     function TermToPStrQ(T: TTerm): string;
     procedure PStrToTerm(var TP: TTerm; S: string);
     function StrTermLen(T: TTerm): Integer;
     { Making Prolog types }
     procedure MakeAtom(var TP: TTerm; S: string);
-    procedure MakeStr(var TP: TTerm; S: PAnsiChar);
+    procedure MakeStr(var TP: TTerm; S: PChar);
     procedure MakePStr(var TP: TTerm; S: string);
     procedure MakeInt(var TP: TTerm; I: LongInt);
     procedure MakeFloat(var TP: TTerm; F: Double);
@@ -179,9 +197,9 @@ type
     function GetPVersion: string;
     { Error handling functions }
     function GetExceptRC: TRC;
-    procedure GetExceptMsg(S: PAnsiChar; L: Integer);
-    procedure GetExceptReadBuffer(S: PAnsiChar; L: Integer);
-    procedure GetExceptCallStack(S: PAnsiChar; L: Integer);
+    procedure GetExceptMsg(S: PChar; L: Integer);
+    procedure GetExceptReadBuffer(S: PChar; L: Integer);
+    procedure GetExceptCallStack(S: PChar; L: Integer);
   end;
 
 procedure Register;
@@ -190,80 +208,166 @@ implementation
 
 const
   AMZIDLL = 'amzi.dll';
+  {$IFDEF UNICODE}
+  AWSuffix = 'W';
+  {$ELSE}
+  AWSuffix = 'A';
+  {$ENDIF}
 
 { Defines the actual DLL entry points for the Logic Server API.
   See the file AMZI.H for the complete C header file definition. }
 
 { Main entry points to set up Prolog environment }
 function lsInitA(var Eng: TEngID; XPLName: PAnsiChar): TRC; stdcall; external AMZIDLL;
+function lsInitW(var Eng: TEngID; XPLName: PWideChar): TRC; stdcall; external AMZIDLL;
+function lsInit(var Eng: TEngID; XPLName: PChar): TRC; stdcall; external AMZIDLL name 'lsInit' + AWSuffix;
+
 function lsInit2A(var Eng: TEngID; XPLName: PAnsiChar): TRC; stdcall; external AMZIDLL;
+function lsInit2W(var Eng: TEngID; XPLName: PWideChar): TRC; stdcall; external AMZIDLL;
+function lsInit2(var Eng: TEngID; XPLName: PChar): TRC; stdcall; external AMZIDLL name 'lsInit2' + AWSuffix;
+
 function lsInitLSX(Eng: TEngID; P: Pointer): TRC; stdcall; external AMZIDLL;
-function lsAddLSXA(Eng: TEngID; LSXname: PAnsiChar; P: Pointer): TRC; stdcall; external AMZIDLL;
+
+function lsAddLSXA(Eng: TEngID; LSXName: PAnsiChar; P: Pointer): TRC; stdcall; external AMZIDLL;
+function lsAddLSXW(Eng: TEngID; LSXName: PWideChar; P: Pointer): TRC; stdcall; external AMZIDLL;
+function lsAddLSX(Eng: TEngID; LSXName: PChar; P: Pointer): TRC; stdcall; external AMZIDLL name 'lsAddLSX' + AWSuffix;
+
 function lsAddPredA(Eng: TEngID; PName: PAnsiChar; PArity: TArity; PFunc: TExtPred; Ptr: Pointer): TRC; stdcall; external AMZIDLL;
-function lsInitPredsA(Eng: TEngID; PIptr: TPredInitPtr): TRC; stdcall; external AMZIDLL;
+function lsAddPredW(Eng: TEngID; PName: PWideChar; PArity: TArity; PFunc: TExtPred; Ptr: Pointer): TRC; stdcall; external AMZIDLL;
+function lsAddPred(Eng: TEngID; PName: PChar; PArity: TArity; PFunc: TExtPred; Ptr: Pointer): TRC; external AMZIDLL name 'lsAddPred' + AWSuffix;
+
+function lsInitPredsA(Eng: TEngID; PIPtr: TPredInitPtrA): TRC; stdcall; external AMZIDLL;
+function lsInitPredsW(Eng: TEngID; PIPtr: TPredInitPtrW): TRC; stdcall; external AMZIDLL;
+function lsInitPreds(Eng: TEngID; PIPtr: TPredInitPtr): TRC; stdcall; external AMZIDLL name 'lsInitPreds' + AWSuffix;
+
 function lsLoadA(Eng: TEngID; XPLname: PAnsiChar): TRC; stdcall; external AMZIDLL;
+function lsLoadW(Eng: TEngID; XPLname: PWideChar): TRC; stdcall; external AMZIDLL;
+function lsLoad(Eng: TEngID; XPLname: PChar): TRC; stdcall; external AMZIDLL name 'lsLoad' + AWSuffix;
+
 function lsMain(Eng: TEngID): TTFi; stdcall; external AMZIDLL;
 function lsReset(Eng: TEngID): TRC; stdcall; external AMZIDLL;
 function lsClose(Eng: TEngID): TRC; stdcall; external AMZIDLL;
+
 { Function and predicate parameters }
 function lsGetParm(Eng: TEngID; N: Integer; DT: TTypeInt; P: Pointer): TRC; stdcall; external AMZIDLL;
 function lsGetParmType(Eng: TEngID; N: Integer): TTypeInt; stdcall; external AMZIDLL;
 function lsStrParmLen(Eng: TEngID; N: Integer): Integer; stdcall; external AMZIDLL;
 function lsUnifyParm(Eng: TEngID; N: Integer; DT: TTypeInt; P: Pointer): TTFi; stdcall; external AMZIDLL;
+
 { Calling Prolog from Delphi }
 function lsExec(Eng: TEngID; var TP: TTerm): TTFi; stdcall; external AMZIDLL;
+
 function lsExecStrA(Eng: TEngID; var TP: TTerm; S: PAnsiChar): TTFi; stdcall; external AMZIDLL;
+function lsExecStrW(Eng: TEngID; var TP: TTerm; S: PWideChar): TTFi; stdcall; external AMZIDLL;
+function lsExecStr(Eng: TEngID; var TP: TTerm; S: PChar): TTFi; stdcall; external AMZIDLL name 'lsExecStr' + AWSuffix;
+
 function lsCall(Eng: TEngID; var TP: TTerm): TTFi; stdcall; external AMZIDLL;
+
 function lsCallStrA(Eng: TEngID; var TP: TTerm; S: PAnsiChar): TTFi; stdcall; external AMZIDLL;
+function lsCallStrW(Eng: TEngID; var TP: TTerm; S: PWideChar): TTFi; stdcall; external AMZIDLL;
+function lsCallStr(Eng: TEngID; var TP: TTerm; S: PChar): TTFi; stdcall; external AMZIDLL name 'lsCallStr' + AWSuffix;
+
 function lsRedo(Eng: TEngID): TTFi; stdcall; external AMZIDLL;
 function lsClearCall(Eng: TEngID): TRC; stdcall; external AMZIDLL;
+
 { Asserting and retracting }
 function lsAsserta(Eng: TEngID; T: TTerm): TRC; stdcall; external AMZIDLL;
 function lsAssertz(Eng: TEngID; T: TTerm): TRC; stdcall; external AMZIDLL;
 function lsRetract(Eng: TEngID; T: TTerm): TRC; stdcall; external AMZIDLL;
+
 function lsAssertaStrA(Eng: TEngID; S: PAnsiChar): TRC; stdcall; external AMZIDLL;
+function lsAssertaStrW(Eng: TEngID; S: PWideChar): TRC; stdcall; external AMZIDLL;
+function lsAssertaStr(Eng: TEngID; S: PChar): TRC; stdcall; external AMZIDLL name 'lsAssertaStr' + AWSuffix;
+
 function lsAssertzStrA(Eng: TEngID; S: PAnsiChar): TRC; stdcall; external AMZIDLL;
+function lsAssertzStrW(Eng: TEngID; S: PWideChar): TRC; stdcall; external AMZIDLL;
+function lsAssertzStr(Eng: TEngID; S: PChar): TRC; stdcall; external AMZIDLL name 'lsAssertzStr' + AWSuffix;
+
 function lsRetractStrA(Eng: TEngID; S: PAnsiChar): TRC; stdcall; external AMZIDLL;
+function lsRetractStrW(Eng: TEngID; S: PWideChar): TRC; stdcall; external AMZIDLL;
+function lsRetractStr(Eng: TEngID; S: PChar): TRC; stdcall; external AMZIDLL name 'lsRetractStr' + AWSuffix;
+
 { string/term conversion functions }
 function lsTermToStrA(Eng: TEngID; T: TTerm; S: PAnsiChar; N: Integer): TRC; stdcall; external AMZIDLL;
+function lsTermToStrW(Eng: TEngID; T: TTerm; S: PWideChar; N: Integer): TRC; stdcall; external AMZIDLL;
+function lsTermToStr(Eng: TEngID; T: TTerm; S: PChar; N: Integer): TRC; stdcall;  external AMZIDLL name 'lsTermToStr' + AWSuffix;
+
 function lsTermToStrQA(Eng: TEngID; T: TTerm; S: PAnsiChar; N: Integer): TRC; stdcall; external AMZIDLL;
+function lsTermToStrQW(Eng: TEngID; T: TTerm; S: PWideChar; N: Integer): TRC; stdcall; external AMZIDLL;
+function lsTermToStrQ(Eng: TEngID; T: TTerm; S: PChar; N: Integer): TRC; stdcall; external AMZIDLL name 'lsTermToStrQ' + AWSuffix;
+
 function lsStrToTermA(Eng: TEngID; var TP: TTerm; S: PAnsiChar): TRC; stdcall; external AMZIDLL;
+function lsStrToTermW(Eng: TEngID; var TP: TTerm; S: PWideChar): TRC; stdcall; external AMZIDLL;
+function lsStrToTerm(Eng: TEngID; var TP: TTerm; S: PChar): TRC; stdcall; external AMZIDLL name 'lsStrToTerm' + AWSuffix;
+
 { Making Prolog types }
 function lsMakeAtomA(Eng: TEngID; var TP: TTerm; S: PAnsiChar): TRC; stdcall; external AMZIDLL;
+function lsMakeAtomW(Eng: TEngID; var TP: TTerm; S: PWideChar): TRC; stdcall; external AMZIDLL;
+function lsMakeAtom(Eng: TEngID; var TP: TTerm; S: PChar): TRC; stdcall; external AMZIDLL name 'lsMakeAtom' + AWSuffix;
+
 function lsMakeStrA(Eng: TEngID; var TP: TTerm; S: PAnsiChar): TRC; stdcall; external AMZIDLL;
+function lsMakeStrW(Eng: TEngID; var TP: TTerm; S: PWideChar): TRC; stdcall; external AMZIDLL;
+function lsMakeStr(Eng: TEngID; var TP: TTerm; S: PChar): TRC; stdcall; external AMZIDLL name 'lsMakeStr' + AWSuffix;
+
 function lsMakeInt(Eng: TEngID; var TP: TTerm; I: LongInt): TRC; stdcall; external AMZIDLL;
 function lsMakeFloat(Eng: TEngID; var TP: TTerm; F: Double): TRC; stdcall; external AMZIDLL;
 function lsMakeAddr(Eng: TEngID; var TP: TTerm; P: Pointer): TRC; stdcall; external AMZIDLL;
+
 { Getting C values from Prolog terms }
 function lsGetTermType(Eng: TEngID; T: TTerm): TTypeInt; stdcall; external AMZIDLL;
-function lsGetTerm(Eng: TEngID; T: TTerm; dt: TTypeInt; P: Pointer): TRC; stdcall; external AMZIDLL;
+function lsGetTerm(Eng: TEngID; T: TTerm; DT: TTypeInt; P: Pointer): TRC; stdcall; external AMZIDLL;
 function lsStrTermLen(Eng: TEngID; T: TTerm): Integer; stdcall; external AMZIDLL;
+
 { Structure hacking functions }
 function lsGetFAA(Eng: TEngID; T: TTerm; S: PAnsiChar; var AP: TArity): TRC; stdcall; external AMZIDLL;
+function lsGetFAW(Eng: TEngID; T: TTerm; S: PWideChar; var AP: TArity): TRC; stdcall; external AMZIDLL;
+function lsGetFA(Eng: TEngID; T: TTerm; S: PChar; var AP: TArity): TRC; stdcall; external AMZIDLL name 'lsGetFA' + AWSuffix;
+
 function lsMakeFAA(Eng: TEngID; var TP: TTerm; S: PAnsiChar; A: TArity): TRC; stdcall; external AMZIDLL;
+function lsMakeFAW(Eng: TEngID; var TP: TTerm; S: PWideChar; A: TArity): TRC; stdcall; external AMZIDLL;
+function lsMakeFA(Eng: TEngID; var TP: TTerm; S: PChar; A: TArity): TRC; stdcall; external AMZIDLL name 'lsMakeFA' + AWSuffix;
+
 function lsUnifyArg(Eng: TEngID; var TP: TTerm; N: Integer; DT: TTypeInt; P: Pointer): TTFi; stdcall; external AMZIDLL;
 function lsGetArg(Eng: TEngID; T: TTerm; N: Integer; DT: TTypeInt; P: Pointer): TRC; stdcall; external AMZIDLL;
 function lsGetArgType(Eng: TEngID; T: TTerm; N: Integer): TTypeInt; stdcall; external AMZIDLL;
 function lsStrArgLen(Eng: TEngID; T: TTerm; I: Integer): Integer; stdcall; external AMZIDLL;
 function lsUnify(Eng: TEngID; T1: TTerm; T2: TTerm): TTFi; stdcall; external AMZIDLL;
+
 { List hacking functions }
 function lsMakeList(Eng: TEngID; var TP: TTerm): TRC; stdcall; external AMZIDLL;
 function lsPushList(Eng: TEngID; var TP: TTerm; T: TTerm): TRC; stdcall; external AMZIDLL;
 function lsPopList(Eng: TEngID; var TP: TTerm; DT: TTypeInt; P: Pointer): TRC; stdcall; external AMZIDLL;
 function lsGetHead(Eng: TEngID; T: TTerm; DT: TTypeInt; P: Pointer): TRC; stdcall; external AMZIDLL;
 function lsGetTail(Eng: TEngID; T: TTerm): TTerm; stdcall; external AMZIDLL;
+
 { Stream I/O functions }
 function lsSetStream(Eng: TEngID; ST: TPStreamInt; I: Integer): TRC; stdcall; external AMZIDLL;
 function lsGetStream(Eng: TEngID; ST: TPStreamInt): Integer; stdcall; external AMZIDLL;
 function lsSetInput(Eng: TEngID; PFunc1: TGetC; PFunc2: TUngetC): TRC; stdcall; external AMZIDLL;
-function lsSetOutputA(Eng: TEngID; PFunc1: TPutC; PFunc2: TPutS): TRC; stdcall; external AMZIDLL;
+
+function lsSetOutputA(Eng: TEngID; PFunc1: TPutC; PFunc2: TPutSA): TRC; stdcall; external AMZIDLL;
+function lsSetOutputW(Eng: TEngID; PFunc1: TPutC; PFunc2: TPutSW): TRC; stdcall; external AMZIDLL;
+function lsSetOutput(Eng: TEngID; PFunc1: TPutC; PFunc2: TPutS): TRC; stdcall; external AMZIDLL name 'lsSetOutput' + AWSuffix;
+
 { Miscellaneous functions }
 function lsGetVersionA(Eng: TEngID; S: PAnsiChar): TRC; stdcall; external AMZIDLL;
+function lsGetVersionW(Eng: TEngID; S: PWideChar): TRC; stdcall; external AMZIDLL;
+function lsGetVersion(Eng: TEngID; S: PChar): TRC; stdcall; external AMZIDLL name 'lsGetVersion' + AWSuffix;
+
 { Error handling functions }
 function lsGetExceptRC(Eng: TEngID): TRC; stdcall; external AMZIDLL;
+
 procedure lsGetExceptMsgA(Eng: TEngID; S: PAnsiChar; L: Integer) stdcall; external AMZIDLL;
+procedure lsGetExceptMsgW(Eng: TEngID; S: PWideChar; L: Integer) stdcall; external AMZIDLL;
+procedure lsGetExceptMsg(Eng: TEngID; S: PChar; L: Integer) stdcall; external AMZIDLL name 'lsGetExceptMsg' + AWSuffix;
+
 procedure lsGetExceptReadBufferA(Eng: TEngID; S: PAnsiChar; L: Integer) stdcall; external AMZIDLL;
+procedure lsGetExceptReadBufferW(Eng: TEngID; S: PWideChar; L: Integer) stdcall; external AMZIDLL;
+procedure lsGetExceptReadBuffer(Eng: TEngID; S: PChar; L: Integer) stdcall; external AMZIDLL name 'lsGetExceptReadBuffer' + AWSuffix;
+
 procedure lsGetExceptCallStackA(Eng: TEngID; S: PAnsiChar; L: Integer) stdcall; external AMZIDLL;
+procedure lsGetExceptCallStackW(Eng: TEngID; S: PWideChar; L: Integer) stdcall; external AMZIDLL;
+procedure lsGetExceptCallStack(Eng: TEngID; S: PChar; L: Integer) stdcall; external AMZIDLL name 'lsGetExceptCallStack' + AWSuffix;
 
 constructor TLSEngine.Create(Owner: TComponent);
 begin
@@ -292,7 +396,7 @@ procedure TLSEngine.InitLS(XPLName: string);
 begin
   if not FCreatedB then LSError('LS not created', 0);
   if FInitializedB then lsClose(FEng);
-  FRC := lsInitA(FEng, PAnsiChar(AnsiString(XPLName)));
+  FRC := lsInit(FEng, PChar(XPLName));
   if FRC <> 0 then LSError('lsInit', FRC);
   FInitializedB := True;
 end;
@@ -311,20 +415,19 @@ end;
 
 procedure TLSEngine.AddLSX(LSXName: string);
 begin
-  FRC := lsAddLSXA(FEng, PAnsiChar(AnsiString(LSXName)), nil);
+  FRC := lsAddLSX(FEng, PChar(LSXName), nil);
   if FRC <> 0 then LSError('lsAddLSX', FRC);
 end;
 
 procedure TLSEngine.AddPred(PName: string; PArity: TArity; PFunc: TExtPred);
 begin
-  FRC := lsAddPredA(FEng, PAnsiChar(AnsiString(PName)), PArity, PFunc,
-    Pointer(FEng));
+  FRC := lsAddPred(FEng, PChar(PName), PArity, PFunc, Pointer(FEng));
   if FRC <> 0 then LSError('lsAddPred', FRC);
 end;
 
 procedure TLSEngine.InitPreds(PIPtr: TPredInitPtr);
 begin
-  FRC := lsInitPredsA(FEng, PIPtr);
+  FRC := lsInitPreds(FEng, PIPtr);
   if FRC <> 0 then LSError('lsInitPreds', FRC);
 end;
 
@@ -335,7 +438,7 @@ end;
 
 procedure TLSEngine.LoadXPL(XPLName: string);
 begin
-  FRC := lsLoadA(FEng, PAnsiChar(AnsiString(XPLName)));
+  FRC := lsLoad(FEng, PChar(XPLName));
   if FRC <> 0 then LSError('lsLoad', FRC);
 end;
 
@@ -378,15 +481,20 @@ end;
 
 function TLSEngine.GetPStrParm(N: Integer): string;
 var
-  res: AnsiString;
+  res: string;
 begin
   SetLength(res, lsStrParmLen(FEng, N));
   if Length(res) > 0 then
     res[1] := #0;
 
+{$IFDEF UNICODE}
+  FRC := lsGetParm(FEng, N, TTypeInt(dWSTR), PWideChar(res));
+{$ELSE}
   FRC := lsGetParm(FEng, N, TTypeInt(dSTR), PAnsiChar(res));
+{$ENDIF}
+
   if FRC <> 0 then LSError('lsGetParm', FRC);
-  Result := string(PAnsiChar(res));
+  Result := PChar(res);
 end;
 
 function TLSEngine.GetIntParm(N: Integer): Integer;
@@ -449,7 +557,13 @@ end;
 function TLSEngine.UnifyPStrParm(N: Integer; S: string): Boolean;
 begin
   Result := False;
-  FRC := lsUnifyParm(FEng, N, TTypeInt(dSTR), PAnsiChar(AnsiString(S)));
+
+{$IFDEF UNICODE}
+  FRC := lsUnifyParm(FEng, N, TTypeInt(dWSTR), PWideChar(S));
+{$ELSE}
+  FRC := lsUnifyParm(FEng, N, TTypeInt(dSTR), PAnsiChar(S));
+{$ENDIF}
+
   case FRC of
     0: Result := False;
     1: Result := True;
@@ -460,8 +574,15 @@ end;
 function TLSEngine.UnifyAtomParm(N: Integer; S: string): Boolean;
 begin
   Result := False;
-  StrPCopy(FAnsiBuf, AnsiString(S));
+
+{$IFDEF UNICODE}
+  StrPCopy(FWideBuf, S);
+  FRC := lsUnifyParm(FEng, N, TTypeInt(dWATOM), @FWideBuf);
+{$ELSE}
+  StrPCopy(FAnsiBuf, S);
   FRC := lsUnifyParm(FEng, N, TTypeInt(dATOM), @FAnsiBuf);
+{$ENDIF}
+
   case FRC of
     0: Result := False;
     1: Result := True;
@@ -527,10 +648,10 @@ begin
   end;
 end;
 
-function TLSEngine.ExecStr(var TP: TTerm; S: PAnsiChar): Boolean;
+function TLSEngine.ExecStr(var TP: TTerm; S: PChar): Boolean;
 begin
   Result := False;
-  FRC := lsExecStrA(FEng, TP, S);
+  FRC := lsExecStr(FEng, TP, S);
   case FRC of
     0: Result := False;
     1: Result := True;
@@ -541,7 +662,7 @@ end;
 function TLSEngine.ExecPStr(var TP: TTerm; S: string): Boolean;
 begin
   Result := False;
-  FRC := lsExecStrA(FEng, TP, PAnsiChar(AnsiString(S)));
+  FRC := lsExecStr(FEng, TP, PChar(S));
   case FRC of
     0: Result := False;
     1: Result := True;
@@ -560,10 +681,10 @@ begin
   end;
 end;
 
-function TLSEngine.CallStr(var TP: TTerm; S: PAnsiChar): Boolean;
+function TLSEngine.CallStr(var TP: TTerm; S: PChar): Boolean;
 begin
   Result := False;
-  FRC := lsCallStrA(FEng, TP, S);
+  FRC := lsCallStr(FEng, TP, S);
   case FRC of
     0: Result := False;
     1: Result := True;
@@ -575,7 +696,7 @@ function TLSEngine.CallPStr(var TP: TTerm; S: string): Boolean;
 begin
   Result := False;
 
-  FRC := lsCallStrA(FEng, TP, PAnsiChar(AnsiString(S)));
+  FRC := lsCallStr(FEng, TP, PChar(S));
   case FRC of
     0: Result := False;
     1: Result := True;
@@ -620,91 +741,93 @@ begin
   if FRC <> 0 then LSError('lsRetract', FRC);
 end;
 
-procedure TLSEngine.AssertaStr(S: PAnsiChar);
+procedure TLSEngine.AssertaStr(S: PChar);
 begin
-  FRC := lsAssertaStrA(FEng, S);
+  FRC := lsAssertaStr(FEng, S);
   if FRC <> 0 then LSError('lsAssertaStr', FRC);
 end;
 
-procedure TLSEngine.AssertzStr(S: PAnsiChar);
+procedure TLSEngine.AssertzStr(S: PChar);
 begin
-  FRC := lsAssertzStrA(FEng, S);
+  FRC := lsAssertzStr(FEng, S);
   if FRC <> 0 then LSError('lsAssertzStr', FRC);
 end;
 
-procedure TLSEngine.RetractStr(S: PAnsiChar);
+procedure TLSEngine.RetractStr(S: PChar);
 begin
-  FRC := lsRetractStrA(FEng, S);
+  FRC := lsRetractStr(FEng, S);
   if FRC <> 0 then LSError('lsRetractStr', FRC);
 end;
 
 procedure TLSEngine.AssertaPStr(S: string);
 begin
-  FRC := lsAssertaStrA(FEng, PAnsiChar(AnsiString(S)));
+  FRC := lsAssertaStr(FEng, PChar(S));
   if FRC <> 0 then LSError('lsAssertaStr', FRC);
 end;
 
 procedure TLSEngine.AssertzPStr(S: string);
 begin
-  FRC := lsAssertzStrA(FEng, PAnsiChar(AnsiString(S)));
+  FRC := lsAssertzStr(FEng, PChar(S));
   if FRC <> 0 then LSError('lsAssertzStr', FRC);
 end;
 
 procedure TLSEngine.RetractPStr(S: string);
 begin
-  FRC := lsRetractStrA(FEng, PAnsiChar(AnsiString(S)));
+  FRC := lsRetractStr(FEng, PChar(S));
   if FRC <> 0 then LSError('lsRetractStr', FRC);
 end;
 
 { string/term conversion functions }
 
-procedure TLSEngine.TermToStr(T: TTerm; S: PAnsiChar; N: Integer);
+procedure TLSEngine.TermToStr(T: TTerm; S: PChar; N: Integer);
 begin
-  FRC := lsTermToStrA(FEng, T, S, N);
+  FRC := lsTermToStr(FEng, T, S, N);
   if FRC <> 0 then LSError('lsTermToStr', FRC);
 end;
 
-procedure TLSEngine.TermToStrQ(T: TTerm; S: PAnsiChar; N: Integer);
+procedure TLSEngine.TermToStrQ(T: TTerm; S: PChar; N: Integer);
 begin
-  FRC := lsTermToStrQA(FEng, T, S, N);
+  FRC := lsTermToStrQ(FEng, T, S, N);
   if FRC <> 0 then LSError('lsTermToStrQ', FRC);
 end;
 
-procedure TLSEngine.StrToTerm(var TP: TTerm; S: PAnsiChar);
+procedure TLSEngine.StrToTerm(var TP: TTerm; S: PChar);
 begin
-  FRC := lsStrToTermA(FEng, TP, S);
+  FRC := lsStrToTerm(FEng, TP, S);
   if FRC <> 0 then LSError('lsStrToTerm', FRC);
 end;
 
 function TLSEngine.TermToPStr(T: TTerm): string;
 var
-  res: AnsiString;
+  res: string;
 begin
   SetLength(res, StrTermLen(T));
   if Length(res) > 0 then
     res[1] := #0;
 
-  FRC := lsTermToStrA(FEng, T, PAnsiChar(res), Length(res) + 1);
+  FRC := lsTermToStr(FEng, T, PChar(res), Length(res) + 1);
+
   if FRC <> 0 then LSError('lsTermToStr', FRC);
-  Result := string(PAnsiChar(res));
+  Result := PChar(res);
 end;
 
 function TLSEngine.TermToPStrQ(T: TTerm): string;
 var
-  res: AnsiString;
+  res: string;
 begin
   SetLength(res, StrTermLen(T));
   if Length(res) > 0 then
     res[1] := #0;
 
-  FRC := lsTermToStrQA(FEng, T, PAnsiChar(res), Length(res) + 1);
+  FRC := lsTermToStrQ(FEng, T, PChar(res), Length(res) + 1);
+
   if FRC <> 0 then LSError('lsTermToStrQ', FRC);
-  Result := string(PAnsiChar(res));
+  Result := PChar(res);
 end;
 
 procedure TLSEngine.PStrToTerm(var TP: TTerm; S: string);
 begin
-  FRC := lsStrToTermA(FEng, TP, PAnsiChar(AnsiString(S)));
+  FRC := lsStrToTerm(FEng, TP, PChar(S));
   if FRC <> 0 then LSError('lsStrToTerm', FRC);
 end;
 
@@ -717,19 +840,19 @@ end;
 
 procedure TLSEngine.MakeAtom(var TP: TTerm; S: string);
 begin
-  FRC := lsMakeAtomA(FEng, TP, PAnsiChar(AnsiString(S)));
+  FRC := lsMakeAtom(FEng, TP, PChar(S));
   if FRC <> 0 then LSError('lsMakeAtom', FRC);
 end;
 
-procedure TLSEngine.MakeStr(var TP: TTerm; S: PAnsiChar);
+procedure TLSEngine.MakeStr(var TP: TTerm; S: PChar);
 begin
-  FRC := lsMakeStrA(FEng, TP, S);
+  FRC := lsMakeStr(FEng, TP, S);
   if FRC <> 0 then LSError('lsMakeStr', FRC);
 end;
 
 procedure TLSEngine.MakePStr(var TP: TTerm; S: string);
 begin
-  FRC := lsMakeStrA(FEng, TP, PAnsiChar(AnsiString(S)));
+  FRC := lsMakeStr(FEng, TP, PChar(S));
   if FRC <> 0 then LSError('lsMakeStr', FRC);
 end;
 
@@ -766,15 +889,20 @@ end;
 
 function TLSEngine.GetPStrTerm(T: TTerm): string;
 var
-  res: AnsiString;
+  res: string;
 begin
   SetLength(res, lsStrTermLen(FEng, T));
   if Length(res) > 0 then
     res[1] := #0;
 
+{$IFDEF UNICODE}
+  FRC := lsGetTerm(FEng, T, TTypeInt(dWSTR), PWideChar(res));
+{$ELSE}
   FRC := lsGetTerm(FEng, T, TTypeInt(dSTR), PAnsiChar(res));
+{$ENDIF}
+
   if FRC <> 0 then LSError('lsGetTerm', FRC);
-  Result := string(PAnsiChar(res));
+  Result := PChar(res);
 end;
 
 function TLSEngine.GetIntTerm(T: TTerm): Integer;
@@ -817,48 +945,51 @@ end;
 
 procedure TLSEngine.GetFA(T: TTerm; var S: string; var AP: TArity);
 var
-  res: AnsiString;
+  res: string;
 begin
   SetLength(res, 4096);
   if Length(res) > 0 then
     res[1] := #0;
 
-  FRC := lsGetFAA(FEng, T, PAnsiChar(res), AP);
+  FRC := lsGetFA(FEng, T, PChar(res), AP);
+
   if FRC <> 0 then LSError('lsGetFA', FRC);
-  S := string(PAnsiChar(res));
+  S := PChar(res);
 end;
 
 function TLSEngine.GetFunctor(T: TTerm): string;
 var
-  res: AnsiString;
+  res: string;
   AP: TArity;
 begin
   SetLength(res, 4096);
   if Length(res) > 0 then
     res[1] := #0;
 
-  FRC := lsGetFAA(FEng, T, PAnsiChar(res), AP);
+  FRC := lsGetFA(FEng, T, PChar(res), AP);
+
   if FRC <> 0 then LSError('lsGetFunctor', FRC);
-  Result := string(PAnsiChar(res));
+  Result := PChar(res);
 end;
 
 function TLSEngine.GetArity(T: TTerm): Integer;
 var
-  res: AnsiString;
+  res: string;
   AP: TArity;
 begin
   SetLength(res, 4096);
   if Length(res) > 0 then
     res[1] := #0;
 
-  FRC := lsGetFAA(FEng, T, PAnsiChar(res), AP);
+  FRC := lsGetFA(FEng, T, PChar(res), AP);
+
   if FRC <> 0 then LSError('lsGetArity', FRC);
   Result := AP;
 end;
 
 procedure TLSEngine.MakeFA(var TP: TTerm; S: string; A: TArity);
 begin
-  FRC := lsMakeFAA(FEng, TP, PAnsiChar(AnsiString(S)), A);
+  FRC := lsMakeFA(FEng, TP, PChar(S), A);
   if FRC <> 0 then LSError('lsMakeFA', FRC);
 end;
 
@@ -876,8 +1007,15 @@ end;
 function TLSEngine.UnifyPStrArg(var TP: TTerm; N: Integer; S: string): Boolean;
 begin
   Result := False;
-  StrPCopy(FAnsiBuf, AnsiString(S));
+
+{$IFDEF UNICODE}
+  StrPCopy(FWideBuf, S);
+  FRC := lsUnifyArg(FEng, TP, N, TTypeInt(dWSTR), @FWideBuf);
+{$ELSE}
+  StrPCopy(FAnsiBuf, S);
   FRC := lsUnifyArg(FEng, TP, N, TTypeInt(dSTR), @FAnsiBuf);
+{$ENDIF}
+
   case FRC of
     0: Result := False;
     1: Result := True;
@@ -888,8 +1026,15 @@ end;
 function TLSEngine.UnifyAtomArg(var TP: TTerm; N: Integer; S: string): Boolean;
 begin
   Result := False;
-  StrPCopy(FAnsiBuf, AnsiString(S));
+
+{$IFDEF UNICODE}
+  StrPCopy(FWideBuf, S);
+  FRC := lsUnifyArg(FEng, TP, N, TTypeInt(dWATOM), @FWideBuf);
+{$ELSE}
+  StrPCopy(FAnsiBuf, S);
   FRC := lsUnifyArg(FEng, TP, N, TTypeInt(dATOM), @FAnsiBuf);
+{$ENDIF}
+
   case FRC of
     0: Result := False;
     1: Result := True;
@@ -950,15 +1095,20 @@ end;
 
 function TLSEngine.GetPStrArg(T: TTerm; N: Integer): string;
 var
-  res: AnsiString;
+  res: string;
 begin
   SetLength(res, lsStrArgLen(FEng, T, N));
   if Length(res) > 0 then
     res[1] := #0;
 
+{$IFDEF UNICODE}
+  FRC := lsGetArg(FEng, T, N, TTypeInt(dWSTR), PWideChar(res));
+{$ELSE}
   FRC := lsGetArg(FEng, T, N, TTypeInt(dSTR), PAnsiChar(res));
+{$ENDIF}
+
   if FRC <> 0 then LSError('lsGetArg', FRC);
-  Result := string(PAnsiChar(res));
+  Result := PChar(res);
 end;
 
 function TLSEngine.GetIntArg(T: TTerm; N: Integer): Integer;
@@ -1045,15 +1195,20 @@ end;
 
 function TLSEngine.PopPStrList(var TP: TTerm; var S: string): TRC;
 var
-  res: AnsiString;
+  res: string;
 begin
   SetLength(res, StrTermLen(TP));
   if Length(res) > 0 then
     res[1] := #0;
 
+{$IFDEF UNICODE}
+  FRC := lsPopList(FEng, TP, TTypeInt(dWSTR), PWideChar(res));
+{$ELSE}
   FRC := lsPopList(FEng, TP, TTypeInt(dSTR), PAnsiChar(res));
+{$ENDIF}
+
   Result := FRC;
-  S := string(PAnsiChar(res));
+  S := PChar(res);
   case FRC of
     0: Result := FRC;
     -1: Result := FRC;
@@ -1118,9 +1273,15 @@ end;
 
 function TLSEngine.GetPStrHead(T: TTerm; var S: string): TRC;
 begin
+{$IFDEF UNICODE}
+  FRC := lsGetHead(FEng, T, TTypeInt(dWSTR), @FWideBuf);
+  S := FWideBuf;
+{$ELSE}
   FRC := lsGetHead(FEng, T, TTypeInt(dSTR), @FAnsiBuf);
+  S := FAnsiBuf;
+{$ENDIF}
+
   Result := FRC;
-  S := string(StrPas(FAnsiBuf));
   case FRC of
     0: Result := FRC;
     -1: Result := FRC;
@@ -1199,7 +1360,7 @@ end;
 
 procedure TLSEngine.SetOutput(PFunc1: TPutC; PFunc2: TPutS);
 begin
-  FRC := lsSetOutputA(FEng, PFunc1, PFunc2);
+  FRC := lsSetOutput(FEng, PFunc1, PFunc2);
   if FRC <> 0 then LSError('lsSetOutput', FRC);
 end;
 
@@ -1207,37 +1368,37 @@ end;
 
 procedure TLSEngine.GetVersion(var S: string);
 var
-  res: AnsiString;
+  res: string;
 begin
   SetLength(res, 4096);
   if Length(res) > 0 then
     res[1] := #0;
 
-  FRC := lsGetVersionA(FEng, PAnsiChar(AnsiString(res)));
+  FRC := lsGetVersion(FEng, PChar(res));
 
   if FRC <> 0 then LSError('lsGetVersion', FRC);
-  S := string(PAnsiChar(res));
+  S := PChar(res);
 end;
 
 function TLSEngine.GetPVersion: string;
 var
-  res: AnsiString;
+  res: string;
 begin
   SetLength(res, 4096);
   if Length(res) > 0 then
     res[1] := #0;
 
-  FRC := lsGetVersionA(FEng, PAnsiChar(AnsiString(res)));
+  FRC := lsGetVersion(FEng, PChar(res));
 
   if FRC <> 0 then LSError('lsGetVersion', FRC);
-  Result := string(PAnsiChar(res));
+  Result := PChar(res);
 end;
 
 { Error handling functions }
 
-procedure TLSEngine.GetExceptMsg(S: PAnsiChar; L:Integer);
+procedure TLSEngine.GetExceptMsg(S: PChar; L:Integer);
 begin
-  lsGetExceptMsgA(FEng, S, L);
+  lsGetExceptMsg(FEng, S, L);
 end;
 
 function TLSEngine.GetExceptRC: TRC;
@@ -1245,16 +1406,15 @@ begin
   Result := lsGetExceptRC(FEng);
 end;
 
-procedure TLSEngine.GetExceptReadBuffer(S: PAnsiChar; L: Integer);
+procedure TLSEngine.GetExceptReadBuffer(S: PChar; L: Integer);
 begin
-  lsGetExceptReadBufferA(FEng, S, L);
+  lsGetExceptReadBuffer(FEng, S, L);
   if FRC <> 0 then LSError('lsGetExceptReadBuffer', FRC);
 end;
 
-
-procedure TLSEngine.GetExceptCallStack(S: PAnsiChar; L: Integer);
+procedure TLSEngine.GetExceptCallStack(S: PChar; L: Integer);
 begin
-  lsGetExceptCallStackA(FEng, S, L);
+  lsGetExceptCallStack(FEng, S, L);
   if FRC <> 0 then LSError('lsGetExceptCallStack', FRC);
 end;
 
@@ -1267,13 +1427,15 @@ end;
 
 procedure TLSEngine.LSError(APIName: string; RC: Integer);
 var
-  S: AnsiString;
+  S: string;
 begin
   SetLength(S, 4096);
   S[1] := #0;
-  lsGetExceptMsgA(FEng, PAnsiChar(S), Length(S) + 1);
-  S := PAnsiChar(S);
-  raise ELogicServer.Create(APIName + ': ' + IntToStr(RC) + ' ' + string(S));
+
+  lsGetExceptMsg(FEng, PChar(S), Length(S) + 1);
+
+  S := PChar(S);
+  raise ELogicServer.Create(APIName + ': ' + IntToStr(RC) + ' ' + S);
 end;
 
 procedure Register;
