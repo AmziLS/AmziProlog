@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>System Predicates</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="SystemPredicates"></A><FONT COLOR="#D2AA00">System Predicates</FONT> </h1>
+
+<!AMZI_INDEX=  System Predicates>
+<P>Various predicates are provided for getting information about the operation 
+  of the Prolog engine and the computer environment.</P>
+
+
+<H3><A name="commandlineArgsL"></A><font color="#000080">command_line(ArgsL)</font></H3>
+<p><!AMZI_INDEX=  command_line/1; command line arguments; arguments, command line><b>command_line/1</b> succeeds by unifying ArgsL 
+  with a list of character code lists, each of which is an argument on the command 
+  line used when the program was invoked. The character code lists are a convenient 
+  form for doing character-by-character analysis of the argments, or for sending 
+  to a DCG parser. They can also be converted to atoms, strings, or terms as necessary.</p>
+<p>This predicate can be used only in command-line environments or Windows console 
+  mode, but is a useful tool for applications designed to run in those environments. 
+  Here is a short sample program illustrating it's use.</p>
+<ul><font color="#000080"><pre>
+% command_line.pro
+
+main :-
+   command_line(ARGS),
+   writeq(ARGS),
+   nl,
+   args_to_strings(ARGS),
+   nl.
+
+args_to_strings([]).
+args_to_strings([ARG|ARGS]) :-
+   string_list(STR, ARG),
+   writeq(STR),
+   nl,
+   args_to_strings(ARGS).
+</pre></font></ul>
+<p>Running it (after compiling and linking):</p>
+<ul><font color="#000080"><pre>
+D:\>arun command_line one two
+[[0w006f, 0w006e, 0w0065], [0w0074, 0w0077, 0w006f]]
+`one`
+`two`
+</pre></font></ul>
+
+
+<H3><A NAME="dateMonthNVDayNVYearNV"></A><FONT COLOR="#000080">date(MONTH, DAY, 
+  YEAR)</FONT></H3>
+
+<P><!AMZI_INDEX=  date/3><B>date/3</B> returns the MONTH, DAY and YEAR if unbound. 
+  If bound, then it unifies with them. For example, this is the day this bit of 
+  documentation was updated: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- date(YEAR, MONTH, DAY).
+YEAR = 4
+MONTH = 26
+DAY = 2002 
+yes</FONT></PRE>
+</UL>
+<p>There is a <a href="../libs/date_time.htm">date-time library</a> that provides 
+  predicates for doing date-time arithmetic.</p>
+<H3><A NAME="timeHourMinSec"></A><FONT COLOR="#000080">time(HOUR, MIN, SEC)</FONT></H3>
+
+<P><!AMZI_INDEX=  time/3><B>time/3</B> succeeds by unifying HOUR, MIN, and SEC 
+  to the current time-of-day (hours, minutes, and seconds respectively). HOUR 
+  runs from 0 to 24. For example, this is the time this bit of documentation was 
+  updated: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- time(HOUR, MINUTES, SECONDS).
+HOUR = 14
+MINUTES = 3
+SECONDS = 54 
+yes</FONT></PRE>
+</UL>
+<p>There is a <a href="../libs/date_time.htm">date-time library</a> that provides 
+  predicates for doing date-time arithmetic.</p>
+
+<H3><A NAME="gc0"></A><FONT COLOR="#000080">gc</FONT></H3>
+
+<P><!AMZI_INDEX=  gc/0; garbage collection><B>gc/0</B> forces garbage collection 
+  of unused dynamic clauses, heap cells, and strings. Garbage collection is automatic 
+  in Prolog, so in general, it is not necessary to call <b>gc/0</b>.</P>
+
+<H3><A NAME="highwater"></A><FONT COLOR="#000080">highwater(Heap, Local,
+Control, Trail)</FONT></H3>
+
+<P><!AMZI_INDEX=  highwater/4; stack sizes><B>highwater/4 </B>predicate returns the approximate 
+  highwater marks used by these four control structures. These values, plus some 
+  extra space, can then be used in <a href="pug_runtime.htm#CFGParameters">configuration parameters</a> 
+  for minimizing the resources required for an application. </P>
+
+<H3><a name="loadlsxFilenameA"></a><font color="#000080">loadlsx(FilenameA)</font></H3>
+<p><!AMZI_INDEX= loadlsx/1; LSX><b>loadlsx</b> dynamically loads a logic server extension 
+  at runtime from a Prolog program.</p>
+<p>Example:</p>
+<blockquote> 
+  <pre><font color="#000080">main :-
+ loadlsx('aosutils.lsx'),
+ ...</font></pre>
+</blockquote>
+<p>If loadlsx is called from a directive within a module specification, then the predicates for that LSX are loaded in that module.</p>
+<p>For example, to hide the xarray sample predicates in a module:</p>
+<blockquote> 
+  <pre><font color="#000080">:- module(array_utils).
+:- loadlsx('xarray.lsx').
+...
+:- end_module(array_utils).</font></pre>
+</blockquote>
+
+<H3><A NAME="proheapTopPos"></A><FONT COLOR="#000080">pro_heap(Top, Pos)</FONT></H3>
+
+<P><!AMZI_INDEX=pro_heap/2; Heap; Stacks ><B>pro_heap/2</B> returns the
+size, Top, and current position, Pos, of the heap. </P>
+
+<H3><A NAME="procontrolTopPos"></A><FONT COLOR="#000080">pro_control(Top,
+Pos)</FONT></H3>
+
+<P><!AMZI_INDEX=  pro_control/2; Control; Stacks ><B>pro_control/2</B> returns
+the size, Top, and current position, Pos, of the control stack. </P>
+
+<H3><A NAME="prolocalTopPos"></A><FONT COLOR="#000080">pro_local(Top, Pos)</FONT></H3>
+
+<P><!AMZI_INDEX=  pro_local/2; Local; Stacks><B>pro_local/2</B> returns the
+size, Top, and current position, Pos, of the local stack. </P>
+
+<H3><A NAME="protrailTopPos"></A><FONT COLOR="#000080">pro_trail(Top, Pos)</FONT></H3>
+
+<P><!AMZI_INDEX= pro_trail/2; Trail; Stacks><B>pro_trail/2</B> returns
+the size, Top, and current position, Pos, of the trail stack. </P>
+
+<H3><A NAME="stacksizesHeapControlLocalTrai"></A><FONT COLOR="#000080">stack_sizes(Heap,
+Control, Local, Trail)</FONT></H3>
+
+<P><!AMZI_INDEX=  stack_sizes/4; Heap; Control; Local; Trail; Stacks><B>stack_sizes</B>
+returns the number of cells in use on each of the respective stacks. </P>
+
+<H3><A NAME="systemCmdA"></A><FONT COLOR="#000080">system(CmdA)</FONT></H3>
+
+<P><!AMZI_INDEX=  system/1><B>system/1</B> executes an operating system command
+or program. </P>
+
+<P>CmdA must be instantiated to an atom representing a command or program
+that can be executed by the operating system. The call to <B>system/1 </B>succeeds
+if the command &quot;succeeded&quot;. For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- system('dir').</FONT></PRE>
+</UL>
+
+<H3><A NAME="timerTicks"></A><FONT COLOR="#000080">timer(Ticks)</FONT></H3>
+
+<P><!AMZI_INDEX=  timer/1; time; cputime><B>timer/1</B> succeeds if Ticks can be instantiated 
+  to floating point seconds since some implementation dependent time. The built-in 
+  atoms, <a href="ref_math.htm#BuiltinAtoms">cputime and cpuclock</a> provide 
+  similar functions.</P>
+
+<P>It is intended primarily for timing executions </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- timer(X), do_something, timer(Y), Z is Y - X, write(Z).</FONT></PRE>
+</UL>
+
+<P>Note that timings can also be done using the built-in atom, <B>cputime</B>.
+The value of <B>cputime</B> is the current elapsed time in floating point
+seconds. It can be used in arithmetic expressions. </P>
+
+<H3><A NAME="versionString"></A><FONT COLOR="#000080">version(String)</FONT></H3>
+
+<P><!AMZI_INDEX=  version/1><B>version/1</B> returns a string with the current
+Amzi! version. </P>
+
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P>&nbsp; </P>
+
+</BODY>
+</HTML>

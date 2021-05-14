@@ -1,0 +1,409 @@
+<HTML>
+<HEAD>
+<TITLE>Designing and Building a PC Card Installation Expert</TITLE>
+</HEAD>
+<BODY bgcolor=#FFFFFF text=#000000>
+<H1>Designing and Building a PC Card Installation Expert</H1>
+<P>
+by Gregg Weissman
+<P>
+<I>This is an expanded version of the article that originally
+appeared in Dr. Dobb's Journal, Aug 96.</I>
+
+
+<H2>The Problem &amp; the Approach to the Solution</H2>
+<P> <img src="xircom.gif" width="180" height="118" align="right">Anyone who has 
+  tried using a PC Card (PCMCIA Card) over the last several years knows the promise 
+  and the frustration of the technology, which tries to be 'plug and play' and 
+  too often becomes 'plug and pray.' 
+<P>
+The reasons for this include manufacturers' loose interpretations
+of the PC Card specification, subtle differences in the interactions
+between card, computer, and operating system, and simple pilot
+error.  Effort on several vendors' parts has gone into fixing
+this problem, creating installation programs which will try to
+automatically configure the PC Card and driver software, PC Card
+system software (Socket and Card Services) which analyzes and
+tries to correct configuration errors, and adhering more closely
+to published standards.
+<P>
+For the manufacturer of a PC Card, the combinatorics of trying
+to be compatible with a dozen laptop makers with a dozen models
+each, a large handful of current and legacy versions of PC Card
+systems software, several species of operating systems, not to
+mention being interoperable with other PC Cards from other manufacturers,
+go beyond daunting to the realm of impossibility very rapidly.
+ At Xircom we had the choice to limit the scope of compatibility
+we were willing to settle for, but instead opted to create an
+expert system that could solve the most common and most serious
+obstacles to a successful installation and compatible operation
+of our network and network/modem combo-cards.
+<P>
+Traditional procedural programming techniques and languages are
+excellent for accomplishing what they are intended to do, and
+can do almost anything if you push them hard enough, but I felt
+that there were serious deficits in using only a language like
+C to solve our problems.  For one thing, a vast collection of
+statements like<BR>
+<PRE>if (problem_1_exists)
+	do_solution_1();
+</PRE>
+<P>
+didn't appeal to me esthetically, and would be too hard to maintain.
+ A more table-driven approach, though, would have required setting
+up a meta-language for expressing problems and solutions, requiring
+a lot of documentation and training for newcomers to the project.
+ In this day and age it is essential to think beyond the implementation
+of today's code, and consider its maintainability and evolvability
+over time.  Revising and going through a code/test/release cycle
+on core code for the lifetime of the system as new sources of
+incompatibilities arose, and as our products went though hardware
+and driver revisions, also seemed like a burden that was too great
+in proportion to the payoff.
+<P>
+Based on some exposure to Prolog in the mid-eighties, when Borland
+made a splash with the release of an integrated development system
+and compiler, I started to seriously consider it as an ideal language
+to use to create our expert.  Prolog has the capability to very
+simply perform tasks that would take hundreds of lines of C code,
+including exhaustively searching for solutions in a 'decision
+tree', allowing expression of rules and facts with little regard
+for procedural details, and supporting self-modification during
+execution.  Facts, or simple statements describing the state of
+the system being installed onto, could be expressed in a Prolog
+'database' and then a logic engine could digest all these facts
+and determine how to install a PC Card, instruct the user how
+to correct compatibility problems that would prevent correct operation,
+and select optimum configuration parameters.
+<P>
+The only problem was that, as well-suited as Prolog is to those
+sorts of tasks, it is awful for those times when you really want
+to do old-fashioned procedural programming like handling user
+interface tasks, talking to operating systems, and otherwise architecting
+major applications.  When all you really want to do is just iterate,
+C is a lot more straightforward than Prolog.  So the required
+solution looked like it was going to require an expert system
+built in Prolog, but with a traditional C or C++ application superstructure.
+ The Prolog toolset that exactly fit the bill is the Amzi! Prolog
+compiler and logic server, which is one of just a few Prolog implementations
+that support easy integration with other high-level languages.
+<P>
+With Amzi! Prolog, development and compilation can be done within
+a Windows Integrated Development Environment (IDE), or you can
+edit a Prolog source file and compile from the DOS command line.
+ The compiled source resides in a proprietary binary format file
+with an .xpl extension which is loaded by the &quot;logic server&quot;
+- a Prolog engine implemented in C which is provided in .DLL and
+.OBJ formats for linking to your application.  Some easily implemented
+conventions allow you to call Prolog 'functions' from within a
+C (or C++ ... from now on I'll just lump them together as &quot;C++&quot;)
+program, or to call from Prolog to C++ functions.  With the comprehensive
+ API provided for calling the logic server, you can manipulate
+the Prolog component to any level of detail desired, or you can
+call higher-level functions that hide the Prolog internals.  This
+mix of capabilities made it the ideal choice for the project.
+
+
+<H2>Structure of the System</H2>
+<P>
+The design of the complete system involved accounting for two
+very different tasks.  The first was to collect as much information
+about the target computer, its configuration, PC Card software,
+and other installed devices as possible. The second task was to
+take all this information, make some sense out of it so that a
+configuration for installing the card could be determined, and
+detect failure modes that would prevent the installation from
+being successful.
+<P>
+The first task was accomplished by designing a series of C++ modules,
+including a general class library for working with DOS and Windows
+platforms and their dependencies, PC Cards, and PC Card systems
+software (Card Services).  Utilizing the services of the general
+class library was a collection of classes which model system components.
+ Deriving from a base &quot;Device&quot; class, classes for each
+component were responsible for detecting and reporting only those
+characteristics bound to that specific device type.  An &quot;IODevice&quot;
+object was instantiated, for example, which only had the responsibility
+for reporting on IO port usage throughout the IO space, in a general
+way. Other examples are a &quot;SoundCardDevice&quot; object which
+had the task of detecting common sound cards and reporting on
+their characteristics, an  &quot;IRQControllerDevice&quot; which
+analyzed the settings on the Peripheral Interrupt Controller chip
+as a means of detecting free IRQ's, and a &quot;NetworkDevice&quot;
+object which looked for open network connections. No doubt a real
+pro Prolog programmer could have done this all in Prolog, but
+for me the C++ approach was completely natural in handling the
+low-level, dirty job of snooping around the system while facilitating
+a 'pure' architecture which makes maintenance and enhancement
+of the code almost painless.
+<P>
+To analyze the PC Card environment, a class was defined to encapsulate
+examination and diagnostic functions that could report on a myriad
+of parameters representing the configuration parameters specific
+to PC Cards and Card Services.  Functions highly specific to exercising
+Card Services capabilities and resource allocations were executed
+to probe every cranny of how well that complex system component
+was running.  Details of how this part of the system was implemented
+is far outside the scope of this article, but anyone familiar
+with PC Card technology can probably appreciate the complexities
+of determining whether events were being generated correctly,
+if configurations could be selected, if Card Services was allocating
+and releasing  memory and IO resources correctly, and so on.
+<P>
+What the Card Services and system diagnostics functions had in
+common was that the results of their tests were collected in a
+linked list of objects derived from an Assertion class.  The Assertion
+class had the responsibility for linking together instances of
+itself and its subclasses, each instance containing a representation
+of a fact regarding system state.  Assertions were generated in
+one of a small handful of canonical forms, with a subclass managing
+the storage and representation of that particular form.  When
+all system diagnostics were complete, a static member function
+of the Assertion class was invoked to dump all assertions out
+to a disk file, in a form suitable for digestion by the expert
+system written in Prolog.
+<P>
+Also written in C/C++, but only loosely coupled with the &quot;front-end&quot;
+was, logically enough, a &quot;back-end&quot; which was responsible
+for executing diagnostic functions on the PC card being installed,
+under the control of the Expert System which is described below.
+ Taking parameters from the Expert System, the back-end would
+actually test out configurations to ensure that the card would
+function as intended given the Expert's analysis, and report back
+a result.  This showed off one of the strengths of the Amzi! system,
+which supported not only invoking the Prolog engine from the C++
+front-end, but also supported calling back down to C functions
+from the Expert System.
+<P>
+The overall system architecture looked like this, then:<P>
+<IMG SRC="xircarch.gif">
+<P>
+The Expert System consisted of three main components: the Driver,
+the Rules, and the Assertions generated by the C++ front-end.
+ The Driver and Rules were combined into one compiled executable
+which the Amzi! logic server executed.  In the Amzi architecture,
+the logic server is a C++ object, implemented in this case as
+a DLL, invoked by the front-end by calling a few initialization
+routines, including one to load the target executable Prolog program,
+and then issuing a &quot;run&quot; function to the server.  The
+Driver portion of the Expert System was simply a series of &quot;function
+calls&quot; to more complex rule processing, and will not be discussed
+here, as the fun was really in the core of designing and implementing
+the machine to digest all the facts about the system and come
+up with intelligent choices for configuring the card.
+<P>
+In order to design the Expert System, there needed to be a schema
+for how all the configuration information would be represented.
+ Only after that was in place could the Rules be constructed that
+would process the raw data, or facts, and derive the desired answer:
+could the card be correctly installed given the configuration
+of the user's system?
+<P>
+The resulting schema represented configuration facts as a tuple
+associated with a resource type. The tuples associated with a
+resource type defined its locus, its value, and an attribute of
+the resource.  For example, to designate the availability of an
+IO port, a fact would appear in the database: &quot;ioresource(machine,0x300,used).&quot;
+<P>
+Once this schema was defined, the vocabulary for the possible
+loci and attributes that could be associated with a resource were
+defined, as there were several.   A resource locus could be &quot;machine&quot;,
+meaning the resource was analyzed as part of the system hardware
+scan , or &quot;cardsrv&quot; (Card Services), meaning the resource
+was analyzed by the Card Services diagnostics, and other similar
+designations.  Attributes were defined as &quot;available&quot;
+or &quot;unavailable&quot;  primarily, with some adjunct attributes
+defined for additional flexibility.  
+<P>
+The Value portion of the tuple always refers to the value of the
+resource under test: a memory address, an IO port address,an IRQ
+number, etc. A portion of the database the expert system was to
+operate on, therefore, looked something like this:
+<BR>
+<PRE>ioresource(machine,0x200,available).
+ioresource(machine,0x220,available).
+ioresrouce(cardsrv,0x200,unavailable).
+...
+memresource(machine,0xD000,available).
+memresource(machine,0xD100,available).
+memresource(cardsrv,0xD000,available).
+...
+irqresource(machine,8,available).
+irqresource(machine,9,available).
+irqresource(cardsrv,8,unavailable).
+...</PRE>
+<P>
+The entire range of system resources as pertain to the installation
+and configuration analysis were represented this way.  IO port
+ranges were defined on 32-byte boundaries, and memory was analyzed
+on 4k boundaries, primarily as that is the minimum granularity
+of Card Services memory allocation logic, and it also served to
+keep the size of the database reasonable.
+<P>
+There were many other system attributes to be tested as part of
+the overall analysis that did not fit this canonical model, and
+they were represented in ad-hoc fashion, as exceptions that had
+to be handled specially. But the core of the analysis operated
+on the database as presented here.
+<P>
+With the database constructs in place, design of the rules began.
+ A decision was made to implement the rules directly in Prolog,
+rather than, as in many expert systems, in a specialized expert
+system dialect interpreted by the Prolog engine.  This gave us
+more flexibility and was a better fit to the very experimental
+nature of the project.  In other words, we didn't know enough
+about what we were doing yet to design an expert system language
+as well as design the analysis.  So the rules were coded in Prolog.
+<P>
+Here's where the strength of Prolog was brought to bear.  A rule
+was written simply as a series of Prolog clauses that tested resources
+in the appropriate combinations and produced a result: either
+the combination of resources tested by a rule allowed configuration
+and installation of the card to proceed, or it revealed a conflict
+that would prevent proper operation and the process terminated
+with appropriate feedback to the user.  Each rule could be designed
+totally independently from the others since there is generally
+no data coupling between Prolog &quot;functions.&quot;  All we
+had to do was capture the essence of what constituted a well-configured
+system, express the rules in Prolog syntax, fire the rules off
+in sequence and let them examine the data. 
+<P>
+For example, let's start with a rule that says &quot;if there
+is an IO port that the system scan indicates is usable, then if
+Card Services thinks it's usable too then it's a candidate for
+configuration of the card.&quot;  In other words: if both the
+system scan and Card Services analysis indicate a free IO port,
+we can try to configure the card to use that IO port.  Expressed
+in Prolog, this looked like:<BR>
+<PRE>iorule1 :-
+	ioresource(machine,Port,usable),
+	ioresource(cardsrv,Port,usable),
+	try_io_port(Port),
+	...</PRE><BR>
+Example 1
+<P>
+In these three lines, Prolog is able to search the database of
+&quot;ioresource&quot; facts where &quot;machine&quot; is the
+locus, find any that match the &quot;usable&quot; attribute, return
+the associated IO port value in &quot;Port&quot;, then search
+the ioresource facts that have &quot;cardsrv&quot; as the locus,
+&quot;usable&quot; as the attribute, and that match the Port value.
+ And that's just the first two lines!  If those clauses succeed,
+then the Port is used in a final diagnostic routine try_io_port,
+which validates that the card will truly work with that value
+of IO port.  I that test succeeds, further logic is executed to
+do something useful with that IO port value.  If any one of the
+three lines fails, then the rule fails, and the driver logic would
+take approriate action.  This rule failing would translate to
+&quot;there either is no port that is reported as available by
+both Card Services and a system scan, or even if there is, it
+doesn't work!&quot;
+<P>
+This shortcuts a good deal of discussion as to the actual mechanism
+Prolog uses for the exhaustive search capability, called backtracking,
+but should convey the idea, and the power of using such an expressive
+language.  To perform the same task in C(++) would take somewhere
+in the range of 6 to 12 lines, plus decisions as to data structure,
+variable naming and scoping, and on and on.
+<P>
+Before the core resource analysis was executed, though, we thought
+it would be helpful to look for known and common conflicts in
+resource and system configuration, and report back to the user
+any conditions that we could detect early on that would prevent
+installation.  Here were more opportunities to exploit the power
+of Prolog, as several dozen complex rules defining conflicts were
+devised, each of which took only a few lines to code.
+<P>
+For example, we could detect if the system memory manager was
+configured incorrectly as follows: first, the front-end scanned
+upper memory blocks to determine what upper memory areas were
+excluded from the memory manager's control, and made other independent
+tests of the usability of the memory and its status as known to
+Card Services.  If there weren't any memory blocks excluded from
+the memory manager, this was simply expressed as<BR>
+<PRE>conflict :- not memresource(memmgr,_,excluded).</PRE>
+<BR>Example 2
+<P>
+If Card Services was configured so that it might allocate a memory
+block that was not excluded from the memory manager, this was
+expressed as:<BR>
+<PRE>conflict :- memresource(cardsvc,Mem,usable),
+	not memresource(memmgr,Mem,excluded).</PRE>
+<BR>Example 3
+<P>
+or, translated, &quot;If a memory block is reported by Card Services
+and usable, and the memory block is not excluded from the memory
+manager command, then there is a conflict.&quot;<BR>
+<P>
+The front-end was able to generate a &quot;fingerprint&quot; of
+the installed system, and Prolog made short work of searching
+for a match in a database of known problem platforms and advise
+of incompatibilities.  For example, the machine's identifier was
+obtained by the front-end and stored as a fact in the database
+as &quot;platform (XXXX)&quot; where XXXX was the specific value
+of the fingerprint;  then we had a set of rules:<BR>
+<PRE>conflict :- platform(platform_type_1),
+	not mem_rule.
+
+mem_rule :- memresource(machine,Address,usable),
+	Address &gt; 0xCFFF.</PRE>
+<BR>Example 4
+<P>
+In these four lines of code, we embodied: &quot;If the platform
+is platform_type_1, then if there is no memory free above upper
+memory address 0xD000:0000, then there is a conflict.&quot;
+<P>
+The modifiability and maintainability of this type of code, once
+the programmer was familiar with the basic nature of Prolog programming,
+was vastly superior to traditional C/C++, where there would have
+been, for each of these kinds of conditions and tests, loops to
+search the data, boundary conditions (what if there were no memory
+blocks reported for the &quot;machine&quot; locus at all?), and
+a complete edit/build/test cycle for each change.  Using the Amzi!
+Prolog system and the architecture described, a new rule could
+be added and compiled into the rule base in a matter of minutes
+without having to touch any core code.
+<P>
+As mentioned above, another powerful feature of the Amzi! system
+is the ability not only to call a Prolog program from a C++ superstructure,
+but the capability of calling a C function as well, having it
+look just like another Prolog clause.  In Example 1 above, the
+&quot;try_io_port&quot; clause was actually a call to a C routine
+that took an <B>int</B> value and performed low-level diagnostics
+on the card: again, a task much more reasonable to code in C and
+assembler than in Prolog! Note that these routines were in C and
+not C++, using the &quot;extern C&quot; linkage construct to force
+the C calling convention.
+<P>
+To do this was simple from the standpoint of integration with
+the logic server.  A table of predicate names and their associated
+C function names, together with the number of arguments to be
+passed in from Prolog, is created in the C module.  An initialization
+call is made to the logic server with a pointer to the table,
+and presto! predicates, written in C, are all available to your
+Prolog program.
+<P>
+The C functions all take one argument, which is a type defined
+by the logic server, which allows function arguments passed in
+from Prolog to be extracted one by one.  The return type is a
+boolean truth value, indicating success or failure just as a native
+Prolog predicate returns.
+<P>
+So there is the capability for a complete integration of C(++)
+and Prolog, allowing the designer to use the proper tool for the
+job.  The Amzi Prolog architecture allowed construction of complex
+system requiring both procedural and non-procedural tasks, and
+performed without any significant drawbacks.  I would not have
+wanted to implement this system using any architecture other than
+one which allowed me to use a hammer to hit the nails and a screwdriver
+to drive the screws, and not, as is so often the case, have to
+see everything as  a nail because all I had was a hammer.<BR>
+<P>
+<I>Gregg Weissman was Manager of Systems Software Development
+at Xircom, Inc, and the architect and implementer of the software
+described in this article.   He has sinced moved to Mountain View
+where he works for Spyrus, Inc as Director of PC Security Products.
+ He can be reached at geeman@best.com.</I>
+
+</BODY>
+</HTML>

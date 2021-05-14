@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Amzi! Debugger
+Bundle-SymbolicName: com.amzi.prolog.debug; singleton:=true
+Bundle-Version: 4.5.10004
+Bundle-ClassPath: prologdebug.jar
+Bundle-Activator: com.amzi.prolog.debug.PrologDebugPlugin
+Bundle-Vendor: Amzi! inc.
+Bundle-Localization: plugin
+Export-Package: com.amzi.prolog.debug,
+ com.amzi.prolog.debug.core.internal,
+ com.amzi.prolog.debug.core.model,
+ com.amzi.prolog.debug.remote,
+ com.amzi.prolog.debug.ui,
+ com.amzi.prolog.debug.ui.actions
+Require-Bundle: org.eclipse.ui.ide,
+ org.eclipse.jface.text,
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.ui.editors,
+ com.amzi.prolog.core,
+ org.eclipse.core.resources,
+ org.eclipse.ui,
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui,
+ org.eclipse.core.runtime
+Eclipse-LazyStart: true

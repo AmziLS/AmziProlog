@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Amzi! Prolog + Logic Server Documentation
+Bundle-SymbolicName: com.amzi.prolog.help; singleton:=true
+Bundle-Version: 4.5.10004
+Bundle-Vendor: Amzi! inc.

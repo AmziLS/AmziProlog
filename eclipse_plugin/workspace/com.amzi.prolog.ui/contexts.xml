@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.contexts"?>
+<contexts>
+
+ <!-- Note: 1) add /com.amzi.prolog.help/ on href 2) add ending / in topic -->
+ 
+ <!-- Views and Dialogs -->
+ 
+ <context id="listener">
+  <description>This is the Prolog Listener View.</description>
+  <topic label="Listener" href="/com.amzi.prolog.help/doc/pro/pug_listener.htm" />
+  <topic label="Command-Line Debugger" href="/com.amzi.prolog.help/doc/pro/pug_debugger.htm" />
+  <topic label="Eclipse IDE Quick Start" href="/com.amzi.prolog.help/doc/pro/pug_ide_quickstart.htm" />
+  <topic label="Eclipse IDE" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm" />
+  <topic label="Amzi! Quick Tutorial" href="/com.amzi.prolog.help/doc/pro/pug_tutorial.htm" />
+  <topic label="Adventure in Prolog" href="/com.amzi.prolog.help/doc/aip/advtop.htm" />
+ </context>
+ 
+ <context id="project_properties">
+  <description>These are the properties for a Prolog Project.</description>
+  <topic label="Project Properties and Building Executables" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm#PrologProjectsAndBuildingExecutables" />
+  <topic label="Eclipse IDE Quick Start" href="/com.amzi.prolog.help/doc/pro/pug_ide_quickstart.htm" />
+  <topic label="Eclipse IDE" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm" />
+ </context>
+ 
+ <context id="cross_reference">
+  <description>These is the Prolog Project Cross Reference View with syntax checking.</description>
+  <topic label="Cross Referencer and Syntax Checker" href="/com.amzi.prolog.help/doc/pro/pug_xref.htm" />
+  <topic label="Project Properties and Building Executables" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm#PrologProjectsAndBuildingExecutables" />
+  <topic label="Eclipse IDE Quick Start" href="/com.amzi.prolog.help/doc/pro/pug_ide_quickstart.htm" />
+  <topic label="Eclipse IDE" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm" />
+ </context>
+ 
+ <context id="editor">
+  <description>These is the Prolog Source Editor.</description>
+  <topic label="Prolog Editor and Outliner" href="/com.amzi.prolog.help/doc/pro/pug_editor.htm" />
+  <topic label="Breakpoints (for Debugging)" href="/com.amzi.prolog.help/doc/pro/pug_debugger_ide.htm#Breakpoints" />
+  <topic label="Eclipse IDE Quick Start" href="/com.amzi.prolog.help/doc/pro/pug_ide_quickstart.htm" />
+  <topic label="Eclipse IDE" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm" />
+  <topic label="Amzi! Quick Tutorial" href="/com.amzi.prolog.help/doc/pro/pug_tutorial.htm" />
+  <topic label="Adventure in Prolog" href="/com.amzi.prolog.help/doc/aip/advtop.htm" />
+ </context>
+ 
+ <context id="outline">
+  <description>These is the Prolog Source File Outliner.</description>
+  <topic label="Prolog Editor and Outliner" href="/com.amzi.prolog.help/doc/pro/pug_editor.htm" />
+  <topic label="Eclipse IDE Quick Start" href="/com.amzi.prolog.help/doc/pro/pug_ide_quickstart.htm" />
+  <topic label="Eclipse IDE" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm" />
+ </context>
+ 
+ <context id="preferences">
+  <description>These are the Preferences for the Prolog Editor.</description>
+  <topic label="Preferences" href="/com.amzi.prolog.help/doc/pro/pug_editor.htm#Preferences" />
+  <topic label="Prolog Editor and Outliner" href="/com.amzi.prolog.help/doc/pro/pug_editor.htm" />
+  <topic label="Eclipse IDE Quick Start" href="/com.amzi.prolog.help/doc/pro/pug_ide_quickstart.htm" />
+  <topic label="Eclipse IDE" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm" />
+ </context>
+ 
+ <!-- Actions -->
+ 
+ <context id="runtime">
+  <description>This runs or debugs a compiled Prolog program.</description>
+  <topic label="Prolog Runtime" href="/com.amzi.prolog.help/doc/pro/pug_runtime.htm" />
+  <topic label="Source Code Debugger" href="/com.amzi.prolog.help/doc/pro/pug_debugger_ide.htm" />
+  <topic label="Eclipse IDE Quick Start" href="/com.amzi.prolog.help/doc/pro/pug_ide_quickstart.htm" />
+  <topic label="Eclipse IDE" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm" />
+ </context>
+ 
+  <context id="listener_debugger">
+  <description>This runs the Prolog Listener or Source Code Debugger.</description>
+  <topic label="Listener" href="/com.amzi.prolog.help/doc/pro/pug_listener.htm" />
+  <topic label="Source Code Debugger" href="/com.amzi.prolog.help/doc/pro/pug_debugger_ide.htm" />
+  <topic label="Eclipse IDE Quick Start" href="/com.amzi.prolog.help/doc/pro/pug_ide_quickstart.htm" />
+  <topic label="Eclipse IDE" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm" />
+ </context>
+ 
+  <context id="remote_debugger">
+  <description>This runs the Remote Prolog Source Code Debugger.</description>
+  <topic label="Remote Debugging" href="/com.amzi.prolog.help/doc/pro/pug_debugger_ide.htm#RemoteDebugging" />
+  <topic label="Source Code Debugger" href="/com.amzi.prolog.help/doc/pro/pug_debugger_ide.htm" />
+  <topic label="Eclipse IDE Quick Start" href="/com.amzi.prolog.help/doc/pro/pug_ide_quickstart.htm" />
+  <topic label="Eclipse IDE" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm" />
+ </context>
+ 
+ <context id="license">
+  <description>Prolog Installation and Licensing.</description>
+  <topic label="Installation" href="/com.amzi.prolog.help/doc/install.htm" />
+  <topic label="Eclipse IDE Quick Start" href="/com.amzi.prolog.help/doc/pro/pug_ide_quickstart.htm" />
+  <topic label="Eclipse IDE" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm" />
+ </context>
+ 
+ <context id="empty_listener">
+  <description>This runs the Prolog Listener without consulting any source files.</description>
+  <topic label="Listener" href="/com.amzi.prolog.help/doc/pro/pug_listener.htm" />
+  <topic label="Command-Line Debugger" href="/com.amzi.prolog.help/doc/pro/pug_debugger.htm" />
+  <topic label="Eclipse IDE Quick Start" href="/com.amzi.prolog.help/doc/pro/pug_ide_quickstart.htm" />
+  <topic label="Eclipse IDE" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm" />
+ </context>
+ 
+</contexts>

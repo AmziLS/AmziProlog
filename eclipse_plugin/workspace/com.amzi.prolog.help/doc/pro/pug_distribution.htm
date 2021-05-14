@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Distributing Your Programs</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="DistributingYourPrograms"></A><FONT COLOR="#D2AA00">Distributing 
+  Your Programs</FONT> </h1>
+
+<P><!AMZI_INDEX = Distributing; arun>In order package up your .plm files into
+a distributable module, you first need to create an .xpl file for your application
+as described in the section on alnk. </P>
+
+<P>For command-line environments like the Windows Console, Solaris or Linux, you 
+  need to create an executable file. The simplist way to do this is to copy arun(.exe) 
+  to <I>yourprog(</I>.exe<i>)</i>, where your compiled and linked Prolog module 
+  is called <I>yourprog</I>.xpl. When <I>yourprog(.exe)</I> is run, it will automatically 
+  run <I>yourprog</I>.xpl. The source code for arun is included in the src/acore/arun 
+  directory. It is in file arun.cpp. A make file is included as well.</P>
+
+<P>To ship your program to other users, the following files are required:
+</P>
+
+<UL>
+  <LI>A host program written in C/C++, Java,&nbsp;Delphi, Visual Basic or any 
+    other language or tool that calls the Amzi! dynamic library runtime. (For 
+    command-line programs, it can simply be the .exe file copied or created from 
+    arun.)</LI>
+  <LI>The Amzi! Prolog dynamic library runtime (.dll&nbsp;or .so):</LI>
+  <UL>
+    <LI>amzi.dll for Windows applications</LI>
+    <LI>libamzi.so for Unix applications</LI>
+  </UL>
+  <LI>The Amzi! Logic Server environment-specific dynamic runtime libraries (.dll 
+    or .so):
+    <ul>
+      <li>amzijni.dll/so for Java applications</li>
+      <li>amzinet.dll for Windows .NET applications</li>
+    </ul>
+  </LI>
+  <li>Your .xpl file (from alnk, which contains a .plm file).</li>
+  <LI>Optionally, any required Logic Server Extensions such as aosutils.lsx, asock.lsx, 
+    aodbc.lsx, etc.</LI>
+  <LI>Optionally, any other supporting files, such as user-modifiable .pro Files. 
+  </LI>
+  <LI>Optionally, an .cfg file for setting stack sizes and other options. </LI>
+</UL>
+
+<P>Your users simply copy these files into a directory and run the program
+by typing its name at the operating system prompt. If that directory is
+in their PATH statement, they can run your application from any directory
+on their machine. </P>
+
+<H2><A NAME="RedistributableFiles"></A><FONT COLOR="#0000FF">Redistributable
+Files</FONT></H2>
+
+<P><!AMZI_INDEX = Distributing; Redistributable Files; Licensing>The following
+files may be distributed with your Amzi! Prolog application: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">arun.exe, arun
+amzi.dll, libamzi.so
+amzijni.dll, amzijni.so
+amzinet.so
+*.lsx
+acgi.exe
+amzi.jar, LogicServer.class, LSException.class</FONT></PRE>
+</UL>
+
+<P>You may distribute  the Prolog library files. </P>
+
+<P>You may distribute the following files if they are linked into your
+EXE file: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">amzi.lib
+amzib.lib</FONT></PRE>
+</UL>
+
+<P>You may incorporate and/or modify  any of the samples (in the samples subdirectory) 
+  into your applications.</P>
+<P>You may distribute any of the files provided as source in the standard distribution, and any files derived from those files. For example, if you modify and/or recompile the Java Logic Server interface you may distribute that derived interface with your application.</P>
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>You may <b>NOT</b> 
+  distribute any other files not explicitly listed here without the prior written 
+  authorization of Amzi! inc. You may <b>NOT</b> distribute any of the development 
+  tools, such as: alis.exe, alis.xpl, acmp.exe, acmp.xpl, alnk.exe, alnk.dll, 
+  the Eclipse plug-ins. For example, there are occasions where it is desired to redistribute the Amzi! Prolog compiler, acmp.xpl. This can only be done using a separate license obtained from Amzi!.</i></P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --></BODY>
+</HTML>

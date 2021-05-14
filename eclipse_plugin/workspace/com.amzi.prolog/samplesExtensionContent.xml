@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<introContent>
+  <!-- Extension to the SDK Samples Page. -->
+  <extensionContent alt-style="css/swt.properties" style="css/samples.css" path="samples/page-content/endAnchor">
+    <group label="Prolog" id="prolog" style-id="samples-group">
+    <link label="Prolog articles" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.amzi.prolog.help/doc/articles/doc.html" id="prolog" style-id="sample-link">
+      <text>See amzi/samples for source code and read these articles</text>
+    </link>
+    </group>
+  </extensionContent>
+</introContent>
+

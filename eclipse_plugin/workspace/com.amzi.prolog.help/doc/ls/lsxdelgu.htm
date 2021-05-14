@@ -1,0 +1,316 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; U) [Netscape]">
+   <TITLE>Delphi GUI Predicates</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1>
+<A NAME="DelphiGUIPredicates"></A><FONT COLOR="#D2AA00">Delphi GUI Predicates</FONT></H1>
+<!AMZI_INDEX=   DelGUI; Extended Predicates; Delphi>The Delphi GUI Predicates
+(DelGUI) are a collection of extended predicates that allow Prolog to directly
+access and manipulate Delphi controls. For example, there are predicates
+that allow you to draw in paintbox controls and add lines to memo controls.
+They are by no means a complete collection, but provide a framework and
+useful start that can be easily supplemented with your own predicates.
+
+<P>They are contained in two files in the samples\delphi\delgui directory. 
+<UL>
+  <LI> <B>delgui.pas</B> - The definitions of the extended predicates, that can 
+    be called by the Prolog component of a Delphi application.</LI>
+
+  <LI> <B>delgui.pro</B> - Higher level predicates built using the extended predicates, 
+    that can also be incorporated in the Prolog components of a Delphi application.</LI>
+</UL>
+
+<H2>
+<A NAME="UsingDelGUI"></A><FONT COLOR="#0000FF">Using DelGUI</FONT></H2>
+<!AMZI_INDEX=   DelGUI; Delphi>To use DelGUI you must perform the following
+steps.
+<OL>
+  <LI> Include delgui.pas in your Delphi project.</LI>
+
+  <LI> Include delgui.pro in your Prolog project, linking it with your Prolog 
+    code to form a .xpl file which is loaded by the Delphi program.</LI>
+
+<LI>
+Include the Amzi! Logic Server component in the main form, or some other
+convenient place, for the Delphi application.</LI>
+
+<LI>
+Initialize the Logic Server and DelGUI predicates before loading the application's
+Prolog code. (The mainform create is a convenient place to do this.) This
+is done using the normal Logic Server Initialization with the added step
+of calling DG_Init between the InitLS and LoadXPL functions. DG_Init takes
+one argument, which is the Logic Server object.</LI>
+
+<LI>
+(optional) For each control you want Prolog to access, you should somehow
+make the address of that control available to Prolog. One simple way is
+to assert Prolog facts with a symbolic name for each control and its address.</LI>
+
+<LI>
+Close the Logic Server when done. (The mainform destroy is a convenient
+place to do this.)</LI>
+</OL>
+There is a test project in the samples/delphi/delgui directory that can be used 
+as a template for building applications that use the Delphi GUI Predicates. It 
+includes code needed to initialize and start work with the Delphi GUI Predicates 
+and a one button form that tests to make sure its all connected correctly. 
+<UL>
+  <LI> <B>dgtemp.dpr</B> - The Delphi project for the template application.</LI>
+
+  <LI> <B>dgmain.pas/dfm</B> - The code and form for the template application.</LI>
+
+  <LI> <B>dbtemp.pro/ppj/xpl</B> - The source code for the simple Prolog program, 
+    as well as the project that includes it and delgui.pro and the resulting .xpl 
+    file from linking the project.</LI>
+</UL>
+For step 5 (above) it is convenient to define a function that asserts controls
+as dynamic clauses(facts) in the Prolog logicbase. Those asserted facts can then be used by
+the Prolog logic to pick up the address of the control it needs to manipulate.
+The following is an example of such a function. It takes three arguments,
+being 1) the type of the control, 2) the name of the control and 3) the
+address of the control. It asserts these as the three arguments of a Prolog
+fact dyn_control/3.
+<PRE><FONT COLOR="#000080">procedure TTest.AssertControl(ctype, name: string; cntl: TControl);
+var
+&nbsp; t: TTerm;
+&nbsp; c: TControl;
+begin
+&nbsp; c := cntl;
+&nbsp; LSEng.MakeFA(t, 'dyn_control', 3);
+&nbsp; LSEng.UnifyAtomArg(t, 1, ctype);
+&nbsp; LSEng.UnifyAtomArg(t, 2, name);
+&nbsp; LSEng.UnifyArg(t, 3, dADDR, @cntl);
+&nbsp; LSEng.Asserta(t);
+end;</FONT></PRE>
+
+<H2>
+<A NAME="FlowofControlIssue"></A><FONT COLOR="#0000FF">Flow of Control
+Issue</FONT></H2>
+<!AMZI_INDEX=   DelGUI; Extended Predicates>The Delphi GUI predicates enable
+you to apply Prolog reasoning to the layout and display of the user interface.
+This can lead to some interesting applications, but there are some design
+issues that need to be addressed for a tight integration between Prolog
+and Delphi.
+
+<P>If you wish to have Prolog query the user, there are two approaches.
+<OL>
+<LI>
+You can have Prolog call an extended predicate and then start a new Windows
+message pump which waits for the answer and returns when it gets it. Unless
+necessary, this approach is probably better avoided.</LI>
+
+<LI>
+You can have Prolog call an extended predicate which puts up the question,
+control or whatever and then simply returns. In this case you have an OnX
+function in Delphi that waits for a response, and when it gets it, it calls
+Prolog. This is a little more complex in the code interaction, because
+you need to split the Prolog logic for asking questions and receiving answers,
+but is a cleaner separation of responsibilities.</LI>
+</OL>
+
+<H2>
+<A NAME="TheExtendedPredicates"></A><FONT COLOR="#0000FF">Extended Predicates</FONT></H2>
+<!AMZI_INDEX=   DelGUI; Delphi; Extended Predicates>These are the predicates defined 
+in delgui.pas. The majority of them take, as the first argument, the address of 
+the control to be manipulated. This argument is indicated by CA in following text. 
+<DL>
+<DT>
+<B>showmessage(Msg)</B></DT>
+
+<DD>
+Displays the message Msg in a message box. Msg is a string. To display
+other Prolog terms, see w_message in the Prolog tools.</DD>
+</DL>
+The predicates beginning with draw_ apply to canvas controls.
+<DL>
+<DT>
+<B>draw_lineto(CA, X, Y)</B></DT>
+
+<DD>
+Draw a line to X, Y.</DD>
+
+<DT>
+<B>draw_moveto(CA, X, Y)</B></DT>
+
+<DD>
+Move the pen to X, Y.</DD>
+
+<DT>
+<B>draw_textout(CA, X, Y, S)</B></DT>
+
+<DD>
+Write the string S at position X, Y.</DD>
+
+<DT>
+<B>draw_textheight(CA, S, IH)</B></DT>
+
+<DD>
+Unify IH with the height of character string S.</DD>
+
+<DT>
+<B>draw_textwidth(CA, S, IW)</B></DT>
+
+<DD>
+Unify IW with the width of character string S.</DD>
+
+<DT>
+<B>draw_cliprect(CA, Top, Left, Bot, Rt)</B></DT>
+
+<DD>
+Unify the four arguments with the coordinates of the clipping rectangle.</DD>
+
+<DT>
+<B>draw_rectangle(CA, Top, Left, Bot, Rt)</B></DT>
+
+<DD>
+Draw a rectangle using the coordinates.</DD>
+
+<DT>
+<B>draw_ellipse(CA, Top, Left, Bot, Rt)</B></DT>
+
+<DD>
+Draw an ellipse in the coordinates.</DD>
+
+<DT>
+<B>draw_pen(CA, SColor, IWidth)</B></DT>
+
+<DD>
+Set the pen to the color named in the string SColor and to the width specified
+in IWidth.</DD>
+
+<DT>
+<B>draw_font(CA, SFont, SColor, ISize)</B></DT>
+
+<DD>
+If the arguments are variables, then they are unified with the current
+font name, color and size. If they are bound terms, the current font name,
+color and size are set to the new values.</DD>
+
+<DT>
+<B>draw_brush(CA, SColor, SStyle)</B></DT>
+
+<DD>
+Set the brush to the color and style specified.</DD>
+</DL>
+The predicates beginning with memo_ apply to memo controls.
+<DL>
+<DT>
+<B>memo_add(CA, S)</B></DT>
+
+<DD>
+Add the string S to the memo.</DD>
+
+<DT>
+<B>memo_lines(CA, ILine, S)</B></DT>
+
+<DD>
+Unify string S with memo line number ILine.</DD>
+
+<DT>
+<B>memo_delete(CA, ILine)</B></DT>
+
+<DD>
+Delete memo line ILine.</DD>
+</DL>
+The predicates beginning with edit_ apply to edit controls
+<DL>
+<DT>
+<B>edit_text(CA, S)</B></DT>
+
+<DD>
+If S is a variable, unify it with the text in the edit control, otherwise
+set the text to the bound string S.</DD>
+
+<DT>
+<B>edit_modified(CA)</B></DT>
+
+<DD>
+If the control is modified, returns true, otherwise returns false.</DD>
+</DL>
+The predicates beginning with radio_ apply to radio button controls.
+<DL>
+<DT>
+<B>radio_group(CA, ItemList)</B></DT>
+
+<DD>
+Add each of the items in ItemList to the radio group.</DD>
+
+<DT>
+<B>radio_selected(CA, I)</B></DT>
+
+<DD>
+If I is a variable, unify it with the radio group item index. It if is
+bound, then set the radio group index to it.</DD>
+</DL>
+The predicates beginning with ctrl_ apply to any control.
+<DL>
+<DT>
+<B>ctrl_visible(CA, I)</B></DT>
+
+<DD>
+If I = 0, set the control's visible property to false, otherwise set it
+to true.</DD>
+</DL>
+The following functions integrate Prolog with other third party Delphi
+components.
+
+<P>Predicates beginning with graph_ apply to SciGraph controls. The SciGraph
+component is available from Pierre Mertz. Information about SciGraph is
+available from the web site: http://www.ee.princeton.edu/~phmertz/scigraph/scigraph.html
+
+<P>You'll find the SciGraph functions are commented out in the source code.
+If you install SciGraph, then you can uncomment those functions and add
+SciGraph to the 'uses' list.
+<DL>
+<DT>
+<B>graph_function(CA, Start, Stop, Inc, EQ)</B></DT>
+
+<DD>
+This function maps a Prolog symbolic equation, such as f(X) = X**2 to a
+scientific graph. EQ is the equation and Start, Stop and Inc delimit the
+range of X values to be plotted. (It makes use of internal predicates defined
+in DELGUI.PRO.)</DD>
+</DL>
+
+<H2>
+<A NAME="ThePrologPredicates"></A><FONT COLOR="#0000FF">Prolog Predicates</FONT></H2>
+
+<DL>
+<DT>
+<!AMZI_INDEX=   DelGUI; Delphi; Extended Predicates><B>w_message(T)</B></DT>
+
+<DD>
+Converts T to a string and then call showmessage. This predicate illustrates
+how a simple Prolog front-end can make an extended predicate easier to
+work with.</DD>
+
+<DT>
+<B>set_equation(SEq), paint_equation(CA)</B></DT>
+
+<DD>
+These two predicates implement the complex function of displaying a symbolic
+Prolog equation in a format as it might appear in a text book, that is,
+with fractions written above and below and square roots written with full
+radical symbols. They use two parts because paint boxes are not drawn directly,
+but rather are only drawn when the Delphi program receives the OnPaint
+command for the paint box control. paint_equation/1 does the painting.
+See the source codes for details, as this predicate illustrates the power
+of Prolog for graphical layout.</DD>
+</DL>
+
+<H2>
+<A NAME="Sample"></A><FONT COLOR="#0000FF">Sample</FONT></H2>
+<!AMZI_INDEX=   DelGUI>See the sample in samples/delphi/eq for an illustration 
+of using DelGUI and in particular the equation display function.<I><FONT SIZE=-1></FONT></I> 
+<br>
+<br><!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P>&nbsp; 
+</BODY>
+</HTML>

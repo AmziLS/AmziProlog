@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>C++ Class</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="CClass"></A><FONT COLOR="#D2AA00">C++ Class</FONT><!AMZI_INDEX=C++ Class> 
+  <!AMZI_INDEX= Borland C++; Microsoft; Visual C++; logicserver.h; amzi.lib; amzib.lib> 
+</h1>
+<P>The Amzi! engine is implemented using C++. Internally, a Prolog engine is a 
+  C++ object with member functions that provide the services of the Logic Server 
+  API. There are two interfaces on that engine object.</P>
+
+<P>One is the standard Logic Server API calls, as documented in the LSAPI section 
+  of this manual. The other is a C++ class, LogicServer, that provides an external 
+  interface to the internal engine object. C++ programmers can use either interface, 
+  but LogicServer is preferred for the obvious reasons.</P>
+
+<P>The C++ interface also includes class LSException. Instances of this class 
+  are thrown when Logic Server exceptions are encountered. C++ programmers should 
+  use try/catch blocks around Logic Server calls in order to catch Logic Server 
+  exceptions. (This is in contrast to the functional LSAPI that uses return codes 
+  for exception handling.)</P>
+
+<P>To use the Logic Server from C++, an application must include the header file 
+  logicserver.h and link with the appropriate library: 
+<UL>
+<LI>amzi.lib for Microsoft Visual C++ applications,</LI>
+<LI>amzib.lib for Borland C++ applications, and</LI>
+  <LI>libamzi.so for Unix C++ applications.</LI>
+</UL>
+
+
+<H3><A NAME="HelloPrologfromC"></A><FONT COLOR="#000080">Hello Prolog</FONT></H3>
+
+<P><!AMZI_INDEX=  Hello Prolog>There are a number of versions of the Hello Prolog 
+  sample in the subdirectory samples/cpp/hello. As of this writing they are:</P>
+
+<UL>
+  <LI>console - A Microsoft VC++ console implementation.</LI>
+  <LI>dialog - A Microsoft VC++ MFC implementation.</LI>
+</UL>
+
+<H3><A NAME="EncapsulatingPrologServices"></A><FONT COLOR="#000080">Encapsulating
+Prolog Services</FONT></H3>
+
+<P>The
+Logic Server class can be easily used to encapsulate application-specific
+Prolog services. Simply derive a class from the Logic Server class and
+define member functions that make the calls to the Logic Server. </P>
+
+<P>You can use the constructor and destructor member functions for initialization
+and closing of the Logic Server, and you can implement your own error handler
+within your class. </P>
+
+<H3><A NAME="MultipleLogicServers"></A><FONT COLOR="#000080">Multiple LogicServers</FONT></H3>
+
+<P>Each time you create a new instance of LogicServer, you create a new instance 
+  of the the Amzi! Prolog engine. You can run as many simultaneous Logic Servers 
+  as your machine can handle. </P>
+
+<H3><A NAME="ImplementingExtendedPredicates"></A><FONT COLOR="#000080">Implementing
+Extended Predicates</FONT></H3>
+
+<P><!AMZI_INDEX= C++ Class; Extended Predicates>Extended predicates (Prolog
+predicates you implement in C/C++) are implemented as callback functions.  That
+is, you pass a function pointer to the Logic Server and associate that pointer
+with a Prolog predicate name.  When the Prolog engine encounters that predicate,
+it calls the function you provided.</P>
+
+<P>Ideally, in a C++ application you would like to implement extended predicates 
+  as member functions in the classes you derive from LogicServer. Because you 
+  can't get access to a member function pointer in C++, this is not easy.</P>
+
+<P>The Logic Server API supports the next best solution.  It allows you to create
+extended predicate definitions that include the predicate name, the function
+pointer and an argument to be passed by the Logic Server to the function.  This
+argument can be anything, but if its the 'this' pointer of the object creating
+the function, then the function can use that pointer to dispatch the call to
+the appropriate member function of your C++ object.</P>
+
+<P>The sample in samples/cpp/petscb illustrates this technique.</P>
+
+<H3><A NAME="UnicodeSupport"></A><FONT COLOR="#000080">Unicode
+Support</FONT></H3>
+<!AMZI_INDEX= Unicode>
+There are wide versions of all the LSAPI calls that use strings as arguments or 
+returns values. The wide version method names all end in 'W'. You use the Standard 
+Template Library class string for ANSI strings and wstring for Unicode ones. 
+<P>The functions mbstowcs() and wcstombs() are used to convert between
+wide and multibyte (ANSI) strings, so multibyte character sets can also
+be used with the Logic Server.</P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I> </I></P>
+
+</BODY>
+</HTML>

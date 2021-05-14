@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Command-Line Runtime Shell</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (WinNT; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="DOSRuntimeShell"></A><FONT COLOR="#D2AA00">Command-Line Runtime Shell</FONT> 
+</h1>
+<P><!AMZI_INDEX=  Runtime Shell; ARUN.C; main>Included in the src/acore/arun directory 
+  is the source code, arun.cpp. This is the source for the command-line interface 
+  runtime shell (arun[.exe]). It is a relatively simple Logic Server application. 
+</P>
+
+<P>Arun takes one argument, which is the name of a .xpl file. It initializes the 
+  Prolog environment, loads the named .xpl file, and calls its <b>main/0</b> predicate. 
+  It then closes the Prolog environment. </P>
+
+<P>You can modify arun.cpp to create your own command-line shell, or use it as 
+  a sample. It illustrates how to trap errors from a C++ program, and how to map 
+  command line arguments to Prolog so they can be retrieved by the Prolog program. 
+</P>
+
+<P>There is one tricky wrinkle in arun.cpp. If the name of the executable is not 
+  arun, then arun assumes its name is the same as the name of the .xpl file it 
+  is supposed to run. Huh? That's not as dumb as it seems, for you can make a 
+  copy of arun.exe, using the name of the .xpl file for the name of the new .exe. 
+  This lets you easily create executables for your application.</P>
+
+<P>For example, if your Prolog program is ducks.xpl, you can copy arun.exe to 
+  ducks.exe. When you run ducks.exe it notices its name is not arun, so it runs 
+  ducks.xpl rather than reading the command line. </P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I><FONT SIZE=-1>.</FONT></I> </P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,312 @@
+% ROOM is an expert system for placing furniture in a living room.
+
+% It is written using the OOPS production system rules language.
+
+% It is only designed to illustrate the use of a forward chaining
+% rules based language for solving configuration problems.  As such
+% it makes many simplifying assumptions (such as furniture has no
+% width).  It just decides which wall each item goes on, and does
+% not decide the relative placement on the wall.
+
+% Furniture to be placed in the room is stored in terms of the form
+% "furniture(item,length)".  The rules look for unplaced furniture,
+% and if found attempt to place it according to the rules of thumb.
+% Once placed, the available space on a wall is updated, the furniture
+% is ed on a wall with a term of the form "position(item,wall)",
+% and the original "furniture" term is removed.
+
+
+% These are the terms which are initially stored in working storage.
+% They set a goal used to force firing of certain preliminary rules,
+% and various facts about the problem domain used by the actual
+% configuration rules.
+
+initial_data([goal(place_furniture),
+              not_end_yet,
+              legal_furniture([couch, chair, table_lamp, end_table,
+                               coffee_table, tv, standing_lamp, end]),
+              opposite(north,south),
+              opposite(south,north),
+              opposite(east,west),
+              opposite(west,east),
+              right(north,west),
+              right(west,south),
+              right(south,east),
+              right(east,north),
+              left(north,east),
+              left(east,south),
+              left(south,west),
+              left(west,north)]).
+
+% Rules 1-8 are an example of how to generate procedural behavior
+% from a non-procedural rule language.  These rules force a series
+% of prompts and gather data from the user on the room and furniture
+% to be configured.  They are included to illustrate the kludgy
+% nature of production systems in a conventional setting.
+
+% This is in contrast to rules f1-f14 which elegantly configure the room.
+
+rule 1:
+  [1: goal(place_furniture),     % The initial goal causes a rule to
+   2: legal_furniture(LF)]       % to fire with introductory information.
+ ==>                             % It will set a new goal.
+  [retract(1),
+   nl,
+   write('Enter a single item of furniture at each prompt.'),nl,
+   write('Include the width (in feet) of each item.'),nl,
+   write('The format is Item:Length.'),nl,nl,
+   write('The legal values are:'),nl,
+   write(LF),nl,nl,
+   write('When there is no more furniture, enter "end:end."'),nl,
+   assert(goal(read_furniture))].
+
+rule 2:
+  [1: furniture(end,end),               % When the furniture is read
+   2: goal(read_furniture)]             % set the new goal of reading
+ ==>                                    % reading wall sizes
+  [retract(all),
+   assert(goal(read_walls))].
+
+rule 3:
+  [1: goal(read_furniture),             % Loop to read furniture.
+   2: legal_furniture(LF)]
+ ==>
+  [prompt('furniture> ', F:L),
+   member(F,LF),
+   assert(furniture(F,L))].
+
+rule 4:                              % If rule 3 matched and failed
+  [1: goal(read_furniture),          % the action, then member must
+   2: legal_furniture(LF)]           % have failed.
+ ==>
+  [write('Unknown piece of furniture, must be one of:'),nl,
+   write(LF),nl].
+
+rule 5:
+  [1: goal(read_walls)]
+ ==>
+  [retract(1),
+   prompt('What is the length of the north and south sides? ', LengthNS),
+   prompt('What is the length of the east and west sides? ', LengthEW),
+   assert(wall(north,LengthNS)),
+   assert(wall(south,LengthNS)),
+   assert(wall(east,LengthEW)),
+   assert(wall(west,LengthEW)),
+   assert(goal(find_door))].
+
+rule 6:
+  [1: goal(find_door)]
+ ==>
+  [retract(1),
+   prompt('Which wall has the door? ', DoorWall),
+   prompt('What is the width of the door? ', DoorWidth),
+   retract(wall(DoorWall,X)),
+   NewWidth = X - DoorWidth,
+   assert(wall(DoorWall, NewWidth)),
+   assert(position(door,DoorWall)),
+   assert(goal(find_plugs)),
+   write('Which walls have plugs? "end." when no more plugs:'),nl].
+
+rule 7:
+  [1: goal(find_plugs),
+   2: position(plug,end)]
+ ==>
+  [retract(all)].
+
+rule 8:
+  [1: goal(find_plugs)]
+ ==>
+  [prompt('Side: ', Wall),
+   assert(position(plug,Wall))]. 
+
+% Rules f1-f13 illustrate the strength of rule based programming.
+% Each rule captures a rule of thumb used in configuring furniture
+% in a living room.  The rules are all independent, transparent,
+% and can be easily maintained.  Complexity can be added without
+% concern for the flow of control.
+
+% f1, f2 - place the couch first, it should be either opposite the
+% door, or to its right, depending on which wall is longer.
+
+rule f1:
+  [1: furniture(couch,LenC),          % an unplaced couch
+      position(door, DoorWall),       % find the wall with the door
+      opposite(DoorWall, OW),         % the wall opposite the door
+      right(DoorWall, RW),            % the wall to the right of the door
+   2: wall(OW, LenOW),                % available space opposite
+      wall(RW, LenRW),                % available space to the right
+      LenOW >= LenRW,                 % if opposite wall bigger than right
+      LenC =< LenOW]                  % length of couch less than wall space
+ ==>
+  [retract(1),                        % remove the furniture term
+   assert(position(couch, OW)),       % assert the new position
+   retract(2),                        % remove the old wall,length
+   NewSpace = LenOW - LenC,           % calculate the space now available
+   assert(wall(OW, NewSpace))].       % assert the wall with new space left
+
+rule f2:
+  [1: furniture(couch,LenC),
+   2: position(door, DoorWall),
+   3: opposite(DoorWall, OW),
+   4: right(DoorWall, RW),
+   5: wall(OW, LenOW),
+   6: wall(RW, LenRW),
+      LenOW =< LenRW,
+      LenC =< LenRW]
+ ==>
+  [retract(1),
+   assert(position(couch, RW)),
+   retract(6),
+   NewSpace = LenRW - LenC,
+   assert(wall(RW, NewSpace))].
+
+% f3 - the tv should be opposite the couch
+
+rule f3:
+  [1: furniture(tv,LenTV),
+   2: position(couch, CW),
+   3: opposite(CW, W),
+   4: wall(W, LenW),
+      LenW >= LenTV]
+ ==>
+  [retract(1),
+   assert(position(tv, W)),
+   retract(4),
+   NewSpace = LenW - LenTV,
+   assert(wall(W, NewSpace))].
+
+% f4, f5 - the coffee table should be in front of the couch or if there
+% is no couch, in front of a chair.
+
+rule f4:
+  [1: furniture(coffee_table,_),
+   2: position(couch, CW)]
+ ==>
+  [retract(1),
+   assert(position(coffee_table, front_of_couch:CW))].
+
+rule f5:
+  [1: furniture(coffee_table,_),
+   2: position(chair, CW)]
+ ==>
+  [retract(1),
+   assert(position(coffee_table, front_of_chair:CW))].
+
+% f6, f7 - chairs should be on adjacent walls from the couch
+
+rule f6:
+  [1: furniture(chair,LC),
+      position(couch, CW),
+      right(CW, ChWa),
+      left(CW, ChWb),
+   4: wall(ChWa, La),
+      wall(ChWb, Lb),
+      La >= Lb,
+      La >= LC]
+ ==>
+  [retract(1),
+   assert(position(chair, ChWa)),
+   NewSpace = La - LC,
+   retract(4),
+   assert(wall(ChWa, NewSpace))].
+
+rule f7:
+  [1: furniture(chair,LC),
+      position(couch, CW),
+      right(CW, ChWa),
+      left(CW, ChWb),
+      wall(ChWa, La),
+   4: wall(ChWb, Lb),
+      La =< Lb,
+      Lb >= LC]
+ ==>
+  [retract(1),
+   assert(position(chair, ChWb)),
+   NewSpace = Lb - LC,
+   retract(4),
+   assert(wall(ChWb, NewSpace))].
+
+
+rule f8:
+  [1: furniture(chair,LC),
+   2: position(couch, CW),
+   3: left(CW, ChW),
+   4: wall(ChW, L),
+      L >= LC]
+ ==>
+  [retract(1),
+   assert(position(chair, ChW)),
+   NewSpace = L - LC,
+   retract(4),
+   assert(wall(ChW, NewSpace))].
+
+% put end_tables next to the couch first, then on the walls with
+% the chairs
+
+rule f9:
+  [1: furniture(end_table,TL),
+   2: position(couch, W),
+   3: not(position(end_table, W)),
+   4: wall(W, L),
+      L >= TL]
+ ==>
+  [retract(1),
+   assert(position(end_table, W, nolamp)),
+   NewSpace = L - TL,
+   retract(4),
+   assert(wall(W, NewSpace))].
+
+rule f10:
+  [1: furniture(end_table,TL),
+   2: position(chair, W),
+   3: not(position(end_table, W)),
+   4: wall(W, L),
+      L >= TL]
+ ==>
+  [retract(1),
+   assert(position(end_table, W, nolamp)),
+   NewSpace = L - TL,
+   retract(4),
+   assert(wall(W, NewSpace))].
+
+% put the table lamps on the end tables
+
+rule f11:
+  [1: furniture(table_lamp,_),
+   2: position(end_table, W, nolamp)]
+ ==>
+  [retract(all),
+   assert(position(table_lamp, W)),
+   assert(position(end_table, W, lamp))].
+
+% get extension cords if needed
+
+rule f12:
+  [1: position(tv, W),
+   2: not(position(plug, W))]
+ ==>
+  [assert(buy(extension_cord, W)),
+   assert(position(plug, W))].
+
+rule f13:
+  [1: position(table_lamp, W),
+   2: not(position(plug, W))]
+ ==>
+  [assert(buy(extension_cord, W)),
+   assert(position(plug, W))].
+
+% When no other rules fire, here is the summary
+
+rule f14:
+  [1: not_end_yet]
+ ==>
+  [retract(1),
+   write('Recommendations:'),nl,nl,
+   write('furniture positions:'),nl,nl,
+   list(position(_,_)),
+   list(position(_,_,_)),nl,
+   write('purchase recommendations:'),nl,nl,
+   list(buy(_,_)),nl,
+   write('furniture which wouldn''t fit:'),nl,nl,
+   list(furniture(_,_)),nl,nl].
+

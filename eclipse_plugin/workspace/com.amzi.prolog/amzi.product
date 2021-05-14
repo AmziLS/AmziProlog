@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Amzi! Prolog + Logic Server IDE" uid="com.amzi.prolog2" id="com.amzi.prolog.ide" application="org.eclipse.ui.ide.workbench" version="4.5.10004" useFeatures="true" includeLaunchers="false">
+
+   <aboutInfo>
+      <image path="/com.amzi.prolog/squirrel_words_250px.jpg"/>
+      <text>
+         Amzi! Prolog + Logic Server 4.5.10001
+(c) 1986-2016 Amzi! inc., all rights reserved
+http://www.amzi.com
+
+Eclipse Platform
+(c) Copyright Eclipse contributors and others, 2000, 2009. All rights reserved.
+http://www.eclipse.org/platform
+
+This product includes software developed by the
+Apache Software Foundation
+http://www.apache.org/
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+   </launcherArgs>
+
+   <windowImages i16="/com.amzi.prolog/squirrel_16.png" i32="/com.amzi.prolog/squirrel_32.png" i48="/com.amzi.prolog/squirrel_48.png" i64="/com.amzi.prolog/squirrel_64.png" i128="/com.amzi.prolog/squirrel_128.png"/>
+
+   <splash
+      location="com.amzi.prolog" />
+   <launcher>
+      <solaris/>
+      <win useIco="false">
+         <ico path="/com.amzi.prolog/square_squirrel.ico"/>
+         <bmp
+            winSmallHigh="/com.amzi.prolog/square_squirrel-16x16x32.bmp"
+            winMediumHigh="/com.amzi.prolog/square_squirrel-32x32x32.bmp"
+            winLargeHigh="/com.amzi.prolog/square_squirrel-48x48x32.bmp"/>
+      </win>
+   </launcher>
+
+   <vm>
+      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/OSGi%Minimum-1.0</windows>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="org.eclipse.platform" version="4.5.1.v20150904-0015"/>
+      <feature id="com.amzi.prolog" version="4.5.10004"/>
+   </features>
+
+
+   <preferencesInfo>
+      <targetfile overwrite="false"/>
+   </preferencesInfo>
+
+   <cssInfo>
+   </cssInfo>
+
+</product>

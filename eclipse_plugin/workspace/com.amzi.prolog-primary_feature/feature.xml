@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.amzi.prolog"
+      label="Amzi! Prolog + Logic Server IDE"
+      version="4.5.10004"
+      provider-name="Amzi! inc."
+      plugin="com.amzi.prolog"
+      image="amzi_feature.jpg"
+      exclusive="true"
+      application="org.eclipse.ui.workbench">
+   <install-handler handler=""/>
+
+   <description url="http://www.amzi.com">
+      The Eclipse plug-ins for developing and debugging programs in
+Amzi! Prolog + Logic Server
+   </description>
+
+   <copyright>
+      Copyright (c) 1986-2010 Amzi! inc. and others. All Rights Reserved.
+   </copyright>
+
+   <license url="">
+      Amzi! Prolog + Logic Server License Agreement
+
+MIT License
+
+Copyright (c) Amzi! inc. 2016
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+   </license>
+
+   <requires>
+      <import plugin="com.amzi.prolog.core" version="4.5.10001" match="compatible"/>
+      <import plugin="com.amzi.prolog.debug" version="4.5.10001" match="compatible"/>
+      <import plugin="com.amzi.prolog.ui" version="4.5.10001" match="compatible"/>
+      <import plugin="com.amzi.prolog.help" version="4.5.10001" match="compatible"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.debug.core"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.swt"/>
+   </requires>
+
+   <plugin
+         id="com.amzi.prolog"
+         download-size="0"
+         install-size="0"
+         version="4.5.10004"/>
+
+   <plugin
+         id="com.amzi.prolog.core"
+         download-size="0"
+         install-size="0"
+         version="4.5.10004"/>
+
+   <plugin
+         id="com.amzi.prolog.debug"
+         download-size="0"
+         install-size="0"
+         version="4.5.10004"/>
+
+   <plugin
+         id="com.amzi.prolog.ui"
+         download-size="0"
+         install-size="0"
+         version="4.5.10004"/>
+
+   <plugin
+         id="com.amzi.prolog.help"
+         download-size="0"
+         install-size="0"
+         version="4.5.10004"/>
+
+</feature>

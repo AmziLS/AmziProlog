@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://www.amzi.com">
+      All about Amzi!
+   </description>
+   <feature url="features/com.amzi.prolog_4.5.10004.jar" id="com.amzi.prolog" version="4.5.10004">
+      <category name="amzi_eclipse_feature"/>
+   </feature>
+   <category-def name="amzi_eclipse_feature" label="Amzi! Eclipse Feature">
+      <description>
+         The Eclipse plug-ins for developing and debugging programs in Amzi! Prolog. The environment variable, AMZI_DIR, must be set and point to a currently installed version of Amzi! version 9.0 or later.
+      </description>
+   </category-def>
+</site>

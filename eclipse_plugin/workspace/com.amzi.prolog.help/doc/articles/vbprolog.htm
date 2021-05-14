@@ -1,0 +1,725 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Using Rules to Code the Heart and Soul of VB Applications</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<H1>Using Rules to Code the Heart and Soul of VB Applications</H1>
+
+<P>[A version of this article was published in the Sept 95 issue of VB
+Tech Journal.] </P>
+
+<H2>Introduction</H2>
+
+<P>Application developers have tools for representing and manipulating
+data, and tools for encoding procedures. These tools work fine for most
+of the development process, but each application usually contains at least
+one component that cannot be easily expressed either as data or as procedure.
+These components are often originally specified as declarative rules, and
+are, more often than not, the heart and soul of the application. </P>
+
+<P>This article discusses the role of rules in application development
+and describes how to integrate rule-based components into Visual Basic
+applications in much the same way database components can be added. </P>
+
+<H2>Data, Procedure and Rules</H2>
+
+<P><IMG SRC="dataproc.gif" HEIGHT=256 WIDTH=487> <BR>
+Figure 1 </P>
+
+<H3>Data</H3>
+
+<P>Data can be thought of as a collection of completely independent, declarative
+statements. For example, each record in a database of people is a statement
+about certain attributes of that person, such as first name and last name.
+Similarly, a program data initialization statement, such as ‘x = 3’, simply
+states that the value of x is 3. The top of figure 1 illustrates the independent
+statements of data. </P>
+
+<H3>Procedures</H3>
+
+<P>Procedures, on the other hand, can be thought of as a tightly linked
+collection of statements. Each statement in a program has a position in
+that program, and is executed at a precise time in relation to the surrounding
+statements. The right side of figure 1 shows the linked statements of procedures.
+</P>
+
+<H3>Rules</H3>
+
+<P>Rules contain statements that are not independent, as data statements
+are. And, rules are not executed in a particular order, as procedures are.
+Diagramatically the statements in rules look like the middle of figure
+1, a spaghetti-like mess half way in between the clean separation of data
+statements and the neat ordering of procedure statements. Often, developers
+try to code the rule-based components of an application procedurally. The
+result is spaghetti-like code that no amount of software engineering can
+fix. It is the ‘ugly’ module. The code is difficult to write, and more
+important, difficult to maintain and change. Ironically, it is these modules
+that are most likely to change. </P>
+
+<P>A rule-based language lets the developer specify the rules declaratively,
+very close to the way in which the rules are described when a system is
+specified. A rule engine is used to decide, at runtime, which rules apply
+and how to execute them. This will, of course, change from run-to-run depending
+on the data of the particular case being considered. </P>
+
+<H2>Examples</H2>
+
+<H3>Pricing Phone Calls</H3>
+
+<P>We’re currently doing work on the billing software for a small phone
+company. The application is written in Basic and accesses a database. The
+database components of the system work well, with data for customers, phone
+numbers, calls, etc. The procedural components process the call records
+and generate bills. Most of the application is straight-forward, with one
+notable exception--the module that prices each call. </P>
+
+<P>The pricing module must apply a seemingly arbitrary and disconnected
+set of rules to each call. In addition to the rules that apply based on
+time of day, duration of call, and physical distance of call, there are
+rules for collect and credit card calls, and rules for various sub- carriers
+of calls, and rules dictated by local regulatory agencies, and rules for
+information service providers, and rules for large customers with special
+deals, and rules for commissions, and rules based on the customer’s credit
+rating and past history of calling, and ... </P>
+
+<P>Because of the interrelationships between the rules, and the lack of
+procedure in the rules, the pricing module looks like spaghetti, with complex
+if-then-else statements and a myriad of flags being set to allow various
+parts of the code to communicate. </P>
+
+<P>This wouldn’t be so bad if once the pricing module was working it could
+be left alone. Unfortunately, pricing calls is the heart of the business
+and the competitive edge this small company brings to the market. As such,
+management is constantly changing the pricing rules to accomodate changing
+customer needs and a competitive environment. All you have to do is listen
+to the advertising wars between the large phone companies to understand
+the importance of call pricing. All you have to do is look at your phone
+bill to understand that the charges have been calculated from an incomprehensible
+set of rules. </P>
+
+<P>For these reasons, the pricing module is being rewritten using the rule-
+based language, Prolog, that allows for the declarative specification of
+the pricing rules much as management expresses the rules. The code, written
+as rules, becomes easier to read and understand, as well as much easier
+to maintain and change. </P>
+
+<H3>Maintaining Quality Cheese</H3>
+
+<P>In another application example, a large cheese manufacturer uses a quality-control
+application written in Visual Basic, Access, and Prolog, a rule-based language.
+Access is used to gather data about the cheese production, VB is used to
+graphically display that data with many gauges that have green and red
+zones, indicating whether the cheese is proceding as desired. If any guage
+slips into a red zone, then Prolog rules are fired that provide advice
+on how to adjust the cheese production to bring the cheese back to the
+desired quality. </P>
+
+<P>Again, the heart of the quality control application is the rules that
+describe how to maintain the quality of the cheese in the face of various
+changing conditions. </P>
+
+<H3>Other Applications</H3>
+
+<P>This same phenomenon occurs in many application areas. Processing orders
+for insurance companies is straight-forward, except for the underwriting
+module which encodes the business rules that give one insurance company
+the edge over its competitors. </P>
+
+<P>A help desk application can keep track of customers, calls, problems,
+who handled the problems and other information. But the heart of a help
+desk is diagnosing problems, or applying diagnostic rules to a particular
+problem situation. </P>
+
+<P>In manufacturing, the configuration rules are the key component--for
+transportation companies its the rules for scheduling. In banking its credit
+approval. </P>
+
+<P>For each of these cases, the heart and soul of the application is specified
+as a collection of rules that lie somewhere in between data and procedure,
+and that the application developer has to some how integrate into the system.
+</P>
+
+<H2>Rule Bases like Data Bases</H2>
+
+<P>Rulebases are similar to databases. With a database you have a way of
+entering and accessing data that is provided by the vendor of the database.
+With rulebases, you also interact with the rules through software provided
+by the vendor. </P>
+
+<P>That software is often called an inference engine. It is the component
+that takes the declarative specification of the rules and decides at run
+time, based on the data available, which rules to fire in which order.
+These rules might generate the price of a phone call, the underwriting
+decisions of an insurance company, the credit line from a bank, an airline
+schedule, or the cause of a customer’s technical problem. Many rule-based
+systems were designed to create stand-alone applications, but there are
+systems available today that the Visual Basic programmer can directly access
+from Visual Basic. These tools allow the integration of rule-based components
+in VB applications. One of these tools is Prolog (although not all Prolog
+vendors provide integration with VB). </P>
+
+<P>Prolog is a non-proprietary language based on the rules of logic. Prolog
+performance comes from compiling the rules into an internal format that
+is efficiently run on a Prolog engine. </P>
+
+<P>The following sample application is implemented using Amzi!(TM) Prolog
+with its embeddable Logic Server(TM) API (applications programming interface).
+</P>
+
+<H2>Sample Application</H2>
+
+<P>The sample application is a genealogical application. It maintains a
+collection of persons in a family tree, answers questions about relationships
+between individuals, and maintains the semantic integrity of the collection,
+ensuring that people are not added that violate fundamental genealogical
+rules, such as being one’s own ancestor. The front-end of the application
+is written in Visual Basic. Based on user input, the VB code calls the
+Prolog rule-base. </P>
+
+<P>The genealogical application is chosen first because it follows the
+basic pattern described above. That is, the storing of the data and the
+basic process of the user interface are straight-forward. The heart of
+the application is in the rules describing family relationships and the
+rules ensuring the integrity of the family tree. </P>
+
+<P>The second reason the example was chosen is the rules of genealogy are
+well understood by everyone, so there is no problem with understanding
+what the rules do and how they are used. </P>
+
+<P>Screen shot 1 shows the starting point of the sample application, where
+a family tree is first loaded. Screen shot 2 shows the query dialog box.
+It contains three list boxes. The first is a list of individuals, and the
+second is a list of family relationships. When the user selects an item
+from the first two list boxes, the third list box is filled with the names
+of the individuals who satisfy that family relationship. In the example
+the user requested the ancestors of ‘James I’ from a fragment of the British
+royal family tree. </P>
+
+<P>Screen shot 3 shows the dialog box used to update the family tree. The
+particular record being entered is rejected because the individual is erroneously
+listed in a relationship that makes him his own ancestor. The following
+sections will first, introduce the Prolog rules, and then the VB integration
+with those rules. </P>
+
+<H3>Prolog Code</H3>
+
+<H4>Person Data</H4>
+
+<P>Prolog is built on the same theoretical roots as relational database.
+As such, it has a strong database component to it that is used, in this
+example, to store the data about individuals in the family tree. For this
+example, Prolog facts, corresponding to rows in a relational table, are
+used to describe individuals. The facts are of the form: </P>
+
+<PRE>person(Name, Gender, Mother, Father, Spouse)</PRE>
+
+<P>For example, some records from the family tree of English royalty are
+shown below and partially in figure 2. These facts are stored in a file
+called ENGLAND.FAM. Other family trees can be stored in other files. </P>
+
+<PRE>person('Henry VII', male, 'Margaret Beaufort', 'Edmund Tudor', 'Elizabeth of York').
+person('James IV', male, 'Elizabeth of York', 'Henry VII', 'Margaret Tudor').
+person('Henry VIII', male, 'Elizabeth of York', 'Henry VII', 'Catherine of Aragon').
+person('Mary', female, 'Elizabeth of York', 'Henry VII', 'Charles Brandon').
+person('James V', male, 'Margaret Tudor', 'James IV', 'Mary of Guise').
+person('Lady Margaret Douglas', female, 'Margaret Tudor', 'Archibald Earl of Angus', 'Mathew Earl of Lennox').
+person('Mary Tudor', female, 'Catherine of Aragon', 'Henry VIII', single).
+person('Elizabeth I', female, 'Anne Boleyn', 'Henry VIII', single).
+person('Edward VI', male, 'Jane Seymour', 'Henry VIII', single).
+person('Lady Frances Brandon', female, 'Mary', 'Charles Brandon', 'Henry Grey').
+person('Mary Queen of Scots', female, 'Mary of Guise', 'James V', 'Henry Lord Darnley').
+person('Henry Lord Darnley', male, 'Lady Margaret Douglas', 'Mathew Earl of Lennox', 'Mary Queen of Scots').
+person('Lord Charles Stuart', male, 'Lady Margaret Douglas', 'Mathew Earl of Lennox', 'Elizabeth Cavendish').
+person('Lady Jane Grey', female, 'Lady Frances Brandon', 'Henry Grey', single).
+person('Lady Catherine Grey', female, 'Lady Frances Brandon', 'Henry Grey', 'Edward Seymour').
+person('Lady Mary Grey', female, 'Lady Frances Brandon', 'Henry Grey', 'Thomas Keys').
+person('James I', male, 'Mary Queen of Scots', 'Henry Lord Darnley', single).</PRE>
+
+<P>Prolog facts can be stored in a text file which is ‘consult’ed by a
+Prolog program. Facts can also be dynamically added using the Prolog ‘assert’
+statement. These two features of Prolog are used to maintain the family
+database. </P>
+
+<P>This data can be queried directly, just as a database can. Prolog systems
+generally provide a ‘listener’ in which you can interact directly with
+the Prolog program. (We will be carrying on this same type of interaction
+with Prolog from Visual Basic.) To find out James I’s mother you would
+pose the query: </P>
+
+<PRE>?- person(‘James I’, _, X, _, _).</PRE>
+
+<P>This query means find a person fact with the person name ‘James I’ and
+get that person’s mother, ignoring other fields. The X is a variable, as
+is any word not included in quotes beginning with a capital letter. The
+_ is used to ignore a field. </P>
+
+<P>Prolog would respond to that query with: </P>
+
+<PRE>X = ‘Mary Queen of Scots’</PRE>
+
+<P>Prolog will search for all answers to a query. For example to find all
+of the children of ‘Lady Frances Brandon’: </P>
+
+<PRE>?- person(X, _, ‘Lady Frances Brandon’, _, _).</PRE>
+
+<P>Prolog responds with </P>
+
+<PRE>X = ‘Lady Jane Grey’ ;
+X = ‘Lady Catherine Grey’ ;
+no</PRE>
+
+<P>The semicolon is entered by the user and means get another answer. The
+final no means there are no more answers. </P>
+
+<H4>Relationship Rules</H4>
+
+<P>Prolog rules are a simple extension from the database and query ideas
+presented above. They are, in a sense, canned queries. For example, to
+write a rule defining mother: (remember upper case words are variables)
+</P>
+
+<PRE>mother(M, C) :- person(C, _, M, _, _).</PRE>
+
+<P>This rule means M is the mother of C if there is a fact of the form
+person(C, _, M, _, _). Note that the symbol ‘:-’ can often be read as the
+word ‘if’. </P>
+
+<P>This rule can be used exactly as if it were a fact to find someone’s
+mother: </P>
+
+<PRE>?- mother(‘James I’, X).
+X = ‘Mary Queen of Scots’
+or some mother’s children:
+?- mother(X, ‘Lady Frances Brandon’).
+X = ‘Lady Jane Grey’ ;
+X = ‘Lady Catherine Grey’ ;
+no</PRE>
+
+<P>(Note that the user does not see any difference between the query to
+the rule for mother and the queries to the basic facts, e.g. person.) From
+here the fun begins, as the Prolog program, which contains the rule definitions,
+can express more and more complex relationships. Assuming, father is defined
+similarly to mother, then </P>
+
+<PRE>parent(X, Y) :-
+  mother(X, Y).
+parent(X, Y) :-
+  father(X, Y).
+
+Two or more rules act like ‘or’s.  Just as the person facts can be considered as the first fact is a person, or the second fact is a person, and so on,  so too can multiple rules act together.  In this case X is the parent of Y if X is the mother of Y or if X is the father of Y.  Just as Prolog searches through all facts matching a query pattern looking for solutions to queries, it searches through all rules matching a query pattern.</PRE>
+
+<P>Rules can call other rules more than once: </P>
+
+<PRE>grandparent(G, C) :-
+  parent(G, P), 
+  parent(P, C).</PRE>
+
+<P>meaning G is the grandparent of C if G is the parent of P and P is the
+parent of C. (The comma is read as ‘and’). </P>
+
+<P>And, of course, Prolog supports recursion, allowing a rule to reference
+itself. Here are the recursive rules for finding ancestors: </P>
+
+<PRE>ancestor(A,P) :-
+  parent(A,P).
+ancestor(A,P) :-
+  parent(X,P),
+  ancestor(A,X).</PRE>
+
+<P>A is the ancestor of P if A is the parent of P, or if, some X is the
+parent of P and A is the ancestor of X. </P>
+
+<P>The query </P>
+
+<PRE>?- ancestor(X, ‘James I’).</PRE>
+
+<P>will find all of the ancestors of James I. </P>
+
+<H4>Semantic Integrity Rules</H4>
+
+<P>Semantic integrity means checking a proposed update or change to the
+database against the rest of the database to ensure it makes sense. Examples
+include checking if a person’s mother and father are the right gender,
+someone is not their own ancestor, and spouses are not blood relatives.
+While this last is not really a genealogical rule, it’s included as an
+example of relatively complex semantic integrity checking on a database.
+</P>
+
+<P>Each of the integrity rules checks to see if a constraint is violated.
+If so, it asserts a message that can be retrieved by the VB program and
+forces the query to send back a return code indicated the query failed.
+This following pair of rules rules ensures that someone is not their own
+ancestor. The first rule takes a person’s name and tests to see if that
+person is their own ancestor. If so, a message is asserted, the ‘!’ symbol
+tells Prolog not to try any more rules, and the fail tells Prolog to report
+that the query failed. On the other hand, if the person is not their own
+ancestor then the first rule does not succeed and the second rule is tried.
+It is a dummy statement that is always true and could also be written as
+‘ancestor_check(_) :- true.’ </P>
+
+<PRE>ancestor_check(Name) :-
+  ancestor(Name,Name),
+  assert(message($Person is their own ancestor/descendent$)),
+  !, fail.
+ancestor_check(_).</PRE>
+
+<P>Similarly, here are some rules that check on spouses. The first rule
+makes sure there is no bigamy in the database (the \= means ‘not equivalent’),
+and the second rule makes sure there is no incest. Note that the incest
+rule uses the rules for blood_relative which are defined using the relationship
+rules described earlier. </P>
+
+<PRE>spouse_check(Name, Spouse) :-
+  spouse(Name, X),
+  X \= Spouse,
+  assert(message($Person is already someone else's spouse$)),
+  !, fail.
+spouse_check(Name, Spouse) :-
+  blood_relative(Name, Spouse),
+  assert(message($Person is a blood relative of spouse$)),
+  !, fail.
+spouse_check(_,_).</PRE>
+
+<P>Introduced in these rules is the Prolog semicolon, which is another
+way of expressing an ‘or’. The first blood_relative rule says X is a blood
+relative of Y if X is the ancestor of Y or if Y is the ancestor of X. </P>
+
+<PRE>blood_relative(X,Y) :- (ancestor(X,Y); ancestor(Y,X)).
+blood_relative(X,Y) :- sibling(X,Y).
+blood_relative(X,Y) :- cousin(X,Y).
+blood_relative(X,Y) :- (uncle(X,Y); uncle(Y,X)).
+blood_relative(X,Y) :- (aunt(X,Y); aunt(Y,X)).</PRE>
+
+<P>All of the various semantic integrity checks can be strung together
+in one Prolog rule. This rule first retracts previous error messages, makes
+the simple check that the person doesn’t already exist, then tenatively
+asserts the new data, and performs the various checks to see if the integrity
+of the database has been violated. If any of the integrity checks fail,
+the tenative update is backed out. (The code for this last bit is not shown
+here.) </P>
+
+<PRE>add_person(Name,Gender,Mother,Father,Spouse) :-
+  retractall(message(_)),
+  dup_check(Name),
+  add(Name,Gender,Mother,Father,Spouse),
+  ancestor_check(Name),
+  mother_check(Name, Gender, Mother),
+  father_check(Name, Gender, Father),
+  spouse_check(Name, Spouse).</PRE>
+
+<P>This last chunk of code shows that the lines between procedural and
+rule-based code is not as crisp at it might appear. Just as rules can be
+encoded with normal procedural code, so too can procedural code be written
+using a rule-based language. It just that procedural tools are better at
+procedures and rule-based tools are better at rules. </P>
+
+<H3>Summing Up the Prolog Code</H3>
+
+<P>The above section has shown declarative Prolog rules for maintaining
+the data in the database, the relationship rules, and the semantic integrity
+rules. The rules do not contain any indication of how they might be used
+in an application, nor do they provide any hints as to the type of user
+interface that might be built on the application. </P>
+
+<P>The next section shows how the VB user interface is developed, and how
+VB calls upon the Prolog rules to get data for list boxes, how to pass
+selected information to Prolog and how to use the semantic integrity rules.
+</P>
+
+<H2>Visual Basic in Control</H2>
+
+<H3>Accessing a Prolog Rule Base</H3>
+
+<P>Visual Basic is well-suited for interfacing with Prolog, as it enables
+the application programmer to implement a module that encapsulates the
+Prolog services. In this way theVisual Basic interface to the Prolog services
+is well defined, and the implementation can be maintained without impacting
+the rest of the application. </P>
+
+<P>The interface to Amzi! Prolog is through its Logic Server, which provides
+the VB programmer with the ability to easily query Prolog rules and retrieve
+results. It is implemented as a Dynamic Link Library (DLL) that contains
+various function calls enabling the links between VB and Prolog. </P>
+
+<P>Calling the Prolog Logic Server is similar to calling a database server.
+First you have to open a Rule Base (usually compiled), then you can issue
+calls to query the rules and data (called 'facts' in Prolog). Here is a
+Visual Basic program that loads the rules of the application (GENE.xpl),
+consults the database of facts (ENGLAND.FAM), poses a query and reports
+the result to the user. The whole sequence is bracketed by calls to InitLS
+and CloseLS that initialize and close the Prolog environment. </P>
+
+<PRE>‘ Initialize the Prolog engine, and load the genealogical rules
+
+Call InitLS(&quot;&quot;)
+Call LoadLS(&quot;gene.xpl&quot;)
+Call ExecLS(Term, &quot;consult(‘england.fam’)&quot;)
+tf = CallStrLS(Term, &quot;mother(‘James I’, X)&quot;)
+if (tf = 1) then     ‘ if the query succeeded
+    ‘ Get the value of the second argument of the term built above
+    StrVal = GetStrArgLS(Term, 2)
+    MsgBox &quot;James I’s mother is &quot; + StrVal
+else
+    MsgBox &quot;James I is a motherless child&quot;
+end if
+‘ Close the Prolog engine, freeing all resources
+Call CloseLS</PRE>
+
+<P>This program will display a message box saying </P>
+
+<PRE>James I’s mother is Mary Queen of Scots</PRE>
+
+<P>Notice that the VB program communicates with the Prolog rules by passing
+strings. These strings match patterns in the rule base. The ‘Term’s you
+see are Prolog’s representation of the information. The Logic Server provides
+tools, such as the Get___ArgLS functions for extracting information from
+those Prolog terms. In this example, it is the second argument of the query
+term, which is James I’s mother. </P>
+
+<P>(In this example and the others in this article, a module of VB cover
+functions have been used for the actual Logic Server calls. These functions
+handle errors and massage the strings being passed back and forth, simplifying
+the higher-level code.) </P>
+
+<H3>Prolog vs. VB Portions of the Application</H3>
+
+<P>The Prolog Logic Server can be encapsulated in a single function as
+shown in the example above, or calls to it can be scattered throughout
+a Visual Basic application. For the genealogical application (called WGENEVB),
+the Logic Server is initialized and the rules are loaded when the main
+form is loaded, and closed down when the application exits. In between
+Visual Basic issues a myriad of calls to query and update the database.
+</P>
+
+<P>WGENEVB uses Basic and Prolog each for the things they do best. The
+parts that are implemented in Visual Basic are: </P>
+
+<UL>
+<LI>The main form which contains the application menu and displays three
+lists: family members, relationships and related persons. </LI>
+
+<LI>The person information form used for adding and changing individual
+family members. </LI>
+
+<LI>All prompt, dialog, and message boxes (including file open, save) and
+on-line help. </LI>
+</UL>
+
+<P>Amzi! Prolog is used behind the Visual Basic scenery to: </P>
+
+<UL>
+<LI>Represent each family member as relational-like record of the form:
+person(Name, Gender, Mother, Father, Spouse). </LI>
+
+<LI>Add, save, delete and return information about family members. The
+add predicates call a set of rules that maintain the integrety of the database.
+For example, one rule makes sure a person is not their own ancestor or
+descendent. </LI>
+
+<LI>Determining all the family members who have a specified relationship
+with a specified person. For example, sibling(Person, Sibling) can determine
+the siblings of the specified person. </LI>
+</UL>
+
+<H3>Consulting a Family</H3>
+
+<P>The first sample of VB code loaded the English family tree. The actual
+application dynamically loads the family tree of the user’s choosing, based
+on the file/open menu item as show in screen shot 1. </P>
+
+<P><IMG SRC="wgopen.gif" HEIGHT=243 WIDTH=475> <BR>
+Screen Shot 1 </P>
+
+<PRE>' Build and call a Prolog consult command to load the selected family data
+CurrentFamily = MainForm.CMDialog.Filename
+tf = CallStrLS(term, &quot;consult('&quot; + CurrentFamily + &quot;')&quot;)
+If (tf &lt;&gt; 1) Then
+    MsgBox &quot;Unable to load family&quot;, 0, &quot;&quot;
+    CurrentFamily = &quot;&quot;
+End If</PRE>
+
+<H3>Getting Answers from Prolog</H3>
+
+<P>Once a family database has been loaded, WGENEVB needs to fill in the
+three lists on the main form (see screen shot 2): </P>
+
+<UL>
+<LI>Persons - the members of the family </LI>
+
+<LI>Relationships - possible relationships, e.g. ancestors, descendents,
+parents. </LI>
+
+<LI>Related Persons - when a Person and a Relationship is highlighted,
+this list contains the family members having the specified Relationship
+with the specified Person. </LI>
+</UL>
+
+<P><IMG SRC="wgmain.gif" HEIGHT=260 WIDTH=542> <BR>
+Screen Shot 2 </P>
+
+<P>Filling in these lists is a process that works naturally using Prolog
+queries and Visual Basic actions. Let’s look at how the Related Persons
+list is filled in. Very similar code is used to populate the first two
+list boxes, although both are simpler than this third list box. </P>
+
+<PRE>' First clear the list of related persons
+RelatedPersonsList.Clear
+
+' Get the highlighted person and relationship
+Person = PersonList.List(PersonList.ListIndex)
+Relationship = RelationshipList.List(RelationshipList.ListIndex)
+
+' Issue the Prolog command &lt;relationship&gt;(X, &lt;person&gt;)
+tf = CallStrLS(Term, Relationship + &quot;(X, '&quot; + Person + &quot;')&quot;)
+
+' Loop getting all the people who have that relationship
+' and add them to the related persons list
+While (tf)
+
+    ‘ Get the value of the first argument of the term built above
+    StrVal = GetStrArgLS(Term, 1)
+
+    ‘ Add it to the Visual Basic list
+    RelatedPersonsList.AddItem StrVal
+
+    ‘ Call Prolog again setting Term to the next solution
+    ‘ tf will be set to 0 when there are no more answers
+    tf = RedoLS()
+Wend
+</PRE>
+
+<P>The code above gets the person and relationship from their respective
+lists and builds a Prolog query of the form: &lt;relationship_name&gt;(Variable,
+&lt;person_name&gt;). We call CallStrLS to set Term to the result of the
+query. Then, we use that Term to extract the value of the first argument
+(our Variable) and store it in a Basic string. That string is added to
+the Basic list, then the Term is set to the next match by calling RedoLS.
+This process continues as long as RedoLS succeeds. </P>
+
+<P>The GetArg family of function can be used to readily transfer string,
+integer and floating point values between Prolog and Visual Basic. Additional
+Logic Server functions are provided for building and decomposing more complex
+Prolog terms such as structures and lists. </P>
+
+<H3>Responding to Messages with Rules</H3>
+
+<P>Many of the commands in WGENEVB are implemented directly in Prolog.
+For example, to add a family member, Visual Basic collects the information,
+then calls Prolog to do the work. </P>
+
+<PRE>    ' Build a Prolog query to add the person.  The query is of the
+    ' form add_person(Name, male|female, Mother, Father, single/Spouse)
+    ' AddPerson uses the data in the person information form
+    s = &quot;add_person('&quot; + PersonForm.Person.Text + &quot;', &quot;
+    ' Convert an OptionBox into a token
+    If PersonForm.Female.Value = True Then
+        s = s + &quot;female, '&quot;
+    Else
+        s = s + &quot;male, '&quot;
+    End If
+
+    s = s + PersonForm.Mother.Text + &quot;', '&quot;
+    s = s + PersonForm.Father.Text + &quot;', &quot;
+
+    ' Put in the single token or the name of the spouse
+    If PersonForm.Single.Value = True Then
+        s = s + &quot;single)&quot;
+    Else
+        s = s + &quot;'&quot; + PersonForm.Spouse.Text + &quot;')&quot;
+    End If
+
+    ' Call the query string
+    tf = CallStrLS(Term, s)</PRE>
+
+<P>If the query succeeds, we fill in the person and relations list boxes,
+otherwise we ask Prolog what the error was, and display it for the user.
+</P>
+
+<PRE>   If tf Then
+        tf = Persons()
+        tf = Relations()
+    Else
+        ' If the person didn't add, get the explanation from Prolog
+        ' and display it for the user
+        tf = CallStrLS(Term, &quot;message(X)&quot;)
+        If tf = 1 Then
+            ' Get the value of the 1st argument (X)
+            Msg = GetStrArgLS(Term, 1)
+        Else
+             msg = &quot;Unknown Error&quot;
+        End If
+        MsgBox Msg, 48, &quot;A Message from Amzi! Prolog&quot;
+    End If</PRE>
+
+<P>The code above shows how easily you can use Basic’s string manipulation
+functions to build complex Prolog commands. In this case, all the data
+is extracted from the person form, including the 'single' check-box. </P>
+
+<P>The result from the dialog shown in screen shot 3 is packed into the
+string </P>
+
+<PRE>add_person(‘Edmund Tudor’, male, ‘Lady Beth of York’, ‘James I’, single)</PRE>
+
+<P><IMG SRC="wgadd.gif" HEIGHT=153 WIDTH=495> <BR>
+Screen Shot 3 </P>
+
+<P>Similar code is used to implement the person change and delete menu
+commands, as well as the file save and save as commands. Although the Prolog
+commands issued are simple in their structure, the underlying Prolog code
+invokes the integrity checking rules described earlier to ensure the family
+tree is logically consistent. </P>
+
+<H2>Summary</H2>
+
+<P>This sample application illustrates how Visual Basic can be used for
+those aspects of an application its best suited for, and Prolog for those
+aspects its best suited for. Visual Basic is used to develop a Windows
+front end, while Prolog is used as both a database and a rule-base. The
+architecture makes it easy to maintain the logic rules of the application,
+coded in declarative Prolog, and the GUI interface using the increasingly
+sophisticated GUI tools available from VBX vendors. This same architecture
+can be used to create many other rule-based components. For example: </P>
+
+<UL>
+<LI>Planning programs can use rules to schedule tasks taking into account
+both dependencies and available resources. </LI>
+
+<LI>Order entry systems can use Prolog rules to determine pricing based
+on factors such as customer status, quantity, location, special promotions,
+etc. </LI>
+
+<LI>Information systems can use Prolog to make recommendations based on
+user criteria (for example, restaurant or wine recommendations). </LI>
+
+<LI>Help desk applications can include facilities for diagnosing problems
+asking the user questions along the way. </LI>
+
+<LI>Data entry programs can use more complex checks on the inputted data
+than provided by Visual Basic. For example an underwriting application
+can perform a risk analysis. </LI>
+
+<LI>Wizards can use rules to generate code, command files, form or report
+layouts and configuration parameters. </LI>
+
+<LI>Formal and natural language parsers use grammar rules to interpret
+lists of words or symbols. </LI>
+</UL>
+
+<P>The declarative and symbolic nature of Prolog makes it a language that
+is well suited for both implementing, and more importantly, maintaining
+rule-based systems and components. </P>
+
+<P><I>Mary Kroening is a principal of Amzi! inc. makers of Amzi! Prolog+Logic
+Server and other products for learning and using Prolog and rule-based
+systems.</I></P>
+
+<P><I>The WGENEVB example (with full source code) is available as a self-
+extracting .exe via the World Wide Web or anonymous FTP on Internet. The
+web document is http://www.amzi.com The FTP site name is ftp.amzi.com and
+the directory and file is /pub/demos/WGENEVB.exe.</I> </P>
+
+</BODY>
+</HTML>

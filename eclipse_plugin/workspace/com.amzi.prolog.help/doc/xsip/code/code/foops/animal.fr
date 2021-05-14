@@ -1,0 +1,66 @@
+% the animal expert system from Winston's LISP book for FRAMES
+
+frame(animal,[locomotion-[val self]]).
+
+frame(mammal,[
+	ako-[val animal],
+	skin-[val hair],
+	nurture-[val gives_milk] ]).
+frame(bird,[
+	ako-[val animal],
+	skin-[val feathers],
+	flies-[def yes],
+	eats-[def seed],
+	birth-[val lays_eggs] ]).
+frame(carnivore,[
+	ako-[val animal],
+	eats-[val meat],
+	teeth-[val pointed],
+	eyes-[val forward],
+	feet-[val claws] ]).
+frame(ungulate,[
+	ako-[val mammal],
+	feet-[val hoofs],
+	even_toes-[val yes],
+	chews_cud-[val yes] ]).
+frame(cheetah,[
+	ako-[val [mammal,carnivore]],
+	color-[val tawny],
+	markings-[val dark_spots] ]).
+frame(tiger,[
+	ako-[val [mammal,carnivore]],
+	color-[val tawny],
+	markings-[val black_stripes] ]).
+frame(giraffe,[
+	ako-[val ungulate],
+	neck-[val long],
+	legs-[val long],
+	markings-[val dark_spots] ]).
+frame(zebra,[
+	ako-[val ungulate],
+	markings-[val black_stripes] ]).
+frame(ostrich,[
+	ako-[val bird],
+	flies-[val no],
+	neck-[val long],
+	legs-[val long],
+	markings-[val black_and_white] ]).
+frame(penguin,[
+	ako-[val bird],
+	flies-[val no],
+	swims-[val yes],
+	markings-[val black_and_white] ]).
+frame(albatross,[
+	ako-[val bird],
+	wings-[val large] ]).
+frame(sloth,[
+	ako-[val ungulate],
+	moves-[val slow] ]).
+frame(hawk,[
+	ako-[val [bird,carnivore]],
+	eats-[val meat] ]).
+
+
+
+	                                                                                                         
+

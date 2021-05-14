@@ -1,0 +1,34 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Amzi! User Interface
+Bundle-SymbolicName: com.amzi.prolog.ui; singleton:=true
+Bundle-Version: 4.5.10004
+Bundle-ClassPath: prologui.jar
+Bundle-Activator: com.amzi.prolog.ui.PrologUIPlugin
+Bundle-Vendor: Amzi! inc.
+Bundle-Localization: plugin
+Export-Package: com.amzi.prolog.ui,
+ com.amzi.prolog.ui.actions,
+ com.amzi.prolog.ui.build,
+ com.amzi.prolog.ui.editor,
+ com.amzi.prolog.ui.editor.actions,
+ com.amzi.prolog.ui.editor.internal,
+ com.amzi.prolog.ui.internal,
+ com.amzi.prolog.ui.launch,
+ com.amzi.prolog.ui.preferences,
+ com.amzi.prolog.ui.views,
+ com.amzi.prolog.ui.wizards
+Require-Bundle: org.eclipse.ui.ide,
+ org.eclipse.ui.views,
+ org.eclipse.jface.text,
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.ui.editors,
+ com.amzi.prolog.core,
+ com.amzi.prolog.debug,
+ org.eclipse.core.resources,
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.swt,
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui
+Eclipse-LazyStart: true

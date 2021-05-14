@@ -1,0 +1,858 @@
+
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<TITLE>2 Using Prolog's Inference Engine</TITLE>
+</HEAD>
+<BODY bgcolor="#ffffff">
+ <h1> <a name="UsingPrologsInferenceEngine"></a><B><FONT FACE="New Century Schlbk,Century Schoolbook">2 
+  Using Prolog's Inference Engine </font></B></h1>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Prolog 
+  has a built-in backward chaining inference engine which can be used to partially 
+  implement some expert systems. Prolog rules are used for the knowledge representation, 
+  and the Prolog inference engine is used to derive conclusions. Other portions 
+  of the system, such as the user interface, must be coded using Prolog as a programming 
+  language.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  Prolog inference engine does simple backward chaining. Each rule has a goal 
+  and a number of sub-goals. The Prolog inference engine either proves or disproves 
+  each goal. There is no uncertainty associated with the results.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  rule structure and inference strategy is adequate for many expert system applications. 
+  Only the dialog with the user needs to be improved to create a simple expert 
+  system. These features are used in this chapter to build a sample application 
+  called, "Birds, " which identifies birds.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>In 
+  the later portion of this chapter the Birds system is split into two modules. 
+  One contains the knowledge for bird identification, and the other becomes "Native, 
+  " the first expert system shell developed in the book. Native can then be used 
+  to implement other similar expert systems.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="thebirdidentificationsystem"></a>2.1 
+  The Bird Identification System </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>A 
+  system which identifies birds will be used to illustrate a native Prolog expert 
+  system. The expertise in the system is a small subset of that contained in <I>Birds 
+  of North America</I> by Robbins, Bruum, Zim, and Singer. The rules of the system 
+  were designed to illustrate how to represent various types of knowledge, rather 
+  than to provide accurate identification.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="ruleformats"></a>Rule 
+  formats</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  rules for expert systems are usually written in the form:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>IF<BR>
+      first premise, and<BR>
+      second premise, and<BR>
+      ...</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>THEN<BR>
+      conclusion</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  IF side of the rule is referred to as the left hand side (LHS), and the THEN 
+  side is referred to as the right hand side (RHS). This is semantically the same 
+  as a Prolog rule:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>conclusion 
+      :-<BR>
+      first_premise, <BR>
+      second_premise, <BR>
+      ...</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Note 
+  that this is a bit confusing since the syntax of Prolog is really THEN IF, and 
+  the normal RHS and LHS appear on opposite sides.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="rulesaboutbirds"></a>Rules 
+  about birds</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  most fundamental rules in the system identify the various species of birds. 
+  We can begin to build the system immediately by writing some rules. Using the 
+  normal IF THEN format, a rule for identifying a particular albatross is:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>IF<BR>
+      family is albatross and<BR>
+      color is white</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>THEN<BR>
+      bird is laysan_albatross</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>In 
+  Prolog the same rule is:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>bird(laysan_albatross) 
+      :-<BR>
+      family(albatross), <BR>
+      color(white).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  following rules distinguish between two types of albatross and swan. They are 
+  clauses of the predicate <B>bird/1</B>:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>bird(laysan_albatross):-<BR>
+      family(albatross), <BR>
+      color(white).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>bird(black_footed_albatross):-<BR>
+      family(albatross), <BR>
+      color(dark).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>bird(whistling_swan) 
+      :-<BR>
+      family(swan), <BR>
+      voice(muffled_musical_whistle).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>bird(trumpeter_swan) 
+      :-<BR>
+      family(swan), <BR>
+      voice(loud_trumpeting).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>In 
+  order for these rules to succeed in distinguishing the two birds, we would have 
+  to store facts about a particular bird that needed identification in the program. 
+  For example if we added the following facts to the program:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>family(albatross).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>color(dark).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>then 
+  the following query could be used to identify the bird:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>?- bird(X).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>X = black_footed_albatross</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Note 
+  that at this very early stage there is a complete working Prolog program which 
+  functions as an expert system to distinguish between these four birds. The user 
+  interface is the Prolog interpreter's interface, and the input data is stored 
+  directly in the program.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="rulesforhierarchicalrelationships"></a>Rules 
+  for hierarchical relationships</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  next step in building the system would be to represent the natural hierarchy 
+  of a bird classification system. These would include rules for identifying the 
+  family and the order of a bird. Continuing with the albatross and swan lines, 
+  the predicates for <B>order</B> and <B>family</B> are:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>order(tubenose) 
+      :-<BR>
+      nostrils(external_tubular), <BR>
+      live(at_sea), <BR>
+      bill(hooked).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>order(waterfowl) 
+      :-<BR>
+      feet(webbed), <BR>
+      bill(flat).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>family(albatross) 
+      :-<BR>
+      order(tubenose), <BR>
+      size(large), <BR>
+      wings(long_narrow).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>family(swan) 
+      :-<BR>
+      order(waterfowl), <BR>
+      neck(long), <BR>
+      color(white), <BR>
+      flight(ponderous).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Now 
+  the expert system will identify an albatross from more fundamental observations 
+  about the bird. In the first version, the predicate for <B>family</B> was implemented 
+  as a simple fact. Now <B>family</B> is implemented as a rule. The facts in the 
+  system can now reflect more primitive data:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>nostrils(external_tubular).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>live(at_sea).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>bill(hooked).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>size(large).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>wings(long_narrow).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>color(dark).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  same query still identifies the bird:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>?- bird(X).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>X = black_footed_albatross</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>So 
+  far the rules for birds just reflect the attributes of various birds, and the 
+  hierarchical classification system. This type of organization could also be 
+  handled in more conventional languages as well as in Prolog or some other rule-based 
+  language. Expert systems begin to give advantages over other approaches when 
+  there is no clear hierarchy, and the organization of the information is more 
+  chaotic.</FONT></P>
+<P ALIGN="CENTER"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><BR>
+  <IMG SRC="usingprolog2-1.gif" WIDTH=427 HEIGHT=296><BR>
+  </FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=1>Figure 
+  2.1. Relationships between some of the rules in the Bird identification system</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="rulesforotherrelationships"></a>Rules 
+  for other relationships</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  Canada goose can be used to add some complexity to the system. Since it spends 
+  its summers in Canada, and its winters in the United States, its identification 
+  includes where it was seen and in what season. Two different rules would be 
+  needed to cover these two situations:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>bird(canada_goose):-<BR>
+      family(goose), <BR>
+      season(winter), <BR>
+      country(united_states), <BR>
+      head(black), <BR>
+      cheek(white).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>bird(canada_goose):-<BR>
+      family(goose), <BR>
+      season(summer), <BR>
+      country(canada), <BR>
+      head(black), <BR>
+      cheek(white).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>These 
+  goals can refer to other predicates in a different hierarchy:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>country(united_states):- 
+      region(mid_west).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>country(united_states):- 
+      region(south_west).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>country(united_states):- 
+      region(north_west).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>country(united_states):- 
+      region(mid_atlantic).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>country(canada):- 
+      province(ontario).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>country(canada):- 
+      province(quebec).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>region(new_england):-<BR>
+      state(X), <BR>
+      member(X, [massachusetts, vermont, </b>....<B>]).</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> <B>region(south_east):-<BR>
+      state(X), <BR>
+      member(X, [florida, mississippi, </b>....<B>]).</b></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>There 
+  are other birds that require multiple rules for the different characteristics 
+  of the male and female. For example the male mallard has a green head, and the 
+  female is mottled brown.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>bird(mallard):-<BR>
+      family(duck), <BR>
+      voice(quack), <BR>
+      head(green).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>bird(mallard):-<BR>
+      family(duck), <BR>
+      voice(quack), <BR>
+      color(mottled_brown).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Figure 
+  2.1 shows some of the relationships between the rules to identify birds.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Basically, 
+  any kind of identification situation from a bird book can be easily expressed 
+  in Prolog rules. These rules form the knowledge base of an expert system. The 
+  only drawback to the program is the user interface, which requires the data 
+  to be entered into the system as facts.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="userinterface"></a>2.2 
+  User Interface </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  system can be dramatically improved by providing a user interface which prompts 
+  for information when it is needed, rather than forcing the user to enter it 
+  beforehand. The predicate <B>ask</B> will provide this function.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="attributevaluepairs"></a>Attribute 
+  Value pairs</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Before 
+  looking at <B>ask</B>, it is necessary to understand the structure of the data 
+  which will be asked about. All of the data has been of the form: "attribute-value". 
+  For example, a bird is a mallard if it has the following values for these selected 
+  bird attributes:</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<DIR> 
+  <DIR> 
+    <DIR> 
+      <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>Attribute</b>&#9;<B>Value</b></FONT></P>
+      <P ALIGN="JUSTIFY"> 
+      <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+      <P ALIGN="JUSTIFY"> </P>
+      </FONT> 
+      <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>family&#9;duck</FONT></P>
+      <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>voice&#9;quack</FONT></P>
+      <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>head&#9;green</FONT></P>
+      <P ALIGN="JUSTIFY"> 
+      <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+      <P ALIGN="JUSTIFY"> </P>
+      </FONT> </DIR>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  is one of the simplest forms of representing data in an expert system, but is 
+  sufficient for many applications. More complex representations can have "object-attribute-value" 
+  triples, where the attribute-values are tied to various objects in the system. 
+  Still more complex information can be associated with an object and this will 
+  be covered in the chapter on frames. For now the simple attribute-value data 
+  model will suffice.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  data structure has been represented in Prolog by predicates which use the predicate 
+  name to represent the attribute, and a single argument to represent the value. 
+  The rules refer to attribute-value pairs as conditions to be tested in the normal 
+  Prolog fashion. For example, the rule for mallard had the condition <B>head(green) 
+  </B> in the rule.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Of 
+  course since we are using Prolog, the full richness of Prolog's data structures 
+  could be used, as in fact list membership was used in the rules for <B>region</B>. 
+  The final chapter discusses a system which makes full use of Prolog throughout 
+  the system. However, the basic attribute-value concept goes a long way for many 
+  expert systems, and using it consistantly makes the implementation of features 
+  such as the user interface easier.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="askingtheuser"></a>Asking 
+  the user</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>ask</B> predicate will have to determine from the user whether or not a given 
+  attribute-value pair is true. The program needs to be modified to specify which 
+  attributes are askable. This is easily done by making rules for those attributes 
+  which call <B>ask</B>.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>eats(X):- 
+      ask(eats, X).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>feet(X):- 
+      ask(feet, X).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>wings(X):- 
+      ask(wings, X).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>neck(X):- 
+      ask(neck, X).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>color(X):- 
+      ask(color, X).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Now 
+  if the system has the goal of finding <B>color(white)</B> it will call <B>ask</B>, 
+  rather than look in the program. If <B>ask(color, white)</B> succeeds, <B>color(white)</B> 
+  succeeds.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  simplest version of <B>ask</B> prompts the user with the requested attribute 
+  and value and seeks confirmation or denial of the proposed information. The 
+  code is:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>ask(Attr, 
+      Val):-<BR>
+      write(Attr:Val), <BR>
+      write('? '), <BR>
+      read(yes).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>read</B> will succeed if the user answers "yes", and fail if the user types 
+  anything else. Now the program can be run without having the data built into 
+  the program. The same query to <B>bird</B> starts the program, but now the user 
+  is responsible for determining whether some of the attribute-values are true. 
+  The following dialog shows how the system runs:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>?- bird(X).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>nostrils : external_tubular? 
+      <B> yes.</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>live : at_sea? 
+      <B>yes.</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>bill : hooked? 
+      <B>yes.</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>size : large? 
+      <B>yes.</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>wings : long_narrow? 
+      <B>yes.</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>color : white? 
+      <B>yes.</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>X = laysan_albatross</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>There 
+  is a problem with this approach. If the user answered "no" to the last question, 
+  then the rule for <B>bird(laysan_albatross)</B> would have failed and backtracking 
+  would have caused the next rule for <B>bird(black_footed_albatross)</B> to be 
+  tried. The first subgoal of the new rule causes Prolog to try to prove <B>family(albatross)</B> 
+  again, and ask the same questions it already asked. It would be better if the 
+  system remembered the answers to questions and did not ask again.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="rememberingtheanswer"></a>Remembering 
+  the answer</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>A 
+  new predicate, <B>known/3</B> is used to remember the user's answers to questions. 
+  It is not specified directly in the program, but rather is dynamically <B>assert</B>ed 
+  whenever <B>ask</B> gets new information from the user.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Every 
+  time <B>ask</B> is called it first checks to see if the answer is already <B>known</B> 
+  to be yes or no. If it is not already <B>known</B>, then <B>ask</B> will <B>assert</B> 
+  it after it gets a response from the user. The three arguments to <B>known</B> 
+  are: yes/no, attribute, and value. The new version of <B>ask</B> looks like:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> <B>ask(A, V):-<BR>
+      known(yes, A, V), &#9;&#9;</b>% succeed if true<BR>
+      <B>!.&#9;&#9;&#9;&#9;</B>% stop looking </FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> <B>ask(A, V):-<BR>
+      known(_, A, V), &#9;&#9;</b>% fail if false<BR>
+      <B>!, fail.</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> <B>ask(A, V):-<BR>
+      write(A:V), &#9;&#9;&#9;</b>% ask user<B><BR>
+      write('? : '), <BR>
+      read(Y), &#9;&#9;&#9;</B>% get the answer<B><BR>
+      asserta(known(Y, A, V)), &#9;</B>% remember it<BR>
+      <B>Y == yes.&#9;&#9;&#9;</B>% succeed or fail</FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  cuts in the first two rules prevent <B>ask</B> from backtracking after it has 
+  already determined the answer.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="multivaluedanswers"></a>Multi-valued 
+  answers</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>There 
+  is another level of subtlety in the approach to <B>known</B>. The <B>ask</B> 
+  predicate now assumes that each particular attribute value pair is either true 
+  or false. This means that the user could respond with a "yes" to both color:white 
+  and color:black. In effect, we are letting the attributes be multi-valued. This 
+  might make sense for some attributes such as <B>voice</B> but not others such 
+  as <B>bill</B>, which only take a single value.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  best way to handle this is to add an additional predicate to the program which 
+  specifies which attributes are multi-valued: </FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B> multivalued(voice).<BR>
+      multivalued(feed).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>A 
+  new clause is now added to <B>ask</B> to cover the case where the attribute 
+  is not multi-valued (therefor single-valued) and already has a different value 
+  from the one asked for. In this case <B>ask</B> should fail. For example, if 
+  the user has already answered yes to <B>size - large</B> then <B>ask</B> should 
+  automatically fail a request for <B>size - small</B> without asking the user. 
+  The new clause goes before the clause which actually asks the user:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B> ask(A, V):-<BR>
+      &#9;not multivalued(A), <BR>
+      &#9;known(yes, A, V2), <BR>
+      &#9;V \== V2, <BR>
+      &#9;!, fail.</B></FONT></P>
+  </DIR>
+</DIR>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="menusfortheuser"></a>Menus 
+  for the user</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  user interface can further be improved by adding a menu capability which gives 
+  the user a list of possible values for an attribute. It can further enforce 
+  that the user enter a value on the menu.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  can be implemented with a new predicate, <B>menuask</B>. It is similar to <B>ask</B>, 
+  but has an additional argument which contains a list of possible values for 
+  the attribute. It would be used in the program in an analogous fashion to <B>ask</B>:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>size(X):- 
+      menuask(size, X, [large, plump, medium, small]).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>flight(X):- 
+      menuask(flight, X, [ponderous, agile, flap_glide]).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The<B> 
+  menuask</B> predicate can be implemented using either a sophisticated windowing 
+  interface, or by simply listing the menu choices on the screen for the user. 
+  When the user returns a value it can be verified, and the user reprompted if 
+  it is not a legal value.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>A 
+  simple implementation would have initial clauses as in <B>ask</B>, and have 
+  a slightly different clause for actually asking the user. That last clause of 
+  <B>menuask</B> might look like:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>menuask(A, 
+      V, MenuList) :-<BR>
+      write('What is the value for'), write(A), write('?'), nl, <BR>
+      write(MenuList), nl, <BR>
+      read(X), <BR>
+      check_val(X, A, V, MenuList), <BR>
+      asserta( known(yes, A, X) ), <BR>
+      X == V.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>check_val(X, 
+      A, V, MenuList) :-<BR>
+      member(X, MenuList), !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>check_val(X, 
+      A, V, MenuList) :-<BR>
+      write(X), write(' is not a legal value, try again.'), nl, <BR>
+      menuask(A, V, MenuList).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>check_val</B> predicate validates the user's input. In this case the test 
+  ensures the user entered a value on the list. If not, it retries the <B>menuask</B> 
+  predicate.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="otherenhancements"></a>Other 
+  enhancements</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Other 
+  enhancements can also be made to allow for more detailed prompts to the user, 
+  and other types of input validation. These can be included as other arguments 
+  to <B>ask</B>, or embodied in other versions of the <B>ask</B> predicate. Chapter 
+  10 gives other examples along these lines.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="asimpleshell"></a>2.3 
+  A Simple Shell </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  bird identification program has two distinct parts: the knowledge base, which 
+  contains the specific information about bird identification; and the predicates 
+  which control the user interface.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>By 
+  separating the two parts, a shell can be created which can be used with any 
+  other knowledge base. For example, a new expert system could be written which 
+  identified fish. It could be used with the same user interface code developed 
+  for the bird identification system.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  minimal change needed to break the two parts into two modules is a high level 
+  predicate which starts the identification process. Since in general it is not 
+  known what is being identified, the shell will seek to solve a generic predicate 
+  called <B>top_goal</B>. Each knowledge base will have to have a <B>top_goal</B> 
+  which calls the goal to be satisfied. For example:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B> top_goal(X) 
+      :- bird(X).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  is now the first predicate in the knowledge base about birds.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  shell has a predicate called <B>solve</B>, which does some housekeeping and 
+  then solves for the <B>top_goal</B>. It looks like:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>solve :-<BR>
+      abolish(known, 3), <BR>
+      define(known, 3), <BR>
+      top_goal(X), <BR>
+      write('The answer is '), write(X), nl.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>solve :-<BR>
+      write('No answer found.'), nl.</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  built-in <B>abolish</B> predicate is used to remove any previous <B>known</B>s 
+  from the system when a new consultation is started. This allows the user to 
+  call <B>solve</B> multiple times in a single session.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>abolish</B> and <B>define</B> predicates are built-in predicates which respectively 
+  remove previous <B>known</B>s for a new consultation, and ensure that <B>known</B> 
+  is defined to the system so no error condition is raised the first time it is 
+  referenced. Different dialects of Prolog might require different built-in predicate 
+  calls.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>In 
+  summary, the predicates of the bird identification system have been divided 
+  into two modules. The predicates which are in the shell called Native, are:</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<DIR> 
+  <DIR> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>solve</b> 
+      - starts the consultation;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>ask</b> 
+      - poses simple questions to the users and remembers the answers;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>menuask</b> 
+      - presents the user with a menu of choices;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>supporting 
+      predicates for the above three predicates.</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  predicates which are in the knowledge base are:</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<DIR> 
+  <DIR> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>top_goal</b> 
+      - specifies the top goal in the knowledge base;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>rules 
+      for identifying or selecting whatever it is the knowledge base was built 
+      for (for example <B>bird</B>, <B>order</B>, <B>family</B>, and <B>region)</B>;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>rules 
+      for attributes which must be user supplied (for example <B>size</B>, <B>color</B>, 
+      <B>eats</B>, and <B>wings);</b></FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>multivalued</b> 
+      - defines which attributes might have multiple values.</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>To 
+  use this shell with a Prolog interpreter, both the shell and the birds knowledge 
+  base must be consulted. Then the query for <B>solve</B> is started.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>?- consult(native).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>yes</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>?- consult('birds.kb').</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>yes</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>?- solve.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>nostrils : external_tubular? 
+      </FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>...</FONT></P>
+  </DIR>
+</DIR>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="commandloop"></a>Command 
+  loop</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  shell can be further enhanced to have a top level command loop called <B>go</B>. 
+  To begin with, <B>go</B> should recognize three commands:</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<DIR> 
+  <DIR> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>load</b> 
+      - Load a knowledge base.</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>consult</b> 
+      - Consult the knowledge base by satisfying the top goal of the knowledge 
+      base.</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>quit</b> 
+      - Exit from the shell.</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>go</B> predicate will also display a greeting and give the user a prompt 
+  for a command. After reading a command, <B>do</B> is called to execute the command. 
+  This allows the command names to be different from the actual Prolog predicates 
+  which execute the command. For example, the common command for starting an inference 
+  is <B>consult</B>, however <B>consult</B> is the name of a built-in predicate 
+  in Prolog. This is the code:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>go :-<BR>
+      greeting, <BR>
+      repeat, <BR>
+      write('&gt; '), <BR>
+      read(X), <BR>
+      do(X), <BR>
+      X == quit.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>greeting :-<BR>
+      write('This is the Native Prolog shell.'), nl, <BR>
+      write('Enter load, consult, or quit at the prompt.'), nl.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>do(load) :- 
+      load_kb, !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>do(consult) 
+      :- solve, !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>do(quit).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>do(X) :-<BR>
+      write(X), <BR>
+      write('is not a legal command.'), nl, <BR>
+      fail.</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>go</B> predicate uses a repeat fail loop to continue until the user enters 
+  the command <B>quit</B>. The <B>do</B> predicate provides an easy mechanism 
+  for linking the user's commands to the predicates which do the work in the program. 
+  The only new predicate is <B>load_kb</B> which reconsults a knowledge base. 
+  It looks like:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>load_kb :-<BR>
+      write('Enter file name: '), <BR>
+      read(F), <BR>
+      reconsult(F).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Two 
+  other commands which could be added at this point are:</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<DIR> 
+  <DIR> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>help</b> 
+      - provide a list of legal commands;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>list</b> 
+      - list all of the <B>known</B>s derived during the consultation (useful 
+      for debugging).</FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="CENTER"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><BR>
+  <IMG SRC="usingprolog2-2.gif" WIDTH=344 HEIGHT=393><BR>
+  </FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=1>Figure 
+  2.2. Major predicates of Native Prolog shell</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  new version of the shell can either be run from the interpreter as before, or 
+  compiled and executed. The load command is used to load the knowledge base for 
+  use with the compiled shell. The exact interaction between compiled and interpreted 
+  Prolog varies from implementation to implementation. Figure 2.2 shows the architecture 
+  of the Native shell.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Using 
+  an interpreter the system would run as follows:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>?- consult(native).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>yes</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>?- go.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This is the native 
+      Prolog shell.</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Enter load, consult, 
+      or quit at the prompt.</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>&gt;load.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Enter file name:<B> 
+      'birds.kb'.</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>&gt;consult.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>nostrils : external_tubular 
+      ?<B> yes.</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>...</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The answer is 
+      black_footed_albatross</FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>&gt;quit.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>?-</B></FONT></P>
+  </DIR>
+</DIR>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="atoolfornonprogrammers"></a>A 
+  tool for non-programmers</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>There 
+  are really two levels of Prolog, one which is very easy to work with, and one 
+  which is a little more complex.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  first level is Prolog as a purely declarative rule based language. This level 
+  of Prolog is easy to learn and use. The rules for bird identification are all 
+  formulated with this simple level of understanding of Prolog.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  second level of Prolog requires a deeper understanding of backtracking, unification, 
+  and built-in predicates. This level of understanding is needed for the shell.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>By 
+  breaking the shell apart from the knowledge base, the code has also been divided 
+  along these two levels. Even though the knowledge base is in Prolog, it only 
+  requires the high level understanding of Prolog. The more difficult parts are 
+  hidden in the shell.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  means the knowledge base can be understood with only a little training by an 
+  individual who is not a Prolog programmer. In other words, once the shell is 
+  hidden from the user, this becomes an expert system tool that can be used with 
+  very little training.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="summary"></a>2.4 
+  Summary </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  example shows that Prolog's native syntax can be used as a declarative language 
+  for the knowledge representation of an expert system. The rules lend themselves 
+  to solving identification and other types of selection problems that do not 
+  require dealing with uncertainty.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  example has also shown that Prolog can be used as a development language for 
+  building the user interface of an expert system shell. In this case Prolog is 
+  being used as a full programming language.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="exercises"></a>Exercises 
+  </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>2.1 
+  - In Native, implement commands to provide help and to list the current "known"s.</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>2.2 
+  - Have <B>menuask</B> print a numbered list of items and let the user just enter 
+  the number of the chosen item.</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>2.3 
+  - Modify both <B>ask</B> and <B>menuask</B> to recognize input from the user 
+  which is a command, execute the command, and then re-ask the question.</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>2.4 
+  - Add a prompt field to <B>ask</B> which allows for a longer question for an 
+  attribute.</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>2.5 
+  - Modify the system to handle attribute-object-value triples as well as attribute-value 
+  pairs. For example, rules might have goals such as <B>color(head, green)</B>, 
+  <B>color(body, green)</B>, <B>length(wings, long)</B>, and <B>length(tail, short)</B>. 
+  Now <B>ask</B> will prompt with both the object and the attribute as in "head 
+  color?". This change will lead to a more natural representation of some of the 
+  knowledge in a system as well as reducing the number of attributes.</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>2.6 
+  - Use the Native shell to build a different expert system. Note any difficulties 
+  in implementing the system and features which would have made it easier.</FONT></P>
+<P ALIGN="JUSTIFY"><i><font size=-1>Copyright &copy;1989,2000 Amzi! inc. All Rights 
+  Reserved.</font></i></P>
+</BODY>
+</HTML>

@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Tcl/Tk Support</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="TclTkSupport"></A><font color="#D2AA00">Tcl/Tk Support</font> </h1>
+<P>
+  <!AMZI_INDEX=  Tcl/Tk; Extended Predicates; User Interface; GUI; Graphical User Interface;
+     Graphics>The Logic Server Extension (LSX) for Tcl/Tk, <b>atcltk.lsx</b>, provides:</P>
+<ul>
+  <li>The ability to embed Tcl/Tk commands in a logicbase, and</li>
+  <li>The ability to query a logicbase from those Tcl/Tk commands.</li>
+</ul>
+<p>The primary intention is to allow for the easy development of graphical user 
+  interfaces for logicbase applications, but any of the capabilities of Tcl/Tk 
+  are available from within a logicbase.</p>
+<p>The Tcl and Tk libraries are included with the Amzi! distribution, so it is 
+  not necessary to install these independently.</p>
+  
+<MENU> 
+  <LI><A HREF="#overview">Overview</A> </LI>
+  <LI><A HREF="#tcltk_calls_prolog">Calling Tcl/Tk from a logicbase</A> </LI>
+  <LI><A HREF="#prolog_calls_tcltk">Making logicbase queries from Tcl/Tk</A> </LI>
+  <LI><A HREF="#error_handling">Error Handling</A> </LI>
+  <LI><A HREF="#distribution">Distribution</A> </LI>
+  <LI><A HREF="#tutorial">Tutorial Example</A> </LI>
+  <LI><A HREF="#implementation">Implementation</A> </LI>
+  <LI><A HREF="#references">References</A> </LI>
+</MENU>
+
+<H2><A NAME="overview"></A><FONT COLOR="#0000FF">Overview</FONT></H2>
+<p>Tcl is a powerful scripting language that can be embedded in other applications, 
+  and also extended with custom commands (very much like the Amzi! Logic Server 
+  implementation). When Tcl is embedded in another application, that application 
+  can then start Tcl interpreters that have access to any custom commands.</p>
+<p>Tk is an extension to Tcl that provides a clean and powerful way of creating 
+  graphical user interfaces.</p>
+<p>A logicbase creates a Tcl interpreter by calling the extended predicate <b>tcl_init</b>. 
+  This returns an ID for a Tcl interpreter. The logicbase can then call <b>tcl_eval</b> 
+  to evaluate any Tcl/Tk commands for purposes such as:</p>
+<ul>
+  <li> creating windows, menus, buttons and other widgets,</li>
+  <li>capturing events such as mouse and keyboard activity,</li>
+  <li>defining actions to be taken in response to events.</li>
+</ul>
+<p>The Tcl/Tk command language is extended to allow logicbase queries. So, for 
+  example, event-response actions can trigger logicbase queries using the <b>ls_query</b> 
+  function, which can, in turn, further manipulate the graphical environment through 
+  calls to <b>tcl_eval</b>.</p>
+<p>The result is a very powerful architecture that combines the best of Tcl/Tk's 
+  clean windowing interface with the declarative power of a logicbase.</p>
+  
+<H2><A NAME="tcltk_calls_prolog"></A><FONT COLOR="#0000FF">Calling Tcl/Tk from 
+  a logicbase</FONT></H2>
+<p>These are the extended predicates that allow the creation and use of Tcl/Tk 
+  from a logicbase.</p>
+<DL> 
+  <DT><B>tcl_init(TclInterpreter, TclLibrary, Result)</B> </DT>
+  <DD>Create a Tcl interpreter and return the address of the interpreter in <b>TclInterpreter</b>. 
+    <b>Result</b> contains the result string returned from initialization. <b>TclLibrary</b> indicates where the Tcl/Tk libraries are. These can 
+    be standard locations or something custom. The values of <b>TclLibrary</b> 
+    can be:</DD>
+<ul><ul>
+  <li>amzi - indicating the libraries in the Amzi! distribution,</li>
+  <li>tcl - indicating the libraries for a local Tcl installation,</li>
+  <li>here - indicating the libraries are in the current directory in lib/tcl 
+    and lib/tk, or</li>
+      <li><i>pathname</i> - a library path, without ending / or \\, that contains 
+        the directories lib/tcl and lib/tk.</li>
+</ul></ul>
+
+  <DT><B>tk_mainloop</B> </DT>
+  <DD>Start the Tk event handling loop. This will normally be called after a number 
+    of calls creating an initial configuration for a window and its associated 
+    widgets. </DD>
+  <DT><B>tcl_finish(TclInterpreter)</B> </DT>
+  <DD>Shutdown the Tcl interpreter. Note that this should be used instead of the 
+    Tcl &quot;exit&quot; command, which shuts down the process which called it 
+    as well.</DD>
+  <DT><B>tcl_eval(TclInterpreter, CommandString, Result)</B> </DT>
+  <DD>Evaluate the Tcl/Tk commands in <b>CommandString</b> using the specified 
+    Tcl interpreter. <b>Result</b> contains the result, which might be a return 
+    value for some commands.</DD>
+  <DT><B>tcl_evalfile(TclInterpreter, FileName)</B> </DT>
+  <DD>Evaluate the Tcl/Tk commands in the named file. This can be useful for calling 
+    a longer sequence of commands, such as those used to create a complex graphical 
+    environment.</DD>
+</DL>
+
+
+<H2><A NAME="prolog_calls_tcltk"></A><font color="#0000FF">Making logicbase queries 
+  from Tcl/Tk</font></H2>
+<p>The Tcl/Tk commands provide a high-level logicbase query capability. A query 
+  contains a goal string that may or may not include logical variables, and the 
+  result is a Tcl list of alternating variable names and values.</p>
+<DL> 
+  <DT><b><i>list</i> ls_query <i>option</i> <i>?goal?</i></b></DT>
+  <DL>
+    <DT><b><i>list</i></b> - Returned Tcl list of alternating variable names and 
+      values, where the first pair contains 'result' and either 'true' or 'false'. 
+      The list can be easily displayed, queried, or turned into a Tcl array where 
+      the variable names becomes the keys.</DT>
+	<DT><b><i>option</i></b> - Backtracking option for the query 
+      <DL> 
+        <DT><b>once</b> - Execute the query goal once and return the answer list. 
+          Requires a <b>goal</b>.</DT>
+        <DT><b>first</b> - Call the query goal; return the first answer list; 
+          and set up the Logic Server to get additional answers. Requires a <b>goal</b>.</DT>
+        <DT><b>next</b> - Redo the current query goal and return the next answer. 
+          The first two elements will be 'result' and 'false' when there are no 
+          more answers. Does not need the <b>goal</b> argument.</DT>
+        <DT><b>clear</b> - Used for the special case when a query using the <b>first</b> 
+          and <b>next</b> options has not found all the answers and the query 
+          is to be ended. It is not necessary to call ls_query clear, and in fact 
+          might trigger an error, when ls_query next has reached a 'result' of 
+          'false'. Does not need the <b>goal</b> argument.</DT></DL>
+    <DT><b><i>goal</i></b> - A logicbase goal, such as might be entered at a Prolog 
+      listener prompt (?-).</DT>
+      </DL>
+  </DL>
+<p>Tcl/Tk commands that correspond to the more common Logic Server API calls are 
+  also provided. These are:</p>
+  
+<DT><B><i>term</i> ls_exec <i>goal</i></B></DT>
+<DD>Execute the query goal once, without setting up backtracking. A logical <i>term</i> 
+  is returned, which is cast to a Tcl integer. A zero value indicates the query 
+  failed.</DD>
+<DT><B><i>term</i> ls_call <i>goal</i></B></DT>
+<DD>Execute the query goal and set up backtracking. A <i>term</i> is returned, 
+  which is cast to a Tcl integer. A zero value indicates the query failed.</DD>
+<DT><B><i>term</i> ls_redo <i>term</i></B></DT>
+<DD>Redo the last query set up for backtracking, using the term returned from 
+  <b>ls_call</b>. A <i>term</i> is returned, which is cast to a Tcl integer. A 
+  zero value indicates the query failed.</DD>
+<DT><B><i>term</i> ls_clearcall <i>term</i></B></DT>
+<DD>If a query set up with <b>ls_call</b> has not been exhausted using <b>ls_redo</b> 
+  calls, use a call to <b>ls_clearcall</b> to end backtracking. The <i>term</i> 
+  argument is the term from the last <b>ls_call</b> or <b>ls_redo</b>. A term 
+  with 0 value is returned. </DD>
+<DT><B><i>string</i> ls_termtostr <i>term</i></B></DT>
+<DD>The <i>term</i> is converted to <i>string</i>, which is returned.</DD>
+<DT><B><i>string</i> ls_termtostrq <i>term</i></B></DT>
+<DD>The <i>term</i> is converted to <i>string</i>, which is returned, with Prolog 
+  quoting when necessary, so that it can be used in another query if necessary.</DD>
+<DT><B><i>string</i> ls_getstrarg <i>term int</i></B></DT>
+<DD>From the input <i>term</i>, get the argument at the <i>int</i> position, where 
+  1 is the first argument. Return the argument as a string. This is a bit different 
+  from equivalent Logic Server API calls which expect the argument to be a string 
+  or atom. The Tcl/Tk version converts any argument to a string, as if the argument 
+  were first passed through <b>ls_termtostr</b>.</DD>
+<H2><A NAME="error_handling"></A><FONT COLOR="#0000FF">Error Handling</FONT></H2>
+<p>The Tcl extensions for querying logicbases throw exceptions that can be handled 
+  using Tcl's error handling.</p>
+<p>The Prolog extended predicates for calling Tcl throw exceptions that can be 
+  handled using Prolog's error handling.</p>
+<H2><A NAME="distribution"></A><FONT COLOR="#0000FF">Distribution</FONT></H2>
+<p>To distribute an application with Tcl/Tk you need:</p>
+<ul>
+  <li>The Tcl/Tk LSX, atcltk.lsx, which is in amzi/bin.</li>
+  <li>The Tcl/Tk shared libraries (.dll / .so) which are in amzi/bin. These begin 
+    with tcl... and tk...</li>
+  <li>The library of Tcl/Tk scripts which are in amzi/lsapis/tcltk/lib</li>
+</ul>
+<p>When Tcl/Tk is initialized from Prolog, the <b>tcl_init</b> predicates has 
+  an argument that specifies where the Tcl/Tk script library is located. For development, 
+  that value should be either 'amzi' or 'tcl' depending on whether you have Tcl/Tk 
+  independently installed on the machine.</p>
+<p>For distribution that value can be 'here', which means the Tcl/Tk 'lib' directory 
+  is in the current directory of the application. In this case you copy the amzi/lsapis/tcltk/lib 
+  directory to your application directory.</p>
+<p>The library can also be a specific location, in which case the directory that 
+  contains the lib directory is supplied as the second argument to <b>tcl_init</b>.</p>
+<H2><A NAME="tutorial"></A><FONT COLOR="#0000FF">Tutorial Example</FONT></H2>
+<p>See the references below for introductions to Tcl/Tk and see the amzi/samples/tcltk 
+  directory for samples.</p>
+<p></p>
+<H2><A NAME="implementation"></A><FONT COLOR="#0000FF">Implementation</FONT></H2>
+<p>The Tcl/Tk interface is implemented in amzi/bin/atcltk.lsx, and requires the 
+  tcl and tk shared libraries and the tcl and tk libraries of the Tcl scripts. 
+  All of these are included with the Amzi! distribution.</p>
+<p>The Tcl/Tk LSX contains both the extended predicates that allow Prolog to call 
+  Tcl, and the Tcl extensions that allow Tcl to call Prolog.</p>
+<H2><A NAME="references"></A><FONT COLOR="#0000FF">References</FONT></H2>
+<p><a href="http://www.scriptics.com/">http://www.scriptics.com/</a> - Tcl/Tk 
+  developer site, with downloads.</p>
+<p><a href="http://www.pconline.com/%7Eerc/tcl.htm">http://www.pconline.com/~erc/tcl.htm</a> 
+  - Eric Foster Johnson's site with Tcl/Tk resources and a quick reference.</p>
+<p><a href="http://www.csc.calpoly.edu/%7Edbutler/tutorials/winter96/tcl/">http://www.csc.calpoly.edu/~dbutler/tutorials/winter96/tcl/</a> 
+  - Alex Samonte's Tcl/Tk tutorial.</p>
+<p><i>Tcl and the Tk Toolkit by John Ousterhout [Addison Wesley]</i> - The Tcl/Tk 
+  creator's book on the subject.</p>
+<p><i>Practical Programming in Tcl and Tk by Brent Welch, Ken Jones, Jeffrey Hobbs 
+  [Prentice Hall 2003]</i> - Another good book on Tcl/Tk programming.</p>
+
+  <!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --></BODY>
+</HTML>

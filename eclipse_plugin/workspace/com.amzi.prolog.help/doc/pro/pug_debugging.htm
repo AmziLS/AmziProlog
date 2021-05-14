@@ -1,0 +1,366 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Debugging Your Programs</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="DebuggingYourPrograms"></A><FONT COLOR="#D2AA00">Debugging Your Programs</FONT> 
+</h1>
+<P> 
+  <!AMZI_INDEX = Debugging>
+  There are a number of tools in addition to the <A HREF="pug_debugger_ide.htm">Source 
+  Code Debugger</A> that help track down bugs in embedded and standalone Prolog 
+  programs. </P>
+
+<H2><A NAME="InitialDevForEmbeddedModules"></A><FONT COLOR="#0000FF">Initial Development 
+  for Embedded Modules</FONT></H2>
+
+<P>When you are first developing your Prolog components, you can usually
+create a suite of predicates that simulate the way the Prolog code will
+be called from a host language. </P>
+
+<P>By using a simulated front-end written in Prolog, you can get most of
+the Prolog code working correctly using the normal development tools of
+the Windows-IDE. </P>
+
+<P>You can also create Prolog versions of any extended predicates you write,
+where the Prolog versions simply return values that simulate the results
+you expect returned by your extended predicates. </P>
+
+<H2><A NAME="TrackingRuntimeErrorsinProlog"></A><FONT COLOR="#0000FF">Tracking
+Prolog Errors</FONT></H2>
+
+<P><!AMZI_INDEX = Errors>There are a number of ways to gather information
+from a running Prolog program. These are described in this section. </P>
+
+<H3><A NAME="Logging"></A><FONT COLOR="#000080">Logging</FONT></H3>
+
+<P><!AMZI_INDEX = Logging; Debugging; openlog; writelog; nllog; closelog>The
+most basic debugging tool is the write statement. In the case of an embedded
+Prolog module, especially in a Windows environment, the best way to add
+'write's is to use the logging capabilities of Amzi!. </P>
+
+<P>You can specify that a logfile be opened either from the Prolog program:
+</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">openlog('log.log'),</FONT></PRE>
+</UL>
+
+<P>or from the .cfg file. For example, if your .xpl file is foo.xpl then you can 
+  add this line to your foo.cfg file: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">logfile = log.log</FONT></PRE>
+</UL>
+
+<P>Once you've got a log file you can write to it using the <b>writelog/1</b> 
+  predicate and the <b>nllog/0</b> (for newlines) predicate. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">writelog($The funny term is: $), 
+writelog(FunnyTerm), 
+nllog,</FONT></PRE>
+</UL>
+
+<P>You close the logfile, although it will close automatically, with: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">closelog.</FONT></PRE>
+</UL>
+
+<H3><A NAME="DebuggerLikeIO"></A><FONT COLOR="#000080">Debugger-Like Output</FONT></H3>
+<!AMZI_INDEX = buginit/1; buginit/0; user_bugwrite/1;
+bug/1; ?/1; bugclose/0; flow/1; flow/3; debugging predicates>
+<P>If you're having
+trouble with the flow-of-control in the running program, you can add some
+special statements that provide output similar to the debugger's for each
+of the four ports, CALL, EXIT, FAIL, and REDO. </P>
+
+<P>To do this simply put the operator 
+  '?' in front of lines that you want to create output for. Or, use the <b>bug/1</b> 
+  predicate like a <b>call/1</b> predicate.</P>
+
+<P>For example, if you suspected problems with goal2 below, the ? operator
+will generate diagnostic information for each of the ports. It will work
+for both compiled and interpreted code. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">failing_predicate(W,Z) :-
+  goal1(W,X),
+? goal2(X,Y),
+  goal3(Y,Z).</FONT></PRE>
+</UL>
+
+<p>The following debugging predicates are built into Amzi!</p>
+
+<blockquote> 
+  <p><b>buginit/1</b> - optionally opens a file to which debugging output is directed. 
+    The argument is the file name. If not specified, output is directed to standard 
+    output. </p>
+  <p><b>buginit/0</b> - optionally opens file 'bug.log' for debugging output. 
+  </p>
+  <p><b>user_bugwrite/1</b> - The user can define an output predicate that is 
+    used by bug/1 to output a term, and most likely follows it with a newline. 
+    If not specified, output is generated with 'writeq' statements to the debugging 
+    output stream.</p>
+  <p><b>bug/1</b> - brackets a call to a predicate with debugging information 
+  </p>
+  <p><b>?/1</b> - an operator synonym for bug/1. </p>
+  <p><b>bugclose/0</b> - closes the debugging file, if one was open </p>
+  <p><b>flow/1,3</b> - can be used to note the flow of control at a point in the 
+    program, for both normal code and DCG. </p>
+</blockquote>
+
+<H3><A NAME="catchandthrow"></A><FONT COLOR="#000080">catch and throw</FONT></H3>
+
+<P><!AMZI_INDEX = Debugging; catch; throw>These predicates allow you to implement 
+  better error handling in your own code. <b>catch/3</b> lets you make a normal 
+  call to a goal with the added feature that it also 'catch'es any exceptions 
+  that are 'throw'n further down the code. This makes it easier for you to implement 
+  your own error catching code. For example: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+      <PRE><FONT COLOR="#000080">main :- 
+     catch(
+          dostuff,
+          error(X,Y), 
+          process_err(X,Y) ).
+
+process_err(badpredarg, X) :- 
+     write($Bad argument given to predicate: $), 
+     write(X), nl. 
+process_err(X, Y) :- 
+     write($Some other error: $), 
+     write(X:Y), nl.
+
+dostuff :- foo1, foo2, ...
+
+foo2 :- 
+     getfromsomewhere(X), 
+     foon(X), ...
+
+foon(case1) :- ... 
+foon(case2) :- ... 
+... 
+foon(X) :- throw(error(badpredarg, foon(X)).</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>See the example samples/prolog/misc/catch.pro and See <a href="ref_execution.htm#FlowofControlPredicates">Flow 
+  of Control Predicates</a> for more details. </P>
+
+<H3><A NAME="PrologErrorFile"></A><FONT COLOR="#000080">Prolog Error File</FONT></H3>
+
+<P><!AMZI_INDEX = Error Files>Sometimes error messages are not retrieved fully 
+  from an executing Prolog .xpl file. You can often look in the file foo.err, 
+  where foo is the name of the .cfg or .xpl file, to find the error messages emitted 
+  during a run. </P>
+
+<P>This same file can be useful in the IDE as well. The listener writes its messages 
+  to wideA.err (or wideW.err) and the compiler writes messages to acmp.err. These 
+  correspond to the two .xpl Files that are run by the IDE. </P>
+
+<P>The existence of the error file does not eliminate the need to check error 
+  conditions from Logic Server API calls. </P>
+<h2><a name="YourOwnDebuggingPredicates"></a><font color="#0000FF">Writing Your 
+  Own Embedded Debugging Predicates</font></h2>
+
+<p>Sometimes you need to build a custom version of the built-in debugging predicates. 
+  This is especially true with a program that is recursive or heavily looping. 
+  You can build into your program specialized debugging displays, that are application-specific.</p>
+<p>One approach is like this: </p>
+<blockquote>
+  <pre><font color="#000080">trace_open(FILENAME) :- <br>  fopen(H, FILENAME, w), <br>  assert(trace_file(H)). <br><br>trace_close :- <br>  retract(trace_file(H)), <br>  fclose(H). <br><br>trace(X) :- <br>  trace_file(H), !, <br>  write('TRACE:    '), <br>  write(H,X), nl, <br>  fflush(H). % this if you want to make sure the output is there <br>trace(_).</font></pre>
+</blockquote>
+<p> Then in your code: </p>
+<blockquote>
+  <pre><font color="#000080">some_tricky_predicate(A,B,C) :- 
+  trace(calling:the_tricky_bit(B)), 
+  the_tricky_bit(B),    
+  trace(exiting:the_tricky_bit(B)), ... </font></pre>
+</blockquote>
+<p>Now if you call <b>trace_open/1</b>, you'll get tracing information written 
+  in your trace file, but if you don't the program will quietly do nothing on 
+  the trace statements. And you can make this more sophisticated, with other arguments 
+  defining level of trace, that make decisions as to what to display in what situations. 
+  And you can prune things out: </p>
+<blockquote>
+  <pre><font color="#000080">something(B) :- 
+  ( B > 10, trace( bigB(B) ); true ), 
+  something_else(B),    ... </font> </pre>
+</blockquote>
+<p>or create a trace with a two argument predicate that is conditional: </p>
+<blockquote>
+  <pre><font color="#000080">trace(CONDITION, X) :- 
+  trace_file(H), 
+  call( CONDITION ), !, 
+  write(X), nl. 
+trace(_,    _). </font></pre>
+</blockquote>
+<p>So the above call becomes:</p>
+<blockquote>
+  <pre><font color="#000080">something(B) :- 
+  trace( B > 10, bigB(B) ), 
+  something_else(B), ... </font></pre>
+</blockquote>
+<p>And of course backtracking versions that actually execute the predicate being 
+  debugged (which is how the bug/1 and ?/1 predicates are implemented in the system):</p>
+<blockquote> 
+  <pre><font color="#000080">trace(X) :-
+  trace_callfail(X),
+  call(X),
+  trace_exitredo(X).
+
+trace_callfail(X) :- 
+  trace_file(H), !, 
+  ( write('CALL: '), write(X), nl ; write('FAIL:    '), 
+  write(X), nl, fail ). 
+trace_callfail(X). 
+trace_exitredo(X) :- 
+  trace_file(H), !, 
+  ( write('EXIT: '), write(X), nl ; write('REDO: '), 
+  write(X), nl, fail ).    
+trace_exitredo(X). </font></pre>
+</blockquote>
+<p>This is called like this:</p>
+<blockquote>
+  <pre><font color="#000080">some_tricky_predicate(A,B,C) :- 
+  trace(the_tricky_bit(B)), ... </font></pre>
+</blockquote>
+<p>This type of approach would let you see the operation in detail, but with a 
+  trace/debugging output that reflects application processing rather than Prolog 
+  processing.</p>
+<H2><a name="DebuggingLogicServerAPIFunctio"></a><font color="#0000FF">Tracking 
+  LSAPI Errors</font></H2>
+
+<P><!AMZI_INDEX = Debugging; LSAPI>It is often the case that the Prolog
+program is running just fine, but the Logic Server API calls are not communicating
+with it correctly. </P>
+
+<P>The various techniques listed in the above section can be used by the
+Prolog program to indicate that it has, indeed, been called correctly from
+the host program, and to verify that the terms being passed back to the
+host program are the correct terms. </P>
+
+<P>Given that Prolog is working correctly, then the problem is somewhere
+in the LSAPI calls that are retrieving the information. </P>
+
+<H3><A NAME="TracingAPICalls"></A><FONT COLOR="#000080">Tracing LSAPI Calls</FONT></H3>
+
+<P><!AMZI_INDEX = LSAPI; Tracing; apitrace; logfile>To help debug host applications 
+  calling the Logic Server API, we've added an API trace facility. You initiate 
+  it by setting the <A HREF="pug_runtime.htm">.cfg parameter</A> 'apitrace' to 
+  'on'. You must specify a 'logfile' as well, for the trace output goes to the 
+  log file. </P>
+
+<P>If you specify 'apitrace' in amzi.cfg, then you'll catch errors in the lsInit() 
+  call if there are any. If you specify it in myprog.cfg, where 'myprog' is the 
+  name of your .xpl file, you'll get trace information as long as the initialization 
+  completed OK. </P>
+
+<P>What follows is some apitrace output from the xgene.c sample program. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">lsInit(0, &quot;xgene&quot;)
+  returns OK
+lsLoad(0, &quot;xgene&quot;)
+  returns OK
+lsStrToTerm(0, 00442380, &quot;sibling(mary, Y)&quot;)
+  returns OK
+lsCall(0, 00442380)
+  returns TRUE,
+  term bound to &quot;sibling(mary,mary)&quot;
+lsGetFA(0, 004b7060, 00442358, 00442384)
+  returns OK,
+  functor set to &quot;sibling&quot; arity 2
+lsGetArg(0, 004b7060, 1, 1, 004422e0)
+  returns 0
+  arg 1 = mary
+lsGetArg(0, 004b7060, 2, 1, 00442330)
+  returns 0
+  arg 2 = mary
+lsRedo(0)
+  returns TRUE
+lsGetFA(0, 004b7060, 00442358, 00442384)
+  returns OK,
+  functor set to &quot;sibling&quot; arity 2
+lsGetArg(0, 004b7060, 1, 1, 004422e0)
+  returns 0
+  arg 1 = mary
+lsGetArg(0, 004b7060, 2, 1, 00442330)
+  returns 0
+  arg 2 = kathy</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<H3><A NAME="CheckingAPIErrorCodes"></A><FONT COLOR="#000080">Checking
+LSAPI Error Codes</FONT></H3>
+
+<P><!AMZI_INDEX = LSAPI; Errors; lsGetExceptMsg; lsGetExceptReadBuffer>In
+the API calls, make sure you always check for the appropriate return codes.
+Add an if statement that stops when an API error is encountered. In that
+code you can get error message using the API call lsGetExceptMsg(). For
+read errors you can also get the input read buffer using lsGetExceptReadBuffer().
+</P>
+
+<H3><A NAME="ExaminingPrologTerms"></A><FONT COLOR="#000080">Examining
+Prolog Terms</FONT></H3>
+
+<P><!AMZI_INDEX = Terms; lsTermToStr>If you are doing hacking of Prolog terms, 
+  you can verify that the terms are what you expect by using lsTermToStr(). It 
+  converts a term into a string, just as a <b>write</b>(X) would write whatever 
+  the term X was from a Prolog listener. You can then look at the string to see 
+  if you are picking up the term correctly. </P>
+
+<P>For example: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">  tf = lsCallStr(eid, &amp;term, &quot;foo(X,Y)&quot;); 
+#ifdef DEBUG 
+  lsTermToStr(eid, &amp;term, buffer, 255); 
+  printf(&quot;Called: %s\n&quot;, buffer); 
+#endif 
+if (tf == TRUE) {       
+#ifdef DEBUG    
+  lsGetArg(eid, term, 2, cTERM, &amp;targ2);  
+  lsTermToStr(eid, &amp;targ2, buffer, 255);  
+  printf(&quot;Arg2: %s\n&quot;, buffer);   
+#endif  
+  lsGetArg(eid, term, 2, cSTR, arg2);     
+  ...do the right thing...       
+  } 
+else    
+  if (tf == FALSE)                
+    printf(&quot;Call failed\n&quot;);        
+  else {               
+    lsErrMsg(eid, buffer);          
+    printf(&quot;Prolog error: %d, %s\n&quot;, tf, buffer);           
+    }
+  }</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>This section of code will report the error messages of any erroneous results, 
+  as well as, during debug mode, display the values of various terms during the 
+  course of execution. </P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P>&nbsp;</P>
+
+</BODY>
+</HTML>

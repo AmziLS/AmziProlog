@@ -1,0 +1,778 @@
+<html>
+<head>
+<title>What's New</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1><font color="#D2AA00">What's New</font></h1>
+<hr width="100%">
+<h2><font color="#0000FF"><a name="build_notes"></a>Build Notes (most recent first)</font></h2>
+<h2><font color="#0000FF">9.0</font></h2>
+<h3><font color="#000080">9.5.4</font></h3>
+<ul>
+  <li>Add Mac support for the full Amzi! Prolog + Logic Server + IDE</li>
+  <li>Added Linux  support for CentOS64 (binary compatible with RHEL)</li>
+</ul>
+<h3><font color="#000080">9.5.2</font></h3>
+<ul>
+  <li>Added UTF-8 support as a Prolog flag. The set_prolog_flag(utf8i0, on) directive will cause all I/O to be encoded and decoded as UTF-8 strings. This is especially useful for Web applications using expanded character sets.</li>
+  <li>Re-introduced the original Amzi! IDE, wide.exe in amzi/apls/bin. The original IDE was a relatively simple Windows based IDE for the development and testing of Prolog programs as an alternative to the full Eclipse-based IDE. The original IDE is well suited for student use as it doesn't require the overhead of learning the Eclipse professional development environment.</li>
+</ul>
+<h3><font color="#000080"></font><font color="#000080">9.4.4</font></h3>
+<ul>
+  <li>Changed the basic product options which are reflected in the purchase options and the activation of the software. The software can be activated as free, licensed or evaluation. The free version includes just the IDE and is ideal for students learning the Prolog language. The licensed and evaluation versions have the full features of the product, equivalent to the old 'Professional' edition, although the evaluation versions expire after a certain time. There are no longer separate 'Personal' and 'Developer' editions.</li>
+</ul>
+<h3><font color="#000080">9.2.2</font></h3>
+<ul>
+  <li>Reworked the basic distribution directory structure to better reflect Amzi! products. There is now a core directory, apls, with the basic Prolog system, and an IDE directory at the same level, which then uses that Prolog core. Similarly, ARulesXL, now uses that same core directory rather than having parallel versions of the same files.</li>
+  <li>Brought the Linux version up to date.</li>
+  <li>Released a NetBSD version, sans IDE.</li>
+  <li>Moved to a simpler install that is more consistent across platforms.</li>
+  <li>Synchronized the 32-bit and 64-bit versions for Windows.</li>
+</ul>
+<h3><font color="#000080">9.0.1</font></h3>
+<ul>
+  <li>Updated to work with Eclipse 3.5</li>
+  <li>Fixed some causes of sporatic thread interaction bugs that caused some grief using the source code debugger.</li>
+  <li>Created 64-bit version for Windows.</li>
+</ul>
+<h2><font color="#0000FF">8.0</font></h2>
+<h3><font color="#000080">8.0.6</font></h3>
+<ul>
+  <li>Relaxes many of the technical licensing restrictions, making it easier to move copies around and maintain valid licenses.</li>
+  <li>Adds additional licensing capabilities to support site licenses for universities and corporations.</li>
+</ul>
+<h2><font color="#0000FF"><a name="v7_6"></a>7.6 </font></h2>
+<h3><font color="#000080">7.6.9</font></h3>
+<ul>
+  <li>In Eclipse, fix the listener finished message to appear at the proper time and place. </li>
+  <li>In Eclipse debugger, eliminate the debug64_init error on backtracking. </li>
+  <li>In Eclipse debugger, increase stability by ignoring debug command buttons during user input. </li>
+  <li>In the Prolog engine, release the amzidll mutex on process detach. </li>
+</ul>
+<h3><font color="#000080">7.6.8</font></h3>
+<ul>
+  <li>Made undefined_predicate a settable Prolog flag. It can now be fail (default) 
+    or error, which throws an error. </li>
+  <li>Fixed some error messages which were garbling predicate names in the message.</li>
+</ul>
+<h3><font color="#000080">7.6.5</font></h3>
+<ul>
+  <li>Upgraded to Eclipse 3.2.2 and Java 1.6. </li>
+  <li>Fixed additional instabilities when using the Eclipse Prolog Debugger and Listener by changing amzijni.dll to save the Java environment pointer when extended predicates are created instead of using the most recent environment pointer. </li>
+  <li>Under Linux, fix inadvertently broken debugger in 7.6.4. </li>
+  <li>When using extended predicates with Java, there are now 3 options for determining which JNI environment pointer is used to call extended predicates. See the <a href="ls/lsajava.htm">Java Class </a> for details. This change has implications and offers additional options for server environments with extended predicates that pool those predicates on startup in threads that no longer exist when the predicates are actually used. </li>
+</ul>
+<h3><font color="#000080">7.6.4</font></h3>
+<ul>
+  <li>Fixed Eclipse hangs during listener output. Added Debug Info command on listener to identify any further problems. </li>
+</ul>
+<h3><font color="#000080">7.6.3</font></h3>
+<ul>
+  <li>Fixed broken Amzi! documentation links under Eclipse Help. </li>
+  <li>Fixed Eclipse under Ubuntu Linux to not loop infinitely and to show the listener views. </li>
+</ul>
+<h3><font color="#000080">7.6.2</font></h3>
+<ul>
+  <li>Added support in the debug interpreter and compiler for the basic preprocessor directives. The #define directive works for  a simple value (number or word) or no value. Also supported are: #ifdef, #ifndef, #else, #endif, #undef and #error. The predefined macros __DATE__, __TIME__ and __LINE__ are supported. </li>
+  <li>Fixed corner case bug in sub_string; sub_string(`abcdef`, 1, X, `abc`)
+    used to fail, now it succeeds with X =   3.</li>
+  <li>Fixed cross referencer bug that erroneously reported user predicates called from modules as undefined. </li>
+  <li>Fixed Eclipse bug that genereated error about missing com.amzi.prolog.doc plug-in when installing the Amzi! plug-ins into an existing Eclipse installation. </li>
+  <li>Have the Eclipse Prolog editor color atoms in single quotes. <BR>
+  </li>
+  <li>Changed how module names are stored internally in the Prolog engine.</li>
+</ul>
+<h3><font color="#000080">7.6.1</font></h3>
+<ul>
+  <li>Fixed Logic Server close to properly report any errors in the API log, and not retry closing again. </li>
+  <li>Default the preprocessor to always be on per the documentation. It was on for the compiler and listener but not for other programs, like the cross referencer. </li>
+  <li>Fixed bug in listener to have arrow keys properly bring back old command lines without generating null pointer errors. </li>
+  <li>Fixed bug that did not recognize {} as an atom. </li>
+  <li>Updated to Eclipse 3.2.1.</li>
+  <li>Fixed Eclipse bug requiring a click on the Prolog Stack Frame to open the first source file when starting the source code debugger.</li>
+  <li>Fixed Eclipse bug that said &lt;terminated&gt; on the launch name in the Debug View.</li>
+  <li>Changed how extended predicates are called from Java by using the Java environment from the last Exec/Call/Redo instead of the environment when the extended predicate was added. This fixes a bug under IBM's JAVA50 when Logic Servers are created in one thread and used from another.    </li>
+</ul>
+<h3><font color="#000080">7.6.0</font></h3>
+<ul>
+  <li>Fix bug in serialization of LSException. </li>
+</ul>
+<h3><font color="#000080">7.5.2 Beta Test </font></h3>
+<ul>
+  <li>Updated .NET interface DLL to use new 2.0 C++ syntax and make LSException serializable. This required changing the enumerated type names from exTYPE to exLSTYPE, pTYPE to pLSTYPE and dTYPE to dLSTYPE. Also the method GetType() in LSException was renamed to GetExceptType(). </li>
+</ul>
+<h3><font color="#000080">7.5.1 Beta Test </font></h3>
+<ul>
+  <li>Fixed crash when retracting the last fact in the dynamic database. </li>
+</ul>
+<h3><font color="#000080">7.5.0 Beta Test </font></h3>
+<ul>
+  <li>Upgraded to .NET 2.0. This upgrades amzinet.dll and all Visual Studio solutions and projects in the LSAPIs, LSXs and samples.</li>
+  <li>Upgraded to Eclipse 3.2. The Amzi! plug-ins do not support remote files as part of Prolog projects. The Prolog Welcome screen was removed. </li>
+  <li>Eclipse 3.2 KNOWN BUG: When debugging an interpreted Prolog program, you must click on the '+' box in front of 'Prolog Debug Thread' to bring up the source code with the current line highlighted. </li>
+  <li>In OSUtils, fail (by returning false) if environment variable does not exist. </li>
+</ul>
+<h2><font color="#0000FF"><a name="v7_4"></a>7.4</font></h2>
+<h3><font color="#000080">7.4.12</font></h3>
+<ul>
+  <li>Fixed bug that caused trail space overflow when consulting a file containing 'call(Var)'. </li>
+  <li>Changed list of files to exclude from build to be case-insensitive. </li>
+</ul>
+<h3><font color="#000080">7.4.10</font></h3>
+<ul>
+  <li>For Unix (Linux and Solaris) Professional and Developer users, a new license key is needed for this release. Contact us with your user name and hostid to get a new key. </li>
+  <li>Fixed bug in bagof which resulted in different results compiled versus interpreted when using bound variables in the goal parameter. </li>
+</ul>
+<h3><font color="#000080">7.4.9</font></h3>
+<ul>
+  <li>Fixed bug that broke the debugger due to change in 7.4.8 . </li>
+</ul>
+<h3><font color="#000080">7.4.8</font></h3>
+<ul>
+  <li>In Eclipse launch configurations, allow the specification of a pathname to a config file (.cfg) that is used when running or debugging a project. </li>
+</ul>
+<h3><font color="#000080">7.4.7</font></h3>
+<ul>
+  <li>Fix null pointer bug in debug event handler in Eclipse. Include all mfc dlls in the install file. </li>
+</ul>
+<h3><font color="#000080">7.4.6</font></h3>
+<ul>
+  <li>New License Manager supports getting license keys from the Amzi! website and improves license key transfer. Inconjunction with the new ecommerce database, license keys in larger organizations can be centrally ordered and managed. </li>
+</ul>
+<h3><font color="#000080">7.4</font>.5</h3>
+<ul>
+  <li>In the Eclipse Debugger truncate large variables to 500 characters, and clear port breakpoint annotations on terminate. </li>
+  <li>Fix hang typing [Ctrl]-C in the Eclipse Prolog Listener after it is finished. </li>
+  <li>Fix hang in listener and compiler when reading a .pro file with an unclosed comment (/* */) </li>
+</ul>
+<h3><font color="#000080">7.4</font>.1</h3>
+<ul>
+  <li>Linked files in Prolog projects work properly for run and debug. </li>
+  <li>Under Eclipse 3.1.1 SDK and Amzi! Core for Windows 2000, fix linker failure/crash by removing amzijide.dll and alnk.dll. </li>
+  <li>Unable to workaround Eclipse bug that rebuilds all open projects when starting a run or debug launch. The only known fix is to turn off &quot;Build (if required) before launching&quot; on the Eclipse Preferences | Run/Debug | Launching page.</li>
+  <li>Allow relaunch of Run or Debug | Single File Interpreted by adding the appropriate page to the Launch Definition dialog. </li>
+  <li>Fixed a bug in the Developer Edition that had allowed multiple Logic Servers in multiple processes. </li>
+</ul>
+<h3><font color="#000080">7.4</font>.0</h3>
+<ul>
+  <li>Eclipse now saves the last run or debug configuration that was executed. This lets you re-run your last run or debug listener from the Run History or Debug History menu or the the Run or Debug command buttons. </li>
+  <li>Allow the Eclipse Prolog Listener to repeat the last run using the Run | Run History command. </li>
+  <li>Fix exception handling in VB.NET  examples. There is no longer a need to get the inner exception to retrieve error information. </li>
+</ul>
+<h2><font color="#0000FF"><a name="v7_3"></a>7.3 Beta Test </font></h2>
+<h3><font color="#000080">7.3.2</font></h3>
+<ul>
+  <li>Fix hang when pressing the stop button in the Prolog Listener when backtracking through a goal (when waiting for a ; or .). </li>
+</ul>
+<h3><font color="#000080">7.3.1</font></h3>
+<ul>
+  <li>In Eclipse, prompt to save files and build, if needed, before starting the Prolog Listener or Debug Listener. </li>
+  <li>Change the Free Edition to run forever (instead of limited to 6 months). </li>
+</ul>
+<h3><font color="#000080">7.3.0</font></h3>
+<ul>
+  <li>Update to Eclipse 3.1.</li>
+  <li>Change the Listener Stop button to mean stop Prolog running or enter a [Ctrl]-C as user input.</li>
+  <li>Changed the Debug Stop button to stop Prolog running (must type [Ctrl]-C to break at user input. </li>
+  <li>Fix a variety of instabilities in the Listener and Debug Listener when terminating execution.   </li>
+  <li>Change the GetHead family of LSAPI calls to throw a bad list exception when 
+    the term is not a list.</li>
+  <li>Change the UnifyParm family of LSAPI C++ calls to return a term of 0 when 
+    the unification fails.</li>
+  <li>Fix a problem in Eclipse where the old contents of the listener are not 
+    cleared out when a new listener is started.<font color="#000080"></font></li>
+</ul>
+<h2><font color="#0000FF"><a name="v7_2"></a>7.2</font></h2>
+<h3><font color="#000080">7.2.6</font></h3>
+<ul>
+  <li>Change the GetHead family of LSAPI calls to throw a bad list exception when 
+    the term is not a list.</li>
+  <li>Change the UnifyParm family of LSAPI C++ calls to return a term of 0 when 
+    the unification fails.</li>
+  <li>Fix a problem in Eclipse where the old contents of the listener are not 
+    cleared out when a new listener is started.<font color="#000080"></font></li>
+</ul>
+<h3><font color="#000080">7.2.3 and 7.2.5</font></h3>
+<ul>
+  <li>Fix Eclipse crashes under Windows XP by using finer thread synchronization.</li>
+</ul>
+<h3><font color="#000080">7.2.2</font></h3>
+<ul>
+  <li>Under Windows, amzi.dll is now thread safe, so you can call the Logic Server 
+    from multiple threads simultaneously.</li>
+</ul>
+<h3><font color="#000080">7.2.1</font></h3>
+<ul>
+  <li>Allow linked files to be used in Projects in Eclipse.</li>
+  <li>Changed Developer and Professional Editions to use a hardware fingerprint. 
+    A new web-based systems allows a license to be transferred as needed to another 
+    PC and/or user.</li>
+</ul>
+<h3><font color="#000080">7.2.0</font></h3>
+<ul>
+  <li>Added built-in numeric atom 'inf' for testing for floating point values 
+    larger than the largest permitted.</li>
+  <li>Fixed bug that prevented ; from initiating backtracking on keyboards that 
+    require a shift to get a ;. The fix means that any character will, in fact, 
+    initiate backtracking now except an Enter.</li>
+  <li>Fixed spurious hangs in the Eclipse IDE.</li>
+</ul>
+<h3><font color="#000080">7.1.0 Beta Test</font></h3>
+<ul>
+  <li>Add support for the next major version of Eclipse, 3.0. The Amzi! Eclipse 
+    Plug-ins will now run under version 3.0 or later.</li>
+</ul>
+<h2><font color="#0000FF"><a name="v7_1"></a>7.0</font></h2>
+<h3><font color="#000080">7.0.27</font></h3>
+<ul>
+  <li> Fix bug in unlock that did not allow entry of a new license key after the 
+    old key has expired. </li>
+  <li>Upgrade copy protection to avoid spurious hangs and exception reporting 
+    problems with VC++ 7.1.</li>
+</ul>
+<h3><font color="#000080">7.0.25</font></h3>
+<ul>
+  <li>In defiance of the ISO standard, changed unification between numbers so 
+    that a float and an integer will unify if they have the same value.</li>
+</ul>
+<h3><font color="#000080">7.0.21</font></h3>
+<ul>
+  <li>Fixed formatting of table of contents for Building Expert Systems in Prolog 
+    under Eclipse.</li>
+  <li>Fixed display of quoted values in Debug Variables view.</li>
+  <li>When running the debugger multiple times, ensure the debug menu options 
+    display matches the internal settings.</li>
+  <li>Fix bug running out of Logic Servers when errors encountered in cross reference.</li>
+</ul>
+<h3><font color="#000080">7.0.20</font></h3>
+<ul>
+  <li>Fixed dependency in amzijide.dll on mscv*71.dll's.</li>
+  <li>Removed code that prompts to stop execution on error in VB 6 to resolve 
+    rerun problem in VBA under Access and other MS-Office tools.</li>
+</ul>
+<h3><font color="#000080">7.0.19</font></h3>
+<ul>
+  <li>Fixed problem in security code that disables the execution of distributed 
+    applications after 6 months or when the system clock is changed.</li>
+</ul>
+<h3><font color="#000080">7.0.18</font></h3>
+<ul>
+  <li>Added new LSAPI function LoadFromMemory to load an XPL file from memory. 
+    This is useful for network applications where the XPL file is delivered in 
+    a JAR or other binary archive. The host application extracts the XPL file 
+    and passes it to the Logic Server for loading.</li>
+  <li>Added new Java method LoadFromURL which uses LoadFromMemory to load an XPL 
+    file from a JAR file or from the Internet. Also added a sample demonstrating 
+    both LoadFromMemory and LoadFromURL.</li>
+  <li>With .NET Framework 1.1, it is no longer necessary to copy amzi.dll (or 
+    any other files) to the windows\system or system32 directory.</li>
+  <li>Added C# pets callback sample illustrating writing Prolog extended predicates 
+    in C#.</li>
+  <li>Allow only aosutils.lsx to be loaded for the Free Edition.</li>
+  <li>Fixed stack overflow crash under Windows when running the remote debugger 
+    with Java applications.</li>
+  <li>Updated many Windows projects to Visual Studio 2003 format.</li>
+  <li>Added Tcl/Tk LSX that allow Prolog to call Tcl/Tk and Tcl/Tk to call Prolog. 
+    This makes it easy to create graphical applications directly from the Prolog 
+    environment. See <a href="ls/lsxtcltk.htm">Logic Server/LSX/TclTk documentation</a> 
+    for details.</li>
+  <li>Added a Tcl/Tk sample, amzi/samples/tcltk/lb_query, that provides a simple 
+    GUI front-end that allows queries of logicbases. It illustrates the use of 
+    the ls_query Tcl command that returns a Tcl list of variable names and bindings.</li>
+  <li>Added two new built-in query predicates, <a href="pro/ref_manipulating_terms.htm#string_query2">string_query/2</a> 
+    and <a href="pro/ref_manipulating_terms.htm#varlist_query3">varlist_query/3</a>. 
+    Each takes an input string with a query term in it and returns the resulting 
+    variable names and bindings, as a string or list respectively. These are intended 
+    for use from Logic Server applications to make it easier to pick up the values 
+    of variables resulting from a query.</li>
+</ul>
+<h3><font color="#000080">7.0.17</font></h3>
+<ul>
+  <li>Added unification with occurs check, finally. Occurs checking is turned 
+    on and off using the Prolog flag, <b>occurs_check</b>. The occurs check prevents 
+    system crashes when a unification is attempted with cyclic terms, that is, 
+    terms that refer to themselves. For example, the query ?- A = f(A), B = f(B), 
+    A = B. will cause an internal stack overflow, resulting in a hard crash. With 
+    <b>occurs_check</b> on, that query will simply fail. Occurs checking is not 
+    normally done in Prolog because it adds about 10% overhead to unification, 
+    and is rarely necessary (see two bullets down).</li>
+  <li>The ISO standard <b>unify_with_occurs_check/2</b> predicate was implemented 
+    as well, although the it does not affect unification between a goal and a 
+    head of a clause, so it's use is limited. It is implemented internally by 
+    simply turning the <b>occurs_check</b> Prolog flag on and off before unification. 
+  </li>
+  <li>Cyclic terms are rare and usually an error. Further, they often only cause 
+    a problem when they are written. The write routines automatically detect cyclic 
+    terms whether or not occurs check is on and display '...' after a few iterations. 
+    The previous outputdepth Prolog flag is now deprecated.</li>
+  <li>A new built-in predicate <b>is_cyclic/1</b> can be used to test if a term 
+    has any cyclic redundencies in it.</li>
+  <li>Added a new JSP shipping advisor sample that uses a Java bean to query the 
+    Logic Server. </li>
+  <li>Add limited server capabilities to the Linux Developer Edition so that web-applications 
+    up to 10 users can be deployed (Windows added this support in 7.0.14).</li>
+</ul>
+<h3><font color="#000080">7.0.16</font></h3>
+<ul>
+  <li>Fixed GPF when running compiled Prolog projects (xpl files) under the Developer 
+    Edition only.</li>
+</ul>
+<h3><font color="#000080">7.0.15</font></h3>
+<ul>
+  <li>Enabled the ?- command to open a new listener during debugging which can 
+    be used to enter queries to examine and change the dynamic database or run 
+    code.</li>
+  <li>Updated the 'Adventure in Prolog' tutorial to match the new Eclipse IDE.</li>
+  <li>Fixed bug where pressing [Enter] during a long listing or output in the 
+    listeners hangs Eclipse.</li>
+  <li>Put up a purchase invitation for the Free Edition.</li>
+  <li>Fixed multiple engine bug when selecting File | Buy/Activate License.</li>
+  <li>Fixed multiple bugs in the Prolog reader (parser), especially in DCG.</li>
+</ul>
+<h3><font color="#000080">7.0.14</font></h3>
+<ul>
+  <li>Added logicserver.h for C++ users which has new C++ LogicServer and LSException 
+    classes. This means all the class interfaces to the Logic Server (Java, C++, 
+    .NET and Delphi) have the same methods. The new C++ class uses STL strings 
+    and wstrings. The LSAPI Reference has been updated to reflect this and now 
+    presents the C interface functions (starting with 'ls') and the class interface 
+    functions. Also updated the hello and pets C++ samples to use the new interface. 
+    Added UnifyAtomArg to both Java and .NET.</li>
+  <li>amzi.h is now deprecated but will remain in the distribution.</li>
+  <li>Add limited server capabilities to the Developer Edition so that web-applications 
+    up to 10 users can be deployed.</li>
+  <li>Added the Auto Step command on the Debug View toolbar to automatically step 
+    through your code a goal at a time. The execution speed is controlled by the 
+    Auto Step Speed command on the Debug View menu.</li>
+  <li>Improved leashing in debugger, so step-into and breakpoint stops only occur 
+    for leashed ports (call, exit, redo, fail). Leashing options are now directly 
+    on the toolbar. Leashing can also be turned on/off for clause heads, which 
+    is indicated on the tool bar as an I for info port.</li>
+  <li>Added the Open Listener command on the Debug View toolbar (not implemented 
+    yet) to open a new listener for user queries on the existing debugging session. 
+    This will let you examine the dynamic database and the status of your running 
+    code.</li>
+  <li>A new debugging option 'Cut Display' controls whether cut stack frames can 
+    still be examined in the debugger. This is the default and makes it easy to 
+    understand a program with cuts. But it consumes a lot of control stack, so 
+    a recursive program will quickly run out of control stack. When the display 
+    of cut stack frames is off, then programs will run better (although the debugger 
+    still uses more stack than ordinary programs), but the cut stack frames are 
+    no longer available and the variable window reflects the last stack frame 
+    that has not been cut, not the current one.</li>
+  <li>A new debugging option 'DCG Variables' controls how generated difference 
+    list variables are displayed in the debugger. They can all be hidden, all 
+    displayed, or have only the first and last displayed.</li>
+  <li>New predicate, <b>is_string_term/2</b>, works like <b>string_term/2</b> 
+    except that it fails if trying to parse a string with an invalid Prolog term 
+    in it. This is in contrast to <b>string_term/2</b> which throws an error in 
+    that case.</li>
+  <li><b>string_integer/2</b>, <b>string_number/2</b>, and <b>string_float/2</b> 
+    are all now implemented using <b>is_string_term/2</b>, so they no longer throw 
+    errors if the string has an invalid term, they simply fail.</li>
+  <li>A fix has been added to the ODBC LSX, aodbc.lsx, that works around a bug 
+    with SQL Server. </li>
+  <li>A new ODBC extended predicate has been added that frees all open queries. 
+    This is useful for complex ODBC applications that trim the search space using 
+    cut (!), which has the side-effect of leaving open ODBC queries that consume 
+    ODBC resources.</li>
+  <li>The DBGene sample, samples/odbc/dbgene, has been upgraded to use new features, 
+    and some old bugs in the sample have been fixed as well. dbgene.pro can now 
+    be more easily run as a stand-alone Prolog program in the listener.</li>
+  <li><b>phrase/2,3</b> did not work correctly in a module context. Now they do.</li>
+  <li>Added hover help for directives (import, module, etc), math functions and 
+    operators and constants.</li>
+  <li>Display of character list bug fixed, so now when double_quote_strings is 
+    off (default) character lists display in &quot;s; but if double_quote_strings 
+    is on (meaning application wants to treat &quot; instead of ` as string delimiter), 
+    character lists display as [0'a, 0'b, ..].</li>
+  <li>Fixed StrTermLen, StrArgLen and StrParmLen to return the length of a term 
+    if it were to be converted to a string with quoted atoms.</li>
+</ul>
+<h3><font color="#000080">7.0.12</font></h3>
+<ul>
+  <li>Added sorting to outline (a-z or line number order).</li>
+  <li>Have the cross referencer go to the named predicate when it is clicked on.</li>
+  <li>Added hover help for Amzi! system predicates that describes the arguments 
+    and function.</li>
+  <li>Added completion processor to the editor (with ctrl-space) that provides 
+    system predicate, operator and directive names.</li>
+  <li>Added assistant when coding calls to system predicates.</li>
+  <li>Before running or debugging compiled project, rebuild it.</li>
+  <li>Enabled F1 to provide help in the IDE in every Prolog view and on Prolog-specific 
+    commands. </li>
+  <li>Added a toolbar command for the editor that let's you edit only the predicate 
+    that is currently selected in the outliner instead of the entire file.</li>
+  <li>Reworked parts of the documentation.</li>
+  <li>Fixed cross referencer missing some predicates.</li>
+</ul>
+<h3><font color="#000080">7.0.11</font></h3>
+<ul>
+  <li> Source code debugger now supports most of DCG. Complex control structures 
+    in DCG goals are not yet supported. The Debugger variable window shows variables 
+    labeled DCG$X which are the generated difference lists, making it easy to 
+    see how linked DCG goals are working. </li>
+  <li> Character lists are now displayed as character lists, that is &quot;abc&quot; 
+    on a write statement is shown as &quot;abc&quot; rather than [0w0061, 0w0062, 
+    0w0063]. </li>
+  <li>The outliner is improved, and error reporting on syntax errors caught on 
+    file save is improved.</li>
+  <li>A bug introduced in the faster interpreter that caused crashes when programs 
+    retracted clauses actively being used in a backtracking loop, has been fixed.</li>
+  <li>Added unlock codes for non-Windows platforms.</li>
+  <li>Don't turn off autobuild in Eclipse (instead Prolog ignores autobuilds).</li>
+  <li>bagof (which was inadvertently broken in 7.0.9) is fixed again.</li>
+</ul>
+<h3><font color="#000080">7.0.10</font></h3>
+<ul>
+  <li>Use the same parser for the outline as is used in the debugger resulting 
+    in clearer error messages.</li>
+  <li>Improved dynamic database and interpreted code performance by approximately 
+    30%. </li>
+  <li>Sped up output in the Prolog Listeners in the Eclipse IDE.</li>
+  <li>Added Run and Debug Single File commands in the IDE. This allows you to 
+    have multiple source files in one project/directory and run them individually. 
+    Ideal for learning and experimentation.</li>
+  <li>Fixed ; in the Prolog Listener for some keyboards.</li>
+  <li>Don't use up engines when the outline does not work.</li>
+  <li>Fixed an obscure bug with programs that assert, retract and backtrack over 
+    the dynamic database.</li>
+  <li>Fixed the indexes in the Amzi! Eclipse documentation.</li>
+</ul>
+<h3><font color="#000080">7.0.9</font></h3>
+<ul>
+  <li>Fixed problems that prevented Amzi! 7 from running on Windows NT 4.0.</li>
+</ul>
+<h3><font color="#000080">7.0.8</font></h3>
+<ul>
+  <li>Fixed problems that prevented Amzi! 7 from running on Windows 98.</li>
+  <li>Don't turn off the listener and run when the source code debugger trial 
+    is over.</li>
+  <li>Fixed operator precedence problems in the source debugger.</li>
+  <li>Eliminate 'too many Logic Server' errors when opening a number of editors 
+    in the Amzi! Eclipse IDE.</li>
+  <li>Reworked the License Agreement to allow a wider variety of uses.</li>
+  <li>Upgraded to Eclipse 2.1.2 and Java 1.4.2_02.</li>
+</ul>
+<h2><font color="#0000FF"><a name="v6_4"></a>7.0 (formerly 6.4)</font></h2>
+<p></p>
+<p>Amzi! 7.0 introduces a new, <a href="pro/pug_ide.htm">multi-platform IDE</a> 
+  for developing and debugging stand-alone and embedded or remote Prolog components. 
+  The IDE is based on the Eclipse Project (<a href="http://www.eclipse.org">www.eclipse.org</a>). 
+  The Prolog command-line tools and Logic Server remain stable (bug fixes only).</p>
+<p>The highlights of the Amzi! Eclipse IDE are:</p>
+<ul>
+  <li>Syntax coloring in the editor to highlight built-in predicates, strings, 
+    comments, etc.</li>
+  <li>Source file outliner and project cross referencer.</li>
+  <li>Source code bookmarks to indicate the locations of errors, to-do items, 
+    search text and more.</li>
+  <li>Full source code debugging showing variable bindings at each level in the 
+    call stack.</li>
+  <li>Full source code debugging of compiled Prolog components embedded in other 
+    languages and tools, and those running on remote machines.</li>
+  <li>Portable projects that can optionally include other projects.</li>
+  <li>Automatic loading of libraries and lsx's in the Prolog listener, plus input 
+    line recall and editing.</li>
+</ul>
+<p>Some of the features of Eclipse that may interest you (see www.eclipse.org 
+  to download):</p>
+<ul>
+  <li>Separately downloadable plugins for developing Java, C++, COBOL, C#, PHP 
+    and other programs.</li>
+  <li>Automatic file backup.</li>
+  <li>Tools for modelling, graphical editing and testing.</li>
+  <li>Seamless connection to source control systems like CVS, Perforce, PVCS, 
+    MKS, ClearCase and more.</li>
+  <li>Tight integration with the Apache's Ant build tool.</li>
+</ul>
+<h2><font color="#0000FF"><a name="v6_2"></a>6.2 </font></h2>
+<p>Amzi! 6.2 is the final release following a string of 6.1.x beta releases.</p>
+<ul>
+  <li><a href="#features">New Features</a></li>
+  <li><a href="#compatibility">Compatibility with 5.0 release</a></li>
+  <li><a href="#build_notes">Build Notes</a></li>
+</ul>
+<h2><font color="#0000FF"><a name="features"></a>New Features</font></h2>
+<H3><A NAME="FeaturesOverview"></A> <FONT COLOR="#000080">Overview</FONT></H3>
+<h4>Robust Server Architecture</h4>
+<p>Amzi! 6.2 provides a better platform for server-based applications. Many of 
+  the internals, such as garbage collection and handling of dynamic clauses, have 
+  been rewritten to better support 24/7 online operations.</p>
+<h4>Easier Development and Deployment</h4>
+<p>The old import/export constructs have been replaced with the more powerful 
+  ISO-standard module capabilities which help organize larger applications. Logic 
+  Server Extensions (LSXs) can be loaded from either the host language or Prolog, 
+  and compiled Prolog modules can be loaded anytime from both files and memory. 
+  Diagnostics for common errors are clearer, and many syntactically correct, but 
+  erroneous constructs are flagged as errors. Little touches like allowing either 
+  forward or backward slashes in file names make it easier to build multi-platform 
+  applications.</p>
+<h4>ISO-Standard</h4>
+<p>Many of the changes in the release are related to the ISO-standard, most notably 
+  the inclusion of full ISO module support and ISO stream support.</p>
+<h4>High Performance Logic Base</h4>
+<p>Much of the work that has gone into the 6.2 release is internal. For example, 
+  the dynamic logic base has been completely rewritten.</p>
+<p>Two immediate benefits of this work are support for indexed and sorted dynamic 
+  predicates, both of which offer tremendous performance gains for applications 
+  with a lot of data.</p>
+<h4></h4>
+<h4>Comprehensive Internet Support for .NET, ASP, JSP and Java Servlets</h4>
+<p>A .NET interface is now included with the Logic Server APIs, which can be used 
+  from any .NET language. There are new samples illustrating the use of the Logic 
+  Server with ASP, JSP and Java Servlet Internet technologies. A COM interface 
+  is also available for a limited set of Logic Server API calls (no callbacks).</p>
+<h4>New Libraries and Utilities</h4>
+<p>New libraries and utilities have been added, including a cross reference utility, 
+  XML library, date/time library, and performance probe utility. An optional preprocessor 
+  is also included.</p>
+<h4>Full Internationalization</h4>
+<p>In addition to Unicode support, locale-specific multibyte characters are supported 
+  in all environments.</p>
+<h4>Increased System Limits</h4>
+<p>Work has been done to eliminate some of the pesky system limits, most notably 
+  the atom table, which is now only limited by memory. The compiler can compile 
+  any number of clauses, the number of variables is greatly increased, and the 
+  loader buffers are automatically resized as needed.</p>
+<h4>Improved Documentation</h4>
+<p>Much of the Prolog documentation has been redone and updated, and new sections 
+  added for debugging tips and modules. A frequently asked questions page has 
+  also been included. Also each sample has its own doc.html file that describes 
+  how to build it and run it.</p>
+<h4>Advanced Mathematics</h4>
+<p>There are a number of enhancements of interest to the mathematically inclined, 
+  most notably support for infinite precision real numbers, prime number generation, 
+  and rational number arithmetic.</p>
+<H3><A NAME="FeaturesDetails"></A> <FONT COLOR="#000080">Details</FONT></H3>
+<ul>
+  <li><a href="pro/ref_modules.htm">ISO module</a> support</li>
+  <li>Indexed and sorted <a href="pro/ref_logicbase.htm#DynamicPredicateStorageOptions">storage 
+    options for dynamic clauses</a></li>
+  <li>New predicates for examining <a href="pro/ref_logicbase.htm#Predicates">logic 
+    base</a></li>
+  <li>COM object for .NET support with samples</li>
+  <li><a href="../samples/internet/asp/doc.html">ASP</a>, <a href="../samples/internet/jsp/doc.html">JSP</a> 
+    and <a href="../samples/internet/servlets/doc.html">Java Servlet</a> samples</li>
+  <li>Cross-reference and syntax checking utility</li>
+  <li><a href="libs/xml.htm">XML</a> library</li>
+  <li><a href="libs/date_time.htm">Date/time</a> library</li>
+  <li>Performance probe utility</li>
+  <li><a href="pro/pug_debugging.htm#DebuggerLikeIO">Debugging predicate</a> ?/1 
+    built-in</li>
+  <li><a href="pro/ref_io.htm">ISO stream</a> support</li>
+  <li>New <a href="pro/pug_runtime.htm#Flags">Prolog flags</a>, many settable 
+    by directives</li>
+  <li><a href="pro/ref_system.htm#loadlsxFilenameA">loadlsx/1</a> allows dynamic 
+    loading of LSXs</li>
+  <li>ensure_loaded &amp; include <a href="pro/ref_directives.htm">directives</a></li>
+  <li><a href="pro/pug_runtime.htm#Flags">double_quote_strings, upper_case_atoms</a> 
+    alternate syntaxes</li>
+  <li><a href="pro/ref_terms.htm#Internationalization">Locale-specific multi-byte</a> 
+    characters supported</li>
+  <li>Either slash (/ or \) can be used in file paths</li>
+  <li><a href="pro/ref_text.htm#TiltSlashes">tilt_slashes/2</a> adjusts path delimiters 
+    for a platform</li>
+  <li><a href="pro/ref_manipulating_terms.htm#copy_term">copy_term/2</a> built-in 
+    for fast copies</li>
+  <li><a href="pro/ref_logicbase.htm#load4">load/4</a> allows loading .plm images 
+    from memory</li>
+  <li>Unlimited atom table</li>
+  <li>Maximum variables in a clause up to 4095</li>
+  <li>Maximum arity of a clause up to 4095</li>
+  <li>No limit on the number of clauses in a compiled predicate</li>
+  <li><a href="pro/ref_math.htm#NumberTypes">Infinite precision real numbers</a> 
+    optionally available</li>
+  <li><a href="pro/ref_math.htm#MathematicalGames">Mathematical tools</a></li>
+  <li>New internal garbage collector</li>
+  <li><a href="../samples/chezray/doc.html">Chez Ray</a> samples, a compendium 
+    of advanced Prolog tricks</li>
+</ul>
+<h2><font color="#0000FF"><a name="compatibility"></a>Compatibility</font></h2>
+<h3>Quick conversion from 5.0 to 6.2</h3>
+To get 5.0 programs quickly running under 6.2, use your text editor to make a 
+global search for these changed syntactic patterns: 
+<ul>
+  <li><b>`</b> (backquote) - Change to: 0' (zero singlequote)</li>
+  <li><b>'!EOF'</b> - Change to: end_of_file</li>
+  <li><b>compare_lists, remove_dups</b> - moved from built-in to list library. 
+    Either use the directives :- ensure_loaded(list). :- import(list). or copy 
+    the source code from the list library to your application.</li>
+  <li><b>abolish</b> - look for old two argument version, abolish(Functor, Arity) 
+    and replace with one argument version: abolish(Functor/Arity).</li>
+  <li><b>recorda, recordz, instance, erase, db_ref</b> - these are all no longer 
+    supported, use assert/retract instead.</li>
+</ul>
+<p>See below for details.</p>
+<h3>Details of 5.0 to 6.2 differences</h3>
+<ul>
+  <li>You must compile and relink programs for the new release, as internal formats 
+    have changed.</li>
+  <li>ISO changes - wherever possible we have kept support, but not documentation, 
+    for old Amzi! syntaxes that are deprecated due to the ISO standard. For example, 
+    the old Amzi! fopen/3 is still supported along with the new ISO standard open/3. 
+    In some cases, listed here, that was not possible.</li>
+  <li>Old vs. New Modules - Programs which use old Amzi! modules need to be updated 
+    to the new ISO modules.</li>
+  <li>recorda/z, instance, erase, db_ref not supported - Programs making direct 
+    manipulation of the dynamic database will need to use conventional predicates 
+    instead.</li>
+  <li>bug.plm - this library is now in the system library, so you no longer need 
+    to include it to use the '?' operator for debugging compiled code.</li>
+  <li>'!EOF', the end of file atom, has been changed to the ISO standard, end_of_file. 
+    This means you must change programs that check for '!EOF' to check for end_of_file 
+    instead.</li>
+  <li>The non-standard backquote (`) notation used for characters in earlier releases 
+    of Amzi! is no longer supported. Instead the ISO 0' is used. So `a needs to 
+    be changed to 0'a.</li>
+  <li>Strings can now be delimited with backquotes (`) as the standard hints. 
+    This is in addition to the deprecated $-delimited strings which are still 
+    supported.</li>
+  <li>abolish/2 is no longer supported, just abolish/1, such as abolish(duck/1) 
+    or with modules, abolish(dwmod:duck/1). It abolishes all of the dynamic clauses 
+    for a predicate.</li>
+  <li>Two earlier version built-in predicates, remove_dups/2, and compare_lists/3, 
+    are no longer built-ins but are implemented in the list library instead.</li>
+</ul>
+<h2><font color="#0000FF"><a name="build_notes"></a>Build Notes (most recent first)</font></h2>
+<H3><font color="#000080">6.2.14</font></H3>
+<ul>
+  <li>Fixed bug so that load/4, load from memory, works correctly.</li>
+  <li>John Cullen, a user, fixed some bugs and made some changes in the IDE. (Thanks 
+    John) </li>
+  <ul>
+    <li>Fixed compile, link and build windows so they are reused on subsequent 
+      compiles, links, and builds.</li>
+    <li>Fixed bug that caused crashes when build selected but no project open.</li>
+    <li>Fixed loss of .xpl and project information when projects saved when edit 
+      windows are open.</li>
+    <li>Fixed bug relating to error messages about unnamed files.</li>
+  </ul>
+</ul>
+<H3><font color="#000080">6.2.13</font></H3>
+<ul>
+  <li>Fixed bug that caused the compiler to interpret the string `[]` as the atom 
+    [].</li>
+  <li>Fixed bug that causes retract(x,y) to crash. This is a valid form of retract 
+    where the first argument is a valid module name. Same for retractall/2 and 
+    assert/2. </li>
+  <li>Fixed two bugs that occured when programs retract clauses that are still 
+    in active goals. In other words, situations where the program pulls the rug 
+    out from under itself. While not good programming, this type of program should 
+    work as expected now.</li>
+</ul>
+<H3><font color="#000080">6.2.12</font></H3>
+<ul>
+  <li>Rebuild Solaris release using latest 3.2 gcc and STL libraries due to problems 
+    on that platform caused by heavy work load. Problems resolved by rebuild.</li>
+</ul>
+<H3><font color="#000080">6.2.11</font></H3>
+<ul>
+  <li>Fixed bug in lsClearCall() that would not always trim the callstack back 
+    to the correct choice point.</li>
+  <li>Fixed bug in unload when .plm file was loaded from memory.</li>
+  <li>The use of the escape character, \, for embedded quotes (', `, &quot;) is 
+    not supported, use double quotes instead. i.e., 'Don''t go near the water'. 
+  </li>
+  <li>is_integer/1 bug fixed, works correctly for decimal numbers now.</li>
+  <li>New internal implementation of gensym/2 much much faster.</li>
+  <li>Value of 'e' corrected, 12th digit was wrong.</li>
+  <li>Professional version unlock tests less severe.</li>
+  <li>Unix only -- added new configuration parameter 'maxmemory' for setting the 
+    memory (in megabytes) available to the Amzi! process.</li>
+  <li>Fixed VB LSAPI bug, functions with an argument representing arity now use 
+    Integer instead of Byte for the arity.</li>
+  <li>Aborts due to outputting highly nested terms are now gracefully caught. 
+    Usually these are caused by cyclic terms. The allowable nesting can be set 
+    using the configuration parameter 'outputdepth'.</li>
+</ul>
+<h3> <font color="#000080"></font><font color="#000080">6.2.10</font></h3>
+<ul>
+  <li>Debugger bugs fixed.</li>
+  <li>Trail space properly conserved in recursive loops with cuts, previously 
+    these would prematurely terminate because of increasing trail use.</li>
+  <li>Retract bug fixed that occurred when retracting clauses which were rules.</li>
+  <li>Retract bug fixed that occurred when clauses were retracted that were being 
+    actively used in a goal that could still be backtracked into.</li>
+</ul>
+<H3> <font color="#000080">6.2.9</font></H3>
+<ul>
+  <li>The COM Object has been replaced by a complete <a href="ls/lsadotnet.htm">.NET 
+    Class</a> (a managed wrapper) with some samples.</li>
+</ul>
+<H3><FONT COLOR="#000080">6.2.8</FONT></H3>
+<ul>
+  <li>CGI interface parses query_string and asserts value even when content_length 
+    not specified.</li>
+  <li><a href="pro/ref_system.htm#loadlsxFilenameA">loadlsx/1</a> recognizes the 
+    current module and places it's predicates in that module. This allows encapsulation 
+    of extended predicates in LSXs.</li>
+  <li>Programs with load/unload loops no longer leak.</li>
+</ul>
+<H3> <FONT COLOR="#000080">6.2.7</FONT></H3>
+<ul>
+  <li>New installation program for Windows</li>
+  <li>Better garbage collection for interpreted programs</li>
+</ul>
+<H3> <FONT COLOR="#000080">6.2.6</FONT></H3>
+<ul>
+  <li>Fixed debugger bug, module names would some times be represented as integers, 
+    now are always full names.</li>
+  <li>Mathematical operators floor and ceil would erroneously return fractional 
+    results sometimes with real (infinite precision) arithmetic. They now return 
+    integers.</li>
+  <li><a href="pro/ref_system.htm#gc0">gc/0</a> predicate modified to garbage 
+    collect heap, things, and dynamic storage.</li>
+  <li>Exported missing predicates phrase/3 and for/4.</li>
+  <li>lsMakeFloat fixed to create the correct kind of float, single or double, 
+    based on the setting of the Prolog flag 'floats'. </li>
+</ul>
+<H3> <FONT COLOR="#000080">6.2.5</FONT></H3>
+<ul>
+  <li>Created Solaris 8.0 release, using gcc.</li>
+</ul>
+<H3> <FONT COLOR="#000080">6.2.4</FONT></H3>
+<ul>
+  <li>Logic Server 'Execs' and 'Calls' might user module syntax, which is a :/2 
+    structure. 'GetArg' used to refer to that :/2 structure, rather than the goal 
+    of interest. 'GetArg' and 'GetArgType' now both skip the :/2 and refer to 
+    the goal of interest. For those applications that really want to examine a 
+    :/2 structure, the new cTYPEs cMOD and cGOAL have been added. See <a href="ls/lsprguid.htm#MappingPrologArgumentsToHostVariables">lsGetArg</a>.</li>
+  <li>Registration codes are now recognized for various licenses.</li>
+  <li>Linux build of libamzi.so now includes references to -lstdc++ and -lm, so 
+    these don't need to be specified in Logic Server applications.</li>
+  <li>Performance improved for applications that to many Logic Server calls using 
+    'ExecStr', 'CallStr', 'AssertStr' and 'RetractStr.' <i>Note that some Logic 
+    Server programs that improperly rely on a term being bound across 'Exec' or 
+    'Call' boundaries might not work as before.</i></li>
+  <li>Bug note - Linux C++ Logic Server programs will crash when attempting to 
+    continue after catching a Logic Server error. So display the error as soon 
+    as you catch it! This might be a gcc problem. A workaround is to change the 
+    definitions for CLogicServer in amzi.h to allocate CLSExceptions on the heap 
+    (new), and throw pointers instead.</li>
+  <li>The first 6.2 release incorrectly handled numbers in European and other 
+    locales. Locale is now only used for wide - multibyte character translations, 
+    so all numbers remain in ISO standard Prolog syntax.</li>
+  <li><b>setof/3</b> and <b>bagof/3</b> modified to accept setof(N, (O,P)^pet(O,P,N), 
+    L) syntax as well as O^P^pet(O,P,N) syntax.</li>
+  <li>For real number arithmetic, the meaning of epsilon (precision in recursive 
+    computations) has changed. epsilon is used by both real sqrt and real power 
+    calculations. The default of 0 means power calculations go to full precision, 
+    but sqrt will stop at 36 decimal places of precision.</li>
+  <li><b><a href="pro/ref_extensions.htm#get_env_var">get_env_var/2</a></b>, which 
+    gets the value of a system environment variable, has been added to osutils.lsx 
+    for Windows.</li>
+</ul>
+<hr>
+<p>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p></p>
+<p>&nbsp;</p>
+</body>
+</html>

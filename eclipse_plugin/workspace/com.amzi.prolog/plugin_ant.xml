@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="plugin_export" name="build">
+	<target name="plugin_export">
+		<pde.exportPlugins destination="C:\amzi\dev\eclipse" exportSource="false" exportType="zip" filename="amzi_product_3-5-9001.zip" plugins="com.amzi.prolog,com.amzi.prolog.core,com.amzi.prolog.debug,com.amzi.prolog.help,com.amzi.prolog.ui" useJARFormat="true"/>
+	</target>
+</project>

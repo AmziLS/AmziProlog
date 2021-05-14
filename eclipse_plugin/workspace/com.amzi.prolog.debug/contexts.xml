@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.contexts"?>
+<contexts>
+
+ <!-- Note: 1) add /com.amzi.prolog.help/ on href 2) add ending / in topic -->
+ 
+ <context id="debug_listener">
+  <description>This is the Prolog Debugging Listener.</description>
+  <topic label="Debug Commands" href="/com.amzi.prolog.help/doc/pro/pug_debugger_ide.htm#DebugCommands" />
+  <topic label="Source Code Debugger" href="/com.amzi.prolog.help/doc/pro/pug_debugger_ide.htm" />
+  <topic label="Listener" href="/com.amzi.prolog.help/doc/pro/pug_listener.htm" />
+  <topic label="Eclipse IDE Quick Start" href="/com.amzi.prolog.help/doc/pro/pug_ide_quickstart.htm" />
+  <topic label="Eclipse IDE" href="/com.amzi.prolog.help/doc/pro/pug_ide.htm" />
+  <topic label="Amzi! Quick Tutorial" href="/com.amzi.prolog.help/doc/pro/pug_tutorial.htm" />
+  <topic label="Adventure in Prolog" href="/com.amzi.prolog.help/doc/aip/advtop.htm" />
+ </context>
+ 
+ <context id="leash_action">
+  <description>Controls which ports (call, fail, redo, exit) the debugger pauses at.</description>
+  <topic label="Breaking at Debug Ports" href="/com.amzi.prolog.help/doc/pro/pug_debugger_ide.htm#LeashingDebugPorts" />
+  <topic label="Debug Commands" href="/com.amzi.prolog.help/doc/pro/pug_debugger_ide.htm#DebugCommands" />
+  <topic label="Source Code Debugger" href="/com.amzi.prolog.help/doc/pro/pug_debugger_ide.htm" />
+ </context>
+ 
+</contexts>

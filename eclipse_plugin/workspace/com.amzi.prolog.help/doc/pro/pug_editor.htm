@@ -1,0 +1,185 @@
+<html>
+<head>
+<title>Editor and Outliner</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1><a name="EditorAndOutliner"></a><font color="#D2AA00">Editor and Outliner</font></h1>
+<p> 
+  <!AMZI_INDEX =Editor; Outliner>
+  The Editor and <a href="#Outliner">Outliner</a> are a matched pair of views 
+  in the IDE. </p>
+<p align="center"><img src="editor_outliner.gif" width="718" height="417"></p>
+<p align="left">The screen shot above illustrates many of the editor's features:</p>
+<ul>
+  <li>Color highlighting of system predicates, comments, constants and mathematical 
+    operators and functions<br>
+    (set_prolog_flag and cputime)</li>
+  <li>Error markers for syntax errors (the message can be found in the Tasks View)<br>
+    (the red circle with the x in it in the left ruler)</li>
+  <li>To-Do markers (the description can be found in the Tasks View)<br>
+    (the checkbox in the left margin)</li>
+  <li>Overview ruler (on the right) with icons for positioning on specific Error, 
+    To-Do, Bookmark and Search markers<br>
+    (the blue box for the to-do marker and red box for the error marker)</li>
+  <li>Break points<br>
+    (the blue circle in the left margin)</li>
+  <li>Completion processor (Ctrl-Space) for system predicate names, constants 
+    and mathematical operators and functions<br>
+    (the list of predicates and functions starting with the letter c)</li>
+  <li>Content assistant describes system predicates and their arguments</li>
+  <li>Hover help</li>
+  <li>Automatic indenting<br>
+    (spaces or tabs)</li>
+  <li>Synchronization of the outliner with the editor by highlighting ranges of 
+    code<br>
+    (by clicking on the predicate in the outliner, it's head is highlighted by 
+    a dark segment in the left margin)</li>
+</ul>
+<h3><a name="EditorFunctions"></a><font color="#000080">Editor Functions</font></h3>
+<blockquote> 
+  <table width="100%" border="1" cellspacing="0" cellpadding="3">
+    <tr> 
+      <td width="20%"><b>Action</b></td>
+      <td width="81%"><b>Function</b></td>
+    </tr>
+    <tr> 
+      <td width="20%">[F1]</td>
+      <td width="81%">Displays appropriate help topics</td>
+    </tr>
+    <tr> 
+      <td width="20%">[Ctrl]-Space</td>
+      <td width="81%">Displays a list of matching keywords for any characters 
+        to the left of the cursor</td>
+    </tr>
+    <tr> 
+      <td width="20%">(</td>
+      <td width="81%">Displays a description and the parameters for the Amzi! 
+        system predicates to the left of the left parenthesis</td>
+    </tr>
+    <tr> 
+      <td width="20%">Double-Click in Left Margin</td>
+      <td width="81%">Adds or clears a breakpoint</td>
+    </tr>
+    <tr> 
+      <td width="20%">Right-Click in Left Margin</td>
+      <td width="81%">Allows the managing of breakpoints, task markers and bookmarks</td>
+    </tr>
+    <tr> 
+      <td width="20%">Right-Click in Editor</td>
+      <td width="81%">Displays menu of common editing functions</td>
+    </tr>
+    <tr> 
+      <td width="20%">Put Mouse Cursor Over a Predicate</td>
+      <td width="81%">Displays a description and the parameters for Amzi! system 
+        predicates</td>
+    </tr>
+    <tr>
+      <td width="20%">File | Save</td>
+      <td width="81%">Updates the outline and checks for syntax errors</td>
+    </tr>
+    <tr> 
+      <td width="20%">Edit Menu</td>
+      <td width="81%">Provides standard editing functions for cutting, copying, 
+        pasting, finding and replacing text</td>
+    </tr>
+    <tr> 
+      <td width="20%">Navigate Menu</td>
+      <td width="81%">Go to a line or the last edit</td>
+    </tr>
+    <tr> 
+      <td width="20%">Search Menu</td>
+      <td width="81%">Search for text or patterns across multiple files or the 
+        entire workspace and highlights their locations in the right margin for 
+        each open file </td>
+    </tr>
+    <tr> 
+      <td width="20%">Window | Preferences | Prolog</td>
+      <td width="81%">Set the preferences for colors </td>
+    </tr>
+    <tr> 
+      <td width="20%"><img src="segment_edit.gif" width="16" height="16"></td>
+      <td width="81%">Switch between having the editor to display the entire file 
+        or only the text highlighted by clicking on a predicate in the outliner</td>
+    </tr>
+  </table>
+</blockquote>
+<h3><a name="EditorFunctions"></a><font color="#000080">Using Unicode</font></h3>
+<p>
+  <!AMZI_INDEX= Unicode; encoding>
+  Text files are saved the default format for your operating system and locale. 
+  For example,Windows users in North America, the default is ANSI Codepage 1252 
+  which is a 255 character set. Amzi! Prolog can process source code files in 
+  8-bit (ASCII or multi-byte) or 16-bit Unicode format.</p>
+<p>To change the format of a file select Edit | Encoding. For example, to look 
+  at the source files in the Prolog Babel sample, you will need to select Edit 
+  | Encoding | Unicode after opening one of them.</p>
+<h2><a name="Outliner"></a><font color="#0000FF">Outliner</font></h2>
+<p> 
+  <!AMZI_INDEX = Outliner>
+  The outline (see above) is created when a Prolog source file is opened or saved. 
+  By default the predicates are shown in the order they appear in the file. To 
+  sort them in alphabetical order:</p>
+<ul>
+  <li>Press the <img src="azsort.gif" width="16" height="16"> button<br>
+    or</li>
+  <li>Select Sort from the Outline View Menu (under the black triangle in the 
+    upper right)</li>
+</ul>
+<p>If there are any syntax errors in the source file, they will be displayed in 
+  the Tasks View (by default at the lower right). Errors may cause the outliner 
+  to omit the predicate where the error occurs.</p>
+<p align="center"><img src="task_view.gif" width="522" height="144"></p>
+<p align="left">Clicking on the Error in the Tasks View will jump to the location 
+  in the associate source file.</p>
+<h2><a name="Preferences"></a><font color="#0000FF">Preferences</font></h2>
+<p><!AMZI_INDEX = Preferences>
+To control the colors, tab size and other editor options select Window | Preferences 
+  then click on Prolog.</p>
+<p align="center"><img src="preferences_view.gif" width="487" height="543"> </p>
+<p align="left">The Prolog Editor preferences are:</p>
+<blockquote>
+  <table width="100%" border="1" cellspacing="0" cellpadding="3">
+    <tr> 
+      <td width="20%"><b>Tab Width</b></td>
+      <td>How many spaces wide a tab is</td>
+    </tr>
+    <tr> 
+      <td width="20%"><b>Print Margin Column</b></td>
+      <td>The width of the paper for your printer</td>
+    </tr>
+    <tr> 
+      <td width="20%"><b>Show Overview Ruler</b></td>
+      <td>Controls display of the right margin area that provides quick links 
+        for error, to-do, bookmark and search markers</td>
+    </tr>
+    <tr> 
+      <td width="20%"><b>Show Line Numbers</b></td>
+      <td>Displays line numbers to the left of each line</td>
+    </tr>
+    <tr> 
+      <td width="20%"><b>Highlight Current Line</b></td>
+      <td>Highlights the entire line where the cursor is located</td>
+    </tr>
+    <tr> 
+      <td width="20%"><b>Show Print Margin</b></td>
+      <td>Displays a line at the print margin column</td>
+    </tr>
+    <tr> 
+      <td width="20%"><b>Colors</b></td>
+      <td>Controls the colors of the text and highlights</td>
+    </tr>
+    <tr> 
+      <td width="20%"><b>Background Color</b></td>
+      <td>Sets the background color for the editor</td>
+    </tr>
+  </table>
+</blockquote>
+
+<p align="center"><img src="preferences_annotations.gif" width="286" height="160"></p>
+<p align="left">If you have the Overview Ruler enabled, the Annotations Tab of 
+  the preferences let's you control which items are displayed in the ruler and 
+  the color of each one.</p>
+</body>
+</html>

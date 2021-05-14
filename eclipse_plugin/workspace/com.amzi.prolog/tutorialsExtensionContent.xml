@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<introContent>
+  <!-- Extension to the SDK Tutorials Page. -->
+  <extensionContent alt-style="css/swt.properties" style="css/tutorials.css" path="tutorials/page-content/jdtAnchor">
+    <group label="Prolog Development" id="prolog" style-id="tutorials-group">
+    <link label="Eclipse IDE Quick Start" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.amzi.prolog.help/doc/pro/pug_ide_quickstart.htm" id="prolog-ide" style-id="tutorials-link">
+      <text>Using the Eclipse IDE with Amzi! Prolog</text>
+    </link>
+    <link label="Amzi! Tutorial" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.amzi.prolog.help/doc/pro/pug_tutorial.htm" id="prolog" style-id="tutorials-link">
+      <text>Introduction to the Amzi! development tools</text>
+    </link>
+    <link label="Adventure in Prolog" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.amzi.prolog.help/doc/aip/advfrtop.htm" id="squirrel" style-id="tutorials-link">
+      <text>Beginning tutorial teaches Prolog by full programming examples</text>
+    </link>
+    <link label="Building Expert Systems in Prolog" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.amzi.prolog.help/xsip/xsipfrtop.htm" id="squirrel" style-id="tutorials-link">
+      <text>Advanced tutorial on building reasoning engines in Prolog</text>
+    </link>
+    </group>
+  </extensionContent>
+</introContent>

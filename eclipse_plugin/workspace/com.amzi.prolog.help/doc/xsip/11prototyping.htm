@@ -1,0 +1,480 @@
+
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<TITLE>11 Prototyping</TITLE>
+</HEAD>
+<BODY bgcolor="#ffffff">
+<h1><a name="Prototyping"></a><B><FONT FACE="New Century Schlbk,Century Schoolbook"> 11 Prototyping </font></B></h1>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Whether 
+  or not one is going to use Prolog to build a finished application, Prolog is 
+  still a powerful tool for prototyping the application. The problem might fit 
+  nicely into Clam or Foops in which case those systems should be used for the 
+  prototype, otherwise pure Prolog can be used to model the application.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>In 
+  an expert system prototype it is important to model all of the different types 
+  of knowledge that will be used in the application. Initial knowledge engineering 
+  should be focused on what types of information the expert uses and how it is 
+  used. The full range of expertise should be modelled, but not to the depth required 
+  for a real system.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  Prolog rules used in a prototype can be quickly molded to get the desired effects 
+  in the application. The clean break between the inference engine and the knowledge 
+  base can be somewhat ignored to allow more rapid development of the prototype. 
+  Explanations, traces, and many of the other features of an expert system are 
+  left out of the prototype. The I/O is implemented simply to just give a feeling 
+  for the user interaction with the system. The full system can be more elegantly 
+  designed once the prototype has been reviewed by the potential users.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="theproblem"></a>11.1 
+  The Problem </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  section describes the building of a prototype system which acts as an advisor 
+  for a mainframe software salesperson. A good sales person must not only be congenial 
+  and buy lunches, but must also have good product knowledge and know how to map 
+  that knowledge onto a potential customer's needs. The type of knowledge needed 
+  by the sales person is different from that typically held by a technical person.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  technical person thinks of a product in terms of its features, and implementation 
+  details. The sales person must think of the prospect's real and perceived needs 
+  and be able to map those to benefits provided by the features in the product. 
+  That is, the sales person must understand the prospect's objectives and be able 
+  to present the benefits and features of the product that help meet those objectives.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  salesperson must also have similar product knowledge about the competitor's 
+  products and know which benefits to stress that will show up the weaknesses 
+  in the competitor's product for the particular prospect.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>In 
+  addition to this product knowledge, the sales person also has rules for deciding 
+  whether or not the prospect is likely to buy, and recognizing various typical 
+  sales situations.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>With 
+  a large workload, it is often difficult for a sales person to keep up on product 
+  knowledge. An expert system which helps the sales person position the products 
+  for the prospect would be a big asset for a high tech sales person. The Sales 
+  Advisor system is a prototype of such a system, designed to help in the early 
+  stages of the sales cycle.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="thesalesadvisorknowledgebase"></a>11.2 
+  The Sales Advisor Knowledge Base </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  ways in which sales people mentally organize product knowledge are fairly consistent. 
+  The knowledge base for the sales advisor should be organized in a format which 
+  is as close to the sales person's organization of the knowledge as possible. 
+  This way the semantic gap will be reduced and the knowledge base will be more 
+  easily maintained by a domain expert.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  main types of knowledge used by the salesperson fall into the following categories:</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<DIR> 
+  <DIR> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;Qualification 
+      - the way in which the salesperson determines if the prospect is a good 
+      potential customer and worth pursuing;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;Objective 
+      Benefit Feature (OBF) analysis - the way a salesperson matches the customer's 
+      objectives with the benefits and features of the product;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;Competitive 
+      analysis - the way a salesperson decides which benefits and features to 
+      stress based on the competitor's weaknesses;</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;Situation 
+      analysis - the way a salesperson determines if the products will run in 
+      the prospect's shop.</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> 
+    <P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>•&#9;Miscellaneous 
+      advice - various rules covering different situations which do not fall neatly 
+      in the above categories.</FONT></P>
+    <P ALIGN="JUSTIFY"> 
+    <FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+    <P ALIGN="JUSTIFY"> </P>
+    </FONT> </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Having 
+  this overall organization, we can now begin to prototype the system. The first 
+  step is to design the knowledge base. Simple Prolog rules can be used wherever 
+  possible. The knowledge for each area will be considered separately. The example 
+  uses the products sold for mainframe computers by Cullinet Software.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="qualifying"></a>Qualifying</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>First 
+  we implement the knowledge for qualifying the prospect. This type of knowledge 
+  falls easily into a rule format. The final version will probably need some uncertainty 
+  handling as in Clam, but it is also important for this system to provide more 
+  text output than Clam provides. The quickest way to build the prototype is to 
+  use pure Prolog syntax rules with I/O statements included directly in the body 
+  of the rule. Clam can be used later with modifications for better text display.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Two 
+  examples of qualifying rules are: the prospect must have an IBM mainframe, and 
+  the prospect's revenues must be at least $30 million. They are written as <B>unqualified</B> 
+  since if the prospect fails a test then it is unqualified.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>unqualified:-<BR>
+      not computer('IBM'),<BR>
+      advise('Prospect must have an IBM computer'),<BR>
+      nl.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>unqualified:-<BR>
+      revenues(X),<BR>
+      X &lt; 30,<BR>
+      advise('Prospect is unlikely to buy IDMS with revenues &#9;under $30 million'),<BR>
+      nl.</B></FONT></P>
+  </DIR>
+</DIR>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="objectivesbenefitsfeatures"></a>Objectives 
+  - Benefits - Features</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Sales 
+  people typically store product knowledge in a tabular form called an objective-benefit-feature 
+  chart, or OBF chart. It categorizes product knowledge so that for each objective 
+  of the customer, the benefits of the product for meeting that objective, and 
+  the features of the product are detailed.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>For 
+  the prototype we can simplify the prospect objectives by considering three main 
+  ones: development of applications, building an information center, and building 
+  efficient production systems. Each prospect might have a different one of these 
+  objectives. The benefits of each product in the product line varies for each 
+  of these objectives. This information is stored in Prolog structures of three 
+  arguments called <B>obf</B>. The first argument is the feature (or product), 
+  the second is the customer objective, and the third is the benefit which is 
+  stressed to the prospect.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>obf('IDMS/R',<BR>
+      development,<BR>
+      'IDMS/R separates programs from data, simplifying development.').</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>obf('IDMS/R',<BR>
+      information,<BR>
+      'IDMS/R maintains corporate information for shared access.').</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>obf('IDMS/R',<BR>
+      production,<BR>
+      'IDMS/R allows finely tuned data access for optimal performance.').</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>obf('ADS',<BR>
+      development,<BR>
+      'ADS automates many programming tasks thus increasing productivity.').</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>obf('ADS',<BR>
+      production,<BR>
+      'ADS generates high performance compiled code.').</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>obf('OLQ',<BR>
+      development,<BR>
+      'OLQ allows easy validation of the database during development.').</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>obf('OLQ',<BR>
+      information, <BR>
+      'OLQ lets end users access corporate data easily.').</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>obf('OLE',<BR>
+      information,<BR>
+      'OLE lets users get information with English language queries.').</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>By 
+  using a chart such as this, the salesperson can stress only those features and 
+  benefits which meet the prospect's objectives. For example, OLE (OnLine English 
+  - a natural language query) would only be mentioned for an information center. 
+  OLQ (OnLine Query - a structured query language) would be presented as a data 
+  validation tool to a development shop, and as an end user query tool to an information 
+  center.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  knowledge could have been stored as rules of the form:</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>obf( 'OLE', 
+      'OLE lets users get information in English') :-<BR>
+      objective(information).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>This 
+  type of rule is further away from the way in which the expert's understand the 
+  knowledge. The structures are more natural to deal with, and the inference engine 
+  can be easily modified to deal with what is really just a different format of 
+  a rule.</FONT></P>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="situationanalysis"></a>Situation 
+  Analysis</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  next key area is making sure that the products are compatible with the customer's 
+  configuration. We wouldn't want to sell something that doesn't work. For example, 
+  OLE would not run at the time on a small machine or under a DOS operating system.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>unsuitable('OLE'):-<BR>
+      operating_system(dos).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>unsuitable('OLE'):-<BR>
+      machine_size(small).</B></FONT></P>
+  </DIR>
+</DIR>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="competitiveanalysis"></a>Competitive 
+  Analysis</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>A 
+  good sales person will not directly attack the competition, but will use the 
+  competition's weakness to advantage. This is done by stressing those aspects 
+  of a product which highlight the competitor's weakness. That is, how can our 
+  product be differentiated from the competitor's. For example, two of Cullinet's 
+  main competitors were IBM and ADR. Both IBM and Cullinet provided systems that 
+  performed well, but Cullinet's was easy to use, so ease of use was stressed 
+  when the competitor was IBM. ADR's system was also easy to use, but did not 
+  perform as well as Cullinet's, so against ADR performance was stressed.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prod_dif('IDMS/R', 
+      'ADR',<BR>
+      'IDMS/R allows specification of linked lists for high performance.').</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prod_dif('IDMS/R', 
+      'IBM',<BR>
+      'IDMS/R allows specification of indexed lists for easy access.').</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prod_dif('ADS', 
+      'ADR',<BR>
+      'ADS generates high performance code.').</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>prod_dif('ADS', 
+      'IBM',<BR>
+      'ADS is very easy to use.').</B></FONT></P>
+  </DIR>
+</DIR>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="miscellaneousadvice"></a>Miscellaneous 
+  Advice</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Besides 
+  this tabular data, there are also collections of miscellaneous rules for different 
+  situations. For example, there were two TP monitors, UCF, and DC. One allowed 
+  the user to use CICS for terminal networks, and the other provided direct control 
+  of terminals. The recommendation would depend on the situation. Another example 
+  is dealing with federal government prospects, which required help with the Washington 
+  office as well. Another rule recommends a technical sales approach, rather than 
+  the business oriented sell, for small shops that are not responding well.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>advice:-<BR>
+      not objective(production),<BR>
+      tp_monitor('CICS'),<BR>
+      online_applications(many),<BR>
+      nl,<BR>
+      advise(<BR>
+      'Since there are many existing online applications and'), nl,<BR>
+      advise(<BR>
+      'performance isn''t an issue suggest UCF instead of DC'), nl.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>advice:-<BR>
+      industry(government),<BR>
+      government(federal),<BR>
+      nl,<BR>
+      advise(<BR>
+      'If it's the federal government, make sure you work'),nl,<BR>
+      advise(<BR>
+      ' with our federal government office on the account'),nl.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>advice:-<BR>
+      competition('ADR'),<BR>
+      revenues(X),<BR>
+      X &lt; 100,<BR>
+      friendly_account(no),<BR>
+      nl,<BR>
+      advise(' Market database technical issues'),nl,<BR>
+      advise(' Show simple solutions in shirt sleeve sessions' ), nl.</B></FONT></P>
+  </DIR>
+</DIR>
+<h3 ALIGN="JUSTIFY"><B><FONT FACE="New Century Schlbk,Century Schoolbook"><a name="userqueries"></a>User 
+  Queries</FONT></B></h3>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Finally, 
+  the knowledge base contains a list of those items which will be obtained from 
+  the user.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>competition(X):-<BR>
+      menuask('Who is the competition?',<BR>
+      X, ['ADR', 'IBM', 'other']).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>computer(X):-<BR>
+      menuask('What type of computer are they using?',<BR>
+      X, ['IBM', 'other']).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>friendly_account(X):-<BR>
+      menuask('Has the account been friendly?',<BR>
+      X, [yes, no]).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>government(X):-<BR>
+      menuask('What type of government account is it?',<BR>
+      X, [federal, state, local]).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>industry(X):-<BR>
+      menuask('What industry segment?',<BR>
+      X, ['manufacturing', 'government', 'other']).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>machine_size(X):-<BR>
+      menuask('What size machine are they using?',<BR>
+      X, [small, medium, large]).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>objective(X):- 
+      <BR>
+      menuask('What is the main objective for looking at DBMS?',<BR>
+      X, ['development', 'information', 'production']).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>online_applications(X):-<BR>
+      menuask('Are there many existing online applications?',<BR>
+      X, [many, few]).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>operating_system(X):-<BR>
+      menuask('What operation system are they using?',<BR>
+      X, ['OS', 'DOS']).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>revenues(X):-<BR>
+      ask('What are their revenues (in millions)?',X).</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>tp_monitor(X):-<BR>
+      menuask('What is their current TP monitor?',<BR>
+      X, ['CICS', 'other']).</B></FONT></P>
+  </DIR>
+</DIR>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="theinferenceengine"></a>11.3 
+  The Inference Engine </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Now 
+  that a knowledge base has been designed, which has a reasonably small semantic 
+  gap with the expert's knowledge, the inference engine can be written. For the 
+  prototype, some of the knowledge is more easily stored in the inference engine. 
+  The high level order of goals to seek is stored in the main predicate, <B>recommend</B>.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>recommend:-<BR>
+      qualify,<BR>
+      objective_products,<BR>
+      product_differentiation,<BR>
+      other_advice, !.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>recommend.</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>First, 
+  the prospect is qualified. The <B>qualify</B> predicate checks to make sure 
+  there are no unqualified rules which fire.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>qualify:-<BR>
+      unqualified, <BR>
+      !, fail.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>qualify.</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The<B> 
+  objective_products</B> predicate uses the user's objectives and the OBF chart 
+  to recommend which products to sell and which benefits to present. It makes 
+  use of the <B>unsuitable</B> rules to ensure no products are recommended which 
+  will not work in the customer's shop.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>objective_products:-<BR>
+      objective(X), <BR>
+      advise('The following products meet objective'), <BR>
+      advise(X),nl,nl,<BR>
+      obf(Product, X, Benefit),<BR>
+      not unsuitable(Product),<BR>
+      advise(Product:Benefit),nl,<BR>
+      fail.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>objective_products.</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Next, 
+  the product differentiation table is used in a similar fashion.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> <B>product_differentiation:-<BR>
+      competition(X),<BR>
+      prod_dif(_,X,_), </b><BR>
+      <B>advise('Since the competition is '), advise(X),<BR>
+      advise(', stress:'),nl,nl,<BR>
+      product_diff(X), !.</b></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>product_differentiation.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>product_diff(X):-<BR>
+      prod_dif(Prod, X, Advice),<BR>
+      tab(5), advise(Advice), nl,<BR>
+      fail.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>product_diff(_).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>Finally, 
+  the other advice rules are all tried.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>other_advice:-<BR>
+      advice,<BR>
+      fail.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>other_advice.</B></FONT></P>
+  </DIR>
+</DIR>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="userinterface"></a>11.4 
+  User Interface </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>For 
+  a prototype, the user interface is still a key point. The system will be looking 
+  for supporters inside an organization, and it must be easy for people to understand 
+  the system. The windowing environment makes it relatively easy to put together 
+  a reasonable interface.</FONT></P>
+<P ALIGN="JUSTIFY"> 
+<FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2> 
+<P ALIGN="JUSTIFY"> </P>
+</FONT> 
+<P ALIGN="CENTER"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><BR>
+  <IMG SRC="prototyping11-1.gif" WIDTH=375 HEIGHT=239><BR>
+  </FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=1>Figure 
+  11.1. User interface of sales advisor prototype</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>For 
+  this example, one display window is used for advice near the top of the screen, 
+  and a smaller window near the bottom is used for questions to the user. Pop-up 
+  menus and prompter windows are used to gather information from the user. Figure 
+  11.1 shows the user interface.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  two display windows are defined at the beginning of the session.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>window_init:-<BR>
+      window(advice, create, [type(display), coord(1,1,10,78),</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B> border(blue:white), 
+      contents(blue:white)]),<BR>
+      window(quest, create, [type(display), coord(13,10,13,70),</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B> border(blue:white), 
+      contents(blue:white)]).</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  prompt and pop-up menu windows are defined dynamically as they are needed. The 
+  <B>ask</B> and <B>menuask</B> predicates work as in other examples. Here are 
+  the clauses that interface with the user.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>ask(A,V):-<BR>
+      window(quest,write,A),<BR>
+      window([type(prompt),coord(16,10,16,70),border(white:blue),<BR>
+      contents(white:blue)], read, ['', Y]), <BR>
+      asserta(known(A,Y)), <BR>
+      Y = V.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>menuask(Attribute,AskValue,Menu):-<BR>
+      length(Menu,L),<BR>
+      R1 = 16,<BR>
+      R2 is R1 + L - 1,<BR>
+      window(quest,write,Attribute),<BR>
+      window([type(menu),coord(R1,10,R2,40),border(white:blue),<BR>
+      contents(white:blue),menu(Menu)], read, AnswerValue),<BR>
+      asserta(known(Attribute,AnswerValue)),<BR>
+      AskValue = AnswerValue.</B></FONT></P>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>The 
+  <B>advise</B> predicate uses the predefined display window, <B>advice</B>.</FONT></P>
+<DIR> 
+  <DIR> 
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>advise([H|T]):- 
+      window(advice,writeline,[H|T]),!.</B></FONT></P>
+    <P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2><B>advise(X):- 
+      window(advice,write,X).</B></FONT></P>
+  </DIR>
+</DIR>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="summary"></a>11.5 
+  Summary </font></B></h2>
+<P ALIGN="JUSTIFY"><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>One 
+  can model a fairly complex domain relatively quickly in Prolog, using the tools 
+  available. A small semantic gap on the knowledge base, and good user interface 
+  are two very important points in the prototype.</FONT></P>
+<h2><B><FONT FACE="New Century Schlbk,Century Schoolbook"> <a name="exercises"></a>Exercises 
+  </font></B></h2>
+<P><FONT FACE="New Century Schlbk,Century Schoolbook" SIZE=2>11.1 - Prototype 
+  an expert system which plays poker or some similar game. It will need to be 
+  specialized to understand the particular knowledge of the game. Experiment with 
+  the prototype to find the best type of user interface and dialog with the system.</FONT></P>
+<P><i><font size=-1>Copyright &copy;1989,2000 Amzi! inc. All Rights Reserved.</font></i></P>
+</BODY>
+</HTML>

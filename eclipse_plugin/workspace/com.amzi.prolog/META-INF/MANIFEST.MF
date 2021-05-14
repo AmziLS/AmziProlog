@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: com.amzi.prolog; singleton:=true
+Bundle-Version: 4.5.10004
+Bundle-Vendor: %Bundle-Vendor
+Bundle-Localization: plugin
+Require-Bundle: com.amzi.prolog.core;bundle-version="3.5.9404",
+ com.amzi.prolog.ui;bundle-version="3.5.9404",
+ com.amzi.prolog.debug;bundle-version="3.5.9404",
+ com.amzi.prolog.help;bundle-version="3.5.9404"

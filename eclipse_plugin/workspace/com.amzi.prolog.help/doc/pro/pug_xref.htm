@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Cross Referencer and Syntax Checker</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<h1><A NAME="CrossReferencer"></A><FONT COLOR="#D2AA00">Cross Referencer and Syntax 
+  Checker</FONT></h1>
+
+<P>The cross reference utility can be used to find a number of common Prolog programming 
+  errors. It can check for correct references of predicates across modules, and 
+  take into account extended predicates (LSXs) and compiled libraries.</P>
+<p>It provides a full cross reference of predicates, indicating for each predicate 
+  both predicates called by the given predicate, and predicates that call the 
+  given predicate. The defining modules for the cross-referenced predicates are 
+  given as well, with notes for built-in and extended predicates.</p>
+<p>The cross reference utility checks for</p>
+<ul>
+  <li> Common Prolog punctuation errors,</li>
+  <li>Undeclared discontiguous clauses,</li>
+  <li>Orphaned predicates (never used),</li>
+  <li>Undefined predicates (used but not defined),</li>
+  <li>Module imports and exports</li>
+  <li>Extended (LSX) and library (PLM) predicates</li>
+</ul>
+<h2> <a name="running"></a><font color="#0000FF">Running</font></h2>
+<p>The Cross Reference View is, by default, on the right of the Prolog Perspective 
+  in the IDE under the Outline View.</p>
+<p align="center"><img src="cross_reference_view.gif" width="216" height="425"></p>
+<p>To run it, first select a file in the Editor View or a Prolog Project in the 
+  Navigator View. Then:</p>
+<ul>
+  <li>Press the Refresh button <img src="refresh.gif" width="16" height="16"><br>
+    or</li>
+  <li>Select the 'Refresh' command from the Cross Reference View Menu (under the 
+    black triangle in the upper right)</li>
+</ul>
+<p>The Cross Reference examines each Prolog source file in your <a href="pug_ide.htm#SettingProjectProperties">project</a> 
+  and loads all libraries and Logic Server Extensions that are part of the project. 
+  It displays as shown above. The predicates are listed in alphabetic order. Predicates 
+  that are not in a named module are shown as user:. Amzi! system predicates are 
+  shown as builtin:.</p>
+<p>For each predicate, the Cross References displays:</p>
+<ul>
+  <li>Uses: All the predicates called by the predicate</li>
+  <li>Used by: All the predicates that call the predicate</li>
+</ul>
+<p>You can click on any predicate name to open it in an Editor.</p>
+<p><img src="arrowrt.gif" height=18 width=18 align=BOTTOM> <i>Builtin predicates 
+  cannot be displayed in an Editor.</i></p>
+<h2><a name="warnings_and_errors"></a><font color="#0000FF">Warnings and Errors</font></h2>
+<p>Any syntax errors or warnings will be displayed in the Tasks View (which is 
+  by default on the bottom under the Listener).</p>
+<p align="center"><img src="task_view_xref.gif" width="609" height="155"></p>
+<p>This view includes warnings for all predicates that are:</p>
+<ul>
+  <li>Unused: Defined, but never called.</li>
+  <li>Undefined: Called, but never defined.</li>
+</ul>
+<p>It also has errors for syntax problems and potential misplaced periods.</p>
+<p><!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p></p>
+<P><I> </I></P>
+
+</BODY>
+</HTML>

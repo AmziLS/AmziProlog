@@ -1,0 +1,553 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Atoms, Lists and Strings</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="ManipulatingTerms"></A><FONT COLOR="#D2AA00">Atoms, Lists and Strings</FONT> 
+</h1>
+<P>This section includes predicates for identifying, comparing and manipulating
+atoms, lists and strings. The categories are: </P>
+
+<MENU> 
+  <LI><A HREF="#AtomProcessing">Atom Processing</A> </LI>
+  <LI><A HREF="#ListProcessing">List Processing</A> </LI>
+  <LI><A HREF="#StringProcessing">String Processing</A></LI>
+  <LI><a href="#character_list_processing">Character List Processing</a></LI>
+</MENU>
+
+<H2><A NAME="AtomProcessing"></A><FONT COLOR="#0000FF">Atom Processing</FONT></H2>
+
+<P>A number of predicates are provided for manipulating and converting atoms. 
+</P>
+
+<H3><A NAME="atomcodesAtomCharList"></A><FONT COLOR="#000080">atom_codes(Atom,
+CharList)</FONT></H3>
+
+<P><!AMZI_INDEX= atom_codes/2; name/2><B>atom_codes/2</B> 
+  converts between atoms and a list of character codes. If Atom is an atom then 
+  CharList is unified with the list of character codes for the name of Atom. If 
+  Atom is uninstantiated and CharList is a list of character codes, then instantiate 
+  Atom to the atom whose name is formed from CharList. </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- atom_codes(abc, X).
+X = [0w0061, 0w0062, 0w0063] 
+yes
+
+?- atom_codes(X, "abc").
+X = abc 
+yes</FONT></PRE>
+</UL>
+
+<H3><A NAME="atomlistconcatAtomListAtom"></A><FONT COLOR="#000080">atomlist_concat(AtomList,
+Atom)</FONT></H3>
+
+<P><!AMZI_INDEX= concatenation; atomlist_concat/2><B>atomlist_concat/2</B> concatenates 
+  all of the atoms in the list AtomList to create a single atom, Atom. </P>
+<ul><font color="#000080"><pre>
+?- atomlist_concat([cats,and,dogs], X).
+X = catsanddogs 
+yes
+</pre></font></ul>
+
+<H3><A NAME="atomconcatAtomAtomAtomVar"></A><FONT COLOR="#000080">atom_concat(Atom1,
+Atom2, AtomVar3)</FONT></H3>
+
+<P><!AMZI_INDEX= atom_concat/3>atom_concat/3 concatenates atoms Atom1
+and Atom2 and unifies that with variable AtomVar3. It can also generate
+all possible pairs of atoms, Atom1 and Atom2, from a given atom AtomVar3.
+</P>
+<ul><font color="#000080"><pre>
+?- atom_concat(cats, dogs, X).
+X = catsdogs 
+yes
+
+?- atom_concat(A, B, abc).
+A = ''
+B = abc ;
+
+A = a
+B = bc ;
+
+A = ab
+B = c ;
+
+A = abc
+B = '' ;
+no
+</pre></font></ul>
+
+<H3><A NAME="atomlengthAtomLength"></A><FONT COLOR="#000080">atom_length(Atom,
+Length)</FONT></H3>
+
+<P><!AMZI_INDEX=  atom_length/2><B>atom_length/2</B> unifies the length
+of Atom with Length. </P>
+
+<H3><A NAME="atomuplowAtomUpperAtomLower"></A><FONT COLOR="#000080">atom_uplow(AtomUpper,
+AtomLower)</FONT></H3>
+
+<P><!AMZI_INDEX= atom_uplow/2><B>atom_uplow/2</B> creates a new uppercase
+atom, AtomUpper, from a lowercase atom, AtomLower, and vice versa. </P>
+
+<H3><a name="is_atom"></a><font color="#000080">is_atom(X)</font></H3>
+<p> 
+  <!AMZI_INDEX= is_atom/1>
+  <b>is_atom/1</b> succeeds if X is an atom.</p>
+<h3></h3>
+<H3><A NAME="nameAtomCharList"></A><FONT COLOR="#000080">name(Atom, CharList)</FONT></H3>
+
+<P><!AMZI_INDEX= name/2><B>name/2</B> is the same as atom_codes/2. 
+  It is preserved because it is used in many old Prolog programs.</P>
+
+
+<H3><A NAME="subatomAtomIndexLengthSubAtom"></A><FONT COLOR="#000080">sub_atom(Atom,
+Index, Length, SubAtom)</FONT></H3>
+
+<P><!AMZI_INDEX= sub_atom/4><B>sub_atom/4</B> extracts parts of atoms
+like <B>sub_string/4</B> does for strings. The parameters are: </P>
+
+<DL COMPACT> 
+  <dl>
+    <dt>Atom</dt>
+    <dd>must be an atom </dd>
+    <dt>Index </dt>
+    <dd>the starting position, beginning with 1, of subatom </dd>
+    <dt>Length </dt>
+    <dd>the length of the subatom </dd>
+    <dt>SubAtom </dt>
+    <dd>the subatom </dd>
+  </dl>
+</DL>
+
+<P>In addition to the requirement that Atom be instantiated, either Index
+and Length must be instantiated, or SubAtom. In the first case the subatom
+is found, and in the second, the index andlength are found. Backtracking
+is fruitful in the second case if the subatom can be found more than once.
+</P>
+
+<P>If Index is instantiated and Length isn't, SubAtom becomes the rest
+of the Atom and Length is instantiated to its length. </P>
+
+<P>The instantiation requirements are somewhat more restrictive than the ISO standard 
+  which specifies that sub_atom can be used to generate all possible subatoms, 
+  with index and length, from a given atom. </P>
+
+<P>Example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- sub_atom(ratatatat, 1, 3, X)
+X = rat
+?- sub_atom(ratatatat, I, L, tat)
+I = 3
+L = 3;
+I = 5
+L = 3;
+I = 7
+L = 3;
+no</FONT></PRE>
+</UL>
+
+<H2><A NAME="ListProcessing"></A><FONT COLOR="#0000FF">List Processing</FONT></H2>
+<!AMZI_INDEX = lists; list processing>
+<P>Some list utility predicates are basic built-in predicates. There are many 
+  more that are part of the <a href="../libs/list.htm">list library</a>. These 
+  are the built-in ones.</P>
+
+<H3><A NAME="ismember"></A><FONT COLOR="#000080">is_member(Term, List)</FONT></H3>
+
+<P><!AMZI_INDEX= is_member/2><B>is_member/2</B> is a restricted version of 
+  the classic member/2 predicate (in the LIST.PLM library) than can be used for 
+  fast testing if Term is a member of List. It uses a strong unify (==) for testing 
+  the element. It cannot be used to backtrack through the various members of a 
+  list. The definition is equivalent to:</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">is_member(X, [Y|_]) :- X == Y, !.
+is_member(X,[_|Z]) :- is_member(X,Z).</FONT></PRE>
+</UL>
+
+<H3><A NAME="sortListSortedList"></A><FONT COLOR="#000080">sort(List, SortedList)</FONT></H3>
+
+<P><!AMZI_INDEX= sort/2><B>sort/2</B> sorts a list. List 
+  should be bound to a list. SortedList gets unified with the list whose elements 
+  are those of List arranged according to <a href="ref_manipulating_terms.htm#StandardOrder">standard 
+  order</a>. </P>
+<ul><font color="#000080"><pre>
+?- sort([q,w,e,r,t,y,u], X).
+X = [e, q, r, t, u, w, y] 
+yes
+</pre></font></ul>
+
+<H3><A NAME="keysortListSortedList"></A><FONT COLOR="#000080">keysort(KeyedList, KeyedSortedList)</FONT></H3>
+
+<P><!AMZI_INDEX= keysort/2><B>keysort/2</B> sorts a list of 
+  keyed elements of the form Key-Item. KeyedSortedList should be bound to a list. 
+  KeyedSortedList gets unified with the list whose elements are those of KeyedList 
+  sorted by key in <a href="ref_manipulating_terms.htm#StandardOrder">standard 
+  order</a>. </P>
+<ul><font color="#000080"><pre>
+?- keysort([a-1, r-9, w-3, b-2, y-2, c-1], X).
+X = [a - 1, b - 2, c - 1, r - 9, w - 3, y - 2] 
+yes
+</pre></font></ul>
+
+<H2><A NAME="StringProcessing"></A><FONT COLOR="#0000FF">String Processing</FONT></H2>
+<!AMZI_INDEX = strings; string processing>
+A number of predicates are designed to work with strings. 
+<H3><a name="is_string"></a><font color="#000080">is_string(X)</font></H3>
+<p> 
+  <!AMZI_INDEX=is_string/1>
+  <b>is_string/1</b> succeeds if X is a string. </p>
+<h3><a name="nonblankstringString"></a><font color="#000080">nonblank_string(String)</font></h3>
+<p>
+  <!AMZI_INDEX=nonblank_string/1>
+  <b>nonblank_string/1</b> takes a String as its argument and tests to make sure 
+  it contains at least one non-whitespace character. It succeeds if the string 
+  is nonblank, and fails if it's blank. </p>
+<h3></h3>
+
+<H3><A NAME="strcatStringAStringBStringAB"></A><FONT COLOR="#000080">strcat(StringA, 
+  StringB, StringAB)</FONT></H3>
+
+<P><!AMZI_INDEX= strcat/3><B>strcat/3</B> concatenates the first two strings to 
+  from the third. The first two arguments must be strings.</P>
+
+<H3><A NAME="stringlistconcatStringListStri"></A><FONT COLOR="#000080">stringlist_concat(StringList,
+String), stringlist_concat(StringList, Separator, String)</FONT></H3>
+
+<P><!AMZI_INDEX = concatenation; stringlist_concat/2; stringlist_concat/3><B>stringlist_concat/2</B> concatenates
+all of the strings or atoms in StringList to create the output String.
+For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- stringlist_concat([ `one `, two, ` three` ], X).
+X = `one two three`</FONT></PRE>
+</UL>
+
+<P><B>stringlist_concat/3</B> allows the use of a separator string that
+will appear between all of the elements in StringList</P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- stringlist_concat([`one`,`two`,`three`], `..`, X).
+X = `one..two..three` </FONT></PRE>
+</UL>
+
+<H3><a name="stringatomStringAtom"></a><font color="#000080">string_atom(String, 
+  Atom)</font></H3>
+<p> 
+  <!AMZI_INDEX= string_atom/2>
+  <b>string_atom/2</b> is used to convert between a string and an atom. If String 
+  is bound to a string, then Atom is unified with the corresponding atom. If Atom 
+  is bound to an atom, then String is unified with the string representation. 
+  The more general <b>string_term/2</b> can be used as well. </p>
+<h3><a name="string_float"></a><font color="#000080">string_float(String, Float)</font></h3>
+<p> 
+  <!AMZI_INDEX= string_float/2>
+  <b>string_float/2</b> is used to convert between a string and a floating point 
+  number. </p>
+
+<H3><A NAME="stringicomp"></A><FONT COLOR="#000080">string_icomp(String1,
+String2)</FONT></H3>
+
+<P><!AMZI_INDEX= string_icomp/2><B>string_icomp/2</B> Performs a case
+insensitive compare of two strings.</P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- string_icomp(`ABC`, `abc`).
+yes</FONT></PRE>
+</UL>
+
+<H3><A NAME="stringintegerStringInteger"></A><FONT COLOR="#000080">string_integer(String,
+Integer)</FONT></H3>
+
+<P><!AMZI_INDEX= string_integer/2><B>string_integer</B> converts back and forth 
+  between a string and its integer value (i.e., 33 and `33`). The more general 
+  <b>string_term/2</b> can be used as well.</P>
+
+<P>If String is bound to a string of digits, then Integer is bound to the corresponding 
+  value. If Integer is bound to a value, then String is bound to the ASCII digits 
+  representing that value. For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- string_integer(StrVal, 33).
+StrVal = `33`</FONT></PRE>
+</UL>
+
+<H3><a name="string_number"></a><font color="#000080">string_number(String, Number)</font></H3>
+<p> 
+  <!AMZI_INDEX= string_number/2>
+  <b>string_number</b> converts back and forth between a string and its numeric 
+  value.</p>
+<H3><A NAME="stringlengthStringLength"></A><FONT COLOR="#000080">string_length(String, 
+  Length)</FONT></H3>
+
+<P><!AMZI_INDEX= string_length/2><B>string_length/2</B> requires
+that String be bound to a string. Length is unified with the length of
+the string. For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- string_length(`how long am i?`, Len).
+Len = 14</FONT></PRE>
+</UL>
+
+<H3><A NAME="stringlistStringList"></A><FONT COLOR="#000080">string_list(String,
+List)</FONT></H3>
+
+<P><!AMZI_INDEX= string_list/2><B>string_list/2</B> converts back and forth between 
+  a string and its representation as a list of character codes(i.e., &quot;foo&quot; 
+  and `foo`).</P>
+
+<P>If String is bound to a string then <B>string_list</B> succeeds if it can unify 
+  List with the list of character codes of the characters in the string. </P>
+
+<P>If List is bound to a list of character codes then this predicate succeeds 
+  if String can be unified with the string comprising the characters whose codes 
+  are in List. </P>
+
+<P>For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- string_list(X, [70, 79, 79]).
+X = `FOO` </FONT></PRE>
+</UL>
+<p><b>string_list/2</b> It is especially useful for applications that do character-by-character 
+  parsing on input/output strings. <a href="ref_dcg.htm">DCG</a> applications 
+  often use <b>string_list/2</b>. The following example uses some <a href="../libs/list.htm">list 
+  library</a> predicates to add a file extension to a string file name if it doesn't 
+  have one.</p>
+<UL>
+  <PRE><FONT COLOR="#000080">:- ensure_loaded(list).
+:- import(list).
+
+add_file_extension(S_FILE, S_EXT, S_OUT) :-
+   string_list(S_FILE, L_FILE),
+   (member(0'., L_FILE) ->
+      S_OUT = S_FILE
+      ;
+      string_list(S_EXT, L_EXT),
+      append(L_FILE, L_EXT, L_OUT),
+      string_list(S_OUT, L_OUT)
+   ).</FONT></PRE>
+</UL>
+<p>Trying it:</p>
+<UL>
+  <PRE><FONT COLOR="#000080">?- [ex_string_list].
+yes
+
+?- add_file_extension(`ducky`, `.pro`, X).
+X = `ducky.pro` 
+yes
+
+?- add_file_extension(`ducky.pro`, `.plm`, X).
+X = `ducky.pro` 
+yes</FONT></PRE>
+</UL>
+
+<H3><A NAME="stringsplit"></A><FONT COLOR="#000080">string_split(String,
+DelimitersS, List)</FONT></H3>
+
+<P><!AMZI_INDEX= string_split/3; Parsing><B>string_split
+</B>splits the String into a list of strings separated by the characters
+in the DelimiterS string. Unifies the result with List.</P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- string_split(`one/two:three`, `/:`, X).
+X = [`one`,`two`,`three`] </FONT></PRE>
+</UL>
+
+<P>Note, <B>string_split/3</B> differs from <B>string_tokens</B> in that
+it preserves whitespace, and does not return the delimiters as part of
+the list.</P>
+
+<H3><A NAME="stringtermStringTerm"></A><FONT COLOR="#000080">string_term(String,
+Term)</FONT></H3>
+
+<P><!AMZI_INDEX= string_term/2><B>string_term/2</B> converts
+back and forth between a string and a term. For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- string_term(`whiz(bang)`, X).
+X = whiz(bang)
+?- string_term(X, whiz(bang)).
+X = `whiz(bang)`</FONT></PRE>
+</UL>
+<p><b>string_term/2</b> uses the normal Prolog I/O reader to read/write the term 
+  to/from the string. You can use <a href="ref_execution.htm#catch3">catch/3</a> to catch 
+  bad syntax in the string as the following example shows:</p>
+<ul><font color="#000080"><pre>
+check_string :-
+   repeat,
+   write(`Enter term: `),
+   read_string(STRING),
+   catch(
+      string_term(STRING, TERM),
+      X,
+      process_error(X) ).
+
+process_error(X) :-
+   write(`Error: `),
+   write(X), nl,
+   write(`Try again`), nl,
+   fail.
+</pre></font></ul>
+<p>Trying it:</p>
+<ul><font color="#000080"><pre>
+?- check_string.
+Enter term: duck+*(le
+Error: error(syntax_error,
+   [type = read, rc = 407,
+    message = Unexpected operator,
+    ...
+    read_buffer = duck+*( **NEAR HERE** le .,
+    ...])
+Try again
+Enter term: duck(leona)
+
+yes
+</pre></font></ul>
+<H3><A NAME="stringtermqStringQTerm"></A><FONT COLOR="#000080">string_termq(StringQ,
+Term)</FONT></H3>
+
+<P><!AMZI_INDEX= string_termq/2;><B>string_termq/2</B> is exactly like <b>string_term/2</b>, 
+  except when creating a string from a term it adds syntax like quotes as necessary 
+  to ensure that the string can be converted back to the same term. For example, 
+  an atom with a leading uppercase letter needs to be quoted so it isn't confused 
+  as a variable. For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- string_termq(S, person(name('Walter'), addr(`Maple Way`))).
+S = `person(name('Walter'), addr(``Maple Way``)))`</FONT></PRE>
+</UL>
+
+<H3><A NAME="isstringterm"></A><FONT COLOR="#000080">is_string_term(String, 
+  Term)</FONT></H3>
+
+<P> 
+  <!AMZI_INDEX= is_string_term/2;>
+  <B>is_string_termq/2</B> is exactly like <b>string_term/2</b>, except instead of throwing
+  an error when an input string has a syntax error, it simply fails. </P>
+
+<H3><A NAME="stringtokens"></A><FONT COLOR="#000080">string_tokens(String,
+TokenList), string_tokens(String, TokenList, DelimitersS)</FONT></H3>
+
+<P> 
+  <!AMZI_INDEX= string_tokens/2; string_tokens/3; Parsing>
+  <B>string_tokens/2,3</B> takes a string and parses it into a list of tokens, 
+  where a token is a sequence of alphanumeric characters, or a punctuation mark. 
+  Whitespace between the tokens is removed with one exception, an ending period. 
+  An period embedded in text is simply a period, but one followed by white space 
+  is period space ( '. ' ). For example </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- string_tokens(`the file log.txt is 3.4 pages. or so.`, X).
+X = [the, file, log, ., txt, is, '3', ., '4', pages, '. ', or, so, '. ']
+
+?- string_tokens(`Don't go near, or in, the water!`, X). 
+X = ['Don','''',t,go,near,',',or,in,',',the,water,!] </FONT></PRE>
+</UL>
+
+<P>The three argument version allows you to specify the characters considered
+as punctuation marks. For example this query might be used to parse HTML
+strings:</P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- string_tokens(`&lt;H2&gt;This: A heading?&lt;/H2&gt;`, X, `&lt;&gt;/`).
+X = [&lt;,'H2',&gt;,'This:','A','heading?',&lt;,/,'H2',&gt;] </FONT></PRE>
+</UL>
+
+<P>Note, <B>string_tokens/2,3</B> differs from <B>string_split/3</B> in that
+all delimiters are returned in the TokenList, and whitespace is not preserved.</P>
+
+<H3><A NAME="stringtrim"></A><FONT COLOR="#000080">string_trim(String,
+TrimmedString)</FONT></H3>
+
+<P><!AMZI_INDEX= string_trim/2; Parsing><B>string_trim/2</B> Trims
+the leading and trailing white space from String and unifies the resulting
+string with TrimmedString.</P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- string_trim(` hello `, X).
+X = `hello` </FONT></PRE>
+</UL>
+
+<H3><A NAME="substringStringIndexLengthSubS"></A><FONT COLOR="#000080">sub_string(String,
+Index, Length, SubString)</FONT></H3>
+
+<P><!AMZI_INDEX= sub_string/4><B>sub_string/4</B> is used to locate
+or generate a substring of a given string. String must be bound to a string.
+There are two cases to consider: </P>
+
+<UL>
+<LI>SubString is bound to a string. In this case <B>sub_string</B> looks
+for the first occurrence of SubString in String and unifies Index and Length
+with the position of the start of SubString in String and its length. Backtracking
+will attempt to find the next occurrence of SubString in String. Note that
+index 1 means the first character in StringIn. </LI>
+
+<LI>SubString is unbound. Index and Length are bound to valid integers
+(i.e., 1 &lt; Index &lt; length_of(String) and Index + Length =&lt; length_of(String)).
+The substring unifies SubString with the substring of String at the given
+Index and of the given Length. If Index is bound and Length is unbound,
+then the SubString is the rest of the string and Length is bound to its
+length. </LI>
+</UL>
+
+<P>For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- sub_string(`i am hiding`, Where, Len, `am`).
+Where = 3
+Len = 2
+?- sub_string(`1Q93`, 3, 2, Year).
+Year = 93</FONT></PRE>
+</UL>
+
+<H3><A NAME="TiltSlashes"></A> <FONT COLOR="#000080">tilt_slashes(InAS, OutAS)</FONT></H3>
+<!AMZI_INDEX = tilt_slashes/2>
+<b>tilt_slashes/2</b> converts between slashes of either tilt in the string In, 
+to the correct path separator slashes for the platform, which is / on Unix and 
+\ on Windows. Note that this is not usually necessary because the file open predicates 
+accept either tilt on slashes. 
+<p>For example, this was run on a Windows version of Amzi!:</p>
+<ul>
+  <font color="#000080"> 
+  <pre>
+?- tilt_slashes(`abc/def/ghi`, X).
+X = `abc\def\ghi`
+yes</pre>
+  </font>
+</ul>
+<h2><a name="character_list_processing"></a><font color="#0000FF">Character List 
+  Processing</font></h2>
+<!AMZI_INDEX = character lists>
+A number of predicates are designed to work with character lists. 
+<h3><a name="atom_chars"></a><font color="#000080">atom_chars(Number, CharList)</font></h3>
+<p> 
+  <!AMZI_INDEX=atom_chars/2>
+  <b>atom_chars/2</b> converts back and forth between an atom and a list of characters. 
+</p>
+<h3><a name="char"></a><font color="#000080">char(X)</font></h3>
+<p> 
+  <!AMZI_INDEX=char/1>
+  <b>char/1</b> succeeds if X is a character.</p>
+<h3><a name="char_code"></a><font color="#000080">char_code(Atom, CharList)</font></h3>
+<p> 
+  <!AMZI_INDEX=char_code/2>
+  <b>char/1</b> converts back and forth between an atom and a list of characters.</p>
+<h3><a name="number_chars"></a><font color="#000080">number_chars(Number, CharList)</font></h3>
+<p> 
+  <!AMZI_INDEX=number_chars/2>
+  <b>number_chars/2</b> converts back and forth between a number and a list of 
+  characters. </p>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P>&nbsp;</P>
+
+</BODY>
+</HTML>

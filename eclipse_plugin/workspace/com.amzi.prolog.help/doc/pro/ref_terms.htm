@@ -1,0 +1,963 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Prolog Terms</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="PrologTerms"></A><FONT COLOR="#D2AA00">Prolog Terms</FONT> </h1>
+<P>The generic name for all forms of Prolog data is &quot;term&quot;. The
+data your program works with is all terms of one form or another. The program
+itself is made up of terms. Prolog execution is simply the repetitive matching
+of patterns in these terms. This section describes the various forms of
+terms. They are: </P>
+
+<UL>
+<li><A HREF="#Internationalization">Internationalization</A> </li>
+<LI><A HREF="#Atoms">Atoms</A> </LI>
+
+<LI><A HREF="#Strings">Strings</A> </LI>
+
+<LI><A HREF="#Variables">Variables</A> </LI>
+
+<LI><A HREF="#Numbers">Numbers</A> </LI>
+<LI><A HREF="#Structures">Structures</A> </LI>
+
+<LI><A HREF="#Lists">Lists</A> </LI>
+
+<LI><A HREF="#CharacterLists">Character Lists</A> </LI>
+
+<LI><A HREF="#Operators">Operators</A> </LI>
+
+<LI><A HREF="#Comments">Comments</A> </LI>
+
+</UL>
+
+<H2><A NAME="Internationalization"></A><FONT COLOR="#0000FF">Internationalization</FONT></H2>
+
+<!AMZI_INDEX= Internationalization; Multibyte characters; CJK characters; National languages; Unicode>
+<p>Amzi! provides full support for national languages, using both multibyte (superset 
+  of ASCII) and Unicode (wide) characters. This applies to all textual elements, 
+  including atoms, strings, characters and character lists, and applies to all 
+  I/O predicates.</p>
+<p>Internally, all characters in Amzi! are represented as Unicode (wide 16-bit) 
+  characters. You can work directly with Amzi! using Unicode files and Unicode 
+  I/O, from both the IDE and the Logic Server.</p>
+<p>You can work with Amzi! using the multibyte character interface. All characters 
+  are translated between Unicode and their multibyte equivalent on input and output. 
+  The translation is based on the locale of the host computer.</p>
+<p>The multibyte files, characters and I/O are supported in the IDE and through 
+  the Logic Server.</p>
+<H2><A NAME="Atoms"></A><FONT COLOR="#0000FF">Atoms</FONT></H2>
+
+<P><!AMZI_INDEX= Atoms; Single Quotes; Unicode; upper_case_atoms>Atoms are the 
+  fundamental building blocks of Prolog. Syntactically, they look like character 
+  strings, but internally they are represented by integer values. This is why 
+  Prolog can very quickly unify (compare) atom values.</P>
+<P>An <b>un</b>quoted atom name can be composed of all <b>character</b> values 
+  or all <b>graphic</b> values (not both), as long as it doesn't begin with either 
+  an underscore ('_') or uppercase ASCII letter, ('A'-'Z'). (These beginning characters 
+  indicate a variable, not an atom. See below.) It may not include <b>white</b> 
+  space.</P>
+<P>The syntax rules can be changed to allow uppercase initial letters for atoms, 
+  but still not underscores, by setting the Prolog flag, <a href="pug_runtime.htm#SettableFlags">upper_case_atoms</a> 
+  to on.</P>
+<P>Roughly speaking for ASCII (see details below, plus full range of national 
+  language symbols):</P>
+<ul>
+  <li><b>Character</b> values are letters and numbers plus the symbols underscore 
+    ('_') and dollar sign ('$).</li>
+  <li><b>Graphic</b> values are the punctuation and math symbols (+,;-/ etc.), 
+    but not underscore ('_') or dollar sign ('$') or quoting symbols (&quot; ' 
+    `) </li>
+  <li><b>White</b> space is space, tab, etc.</li>
+</ul>
+<P>By using single quotes, an atom name can be composed of any symbols. Use two 
+  single quotes to indicate an embedded single quote in the atom name.</P>
+<p>Examples of legal and illegal atom names are:</p>
+<ul>
+  <font color="#000080"> 
+  <pre>
+cats            % ok
+dogs            % ok
+cats and dogs   % wrong, contains white space
+cats-and-dogs   % wrong, contains graphic symbol
+cats_and_dogs   % ok, '_' is a character in Prolog
+cats$dogs       % ok, '$' is a character in Prolog
+Cats            % wrong, begins with upper case ASCII (a variable)
+_dogs           % wrong, begins with underscore (a variable)
+==&gt;             % ok, all graphic characters
+;;$=            % wrong, '$' is not a graphic.
+;;+             % ok
+'Anything ;; - At all'    % ok, in single quotes
+'New York'      % ok, in single quotes
+'can''t'        % ok, with '' indicating ' inside atom
+</pre>
+  </font> 
+</ul>
+
+<H3><A NAME="CharacterSet"></A> <FONT COLOR="#000080">Symbol Set for Atoms</FONT></H3>
+<!AMZI_INDEX = character sets>
+
+
+<h4>Character Symbols</h4>
+<P>ASCII values considered characters for atom names are:</P>
+<ul>
+  <li>a-z</li>
+  <li>A-Z</li>
+  <li>0-9</li>
+  <li>underscore ('_')</li>
+</ul>
+<p><i><img src="arrowrt.gif" height=18 width=18 align=BOTTOM> The dollar sign 
+  ('$') is also allowed as a character in Amzi! Prolog to maintain compatibility 
+  with old releases, but it is not ISO standard, and will not be supported in 
+  future releases.</i></p>
+<p>Character values above code 127 include all those symbols that would ordinarily 
+  be considered a character, as opposed to either white space or a graphic (arrows, 
+  math symbols, etc.). They might be entered as either wide (Unicode) characters, 
+  or translated from a locale-specific multi-byte character encoding. In either 
+  case they are stored internally as Unicode characters.</p>
+<p>Unicode character values (in hexadecimal) above the ASCII values are:</p>
+<ul>
+  <li> 00C0 - 1FFF (many phonetic language symbols)</li>
+  <li>3040 - D7FF (Chinese, Japanese, Korean (CJK) ideographs)</li>
+  <li>E000 - FFEF (except FEFF) (Private use, additional CJK and Arabic symbols)</li>
+</ul>
+<P>See the sample program <a href="../../samples/prolog/babel/doc.html">babel</a> 
+  for an example of the use of CJK symbols.</P>
+<h4>Graphic Symbols</h4>
+<P>ASCII values considered graphic characters for atom names are:</p>
+<blockquote>
+  <p> <b># &amp; * + - . / : &lt; = &gt; ? @ \ ^ ~</b></p>
+</blockquote>
+<P><i><img src="arrowrt.gif" height=18 width=18 align=BOTTOM> The backslash ('\') 
+  is not ISO standard, but is part of the graphic set for Amzi! Prolog, and is 
+  used in bit manipulation operators. The dollar sign ('$') should be part of 
+  the graphic characters, but is not for backward compatibility reasons. This 
+  should change in a future release. When the preprocessing flag is turned on, 
+  a number sign ('#') in the first column is interpreted as a preprocessor symbol, 
+  and not a graphic character which might be part of an operator name.</i> </P>
+<P>Unicode graphic values (in hexadecimal) above the ASCII values are:</P>
+<ul>
+  <li>00A1 - 00BF (symbols for copyright, fractions, some currency, etc.)</li>
+  <li>2010 - 303F (symbols for punctuation, math, arrows, box drawing, currency, 
+    etc.)</li>
+</ul>
+<p>See the sample program <a href="../../samples/prolog/doc.html">logic</a> for 
+  an example of the use of Unicode math symbols.</p>
+
+<h4>White Space Symbols</h4>
+<p>ASCII white space is any value below 0020 (space, tab, new line, etc.).</p><p>Unicode white space (in hexadecimal) above the ASCII values is:</p>
+<ul>
+  <li>2000 - 200F (special spacing symbols)</li>
+  <li>FFF0 - FFFE and FFEF (reserved symbols)</li>
+</ul>
+<h4>Entering Wide Characters</h4>
+<p>Wide symbol values can be entered in atom names either with an editor that 
+  supports them, cut and pasting from a character map accessory, by using a locale-specific 
+  version of an operating system, or by directly entering them using escape sequences.</p>
+<p>For example, to create an operator made out of two lighting bolt type arrows 
+  using escape sequences:</p>
+<ul><font color="#000080"><pre>
+:- op(555, xfx, '\x21af\\x21af\').
+main :-
+   write(clouds '\x21af\\x21af\' earth).
+</pre></font></ul>
+<p>The wideW version of the Windows IDE supports wide characters in the editor 
+  and listener. A better way to create the above program is to set the font to 
+  Lucida Sans Unicode, and then use the Windows character map accessory to select 
+  the lightning bolt (21AF) symbol and cut and paste it in the program, without 
+  the single quotes.</p>
+
+<H2><A NAME="EscapeCharacters"></A><FONT COLOR="#0000FF">Escape Characters</FONT></H2>
+
+<P><!AMZI_INDEX= Escape Characters>Certain special characters may be embedded 
+  inside quoted atoms, character lists or strings by use of the escape character 
+  (backslash \) and a token. The handling of escape characters has been enhanced 
+  to be more in keeping with the emerging ISO standard, which is close to the 
+  C standard specification. </P>
+
+<H3><A NAME="EnablingandDisablingEscapeProc"></A><FONT COLOR="#000080">Enabling
+and Disabling Escape Processing</FONT></H3>
+
+<P><!AMZI_INDEX= Escape Characters; string_esc>The use of a backslash (\) as an 
+  escape character can be irritating, especially in applications that use Windows 
+  path names, as it requires using double backslashes (\\) for directory separation.</P>
+<P>There are two options for dealing with this problem. If the problem is only 
+  with Windows path names, then that can be avoided by using the forward slash 
+  (/) as a directory separator. Amzi! Prolog will accept either in a path name, 
+  so applications can run cross-platform.</P>
+
+<P>The other option is to turn escape character processing off. A flag setting 
+  called <a href="pug_runtime.htm#SettableFlags">string_esc</a> allows you to enable 
+  or disable processing of escape characters. To turn it on: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- set_prolog_flag(string_esc, on).</FONT></PRE>
+</UL>
+
+<P>To turn it off: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- set_prolog_flag(string_esc, off).</FONT></PRE>
+</UL>
+
+<P>It can also be set from the .cfg file: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">string_esc=[on|off]</FONT></PRE>
+</UL>
+
+<P>The default setting is 'on'. When string_esc is off, then escape sequences, 
+  such as '\n' become simply '\n' rather than a newline.</P>
+
+<H3><A NAME="EscapeCodes"></A><FONT COLOR="#000080">Escape Codes</FONT></H3>
+
+<!AMZI_INDEX=Escape Characters; Escape Codes>
+<p>When escape processing 
+  is enabled, the backslash (\) is the escape character and does not become part 
+  of the string (it 'escapes' normal processing). The character(s) following the backslash then has special meaning.  This allows expressing character code symbols that are not available on the keyboard input device. 
+</P>
+<p>Escape processing dates back to teletype days, providing a way to generate 
+  control characters for line feeds, backspaces, tabs, etc. Today the newline 
+  (\n) is probably the most common sequence to use, although use of the Prolog 
+  nl/0 predicate removes much of the need for it.</p>
+<p>The escape character is also used to take away the meaning of quotes. For example, 
+  in a quoted atom name, if you want to include a single quote, you can use backslash 
+  quote. So to encode 'isn\'t' and 'isn''t' are both ways of encoding embedded 
+  single quotes in atom names. The same applies to backquotes for strings and 
+  double quotes.</p>
+<p>A new use of escape sequences is encoding Unicode (wide 16-bit) characters 
+  in ASCII text, that is then loaded internally as the correct wide character. 
+  For example: \x21AF\ is a lightning bolt arrow character.</p>
+<p>The special meaning characters that can follow a backslash are as follows:</p>
+
+<DL COMPACT> 
+  <dl>
+    <dt>a </dt>
+    <dd>alert (bell) character </dd>
+    <dt>b </dt>
+    <dd>backspace </dd>
+    <dt>f </dt>
+    <dd>formfeed </dd>
+    <dt>n </dt>
+    <dd>newline </dd>
+    <dt>r </dt>
+    <dd>carriage return </dd>
+    <dt>t </dt>
+    <dd>horizontal tab </dd>
+    <dt>v </dt>
+    <dd>vertical tab </dd>
+    <dt>ooo </dt>
+    <dd>up to three octal digits representing a character, requires closing \ 
+      as well.</dd>
+    <dt>xhhhh </dt>
+    <dd>up to four hex digits representing a character, requires closing \ as 
+      well. </dd>
+    <dt>\ </dt>
+    <dd>a single backslash character </dd>
+  </dl>
+</DL>
+
+<P>Any other character following a backslash is just the character.</P>
+<P>Escape sequence processing can be turned off by setting the Prolog flag <a href="pug_runtime.htm#SettableFlags">string_esc</a> 
+  to off.</P>
+
+
+
+<H3><A NAME="WhereEscapeCodesCanbeUsed"></A><FONT COLOR="#000080">Using
+Escape Codes</FONT></H3>
+
+<P><!AMZI_INDEX=  Escape Characters; Escape Codes; read; read_string>When are 
+  backslashes interpreted as escapes? Anytime the Prolog term reader is invoked. 
+  This includes responses to the <B>read/1</B> predicate, query terms entered 
+  at the listener prompt, query terms built using the string functions in the 
+  API, and code in a file that is either interpreted or compiled. The escape causes 
+  the Prolog reader to convert the escape sequence into the correct character(s) 
+  in the input string, atom, or character list.</P>
+
+<P>When are they not considered escapes? Once the string has been read it stays 
+  converted. Some I/O predicates, such as <B>read_string/1</B>, do not use the 
+  Prolog term reader and process backslashes as plain backslashes. </P>
+
+<p>For example:</p>
+<ul><font color="#000080"><pre>
+?- read(X).
+'\x63\\x63\'.
+X = cc
+
+?- read(X).
+`\x63\\x63\`.
+X = `cc`
+
+?- read_string(X).
+\x63\\x63\
+X = `\x63\\x63\` 
+
+?- read_string(X), string_term(X,T).
+'\x63\\x63\'
+X = `'\x63\\x63\'`
+T = cc 
+</pre></font></ul>
+
+
+<H2><A NAME="Strings"></A><FONT COLOR="#0000FF">Strings</FONT></H2>
+
+<P><!AMZI_INDEX=Strings; double_quote_strings; mode>A string is an alternate way 
+  of representing text. Unlike atoms, which are stored in a table and are represented 
+  in terms as integers, strings are represented as the string itself. They are 
+  useful for textual information that is for display purposes only.</P>
+<P>Strings unify on a character-by-character basis with each other, and with atoms.</P>
+<P>A string is denoted by text enclosed in matching backquotes (`). Strings may 
+  also have embedded formatting characters exactly like atoms (as described in 
+  the section on Escape Characters). For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">`This is a long string used for\ndisplay purposes`</FONT></PRE>
+</UL>
+
+<P>To represent the backquote (`) within a string use two backquotes (``).</P>
+<P>Strings are primarily used to represent text which is being used for I/O, and 
+  not unification. For example, a clause representing customers might have the 
+  customer name as an atom, for fast unification, but have the customer's address 
+  information as a string just for output purposes.</P>
+
+<P>Internally all strings are stored as Unicode (wide) character strings.
+This means the full Unicode character set can be used when reading and
+displaying information, and in Prolog source code. </P>
+
+<P>Strings do not occupy space in the atom table and the space they occupy is 
+  automatically collected and reused by the system once the string is no longer 
+  needed. Consequently, strings can be more memory-efficient for large quantities 
+  of textual information. </P>
+
+<P>There are predicates for working with <a href="ref_text.htm#StringProcessing">strings</a>, 
+  converting to and from other types, finding substrings, etc.</P>
+
+<H2><A NAME="Variables"></A><FONT COLOR="#0000FF">Variables</FONT></H2>
+
+<P><!AMZI_INDEX= Terms; Variables; Anonymous Variables; _; upper_case_atoms; scope of variable names>Variables 
+  in Prolog are called 'logical' variables. They are not the same as conventional 
+  program variables, which typically refer to an element in memory of a specific 
+  type. Logical variables are wild cards for pattern matching (unification) and 
+  take on values as the result of unifying with other Prolog terms.</P>
+<P>A variable is represented by a series of letters, numbers and the underscore 
+  character. It must begin either with an uppercase character or the underscore 
+  character (unless the flag <a href="pug_runtime.htm#SettableFlags">upper_case_atoms</a> 
+  is on, in which case variables must begin with an underscore). The following 
+  are valid variable names: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">Var             Var_2
+_var_3          X
+Leona           Ivan             </FONT></PRE>
+</UL>
+
+<P>Two Prolog variables with the same name represent the same variable if they 
+  are in the same clause. Otherwise they are different variables (which just happen 
+  to have the same name). That is, the scope of a variable name is the clause 
+  in which it appears.</P>
+<P>A special case is the <b>anonymous</b> variable. It is represented as a single 
+  underscore (_) and is used in situations where the value the variable might 
+  take is of no interest. Typically it is a placeholder in structure arguments, 
+  for arguments of no interest.</P>
+<P>For example, a query looking for a customer's phone number, in a clause that 
+  has lots of other information, might look like this:</P>
+<ul>
+  <font color="#000080">
+  <pre>
+?- customer('Leona', _, _, _, PHONE, _, _).
+PHONE = 333-3333
+</pre>
+  </font>
+</ul>
+
+
+<h2><a name="Numbers"></a><font color="#0000ff">Numbers</font></h2>
+<!AMZI_INDEX= Numbers>
+<p>The ISO standard recognizes two types of numbers: integers and, for decimal 
+  numbers, floats.</p>
+<H3><A NAME="Integers"></A>
+<FONT COLOR="#000080">Integers</FONT></H3>
+<!AMZI_INDEX= Integers>
+<p>Amzi! supports integers according to the ISO standard. Amzi! integers are 32 
+  bits on 32-bit operating systems.</p>
+<p>Integers can optionally be entered using hexadecimal, octal, binary or character 
+  code notation. To do this, precede the number with 0x, 0o, 0b or 0'. They are 
+  interpreted as 32-bit unsigned integers which then map into the 32-bit signed 
+  internal integer representation. (It is an error to try to express a number 
+  larger than 32 bits using 0x, 0o, or 0b formats.) For example:</p>
+<ul>
+  <font color="#000080">
+  <pre>
+?- X = 16.
+X = 16 
+
+?- X = 0o7777.
+X = 4095 
+
+?- X = 0b111111.
+X = 63 
+
+?- X = 0'a.
+X = 97 
+
+?- X = 0xff.
+X = 255 
+
+?- X = 0xabcdef.
+X = 11259375 
+
+?- X = 0b1001.
+X = 9 
+
+% the following show 32-bit integer limits
+
+?- X = 0xffffffff.
+X = -1 
+
+?- X = 0x80000000.
+X = -2147483648 
+
+?- X = 0x7fffffff.
+X = 2147483647 </pre>
+  </font>
+</ul>
+<p>Integers expressed in decimal notation, if larger than an internal integer, will be promoted to the appropriate decimal type.  For example:</p>
+<p>For example:</p>
+<ul><font color="#000080"><pre>
+?- X = 200000000000000000000000000000.
+X = 2.000000e+029 
+yes
+</pre></font></ul>
+<H3><A NAME="NegativeNumbers"></A>
+<FONT COLOR="#000080">Negative Numbers</FONT></H3>
+<!AMZI_INDEX = Negative Numbers>
+
+<p>Negative numbers are entered with a preceding minus (-) sign. Care must be 
+  taken to ensure that there is no space between the minus and the number for 
+  single numbers. This is because the minus (-) is an operator, and (-) something 
+  can ambiguously be interpreted as a structure.</p>
+<p>This ambiguity is not a problem when minus (-) is used as an operator with two arguments. For example:</p>
+<ul><font color="#000080"><pre>
+?- display(-3).
+-3
+
+?- display(- 3).
+-(3)
+
+?- display(2 - 3).
+-(2,3)
+
+?- display(2 -3).
+-(2,3)
+yes</pre></font></ul>
+<H3><A NAME="DecimalNumbers"></A>
+<FONT COLOR="#000080">Decimal Numbers</FONT></H3>
+<!AMZI_INDEX = decimal numbers; numbers; real numbers; floating point numbers; numbers, real; numbers, floating point;
+  numbers, default; precision, infinite; precision, single; precision, double; single precision;
+  double precision; pi calculations; inf>
+
+<p>For decimal numbers, such as 3.3, Amzi! supports three options, including ISO 
+  standard floats: 
+<p>
+<ul>
+  <li>single precision floating point numbers</li>
+  <li>double precision floating point numbers</li>
+  <li>infinite precision real numbers</li>
+</ul>
+<p>Real numbers allow for any number of digits on either side of the decimal places. 
+  They are ideal, and very efficient, for most common and business applications, 
+  as well as being perfect for excursions into the realms of large prime numbers, 
+  calculating the digits of pi, and other mathematical games.</p>
+<p>Floating point numbers adhere to the ISO standard, and are best suited for 
+  scientific applications. Amzi! offers both single precision and double precision 
+  floating point numbers. Single precision numbers are more efficient for applications 
+  with lots of calculations, but double precision numbers carry more digits of 
+  precision.</p>
+<p>An explicit exponent indicator, <b>r</b> for reals, <b>e</b> for floats, can 
+  be used to force a number as either real or float. For example:</p>
+<p>For example:</p>
+<ul><font color="#000080"><pre>
+?- X = 112233445566778899.998877665544332211e.
+X = 1.122334e+017 
+
+?- X = 112233445566778899.998877665544332211r.
+X = 112233445566778899.998877665544332211r 
+yes</pre></font></ul>
+<p>Floating point numbers are stored as single or double precision based on the 
+  setting of the <a href="pug_runtime.htm#Flags">Prolog flag</a> <b>floats</b>, 
+  which can be set as a <a href="pug_runtime.htm#ConfigurationFiles">configuration 
+  parameter</a> as well. The choices are <b>single</b> or <b>double</b>.
+<p>The built-in atom <b>inf</b> can be used in mathematical expressions to represent 
+  a floating point number larger than the largest possible representation.
+<p>
+<p>When the system encounters a decimal number without an explicit exponent indicator,
+  it stores the number as real or float based on the
+  setting of the <a href="pug_runtime.htm#Flags">Prolog flag</a> <b>decimals</b>,
+  which can be set as a <a href="pug_runtime.htm#ConfigurationFiles">configuration
+  parameter</a> as well. The choices are <b>real</b> or <b>float</b>.<p>
+<p>The flags <b>decimals</b> and <b>floats</b> also determine how results are 
+  stored in mixed mode mathematical expressions. For details see the section on 
+  <a href="ref_math.htm#NumberTypes">numeric types</a> in math.</p>
+
+
+
+
+
+
+
+<H2><A NAME="Structures"></A><FONT COLOR="#0000FF">Structures</FONT></H2>
+
+<P><!AMZI_INDEX= Structures>Structures are the fundamental data types of
+Prolog. A structure is determined by its name (sometimes called the <I>principal
+functor</I>) and its arguments. The functor is an atom and the arguments
+may be any Prolog terms, including other structures. A structure is written
+as follows: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">name(arg1, arg2, ... , argn)</FONT></PRE>
+</UL>
+
+<P>There must be no space between the name and the opening parenthesis
+&quot;(&quot;. The number of arguments in a structure is called the <I>arity</I>.
+</P>
+
+<P>An atom is really a degenerate structure of arity 0. </P>
+
+<P>The maximum arity of a structure is 4095. </P>
+
+<P>Structures are used to represent data. Following are some examples of a structure 
+  whose functor is 'likes' and whose arity is 2. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">likes(ella, biscuits)
+likes(zeke, biscuits)
+likes(Everyone, pizza)</FONT></PRE>
+</UL>
+
+<P>Here are some more complex nested structures. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">file(foo, date(1993, 6, 15), size(43898))
+tree(pam, left( tree( doyle, left(L2), right(R2) ) ), right(R1))
+sentence( nounphrase( det( the ), noun( dog )), verbphrase( verb( sleeps )) )</FONT></PRE>
+</UL>
+
+<P>Structures are also the heads of Prolog clauses, and the goals of the
+bodies of those clauses. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">friends(X, Y) :- likes(X, Something), likes(Y, Something).</FONT></PRE>
+</UL>
+
+<P>All Prolog really does is match up structures with each other. </P>
+
+<H2><A NAME="Lists"></A><FONT COLOR="#0000FF">Lists</FONT></H2>
+
+<P><!AMZI_INDEX= Lists; |; []; empty list>Lists<B> </B>are used to represent ordered 
+  collections of Prolog terms. Lists are indicated by squared brackets '[' and 
+  ']'. </P>
+
+<P>A list with a known number of elements can be written down, separated by commas 
+  within the brackets. The elements can be arbitrary Prolog terms, including other 
+  lists, e.g.: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">[1, 2, 3]
+[alpha, 4]
+[ f(1), [2, a], X]</FONT></PRE>
+</UL>
+
+<P>Here the first list has three elements, the numbers <B>1</B>, <B>2</B> and 
+  <B>3</B>. The second list has two elements. The third list also has three elements. 
+  The first is a structure of arity 1, the second a sub-list with two elements, 
+  and the third element is a variable called <B>X</B>. </P>
+
+<P>Logically, a list can be considered to have two elements:</P>
+<ul>
+  <li>HEAD - the first element of the list</li>
+  <li>TAIL - a list of the remaining elements in the list</li>
+</ul>
+<p>This way of viewing a list is very useful for recursive predicates that analyze 
+  lists. At each level of recursion, the HEAD can be used, and the TAIL passed 
+  down to the next level of recursion. It is important to remember that the TAIL 
+  is always another list.</p>
+<p>This pattern is represented with a vertical bar: [HEAD | TAIL].</p>
+<p>We can unify this pattern with a list to see how it works:</p>
+<ul><font color="#000080"><pre>
+?- [HEAD|TAIL] = [a,b,c,d].
+HEAD = a
+TAIL = [b, c, d] 
+</pre></font></ul>
+
+<P>More than one element in the HEAD can be specified:</P>
+<ul><font color="#000080"><pre>
+?- [FIRST, SECOND|TAIL] = [a,b,c,d].
+FIRST = a
+SECOND = b
+TAIL = [c, d] 
+</pre></font></ul>
+<P>An empty list is represented by empty square brackets, []. It is important 
+  to note that [] is NOT a list, but an atom. However, it is what is used for 
+  the TAIL when there is no tail.</P>
+<ul><font color="#000080"><pre>
+?- [W, X, Y, Z|TAIL] = [a,b,c,d].
+W = a
+X = b
+Y = c
+Z = d
+TAIL = [] 
+</pre></font></ul>
+
+<P>[] is then a useful element for recognizing that a recursive list predicate 
+  has reached the end of the list. For example, consider the following predicate 
+  that writes each element of a list on a new line:</P>
+<ul>
+  <font color="#000080"> 
+  <pre>
+write_list([]).   % empty list, end.
+write_list([A|Z]) :-
+   write(A),   % write the head
+   nl,
+   write_list(Z).  % recurse with the tail
+</pre>
+  </font> 
+</ul>
+
+<P>Using it: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- write_list([apple, pear, plum, cherry]).
+apple
+pear
+plum
+cherry
+
+yes</FONT></PRE>
+</UL>
+
+<P>While lists are stored more efficiently than structures, you can think of a 
+  list as a nested structure of arity two. The first argument is the head, the 
+  second argument is the same structure representing the rest of the list. The 
+  special atom, [], indicates the end of the nesting. This nature of lists can 
+  be seen using the display/1 predicate, where a dot (.) is used as the functor 
+  of the structure.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- display( [a, b, c] ).
+.(a, .(b, .(c, [])))</FONT></PRE>
+</UL>
+
+<P>While the normal list notation is easier to read and write, sometimes it is 
+  useful to think of the structure notation of lists when trying to understand 
+  predicates that manipulate lists. </P>
+
+<H2><A NAME="CharacterLists"></A><FONT COLOR="#0000FF">Character Lists</FONT></H2>
+
+<P><!AMZI_INDEX=  Character Lists; member>Lists whose elements are character codes 
+  are often used in Prolog, especially in parsing applications. Prolog recognizes 
+  a special syntax to make this use more convenient. </P>
+
+<P>A string of characters enclosed in double quotes (&quot;)<B> </B>is converted 
+  into a list of character codes. Use two double quotes(&quot;&quot;) to indicate 
+  an embedded double quote character. The following examples (using member/2 from 
+  the list library) illustrate its use, and also show <a href="ref_text.htm">predicates 
+  for converting</a> between character lists and atoms and strings:</P>
+<p>For example:</p>
+<ul><font color="#000080"><pre>
+?- X = "abc".
+X = [0w0061, 0w0062, 0w0063] 
+yes
+
+?- member(0'b, "abc").
+yes
+
+?- atom_codes(abc, X).
+X = [0w0061, 0w0062, 0w0063] 
+yes
+
+?- atom_codes(A, "abc").
+A = abc 
+yes
+
+?- string_list(S, "abc").
+S = `abc` 
+yes
+
+?- string_list(`abc`, L).
+L = [0w0061, 0w0062, 0w0063] 
+yes
+
+?- [0'a, 0'b, 0'c] = "abc".
+yes
+
+?- member(0'b, "abc").
+yes
+
+?- member(0x62, "abc").
+yes
+
+?- member(98, "abc").
+yes
+</pre></font></ul>
+
+
+
+<H3><A NAME="CharacterConstants"></A><FONT COLOR="#000080">Character Constants</FONT></H3>
+
+<P><!AMZI_INDEX = Constants; Unicode>Because Unicode characters are unsigned ints 
+  and are often referred to by their hexadecimal value, character constants are 
+  represented by the a two byte hexadecimal code, using 0w to indicate a wide 
+  character.</P>
+
+<P>atom_codes/2, string_list/2 and the single character code notation (0'c) all 
+  use the character constants. For example:</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- atom_codes(duck, X).
+X = [0w0064,0w0075,0w0063,0w006b] 
+yes
+
+?- atom_codes(X, [0w64, 0w75, 0w63, 0w6b]).
+X = duck 
+yes </FONT></PRE>
+</UL>
+
+<P>To create an atom with Japanese characters:</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- atom_codes(X, [0wf900, 0wf901, 0wf902]).</FONT></PRE>
+</UL>
+
+<P>Character constants can be used in arithmetic and will unify with integers.</P>
+
+
+<H2><A NAME="Comments"></A><FONT COLOR="#0000FF">Comments</FONT></H2>
+
+<P><!AMZI_INDEX=  Comments; %; /* */>Comments may appear anywhere in the
+source code. They are preceded by a % sign. All text following the percent
+up to the end of the line is considered part of the comment. </P>
+
+<P>Also, although it is non-standard, Amzi! Prolog allows multi-line comments
+encased in C-style delimiters, /* and */. </P>
+
+<H2><A NAME="Operators"></A><FONT COLOR="#0000FF">Operators</FONT></H2>
+
+<!AMZI_INDEX=  Operators>
+<P>Operators provide a way of specifying an alternate input/output syntax for 
+  structures with one or two arguments. For example, they allow:</P>
+<ul><font color="#000080"><pre>
+likes(leona, water)
+swims(leona)
+</pre></font></ul>
+<p>to be written and read as</p>
+<ul><font color="#000080"><pre>
+leona likes water
+leona swims
+</pre></font></ul>
+
+
+<P>There are a number of predefined operators in Prolog, such as: <B>+, /</B>, 
+  <B>*</B>, <B>-</B>. This is what makes it possible to write 3 + 4 rather than +(3,4). </P>
+
+<P>In order to do this we have to inform Prolog via an operator declaration
+that a certain name may optionally be used before, after, or in between
+its arguments; we speak of <B>name</B> as being an <I>operator</I>. Even
+if <B>name</B> is declared to be an operator, it can still be used in the
+usual structure notation. </P>
+
+<P>We emphasize that declaring operators only serves to alter the way structures 
+  may look on input or output. Once inside the Prolog system, all structures are 
+  kept in the same internal form. </P>
+
+<P>If an operator is declared to be used between its two arguments, we
+say it is an <I>infix</I> operator. If it is to be used before its single
+argument then it is a <I>prefix</I> operator; if it is to be used after
+its argument it is a <I>postfix</I> operator. Operators may be declared
+to be both infix and either pre- or post- fix, in this case they are called
+<I>mixed</I> operators. </P>
+
+<P>Just declaring the &quot;fix&quot; of an operator is not enough however
+since this can lead to ambiguities. For example suppose that <B>+</B> and
+<B>-</B> have been declared to be infix operators. Consider: </P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">a + b - c</FONT></PRE>
+</blockquote>
+<P>What is the second argument of <B>+</B>? It might be <B>b</B>, in which
+case the term is </P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">'-'( '+'(a, b), c)</FONT></PRE>
+</blockquote>
+<P>or it might be the whole term <B>b - c</B>, in which case the term is
+</P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">'+'(a, '-'(b, c))</FONT></PRE>
+</blockquote>
+<P>These are very different terms so which should Prolog choose? </P>
+
+<P>One way to force an interpretation is to use parentheses. So if we wanted
+the first interpretation we would write: </P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">(a + b) - c</FONT></PRE>
+</blockquote>
+<P>If we wanted the second we should use: </P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">a + (b - c)</FONT></PRE>
+</blockquote>
+<P>exactly as in high school algebra. However we still wish to agree on
+a consistent interpretation in the absence of overriding parentheses. </P>
+
+<P>Prolog solves this problem by requiring two extra pieces of information
+about each operator at the time of its declaration: precedence and associativity.
+</P>
+
+<H3><A NAME="Precedence"></A><FONT COLOR="#000080">Precedence</FONT></H3>
+
+<P><!AMZI_INDEX=Precedence; Operators>The first piece of information required
+for each operator (whether pre, in or post -fix) is a number between 1
+and 1200 called the <I>precedence</I><B> </B>of the operator. </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>When combining
+different operators together, the principal functor of a term represented
+by a series of operators is the operator with highest precedence.</I> </P>
+
+<P>For example, suppose <B>+</B> is defined to have precedence 500 and
+<B>*</B> is defined to have precedence 400. Consider: </P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">a + b * c</FONT></PRE>
+</blockquote>
+<P>We start reading from the left. <B>+</B> has higher precedence, so it
+must be the principal functor of the constructed term. Therefore the term
+must be: </P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">'+'(a, '*'(b, c))</FONT></PRE>
+</blockquote>
+<P>This corresponds naturally to the high school algebra rule &quot;do
+multiplications first&quot;. </P>
+
+<H3><A NAME="Associativity"></A><FONT COLOR="#000080">Associativity</FONT></H3>
+
+<P><!AMZI_INDEX=  Operators; Associativity; Infix; Prefix; Postfix>The
+other piece of information required is the operator's <I>associativity</I>.
+Not only does this specify the &quot;fix&quot; of the operator but it also
+handles the ambiguity remaining in operator usagenamely how to handle consecutive
+operators of the same precedence. </P>
+
+<P>The associativity of an operator can be one of the following atoms:
+</P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">xfx             yfx             fx              xf
+xfy             yfy             fy              yf</FONT></PRE>
+</blockquote>
+<P>where <B>x</B> and <B>y</B> stand for the arguments and <B>f</B> stands
+for the operator. Thus: </P>
+
+<DL>
+<DT><B>?f?</B> </DT>
+
+<DD>is an infix operator </DD>
+
+<DT><B>?f</B> </DT>
+
+<DD>is a postfix operator </DD>
+
+<DT><B>f?</B> </DT>
+
+<DD>is a prefix operator </DD>
+</DL>
+
+<P>The meaning of <B>x </B>versus <B>y</B> is a little more subtle. <B>x</B>
+means that the precedence of the argument (i.e., the precedence of the
+principal functor of the argument) must be less than the precedence of
+<B>f</B>. <B>y</B> means that the precedence of the corresponding argument
+may be less than or equal to the precedence of <B>f</B>. </P>
+
+<H3><A NAME="opPrecedenceTypeOper"></A><FONT COLOR="#000080">op(Precedence,
+Associativity, Operator)</FONT></H3>
+
+<P><!AMZI_INDEX=  op/3><B>op/3 </B>is used to define an operator's Precedence, 
+  and Associativity. Precedence must be bound to an integer between 0 and 1200. 
+  Associativity must be bound to one of the atoms fx, fy, xf, yf, xfx, xfy, yfx 
+  and Operator to either the atom which is to be made an operator or a list of 
+  such atoms (in which case all the atoms are given the same specified associativity/precedence). 
+</P>
+
+<P>For example: </P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">?- op(500, yfx, +).</FONT></PRE>
+</blockquote>
+<PRE>so now: </PRE>
+<blockquote>
+  <PRE><FONT COLOR="#000080">a + b + c</FONT></PRE>
+</blockquote>
+<P>must be the same as: </P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">(a + b) + c </FONT></PRE>
+</blockquote>
+<P>Operators can have at most one infix declaration and one declaration
+of either pre- or post-fix in force at any time. Subsequent operator declarations
+supersede earlier ones. For example: </P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">?- op(500, xfy, +).     % + is an infix operator
+?- op(1200, fx, +).     % + is now both infix and <I>pre</I>fix.
+?- op(1200, xf, +).     % .. but is now infix and<I> post</I>fix</FONT></PRE>
+</blockquote>
+<P>The final argument in <B>op</B> may be either a single atom or a list
+of atoms. In the latter case all the atoms are given the same specified
+associativity and precedence. </P>
+
+<H3><A NAME="currentOp3"></A><FONT COLOR="#000080">current_op(Precedence,
+Associativity, Operator)</FONT></H3>
+<!AMZI_INDEX = current_op/3>
+<p>current_op/3 unifies its arguments with the current operator definitions in the system.  On backtracking it returns all the operator definitions that unify with the arguments.</p>
+
+<H3><A NAME="PredefinedPrologOperators"></A><FONT COLOR="#000080">Predefined
+Prolog Operators</FONT></H3>
+
+<P><!AMZI_INDEX=   Operators; op>The following Prolog operators are declared at 
+  initialization time. They can be subsequently redefined by using the <B>op</B> 
+  predicate (but it's not a good idea because they are used by the Prolog system).</P>
+
+<blockquote>
+  <PRE><FONT COLOR="#000080">:- (op(1200, xfx, [:-, -->])).
+:- (op(1200, fx, [?-, :-])).
+:- (op(1100, fx, [import, export, dynamic, multifile, discontiguous, sorted,
+                 indexed])).
+:- (op(1100, xfy, ';')).
+:- (op(1050, xfy, ->)).
+:- (op(1000, xfy, ',')).
+:- (op(900, fy, [\+, not, once])).
+:- (op(900, fy, [?, bug])).
+:- (op(700, xfx, [=, \=, is, =.., ==, \==, =:=, ~=, =\=, <, >, =<, >=, @<,
+                 @>, @=<, @>=])).
+:- (op(600, xfy, :)).
+:- (op(500, yfx, [+, -, /\, \/, xor])).       % moved \ here from 900 fy
+:- (op(400, yfx, [rem, mod, divs, mods, divu, modu])). % new ones and mod
+:- (op(400, yfx, [/, //, *, >>, <<])).
+:- (op(200, xfx, **)).
+:- (op(200, xfy, ^)).
+:- (op(200, fy, [+, -, \])).
+</FONT></PRE>
+</blockquote>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P>&nbsp;</P>
+
+</BODY>
+</HTML>

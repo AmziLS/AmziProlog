@@ -1,0 +1,70 @@
+The cube solver generates a sequence of simple moves which will
+solve any given cube (if solvable).  The method and notation is
+based on "Unscrambling the Cube" by Black & Taylor.
+
+Finding a solution to the cube is a typical Artificial
+Intelligence problem. The problem can be defined as state
+transformations, but the search space to get from a
+given state to the goal state is too large to be done on even the
+biggest machines.  In order to limit the search the
+problem is broken into smaller problems, and heuristics (rules of
+thumb) are used along the way to further control the search.
+
+As is typical of many AI programs, the cube solver offers no
+insight into learning, but is rather the encoding of the
+knowledge required to solve Rubik's cube.
+
+The cube is solved piece by piece.  This brings the problem to a
+manageable size.  Each piece is put in its place, and frozen in
+place.  This continues until the entire cube is solved.  The
+"Target:" field of the "solve" display shows the current piece
+that is being worked on.
+
+The solution is accomplished in six stages.  Each stage groups
+together pieces that share some symmetric relationship.  The
+stages are:
+
+     1 - The four left side edge pieces
+     2 - Three of the four left side corner pieces
+     3 - The four center edge pieces
+     4 - The fourth left side corner piece
+     5 - The four right side edge pieces
+     6 - The four right side corner pieces
+
+Heuristics are used in each stage to limit the search.  For
+example in stage one only three side moves are used in the search
+since the target piece can always be placed using just three
+sides.  In stage 6, five preprogrammed sequences are used for the
+search.
+
+Within each stage symmetry is exploited.  The cube is oriented
+for each piece so the search problem is identical.
+
+Even with this approach, some of the searches take too long to be
+practical on a personal computer.  Further heuristics are needed
+to detect those situations that will cause long searches.  In
+this version there are only two such heuristics, both applied
+during the early stages.  They make sure the target piece (being
+put on the left) starts out on the right side of the cube.
+
+As a result, each of the searches leads to a result after at most
+four levels.  This is a critical design point in the program,
+since the time to search three levels is about the same time
+necessary to apply some of the heuristics.  Therefor, more
+heuristics could further improve the performance, but only up to
+a point.
+
+Due to these manipulations, there might be up to 4 moves or
+sequences listed to place a single piece in position.
+
+     1 - orient the cube (rx moves) to exploit symmetry
+     2 - use heuristics to reposition the piece
+     3 - search for the moves to put it in place
+     4 - return to the original orientation
+
+These moves are broken down into their primitive parts and
+displayed after the shorthand version.  You can check the file,
+rubik.log, to get the log of a session and use it to apply the moves
+to solving an old unscrambled cube you gave up on.  (See the edit
+option for inputing your cube position.)
+

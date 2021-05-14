@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Amzi! Core
+Bundle-SymbolicName: com.amzi.prolog.core;singleton:=true
+Bundle-Version: 4.5.10004
+Bundle-ClassPath: prologcore.jar
+Bundle-Activator: com.amzi.prolog.core.PrologCorePlugin
+Bundle-Vendor: Amzi! inc.
+Bundle-Localization: plugin
+Export-Package: amzi.ls,
+ com.amzi.prolog.core,
+ com.amzi.prolog.core.utils
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Eclipse-LazyStart: true

@@ -1,0 +1,501 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; U) [Netscape]">
+   <TITLE>Delphi Component</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1>
+<A NAME="DelphiComponent"></A><FONT COLOR="#D2AA00">Delphi Component</FONT></H1>
+<!AMZI_INDEX= Delphi Component>The Delphi Logic Server Component provides
+a wrapper on the Logic Server DLL that presents the Logic Server in a manner
+more consistent with Delphi use. It includes:
+<UL>
+<LI>
+A component object that encapsulates a Logic Server Engine,</LI>
+
+<LI>
+Methods that correspond to the Logic Server API functions,</LI>
+
+<LI>
+Automatic mapping from C-strings to Pascal strings,</LI>
+
+<LI>
+Use of Delphi exception handling for API errors, and</LI>
+
+<LI>
+Delphi-like function/procedure interfaces.</LI>
+</UL>
+The sections of this document are:
+<UL>
+  <LI> <A HREF="#InstallingTheDelphiComponent">Installation</A> - How to install 
+    the Logic Server as a Delphi component.</LI>
+  <LI> <A HREF="#HelloPrologFromDelphi">Hello Prolog</A>- Getting the Hello Prolog 
+    application up and running from Delphi.</LI>
+  <LI> <A HREF="#DelphiComponentOverview">Overview</A> - Conceptual overview of 
+    the Delphi version of the Logic Server.</LI>
+  <LI> <A HREF="#UsingTheDelphiComponent">Using the Component</A> - How to use 
+    the Logic Server from Delphi.</LI>
+  <LI> <A HREF="#ImplementingExtendedPredicatesInDelphi">Implementing Extended 
+    Predicates</A> - How to add Prolog extended predicates written in Delphi.</LI>
+  <LI> <A HREF="#DelphiComponentReference">Reference</A> - Full listing of all 
+    of the Delphi Logic Server function calls.</LI>
+</UL>
+
+<H2>
+<A NAME="InstallingTheDelphiComponent"></A><FONT COLOR="#0000FF">Installation</FONT></H2>
+<!AMZI_INDEX=Delphi Component>The Logic Server Component, TLSEngine, is implemented 
+in the Object Pascal unit amzi.pas for 32-bit Delphi. You can use it as an Object 
+Pascal unit by simply including a reference to it in the USES section of your 
+application, or you can install it in the Delphi component library. 
+<P>It is important to follow the directions carefully when installing amzi.pas 
+  as a Delphi component. Delphi must be able to find both amzi.pas and amzi.dll. 
+  The directions assume that you set your environment variable PATH to include 
+  amzi\bin. Replace <i>N</i> in the directions with the version of Delphi you 
+  are using.
+<OL>
+  <LI> Open Delphi.</LI>
+  <LI> Select from the menu 'Component/Install Component…'</LI>
+  <LI> Select the 'Into existing package' tab which will by default install into 
+    the &quot;Borland User Components&quot; package in the file \borland\delphi<i>N</i>\Lib\dclusr.dpk.</LI>
+  <LI>Press the button marked 'Browse' next to the 'Unit file name' box.</LI>
+  <LI> Select \amzi\lsapis\delphi\amzi.pas</LI>
+  <LI>Note the search path should now include amzi\lsapis\delphi.</LI>
+  <LI> Select 'OK' on the Install Component dialog box.</LI>
+  <LI> Select 'Yes' on the 'Package dclusr.dpk will be rebuilt' confirmation box.</LI>
+  <LI> Select 'OK' on the dialog box informing you that TLSEngine has been added 
+    to the package.</LI>
+  <LI> You should now see the Amzi! flying squirrel logo in the Additional components.</LI>
+</OL>
+
+<p><img src="arrowrt.gif" height=18 width=18><i> Note: When embedding Prolog code 
+  in Delphi, make give your XPL file a different name than your Delphi EXE file. 
+  This is necessary so that Amzi! Prolog does not try to use Delphi's CFG file 
+  and vice versa.</i> </p>
+<H2> <A NAME="HelloPrologFromDelphi"></A><FONT COLOR="#0000FF">Hello Prolog</FONT></H2>
+<!AMZI_INDEX=  Hello Prolog>To build the Hello program from Delphi, first install 
+the Logic Server Component as described above. (You can skip this step if you 
+want, see note at end of this section.) 
+<P>You can run the existing sample by opening the project hellop.dpr in the directory 
+  samples\delphi\hello, and running it. To build your own version, start a new 
+  project and save the unit as hello.pas (Hello Delphi Source Code) and the project 
+  as hellop.dpr. Select the Logic Server Component from the Additions page of 
+  the components palette, and place it on the form. Change its name to ls. 
+<P>Select a button and put it on the form. Change its name to Hello. Add
+a click event handler. In the event handler, add the code from the sample
+program and run it.
+
+<P>(If you don't want to install the Logic Server Component, amzi.pas,
+on the component palette, you can still use it. Simply add 'amzi5' to the
+'uses' list for the unit, and define a variable which is an instance of
+the Logic Server. Use the same code as before, but, if the object is not
+a part of your form you must remember to 'create' and 'destroy' the object
+as well.)
+<H2>
+<A NAME="DelphiComponentOverview"></A><FONT COLOR="#0000FF">Overview</FONT></H2>
+<!AMZI_INDEX= Delphi Component>The Amzi! Logic Server Delphi component
+(TLSEngine) is designed to give the Delphi programmer easy access to the
+services provided by the Logic Server DLL.
+
+<P>The Logic Server Component is distributed in source form in the file
+amzi.pas. You can build your own components on top of it, or derive your
+own version from a copy.
+
+<P>When you compare the methods of the component, you'll find they extend,
+and in some cases, modify, the native LSAPI functions. The differences
+are:
+<UL>
+<LI>
+All of the functions are encapsulated as methods in an object of type TComponent.</LI>
+
+<LI>
+Names do not have the initial 'ls', this is reserved for direct DLL calls.</LI>
+
+<LI>
+The methods do not take an engine ID as an argument, that is handled within
+the component.</LI>
+
+<LI>
+Three names are different, CloseLS, InitLS, and LoadXPL, to avoid confusion
+with common method names Close, Init, and Load.</LI>
+
+<LI>
+Many functions, such as LoadXPL, take Pascal strings as arguments rather
+than C strings.</LI>
+
+<LI>
+The methods do not return error codes. Errors are handled within the component
+using Delphi exception handling. If you want to trap specific errors, use
+try-except blocks. (See the sample code.)</LI>
+
+<LI>
+Many functions are now procedures because they don't have to return error
+codes.</LI>
+
+<LI>
+There are numerous new functions that provide an alternate Pascal string
+interface to the native C string interface, such as CallPStr, which does
+a call with a Pascal string.</LI>
+
+<LI>
+There are numerous new functions with types indicated in their names that
+augment the more general dynamic typing and pointer API calls. For example,
+GetArg takes as arguments the target type and a pointer to that type.
+The Delphi component has functions such as GetPStrArg, which simply return
+the value of the string.</LI>
+</UL>
+Philosophically, the component preserves as much of the flavor of the LSAPI
+as possible, and augments it to provide a more Delphi-like interface.
+<H2>
+<A NAME="UsingTheDelphiComponent"></A><FONT COLOR="#0000FF">Using the Component</FONT></H2>
+To include the Logic Server in an application, simply place the Logic Server
+component, from the Additions page of the component palette, on a form.
+Typically it will become part of the main form.
+
+<P>You can also do this manually, by including 'Amzi' in the uses section
+of a unit and creating a variable for the Logic Server, such as LSEng:
+TLSEngine. If you do that, make sure you create and destroy the instance
+of the Logic Server.
+
+<P>To call the Logic Server, simply embed the API calls in the methods
+of your application. You will need to open and close the Logic Server as
+well.
+<H2>
+<A NAME="ImplementingExtendedPredicatesInDelphi"></A><FONT COLOR="#0000FF">Implementing
+Extended Predicates</FONT></H2>
+<!AMZI_INDEX= Extended Predicates>Delphi, like C/C++, Java and VB 5.0 (and later), 
+can be used to implement custom extended predicates to the Prolog language. These 
+custom extensions give the Prolog code the ability to directly access anything 
+Delphi can access. 
+<P>The Delphi functions that implement extended predicates, must be declared
+as returning type TTFi, and as export. They can be added one at a time,
+avoiding pointers to arrays, using the API function AddPred, which adds
+a single predicate at a time.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18><I> Note: Extended predicate
+definitions must always be added after calling InitLS and before calling
+LoadXPL.</I>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18><I> Note: The 32-bit Logic
+Server DLL uses the stdcall calling convention, so that must be specified
+in the extended predicate definitions.</I>
+
+<P>The sample in directory \samples\delphi\deltest includes examples of a number 
+  of Logic Server capabilities, including extended predicate definitions. \samples\delphi\delgui 
+  contains a toolkit of a number of extended predicates that provide various GUI 
+  services to Prolog. 
+<H2>
+<A NAME="DelphiComponentReference"></A><FONT COLOR="#0000FF">Reference</FONT></H2>
+<!AMZI_INDEX=Delphi Component>This section contains the interface portion
+of the unit amzi.pas, which defines the Logic Server Component. You can
+browse the source code for full details.
+<MENU>
+<LI>
+<A HREF="#LogicServerTypes">Logic Server Types</A></LI>
+
+<LI>
+<A HREF="#FunctionsToSetUpLogicServer">Functions to Set Up Logic Server</A></LI>
+
+<LI>
+<A HREF="#FunctionsForExtendedPredicates">Functions for Extended Predicates</A></LI>
+
+<LI>
+<A HREF="#FunctionsForCallingProlog">Functions for Calling Prolog</A></LI>
+
+<LI>
+<A HREF="#FunctionsForLogicbase">Functions for Dynamic Clauses in Logicbase</A></LI>
+
+<LI>
+<A HREF="#FunctionsForStringTermConversion">Functions for String/Term Conversion</A></LI>
+
+<LI>
+<A HREF="#FunctionsForMakingGettingPrologTypes">Functions for Making/Getting
+Prolog Types</A></LI>
+
+<LI>
+<A HREF="#FunctionsForManipulatingStructures">Functions for Manipulating
+Structures</A></LI>
+
+<LI>
+<A HREF="#FunctionsForManipulatingLists">Functions for Manipulating Lists</A></LI>
+
+<LI>
+<A HREF="#FunctionsForPrologStreamIO">Functions for Prolog Stream I/O</A></LI>
+
+<LI>
+<A HREF="#MiscellaneousFunctions">Delphi Miscellaneous Functions</A></LI>
+</MENU>
+
+<H3>
+<A NAME="LogicServerTypes"></A><FONT COLOR="#000080">Logic Server Types</FONT></H3>
+<!AMZI_INDEX= Constants; Types>These are the simple type definitions used
+by the Logic Server. They are mapped to the API types when calling the
+DLL. See \AMZI5\INCLUDE\amzi.pas for details.
+<UL>
+<PRE><FONT COLOR="#000080">const
+&nbsp; lsfalse: integer = 0;
+&nbsp; lstrue:&nbsp; integer = 1;
+type
+&nbsp; ELogicServer = class(Exception);
+&nbsp; { Various types used by the Logic Server API calls }
+&nbsp; TTerm = pointer;&nbsp; { The basic Prolog term }
+&nbsp; { Enumerated Prolog types and enumerated Delphi types, used for mapping
+&nbsp;&nbsp;&nbsp; Prolog types to Delphi types }
+&nbsp; TPType = (pATOM, pINT, pSTR, pFLOAT, pSTRUCT, pLIST, pTERM, pADDR, pVAR);
+&nbsp; TDType = (dATOM, dSTR, dINT, dLONG, dSHORT, dFLOAT, dDOUBLE, dADDR, dTERM);
+&nbsp; TTypeInt = integer; { Generic type for casting types in DLL calls }
+&nbsp; { Enumerated stream identifier, used when redirecting Prolog I/O }
+&nbsp; TPStream = (CUR_IN, CUR_OUT, CUR_ERR, USER_IN, USER_OUT, USER_ERR);
+&nbsp; TPStreamInt = integer; { Generic type for stream identifiers in DLL calls}
+&nbsp; TTFi = integer;&nbsp; { Prolog T/F or error code return code }
+&nbsp; TRC = integer;&nbsp; { Integer return code }
+&nbsp; TArity = Word;&nbsp; { The arity of a functor }
+&nbsp; TEngID = longint;&nbsp; { ID for Engine, only one allowed now }
+&nbsp; TExtPred = function(EngID: TEngID): TTFi;&nbsp; { An extended predicate function }
+&nbsp; TPutC = procedure(c: Integer);
+&nbsp; TPutS = procedure(s: PChar);
+&nbsp; TGetC = function: Integer;
+&nbsp; TUngetC = procedure;
+&nbsp; TPredInit = record
+&nbsp;&nbsp;&nbsp; Pname: PChar;
+&nbsp;&nbsp;&nbsp; Parity: TArity;
+&nbsp;&nbsp;&nbsp; Pfunc: TExtPred;
+&nbsp; end;
+&nbsp; TPredInitPtr = ^TPredInit;</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="FunctionsToSetUpLogicServer"></A><FONT COLOR="#000080">Logic Server
+Set-Up</FONT></H3>
+<!AMZI_INDEX= Logic Server Set-Up; Init; InitLSX; AddLSX; AddPred; InitPreds; Load; Main; Reset; Close>These
+functions provide the basic API services. They are used to initialize and
+close down the Prolog environment. The function, Main, runs the main/0
+predicate of a load Prolog file.
+
+<P>InitLS, LoadXPL and CloseLS are preferred forms for Delphi to avoid
+name conflicts with other components with similar names.
+<UL>
+<PRE><FONT COLOR="#000080">procedure Init(.xplname: String);
+procedure InitLS(.xplname: String);
+procedure InitLSXP(p: pointer);
+procedure InitLSX;
+procedure AddLSX(lsxname: String);
+procedure AddPred(pname: String; parity: TArity; pfunc: TExtPred);
+procedure InitPreds(PIptr: TPredInitPtr);
+procedure Load(.xplname: String);
+procedure LoadXPL(.xplname: String);
+function Main: Boolean;
+procedure Reset;
+procedure CloseLS;</FONT></PRE>
+</UL>
+They are based on the API functions Init, InitLSX, AddLSX, AddPred,
+InitPreds, Load, Main, Reset, and Close.
+<H3>
+<A NAME="FunctionsForExtendedPredicates"></A><FONT COLOR="#000080">Extended
+Predicates</FONT></H3>
+<!AMZI_INDEX= Extended Predicates; GetParm; UnifyParm>When you write
+an extended predicate, you can directly manipulate the Prolog parameters
+to that function. These predicates provide that service. The Get family
+retrieves the nth parameter that was used in the call, and the Unify family
+unifies some computed result with the nth parameter.
+
+<P>The Delphi interface contains a number of type-specific additions to
+the basic API. Functions such as GetLongParm and UnifyPStrParm are examples.
+<UL>
+<PRE><FONT COLOR="#000080">procedure GetParm(n: integer; dt: TDType; p: pointer);
+function GetPStrParm(n: integer): string;
+function GetIntParm(n: integer): integer;
+function GetLongParm(n: integer): longint;
+function GetShortParm(n: integer): longint; {32-bit only}
+function GetFloatParm(n: integer): double;
+function GetParmType(n: integer): TPType;
+function StrParmLen(n: integer): integer;
+function UnifyParm(n: integer; dt: TDType; p: pointer): Boolean;
+function UnifyPStrParm(n: integer; s: string): Boolean;
+function UnifyAtomParm(n: integer; s: string): Boolean;
+function UnifyIntParm(n: integer; i: integer): Boolean;
+function UnifyLongParm(n: integer; i: longint): Boolean;
+function UnifyShortParm(n: integer; i: integer): Boolean; {32-bit only}
+function UnifyFloatParm(n: integer; f: double): Boolean;</FONT></PRE>
+</UL>
+These functions are based on the API functions GetParm, GetParmType,
+UnifyParm, and StrParmLen.
+<H3>
+<A NAME="FunctionsForCallingProlog"></A><FONT COLOR="#000080">Calling Prolog</FONT></H3>
+<!AMZI_INDEX=Calling Prolog; Exec; ExecStr; Call; CallStr; Redo; ClearCall>These
+are the functions that actually call predicates in a Prolog logicbase/program.
+The query term can be represented as a string or a Prolog term. The first
+argument, a term, is always unified with the result of the call. The Redo
+function initiates backtracking, which reunifies the term with the next
+result.
+
+<P>ClearCall is only useful if you start a Redo loop and don't finish.
+It clears the stack.
+
+<P>The 'PStr' versions of the function calls use Pascal strings.
+<UL>
+<PRE><FONT COLOR="#000080">function Exec(var tp: TTerm): Boolean;
+function ExecStr(var tp: TTerm; s: PChar): Boolean;
+function ExecPStr(var tp: TTerm; s: string): Boolean;
+function Call(var tp: TTerm): Boolean;
+function CallStr(var tp: TTerm; s: PChar): Boolean;
+function CallPStr(var tp: TTerm; s: string): Boolean;
+function Redo: Boolean;
+procedure ClearCall;</FONT></PRE>
+</UL>
+These functions are based on the API functions Exec, ExecStr, Call,
+CallStr, Redo, and ClearCall.
+<H3>
+<A NAME="FunctionsForLogicbase"></A><FONT COLOR="#000080">Dynamic Clauses in Logicbase</FONT></H3>
+<!AMZI_INDEX=  Logicbase; Asserta; Assertz; Retract; AssertaStr; AssertzStr; RetractStr>These
+functions make it easy to assert and retract dynamic clauses to and from Prolog's
+logicbase. The 'Pstr' versions use Pascal strings.
+<UL>
+<PRE><FONT COLOR="#000080">procedure Asserta(t: TTerm);
+procedure Assertz(t: TTerm);
+procedure Retract(t: TTerm);
+procedure AssertaStr(s: PChar);
+procedure AssertzStr(s: PChar);
+procedure RetractStr(s: PChar);
+procedure AssertaPStr(s: string);
+procedure AssertzPStr(s: string);
+procedure RetractPStr(s: string);</FONT></PRE>
+</UL>
+These functions are based on the API functions Asserta, AssertaStr,
+Assertz, AssertzStr, and Retract.
+<H3>
+<A NAME="FunctionsForStringTermConversion"></A><FONT COLOR="#000080">Converting
+Strings/Terms</FONT></H3>
+<!AMZI_INDEX= Strings; Terms; Converting; TermToStr; TermToStrQ; StrToTerm>These
+functions convert strings to terms and terms to strings. The 'PStr' versions
+use Pascal strings. The 'Q' versions create quoted strings, when necessary
+for atoms and strings that require delimiter symbols. The 'Q' versions
+are necessary for those cases where you want to use the resulting string
+in another query.
+<UL>
+<PRE><FONT COLOR="#000080">procedure TermToStr(t: TTerm; s: PChar; n: integer);
+procedure TermToStrQ(t: TTerm; s: PChar; n: integer);
+procedure StrToTerm(var tp: TTerm; s: PChar);
+function TermToPStr(t: TTerm): string;
+function TermToPStrQ(t: TTerm): string;
+procedure PStrToTerm(var tp: TTerm; s: string);</FONT></PRE>
+</UL>
+These functions are based on the API functions TermToStr, TermToStrQ,
+and StrToTerm.
+<H3>
+<A NAME="FunctionsForMakingGettingPrologTypes"></A><FONT COLOR="#000080">Making/Getting
+Prolog Types</FONT></H3>
+<!AMZI_INDEX= Prolog Types; Types; MakeAtom; MakeStr; MakeInt; MakeFloat; MakeAddr; GetTermType; GetTerm>These
+functions map Prolog types to Delphi types. The type-specific Get functions
+are Delphi additions.
+<UL>
+<PRE><FONT COLOR="#000080">procedure MakeAtom(var tp: TTerm; s: string);
+procedure MakeStr(var tp: TTerm; s: PChar);
+procedure MakePStr(var tp: TTerm; s: string);
+procedure MakeInt(var tp: TTerm; i: longint);
+procedure MakeFloat(var tp: TTerm; f: double);
+procedure MakeAddr(var tp: TTerm; p: pointer);
+function GetTermType(t: TTerm): TPType;
+procedure GetTerm(t: TTerm; dt: TDType; p: pointer);
+function GetPStrTerm(t: TTerm): string;
+function GetIntTerm(t: TTerm): integer;
+function GetLongTerm(t: TTerm): longint;
+function GetShortTerm(t: TTerm): longint; {32-bit only}
+function GetFloatTerm(t: TTerm): double;</FONT></PRE>
+</UL>
+These functions are based on the API functions MakeAtom, MakeStr, MakeInt,
+MakeFloat, MakeAddr, GetTermType, and GetTerm.
+<H3>
+<A NAME="FunctionsForManipulatingStructures"></A><FONT COLOR="#000080">Manipulating
+Structures</FONT></H3>
+<!AMZI_INDEX= Structures; GetFA; GetFunctor; GetArity; MakeFA; UnifyArg; GetArg; Unify; GetArgType; StrArgLen>These
+Prolog structure-manipulating functions let you create structures, and
+take apart terms that represent structures. This is especially useful for
+getting at various arguments in a query. In the sample code, there is a
+query 'sibling(mary, X)'. The GetPStrArg function can be used to get the
+second argument of this structure, after a CallPStr has caused the variable
+to be bound. (See sample code.)
+<UL>
+<PRE><FONT COLOR="#000080">procedure GetFA(t: TTerm; var s: string; var ap: TArity);
+function GetFunctor(t: TTerm): string;
+function GetArity(t: TTerm): integer;
+procedure MakeFA(var tp: TTerm; s: string; a: TArity);
+function UnifyArg(var tp: TTerm; n: integer; dt: TDType; p: pointer): Boolean;
+function UnifyPStrArg(var tp: TTerm; n: integer; s: string): Boolean;
+function UnifyAtomArg(var tp: TTerm; n: integer; s: string): Boolean;
+function UnifyIntArg(var tp: TTerm; n: integer; i: integer): Boolean;
+function UnifyLongArg(var tp: TTerm; n: integer; i: longint): Boolean;
+function UnifyShortArg(var tp: TTerm; n: integer; i: longint): Boolean; {32-bit only}
+function UnifyFloatArg(var tp: TTerm; n: integer; f: double): Boolean;
+procedure GetArg(t: TTerm; n: integer; dt: TDType; p: pointer);
+function GetPStrArg(t: TTerm; n: integer): string;
+function GetIntArg(t: TTerm; n: integer): integer;
+function GetLongArg(t: TTerm; n: integer): longint;
+function GetShortArg(t: TTerm; n: integer): longint; {32-bit only}
+function GetFloatArg(t: TTerm; n: integer): double;
+function GetArgType(t: TTerm; n: integer): TPType;
+function StrArgLen(t: TTerm; i: integer): integer;
+function Unify(t1: TTerm; t2: TTerm): Boolean;</FONT></PRE>
+</UL>
+These functions are based on the API functions GetFA, MakeFA, UnifyArg,
+GetArg, GetArgType, StrArgLen, and Unify.
+<H3>
+<A NAME="FunctionsForManipulatingLists"></A><FONT COLOR="#000080">Manipulating
+Lists</FONT></H3>
+<!AMZI_INDEX=  Lists; MakeList; PushList; PopList>These list manipulation
+functions let you create Prolog lists, add items to lists, and retrieve
+items from lists. The PopList family of functions can be used in loops
+to get all the items in a list. Note that, because PopList doesn't invoke
+the Prolog engine or unification, it does not return a Boolean. It returns
+a normal function return code, in which 0 means success and anything else
+indicates the end of the list has been reached. (See sample code.)
+<UL>
+<PRE><FONT COLOR="#000080">procedure MakeList(var tp: TTerm);
+procedure PushList(var tp: TTerm; t: TTerm);
+function PopList(var tp: TTerm; dt: TDType; p: pointer): TRC;
+function PopPStrList(var tp: TTerm; var s: string): TRC;
+function PopIntList(var tp: TTerm; var i: integer): TRC;
+function PopLongList(var tp: TTerm; var i: longint): TRC;
+function PopShortList(var tp: TTerm; var i: longint): TRC; {32-bit only}
+function PopFloatList(var tp: TTerm; var f: double): TRC;</FONT></PRE>
+</UL>
+These functions are based on the API functions MakeList, PushList,
+and PopList.
+<H3>
+<A NAME="FunctionsForPrologStreamIO"></A><FONT COLOR="#000080">Prolog Stream
+I/O</FONT></H3>
+<!AMZI_INDEX= Stream I/O; SetStream; GetStream; SetInput; SetOutput>These
+functions let you capture and redirect Prolog I/O.
+<UL>
+<PRE><FONT COLOR="#000080">procedure SetStream(st: TPStream; i: integer);
+function GetStream(st: TPStream): integer;
+procedure SetInput(pfunc1: TGetC; pfunc2: TUngetC);
+procedure SetOutput(pfunc1: TPutC; pfunc2: TPutS);</FONT></PRE>
+</UL>
+These functions are based on the API functions SetStream, GetStream,
+SetInput, and SetOutput.
+<H3>
+<A NAME="MiscellaneousFunctions"></A><FONT COLOR="#000080">Miscellaneous
+Functions</FONT></H3>
+<!AMZI_INDEX=Miscellaneous Functions; SetStream; GetStream; GetVersion; ErrMsg; ErrRaise; ErrReadBuf>These
+miscellaneous functions are used to change the Prolog streams, get the
+version number, and work with Prolog error codes.
+<UL>
+<PRE><FONT COLOR="#000080">procedure SetStream(st: TPStream; i: integer);
+function GetStream(st: TPStream): integer;
+procedure GetVersion(var s: string);
+function GetPVersion: string;
+procedure ErrMsg(s: PChar);
+function ErrPMsg: string;
+procedure ErrRaise(s: PChar);
+procedure ErrReadBuf(var i: LongInt; s: PChar);</FONT></PRE>
+</UL>
+<p>These functions are based on the API functions SetStream, GetStream, GetVersion, 
+ErrMsg, ErrRaise, and ErrReadBuf. </p><!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P><I></I> 
+</BODY>
+</HTML>

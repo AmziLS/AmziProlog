@@ -1,0 +1,593 @@
+<HTML>
+<BODY BGCOLOR=#000055 TEXT=yellow LINK=white VLINK=aqua ALINK=red>
+
+<P>
+<B><FONT COLOR="yellow">Amzi! Prolog User's Guide &amp; Reference</FONT></B>
+<P><B><FONT COLOR="yellow">Contents </FONT></B><A HREF="prindex.htm"><B>Index</B></A><P>
+
+<PRE>
+Amzi! Prolog User's Guide and Reference
+ <A HREF="top.htm#Contents" TARGET="content">Contents</A>
+ <A HREF="top.htm#Purpose" TARGET="content">Purpose</A>
+
+Quick Overview
+ <A HREF="pug_overview.htm#AQuickOverview" TARGET="content">Quick Overview</A>
+  <A HREF="pug_overview.htm#Components" TARGET="content">Components</A>
+  <A HREF="pug_overview.htm#RelationshipOfComponents" TARGET="content">Relationship of Files and Components</A>
+  <A HREF="pug_overview.htm#ListenerDebugger" TARGET="content">Listener/Debugger</A>
+   <A HREF="pug_overview.htm#Debugger" TARGET="content">Debugger</A>
+   <A HREF="pug_overview.htm#IntermixingInterpretedandCompi" TARGET="content">Intermixing Interpreted and Compiled Code</A>
+  <A HREF="pug_overview.htm#Compiler" TARGET="content">Compiler</A>
+  <A HREF="pug_overview.htm#Linker" TARGET="content">Linker</A>
+  <A HREF="pug_overview.htm#IDE" TARGET="content">Interactive Development Environment (IDE)</A>
+  <A HREF="pug_overview.htm#StandAloneRuntime" TARGET="content">Stand-Alone Runtime</A>
+  <A HREF="pug_overview.htm#EmbeddedApplications" TARGET="content">Embedded Applications</A>
+  <A HREF="pug_overview.htm#WheretoGoNext" TARGET="content">Where to Go Next?</A>
+
+Quick Tutorial
+ <A HREF="pug_tutorial.htm#AQuickTutorial" TARGET="content">Amzi! Quick Tutorial</A>
+  <A HREF="pug_tutorial.htm#DuckWorld" TARGET="content">Duck World</A>
+  <A HREF="pug_tutorial.htm#StartingtheListener" TARGET="content">Starting the Listener</A>
+  <A HREF="pug_tutorial.htm#CreatingaSourceFile" TARGET="content">Creating a Source File</A>
+  <A HREF="pug_tutorial.htm#ConsultingaSourceFile" TARGET="content">Consulting a Source File</A>
+  <A HREF="pug_tutorial.htm#UsingtheListener" TARGET="content">Using the Listener</A>
+  <A HREF="pug_tutorial.htm#Debugging" TARGET="content">Debugging</A>
+  <A HREF="pug_tutorial.htm#Modules" TARGET="content">Modules</A>
+  <A HREF="pug_tutorial.htm#RunningaModularApplication" TARGET="content">Running a Modular Application</A>
+  <A HREF="pug_tutorial.htm#UsingProjectsintheIDE" TARGET="content">Using Projects in the IDE</A>
+  <A HREF="pug_tutorial.htm#Compiling" TARGET="content">Compiling</A>
+  <A HREF="pug_tutorial.htm#LinkingandEXEGeneration" TARGET="content">Linking and Running</A>
+  <A HREF="pug_tutorial.htm#DistributinganApplication" TARGET="content">Distributing an Application</A>
+  <A HREF="pug_tutorial.htm#InterfacingwithOtherTools" TARGET="content">Interfacing with Other Tools</A>
+
+IDE Quick Start
+ <A HREF="pug_ide_quickstart.htm#IDE_QuickStart" TARGET="content">Eclipse IDE Quick Start</A>
+  <A HREF="pug_ide_quickstart.htm#beginning_users" TARGET="content">Beginning Users</A>
+  <A HREF="pug_ide_quickstart.htm#navigator_view" TARGET="content">Open a Source File</A>
+  <A HREF="pug_ide_quickstart.htm#advanced_users" TARGET="content">Advanced Users</A>
+
+Editor and Outliner
+ <A HREF="pug_editor.htm#EditorAndOutliner" TARGET="content">Editor and Outliner</A>
+   <A HREF="pug_editor.htm#EditorFunctions" TARGET="content">Editor Functions</A>
+   <A HREF="pug_editor.htm#EditorFunctions" TARGET="content">Using Unicode</A>
+  <A HREF="pug_editor.htm#Outliner" TARGET="content">Outliner</A>
+  <A HREF="pug_editor.htm#Preferences" TARGET="content">Preferences</A>
+
+Listener
+ <A HREF="pug_listener.htm#Listener" TARGET="content">Listener</A>
+  <A HREF="pug_listener.htm#StartingStoppingListener" TARGET="content">Starting and Stopping the Listener</A>
+   <A HREF="pug_listener.htm#StartingIDEListener" TARGET="content">IDE</A>
+   <A HREF="pug_listener.htm#StartingCommandLineListener" TARGET="content">Command Line</A>
+  <A HREF="pug_listener.htm#EnteringCommands" TARGET="content">Entering and Editing Commands</A>
+  <A HREF="pug_listener.htm#AddingRemovingClauses" TARGET="content">Adding and Removing Clauses</A>
+   <A HREF="pug_listener.htm#assert" TARGET="content">assert</A>
+   <A HREF="pug_listener.htm#TypinginaRule" TARGET="content">Adding a Rule</A>
+   <A HREF="pug_listener.htm#Consultinguser" TARGET="content">Consulting user</A>
+   <A HREF="pug_listener.htm#add" TARGET="content">add</A>
+   <A HREF="pug_listener.htm#RemovingClauses" TARGET="content">Removing Clauses</A>
+  <A HREF="pug_listener.htm#ListingClauses" TARGET="content">Listing Clauses</A>
+  <A HREF="pug_listener.htm#QueryingLogicBase" TARGET="content">Querying the Logic Base</A>
+  <A HREF="pug_listener.htm#ConsultingPrologSourceFiles" TARGET="content">Consulting Prolog Source Files</A>
+  <A HREF="pug_listener.htm#LoadingCompiledPrologCode" TARGET="content">Loading Compiled Prolog Code</A>
+  <A HREF="pug_listener.htm#ListenerCommands" TARGET="content">Listener Commands</A>
+   <A HREF="pug_listener.htm#add" TARGET="content">add</A>
+   <A HREF="pug_listener.htm#debug" TARGET="content">debug</A>
+   <A HREF="pug_listener.htm#ppTermuserppTerm" TARGET="content">pp(Term), user_pp(Term)</A>
+   <A HREF="pug_listener.htm#quit" TARGET="content">quit</A>
+   <A HREF="pug_listener.htm#replace" TARGET="content">replace</A>
+
+Debugger
+ <A HREF="pug_debugger_ide.htm#SourceCodeDebugger" TARGET="content">Source Code Debugger</A>
+  <A HREF="pug_debugger_ide.htm#BoxModelofProcedureFlow" TARGET="content">Box Model</A>
+  <A HREF="pug_debugger_ide.htm#DebuggingPerspective" TARGET="content">Debugging Perspective</A>
+  <A HREF="pug_debugger_ide.htm#RunningTheDebugger" TARGET="content">Running the Debugger</A>
+   <A HREF="pug_debugger_ide.htm#LaunchConfigurations" TARGET="content">Launch Configurations</A>
+   <A HREF="pug_debugger_ide.htm#StartingAndExiting" TARGET="content">Starting and Exiting</A>
+  <A HREF="pug_debugger_ide.htm#RemoteDebugging" TARGET="content">Remote Debugging</A>
+  <A HREF="pug_debugger_ide.htm#DebuggerDisplay" TARGET="content">Display</A>
+  <A HREF="pug_debugger_ide.htm#DebugCommands" TARGET="content">Debug Commands</A>
+  <A HREF="pug_debugger_ide.htm#Breakpoints" TARGET="content">Breakpoints</A>
+  <A HREF="pug_debugger_ide.htm#LeashingDebugPorts" TARGET="content">Breaking at Debug Ports</A>
+  <A HREF="pug_debugger_ide.htm#DebuggerExample" TARGET="content">Example</A>
+ <A HREF="pug_debugger.htm#TheCommandLineDebugger" TARGET="content">Command-Line Debugger</A>
+  <A HREF="pug_debugger.htm#BoxModelofProcedureFlow" TARGET="content">Box Model</A>
+  <A HREF="pug_debugger.htm#StartingandLeavingtheDebugger" TARGET="content">Starting and Exiting</A>
+  <A HREF="pug_debugger.htm#DebuggerDisplay" TARGET="content">Display</A>
+   <A HREF="pug_debugger.htm#portrayGOAL" TARGET="content">portray(GOAL)</A>
+  <A HREF="pug_debugger.htm#DebugPortOptions" TARGET="content">Debug Port Options</A>
+  <A HREF="pug_debugger.htm#Spypoints" TARGET="content">Spypoints</A>
+  <A HREF="pug_debugger.htm#LeashingDebugPorts" TARGET="content">Leashing Debug Ports</A>
+  <A HREF="pug_debugger.htm#Logging" TARGET="content">Logging</A>
+  <A HREF="pug_debugger.htm#DebuggerExample" TARGET="content">Example</A>
+
+Compiler
+ <A HREF="pug_compiler.htm#Compiler" TARGET="content">Compiler</A>
+  <A HREF="pug_compiler.htm#AdvantagesofCompiling" TARGET="content">Advantages</A>
+  <A HREF="pug_compiler.htm#DisadvantagesofCompiling" TARGET="content">Disadvantages</A>
+  <A HREF="pug_compiler.htm#RequirementsonCompiledFiles" TARGET="content">Requirements</A>
+  <A HREF="pug_compiler.htm#CompilerDirectives" TARGET="content">Directives</A>
+  <A HREF="pug_compiler.htm#StartingtheCompilerfromtheWind" TARGET="content">Running from the IDE</A>
+  <A HREF="pug_compiler.htm#StartingtheCompilerfromtheComm" TARGET="content">Running from the Command-Line</A>
+  <A HREF="pug_compiler.htm#CompilerMessages" TARGET="content">Messages</A>
+  <A HREF="pug_compiler.htm#CompilationErrors" TARGET="content">Errors</A>
+   <A HREF="pug_compiler.htm#ComplexClauses" TARGET="content">Complex Clauses</A>
+   <A HREF="pug_compiler.htm#ComplexPredicates" TARGET="content">Complex Predicates</A>
+  <A HREF="pug_compiler.htm#MainPredicate" TARGET="content">Main Predicate</A>
+
+Linker
+ <A HREF="pug_linker.htm#alnkTheLinker" TARGET="content">Linker</A>
+  <A HREF="pug_linker.htm#StartingtheLinkerfromtheWindow" TARGET="content">Running from the IDE</A>
+  <A HREF="pug_linker.htm#StartingtheLinkerfromtheComman" TARGET="content">Running from the Command-Line</A>
+   <A HREF="pug_linker.htm#EnvironmentSpecificandUtilityL" TARGET="content">Libraries</A>
+
+Cross Referencer and Syntax Checker
+ <A HREF="pug_xref.htm#CrossReferencer" TARGET="content">Cross Referencer and Syntax Checker</A>
+  <A HREF="pug_xref.htm#running" TARGET="content">Running</A>
+  <A HREF="pug_xref.htm#warnings_and_errors" TARGET="content">Warnings and Errors</A>
+
+Amzi! Runtime
+ <A HREF="pug_runtime.htm#AmziPrologRuntime" TARGET="content">Amzi! Runtime</A>
+  <A HREF="pug_runtime.htm#StartingarunfromtheCommandLine" TARGET="content">Running arun from the Command-Line</A>
+  <A HREF="pug_runtime.htm#ConfigurationFiles" TARGET="content">Configuration Files</A>
+   <A HREF="pug_runtime.htm#CFGParameters" TARGET="content">Configuration Parameters</A>
+   <A HREF="pug_runtime.htm#DefaultINIValues" TARGET="content">Default.cfg Values</A>
+  <A HREF="pug_runtime.htm#Flags" TARGET="content">Flags</A>
+   <A HREF="pug_runtime.htm#current_prolog_flag" TARGET="content">current_prolog_flag(FLAG, VALUE)</A>
+   <A HREF="pug_runtime.htm#set_prolog_flag" TARGET="content">set_prolog_flag(FLAG, VALUE)</A>
+   <A HREF="pug_runtime.htm#ConfigurationFlags" TARGET="content">Configuration Flags</A>
+   <A HREF="pug_runtime.htm#SettableFlags" TARGET="content">Settable Flags</A>
+
+Eclipse IDE
+ <A HREF="pug_ide.htm#IDE" TARGET="content">Eclipse IDE</A>
+  <A HREF="pug_ide.htm#ThePrologPerspective" TARGET="content">The Prolog Perspective</A>
+  <A HREF="pug_ide.htm#PrologProjectsAndBuildingExecutables" TARGET="content">Prolog Projects and Building Executables</A>
+   <A HREF="pug_ide.htm#SettingProjectProperties" TARGET="content">Setting Project Properties</A>
+   <A HREF="pug_ide.htm#CreatingProjects" TARGET="content">Creating Projects</A>
+   <A HREF="pug_ide.htm#OpeningClosingAndDeletingProjects" TARGET="content">Opening, Closing and Deleting Projects</A>
+  <A HREF="pug_ide.htm#RunningTheListenerAndPrologPrograms" TARGET="content">Starting the Listener and Prolog Programs</A>
+   <A HREF="pug_ide.htm#RunningTheListener" TARGET="content">Starting the Listener</A>
+   <A HREF="pug_ide.htm#LaunchConfigurations" TARGET="content">Launch Configurations</A>
+   <A HREF="pug_ide.htm#RunningCompiledPrograms" TARGET="content">Running Compiled Programs</A>
+  <A HREF="pug_ide.htm#RunningTheSourceCodeDebugger" TARGET="content">Starting the Source Code Debugger</A>
+
+Windows IDE
+ <A HREF="pug_wide.htm#IDEInteractiveDevelopmentEnvir" TARGET="content">Original Amzi! Windows IDE</A>
+ <A HREF="pug_wide.htm#AQuickTutorial" TARGET="content">Quick Tutorial</A>
+  <A HREF="pug_wide.htm#DuckWorld" TARGET="content">Duck World</A>
+  <A HREF="pug_wide.htm#StartingtheListener" TARGET="content">Starting the Listener</A>
+  <A HREF="pug_wide.htm#CreatingaSourceFile" TARGET="content">Creating a Source File</A>
+  <A HREF="pug_wide.htm#ConsultingaSourceFile" TARGET="content">Consulting a Source File</A>
+  <A HREF="pug_wide.htm#UsingtheListener" TARGET="content">Using the Listener</A>
+  <A HREF="pug_wide.htm#Debugging" TARGET="content">Debugging</A>
+  <A HREF="pug_wide.htm#Modules" TARGET="content">Modules</A>
+  <A HREF="pug_wide.htm#RunningaModularApplication" TARGET="content">Running a Modular Application</A>
+   <A HREF="pug_wide.htm#UsingalisandBATFiles" TARGET="content">Using alis and BAT Files</A>
+   <A HREF="pug_wide.htm#UsingProjectsintheIDE" TARGET="content">Using Projects</A>
+  <A HREF="pug_wide.htm#Compiling" TARGET="content">Compiling</A>
+  <A HREF="pug_wide.htm#Running" TARGET="content">Running</A>
+  <A HREF="pug_wide.htm#LinkingandEXEGeneration" TARGET="content">Linking and Running</A>
+  <A HREF="pug_wide.htm#DistributinganApplication" TARGET="content">Distributing an Application</A>
+  <A HREF="pug_wide.htm#InterfacingwithOtherTools" TARGET="content">Interfacing with Other Tools</A>
+ <A HREF="pug_wide.htm#WIDEControls" TARGET="content">Windows IDE Interface</A>
+  <A HREF="pug_wide.htm#WIDEInterface" TARGET="content">Interface</A>
+  <A HREF="pug_wide.htm#UnicodeAndASCII" TARGET="content">Unicode and ASCII</A>
+  <A HREF="pug_wide.htm#FileMenu" TARGET="content">File Menu</A>
+  <A HREF="pug_wide.htm#EditMenu" TARGET="content">Edit Menu</A>
+  <A HREF="pug_wide.htm#ViewMenu" TARGET="content">View Menu</A>
+  <A HREF="pug_wide.htm#ListenerMenu" TARGET="content">Listener Menu</A>
+  <A HREF="pug_wide.htm#BuildMenu" TARGET="content">Build Menu</A>
+  <A HREF="pug_wide.htm#WindowMenu" TARGET="content">Window Menu</A>
+  <A HREF="pug_wide.htm#Help" TARGET="content">Help</A>
+ <A HREF="pug_wide.htm#Projects" TARGET="content">Projects</A>
+  <A HREF="pug_wide.htm#CreatingAProject" TARGET="content">Creating a Project</A>
+  <A HREF="pug_wide.htm#ProjectDialogBox" TARGET="content">Dialog Box</A>
+  <A HREF="pug_wide.htm#BuildingAProject" TARGET="content">Consulting/Loading</A>
+  <A HREF="pug_wide.htm#BuildingAProject" TARGET="content">Building</A>
+ <A HREF="pug_wide.htm#TheDebugger" TARGET="content">Debugger</A>
+  <A HREF="pug_wide.htm#BoxModelofProcedureFlow" TARGET="content">Box Model</A>
+  <A HREF="pug_wide.htm#StartingandLeavingtheDebugger" TARGET="content">Starting and Exiting</A>
+  <A HREF="pug_wide.htm#DebuggerDisplay" TARGET="content">Display</A>
+   <A HREF="pug_wide.htm#portrayGOAL" TARGET="content">portray(GOAL)</A>
+  <A HREF="pug_wide.htm#DebugPortOptions" TARGET="content">Debug Port Options</A>
+  <A HREF="pug_wide.htm#Spypoints" TARGET="content">Spypoints</A>
+  <A HREF="pug_wide.htm#LeashingDebugPorts" TARGET="content">Leashing Debug Ports</A>
+  <A HREF="pug_wide.htm#Logging" TARGET="content">Logging</A>
+  <A HREF="pug_wide.htm#DebuggerExample" TARGET="content">Example</A>
+
+Debugging Your Programs
+ <A HREF="pug_debugging.htm#DebuggingYourPrograms" TARGET="content">Debugging Your Programs</A>
+  <A HREF="pug_debugging.htm#InitialDevForEmbeddedModules" TARGET="content">Initial Development for Embedded Modules</A>
+  <A HREF="pug_debugging.htm#TrackingRuntimeErrorsinProlog" TARGET="content">Tracking Prolog Errors</A>
+   <A HREF="pug_debugging.htm#Logging" TARGET="content">Logging</A>
+   <A HREF="pug_debugging.htm#DebuggerLikeIO" TARGET="content">Debugger-Like Output</A>
+   <A HREF="pug_debugging.htm#catchandthrow" TARGET="content">catch and throw</A>
+   <A HREF="pug_debugging.htm#PrologErrorFile" TARGET="content">Prolog Error File</A>
+  <A HREF="pug_debugging.htm#YourOwnDebuggingPredicates" TARGET="content">Writing Your Own Embedded Debugging Predicates</A>
+  <A HREF="pug_debugging.htm#DebuggingLogicServerAPIFunctio" TARGET="content">Tracking LSAPI Errors</A>
+   <A HREF="pug_debugging.htm#TracingAPICalls" TARGET="content">Tracing LSAPI Calls</A>
+   <A HREF="pug_debugging.htm#CheckingAPIErrorCodes" TARGET="content">Checking LSAPI Error Codes</A>
+   <A HREF="pug_debugging.htm#ExaminingPrologTerms" TARGET="content">Examining Prolog Terms</A>
+
+Distributing Your Programs
+ <A HREF="pug_distribution.htm#DistributingYourPrograms" TARGET="content">Distributing Your Programs</A>
+  <A HREF="pug_distribution.htm#RedistributableFiles" TARGET="content">Redistributable Files</A>
+
+Preprocessor
+ <A HREF="pug_preprocessor.htm#Preprocessor" TARGET="content">Preprocessor</A>
+  <A HREF="pug_preprocessor.htm#Directives" TARGET="content">Directives</A>
+   <A HREF="pug_preprocessor.htm#pound_define" TARGET="content">#define</A>
+
+Prolog Directives
+ <A HREF="ref_directives.htm#PrologDirectives" TARGET="content">Prolog Directives</A>
+  <A HREF="ref_directives.htm#DynamicClausesinCompiledCode" TARGET="content">Dynamic Clauses in Compiled Code</A>
+  <A HREF="ref_directives.htm#MultifileClauses" TARGET="content">Multifile Directive</A>
+  <A HREF="ref_directives.htm#DiscontiguousClauses" TARGET="content">Discontiguous Directive</A>
+  <A HREF="ref_directives.htm#Include" TARGET="content">Include Directive</A>
+  <A HREF="ref_directives.htm#EnsureLoaded" TARGET="content">Ensure Loaded Directive</A>
+  <A HREF="ref_directives.htm#Operators" TARGET="content">Op Directive</A>
+  <A HREF="ref_directives.htm#PrologFlag" TARGET="content">Set Prolog Flag</A>
+  <A HREF="ref_directives.htm#LatentExpressions" TARGET="content">Latent Expressions</A>
+
+Prolog Terms
+ <A HREF="ref_terms.htm#PrologTerms" TARGET="content">Prolog Terms</A>
+  <A HREF="ref_terms.htm#Internationalization" TARGET="content">Internationalization</A>
+  <A HREF="ref_terms.htm#Atoms" TARGET="content">Atoms</A>
+   <A HREF="ref_terms.htm#CharacterSet" TARGET="content">Symbol Set for Atoms</A>
+  <A HREF="ref_terms.htm#EscapeCharacters" TARGET="content">Escape Characters</A>
+   <A HREF="ref_terms.htm#EnablingandDisablingEscapeProc" TARGET="content">Enabling and Disabling Escape Processing</A>
+   <A HREF="ref_terms.htm#EscapeCodes" TARGET="content">Escape Codes</A>
+   <A HREF="ref_terms.htm#WhereEscapeCodesCanbeUsed" TARGET="content">Using Escape Codes</A>
+  <A HREF="ref_terms.htm#Strings" TARGET="content">Strings</A>
+  <A HREF="ref_terms.htm#Variables" TARGET="content">Variables</A>
+  <A HREF="ref_terms.htm#Numbers" TARGET="content">Numbers</A>
+   <A HREF="ref_terms.htm#Integers" TARGET="content">Integers</A>
+   <A HREF="ref_terms.htm#NegativeNumbers" TARGET="content">Negative Numbers</A>
+   <A HREF="ref_terms.htm#DecimalNumbers" TARGET="content">Decimal Numbers</A>
+  <A HREF="ref_terms.htm#Structures" TARGET="content">Structures</A>
+  <A HREF="ref_terms.htm#Lists" TARGET="content">Lists</A>
+  <A HREF="ref_terms.htm#CharacterLists" TARGET="content">Character Lists</A>
+   <A HREF="ref_terms.htm#CharacterConstants" TARGET="content">Character Constants</A>
+  <A HREF="ref_terms.htm#Comments" TARGET="content">Comments</A>
+  <A HREF="ref_terms.htm#Operators" TARGET="content">Operators</A>
+   <A HREF="ref_terms.htm#Precedence" TARGET="content">Precedence</A>
+   <A HREF="ref_terms.htm#Associativity" TARGET="content">Associativity</A>
+   <A HREF="ref_terms.htm#opPrecedenceTypeOper" TARGET="content">op(Precedence, Associativity, Operator)</A>
+   <A HREF="ref_terms.htm#currentOp3" TARGET="content">current_op(Precedence, Associativity, Operator)</A>
+   <A HREF="ref_terms.htm#PredefinedPrologOperators" TARGET="content">Predefined Prolog Operators</A>
+
+Prolog Execution
+ <A HREF="ref_execution.htm#PrologExecution" TARGET="content">Prolog Execution</A>
+  <A HREF="ref_execution.htm#Clauses" TARGET="content">Clauses</A>
+  <A HREF="ref_execution.htm#Unification" TARGET="content">Unification</A>
+   <A HREF="ref_execution.htm#unify_with_occurs_check" TARGET="content">unify_with_occurs_check(X,Y)</A>
+   <A HREF="ref_execution.htm#unify_with_occurs_check" TARGET="content">is_cyclic(Term)</A>
+  <A HREF="ref_execution.htm#BacktrackingSearch" TARGET="content">Backtracking Search</A>
+  <A HREF="ref_execution.htm#ComplexGoals" TARGET="content">Complex Goals</A>
+   <A HREF="ref_execution.htm#XandY" TARGET="content">X, Y</A>
+   <A HREF="ref_execution.htm#XorY" TARGET="content">X; Y</A>
+   <A HREF="ref_execution.htm#IfThenElse" TARGET="content">Goal1-Goal2; Goal3</A>
+   <A HREF="ref_execution.htm#callGoal" TARGET="content">call(Goal)</A>
+   <A HREF="ref_execution.htm#notGoal" TARGET="content">not(Goal)</A>
+   <A HREF="ref_execution.htm#notopGoal" TARGET="content">\+ Goal</A>
+   <A HREF="ref_execution.htm#onceGoal" TARGET="content">once(Goal)</A>
+   <A HREF="ref_execution.htm#findallInstanceGoalList" TARGET="content">findall(Instance, Goal, List)</A>
+   <A HREF="ref_execution.htm#bagofInstanceGoalList" TARGET="content">bagof(Instance, Goal, List)</A>
+   <A HREF="ref_execution.htm#setofInstanceGoalList" TARGET="content">setof(Instance, Goal, List)</A>
+  <A HREF="ref_execution.htm#FlowofControlPredicates" TARGET="content">Flow-of-Control</A>
+   <A HREF="ref_execution.htm#Cut" TARGET="content">! Cut</A>
+   <A HREF="ref_execution.htm#repeat" TARGET="content">repeat</A>
+   <A HREF="ref_execution.htm#fail" TARGET="content">fail</A>
+   <A HREF="ref_execution.htm#true" TARGET="content">true</A>
+   <A HREF="ref_execution.htm#forIndexStartEndIncrement" TARGET="content">for(Index, Start, End, Increment)</A>
+   <A HREF="ref_execution.htm#catch3" TARGET="content">catch(GOAL, ERROR, HANDLER)</A>
+   <A HREF="ref_execution.htm#throw1" TARGET="content">throw(TERM)</A>
+   <A HREF="ref_execution.htm#halt" TARGET="content">halt</A>
+  <A HREF="ref_execution.htm#Counters" TARGET="content">Counters</A>
+   <A HREF="ref_execution.htm#cntrgetCounterValue" TARGET="content">cntr_get(Counter, Value)</A>
+   <A HREF="ref_execution.htm#cntrdecCounterValue" TARGET="content">cntr_dec(Counter, Value)</A>
+   <A HREF="ref_execution.htm#cntrincCounterValue" TARGET="content">cntr_inc(Counter, Value)</A>
+   <A HREF="ref_execution.htm#cntrsetCounterValue" TARGET="content">cntr_set(Counter, Value)</A>
+
+Modules
+ <A HREF="ref_modules.htm#Modules" TARGET="content">Modules</A>
+  <A HREF="ref_modules.htm#DefaultUserModule" TARGET="content">Default User Module</A>
+  <A HREF="ref_modules.htm#SystemModule" TARGET="content">System Module</A>
+  <A HREF="ref_modules.htm#DefiningModules" TARGET="content">Defining Modules</A>
+   <A HREF="ref_modules.htm#DefiningModules" TARGET="content">Adding Predicates to a Module</A>
+  <A HREF="ref_modules.htm#ReferringToModules" TARGET="content">Referring to Modules</A>
+   <A HREF="ref_modules.htm#Exports" TARGET="content">Exports</A>
+   <A HREF="ref_modules.htm#Imports" TARGET="content">Imports</A>
+  <A HREF="ref_modules.htm#Metapredicates" TARGET="content">Metapredicates</A>
+
+Manipulating Terms
+ <A HREF="ref_manipulating_terms.htm#ManipulatingTerms" TARGET="content">Manipulating Terms</A>
+  <A HREF="ref_manipulating_terms.htm#TermClassification" TARGET="content">Term Typing</A>
+   <A HREF="ref_manipulating_terms.htm#termtype" TARGET="content">term_type(TERM, TYPE)</A>
+   <A HREF="ref_manipulating_terms.htm#atomicX" TARGET="content">atomic(X)</A>
+   <A HREF="ref_manipulating_terms.htm#atomX" TARGET="content">atom(X)</A>
+   <A HREF="ref_manipulating_terms.htm#stringX" TARGET="content">string(X)</A>
+   <A HREF="ref_manipulating_terms.htm#numberX" TARGET="content">number(X)</A>
+   <A HREF="ref_manipulating_terms.htm#compoundX" TARGET="content">compound(X)</A>
+   <A HREF="ref_manipulating_terms.htm#structureX" TARGET="content">structure(X)</A>
+   <A HREF="ref_manipulating_terms.htm#list" TARGET="content">list(X)</A>
+   <A HREF="ref_manipulating_terms.htm#islistX" TARGET="content">is_list(X)</A>
+   <A HREF="ref_manipulating_terms.htm#varX" TARGET="content">var(X)</A>
+   <A HREF="ref_manipulating_terms.htm#nonvarX" TARGET="content">nonvar(X)</A>
+  <A HREF="ref_manipulating_terms.htm#EqualityofTerms" TARGET="content">Equality of Terms</A>
+   <A HREF="ref_manipulating_terms.htm#XeqY" TARGET="content">X = Y</A>
+   <A HREF="ref_manipulating_terms.htm#XneqY" TARGET="content">X \= Y</A>
+   <A HREF="ref_manipulating_terms.htm#XeqeqY" TARGET="content">X == Y</A>
+   <A HREF="ref_manipulating_terms.htm#XneqeqY" TARGET="content">X \== Y</A>
+   <A HREF="ref_manipulating_terms.htm#notnotXeqY" TARGET="content">not(not(X = Y))</A>
+  <A HREF="ref_manipulating_terms.htm#StandardOrder" TARGET="content">Standard Order of Terms</A>
+  <A HREF="ref_manipulating_terms.htm#ComparisonofTerms" TARGET="content">Ordering of Terms</A>
+   <A HREF="ref_manipulating_terms.htm#XltY" TARGET="content">X @&lt; Y</A>
+   <A HREF="ref_manipulating_terms.htm#XgtY" TARGET="content">X @&gt; Y</A>
+   <A HREF="ref_manipulating_terms.htm#XlteqY" TARGET="content">X @=&lt; Y</A>
+   <A HREF="ref_manipulating_terms.htm#XgteqY" TARGET="content">X @&gt;= Y</A>
+   <A HREF="ref_manipulating_terms.htm#compareResultTermTerm" TARGET="content">compare(Result, Term1, Term2)</A>
+  <A HREF="ref_manipulating_terms.htm#DissectingTerms" TARGET="content">Term Creation and Decomposition</A>
+   <A HREF="ref_manipulating_terms.htm#functorTermFunctorN" TARGET="content">functor(TERM, FUNCTOR, ARITY)</A>
+   <A HREF="ref_manipulating_terms.htm#argNTermArgument" TARGET="content">arg(N, Term, Argument)</A>
+   <A HREF="ref_manipulating_terms.htm#TermListBunivB" TARGET="content">Term =.. List (univ)</A>
+   <A HREF="ref_manipulating_terms.htm#gensymRootSym" TARGET="content">gensym(Root, Sym)</A>
+   <A HREF="ref_manipulating_terms.htm#copy_term" TARGET="content">copy_term(T1, T2)</A>
+  <A HREF="ref_manipulating_terms.htm#VariableIdentification" TARGET="content">Variable Identification</A>
+   <A HREF="ref_manipulating_terms.htm#string_query2" TARGET="content">string_query(QUERYSTRING, RESULTSTRING)</A>
+   <A HREF="ref_manipulating_terms.htm#varlist_query3" TARGET="content">varlist_query(QUERYSTRING, LENGTH, RESULTLIST)</A>
+   <A HREF="ref_manipulating_terms.htm#numbervarsTermStartEnd" TARGET="content">numbervars(TERM, START, END)</A>
+   <A HREF="ref_manipulating_terms.htm#varlistList" TARGET="content">varlist(List)</A>
+   <A HREF="ref_manipulating_terms.htm#varsofTermList" TARGET="content">varsof(Term, List)</A>
+
+Atoms, Lists and Strings
+ <A HREF="ref_text.htm#ManipulatingTerms" TARGET="content">Atoms, Lists and Strings</A>
+  <A HREF="ref_text.htm#AtomProcessing" TARGET="content">Atom Processing</A>
+   <A HREF="ref_text.htm#atomcodesAtomCharList" TARGET="content">atom_codes(Atom, CharList)</A>
+   <A HREF="ref_text.htm#atomlistconcatAtomListAtom" TARGET="content">atomlist_concat(AtomList, Atom)</A>
+   <A HREF="ref_text.htm#atomconcatAtomAtomAtomVar" TARGET="content">atom_concat(Atom1, Atom2, AtomVar3)</A>
+   <A HREF="ref_text.htm#atomlengthAtomLength" TARGET="content">atom_length(Atom, Length)</A>
+   <A HREF="ref_text.htm#atomuplowAtomUpperAtomLower" TARGET="content">atom_uplow(AtomUpper, AtomLower)</A>
+   <A HREF="ref_text.htm#is_atom" TARGET="content">is_atom(X)</A>
+   <A HREF="ref_text.htm#nameAtomCharList" TARGET="content">name(Atom, CharList)</A>
+   <A HREF="ref_text.htm#subatomAtomIndexLengthSubAtom" TARGET="content">sub_atom(Atom, Index, Length, SubAtom)</A>
+  <A HREF="ref_text.htm#ListProcessing" TARGET="content">List Processing</A>
+   <A HREF="ref_text.htm#ismember" TARGET="content">is_member(Term, List)</A>
+   <A HREF="ref_text.htm#sortListSortedList" TARGET="content">sort(List, SortedList)</A>
+   <A HREF="ref_text.htm#keysortListSortedList" TARGET="content">keysort(KeyedList, KeyedSortedList)</A>
+  <A HREF="ref_text.htm#StringProcessing" TARGET="content">String Processing</A>
+   <A HREF="ref_text.htm#is_string" TARGET="content">is_string(X)</A>
+   <A HREF="ref_text.htm#nonblankstringString" TARGET="content">nonblank_string(String)</A>
+   <A HREF="ref_text.htm#strcatStringAStringBStringAB" TARGET="content">strcat(StringA, StringB, StringAB)</A>
+   <A HREF="ref_text.htm#stringlistconcatStringListStri" TARGET="content">stringlist_concat(StringList, String), stringlist_concat(StringList, Separator, String)</A>
+   <A HREF="ref_text.htm#stringatomStringAtom" TARGET="content">string_atom(String, Atom)</A>
+   <A HREF="ref_text.htm#string_float" TARGET="content">string_float(String, Float)</A>
+   <A HREF="ref_text.htm#stringicomp" TARGET="content">string_icomp(String1, String2)</A>
+   <A HREF="ref_text.htm#stringintegerStringInteger" TARGET="content">string_integer(String, Integer)</A>
+   <A HREF="ref_text.htm#string_number" TARGET="content">string_number(String, Number)</A>
+   <A HREF="ref_text.htm#stringlengthStringLength" TARGET="content">string_length(String, Length)</A>
+   <A HREF="ref_text.htm#stringlistStringList" TARGET="content">string_list(String, List)</A>
+   <A HREF="ref_text.htm#stringsplit" TARGET="content">string_split(String, DelimitersS, List)</A>
+   <A HREF="ref_text.htm#stringtermStringTerm" TARGET="content">string_term(String, Term)</A>
+   <A HREF="ref_text.htm#stringtermqStringQTerm" TARGET="content">string_termq(StringQ, Term)</A>
+   <A HREF="ref_text.htm#isstringterm" TARGET="content">is_string_term(String, Term)</A>
+   <A HREF="ref_text.htm#stringtokens" TARGET="content">string_tokens(String, TokenList), string_tokens(String, TokenList, DelimitersS)</A>
+   <A HREF="ref_text.htm#stringtrim" TARGET="content">string_trim(String, TrimmedString)</A>
+   <A HREF="ref_text.htm#substringStringIndexLengthSubS" TARGET="content">sub_string(String, Index, Length, SubString)</A>
+   <A HREF="ref_text.htm#TiltSlashes" TARGET="content">tilt_slashes(InAS, OutAS)</A>
+  <A HREF="ref_text.htm#character_list_processing" TARGET="content">Character List Processing</A>
+   <A HREF="ref_text.htm#atom_chars" TARGET="content">atom_chars(Number, CharList)</A>
+   <A HREF="ref_text.htm#char" TARGET="content">char(X)</A>
+   <A HREF="ref_text.htm#char_code" TARGET="content">char_code(Atom, CharList)</A>
+   <A HREF="ref_text.htm#number_chars" TARGET="content">number_chars(Number, CharList)</A>
+
+Numbers and Math
+ <A HREF="ref_math.htm#NumbersandMath" TARGET="content">Numbers and Math</A>
+  <A HREF="ref_math.htm#EvaluatingMathematicalExpressions" TARGET="content">Evaluating Mathematical Expressions</A>
+   <A HREF="ref_math.htm#XisY" TARGET="content">X is Y</A>
+  <A HREF="ref_math.htm#MathematicalComparisons" TARGET="content">Mathematical Comparisons</A>
+   <A HREF="ref_math.htm#XgteY" TARGET="content">X &gt;= Y</A>
+   <A HREF="ref_math.htm#XlteY" TARGET="content">X =&lt; Y</A>
+   <A HREF="ref_math.htm#XgtY" TARGET="content">X &gt; Y</A>
+   <A HREF="ref_math.htm#XltY" TARGET="content">X &lt; Y</A>
+   <A HREF="ref_math.htm#XeqcoleqY" TARGET="content">X =:= Y</A>
+   <A HREF="ref_math.htm#XeqsleqY" TARGET="content">X =\= Y</A>
+   <A HREF="ref_math.htm#almost_equal" TARGET="content">X ~= Y</A>
+  <A HREF="ref_math.htm#MathematicalOperators" TARGET="content">Mathematical Operators</A>
+   <A HREF="ref_math.htm#XplusY" TARGET="content">X + Y</A>
+   <A HREF="ref_math.htm#XminusY" TARGET="content">X - Y</A>
+   <A HREF="ref_math.htm#NegativeX" TARGET="content">- X</A>
+   <A HREF="ref_math.htm#XtimesY" TARGET="content">X * Y</A>
+   <A HREF="ref_math.htm#XdivY" TARGET="content">X / Y</A>
+   <A HREF="ref_math.htm#XpowerY" TARGET="content">X ** Y</A>
+   <A HREF="ref_math.htm#XdivdivY" TARGET="content">X // Y</A>
+   <A HREF="ref_math.htm#XdivsY" TARGET="content">X divs Y</A>
+   <A HREF="ref_math.htm#XdivuY" TARGET="content">X divu Y</A>
+   <A HREF="ref_math.htm#maxXY" TARGET="content">max(X,Y)</A>
+   <A HREF="ref_math.htm#minXY" TARGET="content">min(X,Y)</A>
+   <A HREF="ref_math.htm#XmodY" TARGET="content">X mod Y</A>
+   <A HREF="ref_math.htm#XmodsY" TARGET="content">X mods Y</A>
+   <A HREF="ref_math.htm#XmoduY" TARGET="content">X modu Y</A>
+  <A HREF="ref_math.htm#BitwiseOperators" TARGET="content">Bitwise Operators</A>
+   <A HREF="ref_math.htm#XandY" TARGET="content">X /\ Y</A>
+   <A HREF="ref_math.htm#XorY" TARGET="content">X \/ Y</A>
+   <A HREF="ref_math.htm#XltltY" TARGET="content">X &lt;&lt; Y</A>
+   <A HREF="ref_math.htm#XgtgtY" TARGET="content">X &gt;&gt; Y</A>
+   <A HREF="ref_math.htm#ComplementX" TARGET="content">\ X</A>
+   <A HREF="ref_math.htm#XxorY" TARGET="content">X xor Y</A>
+  <A HREF="ref_math.htm#TrigonometryFunctions" TARGET="content">Trigonometry Functions</A>
+   <A HREF="ref_math.htm#sinX" TARGET="content">sin(X)</A>
+   <A HREF="ref_math.htm#cosX" TARGET="content">cos(X)</A>
+   <A HREF="ref_math.htm#tanX" TARGET="content">tan(X)</A>
+   <A HREF="ref_math.htm#asinX" TARGET="content">asin(X)</A>
+   <A HREF="ref_math.htm#acosX" TARGET="content">acos(X)</A>
+   <A HREF="ref_math.htm#atanX" TARGET="content">atan(X)</A>
+  <A HREF="ref_math.htm#MathematicalFunctions" TARGET="content">Mathematical Functions</A>
+   <A HREF="ref_math.htm#absX" TARGET="content">abs(X)</A>
+   <A HREF="ref_math.htm#ceilingX" TARGET="content">ceiling(X)</A>
+   <A HREF="ref_math.htm#expX" TARGET="content">exp(X)</A>
+   <A HREF="ref_math.htm#floatX" TARGET="content">float(X)</A>
+   <A HREF="ref_math.htm#floorX" TARGET="content">floor(X)</A>
+   <A HREF="ref_math.htm#integerX" TARGET="content">integer(X)</A>
+   <A HREF="ref_math.htm#lnX" TARGET="content">ln(X), log(X)</A>
+   <A HREF="ref_math.htm#log10X" TARGET="content">log10(X)</A>
+   <A HREF="ref_math.htm#realX" TARGET="content">real(X)</A>
+   <A HREF="ref_math.htm#roundX" TARGET="content">round(X)</A>
+   <A HREF="ref_math.htm#signX" TARGET="content">sign(X)</A>
+   <A HREF="ref_math.htm#sqrtX" TARGET="content">sqrt(X)</A>
+  <A HREF="ref_math.htm#BuiltinAtoms" TARGET="content">Built-in Atoms</A>
+   <A HREF="ref_math.htm#seedrandomI" TARGET="content">seed_random(I)</A>
+  <A HREF="ref_math.htm#NumberTypes" TARGET="content">Number Types</A>
+   <A HREF="ref_math.htm#numerictypeNT" TARGET="content">numeric_type(N,T)</A>
+   <A HREF="ref_math.htm#integerN" TARGET="content">integer(N)</A>
+   <A HREF="ref_math.htm#is_fraction" TARGET="content">is_fraction(N)</A>
+   <A HREF="ref_math.htm#isintegerN" TARGET="content">is_integer(N)</A>
+   <A HREF="ref_math.htm#is_odd" TARGET="content">is_odd(N)</A>
+   <A HREF="ref_math.htm#is_number" TARGET="content">is_number(N)</A>
+   <A HREF="ref_math.htm#floatN" TARGET="content">float(N)</A>
+   <A HREF="ref_math.htm#single_floatN" TARGET="content">single_float(N)</A>
+   <A HREF="ref_math.htm#double_floatN" TARGET="content">double_float(N)</A>
+   <A HREF="ref_math.htm#realN" TARGET="content">real(N)</A>
+   <A HREF="ref_math.htm#fixed_realN" TARGET="content">fixed_real(N)</A>
+   <A HREF="ref_math.htm#long_realN" TARGET="content">long_real(N)</A>
+  <A HREF="ref_math.htm#MixedMode" TARGET="content">Mixed Mode Expressions</A>
+  <A HREF="ref_math.htm#MathematicalGames" TARGET="content">Mathematical Games</A>
+   <A HREF="ref_math.htm#modulo_arithmetic" TARGET="content">Modulo Arithmetic</A>
+   <A HREF="ref_math.htm#NotesOnRealsAndGigdigits" TARGET="content">Notes on Reals and Gigadigits</A>
+   <A HREF="ref_math.htm#PrimeNumbers" TARGET="content">Prime Numbers</A>
+   <A HREF="ref_math.htm#rational_numbers" TARGET="content">Rational Numbers</A>
+   <A HREF="ref_math.htm#ContinuedFractions" TARGET="content">Continued Fractions</A>
+
+Prolog Logicbase
+ <A HREF="ref_logicbase.htm#PrologLogicbase" TARGET="content">Prolog Logicbase</A>
+  <A HREF="ref_logicbase.htm#Modules" TARGET="content">Modules</A>
+   <A HREF="ref_logicbase.htm#CurrentModule1" TARGET="content">current_module(MODULE)</A>
+  <A HREF="ref_logicbase.htm#Predicates" TARGET="content">Predicates</A>
+   <A HREF="ref_logicbase.htm#CurrentPredicate1" TARGET="content">current_predicate(M:F/A)</A>
+   <A HREF="ref_logicbase.htm#PredicateProperty2" TARGET="content">predicate_property(M:F/A, PROPERTY)</A>
+  <A HREF="ref_logicbase.htm#StaticPredicates" TARGET="content">Static Predicates</A>
+   <A HREF="ref_logicbase.htm#load" TARGET="content">load(FileA), load([F1, F2,...])</A>
+   <A HREF="ref_logicbase.htm#load4" TARGET="content">load(memory, NAME, SIZE, ADDRESS)</A>
+   <A HREF="ref_logicbase.htm#unload" TARGET="content">unload(FileA), unload([F1, F2,...])</A>
+  <A HREF="ref_logicbase.htm#DynamicPredicateStorageOptions" TARGET="content">Dynamic Predicate Storage Options</A>
+   <A HREF="ref_logicbase.htm#DynamicDirective" TARGET="content">:-dynamic F/A</A>
+   <A HREF="ref_logicbase.htm#IndexedDirective" TARGET="content">:-indexed F(I1, I2,...)</A>
+   <A HREF="ref_logicbase.htm#SortedDirective" TARGET="content">:-sorted F/A</A>
+  <A HREF="ref_logicbase.htm#DynamicPredicates" TARGET="content">Dynamic Predicates</A>
+   <A HREF="ref_logicbase.htm#abolishNameArity" TARGET="content">abolish(M:F/A)</A>
+   <A HREF="ref_logicbase.htm#assertaTerm" TARGET="content">asserta(TERM)</A>
+   <A HREF="ref_logicbase.htm#assertzTerm" TARGET="content">assertz(TERM)</A>
+   <A HREF="ref_logicbase.htm#assertTerm" TARGET="content">assert(TERM)</A>
+   <A HREF="ref_logicbase.htm#clauseHeadBody" TARGET="content">clause(HEAD, BODY)</A>
+   <A HREF="ref_logicbase.htm#retractTerm" TARGET="content">retract(TERM)</A>
+   <A HREF="ref_logicbase.htm#retractallTerm" TARGET="content">retractall(TERM)</A>
+
+Input and Output
+ <A HREF="ref_io.htm#InputandOutput" TARGET="content">Input and Output</A>
+  <A HREF="ref_io.htm#GeneralPrinciples" TARGET="content">General Principles</A>
+   <A HREF="ref_io.htm#StreamID" TARGET="content">Stream IDs</A>
+   <A HREF="ref_io.htm#Backtracking" TARGET="content">Backtracking and I/O</A>
+   <A HREF="ref_io.htm#endoffile" TARGET="content">End of File</A>
+  <A HREF="ref_io.htm#Streams" TARGET="content">Streams</A>
+   <A HREF="ref_io.htm#StandardStreams" TARGET="content">Standard Streams</A>
+   <A HREF="ref_io.htm#StreamProperties" TARGET="content">Stream Properties</A>
+   <A HREF="ref_io.htm#StreamProperty2" TARGET="content">stream_property(STREAM, PROPERTY)</A>
+   <A HREF="ref_io.htm#StringIO" TARGET="content">String I/O</A>
+  <A HREF="ref_io.htm#OpenAndClosingFiles" TARGET="content">Open and Closing Files</A>
+   <A HREF="ref_io.htm#Open4" TARGET="content">open(FILE, MODE, ID, OPTIONS)</A>
+   <A HREF="ref_io.htm#Open3" TARGET="content">open(FILE, MODE, ID)</A>
+   <A HREF="ref_io.htm#Close1" TARGET="content">close(ID)</A>
+  <A HREF="ref_io.htm#PrologTerms" TARGET="content">Reading and Writing Prolog Terms</A>
+   <A HREF="ref_io.htm#readTermreadIDTerm" TARGET="content">read(TERM), read(ID, TERM)</A>
+   <A HREF="ref_io.htm#writeTermwriteIDTerm" TARGET="content">write(TERM), write(ID, TERM)</A>
+   <A HREF="ref_io.htm#writeqTermwriteqIDTerm" TARGET="content">writeq(Term), writeq(ID, Term)</A>
+   <A HREF="ref_io.htm#listing" TARGET="content">listing, listing(PRED), listing(ID, PRED)</A>
+   <A HREF="ref_io.htm#prettyprint" TARGET="content">pp(TERM), pp(ID, TERM)</A>
+   <A HREF="ref_io.htm#consult1" TARGET="content">consult(FILE), reconsult(FILE)</A>
+   <A HREF="ref_io.htm#displayTerm" TARGET="content">display(Term)</A>
+  <A HREF="ref_io.htm#StringsAndCharacters" TARGET="content">Reading and Writing Strings and Characters</A>
+   <A HREF="ref_io.htm#getChargetIDChar" TARGET="content">get(CODE), get(ID, CODE)</A>
+   <A HREF="ref_io.htm#getChargetIDChar" TARGET="content">get0(CODE), get0(ID, CODE)</A>
+   <A HREF="ref_io.htm#putCharputIDChar" TARGET="content">put(CODE), put(ID, CODE)</A>
+   <A HREF="ref_io.htm#readstringStringreadstringIDSt" TARGET="content">read_string(STRING), read_string(ID, STRING)</A>
+  <A HREF="ref_io.htm#SpecialPurposeIO" TARGET="content">Special Purpose I/O Predicates</A>
+   <A HREF="ref_io.htm#at_end_of_stream" TARGET="content">at_end_of_stream(ID)</A>
+   <A HREF="ref_io.htm#flushoutput" TARGET="content">flush_output, flush_output(ID)</A>
+   <A HREF="ref_io.htm#nlnlID" TARGET="content">nl, nl(ID)</A>
+   <A HREF="ref_io.htm#skipCharskipIDChar" TARGET="content">skip(CODE), skip(ID, CODE)</A>
+   <A HREF="ref_io.htm#tabNtabIDN" TARGET="content">tab(N), tab(ID, N)</A>
+   <A HREF="ref_io.htm#respkeyChar" TARGET="content">respkey(CHAR)</A>
+   <A HREF="ref_io.htm#Repositioning" TARGET="content">Repositioning Streams</A>
+   <A HREF="ref_io.htm#stream_property" TARGET="content">stream_property(ID, position(Position))</A>
+   <A HREF="ref_io.htm#SetStreamPosition" TARGET="content">set_stream_position(ID, POSITION)</A>
+  <A HREF="ref_io.htm#RedirectingStreams" TARGET="content">Redirecting Streams</A>
+   <A HREF="ref_io.htm#currentinput" TARGET="content">current_input(ID)</A>
+   <A HREF="ref_io.htm#currentoutput" TARGET="content">current_output(ID)</A>
+   <A HREF="ref_io.htm#setinput" TARGET="content">set_input(ID)</A>
+   <A HREF="ref_io.htm#setoutput" TARGET="content">set_output(ID)</A>
+   <A HREF="ref_io.htm#seeStreamA" TARGET="content">see(ID), see(FILENAME), see(user)</A>
+   <A HREF="ref_io.htm#seen" TARGET="content">seen</A>
+   <A HREF="ref_io.htm#seeingSName" TARGET="content">seeing(ID)</A>
+   <A HREF="ref_io.htm#tellStreamA" TARGET="content">tell(ID), tell(FILENAME), tell(user)</A>
+   <A HREF="ref_io.htm#told" TARGET="content">told</A>
+   <A HREF="ref_io.htm#tellingSName" TARGET="content">telling(ID)</A>
+  <A HREF="ref_io.htm#BinaryIO" TARGET="content">Binary I/O</A>
+   <A HREF="ref_io.htm#ReadBinary" TARGET="content">read_binary(ID, DATA_TYPE, DATA)</A>
+   <A HREF="ref_io.htm#WriteBinary" TARGET="content">write_binary(ID, DATA_TYPE, DATA)</A>
+  <A HREF="ref_io.htm#Logging" TARGET="content">Logging</A>
+   <A HREF="ref_io.htm#openlogFname" TARGET="content">openlog(Fname)</A>
+   <A HREF="ref_io.htm#closelog" TARGET="content">closelog</A>
+   <A HREF="ref_io.htm#writelogX" TARGET="content">writelog(X)</A>
+   <A HREF="ref_io.htm#nllog" TARGET="content">nllog</A>
+
+System Predicates
+ <A HREF="ref_system.htm#SystemPredicates" TARGET="content">System Predicates</A>
+   <A HREF="ref_system.htm#commandlineArgsL" TARGET="content">command_line(ArgsL)</A>
+   <A HREF="ref_system.htm#dateMonthNVDayNVYearNV" TARGET="content">date(MONTH, DAY, YEAR)</A>
+   <A HREF="ref_system.htm#timeHourMinSec" TARGET="content">time(HOUR, MIN, SEC)</A>
+   <A HREF="ref_system.htm#gc0" TARGET="content">gc</A>
+   <A HREF="ref_system.htm#highwater" TARGET="content">highwater(Heap, Local, Control, Trail)</A>
+   <A HREF="ref_system.htm#loadlsxFilenameA" TARGET="content">loadlsx(FilenameA)</A>
+   <A HREF="ref_system.htm#proheapTopPos" TARGET="content">pro_heap(Top, Pos)</A>
+   <A HREF="ref_system.htm#procontrolTopPos" TARGET="content">pro_control(Top, Pos)</A>
+   <A HREF="ref_system.htm#prolocalTopPos" TARGET="content">pro_local(Top, Pos)</A>
+   <A HREF="ref_system.htm#protrailTopPos" TARGET="content">pro_trail(Top, Pos)</A>
+   <A HREF="ref_system.htm#stacksizesHeapControlLocalTrai" TARGET="content">stack_sizes(Heap, Control, Local, Trail)</A>
+   <A HREF="ref_system.htm#systemCmdA" TARGET="content">system(CmdA)</A>
+   <A HREF="ref_system.htm#timerTicks" TARGET="content">timer(Ticks)</A>
+   <A HREF="ref_system.htm#versionString" TARGET="content">version(String)</A>
+
+O.S. Extended Predicates
+ <A HREF="ref_extensions.htm#ExtendedPredicates" TARGET="content">O.S. Extended Predicates</A>
+   <A HREF="ref_extensions.htm#FileampDirectoryPredicates" TARGET="content">File and Directory Name Parameters</A>
+   <A HREF="ref_extensions.htm#chdirDirL" TARGET="content">chdir(DirL)</A>
+   <A HREF="ref_extensions.htm#chdirDirLErr" TARGET="content">chdir(DirL, Err)</A>
+   <A HREF="ref_extensions.htm#curdirDirL" TARGET="content">curdir(DirS)</A>
+   <A HREF="ref_extensions.htm#delfilePathLErr" TARGET="content">delfile(PathL, Err)</A>
+   <A HREF="ref_extensions.htm#mkdirDirLErr" TARGET="content">mkdir(DirL, Err)</A>
+   <A HREF="ref_extensions.htm#renameOldNameNewNameErr" TARGET="content">rename(OldName, NewName, Err)</A>
+   <A HREF="ref_extensions.htm#rmdirDirLErr" TARGET="content">rmdir(DirL, Err)</A>
+   <A HREF="ref_extensions.htm#findfilesMaskAttrFileInfo" TARGET="content">findfiles(Mask, Attr, FileInfo)</A>
+   <A HREF="ref_extensions.htm#FileStat" TARGET="content">stat(FileName,Atime,Ctime,Mtime,Size,Mode,NLink,Uid,Gid)</A>
+   <A HREF="ref_extensions.htm#getdriveDrive" TARGET="content">getdrive(Drive)</A>
+   <A HREF="ref_extensions.htm#setdriveDrive" TARGET="content">setdrive(Drive)</A>
+   <A HREF="ref_extensions.htm#get_env_var" TARGET="content">get_env_var(VARIABLE, VALUE)</A>
+   <A HREF="ref_extensions.htm#wgetfileFileStr" TARGET="content">w_getfile(FileStr)</A>
+   <A HREF="ref_extensions.htm#wmsgboxTerm" TARGET="content">w_msgbox(Term)</A>
+   <A HREF="ref_extensions.htm#wtfmsgboxTerm" TARGET="content">w_tfmsgbox(Term)</A>
+
+Definite Clause Grammars (DCGs)
+ <A HREF="ref_dcg.htm#DefiniteClauseGrammarsDCGs" TARGET="content">Definite Clause Grammars (DCGs)</A>
+  <A HREF="ref_dcg.htm#ParsingWithDifferenceLists" TARGET="content">Parsing with Difference Lists</A>
+  <A HREF="ref_dcg.htm#GeneratingWithDifferenceLists" TARGET="content">Generating with Difference Lists</A>
+  <A HREF="ref_dcg.htm#DCGSyntax" TARGET="content">DCG Syntax</A>
+   <A HREF="ref_dcg.htm#expandtermDCGclausePROLOGclaus" TARGET="content">expand_term(DCGclause, PROLOGclause)</A>
+  <A HREF="ref_dcg.htm#ApplicationsDCGDifferenceLists" TARGET="content">Applications of DCG and Difference Lists</A>
+   <A HREF="ref_dcg.htm#DCGTranslation" TARGET="content">Language Translation</A>
+   <A HREF="ref_dcg.htm#DCGBillMaterials" TARGET="content">Bill of Materials</A>
+   <A HREF="ref_dcg.htm#DCGCommandLanguage" TARGET="content">Command Language</A>
+   <A HREF="ref_dcg.htm#DCGXML" TARGET="content">XML</A>
+  <A HREF="ref_dcg.htm#DCGTerminals" TARGET="content">DCG Terminals</A>
+  <A HREF="ref_dcg.htm#ParsingFiles" TARGET="content">Parsing Files</A>
+</PRE>
+</BODY>
+</HTML>

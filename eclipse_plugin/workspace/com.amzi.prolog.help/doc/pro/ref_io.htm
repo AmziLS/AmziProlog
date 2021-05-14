@@ -1,0 +1,817 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Input and Output</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="InputandOutput"></A><FONT COLOR="#D2AA00">Input and Output</FONT> 
+</h1>
+<!AMZI_INDEX= Input; Output; I/O; Read; Write;> 
+<p>Amzi! supports a variety of predicates that perform I/O on streams, which can 
+  be standard input/output, files, strings (limited), or host application defined.</p>
+<ul>
+  <li><a href="#GeneralPrinciples">General Principles</a></li>
+  <li><a href="#Streams">Streams</a></li>
+  <li><a href="#OpenAndClosingFiles">Open and Closing Files</a></li>
+  <li><a href="#PrologTerms">Reading and Writing Prolog Terms</a></li>
+  <li><a href="#StringsAndCharacters">Reading and Writing Strings and Characters</a></li>
+  <li><a href="#SpecialPurposeIO">Special Purpose I/O Predicates (formatting, repositioning, keyboard)</a></li>
+  <li><a href="#RedirectingStreams">Redirecting Streams</a></li>
+  <li><a href="#BinaryIO">Binary I/O</a></li>
+  <li><a href="#Logging">Logging</a></li>
+</ul>
+
+<p>Predicates for accessing a machine's directory structure, deleting files, changing 
+  directories etc. are not part of the standard Prolog built-in predicates, but 
+  are provided for most platforms as <a href="ref_extensions.htm">extended predicates</a> 
+  implemented in a Logic Server Extension.</p>
+
+<H2><A NAME="GeneralPrinciples"></A><FONT COLOR="#0000FF">
+General Principles</FONT></H2>
+<!AMZI_INDEX = I/O, General Principles>
+<h3><A NAME="StreamID"></A><FONT COLOR="#000080">Stream IDs</FONT></h3>
+<!AMZI_INDEX = I/O Streams; Stream IDs>
+<p>All I/O is directed to and from streams. Most of the I/O predicates have two 
+  forms, one with a stream ID, the other without. When the stream ID is specified, 
+  that stream is used for the I/O. When the stream ID is NOT specified, the current 
+  default input or output stream is used. See example below.</p>
+
+<h3><A NAME="Backtracking"></A><FONT COLOR="#000080">Backtracking and I/O</FONT></h3>
+<!AMZI_INDEX = backtracking in I/O><p>The I/O predicates perform I/O services when called.  On backtracking, they do nothing and fail through to the previous goal.</p>
+<p>If you want an I/O predicate to keep repeating its behavior, for example to 
+  read all the clauses in a file, you can use the <a href="ref_execution.htm#repeat">repeat/0</a> 
+  predicate before the I/O predicate. See example below.</p>
+<h3><A NAME="endoffile"></A><FONT COLOR="#000080">End of File</FONT></h3>
+<!AMZI_INDEX = eof; end_of_file; stream end>
+<p>Some streams, notably files, have ends. When an I/O predicate attempts to read 
+  at or beyond the end of a stream, the atom <b>end_of_file</b> is unified with 
+  the predicate's argument that contains the 'read' term or item.</p>
+<p>When reading to the end of a file, the programmer must test for this atom. 
+  This, and the two topic above are illustrated in this example that reads and 
+  echos all the clauses (Prolog terms) in a file:</p>
+<ul><font color="#000080">
+  <pre>
+echo_file(F) :-
+  open(F, read, ID),  % open a stream
+  repeat,             % try again forever
+  read(ID, X),        % read from the stream
+  write(X), nl,       % write to current output stream
+  X == end_of_file,   % fail (backtrack) if not end of file
+  close(ID).          % close the file
+</pre>
+  </font></ul>
+<H2><A NAME="Streams"></A><FONT COLOR="#0000FF">
+Streams</FONT></H2>
+<!AMZI_INDEX = Streams; standard input/output; console; function streams; alias; default streams>
+
+<p>Prolog I/O is done via streams. The streams can be:</p>
+<ul>
+  <li>Standard input/output, such as a console,</li>
+  <li>Files,</li>
+  <li>Strings (in a limited sense),</li>
+  <li>External application-specific stream defined through the Logic Server API 
+    (not generally used except for special-purpose applications).</li>
+</ul>
+<p>Streams are identified by a stream ID, which is a small integer in Amzi! Prolog. 
+  The stream ID can be optionally specified in all I/O predicates. If the stream 
+  ID is not specified, then a default stream is used. See <a href="#RedirectingStreams">redirecting 
+  streams</a> for details.</p>
+<p><i><img src="arrowrt.gif" height=18 width=18 align=BOTTOM> For simple stand-alone 
+  Prolog programs, run at a console or window in the Amzi! IDE, the programmer 
+  does not need to know about streams, and the read/1 and write/1 predicates will 
+  read and write as expected.</i></p>
+<p>Each stream can also have an <b>alias</b>, which is an atom. The <b>alias</b> 
+  can be used instead of the stream ID in the I/O predicates.</p>
+<h3><A NAME="StandardStreams"></A><FONT COLOR="#000080">Standard Streams</FONT></h3>
+<!AMZI_INDEX = user_input; user_output; user_error; user_function; user streams>
+<p>There are four standard streams. Their aliases and IDs (in brackets) are:</p>
+<ul>
+  <li><b>user_input [0]</b> - standard input device. Typically the console for 
+    environments that support consoles, e.g. Unix and the Windows console (old 
+    DOS box).</li>
+  <li><b>user_output [1]</b> - standard output device. Typically the console for 
+    environments that support consoles, e.g. Unix and the Windows console (old 
+    DOS box).</li>
+  <li><b>user_error [2]</b> - standard error device. Typically the console for 
+    environments that support consoles, e.g. Unix and the Windows console (old 
+    DOS box).</li>
+  <li><b>user_function [3]</b> - Optional application defined stream. Used for 
+    special applications that need to create custom Prolog streams. See Logic 
+    Server API for <a href="../ls/lsprguid.htm#CapturingPrologIO">details</a>. 
+    See note below as well.</li>
+</ul>
+<p><i><b>NOTE ==&gt;</b> The Amzi! IDE is a special application that makes use 
+  of the user_function [3] stream to allow Prolog to read and write from a window. 
+  Default I/O is <a href="#RedirectingStreams">redirected</a> to the user_function 
+  [3] stream in the IDE. This is why it appears that the Prolog standard input/output 
+  appears in the IDE windows.</i></p>
+<p>Typically, you will never need to use either the alias name or the stream ID 
+  for any of the standard streams. They will be set up as the current input/output 
+  streams.</p>
+
+<h3><A NAME="StreamProperties"></A><FONT COLOR="#000080">Stream Properties</FONT></h3>
+<!AMZI_INDEX = reposition; alias; eof_action;
+end_of_stream; type(stream); mode(stream); input; output; stream_property/2>
+<p>Each stream has a number of properties associated with it. For file streams, 
+  many are set when you <a href="#OpenAndClosingFiles">open</a> the file. For 
+  standard streams, they are predefined.</p>
+<p>The properties are:</p>
+<ul>
+  <li><b>alias(A)</b> - A is an atom name that can be used to identify the stream.</li>
+  <li><b>file_name(F)</b> - For files, F is the name of the file.</li>
+  <li><b>input</b> - Indicates a stream can be used for input.</li>
+  <li><b>output</b> - Indicates a stream can be used for output.</li>
+  <li><b>mode(M)</b> - M is the mode the stream is used in, can be:</li>
+<ul>
+    <li><b>read</b> - Stream can be read.</li>
+    <li><b>write</b> - Stream can be written.</li>
+    <li><b>readwrite</b> - Stream can be written.</li>
+    <li><b>append</b> - Stream can be written, starting at end of existing stream.</li>
+</ul>
+  <li><b>type(T)</b> - The type of stream, can be:</li>
+<ul>
+    <li><b>text</b> - Stream contains ASCII or multi-byte (variable length) character 
+      data.</li>
+    <li><b>wide_text</b> - Stream contains wide (Unicode) characters.</li>
+    <li><b>binary</b> - Stream contains binary data.</li>
+</ul>
+  <li><b>end_of_stream(at/past/no)</b> - Indicates whether a stream is at its 
+    end or not.</li>
+  <li><b>eof_action(A)</b> - Action to take at end of stream.</li>
+  <li><b>reposition(true/false)</b> - Indicates whether a stream can be <a href="#SpecialPurposeIO">repositioned</a> 
+    or not.</li>
+  <li><b>position(P)</b> - For streams that can be <a href="#SpecialPurposeIO">repositioned</a>, 
+    the position.</li>
+</ul>
+<h3><A NAME="StreamProperty2"></A><FONT COLOR="#000080">stream_property(STREAM, PROPERTY)</FONT></h3>
+<!AMZI_INDEX = stream_property/2>
+<p><b>stream_property/2</b> can be used to query stream properties. It returns, 
+  on backtracking, all the properties of a given stream. If STREAM is an unbound 
+  variable, it returns the properties of all current streams.</p>
+<ul><font color="#000080"><pre>
+?- open('test.txt', write, H, [alias(test)]).
+H = 4 
+yes
+?- stream_property(4, X).
+X = file_name('test.txt') ;
+X = alias(test) ;
+X = output ;
+X = mode(write) ;
+X = type(text) ;
+X = end_of_stream(no) ;
+X = eof_action(eof_code) ;
+X = reposition(true) ;
+X = position(text(beginning, 0, 0, 0, 0)) ;
+no
+</pre></font></ul>
+<h3><A NAME="StringIO"></A><FONT COLOR="#000080">String I/O</FONT></h3>
+<!AMZI_INDEX = string I/O; string streams>
+<p>String I/O is also carried out via Prolog streams, but the interface is hidden 
+  from the user. The predicates <a href="ref_text.htm#stringtermStringTerm">string_term/2</a> 
+  and <a href="ref_text.htm#stringtermqStringQTerm">string_termq/2</a> are used 
+  to read and write single Prolog terms to and from strings. Because they work 
+  with single terms, the terms, unlike for other I/O predicates, do not need an 
+  ending period(.).</p>
+<p>The same internal Prolog read/write routines used for other I/O is used for strings, so syntax errors will be reported/thrown just as from other I/O predicates.</p>
+
+<H2><A NAME="OpenAndClosingFiles"></A><FONT COLOR="#0000FF">
+Open and Closing Files</FONT></H2>
+<!AMZI_INDEX = stream open; stream close; open; close; file open; file close; file I/O>
+<p>File streams can be directly opened and closed.</p>
+<h3><A NAME="Open4"></A><FONT COLOR="#000080">open(FILE, MODE, ID, OPTIONS)</FONT></h3>
+<!AMZI_INDEX = open/4; mode; filename; read; write; readwrite; append; alias; type; binary; text; wide_text>
+<p><b>open/4</b> opens a file stream. The arguments are:</p>
+<ul>
+  <li><b>FILE</b> - The name, optionally including path, of the file to be opened. 
+    If the path is not specified, then the file is opened from the current directory. 
+    The path name can use either forward or backward slashes to separate directories. 
+    If backslashes are chosen, then two are usually required, unless <a href="ref_terms.htm#EnablingandDisablingEscapeProc">string_esc</a> 
+    is off.</li>
+  <li><b>MODE</b> - The read/write mode of the file. Choices are:</li>
+  <ul>
+    <li><b>read</b> - An existing file is opened for input.</li>
+    <li><b>write</b> - A new file is created for output, any pre-existing version 
+      is deleted.</li>
+    <li><b>readwrite</b> - If the file exists, it is opened for input/output. 
+      If it doesn't, it is created for input/output.</li>
+    <li><b>append</b> - An existing file is opened for output at the end.</li>
+  </ul>
+  <li><b>ID</b> - The stream ID, a variable which is bound to the new ID for the 
+    successfully opened stream.</li>
+  <li><b>OPTIONS</b> - A list of options. Choices are:</li>
+  <ul>
+    <li><b>alias(A)</b> - A is an atom that can be used as a stream ID for the 
+      stream. The default is the file name.</li>
+    <li><b>type(T)</b> - T indicates the type of file. The default is text for 
+      output files. For input files, the default is either text or wide_text, 
+      the choice being determined by an examination of the characters in the file. 
+      Both big and little endian (byte order differences) wide character files 
+      can be accomodated.</li>
+    <ul>
+      <li><b>text</b> - The file is ASCII or multi-byte (varying length) characters, 
+        in lines ending in platform-dependent end-of-line indicators.</li>
+      <li><b>wide_text</b> - The file is wide (Unicode) characters, in lines, 
+        ending in platform-dependent end-of-line indicators.</li>
+      <li><b>binary</b> - The file is a stream of bytes, with no recognition of 
+        end-of-line indicators, usually for use with <a href="#BinaryIO">binary</a> 
+        read/write.</li>
+    </ul>
+  </ul>
+</ul>
+Example:
+<ul><font color="#000080"><pre>
+?- open('japanese_ducks.pro', write, ID,
+        [alias(jducks), type(wide_text)]).
+ID = 5 
+yes
+</pre></font></ul>
+<p><b>open/4,3</b> throws an error when an attempt is made to open, for reading, 
+  a file that does not exist. You might want to use <a href="ref_execution.htm#catch3">catch/3</a> 
+  to handle this error in your program, say by printing a message and failing 
+  as in this example:</p>
+<ul><font color="#000080"><pre>
+main :- open_file(F, ID), ...
+
+open_file(F, ID) :-
+   catch( open(F, read, ID),
+          _,
+          ( write('can''t open file':F), nl, fail) ).
+</pre></font></ul>
+
+<h3><A NAME="Open3"></A><FONT COLOR="#000080">open(FILE, MODE, ID)</FONT></h3>
+<!AMZI_INDEX = open/3>
+<p><b>open/3</b> can be used when the default options are to be used. These are 
+  type(text) and alias(FILE).</p>
+<p>Example:</p>
+<ul><font color="#000080"><pre>
+?- open('ducks.pro', read, ID).
+ID = 4 
+yes
+</pre></font></ul>
+
+<h3><A NAME="Close1"></A><FONT COLOR="#000080">close(ID)</FONT></h3>
+<!AMZI_INDEX = close/1>
+<p><b>close/1</b> is used to close a stream.</p>
+
+
+<H2><A NAME="PrologTerms"></A><FONT COLOR="#0000FF">
+Reading and Writing Prolog Terms</FONT></H2>
+
+<H3><A NAME="readTermreadIDTerm"></A><FONT COLOR="#000080">read(TERM), read(ID, 
+  TERM)</FONT></H3>
+
+<P><!AMZI_INDEX= read/1; read/2><B>read/1,2</B> behaves as follows:</P>
+<ul>
+  <li><b>succeeds</b> if TERM is unified with the next term read from stream ID, 
+    for read/2, or the current input stream, for read/1. White space and comments 
+    in the input stream are skipped.</li>
+  <li><b>fails</b> if TERM cannot be unified with the next term read.</li>
+  <li><b>unifies</b> TERM with the atom <b>end_of_file</b> if the end of file 
+    has been reached (succeeds or fails based on result of unification). On repeated 
+    attempts to read after the end of file, read/1,2 will continue to return <b>end_of_file</b>.</li>
+  <li><b>throws a read error</b> if there is a syntax error when attempting to 
+    read a valid Prolog term.</li>
+</ul>
+<P>Each term read must be terminated with a period(.). This is true even for terms 
+  entered at the console. Input terms can cover multiple lines, which means if 
+  you forget to enter the period(.), you can enter it on the next line.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- read(X).
+foo(bar).
+X = foo(bar) </FONT></PRE>
+</UL>
+
+<P>If the current input is a file then Prolog expects to be able to read a Term 
+  from the file. This query can be used to read all of the clauses from a Prolog 
+  source file:</P>
+<UL>
+  <PRE><FONT COLOR="#000080">
+?- open('ducks.pro', read, H, [alias(ducks)]).
+H = 4 
+yes
+?- repeat, read(ducks, X),
+   writeq(X), nl, X == end_of_file,
+   close(ducks).
+</FONT></PRE>
+</UL>
+
+<H3><A NAME="writeTermwriteIDTerm"></A><FONT COLOR="#000080">write(TERM), write(ID, 
+  TERM)</FONT></H3>
+
+<P><!AMZI_INDEX=write/1; write/2><B>write/1,2</B> write Prolog terms to stream ID, 
+  or the current output stream. Variables names are not preserved, but are regenerated. 
+  Atoms, strings, and other optionally quoted primitives are written without their 
+  quotes. This means terms written using write/1,2 may not be readable by read/1,2. 
+  Use write quoted, writeq/1,2 (see below), for terms that are intended to be 
+  read back.</P>
+<P>Examples:</P>
+<UL>
+  <PRE><FONT COLOR="#000080">
+?- write(hello).
+hello
+yes
+
+?- write(duck('Leona', `the mother of all ducks`)).
+duck(Leona, the mother of all ducks)
+yes
+
+?- write(duck(X)).
+duck(H1)
+X = H1 
+yes
+
+?- write(head(H, [H|T])).
+head(H1, [H1 | H3])
+H = H1
+T = H3 
+yes</FONT></PRE>
+</UL>
+
+<H3><A NAME="writeqTermwriteqIDTerm"></A><FONT COLOR="#000080">writeq(Term),
+writeq(ID, Term)</FONT></H3>
+
+<P><!AMZI_INDEX= writeq/1; writeq/2; write quoted>
+<P>Write quoted, <B>writeq/1,2</B>, writes Prolog terms to stream ID, or 
+  the current output stream. Variables names are not preserved, but are regenerated. 
+  Atoms, strings, and other optionally quoted primitives are quoted if necessary. 
+  Terms written with writeq/1,2 can be read by read/1,2 without loss of meaning.</P>
+
+<P>Examples:</P>
+<UL>
+  <PRE><FONT COLOR="#000080">
+?- writeq(hello).
+hello
+yes
+
+?- writeq(duck('Leona', `the mother of all ducks`)).
+duck('Leona', `the mother of all ducks`)
+yes
+
+yes</FONT></PRE>
+</UL>
+
+<P>Note that neither writeq/1,2 or write/1,2 writes the ending period required 
+  for input. That must be explicitly written as well if the term is to be later 
+  read. You probably want to write a newline (\n) character as well. Here is one 
+  way to generate a file to be later read (see <a href="#listing">listing</a> 
+  below for a better way).</P>
+<P>The example also illustrates writing a full Prolog rule, which requires parentheses 
+  around the rule to prevent the neck (:-) and comma (,) operators from swallowing 
+  the surrounding Prolog text. </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">
+duck(leona).
+duck(ivan).
+duck(bif).
+
+main :-
+  open('ducksout.pro', write, ID),
+  write_ducks(ID),
+  writeq(ID, (pet(duck) :- sound(quack), feathers(yes)) ),
+  write(ID, '.\n'),
+  close(ID).
+
+write_ducks(ID) :-
+  duck(D),
+  writeq(ID, duck(D)),
+  write(ID, '.\n'),
+  fail.
+write_ducks(_).
+</FONT></PRE>
+</UL>
+
+<H3><A NAME="listing"></A><FONT COLOR="#000080">listing, listing(PRED), listing(ID, 
+  PRED)</FONT></H3>
+
+<P><!AMZI_INDEX=listing; listing/1; listing/2; save; restore><B>listing/0,1,2</B> 
+  uses <b>pp/1</b> (see below) to write dynamic clauses from the logicbase to either 
+  current output or the stream ID specified. Using <b>listing</b> from the <a href="pug_listener.htm#ListingClauses">listener</a>, 
+  is a good way to see the dynamic clauses in the logicbase.</P>
+<P>Using <b>listing</b> with a stream ID is a good way to write out clauses that 
+  are intended to be later read. This is because <b>pp/1</b> uses <b>writeq</b> 
+  and puts on the ending period(.) and newline indicator.</P>
+<P>The PRED argument can be:</P>
+    <ul>
+      <li>FUNCTOR - all clauses in the current module with the functor are listed.</li>
+      <li>FUNCTOR/ARITY - all clauses in the current module with the functor/arity 
+        are listed.</li>
+      <li>MODULE:FUNCTOR/ARITY - all clauses in the specified module, with given 
+        functor/arity are listed.</li>
+      <li>MODULE - all clauses in the specfied module are listed.</li>
+      
+  <li>omitted (listing/0) - all clauses in all modules are listed to current output.</li>
+    </ul>
+<p><b>listing/2</b> can be used to save dynamic predicates that represent the 
+  state of an application. They can then be re-read using consult.</p>
+<p>For example, in a game where the state of the game is kept in a predicate location/2, the following predicates implement a save/restore capability for the game.</p>
+<UL><PRE><FONT COLOR="#000080">
+save(FILE) :-
+  open(FILE, write, ID),
+  listing(ID, location/2),
+  close(ID).
+
+restore(FILE) :-
+  reconsult(FILE).
+</FONT></PRE></UL>
+
+<H3><A NAME="prettyprint"></A><FONT COLOR="#000080">pp(TERM), pp(ID, TERM)</FONT></H3>
+
+<P><!AMZI_INDEX=pp/1; pretty print; user_pp><B>pp/1,2</B> (pretty print) write terms 
+  with indentation and terminating period(.) and new line indication. Variable 
+  names are not preserved, and generated variable names are used instead. If you 
+  implement your own version of <b>pp/1</b> and call it <b>user_pp/1</b>, then 
+  <b>pp</b> will use your version instead. This means that <b>listing</b> will 
+  use your version as well.</P>
+
+<H3><A NAME="consult1"></A><FONT COLOR="#000080">consult(FILE), reconsult(FILE)</FONT></H3>
+
+<P><!AMZI_INDEX=consult/1; reconsult/1><B>(re)consult/1</B> reads all of the clauses 
+  from an input Prolog source file, or list of files, and asserts them as dynamic clauses
+  in the logicbase. It also applies any directives that are part of that file(s). 
+  It is often used from the <a href="pug_listener.htm#ConsultingPrologSourceFiles">listener</a>, 
+  but can be used directly by an application to dynamically read a source file, 
+  as in the save/restore example above.</P>
+<p>reconsult/1 differs from consult/1, in that it retracts any previous clauses 
+  for a predicate that is about to be reconsulted.</p>
+<p>If a path name is used in FILE, it can use either forward or backward slashes 
+  to separate directories. If backslashes are chosen, then two are usually required, 
+  unless <a href="ref_terms.htm#EnablingandDisablingEscapeProc">string_esc</a> 
+  is off.</p>
+
+
+<H3><A NAME="displayTerm"></A><FONT COLOR="#000080">display(Term)</FONT></H3>
+
+<P><!AMZI_INDEX=display/1; Terms><B>display/1</B> displays a Prolog term
+without expanding operators (useful for seeing precedence and associativity
+of operators) </P>
+<UL><PRE><FONT COLOR="#000080">
+?- display( 2 + 3 / 4 * 6 ).
++(2,*(/(3,4),6))
+yes
+</FONT></PRE></UL>
+
+
+<H2><A NAME="StringsAndCharacters"></A><FONT COLOR="#0000FF">
+Reading and Writing Strings and Characters</FONT></H2>
+<!AMZI_INDEX = reading strings; writing strings; reading characters; writing characters>
+<H3><A NAME="getChargetIDChar"></A><FONT COLOR="#000080">get(CODE), get(ID, CODE)</FONT></H3>
+
+<P><!AMZI_INDEX= get/1; get/2><B>get/1,2</B> succeeds if CODE can be unified with 
+  the code value of the next non-white space character read from the appropriate 
+  file, or <b>end_of_file</b>.</P>
+
+<H3><A NAME="getChargetIDChar"></A><FONT COLOR="#000080">get0(CODE), get0(ID, 
+  CODE)</FONT></H3>
+
+<P><!AMZI_INDEX= get0/1; get0/2><B>get0/1,2</B> succeeds if CODE can be unified with 
+  the code value of the next character read in from the stream specified by ID, 
+  or <b>end_of_file</b>. </P>
+
+<H3><A NAME="putCharputIDChar"></A><FONT COLOR="#000080">put(CODE), put(ID, CODE)</FONT></H3>
+
+<P><!AMZI_INDEX= put/1; put/2><B>put/1,2</B> writes a character corresponding to 
+  the CODE value. </P>
+
+
+<H3><A NAME="readstringStringreadstringIDSt"></A><FONT COLOR="#000080">read_string(STRING), 
+  read_string(ID, STRING)</FONT></H3>
+
+<P><!AMZI_INDEX=  read_string/1; read_string/2><B>read_string/1,2</B> succeeds 
+  if STRING can be unified with the next line of characters read from the stream. 
+  The end-of-line indicator is not included as part of the string.</P>
+
+<P>STRING is unified with the atom <b>end_of_file</b> at the end of a file.</P>
+<p><b>read_string</b> can be used with <b>string_term</b> to read Prolog terms 
+  without requiring the ending period, as the following <b>get_input</b> predicate 
+  illustrates.</p>
+<ul><font color="#000080"><pre>
+get_input(TERM) :-
+   read_string(STRING),
+   string_term(STRING, TERM).
+</pre></font></ul>
+<p>You can also add your own error handling:</p>
+<ul><font color="#000080"><pre>
+get_input(PROMPT, TERM) :-
+   repeat,
+   write(PROMPT),
+   read_string(STRING),
+   catch( string_term(STRING, TERM),
+          ERROR, handle_error(ERROR) ).
+
+handle_error(_) :-
+   write(`Invalid Prolog term, try again.\n`),
+   fail.
+</pre></font></ul>
+Trying it:
+<ul><font color="#000080"><pre>
+?- get_input(`Enter term: `, X).
+Enter term: not a term
+Invalid Prolog term, try again.
+Enter term: this(is,a,term)
+
+X = this(is, a, term) 
+yes
+</pre></font></ul>
+
+<H2><A NAME="SpecialPurposeIO"></A><FONT COLOR="#0000FF">
+Special Purpose I/O Predicates</FONT></H2>
+<!AMZI_INDEX = repositioning streams; position; formatting; tab; newline; keyboard; reading keyboard>
+<h3><a name="at_end_of_stream"></a><font color="#000080">at_end_of_stream(ID)</font></h3>
+<p> 
+  <!AMZI_INDEX= at_end_of_stream/1>
+  Succeds if the file position is at the end of the specified stream. </p>
+<h3><a name="flushoutput"></a><font color="#000080">flush_output, flush_output(ID)</font></h3>
+<p><!AMZI_INDEX= flush_output/0; flush_output/1>These predicates flush either current output or 
+  the specified output stream. </p>
+
+<H3><A NAME="nlnlID"></A><FONT COLOR="#000080">nl, nl(ID)</FONT></H3>
+<P><!AMZI_INDEX= nl/0; nl/1><B>nl/0,1</B> prints out a newline to the current output 
+  stream or to the device specified by ID. </P>
+<H3><a name="skipCharskipIDChar"></a><font color="#000080">skip(CODE), skip(ID, 
+  CODE)</font></H3>
+<p><!AMZI_INDEX= skip/1; skip/2><b>skip/1,2</b> keeps reading characters from the 
+  appropriate stream until one is read whose value matches CODE<b>, </b>then succeeds. 
+  Fails if end-of-file condition is reached. </p>
+
+
+<h3><a name="tabNtabIDN"></a><font color="#000080">tab(N), tab(ID, N)</font></h3>
+<p><!AMZI_INDEX=  tab/1; tab/2><b>tab/1,2</b> prints out N spaces to the current output 
+  or the file identified by ID. An error is generated if N is not bound to an 
+  integer.</p>
+<H3><A NAME="respkeyChar"></A><FONT COLOR="#000080">respkey(CHAR)</FONT></H3>
+
+<P><!AMZI_INDEX= respkey/1><B>respkey/1</B> gets a single character response
+key from the keyboard.  This means it doesn't require an enter as get/1,2 does.  It is useful for applications that want an immediate response from a user.  An example of its use is the Amzi! debugger in console mode, where single letter keys trigger debugger actions.</P>
+
+<H3><A NAME="Repositioning"></A>
+<FONT COLOR="#000080">Repositioning Streams</FONT></H3>
+<!AMZI_INDEX = Repositioning; position; set_stream_position/2; steam_property>
+Certain streams, in particular files, can be repositioned. This is most often 
+the case with binary files, but text files can be repositioned as well.
+<p>To get the current position of a file, use the <b>stream_property/2</b> predicate 
+  as follows:</p>
+<h3><b><a name="stream_property"></a> <font color="#000080">stream_property(ID, 
+  position(Position))</font></b></h3>
+<p>
+  <!AMZI_INDEX = stream_property/2>
+  To set the position, use <b>set_stream_position/2</b>.</p>
+<H3><A NAME="SetStreamPosition"></A>
+<FONT COLOR="#000080">set_stream_position(ID, POSITION)</FONT></H3>
+<!AMZI_INDEX = set_stream_position/2>
+You can use the first call above, to get a position, and the second call to reset 
+the stream to that position, without having to know the details of how POSITION 
+is represented.
+<p>For example, this series of goals saves a position and then goes back to it:</p>
+<ul><font color="#000080"><pre>
+reread :-
+   open('duck.pro', read, H),
+   read(H, D1), write(D1), nl,
+   stream_property(H, position(POS_DUCK2)),
+   read(H, D2), write(D2), nl,
+   read(H, D3), write(D3), nl,
+   set_stream_position(H, POS_DUCK2),
+   read(H, D4), write(D4), nl,
+   close(H).
+</pre></font></ul>
+<p>Using it on this file, duck.pro:</p>
+<ul><font color="#000080"><pre>
+duck(leona).
+duck(ivan).
+duck(bif).
+duck(martha).
+</pre></font></ul>
+<p>produces these results:</p>
+<ul><font color="#000080"><pre>
+?- reread.
+duck(leona)
+duck(ivan)
+duck(bif)
+duck(ivan)
+
+yes
+</pre></font></ul>
+
+<p>Repositioning can be used to restart reading in a file, or in read/write files 
+  to read elements written previously, or to insert elements in a file, such as 
+  adding a length at the beginning of the file, which was only determined after 
+  writing the file. Repositioning is probably of the most use with binary files. 
+  (For example, it is used heavily in the Amzi! compiler, written in Prolog, which 
+  generates the binary output format .plm files.)</p>
+<p>The POSITION argument is a structure, defining the state of the stream. It 
+  allows for the specification of both a read and a write position. BUT, this 
+  feature is only supported if the underlying tools used to build the Amzi! runtime 
+  engine support dual positions. On most platforms, both are the same, and setting 
+  one sets the other.</p>
+<p>The POSITION argument is different for text and binary streams. For binary 
+  streams, the POSITION structure is relatively straight forward:</p>
+<p><b>binary(ORIGIN, READ_POSITION, WRITE_POSITION)</b>.</p>
+
+<ul>
+  <li><b>ORIGIN</b> - what the position is relative to, can be: 
+    <ul>
+      <li><b>beginning</b> - the beginning of the stream</li>
+      <li><b>current</b> - the current position in the stream</li>
+      <li><b>end</b> - the end of the stream</li>
+    </ul>
+  </li>
+  <li><b>READ_POSITION</b> - The offset from the origin of the read position in 
+    the stream. <i>NOTE, for many environments this might be forced to be the 
+    same as the WRITE_POSITION.</i></li>
+  <li><b>WRITE_POSITION</b> - The offset from the origin of the write position 
+    in the stream. <i>NOTE, for many environments this might be forced to be the 
+    same as READ_POSITION.</i></li>
+</ul>
+<p>Here is an example of reading the above sample file as a binary file, reading 
+  a character at a time:</p>
+<ul>
+  <font color="#000080">
+  <pre>
+?- open('duck.pro', read, H, [alias(duck), type(binary)]).
+H = 4 
+yes
+?- read_binary(duck, char, X).
+X = 100    % d
+yes
+?- read_binary(duck, char, X).
+X = 117    % u
+yes
+?- stream_property(duck, position(POSITION)).
+POSITION = binary(beginning, 2, 0) 
+yes
+?- set_stream_position(duck, binary(beginning, 1, 0)).
+yes
+?- read_binary(duck, char, X).
+X = 117   % u again
+yes
+?- set_stream_position(duck, binary(current, -1, 0)).
+yes
+?- read_binary(duck, char, X).
+X = 117   % and u again
+yes
+</pre>
+  </font>
+</ul>
+
+<p>For text streams, the POSITION structure is more complex for the read position. 
+  This is because input streams are read a line at a time, and the line is converted 
+  from possible multi-byte (variable length) characters in the stream to wide 
+  characters internally. It's form is:</p>
+<p><b>text(ORIGIN, READ_LINE, READ_COLUMN, READ_OFFSET, WRITE_POSITION).</b></p>
+<p><b><img src="arrowrt.gif" height=18 width=18 align=BOTTOM> </b><i> You should 
+  never attempt to manually set the arguments of the text position. You can get 
+  position information, save it, and then reuse it, but attempts to generate text 
+  positions by hand can lead to unpredictable results.</i></p>
+
+<H2><A NAME="RedirectingStreams"></A><FONT COLOR="#0000FF">
+Redirecting Streams</FONT></H2>
+
+<P><!AMZI_INDEX= Redirecting streams; stream redirection>There are two sets of predicates for redirecting streams.  The predicates with input/output in their names are part of the ISO standard for Prolog.  The see/tell family of predicates are from the older defacto Edinburgh standard for Prolog.</P>
+
+<P>In either case, the predicates are used to examine or to change the current 
+  (default) input/output streams. The current input/output streams are the ones 
+  used by I/O predicates that do not have stream ID specified.</P>
+<P>For example, listing output is redirected to a file during this listener session:</P>
+<ul><font color="#000080"><pre>
+?- open('out.txt', write, H, [alias(out)]).
+H = 5 
+yes
+?- current_output(COUT), set_output(out), listing, set_output(COUT).
+COUT = 3 
+yes
+</pre></font></ul>
+<p>(The fact that COUT = 3 in the example, is due to the example being run in 
+  the Amzi! Windows IDE. It would have been 1 in a console application.)</p>
+<p><i><b>NOTE ==&gt;</b> It is important to always first save the current input/output 
+  stream before changing the stream. This allows you to reset the stream to its 
+  previous value.</i></p>
+<H3><a name="currentinput"></a><font color="#000080">current_input(ID)</font></H3>
+<p><!AMZI_INDEX=  current_input/1><b>current_input/1</b> unifies ID with the current 
+  input stream. </p>
+<h3><a name="currentoutput"></a><font color="#000080">current_output(ID)</font></h3>
+<p><!AMZI_INDEX=  current_output/1><b>current_output/1</b> unifies ID with the current 
+  output stream. </p>
+
+
+<h3><a name="setinput"></a><font color="#000080">set_input(ID)</font></h3>
+<p><!AMZI_INDEX= set_input/1><b>set_input/1</b> sets the current input stream to 
+  ID. </p>
+<H3><A NAME="setoutput"></A><FONT COLOR="#000080">set_output(ID)</FONT></H3>
+
+<P><!AMZI_INDEX= set_output/1><B>set_output/1</B> sets the current output stream 
+  to ID. </P>
+
+<H3><A NAME="seeStreamA"></A><FONT COLOR="#000080">see(ID), see(FILENAME), see(user)</FONT></H3>
+
+<P><!AMZI_INDEX=see/1><B>see/1</B> redirects the current input to ID. Unlike <b>set_input/1</b>, 
+  the argument to <b>see/1</b> does not have to be a valid stream ID. If its not, 
+  <b>see/1</b> will assume the argument is a file name and open it for input. 
+  The special atom <b>user</b> indicates that current input should be directed 
+  to the normal user input stream. This would be 0 for console applications and 
+  3 for Amzi! Windows IDE applications.</P>
+
+<H3><A NAME="seen"></A><FONT COLOR="#000080">seen</FONT></H3>
+
+<P><!AMZI_INDEX= seen/0>The current input stream is closed and is redirected to 
+  <b>user</b>, see above.</P>
+
+<H3><A NAME="seeingSName"></A><FONT COLOR="#000080">seeing(ID)</FONT></H3>
+
+<P><!AMZI_INDEX= seeing/1><B>seeing/1</B> returns the ID of the current input stream. 
+  ID must be a variable. </P>
+
+
+<h3><a name="tellStreamA"></a><font color="#000080">tell(ID), tell(FILENAME), 
+  tell(user) </font></h3>
+<P><!AMZI_INDEX=tell/1><B>tell/1</B> redirects the current output to ID. Unlike <b>set_output/1</b>, 
+  the argument to <b>tell/1</b> does not have to be a valid stream ID. If its not, 
+  <b>tell/1</b> will assume the argument is a file name and open it for output. 
+  The special atom <b>user</b> indicates that current output should be directed 
+  to the normal user output stream. This would be 1 for console applications and 
+  3 for Amzi! Windows IDE applications.</P>
+
+<H3><A NAME="told"></A><FONT COLOR="#000080">told</FONT></H3>
+
+<P><!AMZI_INDEX= told/0>The current output stream is closed and is redirected to 
+  <b>user</b>, see above.</P>
+
+<H3><A NAME="tellingSName"></A><FONT COLOR="#000080">telling(ID)</FONT></H3>
+
+<P><!AMZI_INDEX= telling/1><B>telling/1</B> returns the ID of the current output 
+  stream. ID must be a variable. </P>
+
+
+<H2><A NAME="BinaryIO"></A><FONT COLOR="#0000FF">
+Binary I/O</FONT></H2>
+
+<!AMZI_INDEX = binary I/O; char; wide_char; short_integer; integer; single_float; double_float; data types>
+<p>The binary I/O predicates view a stream as a stream of bytes, without recognition 
+  of end-of-line indicators. The predicates read/write various types of data, 
+  such as integers, floats and characters. The DATA_TYPE in the two predicates 
+  can be one of the following atom values:</p>
+<ul>
+  <li><b>char</b> - a single byte (8 bits).</li>
+  <li><b>wide_char</b> - a double byte character (16 bits).</li>
+  <li><b>short_integer</b> - a 16 bit integer (on 32-bit platforms).</li>
+  <li><b>integer</b> - a 32 bit integer (on 64-bit platforms).</li>
+  <li><b>single_float</b> - a single precision floating point number.</li>
+  <li><b>double_float</b> - a double precision floating point number.</li>
+</ul>
+<H3><A NAME="ReadBinary"></A>
+<FONT COLOR="#000080">read_binary(ID, DATA_TYPE, DATA)</FONT></H3>
+<!AMZI_INDEX = read_binary/3; binary input>
+<p><b>read_binary/3</b> reads a binary quantity, of type DATA_TYPE, from stream 
+  ID and unifies the read quantity with DATA.</p>
+
+<H3><A NAME="WriteBinary"></A>
+<FONT COLOR="#000080">write_binary(ID, DATA_TYPE, DATA)</FONT></H3>
+<!AMZI_INDEX = write_binary/3; binary output>
+<p><b>write_binary/3</b> writes a binary quantity, DATA, of type DATA_TYPE, to stream 
+  ID.</p>
+
+
+
+<H2><A NAME="Logging"></A><FONT COLOR="#0000FF">
+Logging</FONT></H2>
+
+<P><!AMZI_INDEX= Log Files; logging>The log file capability allows you to record
+a transcript of a Prolog session. This is especially useful in recording
+long traces during debugging. </P>
+
+<P>Logging can be controlled from a listener, or within a Prolog program
+through the use of built-in predicates. </P>
+
+<H3><A NAME="openlogFname"></A><FONT COLOR="#000080">openlog(Fname)</FONT></H3>
+
+<P><!AMZI_INDEX= openlog/1>This opens the file Fname and sets a flag letting
+Prolog know it is logging. The file overwrites any previous file of the
+same name. Fname must be an atom, such as &quot;temp.log&quot; or simply
+log. </P>
+
+<H3><A NAME="closelog"></A><FONT COLOR="#000080">closelog</FONT></H3>
+
+<P><!AMZI_INDEX= closelog/0>This closes the log file and stops the logging
+process. </P>
+
+<H3><A NAME="writelogX"></A><FONT COLOR="#000080">writelog(X)</FONT></H3>
+
+<P><!AMZI_INDEX= writelog/1>Writes X just to the log file. </P>
+
+<H3><A NAME="nllog"></A><FONT COLOR="#000080">nllog</FONT></H3>
+
+<P><!AMZI_INDEX= nllog/0>Writes a newline to the log file. </P>
+
+<P>Logging can also be turned on for an application by specifying a log
+file in the application's .cfg file. </P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><P>&nbsp; </P>
+
+</BODY>
+</HTML>

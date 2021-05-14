@@ -1,0 +1,211 @@
+<HTML>
+<BODY BGCOLOR=#000055 TEXT=yellow LINK=white VLINK=aqua ALINK=red>
+
+<P>
+<B><FONT COLOR="yellow">Building Expert Systems in Prolog</FONT></B>
+<P><B><FONT COLOR="yellow">Contents </FONT></B><A HREF="xsipidx.htm"><B>Index</B></A><P>
+
+<PRE>
+Faceplate
+  <A HREF="00faceplate.htm#johnstannardonthefirstfreeascentoffoops1967" TARGET="content">John Stannard on the first free ascent of Foops-1967</A>
+
+Preface & amp; Acknowledgements
+  <A HREF="00preface.htm#preface" TARGET="content">Preface</A>
+ <A HREF="00preface.htm#acknowledgements" TARGET="content">Acknowledgements</A>
+
+1 Introduction
+ <A HREF="01introduction.htm#Introduction" TARGET="content">1 Introduction</A>
+  <A HREF="01introduction.htm#expertsystems" TARGET="content">1.1 Expert Systems</A>
+  <A HREF="01introduction.htm#expertsystemfeatures" TARGET="content">1.2 Expert System Features</A>
+  <A HREF="01introduction.htm#goaldrivenreasoning" TARGET="content">Goal-Driven Reasoning</A>
+  <A HREF="01introduction.htm#uncertainty" TARGET="content">Uncertainty</A>
+  <A HREF="01introduction.htm#datadrivenreasoning" TARGET="content">Data Driven Reasoning</A>
+  <A HREF="01introduction.htm#datarepresentation" TARGET="content">Data Representation</A>
+  <A HREF="01introduction.htm#userinterface" TARGET="content">User Interface</A>
+  <A HREF="01introduction.htm#explanations" TARGET="content">Explanations</A>
+  <A HREF="01introduction.htm#sampleapplications" TARGET="content">1.3 Sample Applications</A>
+  <A HREF="01introduction.htm#prolog" TARGET="content">1.4 Prolog</A>
+  <A HREF="01introduction.htm#assumptions" TARGET="content">1.5 Assumptions</A>
+
+2 Using Prolog's Inference Engine
+ <A HREF="02usingprolog.htm#UsingPrologsInferenceEngine" TARGET="content">2 Using Prolog's Inference Engine</A>
+  <A HREF="02usingprolog.htm#thebirdidentificationsystem" TARGET="content">2.1 The Bird Identification System</A>
+  <A HREF="02usingprolog.htm#ruleformats" TARGET="content">Rule formats</A>
+  <A HREF="02usingprolog.htm#rulesaboutbirds" TARGET="content">Rules about birds</A>
+  <A HREF="02usingprolog.htm#rulesforhierarchicalrelationships" TARGET="content">Rules for hierarchical relationships</A>
+  <A HREF="02usingprolog.htm#rulesforotherrelationships" TARGET="content">Rules for other relationships</A>
+  <A HREF="02usingprolog.htm#userinterface" TARGET="content">2.2 User Interface</A>
+  <A HREF="02usingprolog.htm#attributevaluepairs" TARGET="content">Attribute Value pairs</A>
+  <A HREF="02usingprolog.htm#askingtheuser" TARGET="content">Asking the user</A>
+  <A HREF="02usingprolog.htm#rememberingtheanswer" TARGET="content">Remembering the answer</A>
+  <A HREF="02usingprolog.htm#multivaluedanswers" TARGET="content">Multi-valued answers</A>
+  <A HREF="02usingprolog.htm#menusfortheuser" TARGET="content">Menus for the user</A>
+  <A HREF="02usingprolog.htm#otherenhancements" TARGET="content">Other enhancements</A>
+  <A HREF="02usingprolog.htm#asimpleshell" TARGET="content">2.3 A Simple Shell</A>
+  <A HREF="02usingprolog.htm#commandloop" TARGET="content">Command loop</A>
+  <A HREF="02usingprolog.htm#atoolfornonprogrammers" TARGET="content">A tool for non-programmers</A>
+  <A HREF="02usingprolog.htm#summary" TARGET="content">2.4 Summary</A>
+  <A HREF="02usingprolog.htm#exercises" TARGET="content">Exercises</A>
+
+3 Backward Chaining with Uncertainty
+ <A HREF="03backwarduncertainty.htm#BackwardChainingWithUncertainty" TARGET="content">3 Backward Chaining with Uncertainty</A>
+  <A HREF="03backwarduncertainty.htm#certaintyfactors" TARGET="content">3.1 Certainty Factors</A>
+  <A HREF="03backwarduncertainty.htm#anexample" TARGET="content">An Example</A>
+  <A HREF="03backwarduncertainty.htm#ruleuncertainty" TARGET="content">Rule Uncertainty</A>
+  <A HREF="03backwarduncertainty.htm#useruncertainty" TARGET="content">User Uncertainty</A>
+  <A HREF="03backwarduncertainty.htm#combiningcertainties" TARGET="content">Combining Certainties</A>
+  <A HREF="03backwarduncertainty.htm#propertiesofcertaintyfactors" TARGET="content">Properties of Certainty Factors</A>
+  <A HREF="03backwarduncertainty.htm#mycinscertaintyfactors" TARGET="content">3.2 MYCINs Certainty Factors</A>
+  <A HREF="03backwarduncertainty.htm#determiningpremisecf" TARGET="content">Determining Premise CF</A>
+  <A HREF="03backwarduncertainty.htm#combiningpremisecfandconclusioncf" TARGET="content">Combining Premise CF and Conclusion CF</A>
+  <A HREF="03backwarduncertainty.htm#premisethresholdcf" TARGET="content">Premise Threshold CF</A>
+  <A HREF="03backwarduncertainty.htm#combiningcfs" TARGET="content">Combining CFs</A>
+  <A HREF="03backwarduncertainty.htm#ruleformat" TARGET="content">3.3 Rule Format</A>
+  <A HREF="03backwarduncertainty.htm#theinferenceengine" TARGET="content">3.4 The Inference Engine</A>
+  <A HREF="03backwarduncertainty.htm#workingstorage" TARGET="content">Working Storage</A>
+  <A HREF="03backwarduncertainty.htm#findavalueforanattribute" TARGET="content">Find a Value for an Attribute</A>
+  <A HREF="03backwarduncertainty.htm#attributevaluealreadyknown" TARGET="content">Attribute Value Already Known</A>
+  <A HREF="03backwarduncertainty.htm#askuserforattributevalue" TARGET="content">Ask User for Attribute Value</A>
+  <A HREF="03backwarduncertainty.htm#deduceattributevaluefromrules" TARGET="content">Deduce Attribute Value from Rules</A>
+  <A HREF="03backwarduncertainty.htm#makingtheshell" TARGET="content">3.5 Making the Shell</A>
+  <A HREF="03backwarduncertainty.htm#startingtheinference" TARGET="content">Starting the Inference</A>
+  <A HREF="03backwarduncertainty.htm#englishlikerules" TARGET="content">3.6 English-like Rules</A>
+  <A HREF="03backwarduncertainty.htm#exercises" TARGET="content">Exercises</A>
+
+4 Explanation
+ <A HREF="04explanation.htm#Explanation" TARGET="content">4 Explanation</A>
+   <A HREF="04explanation.htm#valueofexplanationstotheuser" TARGET="content">Value of Explanations to the User</A>
+   <A HREF="04explanation.htm#valueofexplanationstothedeveloper" TARGET="content">Value of Explanations to the Developer</A>
+   <A HREF="04explanation.htm#typesofexplanations" TARGET="content">Types of Explanation</A>
+  <A HREF="04explanation.htm#explanationinclam" TARGET="content">4.1 Explanation in Clam</A>
+  <A HREF="04explanation.htm#tracing" TARGET="content">Tracing</A>
+  <A HREF="04explanation.htm#howexplanations" TARGET="content">How Explanations</A>
+  <A HREF="04explanation.htm#whyquestions" TARGET="content">Why Questions</A>
+  <A HREF="04explanation.htm#nativeprologsystems" TARGET="content">4.2 Native Prolog Systems</A>
+  <A HREF="04explanation.htm#exercises" TARGET="content">Exercises</A>
+
+5 Forward Chaining
+ <A HREF="05forward.htm#ForwardChaining" TARGET="content">5 Forward Chaining</A>
+  <A HREF="05forward.htm#productionsystems" TARGET="content">5.1 Production Systems</A>
+  <A HREF="05forward.htm#usingoops" TARGET="content">5.2 Using Oops</A>
+  <A HREF="05forward.htm#implementation" TARGET="content">5.3 Implementation</A>
+  <A HREF="05forward.htm#explanationforoops" TARGET="content">5.4 Explanations for Oops</A>
+  <A HREF="05forward.htm#enhancements" TARGET="content">5.5 Enhancements</A>
+  <A HREF="05forward.htm#ruleselection" TARGET="content">5.6 Rule Selection</A>
+  <A HREF="05forward.htm#generatingtheconflictset" TARGET="content">Generating the conflict set</A>
+  <A HREF="05forward.htm#timestamps" TARGET="content">Time stamps</A>
+  <A HREF="05forward.htm#lex" TARGET="content">5.7 LEX</A>
+  <A HREF="05forward.htm#changesintherules" TARGET="content">Changes in the Rules</A>
+  <A HREF="05forward.htm#implementinglex" TARGET="content">Implementing LEX</A>
+  <A HREF="05forward.htm#MEA" TARGET="content">5.8 MEA</A>
+  <A HREF="05forward.htm#exercises" TARGET="content">Exercises</A>
+
+6 Frames
+ <A HREF="06frames.htm#Frames" TARGET="content">6 Frames</A>
+  <A HREF="06frames.htm#thecode" TARGET="content">6.1 The Code</A>
+  <A HREF="06frames.htm#datastructures" TARGET="content">6.2 Data Structure</A>
+  <A HREF="06frames.htm#themanipulationpredicates" TARGET="content">6.3 The Manipulation Predicates</A>
+  <A HREF="06frames.htm#usingframes" TARGET="content">6.4 Using Frames</A>
+  <A HREF="06frames.htm#summary" TARGET="content">6.5 Summary</A>
+  <A HREF="06frames.htm#exercises" TARGET="content">Exercises</A>
+
+7 Integration
+ <A HREF="07integration.htm#Integration" TARGET="content">7 Integration</A>
+  <A HREF="07integration.htm#foops" TARGET="content">7.1 Foops (Frames and Oops)</A>
+  <A HREF="07integration.htm#instances" TARGET="content">Instances</A>
+  <A HREF="07integration.htm#rulesforfrints" TARGET="content">Rules for frinsts</A>
+  <A HREF="07integration.htm#addingprologtofoops" TARGET="content">Adding Prolog to Foops</A>
+  <A HREF="07integration.htm#roomconfiguration" TARGET="content">7.2 Room Configuration</A>
+  <A HREF="07integration.htm#furnitureframes" TARGET="content">Furniture frames</A>
+  <A HREF="07integration.htm#framedemons" TARGET="content">Frame Demons</A>
+  <A HREF="07integration.htm#initialdata" TARGET="content">Initial Data</A>
+  <A HREF="07integration.htm#inputdata" TARGET="content">Input Data</A>
+  <A HREF="07integration.htm#therules" TARGET="content">The Rules</A>
+  <A HREF="07integration.htm#outputdata" TARGET="content">Output Data</A>
+  <A HREF="07integration.htm#asamplerun" TARGET="content">7.3 A Sample Run</A>
+  <A HREF="07integration.htm#summary" TARGET="content">7.4 Summary</A>
+  <A HREF="07integration.htm#exercises" TARGET="content">Exercises</A>
+
+8 Performance
+ <A HREF="08performance.htm#Performance" TARGET="content">8 Performance</A>
+  <A HREF="08performance.htm#backwardchainingindexes" TARGET="content">8.1 Backward Chaining Indexes</A>
+  <A HREF="08performance.htm#retematchalgorithm" TARGET="content">8.2 Rete Match Algorithm</A>
+  <A HREF="08performance.htm#networknodes" TARGET="content">Network Nodes</A>
+  <A HREF="08performance.htm#networkpropogation" TARGET="content">Network Propagation</A>
+  <A HREF="08performance.htm#exampleofnetworkpropagation" TARGET="content">Example of Network Propagation</A>
+  <A HREF="08performance.htm#performanceimprovements" TARGET="content">Performance Improvements</A>
+  <A HREF="08performance.htm#theretegraphdatastructures" TARGET="content">8.3 The Rete Graph Data Structures</A>
+  <A HREF="08performance.htm#propagatingtokens" TARGET="content">8.4 Propagating Tokens</A>
+  <A HREF="08performance.htm#therulecompiler" TARGET="content">8.5 The Rule Compiler</A>
+  <A HREF="08performance.htm#integrationwithfoops" TARGET="content">8.6 Integration with Foops</A>
+  <A HREF="08performance.htm#designtradeoffs" TARGET="content">8.7 Design Tradeoffs</A>
+  <A HREF="08performance.htm#exercises" TARGET="content">Exercises</A>
+
+9 User Interface
+ <A HREF="09userinterface.htm#UserInterface" TARGET="content">9 User Interface</A>
+  <A HREF="09userinterface.htm#objectorientedwindowinterface" TARGET="content">9.1 Object Oriented Window Interface</A>
+  <A HREF="09userinterface.htm#developersinterfacetowindows" TARGET="content">9.2 Developer's Interface to Windows</A>
+  <A HREF="09userinterface.htm#highlevelwindowimplementation" TARGET="content">9.3 High-Level Window Implementation</A>
+  <A HREF="09userinterface.htm#messagepassing" TARGET="content">Message Passing</A>
+  <A HREF="09userinterface.htm#inheritance" TARGET="content">Inheritance</A>
+  <A HREF="09userinterface.htm#lowlevelwindowimplementation" TARGET="content">9.4 Low-Level Window Implementation</A>
+  <A HREF="09userinterface.htm#exercises" TARGET="content">Exercises</A>
+
+10 Two Hybrids
+ <A HREF="10hybrids.htm#TwoHybrids" TARGET="content">10 Two Hybrids</A>
+  <A HREF="10hybrids.htm#cvgen" TARGET="content">10.1 CVGEN</A>
+  <A HREF="10hybrids.htm#theknowledgebase" TARGET="content">10.2 The Knowledge Base</A>
+  <A HREF="10hybrids.htm#ruleforparameters" TARGET="content">Rule for parameters</A>
+  <A HREF="10hybrids.htm#rulesforderivedinformation" TARGET="content">Rules for derived information</A>
+  <A HREF="10hybrids.htm#questionsfortheuser" TARGET="content">Questions for the user</A>
+  <A HREF="10hybrids.htm#defaultrules" TARGET="content">Default rules</A>
+  <A HREF="10hybrids.htm#rulesforedits" TARGET="content">Rules for edits</A>
+  <A HREF="10hybrids.htm#staticinformation" TARGET="content">Static information</A>
+  <A HREF="10hybrids.htm#inferenceengine" TARGET="content">10.3 Inference Engine</A>
+  <A HREF="10hybrids.htm#explanations" TARGET="content">10.4 Explanations</A>
+  <A HREF="10hybrids.htm#environment" TARGET="content">10.5 Environment</A>
+  <A HREF="10hybrids.htm#aijmp" TARGET="content">10.6 AIJMP</A>
+  <A HREF="10hybrids.htm#summary" TARGET="content">10.7 Summary</A>
+  <A HREF="10hybrids.htm#exercises" TARGET="content">Exercises</A>
+
+11 Prototyping
+ <A HREF="11prototyping.htm#Prototyping" TARGET="content">11 Prototyping</A>
+  <A HREF="11prototyping.htm#theproblem" TARGET="content">11.1 The Problem</A>
+  <A HREF="11prototyping.htm#thesalesadvisorknowledgebase" TARGET="content">11.2 The Sales Advisor Knowledge Base</A>
+  <A HREF="11prototyping.htm#qualifying" TARGET="content">Qualifying</A>
+  <A HREF="11prototyping.htm#objectivesbenefitsfeatures" TARGET="content">Objectives-Benefits-Features</A>
+  <A HREF="11prototyping.htm#situationanalysis" TARGET="content">Situation Analysis</A>
+  <A HREF="11prototyping.htm#competitiveanalysis" TARGET="content">Competitive Analysis</A>
+  <A HREF="11prototyping.htm#miscellaneousadvice" TARGET="content">Miscellaneous Advice</A>
+  <A HREF="11prototyping.htm#userqueries" TARGET="content">User Queries</A>
+  <A HREF="11prototyping.htm#theinferenceengine" TARGET="content">11.3 The Inference Engine</A>
+  <A HREF="11prototyping.htm#userinterface" TARGET="content">11.4 User Interface</A>
+  <A HREF="11prototyping.htm#summary" TARGET="content">11.5 Summary</A>
+  <A HREF="11prototyping.htm#exercises" TARGET="content">Exercises</A>
+
+12 Rubik's Cube
+ <A HREF="12rubikscube.htm#RubiksCube" TARGET="content">12 Rubik's Cube</A>
+  <A HREF="12rubikscube.htm#theproblem" TARGET="content">12.1 The Problem</A>
+  <A HREF="12rubikscube.htm#thecube" TARGET="content">12.2 The Cube</A>
+  <A HREF="12rubikscube.htm#rotation" TARGET="content">12.3 Rotation</A>
+  <A HREF="12rubikscube.htm#highlevelrules" TARGET="content">12.4 High Level Rules</A>
+  <A HREF="12rubikscube.htm#improvingthestate" TARGET="content">12.5 Improving the State</A>
+  <A HREF="12rubikscube.htm#thesearch" TARGET="content">12.6 The Search</A>
+  <A HREF="12rubikscube.htm#moreheuristics" TARGET="content">12.7 More Heuristics</A>
+  <A HREF="12rubikscube.htm#userinterface" TARGET="content">12.8 User Interface</A>
+  <A HREF="12rubikscube.htm#onthelimitsofmachines" TARGET="content">12.9 On the Limits of Machines</A>
+  <A HREF="12rubikscube.htm#exercises" TARGET="content">Exercises</A>
+
+Appendix-Full Source Code
+  <A HREF="appendix.htm#Appendix" TARGET="content">Appendix-Full Source Code</A>
+  <A HREF="appendix.htm#native" TARGET="content">Native</A>
+  <A HREF="appendix.htm#clam" TARGET="content">Clam</A>
+  <A HREF="appendix.htm#oops" TARGET="content">Oops</A>
+  <A HREF="appendix.htm#foops" TARGET="content">Foops</A>
+  <A HREF="appendix.htm#retefoops" TARGET="content">Rete-Foops</A>
+  <A HREF="appendix.htm#windows" TARGET="content">Windows</A>
+  <A HREF="appendix.htm#rubik" TARGET="content">Rubik</A>
+  <A HREF="appendix.htm#taxes" TARGET="content">Taxes (Bonus Code)</A>
+</PRE>
+</BODY>
+</HTML>

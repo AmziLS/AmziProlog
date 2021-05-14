@@ -1,0 +1,531 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Untitled</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY>
+
+<H1><FONT COLOR="#0000FF">Extending C with Prolog</FONT></H1>
+
+<P><I><FONT SIZE=+0>(This is an expanded version the text of an article
+which appeared in the August 1994 issue of Dr. Dobbs Journal. Please do
+not copy or distribute without acknowleging Dr. Dobbs Journal. The original
+article referred to Cogent Prolog, which has been renamed Amzi! Prolog.
+As the article was intended for C/C++ programmers, it contains background
+information on Prolog as well as a description of the IRQXS sample program.)</FONT></I></P>
+
+<H2><FONT COLOR="#000080">Introduction </FONT></H2>
+
+<P>Prolog and C provide complementary strengths that have been used together
+since programmers have been using Prolog. At the heart of KnowledgeWare's
+CASE tool, ADW, is a giant Prolog program; ICARUS provides project estimation
+tools for chemical engineers with Prolog doing the work inside; and Pacific
+AI provides educational tools for industry using C libraries for presentation
+and Prolog for internal logic.</P>
+
+<P>This article examines the strengths of Prolog, the nature of Prolog,
+and the design of an interface between Prolog and C. All comments about
+and examples of Prolog adhere to the Edinburgh Prolog standard and thus
+apply to any conforming Prolog implementation. The C interface examples
+are specific to the Amzi! Prolog API, but the same capabilities are available
+in many Prolog implementations.</P>
+
+<H2><FONT COLOR="#000080">Why Prolog?</FONT><FONT COLOR="#0000FF"> </FONT></H2>
+
+<P>Much has been written about the wonders of Prolog as a declarative programming
+language and its strength as a language for implementing artificial intelligence
+(AI) applications. A look under the hood of both AI and Prolog reveals
+why.</P>
+
+<P>When I first became interested in AI, I bought one of the few books
+written on the subject at the time. I was expecting deep discussions on
+the nature of intelligence and the problems of simulating it on a computer.
+Instead, I found a collection of search and pattern- matching algorithms.</P>
+
+<P>This, it turns out, is the essence of much AI programming. A chess program
+searches for patterns in the game, a natural language program searches
+for patterns in lists of words, and a diagnostic program searches for rules
+that match symptoms. Prolog is very good at pattern matching and search.</P>
+
+<P>Two features in a programming language that make pattern- matching easier
+are 1) support for symbols as a primitive data type that can be manipulated
+without the need to call special functions, and 2) dynamic memory management
+so the developer can simply use the symbols without worrying about memory
+allocation issues. Languages that have these features, such as Prolog and
+LISP, are called symbolic languages.</P>
+
+<P>Consider, for example, a simple control loop that reads a command from
+a user and then does something. In C that code might look like</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">void main() 
+{ 
+  char buf[20]; 
+  do { 
+     gets(buf); 
+     if (0 == strcmp(buf, &quot;open&quot;)) ... 
+     else if (0 == strcmp(buf, &quot;add&quot;)) ... 
+     else if (0 == strcmp(buf, &quot;delete&quot;)) ... 
+  } while (strcmp(buf, &quot;quit&quot;)); 
+  printf(&quot;done&quot;); 
+}</FONT></PRE>
+</UL>
+
+<P>In Prolog, dynamically allocated symbols are used instead of character
+strings, so the equivalent code looks like</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">main :- 
+  repeat, 
+  read(X), 
+  do(X), 
+  X == quit, 
+  write(done).</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">do(open) :- ... 
+do(add) :- ... 
+do(delete) :- ...</FONT></PRE>
+</UL>
+
+<P>Notice the lack of data definition statements or string compares. The
+difference is not significant in a simple example such as this, but in
+applications where the bulk of the work is comparing symbols, it becomes
+quite significant.</P>
+
+<P>In addition to dynamically allocated symbols, Prolog has, as an integral
+part of the language, a sophisticated pattern matching algorithm, called
+unification, and a search mechanism, called backtracking.</P>
+
+<P>These can both be seen in the code fragment above. The pattern 'do(X)'
+is unified against the first of the three 'do' rules, defined by the ':-'
+symbol meaning 'if'. If the user entered 'open' then the first clause,
+as it's called, would match and the code on the right of the ':-' would
+be executed. If the user entered something other than 'open', Prolog would
+'backtrack' and continue to look for a 'do' rule that does match the user's
+input.</P>
+
+<P>Similarly, the use of the 'repeat' and 'X == quit' in the 'main' rule
+causes the sample section of code to 'loop' until the user types 'quit'.
+The Prolog programmer doesn't write 'if-then-elses', 'calls', 'whiles',
+or other flow-of-control constructs, however, between unification and backtracking
+the programmer can induce any flow-of-control behavior in a Prolog program
+that can be achieved in any other language.</P>
+
+<P>Symbols, unification, backtracking, and dynamic memory management, all
+tend to eliminate procedural code a programmer normally needs to write.
+It is no surprise that what is left looks much more declarative than conventional
+code and is often a fraction of the size. KnowledgeWare claims their Prolog
+modules are a tenth the size of the equivalent C code, among other benefits,
+as described in the article mentioned in the bibliography. For example,
+the following is a Prolog program that can be used to analyze simple English
+sentences.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">sentence --&gt; noun_phrase, verb_phrase. 
+noun_phrase --&gt; determiner, modified_noun. 
+noun_phrase --&gt; modified_noun. 
+modified_noun --&gt; noun. 
+modified_noun --&gt; adjective, modified_noun. 
+verb_phrase --&gt; verb, noun_phrase. 
+determiner --&gt; [the]; [a]. 
+noun --&gt; [cat];[dog];[mouse];[cheese]. 
+adj --&gt; [big];[small];[hungry];[brown]. 
+verb --&gt; [eats];[chases].</FONT></PRE>
+</UL>
+
+<P>If this code were loaded in a Prolog interpreter it could be used, as
+is, to decide whether a sentence followed these grammar rules or not. The
+user presents queries in the interpreter at the '?-' prompt. Prolog answers
+below.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- sentence([the,big,brown,dog,chases,a,small,hungry,cat],[]). 
+yes 
+?- sentence([a,small,dog,cat,eats],[]). 
+no</FONT></PRE>
+</UL>
+
+<P>Without too much work, this idea can be used to implement, for example,
+a natural language front-end on database queries. In that case the code
+would both parse and map the natural language queries to formal database
+queries.</P>
+
+<P>In fact Prolog was originally designed for working with language. As
+such it is well suited for not just natural language work, but for implementing
+and/or experimenting with formal languages as well.</P>
+
+<P>One common use in this line is to build shells for implementing expert
+systems. The shells use their own language to represent the knowledge for
+a particular type of problem. Diagnostic systems, for example, work differently
+from configuration systems. The following rules and facts are excerpted
+from a sample knowledge base for diagnosing why a car won't start. They
+are interpreted by a Prolog program designed for diagnostic applications.
+(cf means certainy factor, a measure of how sure a solution is.)</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">rule 1 
+if       not turn_over and 
+         battery_bad 
+then     problem is battery cf 100.</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">rule 2 
+if      lights_weak 
+then    battery_bad cf 50.</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">rule 4 
+if      turn_over and 
+        smell_gas 
+then    problem is flooded cf 80.</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">output problem is battery get the battery recharged. 
+output problem is flooded wait 5 minutes and try again.</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">ask turn_over 
+menu (yes no) 
+prompt 'Does the engine turn over?'.</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">ask lights_weak 
+menu (yes no) 
+prompt 'Are the lights weak?'.</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">ask smell_gas 
+menu (yes no) 
+prompt 'Do you smell gas?'.</FONT></PRE>
+</UL>
+
+<P>These examples should give a flavor for the power of Prolog and why
+it is used so heavily in the AI community. But many other, more common
+applications, are also better expressed in Prolog.</P>
+
+<P>A tax application in Prolog is simply a collection of rules that specify
+how to fill out each line of the form. Prolog's search and unification
+do the work of linking related lines of the form together so the program
+code winds up looking very much like the tax form itself. Business applications
+such as customer order entry are expressed as relationships describing
+the various transactions and constraints. Pricing and configuration, two
+difficult components of such a system, are relatively straight-forward
+when coded in Prolog.</P>
+
+<P>While C can be used to write anything written in Prolog, Prolog code,
+for the applications it does best, is much less complex. For this reason,
+the Prolog developer can manage and maintain a greater degree of complexity
+in an application, thus providing a greater degree of sophistication to
+the user of an application.</P>
+
+<P>For commercial applications, this leads to a competive edge, but the
+real benefit applies to any application-- Prolog is simply fun.</P>
+
+<H2><FONT COLOR="#000080">How Prolog is Used </FONT></H2>
+
+<P>The examples above provide insight into how a Prolog program is used.
+The grammar rules, for example, are a Prolog program. They are queried
+with lists of words. All Prolog programs are similar collections of rules,
+and are similarly activated by being queried, much the same way a database
+is queried.</P>
+
+<P>This is true even of stand-alone compiled Prolog programs. In that case
+there is usually a single query, 'main', used to start the program. 'main'
+is the name of a rule which then queries other rules which query other
+rules and so on. For example, the following Prolog program could be compiled
+and executed, with a classic result.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">main :- write('Hello World').</FONT></PRE>
+</UL>
+
+<P>It could also be loaded and run from an interpreter. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- main. 
+Hello World</FONT></PRE>
+</UL>
+
+<P>The nature of this interaction with Prolog dictates the nature of a
+C to Prolog interface. It too must be able to either execute compiled Prolog
+code, or query a loaded Prolog program. In this sense, the interface from
+C to Prolog will look more like a database API than procedural interlanguage
+calls.</P>
+
+<P>The Hello World program illustrates the Prolog to C direction of the
+interface as well. Note that the 'write' statement has nothing to do with
+logic, pattern- matching, or search; it simply performs I/O. Prolog provides
+a number of special predicates, such as 'write', which are used primarily
+for their side effects. It is in this area that Prolog is weaker than C.</P>
+
+<P>The Prolog programmer must rely on whatever special predicates a particular
+vendor provides with an implementation. So, for example, if a particular
+Prolog implementation doesn't supply the tools for accessing Windows, then
+it can't be used to implement Windows applications. This is where Prolog
+to C connections come in. They let a programmer define as many extended
+predicates, such as 'write', as desired, to allow Prolog code access to
+any services accessable from C. This fundamental architecture of Prolog
+shapes the design of an interface between it and C. The calls from C to
+Prolog reflect the database nature of Prolog. The calls from Prolog to
+C reflect the procedural nature of C.</P>
+
+<H2><FONT COLOR="#000080">C and Prolog Example </FONT></H2>
+
+<P>We recently installed Gateway multi-media kits on our PCs, but found
+the installation less than trivial because of conflicts in our interrupt
+(IRQ) channels. A simple expert system could have helped to resolve those
+IRQ conflicts.</P>
+
+<P>The listing IRQXS.PRO is a Prolog program that embodies a few rules
+of expertise for sorting out IRQ conflicts. It first checks to see if the
+default IRQ for the device being installed is available. If so, there is
+no problem. If not, it tries the alternate IRQs and recommends one, if
+its slot is available, and tells the user to reset the IRQ switches on
+the card for the device. It the alternates weren't available, it then tries
+to move existing IRQs around, and finally, failing all else, looks for
+COM ports that can be doubled up on a single IRQ, thus freeing one for
+the new device. </P>
+
+<P>The example is intended to illustrate how this knowledge is expressed
+in Prolog, and not be the last word on IRQ conflicts. The example does
+illustrate how expert systems evolve. These rules came about from the particular
+cases of installing the Gateway Sound Blaster on two different machines.
+As new cases are encountered, new rules are added, or old rules modified
+to reflect the new situations. In this way the system gets smarter as new
+installation situations are encountered. So this sample system could be
+expanded based on continued input from Gateway technical support individuals
+responsible for multi-media installation. </P>
+
+<P>Prolog is stronger than C for applications, such as this one, where
+the knowledge to be encoded is not algorithmic. That is, when someone describes
+what the application does, the description is a list of all the different
+cases it handles and hows. On the other hand, if a parameter-driven algorithm
+can be developed that solves a problem, a procedural language is as good
+or better than Prolog.</P>
+
+<P>While one could write a stand-alone Prolog program that offers advice
+on IRQ conflicts, it would be lacking in three dimensions. First, the IRQ
+advisor would make more sense as part of a larger installation application.
+Second, the IRQ advisor should be able to gather information about existing
+IRQ channels directly from the machine, and third, the output advice from
+the Prolog program should be displayed using whatever user interface the
+larger installation application uses.</P>
+
+<P>The listing IRQXS.C shows a simple DOS C program that calls the Prolog
+IRQ advisor, illustrating these points. The main entry point could easily
+be a function called from a menu choice of larger installation application.
+It finds out what type of device is being installed, and then calls the
+IRQ advisor to see if there will be any IRQ conflicts installing that device,
+and if so, how they can be resolved. The advisor has, coded into it, the
+knowledge of various devices and the allowable IRQ channels.</P>
+
+<P>The line of code in main</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">lsCallStr(&amp;t, &quot;irq_advice('%s')&quot;, sDevice); </FONT></PRE>
+</UL>
+
+<P>calls the main entry point of the advisor. It dynamically builds a query
+and poses it to the compiled Prolog program. It is very similar to a database
+call. Notice that the advisor could be expanded to provide advise on other
+device conflicts as well, such as memory address conflicts and/or DMA channels.</P>
+
+<P>The first thing the Prolog code does is get the existing IRQ assignments
+asserted to the Prolog dynamic database. It does this by calling a function
+implemented in C.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">irq_advice(Device) :- 
+  msg($IRQ Conflict Resolution Analysis$), 
+  get_irqs, % get IRQs from C program 
+  free_irq(Device), 
+  msg($ Continue normal install$).</FONT></PRE>
+</UL>
+
+<P>The Prolog predicate, get_irqs, is mapped to a C function that provides
+the service. In the sample code, the C function simply reads the data from
+a file of test IRQ data. A real implementation would have the code necessary
+to determine the IRQs from the machine itself. In the function p_get_irqs,
+each IRQ is asserted to the Prolog database using the appropriate API function
+calls. In this case a printf-like function is used to build a Prolog term
+which is asserted to the Prolog dynamic database.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">for (i=0; i&lt;16; i++) 
+  { 
+    fgets(buf, 80, fp); 
+    lsAssertzStr(&quot;irq(%i, %s)&quot;, i, buf); 
+  }</FONT></PRE>
+</UL>
+
+<P>This is equivalent to having entered facts directly in the Prolog program
+of the form</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">irq(4,mouse). 
+irq(5,open).</FONT></PRE>
+</UL>
+
+<P>These facts are used by the Prolog rules for finding open slots or making
+recommendations on rearranging slots. For example, the following fragment
+of the Prolog program uses Prolog pattern matching to find two IRQs with
+single COM ports on them. It then recommends that the user combine them
+and makes the same change to its own dynamic database. The rule which called
+the make_room predicate then tries again to fit in the device's IRQ request
+with the new free space.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">make_room :-       % double up COM ports to make room 
+  irq(IRQ_X, com(COM_X)), 
+  irq(IRQ_Y, com(COM_Y)), 
+  IRQ_X \= IRQ_Y, 
+  msg([$ Put com ports $, COM_X, $ and $, COM_Y, 
+       $ together on IRQ $, IRQ_X]), 
+  retract(irq(IRQ_X, _)), 
+  assert(irq(IRQ_X, com(COM_X)+com(COM_Y))), 
+  retract(irq(IRQ_Y, _)), 
+  assert(irq(IRQ_Y, open)).</FONT></PRE>
+</UL>
+
+<P>This approach is very similar to the approach taken with puzzle solving
+applications. The program starts with an initial state, the current IRQs,
+and a goal state, the IRQs with the device installed on one of them. The
+rules transform the state until the goal condition is reached. The various
+steps of the transformation are the recommended steps for the user to take
+in rearranging IRQs.</P>
+
+<P>The sample program is set up to allow installation of two different
+devices, a 'Sound Blaster' and a 'Mitsumi CD- ROM'. Each has different
+IRQs it can use. The current IRQ settings are listed in the file IRQTEST1.DAT.
+Running the program for each of these produces the following results.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">What device are you installing? Sound Blaster 
+Use which test file? irqtest1.dat 
+IRQ Conflict Resolution Analysis 
+  Put com ports 3 and 4 together on IRQ 3 
+  Move device mouse to IRQ 4 
+  Continue normal install</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">What device are you installing? Mitsumi CD-ROM 
+Use which test file? irqtest1.dat 
+IRQ Conflict Resolution Analysis 
+  Default IRQ not available. Set device to use 11 instead. 
+  Continue normal install</FONT></PRE>
+</UL>
+
+<P>The output is the result of the third key aspect of the C-Prolog interface.
+Rather than use Prolog I/O statements, the Prolog code uses a function
+defined by the C program. This way the Prolog program is independent of
+the user interface environment it is deployed in. Given this program gives
+advice on PCs, the interface might be Windows, or straight DOS, or be implemented
+using any other GUI library, such as Zinc or XVT.</P>
+
+<P>For the example, straight DOS is used, and printfs are used to generate
+the output. To illustrate some more about transformations between Prolog
+and C, the p_msg function accepts either a term or a list of terms (represented
+withing square brackets [] in Prolog) as an argument. The C function dynamically
+determines what type of Prolog argument it has received, and, if it's a
+list, walks through the list outputing each term after first converting
+it to a C string.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">lsGetParm(1, cTERM, &amp;t); 
+ptype = lsGetTermType(t);</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">if (ptype == pLIST) 
+{ 
+  while (OK == lsPopList(&amp;t, cTERM, &amp;tm)) 
+  { 
+    lsTermToStr(tm, buf, 80); 
+    printf(&quot;%s&quot;, buf); 
+  } 
+} 
+else 
+{ 
+  lsTermToStr(t, buf, 80); 
+  printf(&quot;%s&quot;, buf); 
+}</FONT></PRE>
+</UL>
+
+<P>So, the following Prolog statement produced one of the output lines
+in the test cases listed above. (The $ symbol is used to delimit strings
+in Prolog, where strings are used primarily for I/O as opposed to pattern
+matching symbols, called atoms.)</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">msg([$ Put com ports $, COM_X, $ and $, COM_Y, 
+     $ together on IRQ $, IRQ_X])</FONT></PRE>
+</UL>
+
+<P>The API provides numerous tools for building and breaking down lists
+and complex Prolog structures, as well as tools for capturing Prolog stream
+I/O and errors. These enable you to access any Prolog structures from C
+and visa versa, and to write Prolog code that is truly environment independent.</P>
+
+<H2><FONT COLOR="#000080">Application Ideas </FONT></H2>
+
+<P>The above example illustrates the possibility of a whole class of advisor
+modules adding expertise to larger applications. This technology could
+be applied to tuning an operating environment, such as Windows, or as part
+of very specific applications that control physcial devices, such as in
+a manufacturing environment.</P>
+
+<P>Financial applications and tax programs could have logic advisors associated
+with them that, based on the current numbers recommended various courses
+of action. Policy and procedure applications could also include advisors,
+such as a simple online system that helped employees fill in expense accounts.</P>
+
+<P>Many organizations that have invested in expert system technology for
+help desk applications have found that they wind up with many small advisors,
+rather than one large system. They might have an advisor for printers,
+another for LANs, and others for various software packages in use in the
+organization.</P>
+
+<P>Help systems could provide natural langauge parsers that allow users
+to express what they're trying to do. The natural language parser, could
+then use the information in the user's question to steer the user to the
+appropriate documentation.</P>
+
+<P>Natural language front-ends on database queries can also be developed
+in a straight-forward way from Prolog. Using this technology users could
+be shielded from underlying databases and be able to express, in their
+native tongue, what they wish to get from the database. </P>
+
+<H2><FONT COLOR="#000080">Where to go next </FONT></H2>
+
+<P>There are a wide variety of standard-conforming Prolog implementations.
+These range from shareware available through Universities to expensive
+commercial implementations, and cover all points in between. Prolog is
+available for all sorts of machines and operating environments, from PCs
+to graphical work stations to IBM mainframes. Many of these implementations
+provide external language interfaces.</P>
+
+<P>One of the best sources of information about Prolog is the Internet
+news group comp.lang.prolog. The Frequently Asked Questions (FAQ) file
+lists numerous sources for Prolog as well as sources for learning about
+Prolog. </P>
+
+<H2><FONT COLOR="#000080">References </FONT></H2>
+
+<P>These are a few books and articles on Prolog programming. </P>
+
+<UL>
+<LI>Herb Blecker (ICARUS) interview; PCAI July/Aug 1993. </LI>
+
+<LI>Ivan Bratko; <I>Prolog Programming for Arificial Intelligence</I>;
+Addison Wesley.</LI>
+
+<LI>W.F. Clocksin and C.S. Mellish; <I>Programming in Prolog</I>; Springer-Verlag.</LI>
+
+<LI>Michael Covington, Donald Nute, Andre Vellino; <I>Prolog Programming
+in Depth; Artificial Intelligence Programs</I>, The University of Georgia.</LI>
+
+<LI>Dennis Merritt; <I>Building Expert Systems in Prolog</I>; Springer-Verlag.</LI>
+
+<LI>Dennis Merritt; <I>Adventure in Prolog</I>; Springer-Verlag. </LI>
+
+<LI>Clive Spenser and Al Roth; <I>A CASE for Prolog (KnowledgeWare's use
+of Prolog)</I>; PCAI, May/June 1993. </LI>
+
+<LI>Leon Sterling and Ehud Shapiro; <I>The Art of Prolog</I>; MIT Press.<BR>
+</LI>
+</UL>
+
+</BODY>
+</HTML>

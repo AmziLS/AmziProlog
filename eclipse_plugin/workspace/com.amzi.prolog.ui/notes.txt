@@ -1,0 +1,61 @@
+3.0 Bugs
+--------
+  CRFEI do not initialize correctly the first time in. ECLIPSE BUG.
+  Babel does not work
+
+
+3.0 Clean-Ups
+-------------
+  The creation of the doc link assumes the url is a file. It could be
+    over a network.
+
+  Core resource bundle is null
+  
+  Look into roles and activities
+
+  Deleted PrologMarkerAnnotation, PrologEditorInput, PrologEditorInputFactory
+  
+  Debugger actions are kludged to find them and set their default values, including
+    slow step, step speed, open listener. ECLIPSE BUG WORKAROUND.
+  
+
+To Load into a New Version of Eclipse:
+  Check-in all files
+  Delete everything except workspace directories
+  Install 
+  In Preferences | Plug-in Development | Target Platform check all the jars
+  Rebuild all the classpaths
+  Preferences | Workbench | Label Decorations | Tick CVS
+
+To Deploy:
+  Delete all jar's. Right click plugin.xml to create ant build file. Run build.xml.
+  Press 'versions' and 'package' in feature.xml
+  Press 'build now' in site.xml
+
+JDT puts up a custom "file" when source cannot be found with a button saying "Attach Source"
+
+For jar signing see: http://java.sun.com/j2se/1.3/docs/tooldocs/win32/jarsigner.html
+
+Make sure about.html and license.txt are correct. Feature can be under the Amzi! License.
+
+Use -data on eclipse to set the path to the workspace, otherwise it is in the eclipse directory tree.
+
+stream_property(H, position(X)) returns text(beginning, CHARS, LINE_LENGTH, LINE_CHAR, ?)
+CHARS is number of characters to beginning of line
+LINE_LENGTH is length of line
+LINE_CHAR is character at in the line (1 less than LINE_LENGTH for <cr>)
+stream_property(H, line_number(N)) returns a number starting with 0
+
+Add File | New | Source File
+
+Use
+IWorkbenchPage page = PrologUIPlugin.getDefault().getActivePage();
+then findEditor to find build.properties editor and alert it to changes
+
+Contribute a toc (via the org.eclipse.help.toc extension point) that
+contains topics href's of type file: <topic label="My Topic" href=file://path/to/file.html />
+
+If coloring atoms, handle character constants 0'x
+
+
+

@@ -1,0 +1,553 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Debugger</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="SourceCodeDebugger"></A><FONT COLOR="#D2AA00">Source Code Debugger</FONT> 
+</h1>
+<P> 
+  <!AMZI_INDEX = Debugger>
+  Amzi! Prolog includes a full source code debugger. It works on interpreted and 
+  compiled code that is running on the local or a remote machine. This makes it 
+  very easy to debug Prolog modules embedded in other languages (such as Java, 
+  C++, Delphi or VB) and Web servers (using JSP/Servlets or ASP.NET). The debugger 
+  is based on the Clocksin &amp; Mellish box-model of Prolog execution that allows 
+  you to trace and interact with interpreted or compiled clauses as they are running. 
+</P>
+
+<H2><A NAME="BoxModelofProcedureFlow"></A><FONT COLOR="#0000FF">Box Model</FONT></H2>
+
+<P><!AMZI_INDEX = Procedure Flow; Box Model; call; exit; fail; redo; leash; Creep; Leap>The
+box model of Prolog execution is a conceptual tool that gives a procedural
+interpretation of flow-of-control through a Prolog program. As such it
+is useful for understanding the execution of a program. To use the box
+model envision each Prolog goal surrounded by a box: </P>
+
+<p align="center"><IMG SRC="boxmdl.gif" HEIGHT=74 WIDTH=182 border="0"> </p>
+<P>Each box has four <I>ports</I> through which Prolog may enter (<I>call</I>
+and <I>redo</I> ports) or leave (<I>exit</I> or <I>fail</I> ports) the
+goal. </P>
+
+<MENU>
+<LI><B>call - </B>when Prolog is initially asked to prove the goal it enters
+through the <I>call</I> port. </LI>
+
+<LI><B>exit</B> - having entered through <I>call</I>, Prolog leaves through
+<I>exit</I> if it can prove the goal. </LI>
+
+<LI><B>fail</B> - if Prolog cannot prove the goal it leaves the box via
+the <I>fail</I> port. </LI>
+
+<LI><B>redo</B> - if at some further point in the program (i.e., after
+having entered through <I>call</I> and left via <I>exit</I>) Prolog backtracking
+occurs then eventually (if backtracking reaches this stage back in the
+proof) Prolog reenters the goal via the <I>redo</I> port. </LI>
+</MENU>
+
+<P>There is one box per goal in a program, and the boxes are linked from
+port to port. Ports that we stop at in the debugger are known as &quot;debug
+ports.&quot; </P>
+
+<P>You can single step through your program from port to port, stopping at each 
+  one. The debugger can stop at every CALL, REDO, FAIL and EXIT and ask what to 
+  do next. Alternatively, you can run until a breakpoint is reached. In this case, 
+  the intervening ports are not displayed. </P>
+<P>When using 'Step Into' you can limit which of the ports are stopped at by selecting 
+  them from the pull-down debug menu (to the right of the step buttons). Then, 
+  when you Step Into, all the ports will be displayed, but the debugger will only 
+  break at the ones which are checked on the menu. For example, you might want 
+  to break only at CALLs and REDOs. By default, all ports are stepped into when 
+  the debugger is started. </P>
+<h2><a name="DebuggingPerspective"></a><font color="#0000FF">Debugging Perspective</font></h2>
+<P>The Eclipse Debugging Perspective looks like this:</P>
+<P align="center"><img src="debugger_screen.gif" width="754" height="753"></P>
+<P align="left">If your screen does not look like the screen shot above, you can 
+  select Window / Reset Perspective to restore this arrangement of the views. 
+  The debugging perspective consists of the following views (starting from the 
+  top left):</P>
+<ul>
+  <li><b>Stack Frames</b> <b>&amp; Controls</b> - This view displays the current 
+    call stack including the variable bindings at each level. This view also provides 
+    all the controls for running your program. The buttons at the top of the view 
+    run, pause, stop and step your program. Goals that have been cut are shown 
+    preceded by a '!'. This allows you to view variable values for those goals 
+    even though program execution will not backtrack into them.<br>
+    <br>
+  </li>
+  <li><b>Variables &amp; Breakpoints</b> - The Variables view shows the variables 
+    for the currently highlighted stack frame. By selecting different stack frames, 
+    you can see how variables change value during execution. The Breakpoints view 
+    lists all the breakpoints in your program. You can also see breakpoints in 
+    the source code view. (The Expressions and Display views are not currently 
+    used in debugging Prolog programs.)<br>
+    <br>
+  </li>
+  <li><b>Source Code</b> - The source code for each program being debugged is 
+    displayed in the center.  The icon and highlight color indicates the 
+    debug port: 
+    <ul>
+      <li>Call: green</li>
+      <li>Redo: yellow</li>
+      <li>Fail: red</li>
+      <li>Exit: grey</li>
+      <li>Info (not a port): blue<br>
+        <br>
+      </li>
+    </ul>
+  </li>
+  <li><b>Source Code Outline</b> - The outline of the currently selected source 
+    code file. <br>
+    <br>
+  </li>
+  <li><b>Debug Listener</b> - The Prolog listener for debugging. Every goal you 
+    type here is debugged. So typing goals like 'listing' will cause the call 
+    to listing to be debugged.</li>
+</ul>
+<H2><A NAME="RunningTheDebugger"></A><font color="#0000FF">Running the Debugger</font></H2>
+
+<h3><font color="#000080"><a name="LaunchConfigurations"></a>Launch Configurations</font></h3>
+<P>
+  <!AMZI_INDEX = Launch Configuration>
+  In order to run or debug a Prolog component or program, the Amzi! IDE needs 
+  a 'Launch Configuration'. Launch Configurations define all the necessary parameters 
+  for the runtime or debug environment. For Prolog, these are the libraries and 
+  Logic Server extensions to load, the path to run from, source files or executable 
+  file. 'Launch Shortcuts' automatically build an appropriate Launch Configuration 
+  for the current project. See the Eclipse documentation for details.</P>
+<P>There are four types of configurations/shortcuts for debugging: interpreted 
+  code run locally, single file interpreted code run locally, compiled code run locally and compiled code run 'remotely' 
+  (embedded in another application on the same or a different machine). The parameters 
+  for each launch configuration are:</P>
+<p><b>Interpreted Project</b></p>
+<blockquote>
+  <p>Directory to Run From -- The directory where execution is started. This is 
+    usually the project folder because it contains the source files and the amzi.cfg 
+    configuration file.</p>
+  <p>Optional Pathname for Config File -- The full pathname of the .cfg file to use when running this project. If left blank, amzi.cfg in the run directory is used. </p>
+  <p>List of Source Files to Consult -- The files to consult into the Listener.</p>
+  <p>List of Libraries to Load -- The Amzi! libraries to load into the Listener. 
+    These are taken from the Project Properties.</p>
+  <p>List of Extensions to Load -- The Logic Server Extensions to load into the 
+    Listener. These are take from the Project Properties.</p>
+</blockquote>
+<p><b>Interpreted Single File Project</b></p>
+<blockquote>
+  <p>Directory to Run From -- The directory where execution is started. This is 
+    usually the project folder because it contains the source files and the amzi.cfg 
+    configuration file.</p>
+  <p>Optional Pathname for Config File -- The full pathname of the .cfg file to use when running this project. If left blank, amzi.cfg in the run directory is used. </p>
+  <p>List of Source Files to Consult -- The files to consult into the Listener.</p>
+  <p>List of Libraries to Load -- The Amzi! libraries to load into the Listener. 
+    These are taken from the Project Properties.</p>
+  <p>List of Extensions to Load -- The Logic Server Extensions to load into the 
+    Listener. These are take from the Project Properties.</p>
+</blockquote>
+<p><b>Compiled Project</b></p>
+<blockquote>
+  <p>Directory to Run From -- The directory where execution is started. This is 
+    usually the project folder because it contains the source files and the amzi.cfg 
+    configuration file.</p>
+  <p>Optional Pathname for Config File -- The full pathname of the .cfg file to use when running this project. If left blank, amzi.cfg in the run directory is used. </p>
+  <p>Compiled File to Run -- The xpl file to execute. (The libraries are linked 
+    into the xpl file). This file is usually in a bin subdirectory.</p>
+  <p>List of Extensions to Load -- The Logic Server Extensions to load into the 
+    Listener. These are take from the Project Properties.</p>
+</blockquote>
+<p><b>Remote Prolog Application</b></p>
+<blockquote>
+  <p>Project Name -- The name of an open Eclipse project that corresponds to the 
+    remote Prolog application. (This is not checked, so you must ensure you have 
+    a project with source code that matches the source code used to build the 
+    remote application.)</p>
+  <p>Debug Port Number -- The port to connect to the Prolog engine on. This is 
+    set in the amzi.cfg file for the remote Prolog application.</p>
+</blockquote>
+<img src="arrowrt.gif" height=18 width=18 align=BOTTOM> <i>Note you must set the 
+Project Property to 'Debug' for executable file type in order to run the source 
+code debugger on an xpl file. Do not ship files built in Debug mode as they have 
+considerable overhead in terms of memory and CPU usage.</i> 
+<h3><font color="#000080"><a name="StartingAndExiting"></a>Starting and Exiting</font></h3>
+
+<P>To start the debugger select a Prolog Project in the Navigator View or an open 
+  source file editor (for a file that is in a Prolog Project), then: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+  <TR> 
+    <TD>Amzi! IDE </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <PRE><font color="#000080"><i>Shortcuts</i>
+Run / Debug As / Interpreted Project
+Run / Debug As / Compiled Project
+Run / Debug As / Interpreted Single File
+Run / Debug As / Remote Prolog Application
+<i>To Create a Launch Configuration for the Selected Project</i>
+Run / Debug ...
+New</font></PRE>
+    </TD>
+  </TR>
+</TABLE>
+
+<P>When debugging a remote application, you will be prompted to start it. Wait 
+  until you receive the prompt before starting the remote application. Note, you 
+  need to specify a debug_host and debug_port, and load the adebug.lsx file in 
+  your amzi.cfg file or program code before the remote debugger will operate. 
+  See Remote Debugging below.</P>
+<P>To exit the debugger: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+  <TR> 
+    <TD>Amzi! IDE </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <PRE><FONT COLOR="#000080"><i>Interpreted Project</i>
+Type 'quit.' in the Debug Listener
+or
+Press the 'Terminate' Button
+<i>Remote Prolog</i>
+Press the 'Terminate' or 'Disconnect' Button</FONT></PRE>
+    </TD>
+  </TR>
+</TABLE>
+
+<p>You can switch back to the Prolog Perspective by pressing on the Paw button 
+  on the left edge.</p>
+<p>You can rerun your last debug session by selecting the launch configuration from either the Debug | Debug History menu or from the Debug command button. </p>
+<h2><a name="RemoteDebugging"></a><font color="#0000FF">Remote Debugging</font></h2>
+<p>The Amzi! Eclipse remote debugger is implemented using the TCP/IP protocol. 
+  There are two parts: the Amzi! Eclipse IDE and the LSX (adebug) that communicates 
+  on behalf of the compiled Prolog application with the IDE. The remote application 
+  must load adebug.lsx either explicitly by calling AddLSX in the host program 
+  or by specifying it in the amzi.cfg file.</p>
+<p>You can control the port used for this communication. In the IDE this is done 
+  in the launch configuration (the default is port 8000). For the remote Prolog 
+  application, this is done in the <a href="pug_runtime.htm#CFGParameters">amzi.cfg 
+  file</a> (via debug_host and debug_port). If you are running through a firewall 
+  you will need to select a port that is open. Contact your network administrator.</p>
+<p>Problems with the connection are reported by adebug.lsx by throwing errors 
+  to the host application. So we strongly recommend that you catch and display 
+  any errors from your calls to lsExec, lsExecStr, lsMain, lsCall, lsCallStr, 
+  lsRedo, etc.This is how you will find out if adebug.lsx is unable to connect 
+  to the Amzi! Eclipse IDE.</p>
+<p>To initiate remote debugging, follow these steps:</p>
+<ol>
+  <li>Build your Prolog Project in 'debug' mode.</li>
+  <li>Copy the .xpl file to the remote PC. (We recommend that you do not run an 
+    xpl file built for debugging in a production application as it will have degraded 
+    performance.)</li>
+  <li>Copy amzi.dll (Windows) or libamzi.so (Unix) and adebug.lsx to the remote 
+    PC. </li>
+  <li>Create an amzi.cfg file in the same directory as your .xpl file on the remote 
+    PC and uncomment debug_host, debug_port and load adebug.lsx as follows:<br>
+    debug_host = 127.0.0.1<br>
+    debug_port = 8000<br>
+    lsxload = adebug</li>
+  <li>Start the debugger in Eclipse on your Prolog Project by selecting Run | 
+    Debug As | Remote Prolog Application</li>
+  <li>When prompted start your remote application. For a stand-alone Prolog program, 
+    use 'arun myprog.xpl'. For a Prolog component embedded in a language or webserver, 
+    start the host application. Debugging should start when you initalize the 
+    Logic Server.<br>
+  </li>
+</ol>
+<H2><A NAME="DebuggerDisplay"></A><FONT COLOR="#0000FF">Display</FONT></H2>
+
+<P> 
+  <!AMZI_INDEX = Ports; Call; Exit; Fail; Redo; Clauses; Terms>
+  The debugger works by displaying the list of active stack frames in the upper 
+  left Debug View. A stack frame includes the port name and term that execution 
+  passes through in the course of a computation. When you click on a stack frame 
+  the variable bindings are displayed in the Variables View to the right.</P>
+
+<P>The stack frames take the following form: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">PORT TERM VARIABLES</FONT></PRE>
+</UL>
+
+<P>For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">CALL append([a,b,c], [d,e,f], X)</FONT></PRE>
+</UL>
+
+<P>Notice that variables are represented using the Hn notation. </P>
+
+<blockquote>
+  <p><B>PORT:</B> is one of CALL, REDO, FAIL, or EXIT corresponding to the ports 
+    of the box model discussed above or blank for information-only. </p>
+  <p><B>TERM</B> is the goal that caused entry to the call or redo port of the 
+    box. </p>
+  <p><b>VARIABLES</b> is the list of variable bindings (you can also see these 
+    in the Variables View)</p>
+</blockquote>
+<H2><A NAME="DebugCommands"></A><FONT COLOR="#0000FF">Debug Commands</FONT></H2>
+
+<P> 
+  <!AMZI_INDEX = Ports; Leashing; Run; Step; Resume; Step Into; Step Over; Suspend; Terminate; Disconnect>
+  When the Debug Listener View is active you can type a goal (or other input required 
+  by your program). When it is dimmed, you can select one of the debugging actions 
+  from the Debug View tool bar. The options are: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 width="75%" >
+  <TR> 
+    <TD WIDTH=48><B>Button</B></TD>
+    <TD WIDTH=91><B>Name</B></TD>
+    <TD WIDTH=330><B>Description</B> </TD>
+  </TR>
+  <tr valign="top"> 
+    <td width=48 align="center"><b><img src="resume_co.gif" width="16" height="16"></b></td>
+    <td width=91><b>Resume</b></td>
+    <td width=321>Runs to the next breakpoint.</td>
+  </tr>
+  <tr valign="top"> 
+    <td width=48 align="center"><img src="suspend_co.gif" width="16" height="16"></td>
+    <td width=91><b>Suspend</b></td>
+    <td width=321>Suspend the running program at the next port.</td>
+  </tr>
+  <tr valign="top"> 
+    <td width=48 align="center"><img src="terminate_co.gif" width="16" height="16"></td>
+    <td width=91><b>Terminate</b></td>
+    <td width=321>Stops the debugger. </td>
+  </tr>
+  <tr valign="top"> 
+    <td width=48 align="center"><img src="stepinto_co.gif" width="16" height="16"></td>
+    <td width=91><b>Step Into</b></td>
+    <td width=321>Steps to the very next port. </td>
+  </tr>
+  <tr valign="top"> 
+    <td width=48 align="center"><img src="stepover_co.gif" width="16" height="16"></td>
+    <td width=91><b>Step Over</b></td>
+    <td width=321>Steps over the current term to the next one.</td>
+  </tr>
+  <TR valign="top">
+    <TD WIDTH=48 align="center"><img src="stepinto_slow.gif" width="16" height="16"></TD>
+    <TD WIDTH=91><b>Auto Step</b></TD>
+    <TD WIDTH=321>When set, runs your code by automatically stepping into the 
+      next line at the speed set on the Debug View menu.</TD>
+  </TR>
+  <TR valign="top"> 
+    <TD WIDTH=48 align="center"><img src="disconnect_co.gif" width="16" height="16"></TD>
+    <TD WIDTH=91><B>Disconnect</B></TD>
+    <TD WIDTH=321>Disconnects a remote debugging session. </TD>
+  </TR>
+  <TR valign="top"> 
+    <TD WIDTH=48 align="center"><img src="question_dash.gif" width="16" height="16"></TD>
+    <TD WIDTH=91><b>Listener</b></TD>
+    <TD WIDTH=321>Opens a listener for user queries on the current debugging session. 
+      This is useful for examining or changing the dynamic database, running code 
+      and determining execution state. </TD>
+  </TR>
+</TABLE>
+
+<p>When the debugger is ready to stop at a line of code, it checks the <b>leashing</b>. 
+  Leashing tells the debugger which execution ports are to be displayed. The choices 
+  are the four standard ports, <b>call</b>, <b>exit</b>, <b>redo</b>, and <b>fail</b>, 
+  plus one additional pseudo-port, called <b>info</b>, which stops at the head 
+  of a clause. Leashing is set using the buttons. When a port is clicked, then 
+  the port will be displayed when execution stops at that line of code. The options 
+  shown are:</p>
+<table border=1 cellpadding=3 width="75%" >
+  <tr> 
+    <td width=45><b>Button</b></td>
+    <td width=164><b>Name</b></td>
+    <td width=247><b>Description</b> </td>
+  </tr>
+  <tr> 
+    <td width=45 align="left"> 
+      <div align="center"><b><img src="call.gif" width="16" height="16" align="absmiddle"></b></div>
+    </td>
+    <td width=164 valign="top"><b>Display Call Ports</b></td>
+    <td width=247 valign="top">If not set, debugger skips call ports.</td>
+  </tr>
+  <tr> 
+    <td width=45 align="left" valign="top"> 
+      <div align="center"><img src="redo.gif" width="16" height="16" align="absmiddle"> 
+      </div>
+    </td>
+    <td width=164 valign="top"><b>Display Redo Ports</b></td>
+    <td width=247 valign="top">If not set, debugger skips redo ports.</td>
+  </tr>
+  <tr> 
+    <td width=45 align="left" valign="top"> 
+      <div align="center"><img src="fail.gif" width="16" height="16"></div>
+    </td>
+    <td width=164 valign="top"> <b>Display Fail Ports</b></td>
+    <td width=247 valign="top">If not set, debugger skips fail ports.</td>
+  </tr>
+  <tr> 
+    <td width=45 align="left" valign="top"> 
+      <div align="center"><img src="exit.gif" width="16" height="16"></div>
+    </td>
+    <td width=164 valign="top"><b>Display Exit Ports</b></td>
+    <td width=247 valign="top">If not set, debugger skips exit ports.</td>
+  </tr>
+  <tr> 
+    <td width=45 align="left" valign="top"> 
+      <div align="center"><img src="info.gif" width="16" height="16"></div>
+    </td>
+    <td width=164 valign="top"><b>Display Clause Heads</b></td>
+    <td width=247 valign="top">If not set, debugger skips clause heads.</td>
+  </tr>
+</table>
+<p>There are also commands on the Debug View menu:</p>
+<table border=1 cellpadding=3 width="75%" >
+  <tr> 
+    <td width=166 align="left"><b>Command</b></td>
+    <td width=409><b>Description</b> </td>
+  </tr>
+  <tr valign="top"> 
+    <td width=166 align="left"> 
+      <div align="left"><b>Auto Step Speed</b></div>
+    </td>
+    <td width=409>Select from <b>Very Fast</b> to <b>Very Slow</b> to set the 
+      speed for the Auto Step command button.</td>
+  </tr>
+  <tr valign="top"> 
+    <td width=166 align="left"><b>Cut Display</b></td>
+    <td width=409>Controls whether or not cut stack frames are displayed. When 
+      this feature is enabled, execution may require additional control stack 
+      space. You can increase the <a href="pug_runtime.htm#CFGParameters">control stack size</a> 
+      in the amzi.cfg file.</td>
+  </tr>
+  <tr valign="top">
+    <td width=166 align="left"><b>DCG Variable Display</b></td>
+    <td width=409> 
+      <p>Controls what difference list variables are displayed during execution: </p>
+      <ul>
+        <li><b>All</b> displays the difference lists for each goal</li>
+        <li><b>First and Last</b> the difference lists on input and output</li>
+        <li><b>None</b> does not display difference lists</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<H2><A NAME="Breakpoints"></A><font color="#0000FF">Breakpoints</font></H2>
+
+<P> 
+  <!AMZI_INDEX = Breakpoints>
+  Breakpoints are used to stop the debugger at particular predicates. Execution 
+  always pauses at a breakpoint regardless whether you are running or stepping. 
+</P>
+
+<P>Under the Amzi! IDE, you can double-click in the left margin of the Editor 
+  on the line you want to break at. A blue dot will appear. If you double-click 
+  again, the breakpoint is removed. You can also right-click in the left margin 
+  to set or clear breakpoints.</P>
+<P>The list of all breakpoints is displayed in the Breakpoints View in the upper 
+  left. You can also clear one, some or all the breakpoints in this window.</P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Note that entering 
+  and exiting the IDE does not remove or otherwise alter the setting of breakpoints. 
+  The only way to remove breakpoints is to use one of the above. </I></P>
+
+<H2><A NAME="LeashingDebugPorts"></A><font color="#0000FF">Breaking at Debug Ports</font></H2>
+
+<P> 
+  <!AMZI_INDEX = Ports; break>
+  As mentioned above we can either step or run to a port. When we run to a port, 
+  it is a port for a predicate that has a breakpoint set on it, and the debugger 
+  pauses to allow interaction. </P>
+
+<P>Step into takes us to the ports of predicates in between the breakpoints. The 
+  debugger might pause at a port, or it may simply display it without giving you 
+  the opportunity to interact, as execution continues. The different behavior 
+  at ports is controlled by the Debug View pull-down menu. </P>
+
+<P>Breaking at a specified port is not related to particular predicates, as breakpoints 
+  are, but is instead a characteristic of each of the four types of ports, CALL, 
+  REDO, FAIL and EXIT (and INFO). By default, the debugger will break at all ports, 
+  so all ports of predicates that are stepped into to are paused at. But port 
+  breaking can be turned off for the ports of these intermediate predicates so 
+  they display but don't require step-by-step interaction from you. </P>
+<H2><A NAME="DebuggerExample"></A><FONT COLOR="#0000FF">Example</FONT></H2>
+
+<P><!AMZI_INDEX =Debugging; Creep; Leap; leash>Let's look at an example of creeping, 
+  leaping and leashing using Duck World presented in <A HREF="pug_tutorial.htm">A 
+  Quick Tutorial</A>. First we consult our source code and enter the debugger. 
+</P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+  <TR> 
+    <TD>Amzi! IDE </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <PRE><FONT COLOR="#000080">File / Import / Existing Project into Workspace
+Browse <i>to amzi/samples/prolog/duckworld
+Double-click on </i>dw_rules.pro<i> to edit it</i>
+<i>Select duckworld project folder</i>
+Run / Debug As / Interpreted Project</FONT></PRE>
+    </TD>
+  </TR>
+</TABLE>
+
+<P>Next, we set connect as a breakpoint and break only the call port. Then we 
+  call main. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+  <TR> 
+    <TD>Amzi! IDE </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <PRE><FONT COLOR="#000080"><i>Click</i> connect/2 <i>in the Outline</i>
+<i>Double-click in the left margin next to the</i> connect/2 <i>clauses</i>
+<i>On the pull-down menu, uncheck</i> Display Redo, Fail, Exit and Info Ports
+<i>In the Debug Listener window type:</i>
+?- main. </FONT></PRE>
+    </TD>
+  </TR>
+</TABLE>
+
+<P>We start to step through the program by pressing the Step Into button. Note, 
+  we pause only on CALL ports. Notice after we step into:</P>
+<blockquote> 
+  <pre><font color="#000080">write(` Welcome to Duck World `),nl,</font></pre>
+</blockquote>
+<P>the output appears in the Debug Listener View. Now press the Resume button. 
+  The Debug Listener View now reads:</P>
+<blockquote> 
+  <pre><FONT COLOR="#000080">Welcome to Duck World<br>...
+ Go get an egg 
+&gt;&gt; goto(yard).</FONT></pre>
+</blockquote>
+<P>Our run was interrupted for some user input, so we type &quot;goto(yard).&quot; 
+  We step onwards watching the variable bindings and backtracking. Every time 
+  we reach a predicate that is a breakpoint, we pause. Note that although we are 
+  only leashing CALLs, we pause at the other ports for connect/2. </P>
+
+<P>When you reach a predicate that you are not interested in seeing, so press 
+  Step Over to go directly to the EXIT port. This is illustrated nicely by stepping 
+  over demons/0 in the go/0 predicate. </P>
+
+<P>Finally, we end the debugger: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+  <TR> 
+    <TD>Amzi! IDE </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <PRE><FONT COLOR="#000080"><i>Press</i> Terminate <i>or type:</i>
+&gt;&gt; quit.
+Quitter 
+?- quit.</FONT></PRE>
+    </TD>
+  </TR>
+</TABLE>
+
+<p><!-- #BeginLibraryItem "/Library/Copyright.lbi" -->
+<p><i><font size=-1>Copyright &copy;1987-2011 Amzi! inc. All Rights Reserved. 
+  Amzi! is a registered trademark and Logic Server is a trademark 
+  of Amzi! inc.</font></i></p>
+
+<!-- #EndLibraryItem --><p></p>
+<P>&nbsp; </P>
+
+</BODY>
+</HTML>

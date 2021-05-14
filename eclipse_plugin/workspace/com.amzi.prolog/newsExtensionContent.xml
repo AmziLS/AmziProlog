@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<introContent>
+  <!-- Extension to the SDK What's New Page. -->
+  <extensionContent alt-style="css/swt.properties" path="news/page-content/noteworthy-links/jdtAnchor">
+    <link label="Prolog development tools" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.amzi.prolog.help/doc/whatsnew.htm" id="prolog-noteworthy" style-id="noteworthy-link">
+      <text>Find out about significant changes made to Amzi! Prolog + Logic Server</text>
+    </link>
+  </extensionContent>
+</introContent>

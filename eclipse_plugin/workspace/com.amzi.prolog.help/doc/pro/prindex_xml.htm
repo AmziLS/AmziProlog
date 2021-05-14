@@ -1,0 +1,1509 @@
+<HTML>
+<BODY BGCOLOR=#000055 TEXT=white LINK=white VLINK=white ALINK=red>
+
+<P>
+<B><FONT COLOR=yellow>Amzi! Prolog User's Guide &amp; Reference</FONT></B>
+<P><B><FONT COLOR="yellow">Index </FONT></B><A HREF="</FONT></B><P>
+
+<A HREF="#A">A</A> <A HREF="#B">B</A> <A HREF="#C">C</A> <A HREF="#D">D</A> <A HREF="#E">E</A> <A HREF="#F">F</A> <A HREF="#G">G</A> <A HREF="#H">H</A> <A HREF="#I">I</A> <A HREF="#J">J</A> <A HREF="#K">K</A> <A HREF="#L">L</A> <A HREF="#M">M</A> <A HREF="#N">N</A> <A HREF="#O">O</A> <A HREF="#P">P</A> <A HREF="#Q">Q</A> <A HREF="#R">R</A> <A HREF="#S">S</A> <A HREF="#T">T</A> <A HREF="#U">U</A> <A HREF="#V">V</A> <A HREF="#W">W</A> <A HREF="#X">X</A> <A HREF="#Y">Y</A> <A HREF="#Z">Z</A><P><PRE>
+
+
+<B><A NAME=" "></A>  <FONT COLOR=yellow SIZE=4> </FONT></B><P>
+<A HREF="ref_execution.htm#Cut">!/0</A>
+<A HREF="pug_preprocessor.htm#pound_define">#define</A>
+<A HREF="ref_terms.htm#Comments">%</A>
+<A HREF="ref_math.htm#XgtgtY">&gt;&gt;</A>
+<B>&gt;</B>
+  <A HREF="ref_math.htm#MathematicalComparisons">Numbers and Math: Mathematical Comparisons</A>
+  <A HREF="ref_math.htm#XgtY">Numbers and Math: X &gt; Y</A>
+<B>&gt;=</B>
+  <A HREF="ref_math.htm#MathematicalComparisons">Numbers and Math: Mathematical Comparisons</A>
+  <A HREF="ref_math.htm#XgteY">Numbers and Math: X &gt;= Y</A>
+<A HREF="ref_math.htm#XltltY">&lt;&lt;</A>
+<B>&lt;</B>
+  <A HREF="ref_math.htm#MathematicalComparisons">Numbers and Math: Mathematical Comparisons</A>
+  <A HREF="ref_math.htm#XltY">Numbers and Math: X &lt; Y</A>
+<A HREF="ref_math.htm#XtimesY">*</A>
+<A HREF="ref_math.htm#XpowerY">**</A>
+<A HREF="ref_math.htm#XplusY">+</A>
+<A HREF="ref_execution.htm#XandY">,/2</A>
+<B>-</B>
+  <A HREF="ref_math.htm#NegativeX">Numbers and Math: - X</A>
+  <A HREF="ref_math.htm#XminusY">Numbers and Math: X - Y</A>
+<A HREF="ref_math.htm#XdivY">/</A>
+<A HREF="ref_terms.htm#Comments">/**/</A>
+<A HREF="ref_math.htm#XdivdivY">//</A>
+<A HREF="ref_math.htm#XandY">/\</A>
+<A HREF="ref_modules.htm#ReferringToModules">:</A>
+<A HREF="ref_execution.htm#Clauses">:-</A>
+<A HREF="ref_logicbase.htm#DynamicDirective">:-dynamic/1</A>
+<A HREF="ref_logicbase.htm#IndexedDirective">:-indexed/1</A>
+<A HREF="ref_logicbase.htm#SortedDirective">:-sorted/1</A>
+<A HREF="ref_execution.htm#XorY">;/2</A>
+<B>=&lt;</B>
+  <A HREF="ref_math.htm#MathematicalComparisons">Numbers and Math: Mathematical Comparisons</A>
+  <A HREF="ref_math.htm#XlteY">Numbers and Math: X =&lt; Y</A>
+<A HREF="ref_manipulating_terms.htm#XeqY">=</A>
+<A HREF="ref_manipulating_terms.htm#TermListBunivB">=../2</A>
+<A HREF="ref_manipulating_terms.htm#EqualityofTerms">=/2</A>
+<A HREF="ref_math.htm#MathematicalComparisons">=/=</A>
+<B>=:=</B>
+  <A HREF="ref_math.htm#MathematicalComparisons">Numbers and Math: Mathematical Comparisons</A>
+  <A HREF="ref_math.htm#XeqcoleqY">Numbers and Math: X =:= Y</A>
+<B>==/2</B>
+  <A HREF="ref_manipulating_terms.htm#EqualityofTerms">Manipulating Terms: Equality of Terms</A>
+  <A HREF="ref_manipulating_terms.htm#XeqeqY">Manipulating Terms: X == Y</A>
+<A HREF="ref_math.htm#XeqsleqY">=\=</A>
+<A HREF="pug_debugging.htm#DebuggerLikeIO">?/1</A>
+<A HREF="ref_manipulating_terms.htm#XgtY">@&gt;/2</A>
+<A HREF="ref_manipulating_terms.htm#XgteqY">@&gt;=/2</A>
+<A HREF="ref_manipulating_terms.htm#XltY">@&lt;/2</A>
+<A HREF="ref_manipulating_terms.htm#XlteqY">@=&lt;/2</A>
+
+
+<B><A NAME="A"></A>  <FONT COLOR=yellow SIZE=4>A</FONT></B><P>
+<A HREF="pug_wide.htm#UnicodeAndASCII">ASCII</A>
+<A HREF="pug_wide.htm#Help">About Amzi!</A>
+<A HREF="ref_math.htm#XplusY">Addition</A>
+<A HREF="pug_runtime.htm#AmziPrologRuntime">Amzi! Runtime</A>
+<A HREF="ref_math.htm#XandY">And</A>
+<A HREF="ref_terms.htm#Variables">Anonymous Variables</A>
+<A HREF="ref_manipulating_terms.htm#argNTermArgument">Argument Getting</A>
+<A HREF="ref_manipulating_terms.htm#argNTermArgument">Argument Setting</A>
+<A HREF="ref_math.htm#MathematicalComparisons">Arithmetic Comparisons</A>
+<A HREF="ref_execution.htm#Clauses">Arity</A>
+<A HREF="pug_wide.htm#WindowMenu">Arrange Icons</A>
+<A HREF="ref_terms.htm#Associativity">Associativity</A>
+<A HREF="ref_manipulating_terms.htm#gensymRootSym">Atom Generation</A>
+<B>Atoms</B>
+  <A HREF="ref_terms.htm#Atoms">Prolog Terms</A>
+  <A HREF="ref_math.htm#BuiltinAtoms">Numbers and Math: Built-in Atoms</A>
+
+
+<B><A NAME="B"></A>  <FONT COLOR=yellow SIZE=4>B</FONT></B><P>
+<A HREF="pug_wide.htm#UsingalisandBATFiles">BAT</A>
+<B>Backtracking Search</B>
+  <A HREF="ref_execution.htm#BacktrackingSearch">Prolog Execution</A>
+  <A HREF="ref_execution.htm#FlowofControlPredicates">Prolog Execution: Flow-of-Control</A>
+<A HREF="ref_dcg.htm#DCGBillMaterials">Bill of Materials, DCG</A>
+<A HREF="ref_execution.htm#Unification">Binding</A>
+<A HREF="ref_math.htm#BitwiseOperators">Bit Arithmetic</A>
+<B>Body</B>
+  <A HREF="ref_execution.htm#Clauses">Prolog Execution: Clauses</A>
+  <A HREF="ref_logicbase.htm#clauseHeadBody">Prolog Logicbase: clause(HEAD, BODY)</A>
+<B>Box Model</B>
+  <A HREF="pug_debugger.htm#BoxModelofProcedureFlow">Debugger</A>
+  <A HREF="pug_debugger_ide.htm#BoxModelofProcedureFlow">Debugger</A>
+  <A HREF="pug_wide.htm#BoxModelofProcedureFlow">Windows IDE</A>
+<A HREF="pug_debugger_ide.htm#Breakpoints">Breakpoints</A>
+<A HREF="pug_wide.htm#BuildMenu">Build</A>
+<A HREF="ref_math.htm#BuiltinAtoms">Built</A>
+<A HREF="ref_math.htm#BuiltinAtoms">Built-</A>
+<A HREF="ref_math.htm#BuiltinAtoms">Built-In Atoms</A>
+<A HREF="ref_math.htm#BuiltinAtoms">Built-In</A>
+
+
+<B><A NAME="C"></A>  <FONT COLOR=yellow SIZE=4>C</FONT></B><P>
+<B>C ++</B>
+  <A HREF="pug_tutorial.htm#InterfacingwithOtherTools">Quick Tutorial: Interfacing with Other Tools</A>
+  <A HREF="pug_wide.htm#InterfacingwithOtherTools">Windows IDE: Interfacing with Other Tools</A>
+<A HREF="ref_terms.htm#Internationalization">CJK characters</A>
+<B>Call</B>
+  <A HREF="pug_debugger.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_debugger_ide.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_wide.htm#DebuggerDisplay">Windows IDE: Display</A>
+<A HREF="pug_wide.htm#WindowMenu">Cascade</A>
+<A HREF="pug_wide.htm#Help">Change Browser</A>
+<A HREF="ref_terms.htm#CharacterLists">Character Lists</A>
+<B>Clauses</B>
+  <A HREF="pug_listener.htm#AddingRemovingClauses">Listener: Adding and Removing Clauses</A>
+  <A HREF="ref_execution.htm#Clauses">Prolog Execution</A>
+  <A HREF="pug_compiler.htm#ComplexClauses">Compiler: Complex Clauses</A>
+  <A HREF="pug_debugger.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_debugger_ide.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_wide.htm#DebuggerDisplay">Windows IDE: Display</A>
+  <A HREF="ref_directives.htm#DiscontiguousClauses">Prolog Directives: Discontiguous Directive</A>
+  <A HREF="ref_directives.htm#DynamicClausesinCompiledCode">Prolog Directives: Dynamic Clauses in Compiled Code</A>
+  <A HREF="pug_listener.htm#ListingClauses">Listener: Listing Clauses</A>
+  <A HREF="ref_directives.htm#MultifileClauses">Prolog Directives: Multifile Directive</A>
+  <A HREF="pug_listener.htm#RemovingClauses">Listener: Removing Clauses</A>
+  <A HREF="ref_logicbase.htm#abolishNameArity">Prolog Logicbase: abolish(M:F/A)</A>
+  <A HREF="ref_logicbase.htm#assertTerm">Prolog Logicbase: assert(TERM)</A>
+  <A HREF="ref_logicbase.htm#assertaTerm">Prolog Logicbase: asserta(TERM)</A>
+  <A HREF="ref_logicbase.htm#assertzTerm">Prolog Logicbase: assertz(TERM)</A>
+  <A HREF="ref_logicbase.htm#clauseHeadBody">Prolog Logicbase: clause(HEAD, BODY)</A>
+  <A HREF="pug_listener.htm#replace">Listener: replace</A>
+  <A HREF="ref_logicbase.htm#retractTerm">Prolog Logicbase: retract(TERM)</A>
+  <A HREF="ref_logicbase.htm#retractallTerm">Prolog Logicbase: retractall(TERM)</A>
+<B>Close All</B>
+  <A HREF="pug_wide.htm#FileMenu">Windows IDE: File Menu</A>
+  <A HREF="pug_wide.htm#WindowMenu">Windows IDE: Window Menu</A>
+<A HREF="pug_wide.htm#FileMenu">Close</A>
+<A HREF="ref_dcg.htm#DCGCommandLanguage">Command Language, DCG</A>
+<B>Command-Line</B>
+  <A HREF="pug_runtime.htm#StartingarunfromtheCommandLine">Amzi! Runtime: Running arun from the Command-Line</A>
+  <A HREF="pug_compiler.htm#StartingtheCompilerfromtheComm">Compiler: Running from the Command-Line</A>
+  <A HREF="pug_linker.htm#StartingtheLinkerfromtheComman">Linker: Running from the Command-Line</A>
+<A HREF="ref_terms.htm#Comments">Comments</A>
+<A HREF="ref_manipulating_terms.htm#ComparisonofTerms">Compare Terms</A>
+<A HREF="pug_wide.htm#BuildMenu">Compile</A>
+<B>Compiler</B>
+  <A HREF="pug_compiler.htm#Compiler">Compiler</A>
+  <A HREF="pug_overview.htm#Compiler">Quick Overview</A>
+  <A HREF="pug_compiler.htm#StartingtheCompilerfromtheComm">Compiler: Running from the Command-Line</A>
+  <A HREF="pug_compiler.htm#StartingtheCompilerfromtheWind">Compiler: Running from the IDE</A>
+<B>Compiling</B>
+  <A HREF="pug_compiler.htm#AdvantagesofCompiling">Compiler: Advantages</A>
+  <A HREF="pug_compiler.htm#CompilationErrors">Compiler: Errors</A>
+  <A HREF="pug_compiler.htm#CompilerMessages">Compiler: Messages</A>
+  <A HREF="pug_tutorial.htm#Compiling">Quick Tutorial</A>
+  <A HREF="pug_wide.htm#Compiling">Windows IDE</A>
+  <A HREF="pug_compiler.htm#ComplexClauses">Compiler: Complex Clauses</A>
+  <A HREF="pug_compiler.htm#ComplexPredicates">Compiler: Complex Predicates</A>
+  <A HREF="pug_compiler.htm#DisadvantagesofCompiling">Compiler: Disadvantages</A>
+  <A HREF="ref_directives.htm#DiscontiguousClauses">Prolog Directives: Discontiguous Directive</A>
+  <A HREF="ref_directives.htm#DynamicClausesinCompiledCode">Prolog Directives: Dynamic Clauses in Compiled Code</A>
+  <A HREF="pug_overview.htm#IntermixingInterpretedandCompi">Quick Overview: Intermixing Interpreted and Compiled Code</A>
+  <A HREF="ref_directives.htm#LatentExpressions">Prolog Directives: Latent Expressions</A>
+  <A HREF="ref_directives.htm#MultifileClauses">Prolog Directives: Multifile Directive</A>
+  <A HREF="pug_compiler.htm#RequirementsonCompiledFiles">Compiler: Requirements</A>
+<A HREF="ref_math.htm#ComplementX">Complement</A>
+<A HREF="ref_execution.htm#ComplexGoals">Complex Goals</A>
+<B>Components</B>
+  <A HREF="pug_overview.htm#Components">Quick Overview</A>
+  <A HREF="pug_overview.htm#RelationshipOfComponents">Quick Overview: Relationship of Files and Components</A>
+<A HREF="pug_runtime.htm#ConfigurationFiles">Configuration Files</A>
+<A HREF="pug_runtime.htm#ConfigurationFlags">Configuration Flags</A>
+<A HREF="ref_terms.htm#CharacterConstants">Constants</A>
+<A HREF="ref_manipulating_terms.htm#DissectingTerms">Constructing Terms</A>
+<A HREF="pug_wide.htm#ListenerMenu">Consult</A>
+<A HREF="pug_listener.htm#Consultinguser">Consulting User</A>
+<A HREF="pug_wide.htm#BuildingAProject">Consulting</A>
+<B>Control</B>
+  <A HREF="ref_system.htm#procontrolTopPos">System Predicates: pro_control(Top, Pos)</A>
+  <A HREF="ref_system.htm#stacksizesHeapControlLocalTrai">System Predicates: stack_sizes(Heap, Control, Local, Trail)</A>
+<A HREF="pug_wide.htm#EditMenu">Copy</A>
+<A HREF="ref_execution.htm#Counters">Counters</A>
+<A HREF="ref_manipulating_terms.htm#DissectingTerms">Creating Terms</A>
+<B>Creep</B>
+  <A HREF="pug_debugger.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_debugger_ide.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_wide.htm#BoxModelofProcedureFlow">Windows IDE: Box Model</A>
+  <A HREF="pug_debugger.htm#DebugPortOptions">Debugger: Debug Port Options</A>
+  <A HREF="pug_wide.htm#DebugPortOptions">Windows IDE: Debug Port Options</A>
+  <A HREF="pug_debugger.htm#DebuggerExample">Debugger: Example</A>
+  <A HREF="pug_debugger_ide.htm#DebuggerExample">Debugger: Example</A>
+  <A HREF="pug_wide.htm#DebuggerExample">Windows IDE: Example</A>
+<B>Cut</B>
+  <A HREF="ref_execution.htm#Cut">Prolog Execution: ! Cut</A>
+  <A HREF="pug_wide.htm#EditMenu">Windows IDE: Edit Menu</A>
+
+
+<B><A NAME="D"></A>  <FONT COLOR=yellow SIZE=4>D</FONT></B><P>
+<A HREF="ref_dcg.htm#ApplicationsDCGDifferenceLists">DCG Applications</A>
+<A HREF="ref_dcg.htm#DCGSyntax">DCG Syntax</A>
+<A HREF="ref_dcg.htm#DCGTerminals">DCG Terminals</A>
+<A HREF="ref_dcg.htm#DefiniteClauseGrammarsDCGs">DCG</A>
+<A HREF="pug_wide.htm#ListenerMenu">Debug Off</A>
+<A HREF="pug_wide.htm#ListenerMenu">Debug On</A>
+<B>Debugger</B>
+  <A HREF="pug_overview.htm#Debugger">Quick Overview</A>
+  <A HREF="pug_overview.htm#ListenerDebugger">Quick Overview: Listener/Debugger</A>
+  <A HREF="pug_debugger_ide.htm#SourceCodeDebugger">Debugger: Source Code Debugger</A>
+  <A HREF="pug_debugger.htm#TheCommandLineDebugger">Debugger: Command-Line Debugger</A>
+  <A HREF="pug_wide.htm#TheDebugger">Windows IDE</A>
+  <A HREF="pug_listener.htm#debug">Listener: debug</A>
+<B>Debugging</B>
+  <A HREF="pug_debugger.htm#DebuggerExample">Debugger: Example</A>
+  <A HREF="pug_debugger_ide.htm#DebuggerExample">Debugger: Example</A>
+  <A HREF="pug_wide.htm#DebuggerExample">Windows IDE: Example</A>
+  <A HREF="pug_tutorial.htm#Debugging">Quick Tutorial</A>
+  <A HREF="pug_wide.htm#Debugging">Windows IDE</A>
+  <A HREF="pug_debugging.htm#DebuggingLogicServerAPIFunctio">Debugging Your Programs: Tracking LSAPI Errors</A>
+  <A HREF="pug_debugging.htm#DebuggingYourPrograms">Debugging Your Programs</A>
+  <A HREF="pug_debugging.htm#Logging">Debugging Your Programs: Logging</A>
+  <A HREF="pug_debugging.htm#catchandthrow">Debugging Your Programs: catch and throw</A>
+<A HREF="ref_manipulating_terms.htm#DissectingTerms">Decomposing Terms</A>
+<A HREF="ref_dcg.htm#DefiniteClauseGrammarsDCGs">Definite Clause Grammar</A>
+<A HREF="pug_wide.htm#EditMenu">Delete</A>
+<B>Delphi</B>
+  <A HREF="pug_tutorial.htm#InterfacingwithOtherTools">Quick Tutorial: Interfacing with Other Tools</A>
+  <A HREF="pug_wide.htm#InterfacingwithOtherTools">Windows IDE: Interfacing with Other Tools</A>
+<B>Depth</B>
+  <A HREF="pug_debugger.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_wide.htm#DebuggerDisplay">Windows IDE: Display</A>
+<A HREF="ref_dcg.htm#DefiniteClauseGrammarsDCGs">Difference Lists</A>
+<A HREF="ref_dcg.htm#ApplicationsDCGDifferenceLists">Difference Lists, Applications</A>
+<A HREF="ref_dcg.htm#GeneratingWithDifferenceLists">Difference Lists, Generating</A>
+<A HREF="ref_dcg.htm#ParsingWithDifferenceLists">Difference Lists, Parsing</A>
+<B>Directives</B>
+  <A HREF="pug_compiler.htm#CompilerDirectives">Compiler</A>
+  <A HREF="pug_preprocessor.htm#Directives">Preprocessor</A>
+<A HREF="ref_extensions.htm#FileampDirectoryPredicates">Directories</A>
+<A HREF="pug_debugger_ide.htm#DebugCommands">Disconnect</A>
+<A HREF="ref_manipulating_terms.htm#DissectingTerms">Dissecting Terms</A>
+<B>Distributing</B>
+  <A HREF="pug_distribution.htm#DistributingYourPrograms">Distributing Your Programs</A>
+  <A HREF="pug_tutorial.htm#DistributinganApplication">Quick Tutorial: Distributing an Application</A>
+  <A HREF="pug_wide.htm#DistributinganApplication">Windows IDE: Distributing an Application</A>
+  <A HREF="pug_distribution.htm#RedistributableFiles">Distributing Your Programs: Redistributable Files</A>
+<B>Division</B>
+  <A HREF="ref_math.htm#XdivY">Numbers and Math: X / Y</A>
+  <A HREF="ref_math.htm#XdivdivY">Numbers and Math: X // Y</A>
+  <A HREF="ref_math.htm#XdivsY">Numbers and Math: X divs Y</A>
+  <A HREF="ref_math.htm#XdivuY">Numbers and Math: X divu Y</A>
+<B>Duck World</B>
+  <A HREF="pug_tutorial.htm#Compiling">Quick Tutorial: Compiling</A>
+  <A HREF="pug_wide.htm#Compiling">Windows IDE: Compiling</A>
+  <A HREF="pug_tutorial.htm#ConsultingaSourceFile">Quick Tutorial: Consulting a Source File</A>
+  <A HREF="pug_wide.htm#ConsultingaSourceFile">Windows IDE: Consulting a Source File</A>
+  <A HREF="pug_tutorial.htm#CreatingaSourceFile">Quick Tutorial: Creating a Source File</A>
+  <A HREF="pug_wide.htm#CreatingaSourceFile">Windows IDE: Creating a Source File</A>
+  <A HREF="pug_tutorial.htm#Debugging">Quick Tutorial: Debugging</A>
+  <A HREF="pug_wide.htm#Debugging">Windows IDE: Debugging</A>
+  <A HREF="pug_tutorial.htm#DistributinganApplication">Quick Tutorial: Distributing an Application</A>
+  <A HREF="pug_wide.htm#DistributinganApplication">Windows IDE: Distributing an Application</A>
+  <A HREF="pug_tutorial.htm#DuckWorld">Quick Tutorial</A>
+  <A HREF="pug_wide.htm#DuckWorld">Windows IDE</A>
+  <A HREF="pug_tutorial.htm#LinkingandEXEGeneration">Quick Tutorial: Linking and Running</A>
+  <A HREF="pug_wide.htm#LinkingandEXEGeneration">Windows IDE: Linking and Running</A>
+  <A HREF="pug_tutorial.htm#Modules">Quick Tutorial: Modules</A>
+  <A HREF="pug_wide.htm#Modules">Windows IDE: Modules</A>
+  <A HREF="pug_tutorial.htm#RunningaModularApplication">Quick Tutorial: Running a Modular Application</A>
+  <A HREF="pug_wide.htm#RunningaModularApplication">Windows IDE: Running a Modular Application</A>
+  <A HREF="pug_tutorial.htm#UsingProjectsintheIDE">Quick Tutorial: Using Projects in the IDE</A>
+  <A HREF="pug_wide.htm#UsingProjectsintheIDE">Windows IDE: Using Projects</A>
+  <A HREF="pug_wide.htm#UsingalisandBATFiles">Windows IDE: Using alis and BAT Files</A>
+  <A HREF="pug_tutorial.htm#UsingtheListener">Quick Tutorial: Using the Listener</A>
+  <A HREF="pug_wide.htm#UsingtheListener">Windows IDE: Using the Listener</A>
+<A HREF="ref_logicbase.htm#PrologLogicbase">Dynamic Database</A>
+<B>Dynamic Predicates</B>
+  <A HREF="ref_logicbase.htm#DynamicPredicateStorageOptions">Prolog Logicbase: Dynamic Predicate Storage Options</A>
+  <A HREF="ref_logicbase.htm#DynamicPredicates">Prolog Logicbase</A>
+
+
+<B><A NAME="E"></A>  <FONT COLOR=yellow SIZE=4>E</FONT></B><P>
+<B>EXE Files</B>
+  <A HREF="pug_tutorial.htm#LinkingandEXEGeneration">Quick Tutorial: Linking and Running</A>
+  <A HREF="pug_wide.htm#LinkingandEXEGeneration">Windows IDE: Linking and Running</A>
+<A HREF="pug_wide.htm#EditMenu">Edit Menu</A>
+<A HREF="pug_editor.htm#EditorAndOutliner">Editor</A>
+<A HREF="pug_overview.htm#EmbeddedApplications">Embedded Applications</A>
+<A HREF="pug_wide.htm#ListenerMenu">End</A>
+<A HREF="ref_manipulating_terms.htm#EqualityofTerms">Equality of Terms</A>
+<A HREF="pug_debugging.htm#PrologErrorFile">Error Files</A>
+<B>Error Handling</B>
+  <A HREF="ref_execution.htm#catch3">Prolog Execution: catch(GOAL, ERROR, HANDLER)</A>
+  <A HREF="ref_execution.htm#throw1">Prolog Execution: throw(TERM)</A>
+<B>Errors</B>
+  <A HREF="pug_debugging.htm#CheckingAPIErrorCodes">Debugging Your Programs: Checking LSAPI Error Codes</A>
+  <A HREF="pug_compiler.htm#CompilationErrors">Compiler</A>
+  <A HREF="pug_debugging.htm#TrackingRuntimeErrorsinProlog">Debugging Your Programs: Tracking Prolog Errors</A>
+<B>Escape Characters</B>
+  <A HREF="ref_terms.htm#EnablingandDisablingEscapeProc">Prolog Terms: Enabling and Disabling Escape Processing</A>
+  <A HREF="ref_terms.htm#EscapeCharacters">Prolog Terms</A>
+  <A HREF="ref_terms.htm#EscapeCodes">Prolog Terms: Escape Codes</A>
+  <A HREF="ref_terms.htm#WhereEscapeCodesCanbeUsed">Prolog Terms: Using Escape Codes</A>
+<B>Escape Codes</B>
+  <A HREF="ref_terms.htm#EscapeCodes">Prolog Terms</A>
+  <A HREF="ref_terms.htm#WhereEscapeCodesCanbeUsed">Prolog Terms: Using Escape Codes</A>
+<B>Exit</B>
+  <A HREF="pug_debugger.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_debugger_ide.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_wide.htm#DebuggerDisplay">Windows IDE: Display</A>
+  <A HREF="pug_wide.htm#FileMenu">Windows IDE: File Menu</A>
+<A HREF="ref_math.htm#XpowerY">Exponent</A>
+<B>Extended Predicates</B>
+  <A HREF="pug_linker.htm#EnvironmentSpecificandUtilityL">Linker: Libraries</A>
+  <A HREF="ref_extensions.htm#ExtendedPredicates">O.S. Extended Predicates</A>
+
+
+<B><A NAME="F"></A>  <FONT COLOR=yellow SIZE=4>F</FONT></B><P>
+<B>Fail</B>
+  <A HREF="pug_debugger.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_debugger_ide.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_wide.htm#DebuggerDisplay">Windows IDE: Display</A>
+<A HREF="pug_wide.htm#FileMenu">File Menu</A>
+<A HREF="pug_overview.htm#RelationshipOfComponents">File Types</A>
+<A HREF="ref_extensions.htm#FileampDirectoryPredicates">Files</A>
+<A HREF="pug_wide.htm#EditMenu">Find Next</A>
+<A HREF="pug_wide.htm#EditMenu">Find</A>
+<A HREF="pug_runtime.htm#Flags">Flags</A>
+<A HREF="ref_math.htm#NumberTypes">Float(double)</A>
+<A HREF="ref_math.htm#NumberTypes">Float(single)</A>
+<A HREF="ref_execution.htm#FlowofControlPredicates">Flow-of-Control</A>
+<A HREF="ref_execution.htm#Clauses">Functor</A>
+<A HREF="ref_logicbase.htm#Predicates">Functor/Arity</A>
+
+
+<B><A NAME="G"></A>  <FONT COLOR=yellow SIZE=4>G</FONT></B><P>
+<B>Goals</B>
+  <A HREF="ref_execution.htm#BacktrackingSearch">Prolog Execution: Backtracking Search</A>
+  <A HREF="pug_listener.htm#QueryingLogicBase">Listener: Querying the Logic Base</A>
+
+
+<B><A NAME="H"></A>  <FONT COLOR=yellow SIZE=4>H</FONT></B><P>
+<B>Head</B>
+  <A HREF="ref_execution.htm#Clauses">Prolog Execution: Clauses</A>
+  <A HREF="ref_logicbase.htm#clauseHeadBody">Prolog Logicbase: clause(HEAD, BODY)</A>
+<B>Heap</B>
+  <A HREF="ref_system.htm#proheapTopPos">System Predicates: pro_heap(Top, Pos)</A>
+  <A HREF="ref_system.htm#stacksizesHeapControlLocalTrai">System Predicates: stack_sizes(Heap, Control, Local, Trail)</A>
+
+
+<B><A NAME="I"></A>  <FONT COLOR=yellow SIZE=4>I</FONT></B><P>
+<A HREF="ref_io.htm#InputandOutput">I</A>
+<A HREF="ref_io.htm#InputandOutput">I/</A>
+<A HREF="ref_io.htm#StreamID">I/O Streams</A>
+<A HREF="ref_io.htm#InputandOutput">I/O</A>
+<A HREF="ref_io.htm#GeneralPrinciples">I/O, General Principles</A>
+<B>IDE</B>
+  <A HREF="pug_tutorial.htm#ConsultingaSourceFile">Quick Tutorial: Consulting a Source File</A>
+  <A HREF="pug_wide.htm#ConsultingaSourceFile">Windows IDE: Consulting a Source File</A>
+  <A HREF="pug_ide.htm#IDE">Eclipse IDE</A>
+  <A HREF="pug_overview.htm#IDE">Quick Overview: Interactive Development Environment (IDE)</A>
+  <A HREF="pug_compiler.htm#StartingtheCompilerfromtheWind">Compiler: Running from the IDE</A>
+  <A HREF="pug_linker.htm#StartingtheLinkerfromtheWindow">Linker: Running from the IDE</A>
+  <A HREF="pug_tutorial.htm#StartingtheListener">Quick Tutorial: Starting the Listener</A>
+  <A HREF="pug_wide.htm#StartingtheListener">Windows IDE: Starting the Listener</A>
+  <A HREF="pug_tutorial.htm#UsingProjectsintheIDE">Quick Tutorial: Using Projects in the IDE</A>
+  <A HREF="pug_wide.htm#UsingProjectsintheIDE">Windows IDE: Using Projects</A>
+  <A HREF="pug_wide.htm#WIDEControls">Windows IDE: Windows IDE Interface</A>
+  <A HREF="pug_wide.htm#WIDEInterface">Windows IDE: Interface</A>
+  <A HREF="pug_ide_quickstart.htm#beginning_users">IDE Quick Start: Beginning Users</A>
+<A HREF="ref_manipulating_terms.htm#EqualityofTerms">Identical Terms</A>
+<A HREF="ref_manipulating_terms.htm#XneqeqY">Identity Negated</A>
+<A HREF="ref_manipulating_terms.htm#XeqeqY">Identity</A>
+<A HREF="pug_wide.htm#Help">Index</A>
+<A HREF="ref_terms.htm#Associativity">Infix</A>
+<A HREF="ref_io.htm#InputandOutput">Input</A>
+<A HREF="ref_math.htm#NumberTypes">Integer</A>
+<A HREF="ref_terms.htm#Integers">Integers</A>
+<A HREF="pug_overview.htm#IDE">Interactive Development Environment</A>
+<A HREF="pug_overview.htm#IntermixingInterpretedandCompi">Intermixing dynamic and static(compiled) Code</A>
+<A HREF="ref_terms.htm#Internationalization">Internationalization</A>
+
+
+<B><A NAME="L"></A>  <FONT COLOR=yellow SIZE=4>L</FONT></B><P>
+<B>LSAPI</B>
+  <A HREF="pug_debugging.htm#CheckingAPIErrorCodes">Debugging Your Programs: Checking LSAPI Error Codes</A>
+  <A HREF="pug_debugging.htm#DebuggingLogicServerAPIFunctio">Debugging Your Programs: Tracking LSAPI Errors</A>
+  <A HREF="pug_debugging.htm#TracingAPICalls">Debugging Your Programs: Tracing LSAPI Calls</A>
+<A HREF="ref_system.htm#loadlsxFilenameA">LSX</A>
+<A HREF="ref_dcg.htm#DCGTranslation">Language Translation, DCG</A>
+<A HREF="ref_directives.htm#DiscontiguousClauses">Large Predicates</A>
+<A HREF="ref_directives.htm#LatentExpressions">Latent Expressions</A>
+<A HREF="pug_debugger_ide.htm#LaunchConfigurations">Launch Configuration</A>
+<B>Leap</B>
+  <A HREF="pug_debugger.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_debugger_ide.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_wide.htm#BoxModelofProcedureFlow">Windows IDE: Box Model</A>
+  <A HREF="pug_debugger.htm#DebugPortOptions">Debugger: Debug Port Options</A>
+  <A HREF="pug_wide.htm#DebugPortOptions">Windows IDE: Debug Port Options</A>
+  <A HREF="pug_debugger.htm#DebuggerExample">Debugger: Example</A>
+  <A HREF="pug_debugger_ide.htm#DebuggerExample">Debugger: Example</A>
+  <A HREF="pug_wide.htm#DebuggerExample">Windows IDE: Example</A>
+<A HREF="pug_debugger_ide.htm#DebugCommands">Leashing</A>
+<A HREF="pug_linker.htm#EnvironmentSpecificandUtilityL">Libraries</A>
+<A HREF="pug_distribution.htm#RedistributableFiles">Licensing</A>
+<A HREF="pug_wide.htm#BuildMenu">Link</A>
+<B>Linker</B>
+  <A HREF="pug_linker.htm#EnvironmentSpecificandUtilityL">Linker: Libraries</A>
+  <A HREF="pug_overview.htm#Linker">Quick Overview</A>
+  <A HREF="pug_linker.htm#StartingtheLinkerfromtheComman">Linker: Running from the Command-Line</A>
+  <A HREF="pug_linker.htm#StartingtheLinkerfromtheWindow">Linker: Running from the IDE</A>
+  <A HREF="pug_linker.htm#alnkTheLinker">Linker</A>
+<B>Linking</B>
+  <A HREF="pug_tutorial.htm#LinkingandEXEGeneration">Quick Tutorial: Linking and Running</A>
+  <A HREF="pug_wide.htm#LinkingandEXEGeneration">Windows IDE: Linking and Running</A>
+<A HREF="pug_wide.htm#ListenerMenu">Listener Menu</A>
+<B>Listener</B>
+  <A HREF="pug_listener.htm#Listener">Listener</A>
+  <A HREF="pug_listener.htm#ListenerCommands">Listener: Listener Commands</A>
+  <A HREF="pug_overview.htm#ListenerDebugger">Quick Overview: Listener/Debugger</A>
+  <A HREF="pug_listener.htm#QueryingLogicBase">Listener: Querying the Logic Base</A>
+  <A HREF="pug_tutorial.htm#StartingtheListener">Quick Tutorial: Starting the Listener</A>
+  <A HREF="pug_wide.htm#StartingtheListener">Windows IDE: Starting the Listener</A>
+<A HREF="ref_manipulating_terms.htm#TermListBunivB">Lists to Structures</A>
+<A HREF="ref_terms.htm#Lists">Lists</A>
+<B>Local</B>
+  <A HREF="ref_system.htm#prolocalTopPos">System Predicates: pro_local(Top, Pos)</A>
+  <A HREF="ref_system.htm#stacksizesHeapControlLocalTrai">System Predicates: stack_sizes(Heap, Control, Local, Trail)</A>
+<A HREF="ref_io.htm#Logging">Log Files</A>
+<B>Logging</B>
+  <A HREF="pug_debugger.htm#Logging">Debugger</A>
+  <A HREF="pug_debugging.htm#Logging">Debugging Your Programs</A>
+  <A HREF="pug_wide.htm#Logging">Windows IDE</A>
+<A HREF="pug_overview.htm#EmbeddedApplications">Logic Server API</A>
+<B>Logicbase</B>
+  <A HREF="pug_overview.htm#IntermixingInterpretedandCompi">Quick Overview: Intermixing Interpreted and Compiled Code</A>
+  <A HREF="ref_logicbase.htm#PrologLogicbase">Prolog Logicbase</A>
+
+
+<B><A NAME="M"></A>  <FONT COLOR=yellow SIZE=4>M</FONT></B><P>
+<A HREF="ref_manipulating_terms.htm#ManipulatingTerms">Manipulating Terms</A>
+<A HREF="ref_math.htm#MathematicalComparisons">Mathematical Comparisons</A>
+<A HREF="ref_math.htm#MathematicalFunctions">Mathematical Functions</A>
+<A HREF="ref_math.htm#MathematicalGames">Mathematical Games</A>
+<A HREF="ref_math.htm#MathematicalOperators">Mathematical Operators</A>
+<A HREF="pug_compiler.htm#CompilerMessages">Messages</A>
+<A HREF="ref_math.htm#MixedMode">Mixed Mode Math</A>
+<B>Modules</B>
+  <A HREF="pug_tutorial.htm#Modules">Quick Tutorial</A>
+  <A HREF="pug_wide.htm#Modules">Windows IDE</A>
+  <A HREF="ref_logicbase.htm#Modules">Prolog Logicbase</A>
+  <A HREF="ref_modules.htm#Modules">Modules</A>
+  <A HREF="pug_tutorial.htm#RunningaModularApplication">Quick Tutorial: Running a Modular Application</A>
+  <A HREF="pug_wide.htm#RunningaModularApplication">Windows IDE: Running a Modular Application</A>
+<B>Modulus</B>
+  <A HREF="ref_math.htm#XmodY">Numbers and Math: X mod Y</A>
+  <A HREF="ref_math.htm#XmodsY">Numbers and Math: X mods Y</A>
+  <A HREF="ref_math.htm#XmoduY">Numbers and Math: X modu Y</A>
+<A HREF="ref_terms.htm#Internationalization">Multibyte characters</A>
+<A HREF="pug_overview.htm#EmbeddedApplications">Multiple Logic Servers</A>
+<A HREF="ref_math.htm#XtimesY">Multiplication</A>
+
+
+<B><A NAME="N"></A>  <FONT COLOR=yellow SIZE=4>N</FONT></B><P>
+<A HREF="ref_terms.htm#Internationalization">National languages</A>
+<A HREF="ref_dcg.htm#DefiniteClauseGrammarsDCGs">Natural Language</A>
+<A HREF="ref_execution.htm#Clauses">Neck</A>
+<A HREF="ref_terms.htm#NegativeNumbers">Negative Numbers</A>
+<A HREF="ref_math.htm#NegativeX">Negative</A>
+<A HREF="pug_wide.htm#FileMenu">New File</A>
+<A HREF="pug_wide.htm#FileMenu">New Project</A>
+<A HREF="ref_dcg.htm#DefiniteClauseGrammarsDCGs">Non-Terminals</A>
+<A HREF="ref_math.htm#NumberTypes">Number Types</A>
+<A HREF="ref_terms.htm#Numbers">Numbers</A>
+
+
+<B><A NAME="O"></A>  <FONT COLOR=yellow SIZE=4>O</FONT></B><P>
+<A HREF="pug_wide.htm#FileMenu">Open File</A>
+<A HREF="pug_wide.htm#FileMenu">Open Project</A>
+<B>Operators</B>
+  <A HREF="ref_terms.htm#Associativity">Prolog Terms: Associativity</A>
+  <A HREF="ref_terms.htm#Operators">Prolog Terms</A>
+  <A HREF="ref_terms.htm#Precedence">Prolog Terms: Precedence</A>
+  <A HREF="ref_terms.htm#PredefinedPrologOperators">Prolog Terms: Predefined Prolog Operators</A>
+<A HREF="ref_math.htm#XorY">Or</A>
+<B>Outliner</B>
+  <A HREF="pug_editor.htm#EditorAndOutliner">Editor and Outliner</A>
+  <A HREF="pug_editor.htm#Outliner">Editor and Outliner</A>
+<A HREF="ref_io.htm#InputandOutput">Output</A>
+
+
+<B><A NAME="P"></A>  <FONT COLOR=yellow SIZE=4>P</FONT></B><P>
+<B>Packaging</B>
+  <A HREF="pug_tutorial.htm#LinkingandEXEGeneration">Quick Tutorial: Linking and Running</A>
+  <A HREF="pug_wide.htm#LinkingandEXEGeneration">Windows IDE: Linking and Running</A>
+<A HREF="ref_dcg.htm#ParsingFiles">Parsing Files</A>
+<B>Parsing</B>
+  <A HREF="ref_text.htm#stringsplit">Atoms, Lists and Strings: string_split(String, DelimitersS, List)</A>
+  <A HREF="ref_text.htm#stringtokens">Atoms, Lists and Strings: string_tokens(String, TokenList), string_tokens(String, TokenList, DelimitersS)</A>
+  <A HREF="ref_text.htm#stringtrim">Atoms, Lists and Strings: string_trim(String, TrimmedString)</A>
+<A HREF="pug_wide.htm#EditMenu">Paste</A>
+<B>Ports</B>
+  <A HREF="pug_debugger_ide.htm#DebugCommands">Debugger: Debug Commands</A>
+  <A HREF="pug_debugger.htm#DebugPortOptions">Debugger: Debug Port Options</A>
+  <A HREF="pug_wide.htm#DebugPortOptions">Windows IDE: Debug Port Options</A>
+  <A HREF="pug_debugger.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_debugger_ide.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_wide.htm#DebuggerDisplay">Windows IDE: Display</A>
+  <A HREF="pug_debugger.htm#LeashingDebugPorts">Debugger: Leashing Debug Ports</A>
+  <A HREF="pug_debugger_ide.htm#LeashingDebugPorts">Debugger: Breaking at Debug Ports</A>
+  <A HREF="pug_wide.htm#LeashingDebugPorts">Windows IDE: Leashing Debug Ports</A>
+  <A HREF="pug_debugger.htm#Logging">Debugger: Logging</A>
+  <A HREF="pug_wide.htm#Logging">Windows IDE: Logging</A>
+<A HREF="ref_terms.htm#Associativity">Postfix</A>
+<A HREF="ref_math.htm#XpowerY">Power</A>
+<A HREF="ref_terms.htm#Precedence">Precedence</A>
+<B>Predicates</B>
+  <A HREF="pug_compiler.htm#ComplexPredicates">Compiler: Complex Predicates</A>
+  <A HREF="pug_linker.htm#EnvironmentSpecificandUtilityL">Linker: Libraries</A>
+  <A HREF="ref_extensions.htm#ExtendedPredicates">O.S. Extended Predicates</A>
+  <A HREF="pug_compiler.htm#MainPredicate">Compiler: Main Predicate</A>
+  <A HREF="ref_logicbase.htm#Predicates">Prolog Logicbase</A>
+  <A HREF="ref_logicbase.htm#abolishNameArity">Prolog Logicbase: abolish(M:F/A)</A>
+  <A HREF="pug_listener.htm#add">Listener: add</A>
+<A HREF="pug_editor.htm#Preferences">Preferences</A>
+<A HREF="ref_terms.htm#Associativity">Prefix</A>
+<A HREF="pug_preprocessor.htm#Preprocessor">Preprocessor</A>
+<A HREF="pug_wide.htm#FileMenu">Print Preview</A>
+<A HREF="pug_wide.htm#FileMenu">Print Setup</A>
+<A HREF="pug_wide.htm#FileMenu">Print</A>
+<B>Procedure Flow</B>
+  <A HREF="pug_debugger.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_debugger_ide.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_wide.htm#BoxModelofProcedureFlow">Windows IDE: Box Model</A>
+<B>Projects</B>
+  <A HREF="pug_wide.htm#BuildingAProject">Windows IDE: Consulting/Loading</A>
+  <A HREF="pug_wide.htm#CreatingAProject">Windows IDE: Creating a Project</A>
+  <A HREF="pug_wide.htm#ProjectDialogBox">Windows IDE: Dialog Box</A>
+  <A HREF="pug_wide.htm#Projects">Windows IDE</A>
+
+
+<B><A NAME="R"></A>  <FONT COLOR=yellow SIZE=4>R</FONT></B><P>
+<A HREF="ref_math.htm#seedrandomI">Random Numbers</A>
+<A HREF="ref_io.htm#InputandOutput">Read</A>
+<A HREF="ref_math.htm#NumberTypes">Real(fixed)</A>
+<A HREF="ref_math.htm#NumberTypes">Real(long)</A>
+<A HREF="pug_wide.htm#ListenerMenu">Reconsult</A>
+<A HREF="ref_io.htm#RedirectingStreams">Redirecting streams</A>
+<A HREF="pug_distribution.htm#RedistributableFiles">Redistributable Files</A>
+<B>Redo</B>
+  <A HREF="pug_debugger.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_debugger_ide.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_wide.htm#DebuggerDisplay">Windows IDE: Display</A>
+<B>Remainder</B>
+  <A HREF="ref_math.htm#XmodY">Numbers and Math: X mod Y</A>
+  <A HREF="ref_math.htm#XmodsY">Numbers and Math: X mods Y</A>
+  <A HREF="ref_math.htm#XmoduY">Numbers and Math: X modu Y</A>
+<A HREF="pug_wide.htm#EditMenu">Replace</A>
+<A HREF="ref_io.htm#Repositioning">Repositioning</A>
+<A HREF="pug_debugger_ide.htm#DebugCommands">Resume</A>
+<A HREF="pug_listener.htm#TypinginaRule">Rules</A>
+<B>Run</B>
+  <A HREF="pug_wide.htm#BuildMenu">Windows IDE: Build Menu</A>
+  <A HREF="pug_debugger_ide.htm#DebugCommands">Debugger: Debug Commands</A>
+<A HREF="pug_overview.htm#StandAloneRuntime">Runtime</A>
+
+
+<B><A NAME="S"></A>  <FONT COLOR=yellow SIZE=4>S</FONT></B><P>
+<A HREF="pug_wide.htm#FileMenu">Save All</A>
+<A HREF="pug_wide.htm#FileMenu">Save As</A>
+<A HREF="pug_wide.htm#FileMenu">Save</A>
+<A HREF="pug_wide.htm#EditMenu">Select All</A>
+<A HREF="pug_wide.htm#ViewMenu">Set Font</A>
+<B>Shift</B>
+  <A HREF="ref_math.htm#XgtgtY">Numbers and Math: X &gt;&gt; Y</A>
+  <A HREF="ref_math.htm#XltltY">Numbers and Math: X &lt;&lt; Y</A>
+  <A HREF="ref_math.htm#XxorY">Numbers and Math: X xor Y</A>
+<A HREF="ref_terms.htm#Atoms">Single Quotes</A>
+<B>Skip</B>
+  <A HREF="pug_debugger.htm#DebugPortOptions">Debugger: Debug Port Options</A>
+  <A HREF="pug_wide.htm#DebugPortOptions">Windows IDE: Debug Port Options</A>
+<A HREF="ref_manipulating_terms.htm#StandardOrder">Sort Order</A>
+<B>Source Files</B>
+  <A HREF="pug_tutorial.htm#ConsultingaSourceFile">Quick Tutorial: Consulting a Source File</A>
+  <A HREF="pug_wide.htm#ConsultingaSourceFile">Windows IDE: Consulting a Source File</A>
+  <A HREF="pug_tutorial.htm#CreatingaSourceFile">Quick Tutorial: Creating a Source File</A>
+  <A HREF="pug_wide.htm#CreatingaSourceFile">Windows IDE: Creating a Source File</A>
+<B>Spypoints</B>
+  <A HREF="pug_debugger.htm#Spypoints">Debugger</A>
+  <A HREF="pug_wide.htm#Spypoints">Windows IDE</A>
+<B>Stacks</B>
+  <A HREF="ref_system.htm#procontrolTopPos">System Predicates: pro_control(Top, Pos)</A>
+  <A HREF="ref_system.htm#proheapTopPos">System Predicates: pro_heap(Top, Pos)</A>
+  <A HREF="ref_system.htm#prolocalTopPos">System Predicates: pro_local(Top, Pos)</A>
+  <A HREF="ref_system.htm#protrailTopPos">System Predicates: pro_trail(Top, Pos)</A>
+  <A HREF="ref_system.htm#stacksizesHeapControlLocalTrai">System Predicates: stack_sizes(Heap, Control, Local, Trail)</A>
+<A HREF="pug_overview.htm#StandAloneRuntime">Stand-Alone Runtime</A>
+<A HREF="ref_manipulating_terms.htm#StandardOrder">Standard Order</A>
+<A HREF="pug_wide.htm#ListenerMenu">Start</A>
+<A HREF="ref_logicbase.htm#StaticPredicates">Static Predicates</A>
+<A HREF="pug_wide.htm#ViewMenu">Status Bar</A>
+<A HREF="pug_debugger_ide.htm#DebugCommands">Step Into</A>
+<A HREF="pug_debugger_ide.htm#DebugCommands">Step Over</A>
+<A HREF="pug_debugger_ide.htm#DebugCommands">Step</A>
+<A HREF="ref_io.htm#StreamID">Stream IDs</A>
+<A HREF="ref_io.htm#Streams">Streams</A>
+<A HREF="ref_terms.htm#Strings">Strings</A>
+<A HREF="ref_manipulating_terms.htm#functorTermFunctorN">Structure Analysis</A>
+<B>Structure Creation</B>
+  <A HREF="ref_manipulating_terms.htm#TermListBunivB">Manipulating Terms: Term =.. List (univ)</A>
+  <A HREF="ref_manipulating_terms.htm#functorTermFunctorN">Manipulating Terms: functor(TERM, FUNCTOR, ARITY)</A>
+<A HREF="ref_manipulating_terms.htm#TermListBunivB">Structures to Lists</A>
+<A HREF="ref_terms.htm#Structures">Structures</A>
+<A HREF="ref_math.htm#XminusY">Subtraction</A>
+<A HREF="pug_debugger_ide.htm#DebugCommands">Suspend</A>
+<A HREF="ref_execution.htm#catch3">System Errors</A>
+<A HREF="ref_system.htm#SystemPredicates">System Predicates</A>
+
+
+<B><A NAME="T"></A>  <FONT COLOR=yellow SIZE=4>T</FONT></B><P>
+<A HREF="ref_manipulating_terms.htm#ComparisonofTerms">Term Ordering</A>
+<A HREF="ref_dcg.htm#DefiniteClauseGrammarsDCGs">Terminals</A>
+<A HREF="pug_debugger_ide.htm#DebugCommands">Terminate</A>
+<B>Terms</B>
+  <A HREF="pug_debugger.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_debugger_ide.htm#DebuggerDisplay">Debugger: Display</A>
+  <A HREF="pug_wide.htm#DebuggerDisplay">Windows IDE: Display</A>
+  <A HREF="pug_debugging.htm#ExaminingPrologTerms">Debugging Your Programs: Examining Prolog Terms</A>
+  <A HREF="ref_manipulating_terms.htm#ManipulatingTerms">Manipulating Terms</A>
+  <A HREF="ref_manipulating_terms.htm#StandardOrder">Manipulating Terms: Standard Order of Terms</A>
+  <A HREF="ref_terms.htm#Variables">Prolog Terms: Variables</A>
+  <A HREF="ref_io.htm#displayTerm">Input and Output: display(Term)</A>
+  <A HREF="ref_logicbase.htm#retractTerm">Prolog Logicbase: retract(TERM)</A>
+  <A HREF="ref_logicbase.htm#retractallTerm">Prolog Logicbase: retractall(TERM)</A>
+<A HREF="pug_wide.htm#WindowMenu">Tile Horizontally</A>
+<A HREF="pug_wide.htm#WindowMenu">Tile Vertically</A>
+<A HREF="pug_wide.htm#ViewMenu">Tool Bar</A>
+<B>Tools</B>
+  <A HREF="pug_overview.htm#Components">Quick Overview: Components</A>
+  <A HREF="pug_overview.htm#RelationshipOfComponents">Quick Overview: Relationship of Files and Components</A>
+<A HREF="pug_debugging.htm#TracingAPICalls">Tracing</A>
+<B>Trail</B>
+  <A HREF="ref_system.htm#protrailTopPos">System Predicates: pro_trail(Top, Pos)</A>
+  <A HREF="ref_system.htm#stacksizesHeapControlLocalTrai">System Predicates: stack_sizes(Heap, Control, Local, Trail)</A>
+<A HREF="ref_dcg.htm#DCGTranslation">Translation, DCG</A>
+<A HREF="ref_math.htm#TrigonometryFunctions">Trigonometry Functions</A>
+<B>Tutorial</B>
+  <A HREF="pug_tutorial.htm#Compiling">Quick Tutorial: Compiling</A>
+  <A HREF="pug_wide.htm#Compiling">Windows IDE: Compiling</A>
+  <A HREF="pug_tutorial.htm#CreatingaSourceFile">Quick Tutorial: Creating a Source File</A>
+  <A HREF="pug_wide.htm#CreatingaSourceFile">Windows IDE: Creating a Source File</A>
+  <A HREF="pug_tutorial.htm#Debugging">Quick Tutorial: Debugging</A>
+  <A HREF="pug_wide.htm#Debugging">Windows IDE: Debugging</A>
+  <A HREF="pug_tutorial.htm#DuckWorld">Quick Tutorial: Duck World</A>
+  <A HREF="pug_wide.htm#DuckWorld">Windows IDE: Duck World</A>
+  <A HREF="pug_tutorial.htm#LinkingandEXEGeneration">Quick Tutorial: Linking and Running</A>
+  <A HREF="pug_wide.htm#LinkingandEXEGeneration">Windows IDE: Linking and Running</A>
+  <A HREF="pug_tutorial.htm#Modules">Quick Tutorial: Modules</A>
+  <A HREF="pug_wide.htm#Modules">Windows IDE: Modules</A>
+  <A HREF="pug_tutorial.htm#RunningaModularApplication">Quick Tutorial: Running a Modular Application</A>
+  <A HREF="pug_wide.htm#RunningaModularApplication">Windows IDE: Running a Modular Application</A>
+  <A HREF="pug_tutorial.htm#UsingProjectsintheIDE">Quick Tutorial: Using Projects in the IDE</A>
+  <A HREF="pug_wide.htm#UsingProjectsintheIDE">Windows IDE: Using Projects</A>
+  <A HREF="pug_wide.htm#UsingalisandBATFiles">Windows IDE: Using alis and BAT Files</A>
+  <A HREF="pug_tutorial.htm#UsingtheListener">Quick Tutorial: Using the Listener</A>
+  <A HREF="pug_wide.htm#UsingtheListener">Windows IDE: Using the Listener</A>
+
+
+<B><A NAME="U"></A>  <FONT COLOR=yellow SIZE=4>U</FONT></B><P>
+<A HREF="pug_wide.htm#EditMenu">Undo</A>
+<B>Unicode</B>
+  <A HREF="ref_terms.htm#Atoms">Prolog Terms: Atoms</A>
+  <A HREF="ref_terms.htm#CharacterConstants">Prolog Terms: Character Constants</A>
+  <A HREF="pug_editor.htm#EditorFunctions">Editor and Outliner: Editor Functions</A>
+  <A HREF="ref_terms.htm#Internationalization">Prolog Terms: Internationalization</A>
+  <A HREF="pug_wide.htm#UnicodeAndASCII">Windows IDE: Unicode and ASCII</A>
+<B>Unification Avoidance</B>
+  <A HREF="ref_manipulating_terms.htm#EqualityofTerms">Manipulating Terms: Equality of Terms</A>
+  <A HREF="ref_manipulating_terms.htm#notnotXeqY">Manipulating Terms: not(not(X = Y))</A>
+<A HREF="ref_manipulating_terms.htm#XneqY">Unification Operator Negated</A>
+<A HREF="ref_manipulating_terms.htm#XeqY">Unification Operator</A>
+<A HREF="ref_manipulating_terms.htm#EqualityofTerms">Unification of Terms</A>
+<B>Unification</B>
+  <A HREF="ref_manipulating_terms.htm#EqualityofTerms">Manipulating Terms: Equality of Terms</A>
+  <A HREF="ref_execution.htm#Unification">Prolog Execution</A>
+<A HREF="pug_wide.htm#FileMenu">Unlock</A>
+
+
+<B><A NAME="V"></A>  <FONT COLOR=yellow SIZE=4>V</FONT></B><P>
+<A HREF="ref_manipulating_terms.htm#varlistList">Variable Names</A>
+<B>Variable Names/Bindings</B>
+  <A HREF="ref_manipulating_terms.htm#string_query2">Manipulating Terms: string_query(QUERYSTRING, RESULTSTRING)</A>
+  <A HREF="ref_manipulating_terms.htm#varlist_query3">Manipulating Terms: varlist_query(QUERYSTRING, LENGTH, RESULTLIST)</A>
+<A HREF="ref_manipulating_terms.htm#numbervarsTermStartEnd">Variable Numbering</A>
+<B>Variables</B>
+  <A HREF="ref_terms.htm#Variables">Prolog Terms</A>
+  <A HREF="ref_manipulating_terms.htm#varlistList">Manipulating Terms: varlist(List)</A>
+  <A HREF="ref_manipulating_terms.htm#varsofTermList">Manipulating Terms: varsof(Term, List)</A>
+<A HREF="pug_wide.htm#ViewMenu">View Menu</A>
+
+
+<B><A NAME="W"></A>  <FONT COLOR=yellow SIZE=4>W</FONT></B><P>
+<A HREF="pug_wide.htm#IDEInteractiveDevelopmentEnvir">WIDE</A>
+<A HREF="ref_io.htm#InputandOutput">Write</A>
+
+
+<B><A NAME="X"></A>  <FONT COLOR=yellow SIZE=4>X</FONT></B><P>
+<A HREF="ref_dcg.htm#DCGXML">XML, DCG</A>
+
+
+<B><A NAME=" "></A>  <FONT COLOR=yellow SIZE=4> </FONT></B><P>
+<A HREF="ref_terms.htm#Lists">[]</A>
+<A HREF="ref_math.htm#ComplementX">\</A>
+<A HREF="ref_execution.htm#notopGoal">\+/1</A>
+<A HREF="ref_math.htm#XorY">\/</A>
+<A HREF="ref_manipulating_terms.htm#XneqY">\=</A>
+<A HREF="ref_manipulating_terms.htm#XneqeqY">\==/2</A>
+<A HREF="ref_terms.htm#Variables">_</A>
+
+
+<B><A NAME="A"></A>  <FONT COLOR=yellow SIZE=4>A</FONT></B><P>
+<A HREF="pug_wide.htm#BuildingAProject">abld</A>
+<A HREF="ref_logicbase.htm#abolishNameArity">abolish</A>
+<A HREF="ref_math.htm#absX">abs</A>
+<B>acmp</B>
+  <A HREF="pug_compiler.htm#Compiler">Compiler</A>
+  <A HREF="pug_overview.htm#Compiler">Quick Overview: Compiler</A>
+  <A HREF="pug_compiler.htm#StartingtheCompilerfromtheComm">Compiler: Running from the Command-Line</A>
+  <A HREF="pug_compiler.htm#StartingtheCompilerfromtheWind">Compiler: Running from the IDE</A>
+<A HREF="ref_math.htm#acosX">acos</A>
+<B>add</B>
+  <A HREF="pug_tutorial.htm#UsingtheListener">Quick Tutorial: Using the Listener</A>
+  <A HREF="pug_wide.htm#UsingtheListener">Windows IDE: Using the Listener</A>
+  <A HREF="pug_listener.htm#add">Listener</A>
+<B>alias</B>
+  <A HREF="ref_io.htm#Open4">Input and Output: open(FILE, MODE, ID, OPTIONS)</A>
+  <A HREF="ref_io.htm#StreamProperties">Input and Output: Stream Properties</A>
+  <A HREF="ref_io.htm#Streams">Input and Output: Streams</A>
+<B>alis</B>
+  <A HREF="pug_tutorial.htm#ConsultingaSourceFile">Quick Tutorial: Consulting a Source File</A>
+  <A HREF="pug_wide.htm#ConsultingaSourceFile">Windows IDE: Consulting a Source File</A>
+  <A HREF="pug_listener.htm#Listener">Listener</A>
+  <A HREF="pug_overview.htm#ListenerDebugger">Quick Overview: Listener/Debugger</A>
+  <A HREF="pug_tutorial.htm#StartingtheListener">Quick Tutorial: Starting the Listener</A>
+  <A HREF="pug_wide.htm#StartingtheListener">Windows IDE: Starting the Listener</A>
+  <A HREF="pug_wide.htm#UsingalisandBATFiles">Windows IDE: Using alis and BAT Files</A>
+  <A HREF="pug_tutorial.htm#UsingtheListener">Quick Tutorial: Using the Listener</A>
+  <A HREF="pug_wide.htm#UsingtheListener">Windows IDE: Using the Listener</A>
+<A HREF="ref_math.htm#almost_equal">almost equal</A>
+<B>alnk</B>
+  <A HREF="pug_linker.htm#EnvironmentSpecificandUtilityL">Linker: Libraries</A>
+  <A HREF="pug_overview.htm#Linker">Quick Overview: Linker</A>
+  <A HREF="pug_linker.htm#StartingtheLinkerfromtheComman">Linker: Running from the Command-Line</A>
+  <A HREF="pug_linker.htm#StartingtheLinkerfromtheWindow">Linker: Running from the IDE</A>
+  <A HREF="pug_linker.htm#alnkTheLinker">Linker</A>
+<A HREF="ref_execution.htm#XandY">and</A>
+<A HREF="ref_extensions.htm#ExtendedPredicates">aolsutil.lsx</A>
+<B>apitrace</B>
+  <A HREF="pug_runtime.htm#CFGParameters">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="pug_debugging.htm#TracingAPICalls">Debugging Your Programs: Tracing LSAPI Calls</A>
+<A HREF="ref_io.htm#Open4">append</A>
+<A HREF="ref_manipulating_terms.htm#argNTermArgument">arg/3</A>
+<A HREF="ref_system.htm#commandlineArgsL">arguments, command line</A>
+<B>arun</B>
+  <A HREF="pug_runtime.htm#AmziPrologRuntime">Amzi! Runtime</A>
+  <A HREF="pug_distribution.htm#DistributingYourPrograms">Distributing Your Programs</A>
+  <A HREF="ref_extensions.htm#ExtendedPredicates">O.S. Extended Predicates</A>
+  <A HREF="pug_overview.htm#StandAloneRuntime">Quick Overview: Stand-Alone Runtime</A>
+  <A HREF="pug_runtime.htm#StartingarunfromtheCommandLine">Amzi! Runtime: Running arun from the Command-Line</A>
+<A HREF="ref_math.htm#asinX">asin</A>
+<A HREF="pug_listener.htm#assert">assert</A>
+<A HREF="ref_logicbase.htm#assertTerm">assert/1</A>
+<A HREF="ref_logicbase.htm#assertaTerm">asserta/1</A>
+<A HREF="ref_logicbase.htm#assertzTerm">assertz/1</A>
+<A HREF="ref_io.htm#at_end_of_stream">at_end_of_stream/1</A>
+<A HREF="ref_math.htm#atanX">atan</A>
+<A HREF="ref_manipulating_terms.htm#termtype">atom</A>
+<A HREF="ref_manipulating_terms.htm#atomX">atom/1</A>
+<A HREF="ref_text.htm#atom_chars">atom_chars/2</A>
+<A HREF="ref_text.htm#atomcodesAtomCharList">atom_codes/2</A>
+<A HREF="ref_text.htm#atomconcatAtomAtomAtomVar">atom_concat/3</A>
+<A HREF="ref_text.htm#atomlengthAtomLength">atom_length/2</A>
+<A HREF="ref_text.htm#atomuplowAtomUpperAtomLower">atom_uplow/2</A>
+<A HREF="ref_manipulating_terms.htm#atomicX">atomic/1</A>
+<A HREF="ref_text.htm#atomlistconcatAtomListAtom">atomlist_concat/2</A>
+<A HREF="ref_execution.htm#notGoal">avoiding unification</A>
+
+
+<B><A NAME="B"></A>  <FONT COLOR=yellow SIZE=4>B</FONT></B><P>
+<A HREF="ref_io.htm#Backtracking">backtracking in I/O</A>
+<A HREF="ref_execution.htm#ComplexGoals">bagof</A>
+<A HREF="ref_execution.htm#bagofInstanceGoalList">bagof/3</A>
+<A HREF="ref_io.htm#BinaryIO">binary I/O</A>
+<A HREF="ref_io.htm#ReadBinary">binary input</A>
+<A HREF="ref_io.htm#WriteBinary">binary output</A>
+<A HREF="ref_io.htm#Open4">binary</A>
+<A HREF="ref_modules.htm#DefiningModules">body</A>
+<A HREF="pug_runtime.htm#Flags">bounded</A>
+<A HREF="pug_debugger_ide.htm#LeashingDebugPorts">break</A>
+<A HREF="pug_debugging.htm#DebuggerLikeIO">bug/1</A>
+<A HREF="pug_debugging.htm#DebuggerLikeIO">bugclose/0</A>
+<A HREF="pug_debugging.htm#DebuggerLikeIO">buginit/0</A>
+<A HREF="pug_debugging.htm#DebuggerLikeIO">buginit/1</A>
+<A HREF="ref_logicbase.htm#PredicateProperty2">built_in</A>
+
+
+<B><A NAME="C"></A>  <FONT COLOR=yellow SIZE=4>C</FONT></B><P>
+<B>call</B>
+  <A HREF="pug_debugger.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_debugger_ide.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_wide.htm#BoxModelofProcedureFlow">Windows IDE: Box Model</A>
+<A HREF="ref_execution.htm#callGoal">call/1</A>
+<A HREF="pug_debugging.htm#catchandthrow">catch</A>
+<A HREF="ref_execution.htm#catch3">catch/3</A>
+<A HREF="ref_math.htm#ceilingX">ceiling</A>
+<B>cfg Files</B>
+  <A HREF="pug_overview.htm#AQuickOverview">Quick Overview</A>
+  <A HREF="pug_runtime.htm#CFGParameters">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="pug_runtime.htm#ConfigurationFiles">Amzi! Runtime: Configuration Files</A>
+  <A HREF="pug_runtime.htm#DefaultINIValues">Amzi! Runtime: Default.cfg Values</A>
+<A HREF="ref_io.htm#BinaryIO">char</A>
+<A HREF="ref_text.htm#char">char/1</A>
+<A HREF="ref_text.htm#char_code">char_code/2</A>
+<A HREF="pug_runtime.htm#Flags">char_conversion</A>
+<A HREF="ref_text.htm#character_list_processing">character lists</A>
+<A HREF="ref_terms.htm#CharacterSet">character sets</A>
+<B>chdir</B>
+  <A HREF="ref_extensions.htm#chdirDirL">O.S. Extended Predicates: chdir(DirL)</A>
+  <A HREF="ref_extensions.htm#chdirDirLErr">O.S. Extended Predicates: chdir(DirL, Err)</A>
+<A HREF="pug_compiler.htm#DisadvantagesofCompiling">clause</A>
+<A HREF="ref_logicbase.htm#clauseHeadBody">clause/2</A>
+<A HREF="ref_io.htm#OpenAndClosingFiles">close</A>
+<A HREF="ref_io.htm#Close1">close/1</A>
+<B>closelog</B>
+  <A HREF="pug_debugger.htm#Logging">Debugger: Logging</A>
+  <A HREF="pug_debugging.htm#Logging">Debugging Your Programs: Logging</A>
+  <A HREF="pug_wide.htm#Logging">Windows IDE: Logging</A>
+<A HREF="ref_io.htm#closelog">closelog/0</A>
+<A HREF="ref_execution.htm#cntrdecCounterValue">cntr_dec/2</A>
+<A HREF="ref_execution.htm#cntrgetCounterValue">cntr_get/2</A>
+<A HREF="ref_execution.htm#cntrincCounterValue">cntr_inc/2</A>
+<A HREF="ref_execution.htm#cntrsetCounterValue">cntr_set/2</A>
+<A HREF="ref_system.htm#commandlineArgsL">command line arguments</A>
+<A HREF="ref_system.htm#commandlineArgsL">command_line/1</A>
+<A HREF="ref_manipulating_terms.htm#compareResultTermTerm">compare/3</A>
+<A HREF="ref_math.htm#rational_numbers">compareq/3</A>
+<A HREF="ref_manipulating_terms.htm#compoundX">compound/1</A>
+<B>concatenation</B>
+  <A HREF="ref_text.htm#atomlistconcatAtomListAtom">Atoms, Lists and Strings: atomlist_concat(AtomList, Atom)</A>
+  <A HREF="ref_text.htm#stringlistconcatStringListStri">Atoms, Lists and Strings: stringlist_concat(StringList, String), stringlist_concat(StringList, Separator, String)</A>
+<A HREF="ref_io.htm#Streams">console</A>
+<B>consult</B>
+  <A HREF="pug_listener.htm#ConsultingPrologSourceFiles">Listener: Consulting Prolog Source Files</A>
+  <A HREF="pug_tutorial.htm#Modules">Quick Tutorial: Modules</A>
+  <A HREF="pug_wide.htm#Modules">Windows IDE: Modules</A>
+  <A HREF="pug_tutorial.htm#RunningaModularApplication">Quick Tutorial: Running a Modular Application</A>
+  <A HREF="pug_wide.htm#RunningaModularApplication">Windows IDE: Running a Modular Application</A>
+<A HREF="ref_io.htm#consult1">consult/1</A>
+<B>continued fractions</B>
+  <A HREF="ref_math.htm#ContinuedFractions">Numbers and Math: Continued Fractions</A>
+  <A HREF="ref_math.htm#MathematicalGames">Numbers and Math: Mathematical Games</A>
+<A HREF="pug_runtime.htm#CFGParameters">control</A>
+<A HREF="ref_manipulating_terms.htm#copy_term">copy_term/2</A>
+<A HREF="ref_manipulating_terms.htm#copy_term">copying terms</A>
+<A HREF="ref_math.htm#cosX">cos</A>
+<B>cputime</B>
+  <A HREF="ref_math.htm#BuiltinAtoms">Numbers and Math: Built-in Atoms</A>
+  <A HREF="ref_system.htm#timerTicks">System Predicates: timer(Ticks)</A>
+<A HREF="ref_extensions.htm#curdirDirL">curdir</A>
+<A HREF="ref_io.htm#currentinput">current_input/1</A>
+<A HREF="ref_logicbase.htm#CurrentModule1">current_module/1</A>
+<A HREF="ref_terms.htm#currentOp3">current_op/3</A>
+<A HREF="ref_io.htm#currentoutput">current_output/1</A>
+<A HREF="ref_logicbase.htm#CurrentPredicate1">current_predicate/1</A>
+<A HREF="pug_runtime.htm#Flags">current_prolog_flag</A>
+<A HREF="pug_runtime.htm#current_prolog_flag">current_prolog_flag/2</A>
+
+
+<B><A NAME="D"></A>  <FONT COLOR=yellow SIZE=4>D</FONT></B><P>
+<A HREF="ref_io.htm#BinaryIO">data types</A>
+<A HREF="ref_system.htm#dateMonthNVDayNVYearNV">date/3</A>
+<B>debug</B>
+  <A HREF="pug_runtime.htm#Flags">Amzi! Runtime: Flags</A>
+  <A HREF="pug_listener.htm#debug">Listener</A>
+<A HREF="pug_debugging.htm#DebuggerLikeIO">debugging predicates</A>
+<A HREF="ref_terms.htm#DecimalNumbers">decimal numbers</A>
+<A HREF="pug_runtime.htm#Flags">decimal_places</A>
+<A HREF="ref_io.htm#Streams">default streams</A>
+<A HREF="pug_preprocessor.htm#pound_define">define</A>
+<A HREF="ref_logicbase.htm#PredicateProperty2">defined_in</A>
+<A HREF="ref_math.htm#BuiltinAtoms">degtorad</A>
+<A HREF="ref_extensions.htm#delfilePathLErr">delfile</A>
+<A HREF="ref_math.htm#NotesOnRealsAndGigdigits">delta (flag)</A>
+<A HREF="pug_runtime.htm#Flags">delta</A>
+<A HREF="pug_compiler.htm#CompilationErrors">destbuf</A>
+<B>discontiguous</B>
+  <A HREF="pug_compiler.htm#CompilerDirectives">Compiler: Directives</A>
+  <A HREF="ref_directives.htm#DiscontiguousClauses">Prolog Directives: Discontiguous Directive</A>
+<A HREF="ref_io.htm#displayTerm">display/1</A>
+<A HREF="ref_math.htm#XdivsY">divs</A>
+<A HREF="ref_math.htm#XdivuY">divu</A>
+<A HREF="pug_overview.htm#AQuickOverview">dll Files</A>
+<A HREF="ref_terms.htm#DecimalNumbers">double precision</A>
+<A HREF="ref_io.htm#BinaryIO">double_float</A>
+<A HREF="ref_math.htm#double_floatN">double_float/1</A>
+<B>double_quote_strings</B>
+  <A HREF="pug_runtime.htm#Flags">Amzi! Runtime: Flags</A>
+  <A HREF="ref_terms.htm#Strings">Prolog Terms: Strings</A>
+<A HREF="ref_logicbase.htm#DynamicPredicateStorageOptions">dynamic storage</A>
+<B>dynamic</B>
+  <A HREF="pug_compiler.htm#CompilerDirectives">Compiler: Directives</A>
+  <A HREF="ref_directives.htm#DynamicClausesinCompiledCode">Prolog Directives: Dynamic Clauses in Compiled Code</A>
+  <A HREF="pug_tutorial.htm#Modules">Quick Tutorial: Modules</A>
+  <A HREF="pug_wide.htm#Modules">Windows IDE: Modules</A>
+  <A HREF="ref_logicbase.htm#PredicateProperty2">Prolog Logicbase: predicate_property(M:F/A, PROPERTY)</A>
+<A HREF="ref_logicbase.htm#DynamicDirective">dynamic/1 directive</A>
+
+
+<B><A NAME="E"></A>  <FONT COLOR=yellow SIZE=4>E</FONT></B><P>
+<A HREF="ref_math.htm#BuiltinAtoms">e</A>
+<A HREF="ref_terms.htm#Lists">empty list</A>
+<A HREF="pug_editor.htm#EditorFunctions">encoding</A>
+<A HREF="ref_modules.htm#DefiningModules">end_body</A>
+<A HREF="ref_modules.htm#DefiningModules">end_module</A>
+<A HREF="ref_io.htm#endoffile">end_of_file</A>
+<A HREF="ref_io.htm#StreamProperties">end_of_stream</A>
+<A HREF="ref_directives.htm#EnsureLoaded">ensure_loaded</A>
+<A HREF="ref_extensions.htm#get_env_var">environment variables</A>
+<A HREF="ref_io.htm#endoffile">eof</A>
+<A HREF="ref_io.htm#StreamProperties">eof_action</A>
+<A HREF="ref_math.htm#NotesOnRealsAndGigdigits">epsilon (flag)</A>
+<B>epsilon</B>
+  <A HREF="ref_math.htm#ContinuedFractions">Numbers and Math: Continued Fractions</A>
+  <A HREF="pug_runtime.htm#Flags">Amzi! Runtime: Flags</A>
+<A HREF="pug_overview.htm#AQuickOverview">err Files</A>
+<A HREF="ref_execution.htm#catch3">error/2</A>
+<A HREF="ref_math.htm#EvaluatingMathematicalExpressions">evaluable mathematical expressions</A>
+<B>exit</B>
+  <A HREF="pug_debugger.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_debugger_ide.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_wide.htm#BoxModelofProcedureFlow">Windows IDE: Box Model</A>
+<A HREF="ref_math.htm#expX">exp</A>
+<A HREF="ref_dcg.htm#expandtermDCGclausePROLOGclaus">expand_term</A>
+<B>export</B>
+  <A HREF="pug_compiler.htm#CompilerDirectives">Compiler: Directives</A>
+  <A HREF="ref_modules.htm#Exports">Modules: Exports</A>
+  <A HREF="ref_modules.htm#Modules">Modules</A>
+  <A HREF="ref_logicbase.htm#PredicateProperty2">Prolog Logicbase: predicate_property(M:F/A, PROPERTY)</A>
+<A HREF="ref_math.htm#EvaluatingMathematicalExpressions">expressions, mathematical</A>
+<A HREF="ref_logicbase.htm#PredicateProperty2">extended</A>
+
+
+<B><A NAME="F"></A>  <FONT COLOR=yellow SIZE=4>F</FONT></B><P>
+<B>fail</B>
+  <A HREF="pug_debugger.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_debugger_ide.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_wide.htm#BoxModelofProcedureFlow">Windows IDE: Box Model</A>
+<A HREF="ref_execution.htm#fail">fail/0</A>
+<A HREF="ref_io.htm#OpenAndClosingFiles">file I/O</A>
+<A HREF="ref_io.htm#OpenAndClosingFiles">file close</A>
+<A HREF="ref_io.htm#OpenAndClosingFiles">file open</A>
+<A HREF="ref_io.htm#Open4">filename</A>
+<A HREF="ref_execution.htm#ComplexGoals">findall</A>
+<A HREF="ref_execution.htm#findallInstanceGoalList">findall/3</A>
+<A HREF="ref_extensions.htm#findfilesMaskAttrFileInfo">findfiles</A>
+<A HREF="ref_math.htm#fixed_realN">fixed_real/1</A>
+<A HREF="ref_math.htm#floatX">float</A>
+<A HREF="ref_math.htm#floatN">float/1</A>
+<A HREF="ref_math.htm#NotesOnRealsAndGigdigits">float_real</A>
+<A HREF="ref_terms.htm#DecimalNumbers">floating point numbers</A>
+<A HREF="ref_math.htm#floorX">floor</A>
+<A HREF="pug_debugging.htm#DebuggerLikeIO">flow/1</A>
+<A HREF="pug_debugging.htm#DebuggerLikeIO">flow/3</A>
+<A HREF="ref_io.htm#flushoutput">flush_output/0</A>
+<A HREF="ref_io.htm#flushoutput">flush_output/1</A>
+<A HREF="ref_execution.htm#forIndexStartEndIncrement">for/4</A>
+<A HREF="ref_io.htm#SpecialPurposeIO">formatting</A>
+<A HREF="ref_math.htm#NotesOnRealsAndGigdigits">fraction</A>
+<A HREF="ref_math.htm#MathematicalGames">fractions</A>
+<A HREF="ref_io.htm#Streams">function streams</A>
+<A HREF="ref_manipulating_terms.htm#functorTermFunctorN">functor/3</A>
+
+
+<B><A NAME="G"></A>  <FONT COLOR=yellow SIZE=4>G</FONT></B><P>
+<A HREF="ref_system.htm#gc0">garbage collection</A>
+<A HREF="ref_system.htm#gc0">gc/0</A>
+<A HREF="pug_runtime.htm#CFGParameters">gcthingfreq</A>
+<A HREF="ref_manipulating_terms.htm#gensymRootSym">gensym/2</A>
+<A HREF="ref_io.htm#getChargetIDChar">get/1</A>
+<A HREF="ref_io.htm#getChargetIDChar">get/2</A>
+<A HREF="ref_io.htm#getChargetIDChar">get0/1</A>
+<A HREF="ref_io.htm#getChargetIDChar">get0/2</A>
+<A HREF="ref_extensions.htm#get_env_var">get_env_var/2</A>
+<A HREF="ref_extensions.htm#getdriveDrive">getdrive</A>
+<B>goto</B>
+  <A HREF="pug_tutorial.htm#Modules">Quick Tutorial: Modules</A>
+  <A HREF="pug_wide.htm#Modules">Windows IDE: Modules</A>
+  <A HREF="pug_tutorial.htm#UsingtheListener">Quick Tutorial: Using the Listener</A>
+  <A HREF="pug_wide.htm#UsingtheListener">Windows IDE: Using the Listener</A>
+
+
+<B><A NAME="H"></A>  <FONT COLOR=yellow SIZE=4>H</FONT></B><P>
+<A HREF="ref_execution.htm#halt">halt</A>
+<A HREF="pug_runtime.htm#CFGParameters">heap</A>
+<A HREF="pug_runtime.htm#CFGParameters">heapbumper</A>
+<A HREF="ref_system.htm#highwater">highwater/4</A>
+
+
+<B><A NAME="I"></A>  <FONT COLOR=yellow SIZE=4>I</FONT></B><P>
+<A HREF="ref_execution.htm#IfThenElse">if-then-else</A>
+<B>import</B>
+  <A HREF="pug_compiler.htm#CompilerDirectives">Compiler: Directives</A>
+  <A HREF="ref_modules.htm#Imports">Modules: Imports</A>
+  <A HREF="ref_modules.htm#Modules">Modules</A>
+  <A HREF="ref_logicbase.htm#PredicateProperty2">Prolog Logicbase: predicate_property(M:F/A, PROPERTY)</A>
+<A HREF="ref_directives.htm#Include">include</A>
+<A HREF="ref_logicbase.htm#DynamicPredicateStorageOptions">indexed clauses</A>
+<A HREF="ref_logicbase.htm#IndexedDirective">indexed directive</A>
+<A HREF="ref_logicbase.htm#IndexedDirective">indexed/1</A>
+<B>inf</B>
+  <A HREF="ref_math.htm#BuiltinAtoms">Numbers and Math: Built-in Atoms</A>
+  <A HREF="ref_terms.htm#DecimalNumbers">Prolog Terms: Decimal Numbers</A>
+<A HREF="ref_io.htm#StreamProperties">input</A>
+<B>integer</B>
+  <A HREF="ref_io.htm#BinaryIO">Input and Output: Binary I/O</A>
+  <A HREF="ref_math.htm#NotesOnRealsAndGigdigits">Numbers and Math: Notes on Reals and Gigadigits</A>
+  <A HREF="ref_math.htm#integerX">Numbers and Math: integer(X)</A>
+<A HREF="ref_math.htm#integerN">integer/1</A>
+<A HREF="ref_math.htm#NotesOnRealsAndGigdigits">integer_real</A>
+<A HREF="pug_runtime.htm#Flags">integer_rounding_function</A>
+<B>is/2</B>
+  <A HREF="ref_math.htm#EvaluatingMathematicalExpressions">Numbers and Math: Evaluating Mathematical Expressions</A>
+  <A HREF="ref_math.htm#XisY">Numbers and Math: X is Y</A>
+<A HREF="ref_math.htm#PrimeNumbers">isPrime/1</A>
+<A HREF="ref_text.htm#is_atom">is_atom/1</A>
+<A HREF="ref_math.htm#is_fraction">is_fraction/1</A>
+<A HREF="ref_math.htm#NotesOnRealsAndGigdigits">is_integer</A>
+<A HREF="ref_math.htm#isintegerN">is_integer/1</A>
+<A HREF="ref_manipulating_terms.htm#islistX">is_list/1</A>
+<A HREF="ref_text.htm#ismember">is_member/2</A>
+<A HREF="ref_math.htm#is_number">is_number/1</A>
+<A HREF="ref_math.htm#NotesOnRealsAndGigdigits">is_odd</A>
+<A HREF="ref_math.htm#is_odd">is_odd/1</A>
+<A HREF="ref_text.htm#is_string">is_string/1</A>
+<A HREF="ref_text.htm#isstringterm">is_string_term</A>
+<A HREF="ref_text.htm#isstringterm">is_string_term/</A>
+<A HREF="ref_text.htm#isstringterm">is_string_term/2</A>
+
+
+<B><A NAME="K"></A>  <FONT COLOR=yellow SIZE=4>K</FONT></B><P>
+<A HREF="ref_io.htm#SpecialPurposeIO">keyboard</A>
+<A HREF="ref_text.htm#keysortListSortedList">keysort/2</A>
+
+
+<B><A NAME="L"></A>  <FONT COLOR=yellow SIZE=4>L</FONT></B><P>
+<B>leash</B>
+  <A HREF="pug_debugger.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_debugger_ide.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_wide.htm#BoxModelofProcedureFlow">Windows IDE: Box Model</A>
+  <A HREF="pug_debugger.htm#DebuggerExample">Debugger: Example</A>
+  <A HREF="pug_debugger_ide.htm#DebuggerExample">Debugger: Example</A>
+  <A HREF="pug_wide.htm#DebuggerExample">Windows IDE: Example</A>
+  <A HREF="pug_debugger.htm#LeashingDebugPorts">Debugger: Leashing Debug Ports</A>
+  <A HREF="pug_wide.htm#LeashingDebugPorts">Windows IDE: Leashing Debug Ports</A>
+<A HREF="pug_overview.htm#AQuickOverview">lib Files</A>
+<A HREF="ref_text.htm#ListProcessing">list processing</A>
+<A HREF="ref_manipulating_terms.htm#termtype">list</A>
+<A HREF="ref_manipulating_terms.htm#list">list/1</A>
+<B>listing</B>
+  <A HREF="pug_compiler.htm#DisadvantagesofCompiling">Compiler: Disadvantages</A>
+  <A HREF="pug_listener.htm#ListingClauses">Listener: Listing Clauses</A>
+  <A HREF="pug_tutorial.htm#UsingtheListener">Quick Tutorial: Using the Listener</A>
+  <A HREF="pug_wide.htm#UsingtheListener">Windows IDE: Using the Listener</A>
+  <A HREF="ref_io.htm#listing">Input and Output: listing, listing(PRED), listing(ID, PRED)</A>
+<A HREF="ref_io.htm#listing">listing/1</A>
+<A HREF="ref_io.htm#listing">listing/2</A>
+<A HREF="ref_text.htm#ListProcessing">lists</A>
+<A HREF="ref_math.htm#lnX">ln, log</A>
+<A HREF="ref_logicbase.htm#load4">load from memory</A>
+<A HREF="pug_listener.htm#LoadingCompiledPrologCode">load</A>
+<A HREF="ref_logicbase.htm#load">load/1</A>
+<A HREF="ref_logicbase.htm#load4">load/4</A>
+<A HREF="ref_system.htm#loadlsxFilenameA">loadlsx/1</A>
+<B>loc</B>
+  <A HREF="pug_tutorial.htm#Modules">Quick Tutorial: Modules</A>
+  <A HREF="pug_wide.htm#Modules">Windows IDE: Modules</A>
+<A HREF="pug_runtime.htm#CFGParameters">local</A>
+<A HREF="pug_runtime.htm#Flags">locale</A>
+<A HREF="ref_math.htm#log10X">log10</A>
+<B>logfile</B>
+  <A HREF="pug_runtime.htm#CFGParameters">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="pug_debugging.htm#TracingAPICalls">Debugging Your Programs: Tracing LSAPI Calls</A>
+<A HREF="ref_io.htm#Logging">logging</A>
+<A HREF="ref_math.htm#long_realN">long_real/1</A>
+<A HREF="pug_debugging.htm#CheckingAPIErrorCodes">lsGetExceptMsg</A>
+<A HREF="pug_debugging.htm#CheckingAPIErrorCodes">lsGetExceptReadBuffer</A>
+<A HREF="pug_debugging.htm#ExaminingPrologTerms">lsTermToStr</A>
+<A HREF="pug_runtime.htm#CFGParameters">lsxload</A>
+
+
+<B><A NAME="M"></A>  <FONT COLOR=yellow SIZE=4>M</FONT></B><P>
+<A HREF="pug_runtime.htm#CFGParameters">macroheapsz</A>
+<B>main</B>
+  <A HREF="pug_compiler.htm#MainPredicate">Compiler: Main Predicate</A>
+  <A HREF="pug_tutorial.htm#Modules">Quick Tutorial: Modules</A>
+  <A HREF="pug_wide.htm#Modules">Windows IDE: Modules</A>
+  <A HREF="pug_tutorial.htm#RunningaModularApplication">Quick Tutorial: Running a Modular Application</A>
+  <A HREF="pug_wide.htm#RunningaModularApplication">Windows IDE: Running a Modular Application</A>
+  <A HREF="pug_wide.htm#UsingalisandBATFiles">Windows IDE: Using alis and BAT Files</A>
+<A HREF="pug_listener.htm#StartingCommandLineListener">main/0</A>
+<A HREF="ref_math.htm#PrimeNumbers">makeprimes/1</A>
+<A HREF="ref_math.htm#EvaluatingMathematicalExpressions">mathematical expressions</A>
+<A HREF="ref_math.htm#EvaluatingMathematicalExpressions">mathematical operators</A>
+<A HREF="ref_math.htm#maxXY">max</A>
+<A HREF="pug_runtime.htm#Flags">max_arity</A>
+<A HREF="pug_runtime.htm#Flags">max_integer</A>
+<B>maxclauses</B>
+  <A HREF="pug_runtime.htm#CFGParameters">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="pug_compiler.htm#CompilationErrors">Compiler: Errors</A>
+<A HREF="ref_math.htm#maxXY">maximum</A>
+<A HREF="pug_runtime.htm#CFGParameters">maxmemory</A>
+<A HREF="pug_runtime.htm#CFGParameters">maxvars</A>
+<A HREF="ref_terms.htm#CharacterLists">member</A>
+<A HREF="ref_modules.htm#Metapredicates">metapredicates</A>
+<A HREF="ref_math.htm#minXY">min</A>
+<A HREF="pug_runtime.htm#Flags">min_integer</A>
+<A HREF="ref_math.htm#minXY">minimum</A>
+<A HREF="ref_extensions.htm#mkdirDirLErr">mkdir</A>
+<A HREF="ref_math.htm#XmodY">mod</A>
+<B>mode</B>
+  <A HREF="ref_io.htm#Open4">Input and Output: open(FILE, MODE, ID, OPTIONS)</A>
+  <A HREF="ref_terms.htm#Strings">Prolog Terms: Strings</A>
+<A HREF="ref_io.htm#StreamProperties">mode(stream)</A>
+<A HREF="ref_math.htm#XmodsY">mods</A>
+<A HREF="ref_math.htm#XmoduY">modu</A>
+<A HREF="ref_modules.htm#DefiningModules">module</A>
+<A HREF="ref_modules.htm#ReferringToModules">module:functor</A>
+<A HREF="ref_math.htm#MathematicalGames">modulo arithmetic</A>
+<A HREF="pug_runtime.htm#Flags">modulo</A>
+<B>move</B>
+  <A HREF="pug_tutorial.htm#UsingtheListener">Quick Tutorial: Using the Listener</A>
+  <A HREF="pug_wide.htm#UsingtheListener">Windows IDE: Using the Listener</A>
+<B>multifile</B>
+  <A HREF="pug_compiler.htm#CompilerDirectives">Compiler: Directives</A>
+  <A HREF="ref_directives.htm#MultifileClauses">Prolog Directives: Multifile Directive</A>
+
+
+<B><A NAME="N"></A>  <FONT COLOR=yellow SIZE=4>N</FONT></B><P>
+<B>name/2</B>
+  <A HREF="ref_text.htm#atomcodesAtomCharList">Atoms, Lists and Strings: atom_codes(Atom, CharList)</A>
+  <A HREF="ref_text.htm#nameAtomCharList">Atoms, Lists and Strings: name(Atom, CharList)</A>
+<A HREF="ref_io.htm#SpecialPurposeIO">newline</A>
+<A HREF="ref_io.htm#nlnlID">nl/0</A>
+<A HREF="ref_io.htm#nlnlID">nl/1</A>
+<B>nllog</B>
+  <A HREF="pug_debugger.htm#Logging">Debugger: Logging</A>
+  <A HREF="pug_debugging.htm#Logging">Debugging Your Programs: Logging</A>
+  <A HREF="pug_wide.htm#Logging">Windows IDE: Logging</A>
+<A HREF="ref_io.htm#nllog">nllog/0</A>
+<A HREF="ref_text.htm#nonblankstringString">nonblank_string/1</A>
+<A HREF="ref_manipulating_terms.htm#nonvarX">nonvar/1</A>
+<B>nospy</B>
+  <A HREF="pug_debugger.htm#Spypoints">Debugger: Spypoints</A>
+  <A HREF="pug_wide.htm#Spypoints">Windows IDE: Spypoints</A>
+<B>nospyall</B>
+  <A HREF="pug_debugger.htm#Spypoints">Debugger: Spypoints</A>
+  <A HREF="pug_wide.htm#Spypoints">Windows IDE: Spypoints</A>
+<A HREF="ref_manipulating_terms.htm#EqualityofTerms">not(not())</A>
+<A HREF="ref_execution.htm#notGoal">not/1</A>
+<B>notnot</B>
+  <A HREF="ref_execution.htm#notGoal">Prolog Execution: not(Goal)</A>
+  <A HREF="ref_manipulating_terms.htm#notnotXeqY">Manipulating Terms: not(not(X = Y))</A>
+<A HREF="ref_math.htm#NotesOnRealsAndGigdigits">nth</A>
+<A HREF="ref_manipulating_terms.htm#termtype">number</A>
+<A HREF="ref_manipulating_terms.htm#numberX">number/1</A>
+<A HREF="ref_text.htm#number_chars">number_chars/2</A>
+<A HREF="ref_terms.htm#DecimalNumbers">numbers</A>
+<A HREF="ref_terms.htm#DecimalNumbers">numbers, default</A>
+<A HREF="ref_terms.htm#DecimalNumbers">numbers, floating point</A>
+<A HREF="ref_terms.htm#DecimalNumbers">numbers, real</A>
+<A HREF="ref_manipulating_terms.htm#numbervarsTermStartEnd">numbervars/3</A>
+<A HREF="ref_math.htm#numerictypeNT">numeric_type/2</A>
+
+
+<B><A NAME="O"></A>  <FONT COLOR=yellow SIZE=4>O</FONT></B><P>
+<A HREF="ref_execution.htm#onceGoal">once/1</A>
+<B>op</B>
+  <A HREF="ref_directives.htm#LatentExpressions">Prolog Directives: Latent Expressions</A>
+  <A HREF="ref_directives.htm#Operators">Prolog Directives: Op Directive</A>
+  <A HREF="ref_terms.htm#PredefinedPrologOperators">Prolog Terms: Predefined Prolog Operators</A>
+<A HREF="ref_terms.htm#opPrecedenceTypeOper">op/3</A>
+<A HREF="ref_io.htm#OpenAndClosingFiles">open</A>
+<A HREF="ref_io.htm#Open3">open/3</A>
+<A HREF="ref_io.htm#Open4">open/4</A>
+<B>openlog</B>
+  <A HREF="pug_debugger.htm#Logging">Debugger: Logging</A>
+  <A HREF="pug_debugging.htm#Logging">Debugging Your Programs: Logging</A>
+  <A HREF="pug_wide.htm#Logging">Windows IDE: Logging</A>
+<A HREF="ref_io.htm#openlogFname">openlog/1</A>
+<A HREF="ref_math.htm#EvaluatingMathematicalExpressions">operators, mathematical</A>
+<A HREF="ref_execution.htm#XorY">or</A>
+<A HREF="ref_io.htm#StreamProperties">output</A>
+
+
+<B><A NAME="P"></A>  <FONT COLOR=yellow SIZE=4>P</FONT></B><P>
+<A HREF="ref_logicbase.htm#IndexedDirective">performance</A>
+<A HREF="ref_terms.htm#DecimalNumbers">pi calculations</A>
+<A HREF="ref_math.htm#BuiltinAtoms">pi</A>
+<B>plm Files</B>
+  <A HREF="pug_overview.htm#AQuickOverview">Quick Overview</A>
+  <A HREF="pug_linker.htm#EnvironmentSpecificandUtilityL">Linker: Libraries</A>
+  <A HREF="ref_logicbase.htm#load">Prolog Logicbase: load(FileA), load([F1, F2,...])</A>
+  <A HREF="ref_logicbase.htm#unload">Prolog Logicbase: unload(FileA), unload([F1, F2,...])</A>
+<B>portray</B>
+  <A HREF="pug_debugger.htm#portrayGOAL">Debugger: portray(GOAL)</A>
+  <A HREF="pug_wide.htm#portrayGOAL">Windows IDE: portray(GOAL)</A>
+<B>position</B>
+  <A HREF="ref_io.htm#Repositioning">Input and Output: Repositioning Streams</A>
+  <A HREF="ref_io.htm#SpecialPurposeIO">Input and Output: Special Purpose I/O Predicates</A>
+<B>pp</B>
+  <A HREF="pug_listener.htm#ListenerCommands">Listener: Listener Commands</A>
+  <A HREF="pug_listener.htm#ListingClauses">Listener: Listing Clauses</A>
+  <A HREF="pug_listener.htm#ppTermuserppTerm">Listener: pp(Term), user_pp(Term)</A>
+<A HREF="ref_io.htm#prettyprint">pp/1</A>
+<B>ppj Files</B>
+  <A HREF="pug_overview.htm#AQuickOverview">Quick Overview</A>
+  <A HREF="pug_wide.htm#CreatingAProject">Windows IDE: Creating a Project</A>
+<A HREF="ref_terms.htm#DecimalNumbers">precision, double</A>
+<A HREF="ref_terms.htm#DecimalNumbers">precision, infinite</A>
+<A HREF="ref_terms.htm#DecimalNumbers">precision, single</A>
+<A HREF="ref_logicbase.htm#PredicateProperty2">predicate_property/2</A>
+<A HREF="ref_logicbase.htm#CurrentPredicate1">predicates</A>
+<A HREF="pug_runtime.htm#Flags">preprocessor</A>
+<A HREF="ref_io.htm#prettyprint">pretty print</A>
+<B>prime numbers</B>
+  <A HREF="ref_math.htm#MathematicalGames">Numbers and Math: Mathematical Games</A>
+  <A HREF="ref_math.htm#PrimeNumbers">Numbers and Math: Prime Numbers</A>
+<A HREF="ref_math.htm#PrimeNumbers">prime/2</A>
+<A HREF="ref_math.htm#PrimeNumbers">primeFactors/2</A>
+<A HREF="ref_math.htm#PrimeNumbers">primes/2</A>
+<B>pro Files</B>
+  <A HREF="pug_overview.htm#AQuickOverview">Quick Overview</A>
+  <A HREF="pug_tutorial.htm#ConsultingaSourceFile">Quick Tutorial: Consulting a Source File</A>
+  <A HREF="pug_wide.htm#ConsultingaSourceFile">Windows IDE: Consulting a Source File</A>
+  <A HREF="pug_tutorial.htm#CreatingaSourceFile">Quick Tutorial: Creating a Source File</A>
+  <A HREF="pug_wide.htm#CreatingaSourceFile">Windows IDE: Creating a Source File</A>
+<A HREF="ref_system.htm#procontrolTopPos">pro_control/2</A>
+<A HREF="ref_system.htm#proheapTopPos">pro_heap/2</A>
+<A HREF="ref_system.htm#prolocalTopPos">pro_local/2</A>
+<A HREF="ref_system.htm#protrailTopPos">pro_trail/2</A>
+<A HREF="ref_math.htm#rational_numbers">prodq/3</A>
+<A HREF="pug_runtime.htm#Flags">prolog_copyright</A>
+<A HREF="pug_runtime.htm#Flags">prolog_date</A>
+<A HREF="pug_runtime.htm#Flags">prolog_name</A>
+<A HREF="pug_runtime.htm#Flags">prolog_version</A>
+<A HREF="ref_io.htm#putCharputIDChar">put/1</A>
+<A HREF="ref_io.htm#putCharputIDChar">put/2</A>
+
+
+<B><A NAME="Q"></A>  <FONT COLOR=yellow SIZE=4>Q</FONT></B><P>
+<A HREF="pug_listener.htm#quit">quit</A>
+
+
+<B><A NAME="R"></A>  <FONT COLOR=yellow SIZE=4>R</FONT></B><P>
+<A HREF="ref_math.htm#BuiltinAtoms">radtodeg</A>
+<A HREF="ref_math.htm#BuiltinAtoms">random</A>
+<A HREF="ref_math.htm#MathematicalGames">rational arithmetic</A>
+<B>read</B>
+  <A HREF="ref_io.htm#Open4">Input and Output: open(FILE, MODE, ID, OPTIONS)</A>
+  <A HREF="ref_terms.htm#WhereEscapeCodesCanbeUsed">Prolog Terms: Using Escape Codes</A>
+<A HREF="ref_io.htm#readTermreadIDTerm">read/1</A>
+<A HREF="ref_io.htm#readTermreadIDTerm">read/2</A>
+<A HREF="ref_io.htm#ReadBinary">read_binary/3</A>
+<A HREF="ref_terms.htm#WhereEscapeCodesCanbeUsed">read_string</A>
+<A HREF="ref_io.htm#readstringStringreadstringIDSt">read_string/1</A>
+<A HREF="ref_io.htm#readstringStringreadstringIDSt">read_string/2</A>
+<A HREF="pug_runtime.htm#CFGParameters">readbuffer</A>
+<A HREF="pug_runtime.htm#CFGParameters">readdepth</A>
+<A HREF="ref_io.htm#StringsAndCharacters">reading characters</A>
+<A HREF="ref_io.htm#SpecialPurposeIO">reading keyboard</A>
+<A HREF="ref_io.htm#StringsAndCharacters">reading strings</A>
+<A HREF="ref_io.htm#Open4">readwrite</A>
+<A HREF="ref_terms.htm#DecimalNumbers">real numbers</A>
+<B>real</B>
+  <A HREF="ref_math.htm#NotesOnRealsAndGigdigits">Numbers and Math: Notes on Reals and Gigadigits</A>
+  <A HREF="ref_math.htm#realX">Numbers and Math: real(X)</A>
+<A HREF="ref_math.htm#realN">real/1</A>
+<B>reconsult</B>
+  <A HREF="pug_listener.htm#ConsultingPrologSourceFiles">Listener: Consulting Prolog Source Files</A>
+  <A HREF="pug_listener.htm#replace">Listener: replace</A>
+<A HREF="ref_io.htm#consult1">reconsult/1</A>
+<B>redo</B>
+  <A HREF="pug_debugger.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_debugger_ide.htm#BoxModelofProcedureFlow">Debugger: Box Model</A>
+  <A HREF="pug_wide.htm#BoxModelofProcedureFlow">Windows IDE: Box Model</A>
+<A HREF="ref_extensions.htm#renameOldNameNewNameErr">rename</A>
+<A HREF="ref_execution.htm#repeat">repeat/0</A>
+<B>replace</B>
+  <A HREF="pug_listener.htm#add">Listener: add</A>
+  <A HREF="pug_listener.htm#replace">Listener</A>
+<A HREF="ref_io.htm#StreamProperties">reposition</A>
+<A HREF="ref_io.htm#SpecialPurposeIO">repositioning streams</A>
+<A HREF="ref_io.htm#respkeyChar">respkey/1</A>
+<A HREF="ref_io.htm#listing">restore</A>
+<A HREF="ref_logicbase.htm#retractTerm">retract</A>
+<A HREF="ref_logicbase.htm#retractallTerm">retractall</A>
+<A HREF="ref_extensions.htm#rmdirDirLErr">rmdir</A>
+<A HREF="ref_math.htm#roundX">round</A>
+
+
+<B><A NAME="S"></A>  <FONT COLOR=yellow SIZE=4>S</FONT></B><P>
+<A HREF="ref_io.htm#listing">save</A>
+<A HREF="ref_terms.htm#Variables">scope of variable names</A>
+<A HREF="ref_io.htm#seeStreamA">see/1</A>
+<A HREF="ref_math.htm#seedrandomI">seed_random</A>
+<A HREF="ref_io.htm#seeingSName">seeing/1</A>
+<A HREF="ref_io.htm#seen">seen/0</A>
+<A HREF="ref_math.htm#MathematicalGames">series calculations</A>
+<A HREF="ref_io.htm#setinput">set_input/1</A>
+<A HREF="ref_io.htm#setoutput">set_output/1</A>
+<B>set_prolog_flag</B>
+  <A HREF="pug_runtime.htm#Flags">Amzi! Runtime: Flags</A>
+  <A HREF="ref_math.htm#NotesOnRealsAndGigdigits">Numbers and Math: Notes on Reals and Gigadigits</A>
+<B>set_prolog_flag/2</B>
+  <A HREF="ref_directives.htm#PrologFlag">Prolog Directives: Set Prolog Flag</A>
+  <A HREF="pug_runtime.htm#set_prolog_flag">Amzi! Runtime: set_prolog_flag(FLAG, VALUE)</A>
+<B>set_stream_position/2</B>
+  <A HREF="ref_io.htm#Repositioning">Input and Output: Repositioning Streams</A>
+  <A HREF="ref_io.htm#SetStreamPosition">Input and Output: set_stream_position(ID, POSITION)</A>
+<A HREF="ref_extensions.htm#setdriveDrive">setdrive</A>
+<A HREF="ref_execution.htm#ComplexGoals">setof</A>
+<A HREF="ref_execution.htm#setofInstanceGoalList">setof/3</A>
+<A HREF="ref_io.htm#BinaryIO">short_integer</A>
+<A HREF="ref_math.htm#signX">sign</A>
+<A HREF="ref_math.htm#sinX">sin</A>
+<A HREF="ref_terms.htm#DecimalNumbers">single precision</A>
+<A HREF="ref_io.htm#BinaryIO">single_float</A>
+<A HREF="ref_math.htm#single_floatN">single_float/1</A>
+<A HREF="ref_io.htm#skipCharskipIDChar">skip/1</A>
+<A HREF="ref_io.htm#skipCharskipIDChar">skip/2</A>
+<A HREF="ref_text.htm#sortListSortedList">sort/2</A>
+<A HREF="ref_logicbase.htm#DynamicPredicateStorageOptions">sorted clauses</A>
+<A HREF="ref_logicbase.htm#SortedDirective">sorted directive</A>
+<A HREF="ref_logicbase.htm#SortedDirective">sorted/1</A>
+<B>spy</B>
+  <A HREF="pug_debugger.htm#Spypoints">Debugger: Spypoints</A>
+  <A HREF="pug_wide.htm#Spypoints">Windows IDE: Spypoints</A>
+<A HREF="ref_math.htm#sqrtX">sqrt</A>
+<A HREF="pug_compiler.htm#CompilationErrors">srcbuf</A>
+<A HREF="ref_system.htm#highwater">stack sizes</A>
+<A HREF="ref_system.htm#stacksizesHeapControlLocalTrai">stack_sizes/4</A>
+<A HREF="ref_io.htm#Streams">standard input/output</A>
+<A HREF="ref_extensions.htm#FileStat">stat/9</A>
+<A HREF="ref_logicbase.htm#PredicateProperty2">static</A>
+<A HREF="ref_io.htm#Repositioning">steam_property</A>
+<A HREF="ref_text.htm#strcatStringAStringBStringAB">strcat/3</A>
+<A HREF="ref_io.htm#OpenAndClosingFiles">stream close</A>
+<A HREF="ref_io.htm#endoffile">stream end</A>
+<A HREF="ref_io.htm#OpenAndClosingFiles">stream open</A>
+<A HREF="ref_io.htm#RedirectingStreams">stream redirection</A>
+<B>stream_property/2</B>
+  <A HREF="ref_io.htm#StreamProperties">Input and Output: Stream Properties</A>
+  <A HREF="ref_io.htm#StreamProperty2">Input and Output: stream_property(STREAM, PROPERTY)</A>
+  <A HREF="ref_io.htm#stream_property">Input and Output: stream_property(ID, position(Position))</A>
+<A HREF="ref_io.htm#StringIO">string I/O</A>
+<A HREF="ref_text.htm#StringProcessing">string processing</A>
+<A HREF="ref_io.htm#StringIO">string streams</A>
+<A HREF="ref_manipulating_terms.htm#termtype">string</A>
+<A HREF="ref_manipulating_terms.htm#stringX">string/1</A>
+<A HREF="ref_text.htm#stringatomStringAtom">string_atom/2</A>
+<B>string_esc</B>
+  <A HREF="pug_runtime.htm#CFGParameters">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="ref_terms.htm#EnablingandDisablingEscapeProc">Prolog Terms: Enabling and Disabling Escape Processing</A>
+  <A HREF="pug_runtime.htm#Flags">Amzi! Runtime: Flags</A>
+<A HREF="ref_text.htm#string_float">string_float/2</A>
+<A HREF="ref_text.htm#stringicomp">string_icomp/2</A>
+<A HREF="ref_text.htm#stringintegerStringInteger">string_integer/2</A>
+<A HREF="ref_text.htm#stringlengthStringLength">string_length/2</A>
+<A HREF="ref_text.htm#stringlistStringList">string_list/2</A>
+<A HREF="ref_text.htm#string_number">string_number/2</A>
+<A HREF="ref_manipulating_terms.htm#string_query2">string_query/2</A>
+<A HREF="ref_text.htm#stringsplit">string_split/3</A>
+<A HREF="ref_text.htm#stringtermStringTerm">string_term/2</A>
+<A HREF="ref_text.htm#stringtermqStringQTerm">string_termq</A>
+<A HREF="ref_text.htm#stringtermqStringQTerm">string_termq/</A>
+<A HREF="ref_text.htm#stringtermqStringQTerm">string_termq/2</A>
+<A HREF="ref_text.htm#stringtokens">string_tokens/2</A>
+<A HREF="ref_text.htm#stringtokens">string_tokens/3</A>
+<A HREF="ref_text.htm#stringtrim">string_trim/2</A>
+<A HREF="ref_text.htm#stringlistconcatStringListStri">stringlist_concat/2</A>
+<A HREF="ref_text.htm#stringlistconcatStringListStri">stringlist_concat/3</A>
+<A HREF="ref_text.htm#StringProcessing">strings</A>
+<A HREF="ref_manipulating_terms.htm#termtype">structure</A>
+<A HREF="ref_manipulating_terms.htm#structureX">structure/1</A>
+<A HREF="ref_text.htm#subatomAtomIndexLengthSubAtom">sub_atom/4</A>
+<A HREF="ref_text.htm#substringStringIndexLengthSubS">sub_string/4</A>
+<A HREF="ref_math.htm#rational_numbers">sumq/3</A>
+<A HREF="ref_modules.htm#SystemModule">system (module)</A>
+<A HREF="ref_system.htm#systemCmdA">system/1</A>
+
+
+<B><A NAME="T"></A>  <FONT COLOR=yellow SIZE=4>T</FONT></B><P>
+<A HREF="ref_io.htm#SpecialPurposeIO">tab</A>
+<A HREF="ref_io.htm#tabNtabIDN">tab/1</A>
+<A HREF="ref_io.htm#tabNtabIDN">tab/2</A>
+<A HREF="ref_math.htm#tanX">tan</A>
+<A HREF="ref_io.htm#tellStreamA">tell/1</A>
+<A HREF="ref_io.htm#tellingSName">telling/1</A>
+<B>term typing</B>
+  <A HREF="ref_manipulating_terms.htm#TermClassification">Manipulating Terms: Term Typing</A>
+  <A HREF="ref_manipulating_terms.htm#termtype">Manipulating Terms: term_type(TERM, TYPE)</A>
+<A HREF="ref_manipulating_terms.htm#termtype">term_type/2</A>
+<A HREF="ref_io.htm#Open4">text</A>
+<A HREF="pug_debugging.htm#catchandthrow">throw</A>
+<A HREF="ref_execution.htm#throw1">throw/1</A>
+<A HREF="ref_text.htm#TiltSlashes">tilt_slashes/2</A>
+<A HREF="ref_system.htm#timerTicks">time</A>
+<A HREF="ref_system.htm#timeHourMinSec">time/3</A>
+<A HREF="ref_system.htm#timerTicks">timer/1</A>
+<A HREF="ref_io.htm#told">told/0</A>
+<A HREF="pug_runtime.htm#CFGParameters">trail</A>
+<A HREF="ref_execution.htm#true">true/0</A>
+<A HREF="ref_math.htm#NotesOnRealsAndGigdigits">truncate</A>
+<A HREF="ref_math.htm#ContinuedFractions">truncate/2</A>
+<B>tutorial</B>
+  <A HREF="pug_tutorial.htm#DistributinganApplication">Quick Tutorial: Distributing an Application</A>
+  <A HREF="pug_wide.htm#DistributinganApplication">Windows IDE: Distributing an Application</A>
+<A HREF="ref_manipulating_terms.htm#termtype">type of terms</A>
+<A HREF="ref_io.htm#Open4">type</A>
+<A HREF="ref_io.htm#StreamProperties">type(stream)</A>
+
+
+<B><A NAME="U"></A>  <FONT COLOR=yellow SIZE=4>U</FONT></B><P>
+<B>undefined_predicate</B>
+  <A HREF="pug_runtime.htm#CFGParameters">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="pug_runtime.htm#Flags">Amzi! Runtime: Flags</A>
+<B>unification avoidance</B>
+  <A HREF="ref_manipulating_terms.htm#copy_term">Manipulating Terms: copy_term(T1, T2)</A>
+  <A HREF="ref_execution.htm#notGoal">Prolog Execution: not(Goal)</A>
+<A HREF="ref_execution.htm#unify_with_occurs_check">unify_with_occurs_check/2</A>
+<A HREF="ref_manipulating_terms.htm#TermListBunivB">univ</A>
+<A HREF="ref_logicbase.htm#unload">unload/1</A>
+<B>upper_case_atoms</B>
+  <A HREF="ref_terms.htm#Atoms">Prolog Terms: Atoms</A>
+  <A HREF="pug_runtime.htm#Flags">Amzi! Runtime: Flags</A>
+  <A HREF="ref_terms.htm#Variables">Prolog Terms: Variables</A>
+<A HREF="ref_modules.htm#DefaultUserModule">user (module)</A>
+<A HREF="ref_io.htm#StandardStreams">user streams</A>
+<A HREF="pug_debugging.htm#DebuggerLikeIO">user_bugwrite/1</A>
+<A HREF="ref_io.htm#StandardStreams">user_error</A>
+<A HREF="ref_io.htm#StandardStreams">user_function</A>
+<A HREF="ref_io.htm#StandardStreams">user_input</A>
+<A HREF="ref_io.htm#StandardStreams">user_output</A>
+<B>user_pp</B>
+  <A HREF="pug_listener.htm#ListenerCommands">Listener: Listener Commands</A>
+  <A HREF="pug_listener.htm#ppTermuserppTerm">Listener: pp(Term), user_pp(Term)</A>
+  <A HREF="ref_io.htm#prettyprint">Input and Output: pp(TERM), pp(ID, TERM)</A>
+
+
+<B><A NAME="V"></A>  <FONT COLOR=yellow SIZE=4>V</FONT></B><P>
+<A HREF="ref_manipulating_terms.htm#termtype">var</A>
+<A HREF="ref_manipulating_terms.htm#varX">var/1</A>
+<A HREF="ref_manipulating_terms.htm#varlistList">varlist/1</A>
+<A HREF="ref_manipulating_terms.htm#varlist_query3">varlist_query/3</A>
+<B>vars_sort_equal</B>
+  <A HREF="pug_runtime.htm#CFGParameters">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="pug_runtime.htm#Flags">Amzi! Runtime: Flags</A>
+<A HREF="ref_manipulating_terms.htm#varsofTermList">varsof/2</A>
+<A HREF="ref_system.htm#versionString">version/1</A>
+
+
+<B><A NAME="W"></A>  <FONT COLOR=yellow SIZE=4>W</FONT></B><P>
+<A HREF="ref_extensions.htm#wgetfileFileStr">w_getfiler</A>
+<A HREF="ref_extensions.htm#wmsgboxTerm">w_msgbox</A>
+<A HREF="ref_extensions.htm#wtfmsgboxTerm">w_tfmsgbox</A>
+<A HREF="pug_overview.htm#IDE">wideA</A>
+<A HREF="pug_overview.htm#IDE">wideW</A>
+<A HREF="ref_io.htm#BinaryIO">wide_char</A>
+<A HREF="ref_io.htm#Open4">wide_text</A>
+<A HREF="ref_io.htm#writeqTermwriteqIDTerm">write quoted</A>
+<A HREF="ref_io.htm#Open4">write</A>
+<A HREF="ref_io.htm#writeTermwriteIDTerm">write/1</A>
+<A HREF="ref_io.htm#writeTermwriteIDTerm">write/2</A>
+<A HREF="ref_io.htm#WriteBinary">write_binary/3</A>
+<B>writelog</B>
+  <A HREF="pug_debugger.htm#Logging">Debugger: Logging</A>
+  <A HREF="pug_debugging.htm#Logging">Debugging Your Programs: Logging</A>
+  <A HREF="pug_wide.htm#Logging">Windows IDE: Logging</A>
+<A HREF="ref_io.htm#writelogX">writelog/1</A>
+<A HREF="ref_io.htm#writeqTermwriteqIDTerm">writeq/1</A>
+<A HREF="ref_io.htm#writeqTermwriteqIDTerm">writeq/2</A>
+<A HREF="ref_io.htm#StringsAndCharacters">writing characters</A>
+<A HREF="ref_io.htm#StringsAndCharacters">writing strings</A>
+
+
+<B><A NAME="X"></A>  <FONT COLOR=yellow SIZE=4>X</FONT></B><P>
+<A HREF="ref_math.htm#XxorY">xor</A>
+<A HREF="pug_overview.htm#AQuickOverview">xpl Files</A>
+
+
+<B><A NAME=" "></A>  <FONT COLOR=yellow SIZE=4> </FONT></B><P>
+<A HREF="ref_terms.htm#Lists">|</A>
+<A HREF="ref_math.htm#almost_equal">~=</A>
+</PRE>
+</BODY>
+</HTML>
