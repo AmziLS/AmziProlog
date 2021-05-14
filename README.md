@@ -4,8 +4,8 @@ Source code for the entire Amzi! Prolog system.
 
 Amzi! Prolog is made of the following:
   - **Prolog Virtual Machine** -- Warren Abstrace Machine (WAM)
-  - **Logic Server** -- a runtime library for compiled Prolog programs that execute on the Prolog-VM (Prolog analogue to a database server)
-  - **C API and foreign language bindings** -- to embed Logic Server into other languages (analogue to an interface to a database server)
+  - **Logic Server** -- a runtime library for compiled Prolog programs that execute on the Prolog-VM (*Prolog analogue to a database server*)
+  - **C API and foreign language bindings** -- to embed Logic Server into other languages (*analogue to an interface to a database server*)
     - allows asserting clauses (facts or rules) and querying logic bases
   - **Command line tools** -- to build, run, and "listen to" Prolog programs
   - **Eclipse plugin** -- for comfortable compiling, linking, and *debugging*
