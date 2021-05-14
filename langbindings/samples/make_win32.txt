@@ -25,6 +25,14 @@ _common:
 	$(MD) $(DST)\internet\cgi\hello
 	$(CP) $(SRC)\internet\cgi\hello\doc.html      $(DST)\internet\cgi\hello
 	$(CP) $(SRC)\internet\cgi\hello\hellocgi.pro  $(DST)\internet\cgi\hello
+	$(CP) $(SRC)\internet\cgi\hello\.project      $(DST)\internet\cgi\hello
+	$(CP) $(SRC)\internet\cgi\hello\amzi.cfg      $(DST)\internet\cgi\hello
+	$(CP) $(SRC)\internet\cgi\hello\build.properties      $(DST)\internet\cgi\hello
+	$(CP) $(SRC)\internet\cgi\hello\hellocgi_consult.pro      $(DST)\internet\cgi\hello
+	$(CP) $(SRC)\internet\cgi\hello\hellocgi_greek1.pro      $(DST)\internet\cgi\hello
+	$(CP) $(SRC)\internet\cgi\hello\hellocgi_greek2.pro      $(DST)\internet\cgi\hello
+	$(CP) $(SRC)\internet\cgi\hello\hellocgi_mysql.pro      $(DST)\internet\cgi\hello
+	$(CP) $(SRC)\internet\cgi\hello\hg3.pro       $(DST)\internet\cgi\hello
 	$(MD) $(DST)\internet\cgi\infoform
 	$(CP) $(SRC)\internet\cgi\infoform\doc.html      $(DST)\internet\cgi\infoform
 	$(CP) $(SRC)\internet\cgi\infoform\.project      $(DST)\internet\cgi\infoform
@@ -186,6 +194,7 @@ _windows:
 	$(CP) $(SRC)\dotnet\cs\pets\pets.sln           $(DST)\dotnet\cs\pets
 	$(CP) $(SRC)\dotnet\cs\pets\PetsForm.cs        $(DST)\dotnet\cs\pets
 	$(CP) $(SRC)\dotnet\cs\pets\PetsForm.resx      $(DST)\dotnet\cs\pets
+	$(CP) $(SRC)\dotnet\cs\pets\app.config         $(DST)\dotnet\cs\pets
 	$(MD) $(DST)\dotnet\cs\pets_callback
 	$(CP) $(SRC)\dotnet\cs\pets_callback\doc.html              $(DST)\dotnet\cs\pets_callback
 	$(CP) $(SRC)\dotnet\cs\pets_callback\App.ico               $(DST)\dotnet\cs\pets_callback
@@ -249,6 +258,8 @@ _windows:
 	$(CP) $(SRC)\internet\asp.net\vb_pets\WebForm1.aspx    $(DST)\internet\asp.net\vb_pets
 	$(CP) $(SRC)\internet\asp.net\vb_pets\WebForm1.aspx.resx  $(DST)\internet\asp.net\vb_pets
 	$(CP) $(SRC)\internet\asp.net\vb_pets\WebForm1.aspx.vb $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\Default.aspx $(DST)\internet\asp.net\vb_pets
+	$(CP) $(SRC)\internet\asp.net\vb_pets\Default.aspx.vb $(DST)\internet\asp.net\vb_pets	
 	$(MD) $(DST)\odbc
 	$(CP) $(SRC)\odbc\doc.html             $(DST)\odbc
 	$(MD) $(DST)\odbc\dbgene
@@ -268,6 +279,8 @@ _windows:
 	$(CP) $(SRC)\odbc\dbgene\resource.h    $(DST)\odbc\dbgene
 	$(CP) $(SRC)\odbc\dbgene\stdafx.cpp    $(DST)\odbc\dbgene
 	$(CP) $(SRC)\odbc\dbgene\stdafx.h      $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\.project      $(DST)\odbc\dbgene
+	$(CP) $(SRC)\odbc\dbgene\build.properties      $(DST)\odbc\dbgene
 	$(MD) $(DST)\odbc\dbgene\res
 	$(CP) $(SRC)\odbc\dbgene\res\Dbgene.ico    $(DST)\odbc\dbgene\res
 	$(CP) $(SRC)\odbc\dbgene\res\Dbgene.rc2    $(DST)\odbc\dbgene\res
@@ -275,6 +288,7 @@ _windows:
 	$(CP) $(SRC)\odbc\events\doc.html      $(DST)\odbc\events
 	$(CP) $(SRC)\odbc\events\events.mdb    $(DST)\odbc\events
 	$(CP) $(SRC)\odbc\events\events.pro    $(DST)\odbc\events
+	$(CP) $(SRC)\odbc\events\.project      $(DST)\odbc\events
 	$(MD) $(DST)\odbc\vbgene
 	$(CP) $(SRC)\odbc\vbgene\doc.html      $(DST)\odbc\vbgene
 	$(CP) $(SRC)\odbc\vbgene\amzi.cfg      $(DST)\odbc\vbgene
@@ -326,6 +340,29 @@ _windows:
 	$(CP) $(SRC)\vb\wgene\wgene.bas     $(DST)\vb\wgene
 	$(CP) $(SRC)\vb\wgene\wgenevb.frm   $(DST)\vb\wgene
 	$(CP) $(SRC)\vb\wgene\wgenevb.vbp   $(DST)\vb\wgene
+	$(MD) $(DST)\com
+	$(CP) $(SRC)\com\doc.html $(DST)\com
+	$(MD) $(DST)\com\cpp_pets
+	$(CP) $(SRC)\com\cpp_pets\cpp_pets.cpp $(DST)\com\cpp_pets
+	$(CP) $(SRC)\com\cpp_pets\cpp_pets.dsp $(DST)\com\cpp_pets
+	$(CP) $(SRC)\com\cpp_pets\cpp_pets.dsw $(DST)\com\cpp_pets
+	$(CP) $(SRC)\com\cpp_pets\doc.html $(DST)\com\cpp_pets
+	$(CP) $(SRC)\com\cpp_pets\pets.pro $(DST)\com\cpp_pets
+	$(CP) $(SRC)\com\cpp_pets\StdAfx.cpp $(DST)\com\cpp_pets
+	$(CP) $(SRC)\com\cpp_pets\StdAfx.h $(DST)\com\cpp_pets
+	$(MD) $(DST)\com\delphi_pets
+	$(CP) $(SRC)\com\delphi_pets\delphi_pets.dpr $(DST)\com\delphi_pets
+	$(CP) $(SRC)\com\delphi_pets\delphi_pets.res $(DST)\com\delphi_pets
+	$(CP) $(SRC)\com\delphi_pets\delphi_pets_unit.dfm $(DST)\com\delphi_pets
+	$(CP) $(SRC)\com\delphi_pets\delphi_pets_unit.pas $(DST)\com\delphi_pets
+	$(CP) $(SRC)\com\delphi_pets\doc.html $(DST)\com\delphi_pets
+	$(CP) $(SRC)\com\delphi_pets\pets.pro $(DST)\com\delphi_pets
+	$(MD) $(DST)\com\vb_pets
+	$(CP) $(SRC)\com\vb_pets\doc.html $(DST)\com\vb_pets
+	$(CP) $(SRC)\com\vb_pets\pets.pro $(DST)\com\vb_pets
+	$(CP) $(SRC)\com\vb_pets\vb_pets.frm $(DST)\com\vb_pets
+	$(CP) $(SRC)\com\vb_pets\vb_pets.frx $(DST)\com\vb_pets
+	$(CP) $(SRC)\com\vb_pets\vb_pets.vbp $(DST)\com\vb_pets
 
 clean:
 	@echo "nothing to clean in samples"

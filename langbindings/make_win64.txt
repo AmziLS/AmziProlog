@@ -6,11 +6,16 @@ all: _dirs _sockets _mysql _odbc _tcltk _dotnet _java _cgi _vb _delphi _samples
 
 _dirs:
 	@-md $(RELEASE)
-	@-md $(RELLANGBINDS)\java
 	@-md $(RELLANGBINDS)\cgi
-	@-md $(RELLANGBINDS)\vb
 	@-md $(RELLANGBINDS)\delphi
-	
+	@-md $(RELLANGBINDS)\dotnet
+	@-md $(RELLANGBINDS)\java
+	@-md $(RELLANGBINDS)\mysql
+	@-md $(RELLANGBINDS)\odbc
+	@-md $(RELLANGBINDS)\sockets
+	@-md $(RELLANGBINDS)\tcltk
+	@-md $(RELLANGBINDS)\vb
+
 _sockets:
 	$(info )
 	$(info *************************************************************)
