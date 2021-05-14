@@ -14,35 +14,6 @@ _dirs:
 # no need to make directories for the following targets, because they create
 # their library files/dlls in the bin dir: dotnet odbc mysql sockets	
 
-_sockets:
-	$(info )
-	$(info *************************************************************)
-	$(info *********    making sockets)
-	$(info *************************************************************)
-	@cd $(HERE)\sockets && \
-	  gmake -f make_win32.txt
-
-_mysql:
-	$(info *************************************************************)
-	$(info *********    making mysql)
-	$(info *************************************************************)
-	@cd $(HERE)\mysql && \
-	  gmake -f make_win32.txt
-	
-_odbc:
-	$(info *************************************************************)
-	$(info *********    making odbc)
-	$(info *************************************************************)
-	@cd $(HERE)\odbc && \
-	  gmake -f make_win32.txt
-
-_tcltk:
-	$(info *************************************************************)
-	$(info *********    making tcl/tk)
-	$(info *************************************************************)
-	@cd $(HERE)\tcltk && \
-	  gmake -f make_win32.txt
-	
 _dotnet:
 	$(info *************************************************************)
 	$(info *********    making .net)
@@ -78,26 +49,7 @@ _delphi:
 	@cd $(HERE)\delphi && \
 	  gmake -f make_win32.txt
 
-_samples:
-	$(info *************************************************************)
-	$(info *********    making samples)
-	$(info *************************************************************)
-	@cd $(HERE)\samples && \
-	  gmake -f make_win32.txt
-	  
 clean:
-	@cd sockets && \
-	  gmake -f make_win32.txt clean
-	
-	@cd mysql && \
-	  gmake -f make_win32.txt clean
-
-	@cd odbc && \
-	  gmake -f make_win32.txt clean
-	  
-	@cd tcltk && \
-	  gmake -f make_win32.txt clean	  
-	
 	@cd dotnet && \
 	  gmake -f make_win32.txt clean
 	
@@ -111,7 +63,4 @@ clean:
 	  gmake -f make_win32.txt clean
 	  
 	@cd delphi && \
-	  gmake -f make_win32.txt clean
-	  
-	@cd samples && \
 	  gmake -f make_win32.txt clean
