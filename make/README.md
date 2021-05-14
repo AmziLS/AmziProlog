@@ -5,4 +5,4 @@ This project contains the top-level make files for the various environments supp
 
 See the amzi-apls-devdocs project for details on using them to build the system.
 
-For building on Windows, the Borland bmake.exe utility is included.
+For building on Windows, the GNU gmake.exe utility is included.
