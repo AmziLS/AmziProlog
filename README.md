@@ -11,6 +11,12 @@ Amzi! Prolog is made of the following:
   - **Command line tools** -- to build, run, and "listen to" Prolog programs
   - **Eclipse plugin** -- for comfortable compiling, linking, and *debugging*
 
+File types:
+  - **.pro** -- Prolog source code (program or module)
+  - **.xpl** -- Compiled Prolog program
+  - **.plm** -- Compiled Prolog module
+  - **.lsx** -- Logic Server extension (a renamed DLL/SO file)
+
 See also: [Amzi! Prolog + Logic Server Overview](https://www.amzi.com/AmziPrologLogicServer/white_papers/amzi_overview.php)
 
 Copyright (c) Amzi! inc. 2016, 2021    
