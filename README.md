@@ -24,7 +24,7 @@ The Prolog compiler, listener, and runner are found under run/. acmp, arun, and 
 
 linkrun/ contains the source for the Prolog linker. libs/ contains Prolog libraries that will be compiled to .plm files.
 
-OS related extensions to Prolog, for handling files, directories, environment variables, and displaying message boxes are available under osutils/.
+OS related extensions to Prolog, for handling files, directories, environment variables, and displaying message boxes are available under osutils/. More extensions for ODBC, MySQL, Tcl/Tk, and sockets can be found in the langbindings/ folder.
 
 Finally, apart from a simple IDE (under wide-IDE/), there is also an Eclipse plugin that provides a more complete experience, under eclipse_plugin/.
 
