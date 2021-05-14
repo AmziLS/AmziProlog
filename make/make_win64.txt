@@ -2,8 +2,8 @@ HERE = $(APLS_SOURCE)
 SOURCE = $(APLS_SOURCE)
 RELEASE = $(APLS_RELEASE)
 
-all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _wide_IDE _langbindings amzi_env
-#all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _wide_IDE _eclipse_plugin _langbindings amzi_env
+all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _wide_IDE _extensions _langbindings amzi_env
+#all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _wide_IDE _eclipse_plugin _extensions _langbindings amzi_env
 
 _dirs:
 	$(info )
@@ -136,7 +136,16 @@ _eclipse_plugin:
 	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\plugins $(RELEASE)\eclipse_plugin\plugins
 	copy $(RELEASE)\bin\*.lsx $(RELEASE)\distributable\*.lsx
 	copy $(RELEASE)\config\amzi.cfg $(RELEASE)\distributable\amzi.cfg
-	
+
+_extensions:
+	$(info )
+	$(info *************************************************************)
+	$(info *********    making extensions)
+	$(info *************************************************************)
+	@cd $(SOURCE)\extensions && \
+	  gmake -f make_win64.txt clean && \
+	  gmake -f make_win64.txt
+
 _langbindings:
 	$(info )
 	$(info *************************************************************)
@@ -183,6 +192,9 @@ clean:
 	
 #	@cd $(SOURCE)\_eclipse_plugin && \
 #	  @gmake -f make_win64.txt clean
-	
+
+	@cd $(SOURCE)\extensions && \
+	  @gmake -f make_win64.txt clean
+
 	@cd $(SOURCE)\langbindings && \
 	  @gmake -f make_win64.txt clean
