@@ -16,7 +16,7 @@ Several command line tools are available to "listen to", run, compile and link P
 
 For building the whole system, see the make/ subdirectory. There are [detailed building instructions for Windows](https://github.com/AmziLS/AmziProlog/blob/master/Windows%20compilation%20instructions.md).
 
-Individual components can be built using the make files in each subdirectory. It is also possible to load the .sln files into Visual Studio for debugging. Make sure that you have set up the environment variables correctly (see /bin/amzi_vars_winXX.bat).
+Individual components can be built using the make files in each subdirectory. It is also possible to load the .sln files in Visual Studio for debugging. Make sure that you have set up the environment variables correctly (see /bin/amzi_vars_winXX.bat).
 
 # Releases
 
