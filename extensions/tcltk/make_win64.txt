@@ -1,9 +1,9 @@
 all: _tcltk
 
 _tcltk:
-	-md $(APLS_RELEASE)\langbindings\tcltk
+	-md $(APLS_RELEASE)\extensions\tcltk
 	devenv tcltk.sln /rebuild "Release|x64"
-	@xcopy lib $(APLS_RELEASE)\langbindings\tcltk\lib\ /S /Y
+	@xcopy lib $(APLS_RELEASE)\extensions\tcltk\lib\ /S /Y
 	@copy ..\..\bin\win64\tcl86t.dll $(APLS_RELEASE)\bin\ /Y
 	@copy ..\..\bin\win64\tk86t.dll $(APLS_RELEASE)\bin\ /Y
 
