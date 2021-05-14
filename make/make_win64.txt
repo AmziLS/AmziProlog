@@ -66,7 +66,7 @@ _osutils:
 	$(info *************************************************************)
 	$(info *********    making osutils)
 	$(info *************************************************************)
-	@cd $(SOURCE)\osutils && \
+	@cd $(SOURCE)\extensions\osutils && \
 	  gmake -f make_win64.txt clean && \
 	  gmake -f make_win64.txt
 	
@@ -160,7 +160,7 @@ clean:
 	@cd $(SOURCE)\linkrun && \
 	  @gmake -f make_win64.txt clean
 	
-	@cd $(SOURCE)\osutils && \
+	@cd $(SOURCE)\extensions\osutils && \
 	  @gmake -f make_win64.txt clean
 
 	@cd $(SOURCE)\compile && \
