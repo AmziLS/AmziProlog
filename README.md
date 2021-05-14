@@ -2,8 +2,8 @@
 
 Source code for the entire Amzi! Prolog system.
 
-Copyright (c) Amzi! inc. 2016, 2021
-Licensed under the MIT Open Source License
+Copyright (c) Amzi! inc. 2016, 2021    
+Licensed under the MIT Open Source License.
 
 # Contents
 
@@ -12,7 +12,7 @@ The Logic Server's primary API is in C, but has also various foreign language bi
 
 Several command line tools are available to "listen to", run, compile and link Prolog programs. Apart from a simple IDE (called wide/wide-IDE), there is also an Eclipse plugin that provides a more complete experience, including integrated debugging and compiling.
 
-# Building
+# Building and Debugging
 
 For building the whole system, see the make/ subdirectory. There are [detailed building instructions for Windows](https://github.com/AmziLS/AmziProlog/blob/master/Windows%20compilation%20instructions.md).
 
