@@ -19,13 +19,15 @@ Licensed under the MIT Open Source License.
 # Contents
 
 The engine/ folder contains Amzi! Prolog's core, made of the Prolog-VM and the Logic Server runtime library.
-The Logic Server's primary API is exposed in C found under engine/, but has also various foreign language bindings found under langbindings/, together with usage examples found under langbindings/samples/.
+The Logic Server's primary API is exposed in C found under engine/, but has also various foreign language bindings found under langbindings/.
 
 The Prolog compiler, listener, and runner are found under run/. acmp, arun, and alis are the exact same executable, their actual purpose is identified by their filename only: for arun, the engine/Logic Server simply executes the passed .xpl file, for alis it loads alis.xpl (source under listen/), and for acmp it loads acmp.xpl (found under compile/ and the source under https://github.com/AmziLS/AmziPrologCompiler).
 
 linkrun/ contains the source for the Prolog linker. libs/ contains Prolog libraries that will be compiled to .plm files.
 
-OS related extensions to Prolog, for handling files, directories, environment variables, and displaying message boxes are available under osutils/. More extensions for ODBC, MySQL, Tcl/Tk, and sockets can be found in the langbindings/ folder.
+A core extension to Prolog, which provides OS related functions for handling files, directories, environment variables, and displaying message boxes is available under extensions/osutils/. Non-core extensions exist for ODBC, MySQL, Tcl/Tk, and sockets, which can be found in the extensions/ folder.
+
+Examples for all core Prolog uses, language bindings, and Prolog extensions are available under samples/.
 
 Finally, apart from a simple IDE (under wide-IDE/), there is also an Eclipse plugin that provides a more complete experience, under eclipse_plugin/.
 
