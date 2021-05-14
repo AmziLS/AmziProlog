@@ -1,0 +1,53 @@
+HERE = $(APLS_SOURCE)\extensions
+RELEASE = $(APLS_RELEASE)
+RELEXTENSIONS = $(RELEASE)\extensions
+
+all: _dirs _sockets _mysql _odbc _tcltk
+
+_dirs:
+	@-md $(RELEASE)
+	@-md $(RELEXTENSIONS)\tcltk
+# no need to make directories for the following targets, because they only
+# create files in the bin dir: odbc mysql sockets	
+
+_sockets:
+	$(info )
+	$(info *************************************************************)
+	$(info *********    making sockets)
+	$(info *************************************************************)
+	@cd $(HERE)\sockets && \
+	  gmake -f make_win32.txt
+
+_mysql:
+	$(info *************************************************************)
+	$(info *********    making mysql)
+	$(info *************************************************************)
+	@cd $(HERE)\mysql && \
+	  gmake -f make_win32.txt
+	
+_odbc:
+	$(info *************************************************************)
+	$(info *********    making odbc)
+	$(info *************************************************************)
+	@cd $(HERE)\odbc && \
+	  gmake -f make_win32.txt
+
+_tcltk:
+	$(info *************************************************************)
+	$(info *********    making tcl/tk)
+	$(info *************************************************************)
+	@cd $(HERE)\tcltk && \
+	  gmake -f make_win32.txt
+	  
+clean:
+	@cd sockets && \
+	  gmake -f make_win32.txt clean
+	
+	@cd mysql && \
+	  gmake -f make_win32.txt clean
+
+	@cd odbc && \
+	  gmake -f make_win32.txt clean
+	  
+	@cd tcltk && \
+	  gmake -f make_win32.txt clean
