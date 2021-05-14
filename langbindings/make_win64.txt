@@ -8,13 +8,11 @@ _dirs:
 	@-md $(RELEASE)
 	@-md $(RELLANGBINDS)\cgi
 	@-md $(RELLANGBINDS)\delphi
-	@-md $(RELLANGBINDS)\dotnet
 	@-md $(RELLANGBINDS)\java
-	@-md $(RELLANGBINDS)\mysql
-	@-md $(RELLANGBINDS)\odbc
-	@-md $(RELLANGBINDS)\sockets
 	@-md $(RELLANGBINDS)\tcltk
 	@-md $(RELLANGBINDS)\vb
+# no need to make directories for the following targets, because they create
+# their library files/dlls in the bin dir: dotnet odbc mysql sockets	
 
 _sockets:
 	$(info )
