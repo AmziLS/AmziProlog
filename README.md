@@ -8,7 +8,7 @@ Amzi! Prolog is made of the following:
   - **C API and foreign language bindings** -- to embed Logic Server into other languages (*analogue to an interface to a database server*)
     - allows asserting clauses (facts or rules) and querying logic bases
   - **Logic Server Extensions** -- .lsx files that provide extended predicates/functions, implemented in other languages
-  - **Command line tools** -- to build, run, and "listen to" Prolog programs
+  - **Command line tools** -- to build, run, and "listen to" (using an interactive interpreter) Prolog programs
   - **Eclipse plugin** -- for comfortable compiling, linking, and *debugging*
 
 File types:
