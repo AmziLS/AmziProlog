@@ -14,9 +14,12 @@ Amzi! Prolog is made of the following:
 
 File types:
   - **.pro** -- Prolog source code (program or module)
-  - **.plm** -- Compiled Prolog module (Prolog byte code file)
+  - **.plm** -- Compiled Prolog object module (Prolog byte code file)
   - **.xpl** -- Executable Prolog library (a linked collection of .plm files)
   - **.lsx** -- Logic Server extension (a renamed DLL/SO file)
+
+Common terms:
+  - Loading of source code files (.pro) is called "consulting", while compiled files (.plm/.xpl) are simply "loaded"
 
 See also: [Amzi! Prolog Quick Overview](http://www.amzi.com/manuals/amzi/pro/pug_overview.htm) and the [Detailed Amzi! Prolog Overview](https://www.amzi.com/AmziPrologLogicServer/white_papers/amzi_overview.php)
 
