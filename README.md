@@ -14,9 +14,9 @@ Amzi! Prolog is made of the following:
 
 File types:
   - **.pro** -- **Pro**log source code (program or module)
-  - **.plm** -- Compiled **Pro**l**og object **m**odule (Prolog byte code file)
+  - **.plm** -- Compiled **P**ro**l**og object **m**odule (Prolog byte code file)
   - **.xpl** -- E**x**ecutable **P**rolog **l**ibrary (a linked collection of .plm files)
-  - **.lsx** -- **Logic **S**erver e**x**tension (a renamed DLL/SO file)
+  - **.lsx** -- **L**ogic **S**erver e**x**tension (a renamed DLL/SO file)
 
 Common terms:
   - Loading of source code files (.pro) is called "consulting", while compiled files (.plm/.xpl) are simply "loaded"
