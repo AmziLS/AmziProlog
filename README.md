@@ -14,11 +14,11 @@ Amzi! Prolog is made of the following:
 
 File types:
   - **.pro** -- Prolog source code (program or module)
-  - **.xpl** -- Compiled Prolog program
   - **.plm** -- Compiled Prolog module
+  - **.xpl** -- Compiled Prolog program
   - **.lsx** -- Logic Server extension (a renamed DLL/SO file)
 
-See also: [Amzi! Prolog + Logic Server Overview](https://www.amzi.com/AmziPrologLogicServer/white_papers/amzi_overview.php)
+See also: [Amzi! Prolog Quick Overview](http://www.amzi.com/manuals/amzi/pro/pug_overview.htm) and the [Detailed Amzi! Prolog Overview](https://www.amzi.com/AmziPrologLogicServer/white_papers/amzi_overview.php)
 
 Copyright (c) Amzi! inc. 2016, 2021    
 Licensed under the MIT Open Source License.
