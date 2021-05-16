@@ -19,7 +19,7 @@ File types:
   - **.lsx** -- Logic Server extension (a renamed DLL/SO file)
 
 Common terms:
-  - Loading and interpreting of source code files (.pro) is called "consulting", as opposed to compiled files (.plm/.xpl) which are simply "loaded".
+  - Loading and interpreting of source code files (.pro) is called "consulting", as opposed to compiled files (.plm/.xpl), which are simply "loaded".
 
 See also: [Amzi! Prolog Quick Overview](http://www.amzi.com/manuals/amzi/pro/pug_overview.htm) and the [Detailed Amzi! Prolog Overview](https://www.amzi.com/AmziPrologLogicServer/white_papers/amzi_overview.php)
 
