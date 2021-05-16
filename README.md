@@ -39,7 +39,7 @@ A core extension to Prolog, which provides OS related functions for handling fil
 
 Examples for all core Prolog uses, language bindings, and Prolog extensions are available under samples/.
 
-Finally, apart from a simple IDE (under wide-IDE/), there is also an Eclipse plugin that provides a more complete experience, under eclipse_plugin/.
+Finally, apart from a simple Windows IDE (under winIDE/), there is also an Eclipse plugin that provides a more complete experience, under eclipse_plugin/.
 
 # Building and Debugging
 
