@@ -24,8 +24,8 @@ idxf('Linker', 'Linker', b, `pug_overview.htm`).
 idxf('alnk','Linker',b,`pug_overview.htm`).
 idxf('IDE', 'IDE', b, `pug_overview.htm`).
 idxf('Interactive Development Environment', 'IDE', b, `pug_overview.htm`).
-idxf('wideA','IDE',b,`pug_overview.htm`).
-idxf('wideW','IDE',b,`pug_overview.htm`).
+idxf('winIDE_A','IDE',b,`pug_overview.htm`).
+idxf('winIDE_W','IDE',b,`pug_overview.htm`).
 idxf('Runtime', 'StandAloneRuntime', b, `pug_overview.htm`).
 idxf('Stand-Alone Runtime', 'StandAloneRuntime', b, `pug_overview.htm`).
 idxf('arun','StandAloneRuntime',b,`pug_overview.htm`).
@@ -297,163 +297,163 @@ idxf('current_prolog_flag/2', current_prolog_flag, b, `pug_runtime.htm`).
 idxf('set_prolog_flag/2', set_prolog_flag, b, `pug_runtime.htm`).
 idxf('Configuration Flags', 'ConfigurationFlags', b, `pug_runtime.htm`).
 idxf('IDE', 'IDE', b, `pug_ide.htm`).
-idxf('WIDE', 'IDEInteractiveDevelopmentEnvir', b, `pug_wide.htm`).
-idxf('Tutorial', 'DuckWorld', b, `pug_wide.htm`).
-idxf('Duck World', 'DuckWorld', b, `pug_wide.htm`).
-idxf('alis','StartingtheListener',b,`pug_wide.htm`).
-idxf('Listener', 'StartingtheListener', b, `pug_wide.htm`).
-idxf('IDE', 'StartingtheListener', b, `pug_wide.htm`).
-idxf('Duck World', 'CreatingaSourceFile', b, `pug_wide.htm`).
-idxf('Tutorial', 'CreatingaSourceFile', b, `pug_wide.htm`).
-idxf('Source Files', 'CreatingaSourceFile', b, `pug_wide.htm`).
-idxf('pro Files', 'CreatingaSourceFile', b, `pug_wide.htm`).
-idxf('Source Files', 'ConsultingaSourceFile', b, `pug_wide.htm`).
-idxf('pro Files', 'ConsultingaSourceFile', b, `pug_wide.htm`).
-idxf('Duck World', 'ConsultingaSourceFile', b, `pug_wide.htm`).
-idxf('alis','ConsultingaSourceFile',b,`pug_wide.htm`).
-idxf('IDE', 'ConsultingaSourceFile', b, `pug_wide.htm`).
-idxf('alis','UsingtheListener',b,`pug_wide.htm`).
-idxf('Tutorial', 'UsingtheListener', b, `pug_wide.htm`).
-idxf('Duck World', 'UsingtheListener', b, `pug_wide.htm`).
-idxf('listing','UsingtheListener',b,`pug_wide.htm`).
-idxf('add','UsingtheListener',b,`pug_wide.htm`).
-idxf('move','UsingtheListener',b,`pug_wide.htm`).
-idxf('goto','UsingtheListener',b,`pug_wide.htm`).
-idxf('Tutorial', 'Debugging', b, `pug_wide.htm`).
-idxf('Duck World', 'Debugging', b, `pug_wide.htm`).
-idxf('Debugging', 'Debugging', b, `pug_wide.htm`).
-idxf('Tutorial', 'Modules', b, `pug_wide.htm`).
-idxf('Modules', 'Modules', b, `pug_wide.htm`).
-idxf('Duck World', 'Modules', b, `pug_wide.htm`).
-idxf('consult','Modules',b,`pug_wide.htm`).
-idxf('loc','Modules',b,`pug_wide.htm`).
-idxf('main','Modules',b,`pug_wide.htm`).
-idxf('dynamic','Modules',b,`pug_wide.htm`).
-idxf('goto','Modules',b,`pug_wide.htm`).
-idxf('Tutorial', 'RunningaModularApplication', b, `pug_wide.htm`).
-idxf('Duck World', 'RunningaModularApplication', b, `pug_wide.htm`).
-idxf('Modules', 'RunningaModularApplication', b, `pug_wide.htm`).
-idxf('consult','RunningaModularApplication',b,`pug_wide.htm`).
-idxf('main','RunningaModularApplication',b,`pug_wide.htm`).
-idxf('alis','UsingalisandBATFiles',b,`pug_wide.htm`).
-idxf('BAT', 'UsingalisandBATFiles', b, `pug_wide.htm`).
-idxf('Tutorial', 'UsingalisandBATFiles', b, `pug_wide.htm`).
-idxf('Duck World', 'UsingalisandBATFiles', b, `pug_wide.htm`).
-idxf('main','UsingalisandBATFiles',b,`pug_wide.htm`).
-idxf('Tutorial', 'UsingProjectsintheIDE', b, `pug_wide.htm`).
-idxf('Duck World', 'UsingProjectsintheIDE', b, `pug_wide.htm`).
-idxf('IDE', 'UsingProjectsintheIDE', b, `pug_wide.htm`).
-idxf('Compiling', 'Compiling', b, `pug_wide.htm`).
-idxf('Duck World', 'Compiling', b, `pug_wide.htm`).
-idxf('Tutorial', 'Compiling', b, `pug_wide.htm`).
-idxf('Linking', 'LinkingandEXEGeneration', b, `pug_wide.htm`).
-idxf('Packaging', 'LinkingandEXEGeneration', b, `pug_wide.htm`).
-idxf('EXE Files', 'LinkingandEXEGeneration', b, `pug_wide.htm`).
-idxf('Tutorial', 'LinkingandEXEGeneration', b, `pug_wide.htm`).
-idxf('Duck World', 'LinkingandEXEGeneration', b, `pug_wide.htm`).
-idxf('Duck World', 'DistributinganApplication', b, `pug_wide.htm`).
-idxf('tutorial','DistributinganApplication',b,`pug_wide.htm`).
-idxf('Distributing', 'DistributinganApplication', b, `pug_wide.htm`).
-idxf('C ++', 'InterfacingwithOtherTools', b, `pug_wide.htm`).
-idxf('Delphi', 'InterfacingwithOtherTools', b, `pug_wide.htm`).
-idxf('IDE', 'WIDEControls', b, `pug_wide.htm`).
-idxf('IDE', 'WIDEInterface', b, `pug_wide.htm`).
-idxf('Unicode', 'UnicodeAndASCII', b, `pug_wide.htm`).
-idxf('ASCII', 'UnicodeAndASCII', b, `pug_wide.htm`).
-idxf('File Menu', 'FileMenu', b, `pug_wide.htm`).
-idxf('New File', 'FileMenu', b, `pug_wide.htm`).
-idxf('New Project', 'FileMenu', b, `pug_wide.htm`).
-idxf('Open File', 'FileMenu', b, `pug_wide.htm`).
-idxf('Open Project', 'FileMenu', b, `pug_wide.htm`).
-idxf('Close', 'FileMenu', b, `pug_wide.htm`).
-idxf('Close All', 'FileMenu', b, `pug_wide.htm`).
-idxf('Save', 'FileMenu', b, `pug_wide.htm`).
-idxf('Save As', 'FileMenu', b, `pug_wide.htm`).
-idxf('Save All', 'FileMenu', b, `pug_wide.htm`).
-idxf('Unlock', 'FileMenu', b, `pug_wide.htm`).
-idxf('Print', 'FileMenu', b, `pug_wide.htm`).
-idxf('Print Preview', 'FileMenu', b, `pug_wide.htm`).
-idxf('Print Setup', 'FileMenu', b, `pug_wide.htm`).
-idxf('Exit', 'FileMenu', b, `pug_wide.htm`).
-idxf('Edit Menu', 'EditMenu', b, `pug_wide.htm`).
-idxf('Undo', 'EditMenu', b, `pug_wide.htm`).
-idxf('Cut', 'EditMenu', b, `pug_wide.htm`).
-idxf('Copy', 'EditMenu', b, `pug_wide.htm`).
-idxf('Paste', 'EditMenu', b, `pug_wide.htm`).
-idxf('Delete', 'EditMenu', b, `pug_wide.htm`).
-idxf('Select All', 'EditMenu', b, `pug_wide.htm`).
-idxf('Find', 'EditMenu', b, `pug_wide.htm`).
-idxf('Find Next', 'EditMenu', b, `pug_wide.htm`).
-idxf('Replace', 'EditMenu', b, `pug_wide.htm`).
-idxf('View Menu', 'ViewMenu', b, `pug_wide.htm`).
-idxf('Tool Bar', 'ViewMenu', b, `pug_wide.htm`).
-idxf('Status Bar', 'ViewMenu', b, `pug_wide.htm`).
-idxf('Set Font', 'ViewMenu', b, `pug_wide.htm`).
-idxf('Listener Menu', 'ListenerMenu', b, `pug_wide.htm`).
-idxf('Start', 'ListenerMenu', b, `pug_wide.htm`).
-idxf('End', 'ListenerMenu', b, `pug_wide.htm`).
-idxf('Consult', 'ListenerMenu', b, `pug_wide.htm`).
-idxf('Reconsult', 'ListenerMenu', b, `pug_wide.htm`).
-idxf('Debug On', 'ListenerMenu', b, `pug_wide.htm`).
-idxf('Debug Off', 'ListenerMenu', b, `pug_wide.htm`).
-idxf('Compile', 'BuildMenu', b, `pug_wide.htm`).
-idxf('Link', 'BuildMenu', b, `pug_wide.htm`).
-idxf('Build', 'BuildMenu', b, `pug_wide.htm`).
-idxf('Run', 'BuildMenu', b, `pug_wide.htm`).
-idxf('Cascade', 'WindowMenu', b, `pug_wide.htm`).
-idxf('Tile Horizontally', 'WindowMenu', b, `pug_wide.htm`).
-idxf('Tile Vertically', 'WindowMenu', b, `pug_wide.htm`).
-idxf('Arrange Icons', 'WindowMenu', b, `pug_wide.htm`).
-idxf('Close All', 'WindowMenu', b, `pug_wide.htm`).
-idxf('Index', 'Help', b, `pug_wide.htm`).
-idxf('About Amzi!', 'Help', b, `pug_wide.htm`).
-idxf('Change Browser', 'Help', b, `pug_wide.htm`).
-idxf('Projects', 'Projects', b, `pug_wide.htm`).
-idxf('Projects', 'CreatingAProject', b, `pug_wide.htm`).
-idxf('ppj Files', 'CreatingAProject', b, `pug_wide.htm`).
-idxf('Projects', 'ProjectDialogBox', b, `pug_wide.htm`).
-idxf('Consulting', 'BuildingAProject', b, `pug_wide.htm`).
-idxf('abld','BuildingAProject',b,`pug_wide.htm`).
-idxf('Projects', 'BuildingAProject', b, `pug_wide.htm`).
-idxf('Debugger', 'TheDebugger', b, `pug_wide.htm`).
-idxf('Procedure Flow', 'BoxModelofProcedureFlow', b, `pug_wide.htm`).
-idxf('Box Model', 'BoxModelofProcedureFlow', b, `pug_wide.htm`).
-idxf('call','BoxModelofProcedureFlow',b,`pug_wide.htm`).
-idxf('exit','BoxModelofProcedureFlow',b,`pug_wide.htm`).
-idxf('fail','BoxModelofProcedureFlow',b,`pug_wide.htm`).
-idxf('redo','BoxModelofProcedureFlow',b,`pug_wide.htm`).
-idxf('leash','BoxModelofProcedureFlow',b,`pug_wide.htm`).
-idxf('Creep', 'BoxModelofProcedureFlow', b, `pug_wide.htm`).
-idxf('Leap', 'BoxModelofProcedureFlow', b, `pug_wide.htm`).
-idxf('Ports', 'DebuggerDisplay', b, `pug_wide.htm`).
-idxf('Call', 'DebuggerDisplay', b, `pug_wide.htm`).
-idxf('Exit', 'DebuggerDisplay', b, `pug_wide.htm`).
-idxf('Fail', 'DebuggerDisplay', b, `pug_wide.htm`).
-idxf('Redo', 'DebuggerDisplay', b, `pug_wide.htm`).
-idxf('Depth', 'DebuggerDisplay', b, `pug_wide.htm`).
-idxf('Clauses', 'DebuggerDisplay', b, `pug_wide.htm`).
-idxf('Terms', 'DebuggerDisplay', b, `pug_wide.htm`).
-idxf('portray',portrayGOAL,b,`pug_wide.htm`).
-idxf('Ports', 'DebugPortOptions', b, `pug_wide.htm`).
-idxf('Creep', 'DebugPortOptions', b, `pug_wide.htm`).
-idxf('Leap', 'DebugPortOptions', b, `pug_wide.htm`).
-idxf('Skip', 'DebugPortOptions', b, `pug_wide.htm`).
-idxf('Spypoints', 'Spypoints', b, `pug_wide.htm`).
-idxf('spy','Spypoints',b,`pug_wide.htm`).
-idxf('nospy','Spypoints',b,`pug_wide.htm`).
-idxf('nospyall','Spypoints',b,`pug_wide.htm`).
-idxf('Ports', 'LeashingDebugPorts', b, `pug_wide.htm`).
-idxf('leash','LeashingDebugPorts',b,`pug_wide.htm`).
-idxf('Logging', 'Logging', b, `pug_wide.htm`).
-idxf('Ports', 'Logging', b, `pug_wide.htm`).
-idxf('openlog','Logging',b,`pug_wide.htm`).
-idxf('writelog','Logging',b,`pug_wide.htm`).
-idxf('nllog','Logging',b,`pug_wide.htm`).
-idxf('closelog','Logging',b,`pug_wide.htm`).
-idxf('Debugging', 'DebuggerExample', b, `pug_wide.htm`).
-idxf('Creep', 'DebuggerExample', b, `pug_wide.htm`).
-idxf('Leap', 'DebuggerExample', b, `pug_wide.htm`).
-idxf('leash','DebuggerExample',b,`pug_wide.htm`).
+idxf('WinIDE', 'IDEInteractiveDevelopmentEnvir', b, `pug_winIDE.htm`).
+idxf('Tutorial', 'DuckWorld', b, `pug_winIDE.htm`).
+idxf('Duck World', 'DuckWorld', b, `pug_winIDE.htm`).
+idxf('alis','StartingtheListener',b,`pug_winIDE.htm`).
+idxf('Listener', 'StartingtheListener', b, `pug_winIDE.htm`).
+idxf('IDE', 'StartingtheListener', b, `pug_winIDE.htm`).
+idxf('Duck World', 'CreatingaSourceFile', b, `pug_winIDE.htm`).
+idxf('Tutorial', 'CreatingaSourceFile', b, `pug_winIDE.htm`).
+idxf('Source Files', 'CreatingaSourceFile', b, `pug_winIDE.htm`).
+idxf('pro Files', 'CreatingaSourceFile', b, `pug_winIDE.htm`).
+idxf('Source Files', 'ConsultingaSourceFile', b, `pug_winIDE.htm`).
+idxf('pro Files', 'ConsultingaSourceFile', b, `pug_winIDE.htm`).
+idxf('Duck World', 'ConsultingaSourceFile', b, `pug_winIDE.htm`).
+idxf('alis','ConsultingaSourceFile',b,`pug_winIDE.htm`).
+idxf('IDE', 'ConsultingaSourceFile', b, `pug_winIDE.htm`).
+idxf('alis','UsingtheListener',b,`pug_winIDE.htm`).
+idxf('Tutorial', 'UsingtheListener', b, `pug_winIDE.htm`).
+idxf('Duck World', 'UsingtheListener', b, `pug_winIDE.htm`).
+idxf('listing','UsingtheListener',b,`pug_winIDE.htm`).
+idxf('add','UsingtheListener',b,`pug_winIDE.htm`).
+idxf('move','UsingtheListener',b,`pug_winIDE.htm`).
+idxf('goto','UsingtheListener',b,`pug_winIDE.htm`).
+idxf('Tutorial', 'Debugging', b, `pug_winIDE.htm`).
+idxf('Duck World', 'Debugging', b, `pug_winIDE.htm`).
+idxf('Debugging', 'Debugging', b, `pug_winIDE.htm`).
+idxf('Tutorial', 'Modules', b, `pug_winIDE.htm`).
+idxf('Modules', 'Modules', b, `pug_winIDE.htm`).
+idxf('Duck World', 'Modules', b, `pug_winIDE.htm`).
+idxf('consult','Modules',b,`pug_winIDE.htm`).
+idxf('loc','Modules',b,`pug_winIDE.htm`).
+idxf('main','Modules',b,`pug_winIDE.htm`).
+idxf('dynamic','Modules',b,`pug_winIDE.htm`).
+idxf('goto','Modules',b,`pug_winIDE.htm`).
+idxf('Tutorial', 'RunningaModularApplication', b, `pug_winIDE.htm`).
+idxf('Duck World', 'RunningaModularApplication', b, `pug_winIDE.htm`).
+idxf('Modules', 'RunningaModularApplication', b, `pug_winIDE.htm`).
+idxf('consult','RunningaModularApplication',b,`pug_winIDE.htm`).
+idxf('main','RunningaModularApplication',b,`pug_winIDE.htm`).
+idxf('alis','UsingalisandBATFiles',b,`pug_winIDE.htm`).
+idxf('BAT', 'UsingalisandBATFiles', b, `pug_winIDE.htm`).
+idxf('Tutorial', 'UsingalisandBATFiles', b, `pug_winIDE.htm`).
+idxf('Duck World', 'UsingalisandBATFiles', b, `pug_winIDE.htm`).
+idxf('main','UsingalisandBATFiles',b,`pug_winIDE.htm`).
+idxf('Tutorial', 'UsingProjectsintheIDE', b, `pug_winIDE.htm`).
+idxf('Duck World', 'UsingProjectsintheIDE', b, `pug_winIDE.htm`).
+idxf('IDE', 'UsingProjectsintheIDE', b, `pug_winIDE.htm`).
+idxf('Compiling', 'Compiling', b, `pug_winIDE.htm`).
+idxf('Duck World', 'Compiling', b, `pug_winIDE.htm`).
+idxf('Tutorial', 'Compiling', b, `pug_winIDE.htm`).
+idxf('Linking', 'LinkingandEXEGeneration', b, `pug_winIDE.htm`).
+idxf('Packaging', 'LinkingandEXEGeneration', b, `pug_winIDE.htm`).
+idxf('EXE Files', 'LinkingandEXEGeneration', b, `pug_winIDE.htm`).
+idxf('Tutorial', 'LinkingandEXEGeneration', b, `pug_winIDE.htm`).
+idxf('Duck World', 'LinkingandEXEGeneration', b, `pug_winIDE.htm`).
+idxf('Duck World', 'DistributinganApplication', b, `pug_winIDE.htm`).
+idxf('tutorial','DistributinganApplication',b,`pug_winIDE.htm`).
+idxf('Distributing', 'DistributinganApplication', b, `pug_winIDE.htm`).
+idxf('C ++', 'InterfacingwithOtherTools', b, `pug_winIDE.htm`).
+idxf('Delphi', 'InterfacingwithOtherTools', b, `pug_winIDE.htm`).
+idxf('IDE', 'WinIDEControls', b, `pug_winIDE.htm`).
+idxf('IDE', 'WinIDEInterface', b, `pug_winIDE.htm`).
+idxf('Unicode', 'UnicodeAndASCII', b, `pug_winIDE.htm`).
+idxf('ASCII', 'UnicodeAndASCII', b, `pug_winIDE.htm`).
+idxf('File Menu', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('New File', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('New Project', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('Open File', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('Open Project', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('Close', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('Close All', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('Save', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('Save As', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('Save All', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('Unlock', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('Print', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('Print Preview', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('Print Setup', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('Exit', 'FileMenu', b, `pug_winIDE.htm`).
+idxf('Edit Menu', 'EditMenu', b, `pug_winIDE.htm`).
+idxf('Undo', 'EditMenu', b, `pug_winIDE.htm`).
+idxf('Cut', 'EditMenu', b, `pug_winIDE.htm`).
+idxf('Copy', 'EditMenu', b, `pug_winIDE.htm`).
+idxf('Paste', 'EditMenu', b, `pug_winIDE.htm`).
+idxf('Delete', 'EditMenu', b, `pug_winIDE.htm`).
+idxf('Select All', 'EditMenu', b, `pug_winIDE.htm`).
+idxf('Find', 'EditMenu', b, `pug_winIDE.htm`).
+idxf('Find Next', 'EditMenu', b, `pug_winIDE.htm`).
+idxf('Replace', 'EditMenu', b, `pug_winIDE.htm`).
+idxf('View Menu', 'ViewMenu', b, `pug_winIDE.htm`).
+idxf('Tool Bar', 'ViewMenu', b, `pug_winIDE.htm`).
+idxf('Status Bar', 'ViewMenu', b, `pug_winIDE.htm`).
+idxf('Set Font', 'ViewMenu', b, `pug_winIDE.htm`).
+idxf('Listener Menu', 'ListenerMenu', b, `pug_winIDE.htm`).
+idxf('Start', 'ListenerMenu', b, `pug_winIDE.htm`).
+idxf('End', 'ListenerMenu', b, `pug_winIDE.htm`).
+idxf('Consult', 'ListenerMenu', b, `pug_winIDE.htm`).
+idxf('Reconsult', 'ListenerMenu', b, `pug_winIDE.htm`).
+idxf('Debug On', 'ListenerMenu', b, `pug_winIDE.htm`).
+idxf('Debug Off', 'ListenerMenu', b, `pug_winIDE.htm`).
+idxf('Compile', 'BuildMenu', b, `pug_winIDE.htm`).
+idxf('Link', 'BuildMenu', b, `pug_winIDE.htm`).
+idxf('Build', 'BuildMenu', b, `pug_winIDE.htm`).
+idxf('Run', 'BuildMenu', b, `pug_winIDE.htm`).
+idxf('Cascade', 'WindowMenu', b, `pug_winIDE.htm`).
+idxf('Tile Horizontally', 'WindowMenu', b, `pug_winIDE.htm`).
+idxf('Tile Vertically', 'WindowMenu', b, `pug_winIDE.htm`).
+idxf('Arrange Icons', 'WindowMenu', b, `pug_winIDE.htm`).
+idxf('Close All', 'WindowMenu', b, `pug_winIDE.htm`).
+idxf('Index', 'Help', b, `pug_winIDE.htm`).
+idxf('About Amzi!', 'Help', b, `pug_winIDE.htm`).
+idxf('Change Browser', 'Help', b, `pug_winIDE.htm`).
+idxf('Projects', 'Projects', b, `pug_winIDE.htm`).
+idxf('Projects', 'CreatingAProject', b, `pug_winIDE.htm`).
+idxf('ppj Files', 'CreatingAProject', b, `pug_winIDE.htm`).
+idxf('Projects', 'ProjectDialogBox', b, `pug_winIDE.htm`).
+idxf('Consulting', 'BuildingAProject', b, `pug_winIDE.htm`).
+idxf('abld','BuildingAProject',b,`pug_winIDE.htm`).
+idxf('Projects', 'BuildingAProject', b, `pug_winIDE.htm`).
+idxf('Debugger', 'TheDebugger', b, `pug_winIDE.htm`).
+idxf('Procedure Flow', 'BoxModelofProcedureFlow', b, `pug_winIDE.htm`).
+idxf('Box Model', 'BoxModelofProcedureFlow', b, `pug_winIDE.htm`).
+idxf('call','BoxModelofProcedureFlow',b,`pug_winIDE.htm`).
+idxf('exit','BoxModelofProcedureFlow',b,`pug_winIDE.htm`).
+idxf('fail','BoxModelofProcedureFlow',b,`pug_winIDE.htm`).
+idxf('redo','BoxModelofProcedureFlow',b,`pug_winIDE.htm`).
+idxf('leash','BoxModelofProcedureFlow',b,`pug_winIDE.htm`).
+idxf('Creep', 'BoxModelofProcedureFlow', b, `pug_winIDE.htm`).
+idxf('Leap', 'BoxModelofProcedureFlow', b, `pug_winIDE.htm`).
+idxf('Ports', 'DebuggerDisplay', b, `pug_winIDE.htm`).
+idxf('Call', 'DebuggerDisplay', b, `pug_winIDE.htm`).
+idxf('Exit', 'DebuggerDisplay', b, `pug_winIDE.htm`).
+idxf('Fail', 'DebuggerDisplay', b, `pug_winIDE.htm`).
+idxf('Redo', 'DebuggerDisplay', b, `pug_winIDE.htm`).
+idxf('Depth', 'DebuggerDisplay', b, `pug_winIDE.htm`).
+idxf('Clauses', 'DebuggerDisplay', b, `pug_winIDE.htm`).
+idxf('Terms', 'DebuggerDisplay', b, `pug_winIDE.htm`).
+idxf('portray',portrayGOAL,b,`pug_winIDE.htm`).
+idxf('Ports', 'DebugPortOptions', b, `pug_winIDE.htm`).
+idxf('Creep', 'DebugPortOptions', b, `pug_winIDE.htm`).
+idxf('Leap', 'DebugPortOptions', b, `pug_winIDE.htm`).
+idxf('Skip', 'DebugPortOptions', b, `pug_winIDE.htm`).
+idxf('Spypoints', 'Spypoints', b, `pug_winIDE.htm`).
+idxf('spy','Spypoints',b,`pug_winIDE.htm`).
+idxf('nospy','Spypoints',b,`pug_winIDE.htm`).
+idxf('nospyall','Spypoints',b,`pug_winIDE.htm`).
+idxf('Ports', 'LeashingDebugPorts', b, `pug_winIDE.htm`).
+idxf('leash','LeashingDebugPorts',b,`pug_winIDE.htm`).
+idxf('Logging', 'Logging', b, `pug_winIDE.htm`).
+idxf('Ports', 'Logging', b, `pug_winIDE.htm`).
+idxf('openlog','Logging',b,`pug_winIDE.htm`).
+idxf('writelog','Logging',b,`pug_winIDE.htm`).
+idxf('nllog','Logging',b,`pug_winIDE.htm`).
+idxf('closelog','Logging',b,`pug_winIDE.htm`).
+idxf('Debugging', 'DebuggerExample', b, `pug_winIDE.htm`).
+idxf('Creep', 'DebuggerExample', b, `pug_winIDE.htm`).
+idxf('Leap', 'DebuggerExample', b, `pug_winIDE.htm`).
+idxf('leash','DebuggerExample',b,`pug_winIDE.htm`).
 idxf('Debugging', 'DebuggingYourPrograms', b, `pug_debugging.htm`).
 idxf('Errors', 'TrackingRuntimeErrorsinProlog', b, `pug_debugging.htm`).
 idxf('Logging', 'Logging', b, `pug_debugging.htm`).

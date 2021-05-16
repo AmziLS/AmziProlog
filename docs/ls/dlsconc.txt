@@ -9,7 +9,7 @@ amzi.bas#amzi.bas
 apitrace#apitrace
 Amzi! Architecture#Architecture
 AUTOEXEC.BAT#AUTOEXEC.BAT
-AWIDE.err#AWIDE.err
+AWINIDE.err#AWINIDE.err
 Backtracking#Backtracking
 Break Handling#Break
 [Ctrl-Break]#Break

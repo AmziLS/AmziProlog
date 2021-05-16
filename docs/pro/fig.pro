@@ -24,7 +24,7 @@ files( [
 `pug_runtime.htm`,            % $prruntim.htm$,
 
 `pug_ide.htm`,                % $prwinide.htm$,
-`pug_wide.htm`,
+`pug_winIDE.htm`,
 %`pug_projects.htm`,           % $prprojct.htm$,
 
 `pug_debugging.htm`,          % $prdbgprg.htm$,

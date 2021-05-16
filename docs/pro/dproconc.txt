@@ -98,7 +98,7 @@ Built-in Atoms#Atoms:built-in
 maxatoms#Atoms:maximum number of
 attr(#attr
 AUTOEXEC.BAT#AUTOEXEC.BAT
-AWIDE.err#AWIDE.err
+AWINIDE.err#AWINIDE.err
 Backtracking#Backtracking
 backtracking#Backtracking
 bagof(#bagof
