@@ -52,4 +52,4 @@ Individual components can be built using the make files in each subdirectory. It
 
 # Releases
 
-[Releases](https://github.com/AmziLS/AmziProlog/releases) are available as usual on GitHub, on the right side bar. They contain the built runtime library, and command line tools, but also samples, language bindings, and a ready to use Eclipse plugin. It's the easiest way to get started.
+[Releases](https://github.com/AmziLS/AmziProlog/releases) are available as usual on GitHub, on the right side bar. They contain the built runtime library, and command line tools, but also samples, language bindings, Logic Server extensions, and a ready to use Eclipse plugin. It's the easiest way to get started.
