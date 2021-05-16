@@ -28,22 +28,22 @@ Licensed under the MIT Open Source License.
 
 # Contents
 
-The engine/ folder contains Amzi! Prolog's core, made of the Prolog-VM and the Logic Server runtime library.
-The Logic Server's primary API is exposed in C found under engine/, but has also various foreign language bindings found under langbindings/.
+The /engine folder contains Amzi! Prolog's core, made of the Prolog-VM and the Logic Server runtime library.
+The Logic Server's primary API is exposed in C found under /engine, but has also various foreign language bindings found under /langbindings.
 
-The Prolog compiler, listener, and runner are found under run/. acmp, arun, and alis are the exact same executable, their actual purpose is identified by their filename only: for arun, the engine/Logic Server simply executes the passed .xpl file, for alis it loads alis.xpl (source under listen/), and for acmp it loads acmp.xpl (found under compile/ and the source under https://github.com/AmziLS/AmziPrologCompiler).
+The Prolog compiler, listener, and runner are found under /run. acmp, arun, and alis are the exact same executable, their actual purpose is identified by their filename only: for arun, the engine/Logic Server simply executes the passed .xpl file, for alis it loads alis.xpl (source under /listen), and for acmp it loads acmp.xpl (found under /compile and the source under https://github.com/AmziLS/AmziPrologCompiler).
 
-linkrun/ contains the source for the Prolog linker. libs/ contains Prolog libraries that will be compiled to .plm files.
+/linkrun contains the source for the Prolog linker. /libs contains Prolog libraries that will be compiled to .plm files.
 
-A core extension to Prolog -- which provides OS related functions for handling files, directories, environment variables, and displaying message boxes -- is available under extensions/osutils/. Non-core extensions exist for ODBC, MySQL, Tcl/Tk, and sockets, which can be found in the extensions/ folder.
+A core extension to Prolog -- which provides OS related functions for handling files, directories, environment variables, and displaying message boxes -- is available under /extensions/osutils. Non-core extensions exist for ODBC, MySQL, Tcl/Tk, and sockets, which can be found in the /extensions folder.
 
-Examples for all core Prolog uses, language bindings, and Prolog extensions are available under samples/.
+Examples for all core Prolog uses, language bindings, and Prolog extensions are available under /samples.
 
-Finally, apart from a simple Windows IDE (under winIDE/), there is also an Eclipse plugin that provides a more complete experience, under eclipse_plugin/.
+Finally, apart from a simple Windows IDE (under /winIDE), there is also an Eclipse plugin that provides a more complete experience, under /eclipse_plugin.
 
 # Building and Debugging
 
-For building the whole system, see the make/ subdirectory. There are [detailed building instructions for Windows](https://github.com/AmziLS/AmziProlog/blob/master/Windows%20compilation%20instructions.md).
+For building the whole system, see the /make subdirectory. There are [detailed building instructions for Windows](https://github.com/AmziLS/AmziProlog/blob/master/Windows%20compilation%20instructions.md).
 
 Individual components can be built using the make files in each subdirectory. It is also possible to load the .sln files in Visual Studio for debugging. Make sure that you have set up the environment variables correctly (see /bin/amzi_vars_winXX.bat).
 
