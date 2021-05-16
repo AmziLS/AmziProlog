@@ -47,7 +47,7 @@ The Prolog compiler, listener, and runner are found under `/run`. `acmp`, `arun`
 - for `alis` it loads `alis.xpl` (source under `/listen`)
 - for `acmp` it loads `acmp.xpl` (found under `/compile` and the source under https://github.com/AmziLS/AmziPrologCompiler)
 
-`/linkrun` contains the source for the Prolog linker. `/libs` contains Prolog libraries that will be compiled to .plm files.
+`/linkrun` contains the source for the Prolog linker. `/libs` contains [Prolog libraries](https://www.amzi.com/manuals/amzi/libs/doc.html) that will be compiled to .plm files.
 
 A core extension to Prolog -- which provides OS related functions for handling files, directories, environment variables, and displaying message boxes -- is available under `/extensions/osutils`. Non-core extensions exist for ODBC, MySQL, Tcl/Tk, and sockets, which can be found in the `/extensions` folder.
 
