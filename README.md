@@ -8,16 +8,20 @@ Amzi! Prolog is made of the following:
   - **C API and foreign language bindings** -- to embed Logic Server into other languages (*analogue to an interface to a database server*)
     - allows asserting clauses (facts or rules) and querying logic bases
   - **Logic Server Extensions** -- .lsx files that provide extended predicates/functions, implemented in other languages
-  - **Command line tools** -- to build, run, and "listen to" Prolog programs
+  - **Command line tools** -- to interpret (alis), compile (acmp), link (alnk) and execute (arun) Prolog programs
+    - the Prolog listener alis is an interactive interpreter; the process is aka. [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)
   - **Eclipse plugin** -- for comfortable compiling, linking, and *debugging*
 
 File types:
-  - **.pro** -- Prolog source code (program or module)
-  - **.xpl** -- Compiled Prolog program
-  - **.plm** -- Compiled Prolog module
+  - **.pro** -- <u>Prolog source code (program or module)</u>
+  - **.plm** -- Compiled Prolog object module (Prolog byte code file)
+  - **.xpl** -- Executable Prolog library (a linked collection of .plm files)
   - **.lsx** -- Logic Server extension (a renamed DLL/SO file)
 
-See also: [Amzi! Prolog + Logic Server Overview](https://www.amzi.com/AmziPrologLogicServer/white_papers/amzi_overview.php)
+Common terms:
+  - Loading of source code files (.pro) is called "consulting", while compiled files (.plm/.xpl) are simply "loaded"
+
+See also: [Amzi! Prolog Quick Overview](http://www.amzi.com/manuals/amzi/pro/pug_overview.htm) and the [Detailed Amzi! Prolog Overview](https://www.amzi.com/AmziPrologLogicServer/white_papers/amzi_overview.php)
 
 Copyright (c) Amzi! inc. 2016, 2021    
 Licensed under the MIT Open Source License.
