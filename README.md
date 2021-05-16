@@ -41,7 +41,7 @@ Licensed under the MIT Open Source License.
 [Prolog Articles / Whitepapers](https://www.amzi.com/manuals/amzi/articles/doc.html)    
 [Adventure in Prolog](https://www.amzi.com/manuals/amzi/aip/advfrtop.htm) -- A tutorial/guided tour through Prolog    
 
-## Contents
+## Repository Contents
 
 The `/engine` folder contains Amzi! Prolog's core, made of the Prolog-VM and the Logic Server runtime library.
 The Logic Server's primary API is exposed in C found under `/engine`, but has also various foreign language bindings found under `/langbindings`.
