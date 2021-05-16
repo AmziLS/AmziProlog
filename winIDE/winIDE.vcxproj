@@ -221,7 +221,7 @@
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>Win32</TargetEnvironment>
-      <TypeLibraryName>.\ReleaseA/wide.tlb</TypeLibraryName>
+      <TypeLibraryName>.\ReleaseA/winIDE.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -232,7 +232,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\ReleaseA/wide.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>.\ReleaseA/winIDE.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\ReleaseA/</AssemblerListingLocation>
       <ObjectFileName>.\ReleaseA/</ObjectFileName>
       <ProgramDataBaseFileName>.\ReleaseA/</ProgramDataBaseFileName>
@@ -247,9 +247,9 @@
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>$(AMZI_DEV_DIR)\lib\amzi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(APLS_RELEASE)\bin\wideA.exe</OutputFile>
+      <OutputFile>$(APLS_RELEASE)\bin\winIDE_A.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ProgramDatabaseFile>.\ReleaseA/wideA.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\ReleaseA/winIDE_A.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -261,7 +261,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <TypeLibraryName>.\ReleaseA/wide.tlb</TypeLibraryName>
+      <TypeLibraryName>.\ReleaseA/winIDE.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -272,7 +272,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\ReleaseA/wide.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>.\ReleaseA/winIDE.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\ReleaseA/</AssemblerListingLocation>
       <ObjectFileName>.\ReleaseA/</ObjectFileName>
       <ProgramDataBaseFileName>.\ReleaseA/</ProgramDataBaseFileName>
@@ -286,9 +286,9 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>$(AMZI_DEV_DIR)\lib\amzi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(APLS_RELEASE)\bin\wideA.exe</OutputFile>
+      <OutputFile>$(APLS_RELEASE)\bin\winIDE_A.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ProgramDatabaseFile>.\ReleaseA/wideA.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\ReleaseA/winIDE_A.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -302,7 +302,7 @@
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>Win32</TargetEnvironment>
-      <TypeLibraryName>.\DebugA/wide.tlb</TypeLibraryName>
+      <TypeLibraryName>.\DebugA/winIDE.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -312,7 +312,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\DebugA/wide.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>.\DebugA/winIDE.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\DebugA/</AssemblerListingLocation>
       <ObjectFileName>.\DebugA/</ObjectFileName>
       <ProgramDataBaseFileName>.\DebugA/</ProgramDataBaseFileName>
@@ -329,10 +329,10 @@
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>$(AMZI_DEV_DIR)\lib\amzi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(AMZI_DEV_DIR)\bin\wideA.exe</OutputFile>
+      <OutputFile>$(AMZI_DEV_DIR)\bin\winIDE_A.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>.\DebugA/wideA.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\DebugA/winIDE_A.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -344,7 +344,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <TypeLibraryName>.\DebugA/wide.tlb</TypeLibraryName>
+      <TypeLibraryName>.\DebugA/winIDE.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -354,7 +354,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\DebugA/wide.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>.\DebugA/winIDE.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\DebugA/</AssemblerListingLocation>
       <ObjectFileName>.\DebugA/</ObjectFileName>
       <ProgramDataBaseFileName>.\DebugA/</ProgramDataBaseFileName>
@@ -371,10 +371,10 @@
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>$(AMZI_DEV_DIR)\lib\amzi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(AMZI_DEV_DIR)\bin\wideA.exe</OutputFile>
+      <OutputFile>$(AMZI_DEV_DIR)\bin\winIDE_A.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>.\DebugA/wideA.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\DebugA/winIDE_A.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -387,7 +387,7 @@
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>Win32</TargetEnvironment>
-      <TypeLibraryName>.\ReleaseW/wide.tlb</TypeLibraryName>
+      <TypeLibraryName>.\ReleaseW/winIDE.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -398,7 +398,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\ReleaseW/wide.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>.\ReleaseW/winIDE.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\ReleaseW/</AssemblerListingLocation>
       <ObjectFileName>.\ReleaseW/</ObjectFileName>
       <ProgramDataBaseFileName>.\ReleaseW/</ProgramDataBaseFileName>
@@ -414,9 +414,9 @@
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>$(AMZI_DEV_DIR)\lib\amzi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(AMZI_DEV_DIR)\bin\wideW.exe</OutputFile>
+      <OutputFile>$(AMZI_DEV_DIR)\bin\winIDE_W.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ProgramDatabaseFile>.\ReleaseW/wideW.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\ReleaseW/winIDE_W.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -429,7 +429,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <TypeLibraryName>.\ReleaseW/wide.tlb</TypeLibraryName>
+      <TypeLibraryName>.\ReleaseW/winIDE.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -440,7 +440,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\ReleaseW/wide.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>.\ReleaseW/winIDE.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\ReleaseW/</AssemblerListingLocation>
       <ObjectFileName>.\ReleaseW/</ObjectFileName>
       <ProgramDataBaseFileName>.\ReleaseW/</ProgramDataBaseFileName>
@@ -455,9 +455,9 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>$(AMZI_DEV_DIR)\lib\amzi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(AMZI_DEV_DIR)\bin\wideW.exe</OutputFile>
+      <OutputFile>$(AMZI_DEV_DIR)\bin\winIDE_W.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ProgramDatabaseFile>.\ReleaseW/wideW.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\ReleaseW/winIDE_W.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -472,7 +472,7 @@
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>Win32</TargetEnvironment>
-      <TypeLibraryName>.\ReleaseW/wide.tlb</TypeLibraryName>
+      <TypeLibraryName>.\ReleaseW/winIDE.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -483,7 +483,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\ReleaseW/wide.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>.\ReleaseW/winIDE.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\ReleaseW/</AssemblerListingLocation>
       <ObjectFileName>.\ReleaseW/</ObjectFileName>
       <ProgramDataBaseFileName>.\ReleaseW/</ProgramDataBaseFileName>
@@ -499,9 +499,9 @@
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>$(AMZI_DEV_DIR)\lib\amzi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(AMZI_DEV_DIR)\bin\wideW.exe</OutputFile>
+      <OutputFile>$(AMZI_DEV_DIR)\bin\winIDE_W.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ProgramDatabaseFile>.\ReleaseW/wideW.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\ReleaseW/winIDE_W.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -514,7 +514,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <TypeLibraryName>.\ReleaseW/wide.tlb</TypeLibraryName>
+      <TypeLibraryName>.\ReleaseW/winIDE.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -525,7 +525,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\ReleaseW/wide.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>.\ReleaseW/winIDE.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\ReleaseW/</AssemblerListingLocation>
       <ObjectFileName>.\ReleaseW/</ObjectFileName>
       <ProgramDataBaseFileName>.\ReleaseW/</ProgramDataBaseFileName>
@@ -540,9 +540,9 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>$(AMZI_DEV_DIR)\lib\amzi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(AMZI_DEV_DIR)\bin\wideW.exe</OutputFile>
+      <OutputFile>$(AMZI_DEV_DIR)\bin\winIDE_W.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ProgramDatabaseFile>.\ReleaseW/wideW.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\ReleaseW/winIDE_W.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -557,7 +557,7 @@
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>Win32</TargetEnvironment>
-      <TypeLibraryName>.\DebugW/wide.tlb</TypeLibraryName>
+      <TypeLibraryName>.\DebugW/winIDE.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -567,7 +567,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\DebugW/wide.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>.\DebugW/winIDE.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\DebugW/</AssemblerListingLocation>
       <ObjectFileName>.\DebugW/</ObjectFileName>
       <ProgramDataBaseFileName>.\DebugW/</ProgramDataBaseFileName>
@@ -584,10 +584,10 @@
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>$(AMZI_DEV_DIR)\lib\amzi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(AMZI_DEV_DIR)\bin\wideW.exe</OutputFile>
+      <OutputFile>$(AMZI_DEV_DIR)\bin\winIDE_W.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>.\DebugW/wideW.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\DebugW/winIDE_W.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -600,7 +600,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <TypeLibraryName>.\DebugW/wide.tlb</TypeLibraryName>
+      <TypeLibraryName>.\DebugW/winIDE.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -610,7 +610,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>.\DebugW/wide.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>.\DebugW/winIDE.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\DebugW/</AssemblerListingLocation>
       <ObjectFileName>.\DebugW/</ObjectFileName>
       <ProgramDataBaseFileName>.\DebugW/</ProgramDataBaseFileName>
@@ -627,10 +627,10 @@
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>$(AMZI_DEV_DIR)\lib\amzi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(AMZI_DEV_DIR)\bin\wideW.exe</OutputFile>
+      <OutputFile>$(AMZI_DEV_DIR)\bin\winIDE_W.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>.\DebugW/wideW.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\DebugW/winIDE_W.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -643,7 +643,7 @@
     <ClCompile Include="browbrow.cpp" />
     <ClCompile Include="compile.cpp" />
     <ClCompile Include="conview.cpp" />
-    <ClCompile Include="cpwide.cpp" />
+    <ClCompile Include="cpWinIDE.cpp" />
     <ClCompile Include="cpwin.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="editdoc.cpp" />
@@ -660,14 +660,14 @@
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="cpwide.rc" />
+    <ResourceCompile Include="cpWinIDE.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="amziexcept.h" />
     <ClInclude Include="browbrow.h" />
     <ClInclude Include="compile.h" />
     <ClInclude Include="conview.h" />
-    <ClInclude Include="cpwide.h" />
+    <ClInclude Include="cpWinIDE.h" />
     <ClInclude Include="cpwin.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="editdoc.h" />
@@ -687,7 +687,7 @@
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
     <None Include="RES\cogs.ico" />
-    <None Include="RES\cpwide.ico" />
+    <None Include="RES\cpWinIDE.ico" />
     <None Include="RES\editdoc.ico" />
     <None Include="RES\IDR_MAIN.BMP" />
   </ItemGroup>
@@ -696,7 +696,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties RESOURCE_FILE="cpwide.rc" />
+      <UserProperties RESOURCE_FILE="cpWinIDE.rc" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -1,11 +1,11 @@
-// cpwide.cpp : Defines the class behaviors for the application.
+// cpWinIDE.cpp : Defines the class behaviors for the application.
 //
 
 #include "stdafx.h"
 #include "afxadv.h"
 #include "afxwin.h"   // needed to get &wndBottom
 #include "resource.h"
-#include "cpwide.h"
+#include "cpWinIDE.h"
 #include "mainfrm.h"
 #include "editdoc.h"
 #include "prodoc.h"
@@ -30,10 +30,10 @@ static char BASED_CODE THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CWideApp
+// CWinIDEApp
 
-BEGIN_MESSAGE_MAP(CWideApp, CWinApp)
-   //{{AFX_MSG_MAP(CWideApp)
+BEGIN_MESSAGE_MAP(CWinIDEApp, CWinApp)
+   //{{AFX_MSG_MAP(CWinIDEApp)
    ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
    ON_COMMAND(ID_BUILD_RUN, OnBuildRun)
    ON_COMMAND(ID_BUILD_COMPILE, OnBuildCompile)
@@ -56,7 +56,7 @@ BEGIN_MESSAGE_MAP(CWideApp, CWinApp)
    ON_COMMAND(ID_HELP_PROLOG, OnHelpProlog)
    ON_COMMAND(ID_HELP_LOGICSERVER, OnHelpLogicserver)
    ON_COMMAND(ID_HELP_TUTORIAL, OnHelpTutorial)
-   ON_COMMAND(ID_HELP_WIDE, OnHelpWide)
+   ON_COMMAND(ID_HELP_WINIDE, OnHelpWinIDE)
    //ON_COMMAND(ID_HELP_NEWFEATURES, OnHelpNewfeatures)
    //ON_COMMAND(ID_HELP_LICENSE, OnHelpLicense)
    //ON_COMMAND(ID_HELP_TIBICRULES, OnHelpTibicrules)
@@ -70,22 +70,22 @@ BEGIN_MESSAGE_MAP(CWideApp, CWinApp)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CWideApp construction
+// CWinIDEApp construction
 
-CWideApp::CWideApp()
+CWinIDEApp::CWinIDEApp()
 {
    // Place all significant initialization in InitInstance
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// The one and only CWideApp object
+// The one and only CWinIDEApp object
 
-CWideApp theApp;
+CWinIDEApp theApp;
 
 /////////////////////////////////////////////////////////////////////////////
-// CWideApp initialization
+// CWinIDEApp initialization
 
-BOOL CWideApp::InitInstance()
+BOOL CWinIDEApp::InitInstance()
 {
    m_dplateEdit = NULL;
    m_dplateProg = NULL;
@@ -228,7 +228,7 @@ BOOL CWideApp::InitInstance()
    return TRUE;
 }
 
-int CWideApp::ExitInstance()
+int CWinIDEApp::ExitInstance()
 {
    // delete templates here that were not added with
    // AddDocTemplate
@@ -244,7 +244,7 @@ int CWideApp::ExitInstance()
 }
 
 
-void CWideApp::OnProjectNew() 
+void CWinIDEApp::OnProjectNew() 
 {
    if (m_pProjectDoc != NULL)
    {
@@ -256,13 +256,13 @@ void CWideApp::OnProjectNew()
    m_pProjectDoc = (CProjectDoc*)(m_dplateProject->OpenDocumentFile(NULL));
 }
 
-void CWideApp::OnFileNew()
+void CWinIDEApp::OnFileNew()
 {
    CEditDoc *pDoc = (CEditDoc*)m_dplateEdit->OpenDocumentFile(NULL);
    pDoc->AugmentTitle();
 }
 
-BOOL CWideApp::OnOpenRecentEdit(UINT nID)
+BOOL CWinIDEApp::OnOpenRecentEdit(UINT nID)
 {
    // Copied from CWinApp::OnOpenRecentFile in MFC sources
    ASSERT_VALID(this);
@@ -282,7 +282,7 @@ BOOL CWideApp::OnOpenRecentEdit(UINT nID)
    return TRUE;
 }
 
-BOOL CWideApp::OnOpenRecentProject(UINT nID)
+BOOL CWinIDEApp::OnOpenRecentProject(UINT nID)
 {
    // Copied from CWinApp::OnOpenRecentFile in MFC sources
    ASSERT_VALID(this);
@@ -302,7 +302,7 @@ BOOL CWideApp::OnOpenRecentProject(UINT nID)
    return TRUE;
 }
 
-void CWideApp::OnFileOpen()
+void CWinIDEApp::OnFileOpen()
 {
    CFileDialog *pfileDlg = NULL;
 
@@ -327,7 +327,7 @@ void CWideApp::OnFileOpen()
    WOpen(sFile);
 }
 
-BOOL CWideApp::WOpen(CString sFile)
+BOOL CWinIDEApp::WOpen(CString sFile)
 // Open routine called from OnFileOpen and OnOpenRecentFile.
 // Open could be for project or a source file.
 {
@@ -360,7 +360,7 @@ BOOL CWideApp::WOpen(CString sFile)
 	}
 }
 
-CEditDoc* CWideApp::WOpenEdit(CString sFile)
+CEditDoc* CWinIDEApp::WOpenEdit(CString sFile)
 {
    CEditDoc *pDoc = NULL;
    // First see if the document is already open.
@@ -394,7 +394,7 @@ CEditDoc* CWideApp::WOpenEdit(CString sFile)
    return pDoc;
 }
 
-CProjectDoc* CWideApp::WOpenProject(CString sFile)
+CProjectDoc* CWinIDEApp::WOpenProject(CString sFile)
 {
    if (m_pProjectDoc != NULL)
    {
@@ -431,7 +431,7 @@ CProjectDoc* CWideApp::WOpenProject(CString sFile)
 }
 
 /*
-CEditDoc* CWideApp::ReadErrorOpen(CString sFile, long lineno)
+CEditDoc* CWinIDEApp::ReadErrorOpen(CString sFile, long lineno)
 // Called when there is a Prolog read error, the lineno is the
 // line the error occurred on.
 {
@@ -459,7 +459,7 @@ CEditDoc* CWideApp::ReadErrorOpen(CString sFile, long lineno)
 }
 */
 
-BOOL CWideApp::SameFile(const _TCHAR* f1, const _TCHAR* f2)
+BOOL CWinIDEApp::SameFile(const _TCHAR* f1, const _TCHAR* f2)
 {
    if (0 == _tcsicmp(f1, f2))
       return TRUE;
@@ -548,16 +548,16 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 END_MESSAGE_MAP()
 
 // App command to run the dialog
-void CWideApp::OnAppAbout()
+void CWinIDEApp::OnAppAbout()
 {
    CAboutDlg aboutDlg;
    aboutDlg.DoModal();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CWideApp commands
+// CWinIDEApp commands
 
-void CWideApp::OnBuildRun()
+void CWinIDEApp::OnBuildRun()
 {
 #if defined(_DEBUG) && defined(_WIN32)
    // memory leak detection
@@ -645,7 +645,7 @@ void CWideApp::OnBuildRun()
 #endif
 }
 
-void CWideApp::OnBuildCompile()
+void CWinIDEApp::OnBuildCompile()
 {
    CProDoc *pProDoc;
 //   CDocTemplate* pTemplate = m_dplateProg;
@@ -695,7 +695,7 @@ void CWideApp::OnBuildCompile()
    m_pMFW->RunningOff();
 }
 
-void CWideApp::OnBuildLink()
+void CWinIDEApp::OnBuildLink()
 {
    CLink* pLink;
    //CDocTemplate* pTemplate = m_dplateLink;
@@ -728,7 +728,7 @@ void CWideApp::OnBuildLink()
    //      pLink->OnCloseDocument();
 }
 
-void CWideApp::OnBuildBuild() 
+void CWinIDEApp::OnBuildBuild() 
 {
 //   CDocTemplate* pTemplate;
    CString sFile;
@@ -841,7 +841,7 @@ void CWideApp::OnBuildBuild()
 }
 
 
-void CWideApp::OnListenStart()
+void CWinIDEApp::OnListenStart()
 {
    CProDoc *pProDoc;
    CDocTemplate* pTemplate = m_dplateListen;
@@ -886,7 +886,7 @@ void CWideApp::OnListenStart()
    pProDoc->SetModifiedFlag(FALSE);
 }
 
-void CWideApp::OnListenEnd()
+void CWinIDEApp::OnListenEnd()
 {
    if (m_pMFW->PrologGet())
    {
@@ -916,7 +916,7 @@ void CWideApp::OnListenEnd()
 }
 
 
-void CWideApp::OnListenConsult()
+void CWinIDEApp::OnListenConsult()
 {
    SaveOpenFiles();
    CFrameWnd* pParentFrame;
@@ -927,7 +927,7 @@ void CWideApp::OnListenConsult()
 }
 
 
-void CWideApp::OnListenReconsult()
+void CWinIDEApp::OnListenReconsult()
 {
    SaveOpenFiles();
    CFrameWnd* pParentFrame;
@@ -940,7 +940,7 @@ void CWideApp::OnListenReconsult()
       m_pListenView->ReconsultProject();
 }
 
-void CWideApp::OnDebugOn()
+void CWinIDEApp::OnDebugOn()
 {
    CFrameWnd* pFW;
    pFW = m_dplateDebug->CreateNewFrame(m_pListenDoc, NULL);
@@ -960,19 +960,19 @@ void CWideApp::OnDebugOn()
    m_pListenView->SetFocus();
 }
 
-void CWideApp::OnDebugOff()
+void CWinIDEApp::OnDebugOff()
 {
    m_pMFW->DebuggerOff();
 //   m_pListenView->NoDebug();
    m_pDebugFrame->SendMessage(WM_CLOSE);
 }
 
-void CWideApp::OnHelpIndex() 
+void CWinIDEApp::OnHelpIndex() 
 {
    BrowseDoc(_T("amzidoc.htm"));
 }
 
-void CWideApp::BrowseDoc(_TCHAR* cDoc)
+void CWinIDEApp::BrowseDoc(_TCHAR* cDoc)
 {
    // Get the full path to the docs subdirectory.  The input
    // cDoc to this function is a relative path to that directory.
@@ -1001,7 +1001,7 @@ void CWideApp::BrowseDoc(_TCHAR* cDoc)
 }
 
 /*
-void CWideApp::OnChangebrowser() 
+void CWinIDEApp::OnChangebrowser() 
 {
    CBrowseBrowser bb;
    bb.DoModal();
@@ -1011,7 +1011,7 @@ void CWideApp::OnChangebrowser()
       WriteBrowser();
    
 }
-void CWideApp::ReadBrowser()
+void CWinIDEApp::ReadBrowser()
 {
    m_sBrowser = GetProfileString(_T("Settings"), _T("Browser"));
    if (m_sBrowser.IsEmpty())
@@ -1025,7 +1025,7 @@ void CWideApp::ReadBrowser()
    }
 }
 
-void CWideApp::WriteBrowser()
+void CWinIDEApp::WriteBrowser()
 {
    WriteProfileString(_T("Settings"), _T("Browser"), m_sBrowser);
 }
@@ -1039,7 +1039,7 @@ void CWideApp::WriteBrowser()
 
 _TCHAR szFormat[] = _T("%u,%u,%d,%d,%d,%d,%d,%d,%d,%d");
 
-BOOL CWideApp::ReadWindowPlacement(LPWINDOWPLACEMENT pwp,
+BOOL CWinIDEApp::ReadWindowPlacement(LPWINDOWPLACEMENT pwp,
       _TCHAR * psSection, _TCHAR * psWindowPos)
 {
    CString strBuffer = GetProfileString(psSection, psWindowPos);
@@ -1063,7 +1063,7 @@ BOOL CWideApp::ReadWindowPlacement(LPWINDOWPLACEMENT pwp,
    return TRUE;
 }
 
-void CWideApp::WriteWindowPlacement(LPWINDOWPLACEMENT pwp,
+void CWinIDEApp::WriteWindowPlacement(LPWINDOWPLACEMENT pwp,
       _TCHAR * psSection, _TCHAR * psWindowPos)
 // write a window placement to settings section of app's ini file
 {
@@ -1078,7 +1078,7 @@ void CWideApp::WriteWindowPlacement(LPWINDOWPLACEMENT pwp,
    WriteProfileString(psSection, psWindowPos, szBuffer);
 }
 
-void CWideApp::SaveOpenFiles()
+void CWinIDEApp::SaveOpenFiles()
 {
    POSITION posDoc = theApp.m_dplateEdit->GetFirstDocPosition();
    CDocument* pDoc;
@@ -1097,7 +1097,7 @@ void CWideApp::SaveOpenFiles()
    }
 }
 
-void CWideApp::CheckChangedFiles()
+void CWinIDEApp::CheckChangedFiles()
 // Files might have been changed outside of the editor, for example
 // when another application has been used for awhile, or the listener
 // or build functions modified a file.  Call from CMainFrame::OnActivateApp().
@@ -1134,7 +1134,7 @@ void CWideApp::CheckChangedFiles()
    }
 }
 
-void CWideApp::CloseOpenFiles()
+void CWinIDEApp::CloseOpenFiles()
 {
    POSITION posDoc = theApp.m_dplateEdit->GetFirstDocPosition();
    CDocument* pDoc;
@@ -1152,17 +1152,17 @@ void CWideApp::CloseOpenFiles()
    }
 }
 
-void CWideApp::OnCloseAll() 
+void CWinIDEApp::OnCloseAll() 
 {
    CloseOpenFiles();
 }
 
-void CWideApp::OnSaveAll() 
+void CWinIDEApp::OnSaveAll() 
 {
    SaveOpenFiles();
 }
 
-void CWideApp::OnFileUnlock() 
+void CWinIDEApp::OnFileUnlock() 
 {
    //_TCHAR buf[_MAX_PATH];
    //_TCHAR *p;
@@ -1180,7 +1180,7 @@ void CWideApp::OnFileUnlock()
 	return;
 }
 
-void CWideApp::OnFileOpenproject() 
+void CWinIDEApp::OnFileOpenproject() 
 {
    CFileDialog *pfileDlg = NULL;
 
@@ -1206,39 +1206,39 @@ void CWideApp::OnFileOpenproject()
 }
 
 
-void CWideApp::OnHelpProlog() 
+void CWinIDEApp::OnHelpProlog() 
 {
    BrowseDoc(_T("pro\\prfrtop.htm"));
 }
 
-void CWideApp::OnHelpLogicserver() 
+void CWinIDEApp::OnHelpLogicserver() 
 {
    BrowseDoc(_T("ls\\lsfrtop.htm"));
 }
 
-void CWideApp::OnHelpTutorial() 
+void CWinIDEApp::OnHelpTutorial() 
 {
    BrowseDoc(_T("aip\\advfrtop.htm"));
 }
 
-void CWideApp::OnHelpWide() 
+void CWinIDEApp::OnHelpWinIDE() 
 {
-   BrowseDoc(_T("pro\\pug_wide.htm"));
+   BrowseDoc(_T("pro\\pug_winIDE.htm"));
 }
 
-/*void CWideApp::OnHelpLicense() 
+/*void CWinIDEApp::OnHelpLicense() 
 {
    BrowseDoc(_T("license.htm"));
 }
 
-void CWideApp::OnHelpNewfeatures() 
+void CWinIDEApp::OnHelpNewfeatures() 
 {
    BrowseDoc(_T("whatsnew.htm"));   
 }*/
 
 
 
-CDocument* CWideApp::GetDocument(UINT docID, CDocTemplate* pTemplate, BOOL bCreate)
+CDocument* CWinIDEApp::GetDocument(UINT docID, CDocTemplate* pTemplate, BOOL bCreate)
 {
 	ASSERT(pTemplate != NULL);
 	ASSERT(pTemplate->IsKindOf(RUNTIME_CLASS(CDocTemplate)));

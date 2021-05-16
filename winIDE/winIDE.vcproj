@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="wide"
+	Name="winIDE"
 	ProjectGUID="{72FDCD10-1152-4626-8ED2-DDF1F8F0B915}"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="131072"
@@ -43,7 +43,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\ReleaseA/wide.tlb"
+				TypeLibraryName=".\ReleaseA/winIDE.tlb"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -54,7 +54,7 @@
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
-				PrecompiledHeaderFile=".\ReleaseA/wide.pch"
+				PrecompiledHeaderFile=".\ReleaseA/winIDE.pch"
 				AssemblerListingLocation=".\ReleaseA/"
 				ObjectFile=".\ReleaseA/"
 				ProgramDataBaseFileName=".\ReleaseA/"
@@ -77,10 +77,10 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="$(AMZI_DEV_DIR)\lib\amzi.lib"
-				OutputFile="$(AMZI_DEV_DIR)\bin\wideA.exe"
+				OutputFile="$(AMZI_DEV_DIR)\bin\winIDE_A.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				ProgramDatabaseFile=".\ReleaseA/wideA.pdb"
+				ProgramDatabaseFile=".\ReleaseA/winIDE_A.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -135,7 +135,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\DebugA/wide.tlb"
+				TypeLibraryName=".\DebugA/winIDE.tlb"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -145,7 +145,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
-				PrecompiledHeaderFile=".\DebugA/wide.pch"
+				PrecompiledHeaderFile=".\DebugA/winIDE.pch"
 				AssemblerListingLocation=".\DebugA/"
 				ObjectFile=".\DebugA/"
 				ProgramDataBaseFileName=".\DebugA/"
@@ -170,11 +170,11 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="$(AMZI_DEV_DIR)\lib\amzi.lib"
-				OutputFile="$(AMZI_DEV_DIR)\bin\wideA.exe"
+				OutputFile="$(AMZI_DEV_DIR)\bin\winIDE_A.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\DebugA/wideA.pdb"
+				ProgramDatabaseFile=".\DebugA/winIDE_A.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -229,7 +229,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\ReleaseW/wide.tlb"
+				TypeLibraryName=".\ReleaseW/winIDE.tlb"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -240,7 +240,7 @@
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
-				PrecompiledHeaderFile=".\ReleaseW/wide.pch"
+				PrecompiledHeaderFile=".\ReleaseW/winIDE.pch"
 				AssemblerListingLocation=".\ReleaseW/"
 				ObjectFile=".\ReleaseW/"
 				ProgramDataBaseFileName=".\ReleaseW/"
@@ -264,10 +264,10 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="$(AMZI_DEV_DIR)\lib\amzi.lib"
-				OutputFile="$(AMZI_DEV_DIR)\bin\wideW.exe"
+				OutputFile="$(AMZI_DEV_DIR)\bin\winIDE_W.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				ProgramDatabaseFile=".\ReleaseW/wideW.pdb"
+				ProgramDatabaseFile=".\ReleaseW/winIDE_W.pdb"
 				SubSystem="2"
 				EntryPointSymbol="wWinMainCRTStartup"
 				RandomizedBaseAddress="1"
@@ -323,7 +323,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\DebugW/wide.tlb"
+				TypeLibraryName=".\DebugW/winIDE.tlb"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -333,7 +333,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
-				PrecompiledHeaderFile=".\DebugW/wide.pch"
+				PrecompiledHeaderFile=".\DebugW/winIDE.pch"
 				AssemblerListingLocation=".\DebugW/"
 				ObjectFile=".\DebugW/"
 				ProgramDataBaseFileName=".\DebugW/"
@@ -358,11 +358,11 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="$(AMZI_DEV_DIR)\lib\amzi.lib"
-				OutputFile="$(AMZI_DEV_DIR)\bin\wideW.exe"
+				OutputFile="$(AMZI_DEV_DIR)\bin\winIDE_W.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\DebugW/wideW.pdb"
+				ProgramDatabaseFile=".\DebugW/winIDE_W.pdb"
 				SubSystem="2"
 				EntryPointSymbol="wWinMainCRTStartup"
 				RandomizedBaseAddress="1"
@@ -415,11 +415,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cpwide.cpp"
+				RelativePath=".\cpWinIDE.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\cpwide.rc"
+				RelativePath=".\cpWinIDE.rc"
 				>
 			</File>
 			<File
@@ -500,7 +500,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cpwide.h"
+				RelativePath=".\cpWinIDE.h"
 				>
 			</File>
 			<File
@@ -573,7 +573,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\RES\cpwide.ico"
+				RelativePath=".\RES\cpWinIDE.ico"
 				>
 			</File>
 			<File

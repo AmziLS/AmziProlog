@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "afxadv.h"
-#include "cpwide.h"
+#include "cpWinIDE.h"
 #include "resource.h"
 #include "project.h"
 #include "cpwin.h"    // to get slashslash utility function
@@ -470,7 +470,7 @@ void CProjectDoc::Serialize(CArchive& ar)
 }
 
 void CProjectDoc::SaveOpenFiles(CArchive &ar)
-// Unlike CWideApp::SaveOpenFiles, this version saves them
+// Unlike CWinIDEApp::SaveOpenFiles, this version saves them
 // remembers their positions and closes them.  It is called
 // when the project is being closed.
 {

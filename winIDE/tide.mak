@@ -40,7 +40,7 @@ CLEAN :
 	-@erase "$(INTDIR)\browbrow.obj"
 	-@erase "$(INTDIR)\compile.obj"
 	-@erase "$(INTDIR)\conview.obj"
-	-@erase "$(INTDIR)\cpwide.obj"
+	-@erase "$(INTDIR)\cpWinIDE.obj"
 	-@erase "$(INTDIR)\cpwin.obj"
 	-@erase "$(INTDIR)\debug.obj"
 	-@erase "$(INTDIR)\editdoc.obj"
@@ -113,7 +113,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\browbrow.obj" \
 	"$(INTDIR)\compile.obj" \
 	"$(INTDIR)\conview.obj" \
-	"$(INTDIR)\cpwide.obj" \
+	"$(INTDIR)\cpWinIDE.obj" \
 	"$(INTDIR)\cpwin.obj" \
 	"$(INTDIR)\debug.obj" \
 	"$(INTDIR)\editdoc.obj" \
@@ -148,7 +148,7 @@ CLEAN :
 	-@erase "$(INTDIR)\browbrow.obj"
 	-@erase "$(INTDIR)\compile.obj"
 	-@erase "$(INTDIR)\conview.obj"
-	-@erase "$(INTDIR)\cpwide.obj"
+	-@erase "$(INTDIR)\cpWinIDE.obj"
 	-@erase "$(INTDIR)\cpwin.obj"
 	-@erase "$(INTDIR)\debug.obj"
 	-@erase "$(INTDIR)\editdoc.obj"
@@ -221,7 +221,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\browbrow.obj" \
 	"$(INTDIR)\compile.obj" \
 	"$(INTDIR)\conview.obj" \
-	"$(INTDIR)\cpwide.obj" \
+	"$(INTDIR)\cpWinIDE.obj" \
 	"$(INTDIR)\cpwin.obj" \
 	"$(INTDIR)\debug.obj" \
 	"$(INTDIR)\editdoc.obj" \
@@ -263,8 +263,8 @@ CLEAN :
 	-@erase "$(INTDIR)\compile.sbr"
 	-@erase "$(INTDIR)\conview.obj"
 	-@erase "$(INTDIR)\conview.sbr"
-	-@erase "$(INTDIR)\cpwide.obj"
-	-@erase "$(INTDIR)\cpwide.sbr"
+	-@erase "$(INTDIR)\cpWinIDE.obj"
+	-@erase "$(INTDIR)\cpWinIDE.sbr"
 	-@erase "$(INTDIR)\cpwin.obj"
 	-@erase "$(INTDIR)\cpwin.sbr"
 	-@erase "$(INTDIR)\debug.obj"
@@ -345,7 +345,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\browbrow.sbr" \
 	"$(INTDIR)\compile.sbr" \
 	"$(INTDIR)\conview.sbr" \
-	"$(INTDIR)\cpwide.sbr" \
+	"$(INTDIR)\cpWinIDE.sbr" \
 	"$(INTDIR)\cpwin.sbr" \
 	"$(INTDIR)\debug.sbr" \
 	"$(INTDIR)\editdoc.sbr" \
@@ -373,7 +373,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\browbrow.obj" \
 	"$(INTDIR)\compile.obj" \
 	"$(INTDIR)\conview.obj" \
-	"$(INTDIR)\cpwide.obj" \
+	"$(INTDIR)\cpWinIDE.obj" \
 	"$(INTDIR)\cpwin.obj" \
 	"$(INTDIR)\debug.obj" \
 	"$(INTDIR)\editdoc.obj" \
@@ -408,7 +408,7 @@ CLEAN :
 	-@erase "$(INTDIR)\browbrow.obj"
 	-@erase "$(INTDIR)\compile.obj"
 	-@erase "$(INTDIR)\conview.obj"
-	-@erase "$(INTDIR)\cpwide.obj"
+	-@erase "$(INTDIR)\cpWinIDE.obj"
 	-@erase "$(INTDIR)\cpwin.obj"
 	-@erase "$(INTDIR)\debug.obj"
 	-@erase "$(INTDIR)\editdoc.obj"
@@ -478,7 +478,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\browbrow.obj" \
 	"$(INTDIR)\compile.obj" \
 	"$(INTDIR)\conview.obj" \
-	"$(INTDIR)\cpwide.obj" \
+	"$(INTDIR)\cpWinIDE.obj" \
 	"$(INTDIR)\cpwin.obj" \
 	"$(INTDIR)\debug.obj" \
 	"$(INTDIR)\editdoc.obj" \
@@ -625,30 +625,30 @@ SOURCE=.\conview.cpp
 
 !ENDIF 
 
-SOURCE=.\cpwide.cpp
+SOURCE=.\cpWinIDE.cpp
 
 !IF  "$(CFG)" == "tide - Win32 DebugTW"
 
 
-"$(INTDIR)\cpwide.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\cpWinIDE.obj" : $(SOURCE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "tide - Win32 DebugTA"
 
 
-"$(INTDIR)\cpwide.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\cpWinIDE.obj" : $(SOURCE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "tide - Win32 ReleaseTW"
 
 
-"$(INTDIR)\cpwide.obj"	"$(INTDIR)\cpwide.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\cpWinIDE.obj"	"$(INTDIR)\cpWinIDE.sbr" : $(SOURCE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "tide - Win32 ReleaseTA"
 
 
-"$(INTDIR)\cpwide.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\cpWinIDE.obj" : $(SOURCE) "$(INTDIR)"
 
 
 !ENDIF 

@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "editdoc.h"
 #include "peditvw.h"
-#include "cpwide.h"
+#include "cpWinIDE.h"
 #include "mainfrm.h"
 #include "resource.h"
 #include "project.h"

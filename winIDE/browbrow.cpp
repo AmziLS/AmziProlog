@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "cpwide.h"
+#include "cpWinIDE.h"
 #include "resource.h"
 #include "browbrow.h"
 #include "utils.h"

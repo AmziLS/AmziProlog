@@ -40,7 +40,7 @@ END
 
 3 TEXTINCLUDE DISCARDABLE 
 BEGIN
-    "#include ""res\\cpwide.rc2""  // non-App Studio edited resources\r\n"
+    "#include ""res\\cpWinIDE.rc2""  // non-App Studio edited resources\r\n"
     "\r\n"
     "#include ""afxres.rc""  \t// Standard components\r\n"
     "#include ""afxprint.rc""\t// printing/print preview resources\r\n"
@@ -57,7 +57,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "RES\\TCPWIDE.ICO"
+IDR_MAINFRAME           ICON    DISCARDABLE     "RES\\TCPWINIDE.ICO"
 IDR_PROLOGTYPE          ICON    DISCARDABLE     "RES\\TEDITDOC.ICO"
 IDR_COGS                ICON    DISCARDABLE     "RES\\TCOGS.ICO"
 IDI_TIBCO               ICON    DISCARDABLE     "res\\tibco.ico"
@@ -604,7 +604,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-#include "res\cpwide.rc2"  // non-App Studio edited resources
+#include "res\cpWinIDE.rc2"  // non-App Studio edited resources
 
 #include "afxres.rc"  	// Standard components
 #include "afxprint.rc"	// printing/print preview resources

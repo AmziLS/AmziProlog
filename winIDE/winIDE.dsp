@@ -1,26 +1,26 @@
-# Microsoft Developer Studio Project File - Name="wide" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="winIDE" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Application" 0x0101
 
-CFG=wide - Win32 DebugA
+CFG=winIDE - Win32 DebugA
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "wide.mak".
+!MESSAGE NMAKE /f "winIDE.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "wide.mak" CFG="wide - Win32 DebugA"
+!MESSAGE NMAKE /f "winIDE.mak" CFG="winIDE - Win32 DebugA"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "wide - Win32 ReleaseW" (based on "Win32 (x86) Application")
-!MESSAGE "wide - Win32 ReleaseA" (based on "Win32 (x86) Application")
-!MESSAGE "wide - Win32 DebugW" (based on "Win32 (x86) Application")
-!MESSAGE "wide - Win32 DebugA" (based on "Win32 (x86) Application")
+!MESSAGE "winIDE - Win32 ReleaseW" (based on "Win32 (x86) Application")
+!MESSAGE "winIDE - Win32 ReleaseA" (based on "Win32 (x86) Application")
+!MESSAGE "winIDE - Win32 DebugW" (based on "Win32 (x86) Application")
+!MESSAGE "winIDE - Win32 DebugA" (based on "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -31,12 +31,12 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "wide___Win32_ReleaseW"
-# PROP BASE Intermediate_Dir "wide___Win32_ReleaseW"
+# PROP BASE Output_Dir "winIDE___Win32_ReleaseW"
+# PROP BASE Intermediate_Dir "winIDE___Win32_ReleaseW"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 1
 # PROP Use_Debug_Libraries 0
@@ -55,14 +55,14 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 $(AMZI_DEV_DIR)\lib\amzi.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\wideW.exe"
+# ADD LINK32 $(AMZI_DEV_DIR)\lib\amzi.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\winIDE_W.exe"
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "wide___Win32_ReleaseA"
-# PROP BASE Intermediate_Dir "wide___Win32_ReleaseA"
+# PROP BASE Output_Dir "winIDE___Win32_ReleaseA"
+# PROP BASE Intermediate_Dir "winIDE___Win32_ReleaseA"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 1
 # PROP Use_Debug_Libraries 0
@@ -81,14 +81,14 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 $(AMZI_DEV_DIR)\lib\amzi.lib /nologo /subsystem:windows /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\wideA.exe"
+# ADD LINK32 $(AMZI_DEV_DIR)\lib\amzi.lib /nologo /subsystem:windows /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\winIDE_A.exe"
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "wide___Win32_DebugW"
-# PROP BASE Intermediate_Dir "wide___Win32_DebugW"
+# PROP BASE Output_Dir "winIDE___Win32_DebugW"
+# PROP BASE Intermediate_Dir "winIDE___Win32_DebugW"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 1
 # PROP Use_Debug_Libraries 1
@@ -107,14 +107,14 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 $(AMZI_DEV_DIR)\lib\amzi.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /debug /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\wideW.exe" /pdbtype:sept
+# ADD LINK32 $(AMZI_DEV_DIR)\lib\amzi.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /debug /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\winIDE_W.exe" /pdbtype:sept
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "wide___Win32_DebugA"
-# PROP BASE Intermediate_Dir "wide___Win32_DebugA"
+# PROP BASE Output_Dir "winIDE___Win32_DebugA"
+# PROP BASE Intermediate_Dir "winIDE___Win32_DebugA"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 1
 # PROP Use_Debug_Libraries 1
@@ -133,16 +133,16 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 $(AMZI_DEV_DIR)\lib\amzi.lib /nologo /subsystem:windows /debug /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\wideA.exe" /pdbtype:sept
+# ADD LINK32 $(AMZI_DEV_DIR)\lib\amzi.lib /nologo /subsystem:windows /debug /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\winIDE_A.exe" /pdbtype:sept
 
 !ENDIF 
 
 # Begin Target
 
-# Name "wide - Win32 ReleaseW"
-# Name "wide - Win32 ReleaseA"
-# Name "wide - Win32 DebugW"
-# Name "wide - Win32 DebugA"
+# Name "winIDE - Win32 ReleaseW"
+# Name "winIDE - Win32 ReleaseA"
+# Name "winIDE - Win32 DebugW"
+# Name "winIDE - Win32 DebugA"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
@@ -164,11 +164,11 @@ SOURCE=.\conview.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\cpwide.cpp
+SOURCE=.\cpWinIDE.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\cpwide.rc
+SOURCE=.\cpWinIDE.rc
 # End Source File
 # Begin Source File
 
@@ -248,7 +248,7 @@ SOURCE=.\conview.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\cpwide.h
+SOURCE=.\cpWinIDE.h
 # End Source File
 # Begin Source File
 
@@ -320,7 +320,7 @@ SOURCE=.\RES\cogs.ico
 # End Source File
 # Begin Source File
 
-SOURCE=.\RES\cpwide.ico
+SOURCE=.\RES\cpWinIDE.ico
 # End Source File
 # Begin Source File
 

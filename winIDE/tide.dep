@@ -2,7 +2,7 @@
 
 .\amziexcept.cpp : \
 	".\amziexcept.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\editdoc.h"\
 	".\mainfrm.h"\
 	".\stdafx.h"\
@@ -10,7 +10,7 @@
 
 .\browbrow.cpp : \
 	".\browbrow.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\stdafx.h"\
 	".\utils.h"\
 	
@@ -18,7 +18,7 @@
 .\compile.cpp : \
 	".\compile.h"\
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\cpwin.h"\
 	".\project.h"\
 	".\proprog.h"\
@@ -28,18 +28,18 @@
 
 .\conview.cpp : \
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\mainfrm.h"\
 	".\prodoc.h"\
 	".\proprog.h"\
 	".\stdafx.h"\
 	
 
-.\cpwide.cpp : \
+.\cpWinIDE.cpp : \
 	".\amziexcept.h"\
 	".\compile.h"\
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\debug.h"\
 	".\editdoc.h"\
 	".\link.h"\
@@ -63,7 +63,7 @@
 
 .\debug.cpp : \
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\debug.h"\
 	".\listen.h"\
 	".\mainfrm.h"\
@@ -73,7 +73,7 @@
 	
 
 .\editdoc.cpp : \
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\editdoc.h"\
 	".\mainfrm.h"\
 	".\peditvw.h"\
@@ -84,7 +84,7 @@
 
 .\link.cpp : \
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\link.h"\
 	".\project.h"\
 	".\stdafx.h"\
@@ -93,7 +93,7 @@
 
 .\listen.cpp : \
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\cpwin.h"\
 	".\debug.h"\
 	".\listen.h"\
@@ -107,7 +107,7 @@
 
 .\mainfrm.cpp : \
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\listen.h"\
 	".\mainfrm.h"\
 	".\peditvw.h"\
@@ -117,7 +117,7 @@
 	
 
 .\peditvw.cpp : \
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\editdoc.h"\
 	".\mainfrm.h"\
 	".\peditvw.h"\
@@ -133,7 +133,7 @@
 
 .\project.cpp : \
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\cpwin.h"\
 	".\editdoc.h"\
 	".\listen.h"\
@@ -147,7 +147,7 @@
 .\proprog.cpp : \
 	".\amziexcept.h"\
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\cpwin.h"\
 	".\editdoc.h"\
 	".\mainfrm.h"\
@@ -158,7 +158,7 @@
 
 .\spypoint.cpp : \
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\listen.h"\
 	".\proprog.h"\
 	".\spypoint.h"\
@@ -170,16 +170,16 @@
 	
 
 .\tipco.rc : \
-	".\res\cpwide.rc2"\
+	".\res\cpWinIDE.rc2"\
 	".\RES\IDR_MAIN.BMP"\
 	".\RES\TCOGS.ICO"\
-	".\RES\TCPWIDE.ICO"\
+	".\RES\TCPWINIDE.ICO"\
 	".\RES\TEDITDOC.ICO"\
 	".\RES\tibco.ico"\
 	
 
 .\unlock.cpp : \
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\mainfrm.h"\
 	".\stdafx.h"\
 	".\unlock.h"\

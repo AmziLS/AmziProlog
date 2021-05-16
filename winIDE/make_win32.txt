@@ -1,9 +1,9 @@
 all:
-	devenv wide.sln /rebuild "ReleaseA|Win32"
-	devenv wide.sln /rebuild "ReleaseW|Win32"
+	devenv winIDE.sln /rebuild "ReleaseA|Win32"
+	devenv winIDE.sln /rebuild "ReleaseW|Win32"
 
 clean:
-	devenv wide.sln /clean ReleaseA
-	devenv wide.sln /clean DebugA
-	devenv wide.sln /clean ReleaseW
-	devenv wide.sln /clean DebugW
+	devenv winIDE.sln /clean ReleaseA
+	devenv winIDE.sln /clean DebugA
+	devenv winIDE.sln /clean ReleaseW
+	devenv winIDE.sln /clean DebugW

@@ -8,7 +8,7 @@
 #include "conview.h"
 #include "utils.h"
 #include "cpwin.h"
-#include "cpwide.h"
+#include "cpWinIDE.h"
 #include "resource.h"
 #include "project.h"
 

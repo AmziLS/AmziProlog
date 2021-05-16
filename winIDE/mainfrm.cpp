@@ -8,7 +8,7 @@
 #include <io.h>
 #include "resource.h"
 #include "mainfrm.h"
-#include "cpwide.h"
+#include "cpWinIDE.h"
 #include "conview.h"
 #include "proprog.h"
 #include "listen.h"

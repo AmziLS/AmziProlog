@@ -38,7 +38,7 @@ END
 
 3 TEXTINCLUDE 
 BEGIN
-    "#include ""res\\cpwide.rc2""  // non-App Studio edited resources\r\n"
+    "#include ""res\\cpWinIDE.rc2""  // non-App Studio edited resources\r\n"
     "\r\n"
     "#include ""afxres.rc""  \t// Standard components\r\n"
     "#include ""afxprint.rc""\t// printing/print preview resources\r\n"
@@ -55,7 +55,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "RES\\CPWIDE.ICO"
+IDR_MAINFRAME           ICON                    "RES\\CPWINIDE.ICO"
 IDR_PROLOGTYPE          ICON                    "RES\\EDITDOC.ICO"
 IDR_COGS                ICON                    "RES\\COGS.ICO"
 
@@ -146,7 +146,7 @@ BEGIN
     BEGIN
         MENUITEM "&Contents",                   ID_HELP_INDEX
         MENUITEM SEPARATOR
-        MENUITEM "WIDE User's Guide",           ID_HELP_WIDE
+        MENUITEM "WinIDE User's Guide",         ID_HELP_WINIDE
         MENUITEM "&Prolog Language",            ID_HELP_PROLOG
         MENUITEM "Logic &Server",               ID_HELP_LOGICSERVER
         MENUITEM "Prolog &Tutorial",            ID_HELP_TUTORIAL
@@ -579,7 +579,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-#include "res\cpwide.rc2"  // non-App Studio edited resources
+#include "res\cpWinIDE.rc2"  // non-App Studio edited resources
 
 #include "afxres.rc"  	// Standard components
 #include "afxprint.rc"	// printing/print preview resources

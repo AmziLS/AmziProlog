@@ -164,7 +164,7 @@ SOURCE=.\conview.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\cpwide.cpp
+SOURCE=.\cpWinIDE.cpp
 # End Source File
 # Begin Source File
 
@@ -248,7 +248,7 @@ SOURCE=.\conview.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\cpwide.h
+SOURCE=.\cpWinIDE.h
 # End Source File
 # Begin Source File
 
@@ -324,7 +324,7 @@ SOURCE=.\RES\cogs.ico
 # End Source File
 # Begin Source File
 
-SOURCE=.\RES\cpwide.ico
+SOURCE=.\RES\cpWinIDE.ico
 # End Source File
 # Begin Source File
 
@@ -344,7 +344,7 @@ SOURCE=.\RES\TCOGS.ICO
 # End Source File
 # Begin Source File
 
-SOURCE=.\RES\TCPWIDE.ICO
+SOURCE=.\RES\TCPWINIDE.ICO
 # End Source File
 # Begin Source File
 

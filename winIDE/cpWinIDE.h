@@ -1,4 +1,4 @@
-// cpwide.h : main header file for the CPWIDE application
+// cpWinIDE.h : main header file for the CPWINIDE application
 //
 
 #ifndef __AFXWIN_H__
@@ -6,12 +6,12 @@
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CWideApp:
-// See cpwide.cpp for the implementation of this class
+// CWinIDEApp:
+// See cpWinIDE.cpp for the implementation of this class
 //
-class CWideApp;
+class CWinIDEApp;
 
-extern CWideApp theApp;
+extern CWinIDEApp theApp;
 
 class CMainFrame;
 class CListen;
@@ -21,7 +21,7 @@ class CDebugView;
 class CEditDoc;
 class CProjectDoc;
 
-class CWideApp : public CWinApp
+class CWinIDEApp : public CWinApp
 {
 public:
    CDocTemplate* m_dplateEdit;
@@ -50,7 +50,7 @@ public:
    CString  m_sBrowser; // Internet browser
 
 public:
-   CWideApp();
+   CWinIDEApp();
    BOOL ReadWindowPlacement(LPWINDOWPLACEMENT pwp,
       _TCHAR * psSection, _TCHAR * psWindowPos);
    void WriteWindowPlacement(LPWINDOWPLACEMENT pwp,
@@ -77,7 +77,7 @@ private:
 
 // Implementation
 
-   //{{AFX_MSG(CWideApp)
+   //{{AFX_MSG(CWinIDEApp)
    afx_msg void OnAppAbout();
    afx_msg void OnBuildRun();
    afx_msg void OnBuildCompile();
@@ -100,7 +100,7 @@ private:
    afx_msg void OnHelpProlog();
    afx_msg void OnHelpLogicserver();
    afx_msg void OnHelpTutorial();
-   afx_msg void OnHelpWide();
+   afx_msg void OnHelpWinIDE();
    //afx_msg void OnHelpNewfeatures();
    //afx_msg void OnHelpLicense();
    //afx_msg void OnHelpTibicrules();

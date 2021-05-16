@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "resource.h"
-#include "cpwide.h"
+#include "cpWinIDE.h"
 #include "spypoint.h"
 #include "proprog.h"
 #include "conview.h"

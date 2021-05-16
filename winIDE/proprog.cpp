@@ -3,7 +3,7 @@
 //
 
 #include "stdafx.h"
-#include "cpwide.h"
+#include "cpWinIDE.h"
 #include "mainfrm.h"
 #include "proprog.h"
 #include "amzi.h"

@@ -1,22 +1,22 @@
-# Microsoft Developer Studio Generated NMAKE File, Based on wide.dsp
+# Microsoft Developer Studio Generated NMAKE File, Based on winIDE.dsp
 !IF "$(CFG)" == ""
-CFG=wide - Win32 DebugA
-!MESSAGE No configuration specified. Defaulting to wide - Win32 DebugA.
+CFG=winIDE - Win32 DebugA
+!MESSAGE No configuration specified. Defaulting to winIDE - Win32 DebugA.
 !ENDIF 
 
-!IF "$(CFG)" != "wide - Win32 ReleaseW" && "$(CFG)" != "wide - Win32 ReleaseA" && "$(CFG)" != "wide - Win32 DebugW" && "$(CFG)" != "wide - Win32 DebugA"
+!IF "$(CFG)" != "winIDE - Win32 ReleaseW" && "$(CFG)" != "winIDE - Win32 ReleaseA" && "$(CFG)" != "winIDE - Win32 DebugW" && "$(CFG)" != "winIDE - Win32 DebugA"
 !MESSAGE Invalid configuration "$(CFG)" specified.
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "wide.mak" CFG="wide - Win32 DebugA"
+!MESSAGE NMAKE /f "winIDE.mak" CFG="winIDE - Win32 DebugA"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "wide - Win32 ReleaseW" (based on "Win32 (x86) Application")
-!MESSAGE "wide - Win32 ReleaseA" (based on "Win32 (x86) Application")
-!MESSAGE "wide - Win32 DebugW" (based on "Win32 (x86) Application")
-!MESSAGE "wide - Win32 DebugA" (based on "Win32 (x86) Application")
+!MESSAGE "winIDE - Win32 ReleaseW" (based on "Win32 (x86) Application")
+!MESSAGE "winIDE - Win32 ReleaseA" (based on "Win32 (x86) Application")
+!MESSAGE "winIDE - Win32 DebugW" (based on "Win32 (x86) Application")
+!MESSAGE "winIDE - Win32 DebugA" (based on "Win32 (x86) Application")
 !MESSAGE 
 !ERROR An invalid configuration is specified.
 !ENDIF 
@@ -27,7 +27,7 @@ NULL=
 NULL=nul
 !ENDIF 
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 OUTDIR=.\ReleaseW
 INTDIR=.\ReleaseW
@@ -35,7 +35,7 @@ INTDIR=.\ReleaseW
 OutDir=.\ReleaseW
 # End Custom Macros
 
-ALL : ".\$(AMZI_DEV_DIR)\bin\wideW.exe" "$(OUTDIR)\wide.bsc"
+ALL : ".\$(AMZI_DEV_DIR)\bin\winIDE_W.exe" "$(OUTDIR)\winIDE.bsc"
 
 
 CLEAN :
@@ -47,9 +47,9 @@ CLEAN :
 	-@erase "$(INTDIR)\compile.sbr"
 	-@erase "$(INTDIR)\conview.obj"
 	-@erase "$(INTDIR)\conview.sbr"
-	-@erase "$(INTDIR)\cpwide.obj"
-	-@erase "$(INTDIR)\cpwide.res"
-	-@erase "$(INTDIR)\cpwide.sbr"
+	-@erase "$(INTDIR)\cpWinIDE.obj"
+	-@erase "$(INTDIR)\cpWinIDE.res"
+	-@erase "$(INTDIR)\cpWinIDE.sbr"
 	-@erase "$(INTDIR)\cpwin.obj"
 	-@erase "$(INTDIR)\cpwin.sbr"
 	-@erase "$(INTDIR)\debug.obj"
@@ -79,14 +79,14 @@ CLEAN :
 	-@erase "$(INTDIR)\utils.obj"
 	-@erase "$(INTDIR)\utils.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
-	-@erase "$(OUTDIR)\wide.bsc"
-	-@erase ".\$(AMZI_DEV_DIR)\bin\wideW.exe"
+	-@erase "$(OUTDIR)\winIDE.bsc"
+	-@erase ".\$(AMZI_DEV_DIR)\bin\winIDE_W.exe"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /MT /W3 /GX /O2 /I "$(AMZI_DEV_DIR)\include" /D "NDEBUG" /D "_UNICODE" /D "WIN32" /D "_WINDOWS" /D "_TIBCO" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\wide.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MT /W3 /GX /O2 /I "$(AMZI_DEV_DIR)\include" /D "NDEBUG" /D "_UNICODE" /D "WIN32" /D "_WINDOWS" /D "_TIBCO" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\winIDE.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -121,15 +121,15 @@ CPP_PROJ=/nologo /MT /W3 /GX /O2 /I "$(AMZI_DEV_DIR)\include" /D "NDEBUG" /D "_U
 MTL=midl.exe
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
 RSC=rc.exe
-RSC_PROJ=/l 0x409 /fo"$(INTDIR)\cpwide.res" /d "NDEBUG" 
+RSC_PROJ=/l 0x409 /fo"$(INTDIR)\cpWinIDE.res" /d "NDEBUG" 
 BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\wide.bsc" 
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\winIDE.bsc" 
 BSC32_SBRS= \
 	"$(INTDIR)\amziexcept.sbr" \
 	"$(INTDIR)\browbrow.sbr" \
 	"$(INTDIR)\compile.sbr" \
 	"$(INTDIR)\conview.sbr" \
-	"$(INTDIR)\cpwide.sbr" \
+	"$(INTDIR)\cpWinIDE.sbr" \
 	"$(INTDIR)\cpwin.sbr" \
 	"$(INTDIR)\debug.sbr" \
 	"$(INTDIR)\editdoc.sbr" \
@@ -145,19 +145,19 @@ BSC32_SBRS= \
 	"$(INTDIR)\unlock.sbr" \
 	"$(INTDIR)\utils.sbr"
 
-"$(OUTDIR)\wide.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
+"$(OUTDIR)\winIDE.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
   $(BSC32_FLAGS) $(BSC32_SBRS)
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=$(AMZI_DEV_DIR)\lib\amzi.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\wideW.pdb" /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\wideW.exe" 
+LINK32_FLAGS=$(AMZI_DEV_DIR)\lib\amzi.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\winIDE_W.pdb" /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\winIDE_W.exe" 
 LINK32_OBJS= \
 	"$(INTDIR)\amziexcept.obj" \
 	"$(INTDIR)\browbrow.obj" \
 	"$(INTDIR)\compile.obj" \
 	"$(INTDIR)\conview.obj" \
-	"$(INTDIR)\cpwide.obj" \
+	"$(INTDIR)\cpWinIDE.obj" \
 	"$(INTDIR)\cpwin.obj" \
 	"$(INTDIR)\debug.obj" \
 	"$(INTDIR)\editdoc.obj" \
@@ -172,19 +172,19 @@ LINK32_OBJS= \
 	"$(INTDIR)\stdafx.obj" \
 	"$(INTDIR)\unlock.obj" \
 	"$(INTDIR)\utils.obj" \
-	"$(INTDIR)\cpwide.res"
+	"$(INTDIR)\cpWinIDE.res"
 
-".\$(AMZI_DEV_DIR)\bin\wideW.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+".\$(AMZI_DEV_DIR)\bin\winIDE_W.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 OUTDIR=.\ReleaseA
 INTDIR=.\ReleaseA
 
-ALL : ".\$(AMZI_DEV_DIR)\bin\wideA.exe"
+ALL : ".\$(AMZI_DEV_DIR)\bin\winIDE_A.exe"
 
 
 CLEAN :
@@ -192,8 +192,8 @@ CLEAN :
 	-@erase "$(INTDIR)\browbrow.obj"
 	-@erase "$(INTDIR)\compile.obj"
 	-@erase "$(INTDIR)\conview.obj"
-	-@erase "$(INTDIR)\cpwide.obj"
-	-@erase "$(INTDIR)\cpwide.res"
+	-@erase "$(INTDIR)\cpWinIDE.obj"
+	-@erase "$(INTDIR)\cpWinIDE.res"
 	-@erase "$(INTDIR)\cpwin.obj"
 	-@erase "$(INTDIR)\debug.obj"
 	-@erase "$(INTDIR)\editdoc.obj"
@@ -209,13 +209,13 @@ CLEAN :
 	-@erase "$(INTDIR)\unlock.obj"
 	-@erase "$(INTDIR)\utils.obj"
 	-@erase "$(INTDIR)\vc60.idb"
-	-@erase ".\$(AMZI_DEV_DIR)\bin\wideA.exe"
+	-@erase ".\$(AMZI_DEV_DIR)\bin\winIDE_A.exe"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /MT /W3 /GX /O2 /I "$(AMZI_DEV_DIR)\include" /D "NDEBUG" /D "_MBCS" /D "WIN32" /D "_WINDOWS" /D "_TIBCO" /Fp"$(INTDIR)\wide.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MT /W3 /GX /O2 /I "$(AMZI_DEV_DIR)\include" /D "NDEBUG" /D "_MBCS" /D "WIN32" /D "_WINDOWS" /D "_TIBCO" /Fp"$(INTDIR)\winIDE.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -250,19 +250,19 @@ CPP_PROJ=/nologo /MT /W3 /GX /O2 /I "$(AMZI_DEV_DIR)\include" /D "NDEBUG" /D "_M
 MTL=midl.exe
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
 RSC=rc.exe
-RSC_PROJ=/l 0x409 /fo"$(INTDIR)\cpwide.res" /d "NDEBUG" 
+RSC_PROJ=/l 0x409 /fo"$(INTDIR)\cpWinIDE.res" /d "NDEBUG" 
 BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\wide.bsc" 
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\winIDE.bsc" 
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=$(AMZI_DEV_DIR)\lib\amzi.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\wideA.pdb" /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\wideA.exe" 
+LINK32_FLAGS=$(AMZI_DEV_DIR)\lib\amzi.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\winIDE_A.pdb" /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\winIDE_A.exe" 
 LINK32_OBJS= \
 	"$(INTDIR)\amziexcept.obj" \
 	"$(INTDIR)\browbrow.obj" \
 	"$(INTDIR)\compile.obj" \
 	"$(INTDIR)\conview.obj" \
-	"$(INTDIR)\cpwide.obj" \
+	"$(INTDIR)\cpWinIDE.obj" \
 	"$(INTDIR)\cpwin.obj" \
 	"$(INTDIR)\debug.obj" \
 	"$(INTDIR)\editdoc.obj" \
@@ -277,14 +277,14 @@ LINK32_OBJS= \
 	"$(INTDIR)\stdafx.obj" \
 	"$(INTDIR)\unlock.obj" \
 	"$(INTDIR)\utils.obj" \
-	"$(INTDIR)\cpwide.res"
+	"$(INTDIR)\cpWinIDE.res"
 
-".\$(AMZI_DEV_DIR)\bin\wideA.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+".\$(AMZI_DEV_DIR)\bin\winIDE_A.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 OUTDIR=.\DebugW
 INTDIR=.\DebugW
@@ -292,7 +292,7 @@ INTDIR=.\DebugW
 OutDir=.\DebugW
 # End Custom Macros
 
-ALL : ".\$(AMZI_DEV_DIR)\bin\wideW.exe" "$(OUTDIR)\wide.bsc"
+ALL : ".\$(AMZI_DEV_DIR)\bin\winIDE_W.exe" "$(OUTDIR)\winIDE.bsc"
 
 
 CLEAN :
@@ -304,9 +304,9 @@ CLEAN :
 	-@erase "$(INTDIR)\compile.sbr"
 	-@erase "$(INTDIR)\conview.obj"
 	-@erase "$(INTDIR)\conview.sbr"
-	-@erase "$(INTDIR)\cpwide.obj"
-	-@erase "$(INTDIR)\cpwide.res"
-	-@erase "$(INTDIR)\cpwide.sbr"
+	-@erase "$(INTDIR)\cpWinIDE.obj"
+	-@erase "$(INTDIR)\cpWinIDE.res"
+	-@erase "$(INTDIR)\cpWinIDE.sbr"
 	-@erase "$(INTDIR)\cpwin.obj"
 	-@erase "$(INTDIR)\cpwin.sbr"
 	-@erase "$(INTDIR)\debug.obj"
@@ -337,16 +337,16 @@ CLEAN :
 	-@erase "$(INTDIR)\utils.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\vc60.pdb"
-	-@erase "$(OUTDIR)\wide.bsc"
-	-@erase "$(OUTDIR)\wideW.pdb"
-	-@erase ".\$(AMZI_DEV_DIR)\bin\wideW.exe"
-	-@erase ".\$(AMZI_DEV_DIR)\bin\wideW.ilk"
+	-@erase "$(OUTDIR)\winIDE.bsc"
+	-@erase "$(OUTDIR)\winIDE_W.pdb"
+	-@erase ".\$(AMZI_DEV_DIR)\bin\winIDE_W.exe"
+	-@erase ".\$(AMZI_DEV_DIR)\bin\winIDE_W.ilk"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /MTd /W3 /Gm /GX /ZI /Od /I "$(AMZI_DEV_DIR)\include" /D "_DEBUG" /D "_UNICODE" /D "WIN32" /D "_WINDOWS" /D "_TIBCO" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\wide.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MTd /W3 /Gm /GX /ZI /Od /I "$(AMZI_DEV_DIR)\include" /D "_DEBUG" /D "_UNICODE" /D "WIN32" /D "_WINDOWS" /D "_TIBCO" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\winIDE.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -381,15 +381,15 @@ CPP_PROJ=/nologo /MTd /W3 /Gm /GX /ZI /Od /I "$(AMZI_DEV_DIR)\include" /D "_DEBU
 MTL=midl.exe
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
 RSC=rc.exe
-RSC_PROJ=/l 0x409 /fo"$(INTDIR)\cpwide.res" /d "_DEBUG" 
+RSC_PROJ=/l 0x409 /fo"$(INTDIR)\cpWinIDE.res" /d "_DEBUG" 
 BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\wide.bsc" 
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\winIDE.bsc" 
 BSC32_SBRS= \
 	"$(INTDIR)\amziexcept.sbr" \
 	"$(INTDIR)\browbrow.sbr" \
 	"$(INTDIR)\compile.sbr" \
 	"$(INTDIR)\conview.sbr" \
-	"$(INTDIR)\cpwide.sbr" \
+	"$(INTDIR)\cpWinIDE.sbr" \
 	"$(INTDIR)\cpwin.sbr" \
 	"$(INTDIR)\debug.sbr" \
 	"$(INTDIR)\editdoc.sbr" \
@@ -405,19 +405,19 @@ BSC32_SBRS= \
 	"$(INTDIR)\unlock.sbr" \
 	"$(INTDIR)\utils.sbr"
 
-"$(OUTDIR)\wide.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
+"$(OUTDIR)\winIDE.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
   $(BSC32_FLAGS) $(BSC32_SBRS)
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=$(AMZI_DEV_DIR)\lib\amzi.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\wideW.pdb" /debug /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\wideW.exe" /pdbtype:sept 
+LINK32_FLAGS=$(AMZI_DEV_DIR)\lib\amzi.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\winIDE_W.pdb" /debug /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\winIDE_W.exe" /pdbtype:sept 
 LINK32_OBJS= \
 	"$(INTDIR)\amziexcept.obj" \
 	"$(INTDIR)\browbrow.obj" \
 	"$(INTDIR)\compile.obj" \
 	"$(INTDIR)\conview.obj" \
-	"$(INTDIR)\cpwide.obj" \
+	"$(INTDIR)\cpWinIDE.obj" \
 	"$(INTDIR)\cpwin.obj" \
 	"$(INTDIR)\debug.obj" \
 	"$(INTDIR)\editdoc.obj" \
@@ -432,14 +432,14 @@ LINK32_OBJS= \
 	"$(INTDIR)\stdafx.obj" \
 	"$(INTDIR)\unlock.obj" \
 	"$(INTDIR)\utils.obj" \
-	"$(INTDIR)\cpwide.res"
+	"$(INTDIR)\cpWinIDE.res"
 
-".\$(AMZI_DEV_DIR)\bin\wideW.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+".\$(AMZI_DEV_DIR)\bin\winIDE_W.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 OUTDIR=.\DebugA
 INTDIR=.\DebugA
@@ -447,7 +447,7 @@ INTDIR=.\DebugA
 OutDir=.\DebugA
 # End Custom Macros
 
-ALL : ".\$(AMZI_DEV_DIR)\bin\wideA.exe" "$(OUTDIR)\wide.bsc"
+ALL : ".\$(AMZI_DEV_DIR)\bin\winIDE_A.exe" "$(OUTDIR)\winIDE.bsc"
 
 
 CLEAN :
@@ -459,9 +459,9 @@ CLEAN :
 	-@erase "$(INTDIR)\compile.sbr"
 	-@erase "$(INTDIR)\conview.obj"
 	-@erase "$(INTDIR)\conview.sbr"
-	-@erase "$(INTDIR)\cpwide.obj"
-	-@erase "$(INTDIR)\cpwide.res"
-	-@erase "$(INTDIR)\cpwide.sbr"
+	-@erase "$(INTDIR)\cpWinIDE.obj"
+	-@erase "$(INTDIR)\cpWinIDE.res"
+	-@erase "$(INTDIR)\cpWinIDE.sbr"
 	-@erase "$(INTDIR)\cpwin.obj"
 	-@erase "$(INTDIR)\cpwin.sbr"
 	-@erase "$(INTDIR)\debug.obj"
@@ -492,16 +492,16 @@ CLEAN :
 	-@erase "$(INTDIR)\utils.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\vc60.pdb"
-	-@erase "$(OUTDIR)\wide.bsc"
-	-@erase "$(OUTDIR)\wideA.pdb"
-	-@erase ".\$(AMZI_DEV_DIR)\bin\wideA.exe"
-	-@erase ".\$(AMZI_DEV_DIR)\bin\wideA.ilk"
+	-@erase "$(OUTDIR)\winIDE.bsc"
+	-@erase "$(OUTDIR)\winIDE_A.pdb"
+	-@erase ".\$(AMZI_DEV_DIR)\bin\winIDE_A.exe"
+	-@erase ".\$(AMZI_DEV_DIR)\bin\winIDE_A.ilk"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /MTd /W3 /Gm /GX /ZI /Od /I "$(AMZI_DEV_DIR)\include" /D "_DEBUG" /D "_MBCS" /D "WIN32" /D "_WINDOWS" /D "_TIBCO" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\wide.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MTd /W3 /Gm /GX /ZI /Od /I "$(AMZI_DEV_DIR)\include" /D "_DEBUG" /D "_MBCS" /D "WIN32" /D "_WINDOWS" /D "_TIBCO" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\winIDE.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -536,15 +536,15 @@ CPP_PROJ=/nologo /MTd /W3 /Gm /GX /ZI /Od /I "$(AMZI_DEV_DIR)\include" /D "_DEBU
 MTL=midl.exe
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
 RSC=rc.exe
-RSC_PROJ=/l 0x409 /fo"$(INTDIR)\cpwide.res" /d "_DEBUG" 
+RSC_PROJ=/l 0x409 /fo"$(INTDIR)\cpWinIDE.res" /d "_DEBUG" 
 BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\wide.bsc" 
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\winIDE.bsc" 
 BSC32_SBRS= \
 	"$(INTDIR)\amziexcept.sbr" \
 	"$(INTDIR)\browbrow.sbr" \
 	"$(INTDIR)\compile.sbr" \
 	"$(INTDIR)\conview.sbr" \
-	"$(INTDIR)\cpwide.sbr" \
+	"$(INTDIR)\cpWinIDE.sbr" \
 	"$(INTDIR)\cpwin.sbr" \
 	"$(INTDIR)\debug.sbr" \
 	"$(INTDIR)\editdoc.sbr" \
@@ -560,19 +560,19 @@ BSC32_SBRS= \
 	"$(INTDIR)\unlock.sbr" \
 	"$(INTDIR)\utils.sbr"
 
-"$(OUTDIR)\wide.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
+"$(OUTDIR)\winIDE.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
   $(BSC32_FLAGS) $(BSC32_SBRS)
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=$(AMZI_DEV_DIR)\lib\amzi.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\wideA.pdb" /debug /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\wideA.exe" /pdbtype:sept 
+LINK32_FLAGS=$(AMZI_DEV_DIR)\lib\amzi.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\winIDE_A.pdb" /debug /machine:I386 /out:"$(AMZI_DEV_DIR)\bin\winIDE_A.exe" /pdbtype:sept 
 LINK32_OBJS= \
 	"$(INTDIR)\amziexcept.obj" \
 	"$(INTDIR)\browbrow.obj" \
 	"$(INTDIR)\compile.obj" \
 	"$(INTDIR)\conview.obj" \
-	"$(INTDIR)\cpwide.obj" \
+	"$(INTDIR)\cpWinIDE.obj" \
 	"$(INTDIR)\cpwin.obj" \
 	"$(INTDIR)\debug.obj" \
 	"$(INTDIR)\editdoc.obj" \
@@ -587,9 +587,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\stdafx.obj" \
 	"$(INTDIR)\unlock.obj" \
 	"$(INTDIR)\utils.obj" \
-	"$(INTDIR)\cpwide.res"
+	"$(INTDIR)\cpWinIDE.res"
 
-".\$(AMZI_DEV_DIR)\bin\wideA.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+".\$(AMZI_DEV_DIR)\bin\winIDE_A.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -598,36 +598,36 @@ LINK32_OBJS= \
 
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
-!IF EXISTS("wide.dep")
-!INCLUDE "wide.dep"
+!IF EXISTS("winIDE.dep")
+!INCLUDE "winIDE.dep"
 !ELSE 
-!MESSAGE Warning: cannot find "wide.dep"
+!MESSAGE Warning: cannot find "winIDE.dep"
 !ENDIF 
 !ENDIF 
 
 
-!IF "$(CFG)" == "wide - Win32 ReleaseW" || "$(CFG)" == "wide - Win32 ReleaseA" || "$(CFG)" == "wide - Win32 DebugW" || "$(CFG)" == "wide - Win32 DebugA"
+!IF "$(CFG)" == "winIDE - Win32 ReleaseW" || "$(CFG)" == "winIDE - Win32 ReleaseA" || "$(CFG)" == "winIDE - Win32 DebugW" || "$(CFG)" == "winIDE - Win32 DebugA"
 SOURCE=.\amziexcept.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\amziexcept.obj"	"$(INTDIR)\amziexcept.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\amziexcept.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\amziexcept.obj"	"$(INTDIR)\amziexcept.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\amziexcept.obj"	"$(INTDIR)\amziexcept.sbr" : $(SOURCE) "$(INTDIR)"
@@ -637,25 +637,25 @@ SOURCE=.\amziexcept.cpp
 
 SOURCE=.\browbrow.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\browbrow.obj"	"$(INTDIR)\browbrow.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\browbrow.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\browbrow.obj"	"$(INTDIR)\browbrow.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\browbrow.obj"	"$(INTDIR)\browbrow.sbr" : $(SOURCE) "$(INTDIR)"
@@ -665,25 +665,25 @@ SOURCE=.\browbrow.cpp
 
 SOURCE=.\compile.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\compile.obj"	"$(INTDIR)\compile.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\compile.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\compile.obj"	"$(INTDIR)\compile.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\compile.obj"	"$(INTDIR)\compile.sbr" : $(SOURCE) "$(INTDIR)"
@@ -693,25 +693,25 @@ SOURCE=.\compile.cpp
 
 SOURCE=.\conview.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\conview.obj"	"$(INTDIR)\conview.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\conview.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\conview.obj"	"$(INTDIR)\conview.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\conview.obj"	"$(INTDIR)\conview.sbr" : $(SOURCE) "$(INTDIR)"
@@ -719,61 +719,61 @@ SOURCE=.\conview.cpp
 
 !ENDIF 
 
-SOURCE=.\cpwide.cpp
+SOURCE=.\cpWinIDE.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
-
-
-"$(INTDIR)\cpwide.obj"	"$(INTDIR)\cpwide.sbr" : $(SOURCE) "$(INTDIR)"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+"$(INTDIR)\cpWinIDE.obj"	"$(INTDIR)\cpWinIDE.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-"$(INTDIR)\cpwide.obj" : $(SOURCE) "$(INTDIR)"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+"$(INTDIR)\cpWinIDE.obj" : $(SOURCE) "$(INTDIR)"
 
 
-"$(INTDIR)\cpwide.obj"	"$(INTDIR)\cpwide.sbr" : $(SOURCE) "$(INTDIR)"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+"$(INTDIR)\cpWinIDE.obj"	"$(INTDIR)\cpWinIDE.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-"$(INTDIR)\cpwide.obj"	"$(INTDIR)\cpwide.sbr" : $(SOURCE) "$(INTDIR)"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
+
+
+"$(INTDIR)\cpWinIDE.obj"	"$(INTDIR)\cpWinIDE.sbr" : $(SOURCE) "$(INTDIR)"
 
 
 !ENDIF 
 
-SOURCE=.\cpwide.rc
+SOURCE=.\cpWinIDE.rc
 
-"$(INTDIR)\cpwide.res" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\cpWinIDE.res" : $(SOURCE) "$(INTDIR)"
 	$(RSC) $(RSC_PROJ) $(SOURCE)
 
 
 SOURCE=.\cpwin.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\cpwin.obj"	"$(INTDIR)\cpwin.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\cpwin.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\cpwin.obj"	"$(INTDIR)\cpwin.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\cpwin.obj"	"$(INTDIR)\cpwin.sbr" : $(SOURCE) "$(INTDIR)"
@@ -783,25 +783,25 @@ SOURCE=.\cpwin.cpp
 
 SOURCE=.\debug.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\debug.obj"	"$(INTDIR)\debug.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\debug.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\debug.obj"	"$(INTDIR)\debug.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\debug.obj"	"$(INTDIR)\debug.sbr" : $(SOURCE) "$(INTDIR)"
@@ -811,25 +811,25 @@ SOURCE=.\debug.cpp
 
 SOURCE=.\editdoc.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\editdoc.obj"	"$(INTDIR)\editdoc.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\editdoc.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\editdoc.obj"	"$(INTDIR)\editdoc.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\editdoc.obj"	"$(INTDIR)\editdoc.sbr" : $(SOURCE) "$(INTDIR)"
@@ -839,25 +839,25 @@ SOURCE=.\editdoc.cpp
 
 SOURCE=.\link.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\link.obj"	"$(INTDIR)\link.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\link.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\link.obj"	"$(INTDIR)\link.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\link.obj"	"$(INTDIR)\link.sbr" : $(SOURCE) "$(INTDIR)"
@@ -867,25 +867,25 @@ SOURCE=.\link.cpp
 
 SOURCE=.\listen.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\listen.obj"	"$(INTDIR)\listen.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\listen.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\listen.obj"	"$(INTDIR)\listen.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\listen.obj"	"$(INTDIR)\listen.sbr" : $(SOURCE) "$(INTDIR)"
@@ -895,25 +895,25 @@ SOURCE=.\listen.cpp
 
 SOURCE=.\mainfrm.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\mainfrm.obj"	"$(INTDIR)\mainfrm.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\mainfrm.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\mainfrm.obj"	"$(INTDIR)\mainfrm.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\mainfrm.obj"	"$(INTDIR)\mainfrm.sbr" : $(SOURCE) "$(INTDIR)"
@@ -923,25 +923,25 @@ SOURCE=.\mainfrm.cpp
 
 SOURCE=.\peditvw.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\peditvw.obj"	"$(INTDIR)\peditvw.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\peditvw.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\peditvw.obj"	"$(INTDIR)\peditvw.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\peditvw.obj"	"$(INTDIR)\peditvw.sbr" : $(SOURCE) "$(INTDIR)"
@@ -951,25 +951,25 @@ SOURCE=.\peditvw.cpp
 
 SOURCE=.\prodoc.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\prodoc.obj"	"$(INTDIR)\prodoc.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\prodoc.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\prodoc.obj"	"$(INTDIR)\prodoc.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\prodoc.obj"	"$(INTDIR)\prodoc.sbr" : $(SOURCE) "$(INTDIR)"
@@ -979,25 +979,25 @@ SOURCE=.\prodoc.cpp
 
 SOURCE=.\project.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\project.obj"	"$(INTDIR)\project.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\project.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\project.obj"	"$(INTDIR)\project.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\project.obj"	"$(INTDIR)\project.sbr" : $(SOURCE) "$(INTDIR)"
@@ -1007,25 +1007,25 @@ SOURCE=.\project.cpp
 
 SOURCE=.\proprog.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\proprog.obj"	"$(INTDIR)\proprog.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\proprog.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\proprog.obj"	"$(INTDIR)\proprog.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\proprog.obj"	"$(INTDIR)\proprog.sbr" : $(SOURCE) "$(INTDIR)"
@@ -1035,25 +1035,25 @@ SOURCE=.\proprog.cpp
 
 SOURCE=.\spypoint.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\spypoint.obj"	"$(INTDIR)\spypoint.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\spypoint.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\spypoint.obj"	"$(INTDIR)\spypoint.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\spypoint.obj"	"$(INTDIR)\spypoint.sbr" : $(SOURCE) "$(INTDIR)"
@@ -1063,25 +1063,25 @@ SOURCE=.\spypoint.cpp
 
 SOURCE=.\stdafx.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\stdafx.obj"	"$(INTDIR)\stdafx.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\stdafx.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\stdafx.obj"	"$(INTDIR)\stdafx.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\stdafx.obj"	"$(INTDIR)\stdafx.sbr" : $(SOURCE) "$(INTDIR)"
@@ -1091,25 +1091,25 @@ SOURCE=.\stdafx.cpp
 
 SOURCE=.\unlock.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\unlock.obj"	"$(INTDIR)\unlock.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\unlock.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\unlock.obj"	"$(INTDIR)\unlock.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\unlock.obj"	"$(INTDIR)\unlock.sbr" : $(SOURCE) "$(INTDIR)"
@@ -1119,25 +1119,25 @@ SOURCE=.\unlock.cpp
 
 SOURCE=.\utils.cpp
 
-!IF  "$(CFG)" == "wide - Win32 ReleaseW"
+!IF  "$(CFG)" == "winIDE - Win32 ReleaseW"
 
 
 "$(INTDIR)\utils.obj"	"$(INTDIR)\utils.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 ReleaseA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 ReleaseA"
 
 
 "$(INTDIR)\utils.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugW"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugW"
 
 
 "$(INTDIR)\utils.obj"	"$(INTDIR)\utils.sbr" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "wide - Win32 DebugA"
+!ELSEIF  "$(CFG)" == "winIDE - Win32 DebugA"
 
 
 "$(INTDIR)\utils.obj"	"$(INTDIR)\utils.sbr" : $(SOURCE) "$(INTDIR)"

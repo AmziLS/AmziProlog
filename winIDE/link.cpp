@@ -9,7 +9,7 @@
 #include "link.h"
 #include "utils.h"
 #include "conview.h"
-#include "cpwide.h"
+#include "cpWinIDE.h"
 #include "resource.h"
 #include "project.h"
 

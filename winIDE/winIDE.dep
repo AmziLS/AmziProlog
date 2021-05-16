@@ -1,9 +1,9 @@
-# Microsoft Developer Studio Generated Dependency File, included by wide.mak
+# Microsoft Developer Studio Generated Dependency File, included by winIDE.mak
 
 .\amziexcept.cpp : \
 	"..\..\include\amzi.h"\
 	".\amziexcept.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\editdoc.h"\
 	".\mainfrm.h"\
 	".\stdafx.h"\
@@ -11,7 +11,7 @@
 
 .\browbrow.cpp : \
 	".\browbrow.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\stdafx.h"\
 	".\utils.h"\
 	
@@ -20,7 +20,7 @@
 	"..\..\include\amzi.h"\
 	".\compile.h"\
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\cpwin.h"\
 	".\project.h"\
 	".\proprog.h"\
@@ -31,19 +31,19 @@
 .\conview.cpp : \
 	"..\..\include\amzi.h"\
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\mainfrm.h"\
 	".\prodoc.h"\
 	".\proprog.h"\
 	".\stdafx.h"\
 	
 
-.\cpwide.cpp : \
+.\cpWinIDE.cpp : \
 	"..\..\include\amzi.h"\
 	".\amziexcept.h"\
 	".\compile.h"\
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\debug.h"\
 	".\editdoc.h"\
 	".\link.h"\
@@ -58,10 +58,10 @@
 	".\utils.h"\
 	
 
-.\cpwide.rc : \
+.\cpWinIDE.rc : \
 	".\RES\cogs.ico"\
-	".\RES\cpwide.ico"\
-	".\res\cpwide.rc2"\
+	".\RES\cpWinIDE.ico"\
+	".\res\cpWinIDE.rc2"\
 	".\RES\editdoc.ico"\
 	".\RES\IDR_MAIN.BMP"\
 	
@@ -77,7 +77,7 @@
 .\debug.cpp : \
 	"..\..\include\amzi.h"\
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\debug.h"\
 	".\listen.h"\
 	".\mainfrm.h"\
@@ -87,7 +87,7 @@
 	
 
 .\editdoc.cpp : \
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\editdoc.h"\
 	".\mainfrm.h"\
 	".\peditvw.h"\
@@ -99,7 +99,7 @@
 .\link.cpp : \
 	"..\..\include\amzi.h"\
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\link.h"\
 	".\project.h"\
 	".\stdafx.h"\
@@ -109,7 +109,7 @@
 .\listen.cpp : \
 	"..\..\include\amzi.h"\
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\cpwin.h"\
 	".\debug.h"\
 	".\listen.h"\
@@ -124,7 +124,7 @@
 .\mainfrm.cpp : \
 	"..\..\include\amzi.h"\
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\listen.h"\
 	".\mainfrm.h"\
 	".\peditvw.h"\
@@ -134,7 +134,7 @@
 	
 
 .\peditvw.cpp : \
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\editdoc.h"\
 	".\mainfrm.h"\
 	".\peditvw.h"\
@@ -152,7 +152,7 @@
 .\project.cpp : \
 	"..\..\include\amzi.h"\
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\cpwin.h"\
 	".\editdoc.h"\
 	".\listen.h"\
@@ -167,7 +167,7 @@
 	"..\..\include\amzi.h"\
 	".\amziexcept.h"\
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\cpwin.h"\
 	".\editdoc.h"\
 	".\mainfrm.h"\
@@ -179,7 +179,7 @@
 .\spypoint.cpp : \
 	"..\..\include\amzi.h"\
 	".\conview.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\listen.h"\
 	".\proprog.h"\
 	".\spypoint.h"\
@@ -192,7 +192,7 @@
 
 .\unlock.cpp : \
 	"..\..\include\amzi.h"\
-	".\cpwide.h"\
+	".\cpWinIDE.h"\
 	".\mainfrm.h"\
 	".\stdafx.h"\
 	".\unlock.h"\

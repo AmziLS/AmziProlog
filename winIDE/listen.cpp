@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "resource.h"
 #include <ctype.h>
-#include "cpwide.h"
+#include "cpWinIDE.h"
 #include "mainfrm.h"
 #include "proprog.h"
 #include "conview.h"
@@ -555,7 +555,7 @@ void CListenView::Debug()
 {
    CProDoc* pDoc = GetDocument();
    CListen* pListen = (CListen*)(pDoc->GetProg());
-   g_pDebug = ((CWideApp*)AfxGetApp())->m_pDebugView;
+   g_pDebug = ((CWinIDEApp*)AfxGetApp())->m_pDebugView;
    //PutS(_T("debug"));
    //docall(_T("debug"));
    pListen->SilentCall(_T("set_debug_wide"), _T("on"));

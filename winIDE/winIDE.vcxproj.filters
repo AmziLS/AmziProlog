@@ -27,7 +27,7 @@
     <ClCompile Include="conview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cpwide.cpp">
+    <ClCompile Include="cpWinIDE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="cpwin.cpp">
@@ -74,7 +74,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="cpwide.rc">
+    <ResourceCompile Include="cpWinIDE.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -91,7 +91,7 @@
     <ClInclude Include="conview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cpwide.h">
+    <ClInclude Include="cpWinIDE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cpwin.h">
@@ -144,7 +144,7 @@
     <None Include="RES\cogs.ico">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="RES\cpwide.ico">
+    <None Include="RES\cpWinIDE.ico">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="RES\editdoc.ico">

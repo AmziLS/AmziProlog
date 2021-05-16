@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wide", "wide.vcproj", "{72FDCD10-1152-4626-8ED2-DDF1F8F0B915}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winIDE", "winIDE.vcproj", "{72FDCD10-1152-4626-8ED2-DDF1F8F0B915}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by cpwide.rc
+// Used by cpWinIDE.rc
 //
 #define IDR_MAINFRAME                   2
 #define IDR_PROLOGTYPE                  3
@@ -13,7 +13,7 @@
 #define IDR_BUILDTYPE                   9
 #define IDR_COMPILETYPE                 10
 #define IDD_ABOUTBOX                    100
-#define IDR_WIDEAPP                     101
+#define IDR_WINIDEAPP                   101
 #define IDR_COGS                        102
 #define IDD_DIALOG1                     103
 #define IDD_ENTERNAME                   103
@@ -139,7 +139,7 @@
 #define ID_BUILD_VERBOSE                32828
 #define ID_HELP_TIBICRULES              32829
 #define ID_Menu                         32832
-#define ID_HELP_WIDE                    32833
+#define ID_HELP_WINIDE                  32833
 #define ID_FILE_PREVIEW                 40007
 #define ID_FILE_PRINTSETUP              40009
 #define ID_BUILD_COMPILE                40011

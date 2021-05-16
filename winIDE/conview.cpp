@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "resource.h"
-#include "cpwide.h"
+#include "cpWinIDE.h"
 #include "mainfrm.h"
 #include "conview.h"
 #include "prodoc.h"

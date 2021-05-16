@@ -1,5 +1,5 @@
 //
-// CPWIDE.RC2 - resources App Studio does not edit directly
+// CPWINIDE.RC2 - resources App Studio does not edit directly
 //
 
 #ifdef APSTUDIO_INVOKED
@@ -29,13 +29,13 @@ BEGIN
 		BLOCK "040904E4" // Lang=US English, CharSet=Windows Multilingual
 		BEGIN 
 			VALUE "CompanyName",     "\0"
-			VALUE "FileDescription", "CPWIDE MFC Application\0"
+			VALUE "FileDescription", "CPWINIDE MFC Application\0"
 			VALUE "FileVersion",     "1.0.001\0"
-			VALUE "InternalName",    "CPWIDE\0"
+			VALUE "InternalName",    "CPWINIDE\0"
 			VALUE "LegalCopyright",  "\0"
 			VALUE "LegalTrademarks", "\0"
-			VALUE "OriginalFilename","CPWIDE.EXE\0"
-			VALUE "ProductName",     "CPWIDE\0"
+			VALUE "OriginalFilename","CPWINIDE.EXE\0"
+			VALUE "ProductName",     "CPWINIDE\0"
 			VALUE "ProductVersion",  "1.0.001\0"
 		END
 	END
