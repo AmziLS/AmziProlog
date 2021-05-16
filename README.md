@@ -4,7 +4,7 @@ Source code for the entire Amzi! Prolog system.
 
 Amzi! Prolog is made of the following:
   - **Prolog Virtual Machine** -- Warren Abstrace Machine (WAM)
-  - **Logic Server** -- a runtime library wrapping around the Prolog-VM, for executing compiled Prolog programs
+  - **Logic Server** -- a runtime library wrapping around the Prolog-VM, for executing and interacting with compiled Prolog programs
   - **C API and foreign language bindings** -- the [Logic Server API (LSAPI)](https://www.amzi.com/manuals/amzi/ls/lsapirf.htm) to embed Logic Server into C and other languages
     - allows asserting clauses (facts or rules) and querying logic bases
   - **Logic Server Extensions** -- .lsx files that provide extended predicates/functions, implemented in other languages
