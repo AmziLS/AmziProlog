@@ -25,7 +25,7 @@ File types:
 Common terms:
   - LogicBase = Prolog program
   - The Logic Server is a service, with an interface similar to a database server, which allows to query and update the LogicBase (= Prolog program).
-  - Loading of a source code file (.pro), then interpreting it, is called "consulting". This is in contrast to compiled files (.plm/.xpl), which are simply said to be "loaded" (loading an .xpl file does not automatically execute its [main/0 predicate](https://www.amzi.com/manuals/amzi/ls/lsprguid.htm#MainEntryPoints).)
+  - Loading of a source code file (.pro), then interpreting it, is called "consulting". This is in contrast to compiled files (.plm/.xpl), which are simply said to be "loaded" (Note: loading an .xpl file does not automatically execute its [main/0 predicate](https://www.amzi.com/manuals/amzi/ls/lsprguid.htm#MainEntryPoints).)
 
 See also: [Amzi! Prolog Quick Overview](http://www.amzi.com/manuals/amzi/pro/pug_overview.htm) and the [Detailed Amzi! Prolog Overview](https://www.amzi.com/AmziPrologLogicServer/white_papers/amzi_overview.php)
 
