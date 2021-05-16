@@ -42,7 +42,7 @@ A core extension to Prolog -- which provides OS related functions for handling f
 
 Examples for all core Prolog uses, language bindings, and Prolog extensions are available under `/samples`.
 
-Finally, apart from a simple Windows IDE (under `/winIDE`), there is also an Eclipse plugin that provides a more complete experience, under `/eclipse_plugin`.
+Finally, apart from a simple Windows IDE (under `/winIDE`), there is also an Eclipse plugin that provides a more complete experience, found under `/eclipse_plugin`.
 
 # Building and Debugging
 
