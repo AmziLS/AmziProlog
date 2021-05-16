@@ -1,0 +1,19 @@
+bookname($Amzi! Windows IDE (original)$).
+
+xmlfile($winIDE_toc.xml$).
+xmldocdir($doc/winIDE/$).
+xmlindex($wdindex_xml.htm$).
+indexfile($wdindex.htm$).
+tocfile($wdtoc.htm$).
+indexbody($<BODY BGCOLOR=#000055 TEXT=white LINK=white VLINK=white ALINK=red>$).
+tocbody($<BODY BGCOLOR=#000055 TEXT=yellow LINK=white VLINK=aqua ALINK=red>$).
+titlecolor($yellow$).
+
+files( [
+`toc.htm`,
+`winIDE_contents`,
+`winIDE_overview.htm`,
+`winIDE_quick_overview.htm`,
+`winIDE_quick_tutorial.htm`,
+`winIDE_projects.htm`,
+`winIDE_debugger.htm` ]).
