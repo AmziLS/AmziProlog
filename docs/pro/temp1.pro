@@ -297,7 +297,7 @@ idxf('current_prolog_flag/2', current_prolog_flag, b, `pug_runtime.htm`).
 idxf('set_prolog_flag/2', set_prolog_flag, b, `pug_runtime.htm`).
 idxf('Configuration Flags', 'ConfigurationFlags', b, `pug_runtime.htm`).
 idxf('IDE', 'IDE', b, `pug_ide.htm`).
-idxf('WinIDE', 'IDEInteractiveDevelopmentEnvir', b, `pug_winIDE.htm`).
+idxf('WINIDE', 'IDEInteractiveDevelopmentEnvir', b, `pug_winIDE.htm`).
 idxf('Tutorial', 'DuckWorld', b, `pug_winIDE.htm`).
 idxf('Duck World', 'DuckWorld', b, `pug_winIDE.htm`).
 idxf('alis','StartingtheListener',b,`pug_winIDE.htm`).

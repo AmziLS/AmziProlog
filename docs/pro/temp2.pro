@@ -1184,9 +1184,9 @@ idxf('View Menu', 'ViewMenu', b, `pug_winIDE.htm`).
 idxf('w_getfiler',wgetfileFileStr,b,`ref_extensions.htm`).
 idxf('w_msgbox',wmsgboxTerm,b,`ref_extensions.htm`).
 idxf('w_tfmsgbox',wtfmsgboxTerm,b,`ref_extensions.htm`).
-idxf('WinIDE', 'IDEInteractiveDevelopmentEnvir', b, `pug_winIDE.htm`).
 idxf('wide_char','BinaryIO',b,`ref_io.htm`).
 idxf('wide_text','Open4',b,`ref_io.htm`).
+idxf('WINIDE', 'IDEInteractiveDevelopmentEnvir', b, `pug_winIDE.htm`).
 idxf('winIDE_A','IDE',b,`pug_overview.htm`).
 idxf('winIDE_W','IDE',b,`pug_overview.htm`).
 idxf('write','Open4',b,`ref_io.htm`).
