@@ -30,6 +30,7 @@ Common terms:
 
 See also: [Amzi! Prolog Quick Overview](http://www.amzi.com/manuals/amzi/pro/pug_overview.htm) and the [Detailed Amzi! Prolog Overview](https://www.amzi.com/AmziPrologLogicServer/white_papers/amzi_overview.php)
 
+## Documentation
 [User's Guide and Reference](https://www.amzi.com/manuals/amzi/pro/top.htm)    
 [Programmer's Guide](https://www.amzi.com/manuals/amzi/ls/lsprguid.htm)    
 [Logic Server User's Guide and Reference](https://www.amzi.com/manuals/amzi/ls/lstop.htm)   
@@ -40,7 +41,7 @@ See also: [Amzi! Prolog Quick Overview](http://www.amzi.com/manuals/amzi/pro/pug
 Copyright (c) Amzi! inc. 2016, 2021    
 Licensed under the MIT Open Source License.
 
-# Contents
+## Contents
 
 The `/engine` folder contains Amzi! Prolog's core, made of the Prolog-VM and the Logic Server runtime library.
 The Logic Server's primary API is exposed in C found under `/engine`, but has also various foreign language bindings found under `/langbindings`.
@@ -58,12 +59,12 @@ Examples for all core Prolog uses, language bindings, and Prolog extensions are 
 
 Finally, apart from a simple Windows IDE (under `/winIDE`), there is also an Eclipse plugin that provides a more complete experience, found under `/eclipse_plugin`.
 
-# Building and Debugging
+## Building and Debugging
 
 For building the whole system, see the `/make` subdirectory. There are [detailed building instructions for Windows](https://github.com/AmziLS/AmziProlog/blob/master/Windows%20compilation%20instructions.md).
 
 Individual components can be built using the make files in each subdirectory. It is also possible to load the .sln files in Visual Studio for debugging. Make sure that you have set up the environment variables correctly (see `/bin/amzi_vars_winXX.bat`).
 
-# Releases
+## Releases
 
 [Releases](https://github.com/AmziLS/AmziProlog/releases) are available as usual on GitHub, on the right side bar. They contain the built runtime library, and command line tools, but also samples, language bindings, Logic Server extensions, and a ready to use Eclipse plugin. It's the easiest way to get started.
