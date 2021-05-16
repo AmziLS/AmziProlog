@@ -8,7 +8,7 @@ Amzi! Prolog is made of the following:
   - **C API and foreign language bindings** -- the [Logic Server API (LSAPI)](https://www.amzi.com/manuals/amzi/ls/lsapirf.htm) to embed Logic Server into C and other languages, to allow:
     - asserting or retracting clauses (facts or rules) and querying logic bases
     - calling Prolog predicates
-    - typespecfic operations on data (lists and structures)
+    - type specific operations on data (for lists and structures)
     - converting data between the host language and Prolog
     - error handling
   - **Logic Server Extensions** -- .lsx files that provide extended predicates/functions, implemented in other languages
