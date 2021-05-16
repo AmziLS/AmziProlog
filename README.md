@@ -40,6 +40,7 @@ Licensed under the MIT Open Source License.
     
 [Prolog Articles / Whitepapers](https://www.amzi.com/manuals/amzi/articles/doc.html)    
 [Adventure in Prolog](https://www.amzi.com/manuals/amzi/aip/advfrtop.htm) -- A tutorial/guided tour through Prolog    
+[Building Expert Systems in Prolog](https://www.amzi.com/manuals/amzi/xsip/xsipfrtop.htm) --  An advanced tutorial
 
 ## Repository Contents
 
