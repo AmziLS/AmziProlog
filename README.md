@@ -14,7 +14,7 @@ Amzi! Prolog is made of the following:
 
 File types:
   - **.pro** -- <u>Prolog source code (program or module)</u>
-  - **.plm** -- Compiled Prolog module (Prolog byte code file)
+  - **.plm** -- Compiled Prolog module (Prolog/WAM byte code file)
   - **.xpl** -- Executable Prolog library (a linked collection of .plm files)
   - **.lsx** -- Logic Server extension (a renamed DLL/SO file)
 
