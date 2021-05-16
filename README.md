@@ -5,8 +5,12 @@ Source code for the entire Amzi! Prolog system.
 Amzi! Prolog is made of the following:
   - **Prolog Virtual Machine** -- Warren Abstrace Machine (WAM)
   - **Logic Server** -- a runtime library wrapping around the Prolog-VM, for executing, modifying, and interacting with compiled Prolog programs
-  - **C API and foreign language bindings** -- the [Logic Server API (LSAPI)](https://www.amzi.com/manuals/amzi/ls/lsapirf.htm) to embed Logic Server into C and other languages
-    - allows asserting clauses (facts or rules) and querying logic bases
+  - **C API and foreign language bindings** -- the [Logic Server API (LSAPI)](https://www.amzi.com/manuals/amzi/ls/lsapirf.htm) to embed Logic Server into C and other languages, to allow:
+    - asserting or retracting clauses (facts or rules) and querying logic bases
+    - calling Prolog predicates
+    - typespecfic operations on data (lists and structures)
+    - converting data between the host language and Prolog
+    - error handling
   - **Logic Server Extensions** -- .lsx files that provide extended predicates/functions, implemented in other languages
   - **Command line tools** -- to interpret (alis), compile (acmp), link (alnk) and execute (arun) Prolog programs
     - the Prolog listener alis is an interactive interpreter; the process is aka. [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)
