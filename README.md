@@ -30,6 +30,9 @@ Common terms:
 
 See also: [Amzi! Prolog Quick Overview](http://www.amzi.com/manuals/amzi/pro/pug_overview.htm) and the [Detailed Amzi! Prolog Overview](https://www.amzi.com/AmziPrologLogicServer/white_papers/amzi_overview.php)
 
+Copyright (c) Amzi! inc. 2016, 2021    
+Licensed under the MIT Open Source License.
+
 ## Documentation
 [User's Guide and Reference](https://www.amzi.com/manuals/amzi/pro/top.htm)    
 [Programmer's Guide](https://www.amzi.com/manuals/amzi/ls/lsprguid.htm)    
@@ -37,9 +40,6 @@ See also: [Amzi! Prolog Quick Overview](http://www.amzi.com/manuals/amzi/pro/pug
     
 [Prolog Articles / Whitepapers](https://www.amzi.com/manuals/amzi/articles/doc.html)    
 [Adventure in Prolog](https://www.amzi.com/manuals/amzi/aip/advfrtop.htm) -- A tutorial/guided tour through Prolog    
-
-Copyright (c) Amzi! inc. 2016, 2021    
-Licensed under the MIT Open Source License.
 
 ## Contents
 
