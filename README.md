@@ -4,8 +4,8 @@ Source code for the entire Amzi! Prolog system.
 
 Amzi! Prolog is made of the following:
   - **Prolog Virtual Machine** -- Warren Abstrace Machine (WAM)
-  - **Logic Server** -- a runtime library for compiled Prolog programs that execute on the Prolog-VM (*Prolog analogue to a database server*)
-  - **C API and foreign language bindings** -- to embed Logic Server into other languages (*analogue to an interface to a database server*)
+  - **Logic Server** -- a runtime library wrapping around the Prolog-VM, for executing compiled Prolog programs
+  - **C API and foreign language bindings** -- the [Logic Server API (LSAPI)](https://www.amzi.com/manuals/amzi/ls/lsapirf.htm) to embed Logic Server into C and other languages
     - allows asserting clauses (facts or rules) and querying logic bases
   - **Logic Server Extensions** -- .lsx files that provide extended predicates/functions, implemented in other languages
   - **Command line tools** -- to interpret (alis), compile (acmp), link (alnk) and execute (arun) Prolog programs
@@ -19,7 +19,8 @@ File types:
   - **.lsx** -- Logic Server extension (a renamed DLL/SO file)
 
 Common terms:
-  - Loading and interpreting of source code files (.pro) is called "consulting", as opposed to compiled files (.plm/.xpl), which are simply "loaded".
+  - The Logic Server is a service, with an interface similar to a database server, which allows to query and update the LogicBase (= Prolog program).
+  - Loading of a source code file (.pro), then interpreting it, is called "consulting". This is in contrast to compiled files (.plm/.xpl), which are simply said to be "loaded" (loading an .xpl file does not automatically execute its main/0 predicate.)
 
 See also: [Amzi! Prolog Quick Overview](http://www.amzi.com/manuals/amzi/pro/pug_overview.htm) and the [Detailed Amzi! Prolog Overview](https://www.amzi.com/AmziPrologLogicServer/white_papers/amzi_overview.php)
 
