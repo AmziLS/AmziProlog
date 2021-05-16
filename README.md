@@ -15,7 +15,7 @@ Amzi! Prolog is made of the following:
   - **Logic Server Extensions** -- .lsx files that provide extended predicates/functions, implemented in other languages
   - **Command line tools** -- to interpret (alis), compile (acmp), link (alnk) and execute (arun) Prolog programs
     - the Prolog listener alis is an interactive interpreter; the process is aka. [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)
-  - **Eclipse plugin** -- for comfortable compiling, linking, and *debugging*
+  - **Eclipse IDE plugin** -- for comfortable compiling, linking, and *debugging*
 
 File types:
   - **.pro** -- <u>Prolog source code (program or module)</u>
