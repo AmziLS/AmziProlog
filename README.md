@@ -10,6 +10,7 @@ Amzi! Prolog is made of the following:
     - calling Prolog predicates
     - type specific operations on data (for lists and structures)
     - converting data between the host language and Prolog
+    - manipulating extended predicates
     - error handling
   - **Logic Server Extensions** -- .lsx files that provide extended predicates/functions, implemented in other languages
   - **Command line tools** -- to interpret (alis), compile (acmp), link (alnk) and execute (arun) Prolog programs
