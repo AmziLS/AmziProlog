@@ -41,7 +41,7 @@ _htmlidx : $(DEV_DIR)\docs\htmlidx\htmlidx.pro $(RUN_DIR)\abin\alib.plm
 	cd $(DEV_DIR)\docs\htmlidx && \
 	  $(ACMP) htmlidx && \
 	  $(ALNK) htmlidx htmlidx list misc
-   
+
 _lsdoc :
 	$(MD) $(DOC_DIR)\ls
 	$(MD) $(ECL_DIR)\ls
