@@ -15,7 +15,7 @@
 </ol>
 <p>The samples:</p>
 <h2>Finger Sample</h2>
-<p>The simplest program to finger a host. If you are running under Unix you will 
+<p>The simplest program <a href="https://en.wikipedia.org/wiki/Finger_protocol">fingers a host</a>. If you are running under Unix you will 
   need to change the sdefine/2 declaration at the top and comment out the Windows 
   calls (wsaStartup and wsaCleanup).</p>
 <p> To run it from the listener:</p>
@@ -25,12 +25,48 @@ yes
 ?- consult(finger).
 yes
 ?- main.
-Host name to finger? %enter the host name
-...</font>
+Host name to finger? <font color="#555555">%enter the host name -- try <font color="#000000"><b>telehack.com</b></font></font>
+...
+User name? <font color="#555555">%enter the user name -- try <font color="#000000"><b>operator</b></font></font>
+</font>
 </pre>
 </blockquote>
-<p>You should see the address echoed and then a request for a login ID, which 
-  if you have one, should then lead to some more information.</p>
+<p><b>Note:</b> Only very few public servers still provide the finger service/daemon for security and privacy reasons. The host and user names mentioned in the comments above are from a game simulation (telehack) and should work. You can also find <a href="https://superuser.com/a/1590631">a list of servers that support finger</a> under the section "Practical use" in the linked page.</p>
+<p>You should see the host's IP address as a response to the entered host name, and then a request for providing a user name. If you have a valid one, you should see some status information about that entered user name, such as last login time or user rights/status bits.</p>
+
+<p>
+Exemplary response for the host <b>telehack.com</b> and the user <b>operator</b>:</p>
+<pre>
+USER: operator
+   status message:        System Operator
+   system level:          12 (OPERATOR)
+   location:              tty
+   first login:           11.2y
+   last active:           5m
+   days active:           4087
+   system connects:       5
+   commands executed:     4
+   legacy logincounts:    1, 1, 103
+
+   operator has LOGIN on 26 systems
+
+   user status bits:
+     SHEEP          Baa                     2021-Feb-25  17:14:04
+     LATENITE       Go to sleep             2020-Sep-04  15:25:51
+     DECIMAL        3650                    2020-Mar-04  20:26:00
+     UUBOT          Administrate            2019-Aug-21  22:58:41
+     PERMUSER       Permanent User          2019-Aug-21  17:10:42
+     FOUNDER        1000 days               2019-Aug-21  17:10:42
+     REGUSER        Regular User            2019-Aug-21  17:10:42
+     RETUSER        Returned User           2019-Aug-21  17:10:42
+     OCTAL          5550                    2018-Mar-05  20:26:00
+     QUATERNARY     112310                  2014-Mar-06  20:26:00
+     BINARY         1011011010              2012-Mar-06  20:26:00
+     OPER           System Operator         2010-Mar-07  20:26:00
+
+No plan.
+</pre>
+
 <h2>Client/Server Sample</h2>
 <p>A simple client/server example, where the clients send lines of text to the 
   server, which echos the text. It can be run on one machine or multiple ones. 
