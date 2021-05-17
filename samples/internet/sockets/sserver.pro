@@ -19,7 +19,7 @@ sdefine('SOCK_STREAM', 1).
 % Solaris
 %sdefine('SOCK_STREAM', 2).
 
-sdefine('INADDR_ANY',      0).
+sdefine('INADDR_ANY', 0).
 
 main :-
    wsaStartup(0x0101, Ver, HighVer, Desc, Status, MaxSockets, MaxUdpDg),
@@ -40,12 +40,12 @@ endmain(Sock, X, yes) :-
 doreads([]).
 doreads([Sock | Rest]) :-
    accept(Sock, RAddr, RPort, NewSock),
-   send(NewSock, $Hello Client$, 0, NumSent),
+   send(NewSock, `Server: I received the message.`, 0, NumSent),
    recv(NewSock, Cmd, 4096, 0, NumRecv),
    write(Cmd), nl,
    closesocket(NewSock),
-   (Cmd == $shutdown$ -> 
-      write($Shutting down server ...\n$),
+   (Cmd == `shutdown` -> 
+      write(`Shutting down server ...\n`),
       throw(shutdown) 
    ; 
       true
