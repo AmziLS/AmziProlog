@@ -21,7 +21,7 @@ main :-
    socket(SOCK_STREAM, 0, Sock),
    connect(Sock, NetAddr, 79),
    write($Sock=$), write(Sock), nl,
-   write($Login id name? $), read_string(LoginName),
+   write($User name? $), read_string(LoginName),
    strcat(LoginName, $\x0d\x0a$, SendBuf),
    write($Sending request$), nl,
    send(Sock, SendBuf, 0, NumSent),
