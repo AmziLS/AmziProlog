@@ -239,88 +239,88 @@
   <topic label="Starting the Source Code Debugger" href="doc/pro/pug_ide.htm#RunningTheSourceCodeDebugger">
   </topic>
  </topic>
- <topic label="Original Amzi! Windows IDE" href="doc/pro/pug_wide.htm">
+ <topic label="Original Amzi! Windows IDE" href="doc/pro/pug_winIDE.htm">
  </topic>
- <topic label="Quick Tutorial" href="doc/pro/pug_wide.htm#AQuickTutorial">
-  <topic label="Duck World" href="doc/pro/pug_wide.htm#DuckWorld">
+ <topic label="Quick Tutorial" href="doc/pro/pug_winIDE.htm#AQuickTutorial">
+  <topic label="Duck World" href="doc/pro/pug_winIDE.htm#DuckWorld">
   </topic>
-  <topic label="Starting the Listener" href="doc/pro/pug_wide.htm#StartingtheListener">
+  <topic label="Starting the Listener" href="doc/pro/pug_winIDE.htm#StartingtheListener">
   </topic>
-  <topic label="Creating a Source File" href="doc/pro/pug_wide.htm#CreatingaSourceFile">
+  <topic label="Creating a Source File" href="doc/pro/pug_winIDE.htm#CreatingaSourceFile">
   </topic>
-  <topic label="Consulting a Source File" href="doc/pro/pug_wide.htm#ConsultingaSourceFile">
+  <topic label="Consulting a Source File" href="doc/pro/pug_winIDE.htm#ConsultingaSourceFile">
   </topic>
-  <topic label="Using the Listener" href="doc/pro/pug_wide.htm#UsingtheListener">
+  <topic label="Using the Listener" href="doc/pro/pug_winIDE.htm#UsingtheListener">
   </topic>
-  <topic label="Debugging" href="doc/pro/pug_wide.htm#Debugging">
+  <topic label="Debugging" href="doc/pro/pug_winIDE.htm#Debugging">
   </topic>
-  <topic label="Modules" href="doc/pro/pug_wide.htm#Modules">
+  <topic label="Modules" href="doc/pro/pug_winIDE.htm#Modules">
   </topic>
-  <topic label="Running a Modular Application" href="doc/pro/pug_wide.htm#RunningaModularApplication">
-   <topic label="Using alis and BAT Files" href="doc/pro/pug_wide.htm#UsingalisandBATFiles">
+  <topic label="Running a Modular Application" href="doc/pro/pug_winIDE.htm#RunningaModularApplication">
+   <topic label="Using alis and BAT Files" href="doc/pro/pug_winIDE.htm#UsingalisandBATFiles">
    </topic>
-   <topic label="Using Projects" href="doc/pro/pug_wide.htm#UsingProjectsintheIDE">
-   </topic>
-  </topic>
-  <topic label="Compiling" href="doc/pro/pug_wide.htm#Compiling">
-  </topic>
-  <topic label="Running" href="doc/pro/pug_wide.htm#Running">
-  </topic>
-  <topic label="Linking and Running" href="doc/pro/pug_wide.htm#LinkingandEXEGeneration">
-  </topic>
-  <topic label="Distributing an Application" href="doc/pro/pug_wide.htm#DistributinganApplication">
-  </topic>
-  <topic label="Interfacing with Other Tools" href="doc/pro/pug_wide.htm#InterfacingwithOtherTools">
-  </topic>
- </topic>
- <topic label="Windows IDE Interface" href="doc/pro/pug_wide.htm#WIDEControls">
-  <topic label="Interface" href="doc/pro/pug_wide.htm#WIDEInterface">
-  </topic>
-  <topic label="Unicode and ASCII" href="doc/pro/pug_wide.htm#UnicodeAndASCII">
-  </topic>
-  <topic label="File Menu" href="doc/pro/pug_wide.htm#FileMenu">
-  </topic>
-  <topic label="Edit Menu" href="doc/pro/pug_wide.htm#EditMenu">
-  </topic>
-  <topic label="View Menu" href="doc/pro/pug_wide.htm#ViewMenu">
-  </topic>
-  <topic label="Listener Menu" href="doc/pro/pug_wide.htm#ListenerMenu">
-  </topic>
-  <topic label="Build Menu" href="doc/pro/pug_wide.htm#BuildMenu">
-  </topic>
-  <topic label="Window Menu" href="doc/pro/pug_wide.htm#WindowMenu">
-  </topic>
-  <topic label="Help" href="doc/pro/pug_wide.htm#Help">
-  </topic>
- </topic>
- <topic label="Projects" href="doc/pro/pug_wide.htm#Projects">
-  <topic label="Creating a Project" href="doc/pro/pug_wide.htm#CreatingAProject">
-  </topic>
-  <topic label="Dialog Box" href="doc/pro/pug_wide.htm#ProjectDialogBox">
-  </topic>
-  <topic label="Consulting/Loading" href="doc/pro/pug_wide.htm#BuildingAProject">
-  </topic>
-  <topic label="Building" href="doc/pro/pug_wide.htm#BuildingAProject">
-  </topic>
- </topic>
- <topic label="Debugger" href="doc/pro/pug_wide.htm#TheDebugger">
-  <topic label="Box Model" href="doc/pro/pug_wide.htm#BoxModelofProcedureFlow">
-  </topic>
-  <topic label="Starting and Exiting" href="doc/pro/pug_wide.htm#StartingandLeavingtheDebugger">
-  </topic>
-  <topic label="Display" href="doc/pro/pug_wide.htm#DebuggerDisplay">
-   <topic label="portray(GOAL)" href="doc/pro/pug_wide.htm#portrayGOAL">
+   <topic label="Using Projects" href="doc/pro/pug_winIDE.htm#UsingProjectsintheIDE">
    </topic>
   </topic>
-  <topic label="Debug Port Options" href="doc/pro/pug_wide.htm#DebugPortOptions">
+  <topic label="Compiling" href="doc/pro/pug_winIDE.htm#Compiling">
   </topic>
-  <topic label="Spypoints" href="doc/pro/pug_wide.htm#Spypoints">
+  <topic label="Running" href="doc/pro/pug_winIDE.htm#Running">
   </topic>
-  <topic label="Leashing Debug Ports" href="doc/pro/pug_wide.htm#LeashingDebugPorts">
+  <topic label="Linking and Running" href="doc/pro/pug_winIDE.htm#LinkingandEXEGeneration">
   </topic>
-  <topic label="Logging" href="doc/pro/pug_wide.htm#Logging">
+  <topic label="Distributing an Application" href="doc/pro/pug_winIDE.htm#DistributinganApplication">
   </topic>
-  <topic label="Example" href="doc/pro/pug_wide.htm#DebuggerExample">
+  <topic label="Interfacing with Other Tools" href="doc/pro/pug_winIDE.htm#InterfacingwithOtherTools">
+  </topic>
+ </topic>
+ <topic label="Windows IDE Interface" href="doc/pro/pug_winIDE.htm#WinIDEControls">
+  <topic label="Interface" href="doc/pro/pug_winIDE.htm#WinIDEInterface">
+  </topic>
+  <topic label="Unicode and ASCII" href="doc/pro/pug_winIDE.htm#UnicodeAndASCII">
+  </topic>
+  <topic label="File Menu" href="doc/pro/pug_winIDE.htm#FileMenu">
+  </topic>
+  <topic label="Edit Menu" href="doc/pro/pug_winIDE.htm#EditMenu">
+  </topic>
+  <topic label="View Menu" href="doc/pro/pug_winIDE.htm#ViewMenu">
+  </topic>
+  <topic label="Listener Menu" href="doc/pro/pug_winIDE.htm#ListenerMenu">
+  </topic>
+  <topic label="Build Menu" href="doc/pro/pug_winIDE.htm#BuildMenu">
+  </topic>
+  <topic label="Window Menu" href="doc/pro/pug_winIDE.htm#WindowMenu">
+  </topic>
+  <topic label="Help" href="doc/pro/pug_winIDE.htm#Help">
+  </topic>
+ </topic>
+ <topic label="Projects" href="doc/pro/pug_winIDE.htm#Projects">
+  <topic label="Creating a Project" href="doc/pro/pug_winIDE.htm#CreatingAProject">
+  </topic>
+  <topic label="Dialog Box" href="doc/pro/pug_winIDE.htm#ProjectDialogBox">
+  </topic>
+  <topic label="Consulting/Loading" href="doc/pro/pug_winIDE.htm#BuildingAProject">
+  </topic>
+  <topic label="Building" href="doc/pro/pug_winIDE.htm#BuildingAProject">
+  </topic>
+ </topic>
+ <topic label="Debugger" href="doc/pro/pug_winIDE.htm#TheDebugger">
+  <topic label="Box Model" href="doc/pro/pug_winIDE.htm#BoxModelofProcedureFlow">
+  </topic>
+  <topic label="Starting and Exiting" href="doc/pro/pug_winIDE.htm#StartingandLeavingtheDebugger">
+  </topic>
+  <topic label="Display" href="doc/pro/pug_winIDE.htm#DebuggerDisplay">
+   <topic label="portray(GOAL)" href="doc/pro/pug_winIDE.htm#portrayGOAL">
+   </topic>
+  </topic>
+  <topic label="Debug Port Options" href="doc/pro/pug_winIDE.htm#DebugPortOptions">
+  </topic>
+  <topic label="Spypoints" href="doc/pro/pug_winIDE.htm#Spypoints">
+  </topic>
+  <topic label="Leashing Debug Ports" href="doc/pro/pug_winIDE.htm#LeashingDebugPorts">
+  </topic>
+  <topic label="Logging" href="doc/pro/pug_winIDE.htm#Logging">
+  </topic>
+  <topic label="Example" href="doc/pro/pug_winIDE.htm#DebuggerExample">
   </topic>
  </topic>
  <topic label="Debugging Your Programs" href="doc/pro/pug_debugging.htm">
