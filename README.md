@@ -42,6 +42,10 @@ Licensed under the MIT Open Source License.
 [Adventure in Prolog](https://www.amzi.com/manuals/amzi/aip/advfrtop.htm) -- A tutorial/guided tour through Prolog    
 [Building Expert Systems in Prolog](https://www.amzi.com/manuals/amzi/xsip/xsipfrtop.htm) --  An advanced tutorial
 
+### Videos
+[Getting Started with Eclipse Amzi! Prolog](https://www.youtube.com/watch?v=EMxLnn2I9yo)    
+[Amzi! Prolog Source Code Debugger in Eclipse](https://www.youtube.com/watch?v=fewTmnarfu8)    
+
 ## Repository Contents
 
 The `/engine` folder contains Amzi! Prolog's core, made of the Prolog-VM and the Logic Server runtime library.
