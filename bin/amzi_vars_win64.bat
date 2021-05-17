@@ -17,7 +17,7 @@ REM *****     end adapt     *****
 
 set APLS_SOURCE=%CD%
 set APLS_RELEASE=%APLS_SOURCE%\release
-set AIDE_SOURCE==%CD%\eclipse_plugin
+set AIDE_SOURCE=%CD%\eclipse_plugin
 
 REM for release builds
 set AMZI_DIR=%APLS_RELEASE%
