@@ -14,7 +14,7 @@ DST = $(APLS_RELEASE)\samples
 # remove _windows from all:
 # change rmdir \S \Q to rm -Rf
 
-all: _common _windows
+all: _common _windows _chezray
 
 _common:
 	$(CP) $(SRC)\doc.html             $(DST)\doc.html
@@ -580,6 +580,8 @@ _chezray:
 	$(CP) $(SRC)\chezray\hll\*.*      $(DST)\chezray\hll
 	$(MD) $(DST)\chezray\joli
 	$(CP) $(SRC)\chezray\joli\*.*     $(DST)\chezray\joli
+	$(MD) $(DST)\chezray\matrix
+	$(CP) $(SRC)\chezray\matrix\*.*     $(DST)\chezray\matrix
 	$(MD) $(DST)\chezray\mm
 	$(CP) $(SRC)\chezray\mm\*.*       $(DST)\chezray\mm
 	$(MD) $(DST)\chezray\polyplot
