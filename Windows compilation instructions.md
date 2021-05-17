@@ -1,7 +1,7 @@
 # Windows compilation instructions
 
 0. Install prerequisites
-    - install Visual Studio 2017 or later
+    - install Visual Studio 2017 (with C++ support) or later
     - for a full build (including langbindings and extensions):
       - install Tcl 8.6 into C:\Tcl
       - install a Java Development Kit (any version should do)
