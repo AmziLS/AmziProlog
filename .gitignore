@@ -264,10 +264,8 @@ _Pvt_Extensions
 *.out
 *.
 
-!bmake.exe
-!implib.exe
-/wide-IDE/DebugA
-/wide-IDE/DebugW
-/wide-IDE/ReleaseA
-/wide-IDE/ReleaseW
+/winIDE/DebugA
+/winIDE/DebugW
+/winIDE/ReleaseA
+/winIDE/ReleaseW
 /langbindings/java/amzi/ls/*.class
