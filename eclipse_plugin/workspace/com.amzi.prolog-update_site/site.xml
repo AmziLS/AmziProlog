@@ -3,7 +3,7 @@
    <description url="http://www.amzi.com">
       All about Amzi!
    </description>
-   <feature url="features/com.amzi.prolog_4.5.10004.jar" id="com.amzi.prolog" version="4.5.10004">
+   <feature url="features/com.amzi.prolog_11.1.0.jar" id="com.amzi.prolog" version="11.1">
       <category name="amzi_eclipse_feature"/>
    </feature>
    <category-def name="amzi_eclipse_feature" label="Amzi! Eclipse Feature">
