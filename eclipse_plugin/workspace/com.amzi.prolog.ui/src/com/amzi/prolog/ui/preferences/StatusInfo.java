@@ -3,7 +3,7 @@ package com.amzi.prolog.ui.preferences;
 import com.amzi.prolog.ui.PrologUIPlugin;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jface.util.Assert;
+import org.eclipse.core.runtime.Assert;
 
 /**
  * A settable IStatus. 
