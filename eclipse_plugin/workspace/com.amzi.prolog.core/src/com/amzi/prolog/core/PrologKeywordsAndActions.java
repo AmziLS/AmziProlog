@@ -40,7 +40,7 @@ public class PrologKeywordsAndActions {
 		"log", "log10", "real", "round", "sign", "sqrt", 
 		"/\\", "\\", "\\/", "<<", ">>" };
 	
-	private static HashMap infoMap;
+	private static HashMap<String, String> infoMap;
 //	private static int devActions;
 //	private static int maintenanceDaysLeft;
 //	private static int evaluationDaysLeft;
@@ -121,8 +121,8 @@ public class PrologKeywordsAndActions {
   		}
 	}
 	
-	private synchronized HashMap buildPredicateInfo(LogicServer ls) throws LSException {
-		HashMap infoMap = new HashMap(pKeywords.length);
+	private synchronized HashMap<String, String> buildPredicateInfo(LogicServer ls) throws LSException {
+		HashMap<String, String> infoMap = new HashMap<String, String>(pKeywords.length);
 		long term;
 		String s, desc;
 		
@@ -148,7 +148,7 @@ public class PrologKeywordsAndActions {
 								String info = ls.GetStrArg(term, 3);
 								if (args != null && args.length() > 0 &&
 									info != null && info.length() > 0) {
-									desc = (String)infoMap.get(pKeywords[i]);
+									desc = infoMap.get(pKeywords[i]);
 									desc = desc + "\n\n" + args + "\n" + info;
 									infoMap.put(pKeywords[i], desc);
 								}
@@ -182,7 +182,7 @@ public class PrologKeywordsAndActions {
 								String info = ls.GetStrArg(term, 3);
 								if (args != null && args.length() > 0 &&
 									info != null && info.length() > 0) {
-									desc = (String)infoMap.get(pDirectives[i]);
+									desc = infoMap.get(pDirectives[i]);
 									desc = desc + "\n\n" + args + "\n" + info;
 									infoMap.put(pDirectives[i], desc);
 								}
@@ -216,7 +216,7 @@ public class PrologKeywordsAndActions {
 								String info = ls.GetStrArg(term, 3);
 								if (args != null && args.length() > 0 &&
 									info != null && info.length() > 0) {
-									desc = (String)infoMap.get(pConstants[i]);
+									desc = infoMap.get(pConstants[i]);
 									desc = desc + "\n\n" + args + "\n" + info;
 									infoMap.put(pConstants[i], desc);
 								}
@@ -250,7 +250,7 @@ public class PrologKeywordsAndActions {
 								String info = ls.GetStrArg(term, 3);
 								if (args != null && args.length() > 0 &&
 									info != null && info.length() > 0) {
-									desc = (String)infoMap.get(pMaths[i]);
+									desc = infoMap.get(pMaths[i]);
 									desc = desc + "\n\n" + args + "\n" + info;
 									infoMap.put(pMaths[i], desc);
 								}
@@ -266,7 +266,7 @@ public class PrologKeywordsAndActions {
 	}
 	
 	public String getPredicateInfo(String predicate) {
-		return (String)infoMap.get(predicate);
+		return infoMap.get(predicate);
 	}
 	public String[] getKeywords() {
 		return pKeywords;
@@ -334,7 +334,7 @@ public class PrologKeywordsAndActions {
 	
 	private synchronized String[] prologListToStringArrayNoDups(LogicServer ls, long list, int size) throws LSException
 	{
-		List array = new ArrayList();
+		List<String> array = new ArrayList<String>();
 
 		// Check for the empty list or an atom
 		long type = ls.GetTermType(list);

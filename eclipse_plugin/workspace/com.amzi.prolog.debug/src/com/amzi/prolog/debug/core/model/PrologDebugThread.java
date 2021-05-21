@@ -19,7 +19,7 @@ import org.eclipse.debug.core.model.IThread;
 public class PrologDebugThread extends PlatformObject implements IDebugElement, IThread {
 	private String name;
 	private PrologDebugTarget debugTarget;
-	private Vector stackFrames;
+	private Vector<PrologStackFrame> stackFrames;
 	private IStackFrame[] currentFrames;
 	
 	/**
@@ -29,7 +29,7 @@ public class PrologDebugThread extends PlatformObject implements IDebugElement, 
 		super();
 		this.name = name;
 		this.debugTarget = debugTarget;
-		stackFrames = new Vector(0);
+		stackFrames = new Vector<PrologStackFrame>(0);
 		stackFrames.clear();
 		currentFrames = null;
 	}
@@ -82,7 +82,7 @@ public class PrologDebugThread extends PlatformObject implements IDebugElement, 
 	public IStackFrame getTopStackFrame() throws DebugException {
 		if (stackFrames.size() == 0)
 			return null;
-		PrologStackFrame psf = (PrologStackFrame)stackFrames.lastElement();
+		PrologStackFrame psf = stackFrames.lastElement();
 		return psf;
 	}
 

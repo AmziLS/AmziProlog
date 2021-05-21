@@ -52,7 +52,7 @@ public class PrologDebugModelPresentation extends LabelProvider implements IDebu
 //	private boolean showType = false;
 	Annotation ip;
 	IAnnotationModel annotationModel;
-	List annotations = new ArrayList();
+	List<Annotation> annotations = new ArrayList<Annotation>();
 	
 	/**
 	 * Constructor for PrologDebugModelPresentation.
@@ -304,8 +304,8 @@ public class PrologDebugModelPresentation extends LabelProvider implements IDebu
 	 * @see org.eclipse.debug.ui.IDebugEditorPresentation#removeAnnotations(org.eclipse.ui.IEditorPart, org.eclipse.debug.core.model.IThread)
 	 */
 	public void removeAnnotations(IEditorPart editorPart, IThread thread) {
-	    for (Iterator i = annotations.iterator(); i.hasNext(); ) {
-			annotationModel.removeAnnotation((Annotation) i.next());
+	    for (Iterator<Annotation> i = annotations.iterator(); i.hasNext(); ) {
+			annotationModel.removeAnnotation(i.next());
 	    	i.remove();
 	    }
 	}

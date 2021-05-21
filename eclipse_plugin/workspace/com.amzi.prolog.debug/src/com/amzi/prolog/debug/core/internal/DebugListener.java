@@ -543,7 +543,7 @@ public class DebugListener extends Thread {
 	{
 		PrologVariable[] prologVars = null;
 		long element, name, value;
-		List varList = new ArrayList();
+		List<PrologVariable> varList = new ArrayList<PrologVariable>();
 
 		try
 		{

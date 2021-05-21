@@ -46,7 +46,7 @@ public class DebugListenerView extends AbstractDebugView /*ViewPart*/
 	private DebugListener debugListener = null;
 	private String greeting = null;
 	private String projectName;
-	private ArrayList lineList = new ArrayList();
+	private ArrayList<String> lineList = new ArrayList<String>();
 	private int lineIdx = -1;
 	private int inputStartPosition = 0;
 	private DebugListenerInputBuffer input = new DebugListenerInputBuffer();
@@ -129,7 +129,7 @@ public class DebugListenerView extends AbstractDebugView /*ViewPart*/
 		setTimeToPause(false);
 
 		// Keep a queue of our input lines
-		lineList = new ArrayList();
+		lineList = new ArrayList<String>();
 		lineIdx = -1;
 		
 		// Construct a greeting
@@ -276,7 +276,7 @@ public class DebugListenerView extends AbstractDebugView /*ViewPart*/
 				outputText.setSelection(inputStartPosition, end);
 				outputText.cut();
 			}
-			outputText.append((String)lineList.get(lineIdx));
+			outputText.append(lineList.get(lineIdx));
 			changingInputLine = false;
 		}
 
@@ -292,7 +292,7 @@ public class DebugListenerView extends AbstractDebugView /*ViewPart*/
 				outputText.setSelection(inputStartPosition, end);
 				outputText.cut();
 			}
-			outputText.append((String)lineList.get(lineIdx));
+			outputText.append(lineList.get(lineIdx));
 			changingInputLine = false;
 		}
 	}

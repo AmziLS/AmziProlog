@@ -45,7 +45,7 @@ public class PrologContentAssistProcessor implements IContentAssistProcessor {
 		whitespace = new PrologWhitespaceDetector();
 		
 		String allwords[] = PrologCorePlugin.getPrologKeywords().getKeywords();
-		List wordList = new ArrayList();
+		List<String> wordList = new ArrayList<String>();
 		for (i = 0 ; i < allwords.length ; i++) {
 			if (word.isWordPart(allwords[i].charAt(0))) {
 				if (PrologCorePlugin.getPredicateInfo(allwords[i]) != null)
@@ -68,7 +68,7 @@ public class PrologContentAssistProcessor implements IContentAssistProcessor {
 		for (i = 0 ; i < maths.length ; i++)
 			wordList.add(maths[i]);
 		
-		TreeSet sortedSet = new TreeSet(wordList);
+		TreeSet<String> sortedSet = new TreeSet<String>(wordList);
 		keywords = new String[sortedSet.size()];
 		sortedSet.toArray(keywords);
 	}
@@ -94,7 +94,7 @@ public class PrologContentAssistProcessor implements IContentAssistProcessor {
 		catch (BadLocationException e) {
 		}
 
-		List propList = new ArrayList();
+		List<CompletionProposal> propList = new ArrayList<CompletionProposal>();
 		
 		for (int i= 0; i < keywords.length; i++) {
 			if (prefix.length() == 0 || keywords[i].startsWith(prefix)) {
@@ -253,7 +253,7 @@ public class PrologContentAssistProcessor implements IContentAssistProcessor {
 				break;
 		}
 
-		List infoList = new ArrayList();
+		List<ContextInformation> infoList = new ArrayList<ContextInformation>();
 		idx = 0;
 		while (idx < info.length())	{
 			String args = info.substring(idx, info.indexOf('\n', idx));

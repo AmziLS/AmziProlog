@@ -39,7 +39,7 @@ public class Utils {
 
    	public static synchronized String[] prologListToStringArray(LogicServer ls, long list, int size) throws LSException
    	{
-		List array = new ArrayList();
+		List<String> array = new ArrayList<String>();
 
       	// Check for the empty list or an atom
       	long type = ls.GetTermType(list);

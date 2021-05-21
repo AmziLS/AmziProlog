@@ -11,7 +11,7 @@ import org.eclipse.jface.text.rules.*;
 import org.eclipse.jface.text.*;
 
 public class PrologPartitionScanner extends RuleBasedPartitionScanner {
-	private Map tokenMap = new HashMap(10);
+	private Map<String, Token> tokenMap = new HashMap<String, Token>(10);
 	private ColorManager colorManager;
 
 	private Token comment;
@@ -27,7 +27,7 @@ public class PrologPartitionScanner extends RuleBasedPartitionScanner {
 		comment = new Token(PROLOG_COMMENT);
 //		literal = new Token(PROLOG_LITERAL);
 
-		List rules= new ArrayList();
+		List<PatternRule> rules= new ArrayList<PatternRule>();
 
 		// Add rule for multi-line comments
 		rules.add(new MultiLineRule("/*", "*/", comment));
@@ -49,7 +49,7 @@ public class PrologPartitionScanner extends RuleBasedPartitionScanner {
 	
 	public void updateColor(String colorKey, RGB rgb) {
 		Color newColor = colorManager.getColor(rgb);
-		Token token = (Token)tokenMap.get(colorKey);
+		Token token = tokenMap.get(colorKey);
 		TextAttribute oldAttr = (TextAttribute) token.getData();
 		token.setData(new TextAttribute(newColor, oldAttr.getBackground(), oldAttr.getStyle()));
 	}

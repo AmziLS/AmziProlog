@@ -6,7 +6,6 @@ import java.util.List;
 import com.amzi.prolog.ui.PrologUIPlugin;
 import com.amzi.prolog.ui.build.ProjectProperties;
 import com.amzi.prolog.core.PrologCorePlugin;
-import com.sun.xml.internal.fastinfoset.sax.Properties;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -127,7 +126,7 @@ public class FileListenerShortcut implements ILaunchShortcut {
 				"alis.xpl"; 
    					
    			// Save the information in the configuration
-			List groups = new ArrayList();
+			List<String> groups = new ArrayList<String>();
 			groups.add(IDebugUIConstants.ID_RUN_LAUNCH_GROUP);
 			wc.setAttribute(IDebugUIConstants.ATTR_FAVORITE_GROUPS, groups);
 //			wc.setAttribute(IDebugUIConstants.ATTR_PRIVATE, true);
@@ -164,7 +163,7 @@ public class FileListenerShortcut implements ILaunchShortcut {
 			catch (CoreException ex) {
 				PrologUIPlugin.log(ex);
 			}
-			ArrayList candidates = new ArrayList();
+			ArrayList<ILaunchConfiguration> candidates = new ArrayList<ILaunchConfiguration>();
 			for (int i = 0; i < configs.length; i++) {
 				try {
 					if (configs[i].getAttribute("projectName", "").equals(name)) {
@@ -183,10 +182,10 @@ public class FileListenerShortcut implements ILaunchShortcut {
 //						getLaunchManager().generateUniqueLaunchConfigurationNameFrom(name));
 				} else if (candidates.size() == 1) {
 					//Returns the configuration if only one is avaible
-					return (ILaunchConfiguration) candidates.get(0);
+					return candidates.get(0);
 				} else {
 					//Chooses a configuration among the avaible
-					return (ILaunchConfiguration) candidates.get(0); //chooseConfiguration(candidates, mode);
+					return candidates.get(0); //chooseConfiguration(candidates, mode);
 				}
 			}
 		} 

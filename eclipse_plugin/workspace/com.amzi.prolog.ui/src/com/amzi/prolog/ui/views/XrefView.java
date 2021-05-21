@@ -7,6 +7,7 @@ import com.amzi.prolog.ui.build.ProjectProperties;
 import com.amzi.prolog.ui.PrologUIPlugin;
 import com.amzi.prolog.ui.PrologPluginImages;
 import com.amzi.prolog.ui.internal.Find;
+import com.amzi.prolog.ui.views.XrefView.TreeObject;
 import com.amzi.prolog.core.utils.Utils;
 
 //import java.text.MessageFormat;
@@ -100,11 +101,11 @@ public class XrefView extends ViewPart {
 		}
 
 		class TreeParent extends TreeObject {
-			private ArrayList children;
+			private ArrayList<TreeObject> children;
 			
 			public TreeParent(String name, String file, int line, int line_end) {
 				super(name, file, line, line_end);
-				children = new ArrayList();
+				children = new ArrayList<TreeObject>();
 			}
 			public void addChild(TreeObject child) {
 				children.add(child);
@@ -115,7 +116,7 @@ public class XrefView extends ViewPart {
 				child.setParent(null);
 			}
 			public TreeObject [] getChildren() {
-				return (TreeObject [])children.toArray(new TreeObject[children.size()]);
+				return children.toArray(new TreeObject[children.size()]);
 			}
 			public boolean hasChildren() {
 				return children.size()>0;
@@ -594,7 +595,7 @@ public class XrefView extends ViewPart {
 								editor.setHighlightRange(offset, (offset_end+length)-offset, true);
 							} 
 							catch (BadLocationException ex) {
-								MessageDialog.openError(null, "Cross Reference", "Unable to highlight line:" + new Integer(line).toString());
+								MessageDialog.openError(null, "Cross Reference", "Unable to highlight line:" + Integer.valueOf(line).toString());
 							}
 						} 
 						catch (PartInitException ex) {

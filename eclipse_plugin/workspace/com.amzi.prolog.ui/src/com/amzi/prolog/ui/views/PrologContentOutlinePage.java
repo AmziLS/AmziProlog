@@ -4,6 +4,7 @@ import amzi.ls.LogicServer;
 import amzi.ls.LSException;
 import com.amzi.prolog.core.PrologCorePlugin;
 import com.amzi.prolog.ui.PrologPluginImages;
+import com.amzi.prolog.ui.views.PrologContentOutlinePage.TreeObject;
 //import com.amzi.prolog.ui.PrologUIPlugin;
 import com.amzi.prolog.core.utils.Utils;
 
@@ -85,10 +86,10 @@ public class PrologContentOutlinePage extends ContentOutlinePage {
 	}
 	
 	class TreeParent extends TreeObject {
-		private ArrayList children;
+		private ArrayList<TreeObject> children;
 		public TreeParent(String name, String functor, Position position) {
 			super(name, functor, position);
-			children = new ArrayList();
+			children = new ArrayList<TreeObject>();
 		}
 		public void addChild(TreeObject child) {
 			children.add(child);
@@ -99,7 +100,7 @@ public class PrologContentOutlinePage extends ContentOutlinePage {
 			child.setParent(null);
 		}
 		public TreeObject [] getChildren() {
-			return (TreeObject [])children.toArray(new TreeObject[children.size()]);
+			return children.toArray(new TreeObject[children.size()]);
 		}
 		public boolean hasChildren() {
 			return children.size()>0;
@@ -126,7 +127,7 @@ public class PrologContentOutlinePage extends ContentOutlinePage {
       		int line, nextLine;
       		TreeParent pred;
 
-			IFile file = (IFile)input.getAdapter(IFile.class);
+			IFile file = input.getAdapter(IFile.class);
 			IProject project = file.getProject();
 			if (project == null)
 				return;
@@ -244,11 +245,11 @@ public class PrologContentOutlinePage extends ContentOutlinePage {
 								if (!functor.equals(lastFunctor) || arity != lastArity) {
 									if (!functor.equalsIgnoreCase(":-"))
 										pred= new TreeParent(MessageFormat.format("{0}/{1}", 
-											new Object[] { functor, new Integer(arity) }),
+											new Object[] { functor, Integer.valueOf(arity) }),
 											functor, new Position(offset, 1));
 									else
 										pred= new TreeParent(MessageFormat.format("{0}", 
-											new Object[] { functor, new Integer(arity) }),
+											new Object[] { functor, Integer.valueOf(arity) }),
 											functor, new Position(offset, 1));								
 									root.addChild(pred);
 									lastFunctor = functor;

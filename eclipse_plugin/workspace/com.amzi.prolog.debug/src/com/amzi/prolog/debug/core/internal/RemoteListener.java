@@ -95,7 +95,7 @@ public class RemoteListener extends Thread {
 		sock = new SocketConnection(debugPort);
 		try {
 			if (!sock.connect()) {
-				displayError("Unable to connect to remote Prolog application on port "+new Integer(debugPort).toString()
+				displayError("Unable to connect to remote Prolog application on port " + Integer.valueOf(debugPort).toString()
 					+ ": See log for details.\nCheck that adebug.lsx is loaded in the remote LogicServer.");
 				close();
 				return;
@@ -105,7 +105,7 @@ public class RemoteListener extends Thread {
 			if (in.equalsIgnoreCase("connect_01"))
 				sock.writeLine("ok");
 			else
-				displayError("Incompatible remote Prolog application version on port "+new Integer(debugPort).toString()
+				displayError("Incompatible remote Prolog application version on port " + Integer.valueOf(debugPort).toString()
 					+ "\r\nRecompile and relink with latest release.");
 		}
 		catch (IOException ex) {
@@ -341,7 +341,7 @@ public class RemoteListener extends Thread {
 	{
 		PrologVariable[] prologVars = null;
 		long element, name, value;
-		List varList = new ArrayList();
+		List<PrologVariable> varList = new ArrayList<PrologVariable>();
 	
 		try
 		{

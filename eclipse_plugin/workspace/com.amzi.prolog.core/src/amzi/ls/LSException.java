@@ -50,11 +50,11 @@ public class LSException extends Exception
     public String toString()
     {
 		if (GetType() != READ)
-			return "Error #" + new Integer(GetRC()).toString() + ": " + GetMsg() +
+			return "Error #" + Integer.valueOf(GetRC()).toString() + ": " + GetMsg() +
 				" while calling " + GetCallStack();
 		else
-			return "Read Error #" + new Integer(GetRC()).toString() + ": " + GetMsg() +
-				" at line " + new Integer(GetLineno()).toString() + " in file " + GetReadFileName() +
+			return "Read Error #" + Integer.valueOf(GetRC()).toString() + ": " + GetMsg() +
+				" at line " + Integer.valueOf(GetLineno()).toString() + " in file " + GetReadFileName() +
 				" near " + GetReadBuffer() + " while calling " + GetCallStack();
     }
 }

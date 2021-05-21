@@ -87,7 +87,7 @@ public class ListenerShortcut implements ILaunchShortcut {
 	public void launch(IEditorPart editor, String mode) {
 		IEditorInput editorInput = editor.getEditorInput();
 		if (editorInput instanceof IFileEditorInput) {
-			IFile file = (IFile) ((IFileEditorInput) editorInput).getAdapter(IFile.class);
+			IFile file = ((IFileEditorInput) editorInput).getAdapter(IFile.class);
 
 			launch(file.getProject(), mode);
 		}
@@ -129,7 +129,7 @@ public class ListenerShortcut implements ILaunchShortcut {
 				"alis.xpl"; 
    					
    			// Save the information in the configuration
-			List groups = new ArrayList();
+			List<String> groups = new ArrayList<String>();
 			groups.add(IDebugUIConstants.ID_RUN_LAUNCH_GROUP);
 			wc.setAttribute(IDebugUIConstants.ATTR_FAVORITE_GROUPS, groups);
 			// If private, the default launch perspective is not opened
@@ -164,7 +164,7 @@ public class ListenerShortcut implements ILaunchShortcut {
 			for (int i = 0 ; i < libs.length ; i++)
 				if (libs[i].length() > 0)
 					loadList += "'" + libs[i] + "',";
-			List plmRefs = getReferencedPlmFiles(project, null);
+			List<String> plmRefs = getReferencedPlmFiles(project, null);
 			for (int i = 0 ; i < plmRefs.size() ; i++)
 				loadList += "'" + plmRefs.get(i) + "',";
 			if (loadList.length() > 0)
@@ -202,7 +202,7 @@ public class ListenerShortcut implements ILaunchShortcut {
 			catch (CoreException ex) {
 				PrologUIPlugin.log(ex);
 			}
-			ArrayList candidates = new ArrayList();
+			ArrayList<ILaunchConfiguration> candidates = new ArrayList<ILaunchConfiguration>();
 			for (int i = 0; i < configs.length; i++) {
 				try {
 					if (configs[i].getAttribute("projectName", "").equals(name)) {
@@ -221,10 +221,10 @@ public class ListenerShortcut implements ILaunchShortcut {
 //						getLaunchManager().generateUniqueLaunchConfigurationNameFrom(name));
 				} else if (candidates.size() == 1) {
 					//Returns the configuration if only one is avaible
-					return (ILaunchConfiguration) candidates.get(0);
+					return candidates.get(0);
 				} else {
 					//Chooses a configuration among the avaible
-					return (ILaunchConfiguration) candidates.get(0); //chooseConfiguration(candidates, mode);
+					return candidates.get(0); //chooseConfiguration(candidates, mode);
 				}
 			}
 		} 
@@ -246,12 +246,12 @@ public class ListenerShortcut implements ILaunchShortcut {
 		return DebugPlugin.getDefault().getLaunchManager();
 	}
 */
-	public List getReferencedPlmFiles(IProject project, IProgressMonitor monitor) throws CoreException
+	public List<String> getReferencedPlmFiles(IProject project, IProgressMonitor monitor) throws CoreException
 	{
 		IFolder binFolder;
 		IResource newMembers[];
 		IProject projRefs[] = project.getReferencedProjects();
-		List plmNames = new ArrayList();
+		List<String> plmNames = new ArrayList<String>();
 		
 		for (int p = 0 ; p < projRefs.length ; p++)
 		{

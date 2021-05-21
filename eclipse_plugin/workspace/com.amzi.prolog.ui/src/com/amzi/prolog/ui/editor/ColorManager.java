@@ -15,16 +15,16 @@ import org.eclipse.swt.widgets.Display;
 
 public class ColorManager implements ISharedTextColors {
 
-	protected Map colorRGBTable = new HashMap(10);
+	protected Map<RGB, Color> colorRGBTable = new HashMap<RGB, Color>(10);
 	
 	public void dispose() {
-		Iterator e = colorRGBTable.values().iterator();
+		Iterator<Color> e = colorRGBTable.values().iterator();
 		while (e.hasNext())
-			 ((Color) e.next()).dispose();
+			 e.next().dispose();
 	}
 	
 	public Color getColor(RGB rgb) {
-		Color color = (Color) colorRGBTable.get(rgb);
+		Color color = colorRGBTable.get(rgb);
 		if (color == null) {
 			color = new Color(Display.getCurrent(), rgb);
 			colorRGBTable.put(rgb, color);

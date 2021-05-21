@@ -39,7 +39,7 @@ public class ListenerView extends ViewPart implements VerifyListener, KeyListene
 	public Text outputText;
 	private Listener listener = null;
 //	private String projectName;
-	private ArrayList lineList = new ArrayList();
+	private ArrayList<String> lineList = new ArrayList<String>();
 	private int lineIdx = -1;
 	private int inputStartPosition = 0;
 	private ListenerInputBuffer input;
@@ -145,7 +145,7 @@ public class ListenerView extends ViewPart implements VerifyListener, KeyListene
 		setTimeToStop(false);
 
 		// Keep a queue of our input lines
-		lineList = new ArrayList();
+		lineList = new ArrayList<String>();
 		lineIdx = -1;
 		
 		// Set the title on the tab and window
@@ -316,7 +316,7 @@ public class ListenerView extends ViewPart implements VerifyListener, KeyListene
 				outputText.cut();
 			}
 			if (lineIdx >= 0)
-				outputText.append((String)lineList.get(lineIdx));
+				outputText.append(lineList.get(lineIdx));
 			changingInputLine = false;
 		}
 
@@ -333,7 +333,7 @@ public class ListenerView extends ViewPart implements VerifyListener, KeyListene
 				outputText.cut();
 			}
 			if (lineIdx >= 0)
-				outputText.append((String)lineList.get(lineIdx));
+				outputText.append(lineList.get(lineIdx));
 			changingInputLine = false;
 		}
 	}

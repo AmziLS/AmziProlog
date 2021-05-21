@@ -68,7 +68,7 @@ public class RemoteTab extends AbstractPrologTab {
 		pathnameGridData.widthHint = 100;
 		debugPortText.setLayoutData(pathnameGridData);
 		if (debugPort != 0)
-			debugPortText.setText(new Integer(debugPort).toString());
+			debugPortText.setText(Integer.valueOf(debugPort).toString());
 		debugPortText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent evt) {
 				updateLaunchConfigurationDialog();
@@ -107,7 +107,7 @@ public class RemoteTab extends AbstractPrologTab {
 		}
 		projectNameText.setText(projectName);
 //		debugHostText.setText(debugHost);
-		debugPortText.setText(new Integer(debugPort).toString());
+		debugPortText.setText(Integer.valueOf(debugPort).toString());
 	}
 
 	/* (non-Javadoc)

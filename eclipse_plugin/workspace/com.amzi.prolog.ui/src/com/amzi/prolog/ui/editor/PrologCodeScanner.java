@@ -21,7 +21,7 @@ import org.eclipse.jface.text.*;
  */
  
 public class PrologCodeScanner extends RuleBasedScanner {
-	private Map tokenMap = new HashMap(10);
+	private Map<String, Token> tokenMap = new HashMap<String, Token>(10);
 	private ColorManager colorManager;
 	
 	private static String[] fgKeywords = PrologCorePlugin.getPrologKeywords().getKeywords();
@@ -54,7 +54,7 @@ public class PrologCodeScanner extends RuleBasedScanner {
 		math= new Token(new TextAttribute(colorManager.getColor(PreferenceConverter.getColor(store,IPrologColorConstants.MATH_SYMBOL_FUNCTION))));
 		tokenMap.put(IPrologColorConstants.MATH_SYMBOL_FUNCTION, math);
 
-		List rules = new ArrayList();
+		List<IRule> rules = new ArrayList<IRule>();
 
 		// Add rule for single line comments.
 		rules.add(new EndOfLineRule("%", comment));
@@ -106,7 +106,7 @@ public class PrologCodeScanner extends RuleBasedScanner {
 	
 	public void updateColor(String colorKey, RGB rgb) {
 		Color newColor = colorManager.getColor(rgb);
-		Token token = (Token)tokenMap.get(colorKey);
+		Token token = tokenMap.get(colorKey);
 	 	TextAttribute oldAttr = (TextAttribute) token.getData();
  		token.setData(new TextAttribute(newColor, oldAttr.getBackground(), oldAttr.getStyle()));
 	}

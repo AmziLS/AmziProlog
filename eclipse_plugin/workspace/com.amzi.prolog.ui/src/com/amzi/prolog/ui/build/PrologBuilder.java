@@ -42,7 +42,7 @@ public class PrologBuilder extends IncrementalProjectBuilder {
 	protected IProject[] build(int type, Map args, IProgressMonitor monitor)
 		throws CoreException {
 		IFolder binFolder;
-		List plmPathnames;
+		List<String> plmPathnames;
 		String binFoldername, binPathname, linkMessage;
 		int rc, debugPlmCount = 0;
 		
@@ -140,7 +140,7 @@ public class PrologBuilder extends IncrementalProjectBuilder {
 					libList = libNames.split(",");
 				
 				// Get all the referenced plm names
-				List refNames = getReferencedPlmFiles(project, monitor);
+				List<String> refNames = getReferencedPlmFiles(project, monitor);
 				String[] refList = new String[refNames.size()];
 				refNames.toArray(refList);
 	
@@ -180,7 +180,7 @@ public class PrologBuilder extends IncrementalProjectBuilder {
 	   				linkMessage = ls.getLinkMessage().replaceAll("\n", " : ");
 				}
 				if (rc != 0)
-	   	   			throw new CoreException(new Status(Status.ERROR, "com.amzi.prolog.ui", 200, "Linker Failed: " + new Integer(rc).toString() + " - "+ linkMessage, null));
+	   	   			throw new CoreException(new Status(Status.ERROR, "com.amzi.prolog.ui", 200, "Linker Failed: " + Integer.valueOf(rc).toString() + " - "+ linkMessage, null));
 	   		}
 		} 
 
@@ -211,14 +211,14 @@ public class PrologBuilder extends IncrementalProjectBuilder {
 		return null;
 	}
 
-	private List compileProject(int type, String buildType, IProject project, String proExcludeNames, 
+	private List<String> compileProject(int type, String buildType, IProject project, String proExcludeNames, 
 		String plmPathname, IProgressMonitor monitor)
 		throws CoreException {
 		boolean needsLink = false;
 		boolean compileError = false;
 		LogicServer ls = null;
 		String projectPath, proFilename, plmFilename = null;
-		List plmNames = new ArrayList();
+		List<String> plmNames = new ArrayList<String>();
 
 		// Load up the compiler
 		ls = new LogicServer();
@@ -457,12 +457,12 @@ public class PrologBuilder extends IncrementalProjectBuilder {
 	}
 
 
-	private List getReferencedPlmFiles(IProject project, IProgressMonitor monitor) throws CoreException
+	private List<String> getReferencedPlmFiles(IProject project, IProgressMonitor monitor) throws CoreException
 	{
 		IFolder binFolder;
 		IResource newMembers[];
 		IProject projRefs[] = project.getReferencedProjects();
-		List plmNames = new ArrayList();
+		List<String> plmNames = new ArrayList<String>();
 		
 		for (int p = 0 ; p < projRefs.length ; p++)
 		{

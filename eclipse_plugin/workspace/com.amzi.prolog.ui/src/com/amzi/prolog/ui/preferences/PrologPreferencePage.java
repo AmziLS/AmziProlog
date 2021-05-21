@@ -70,7 +70,7 @@ public class PrologPreferencePage extends PreferencePage implements
     }
 
 	protected void initializeFields() {
-		tabSize.setStringValue(new Integer(getPreferenceStore().getInt(tabSize.getPreferenceName())).toString());
+		tabSize.setStringValue(Integer.valueOf(getPreferenceStore().getInt(tabSize.getPreferenceName())).toString());
 		RGB codeRGB = PreferenceConverter.getColor(getPreferenceStore(), codeColor.getPreferenceName());
 		codeColor.getColorSelector().setColorValue(codeRGB);
 		RGB commentRGB = PreferenceConverter.getColor(getPreferenceStore(), commentColor.getPreferenceName());
