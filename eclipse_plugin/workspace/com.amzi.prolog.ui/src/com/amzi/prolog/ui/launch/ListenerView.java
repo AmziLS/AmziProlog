@@ -1,6 +1,5 @@
 package com.amzi.prolog.ui.launch;
 
-import com.amzi.prolog.core.PrologCorePlugin;
 import com.amzi.prolog.ui.internal.Listener;
 import com.amzi.prolog.ui.internal.ListenerInputBuffer;
 import com.amzi.prolog.ui.internal.ListenerKeyBuffer;

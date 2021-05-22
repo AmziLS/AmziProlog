@@ -7,7 +7,6 @@ import com.amzi.prolog.ui.build.ProjectProperties;
 import com.amzi.prolog.ui.PrologUIPlugin;
 import com.amzi.prolog.ui.PrologPluginImages;
 import com.amzi.prolog.ui.internal.Find;
-import com.amzi.prolog.ui.views.XrefView.TreeObject;
 import com.amzi.prolog.core.utils.Utils;
 
 //import java.text.MessageFormat;
@@ -31,7 +30,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.*;
 import org.eclipse.ui.editors.text.TextEditor; 
 import org.eclipse.ui.ide.*;

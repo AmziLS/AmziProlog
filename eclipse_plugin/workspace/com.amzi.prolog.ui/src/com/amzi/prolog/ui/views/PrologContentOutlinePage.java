@@ -4,7 +4,6 @@ import amzi.ls.LogicServer;
 import amzi.ls.LSException;
 import com.amzi.prolog.core.PrologCorePlugin;
 import com.amzi.prolog.ui.PrologPluginImages;
-import com.amzi.prolog.ui.views.PrologContentOutlinePage.TreeObject;
 //import com.amzi.prolog.ui.PrologUIPlugin;
 import com.amzi.prolog.core.utils.Utils;
 
@@ -33,7 +32,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.model.WorkbenchViewerComparator;
 import org.eclipse.ui.model.WorkbenchViewerSorter;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;

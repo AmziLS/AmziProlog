@@ -23,7 +23,7 @@ public class AboutActionDelegate extends ActionDelegate
 	}
 	
 	public void run(IAction action) {
-		String edition, license, version, amziDir;
+		String license, version, amziDir;
 		
 		LogicServer ls = new LogicServer();
 		try {

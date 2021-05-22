@@ -1,9 +1,6 @@
 package com.amzi.prolog.ui.editor;
 
 import com.amzi.prolog.core.PrologCorePlugin;
-import com.amzi.prolog.ui.editor.PrologWordDetector;
-import com.amzi.prolog.ui.editor.PrologOperatorDetector;
-
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextHover;

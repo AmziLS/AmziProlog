@@ -10,3 +10,4 @@ Require-Bundle: com.amzi.prolog.core;bundle-version="11.1",
  com.amzi.prolog.debug;bundle-version="11.1",
  com.amzi.prolog.help;bundle-version="11.1"
 Automatic-Module-Name: com.amzi.prolog
+Bundle-RequiredExecutionEnvironment: JavaSE-11

@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin
-   id="com.amzi.prolog.doc"
-   name="Amzi! Documentation"
-   version="1.0.0"
-   provider-name="Amzi! inc.">
-
-   <runtime>
-   </runtime>
+<plugin>
 
 <!-- To regenerate search index, delete workspace/.metadata/.plugins/org.eclipse.help -->
    <extension

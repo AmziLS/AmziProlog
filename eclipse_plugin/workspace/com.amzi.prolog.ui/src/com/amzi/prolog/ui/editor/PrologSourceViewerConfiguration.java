@@ -1,6 +1,5 @@
 package com.amzi.prolog.ui.editor;
 
-import com.amzi.prolog.core.PrologCorePlugin;
 import com.amzi.prolog.ui.PrologUIPlugin;
 import com.amzi.prolog.ui.editor.internal.*;
 

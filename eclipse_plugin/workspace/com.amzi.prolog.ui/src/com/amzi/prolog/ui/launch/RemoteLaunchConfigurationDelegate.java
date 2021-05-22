@@ -1,6 +1,5 @@
 package com.amzi.prolog.ui.launch;
 
-import com.amzi.prolog.core.PrologCorePlugin;
 import com.amzi.prolog.debug.core.model.PrologDebugTarget;
 
 import org.eclipse.core.resources.IProject;

@@ -38,7 +38,7 @@ public class ProjectPropertyPage extends PropertyPage
 	private IProject project;
 	private Properties buildProps;
 	private Text xplPathname, binPathname, proExclude;
-	private Vector libButtons, lsxButtons;
+	private Vector<Button> libButtons, lsxButtons;
 	private String libs, lsxs;
 	private List typeList;
 	
@@ -170,7 +170,7 @@ public class ProjectPropertyPage extends PropertyPage
 		libLabelData.horizontalSpan = 2;
 		libLabel.setLayoutData(libLabelData);
 		
-		libButtons = new Vector(20);
+		libButtons = new Vector<Button>(20);
 		libs = buildProps.getProperty("plmLibraryNames");
 		if (libs == null) libs = "";
 		
@@ -211,7 +211,7 @@ public class ProjectPropertyPage extends PropertyPage
 		lsxLabelData.horizontalSpan = 2;
 		lsxLabel.setLayoutData(lsxLabelData);
 		
-		lsxButtons = new Vector(20);
+		lsxButtons = new Vector<Button>(20);
 		lsxs = buildProps.getProperty("lsxExtensionNames");
 		if (lsxs == null) lsxs = "";
 		
@@ -259,11 +259,11 @@ public class ProjectPropertyPage extends PropertyPage
 		// plm libraries
 		String libs = "";
 		for (int i = 0 ; i < libButtons.size() ; i++) {
-			if (((Button)libButtons.elementAt(i)).getSelection()) {
+			if (libButtons.elementAt(i).getSelection()) {
 				if (libs.equals(""))
-					libs = libs + ((Button)libButtons.elementAt(i)).getText();
+					libs = libs + libButtons.elementAt(i).getText();
 				else
-					libs = libs + ","+((Button)libButtons.elementAt(i)).getText();
+					libs = libs + ","+libButtons.elementAt(i).getText();
 			}
 		}
 		buildProps.setProperty("plmLibraryNames", libs);
@@ -271,11 +271,11 @@ public class ProjectPropertyPage extends PropertyPage
 		// lsx extensions
 		String lsxs = "";
 		for (int i = 0 ; i < lsxButtons.size() ; i++) {
-			if (((Button)lsxButtons.elementAt(i)).getSelection()) {
+			if (lsxButtons.elementAt(i).getSelection()) {
 				if (lsxs.equals(""))
-					lsxs = lsxs + ((Button)lsxButtons.elementAt(i)).getText();
+					lsxs = lsxs + lsxButtons.elementAt(i).getText();
 				else
-					lsxs = lsxs + ","+((Button)lsxButtons.elementAt(i)).getText();
+					lsxs = lsxs + ","+lsxButtons.elementAt(i).getText();
 			}
 		}
 		buildProps.setProperty("lsxExtensionNames", lsxs);		
@@ -301,7 +301,7 @@ public class ProjectPropertyPage extends PropertyPage
 
 		try {
 			IAdaptable adaptable= getElement();
-			IResource resource= (IResource) adaptable.getAdapter(IResource.class);
+			IResource resource= adaptable.getAdapter(IResource.class);
 			IProject proj= resource.getProject();
 			return proj;
 			} 

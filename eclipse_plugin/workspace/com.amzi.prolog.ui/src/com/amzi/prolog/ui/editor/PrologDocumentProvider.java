@@ -1,7 +1,5 @@
 package com.amzi.prolog.ui.editor;
 
-import com.amzi.prolog.ui.editor.PrologMarkerAnnotationModel;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;

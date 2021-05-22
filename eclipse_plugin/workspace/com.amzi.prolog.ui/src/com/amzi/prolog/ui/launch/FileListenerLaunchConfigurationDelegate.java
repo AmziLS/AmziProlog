@@ -1,11 +1,8 @@
 package com.amzi.prolog.ui.launch;
 
-import com.amzi.prolog.core.PrologCorePlugin;
 import com.amzi.prolog.debug.PrologDebugPlugin;
 import com.amzi.prolog.debug.core.model.PrologDebugTarget;
 import com.amzi.prolog.ui.PrologUIPlugin;
-import com.amzi.prolog.ui.launch.AbstractPrologLaunchConfigurationDelegate;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;

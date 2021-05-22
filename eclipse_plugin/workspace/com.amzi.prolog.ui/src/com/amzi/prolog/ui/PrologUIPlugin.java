@@ -1,7 +1,5 @@
 package com.amzi.prolog.ui;
 
-import com.amzi.prolog.core.PrologCorePlugin;
-
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -86,7 +84,7 @@ public class PrologUIPlugin extends AbstractUIPlugin {
 	}
 	
 	public static String getFormattedResourceString(String key, String[] args) {
-		return MessageFormat.format(getResourceString(key), args);	
+		return MessageFormat.format(getResourceString(key), (Object[]) args);	
 	}	
 
 	/**

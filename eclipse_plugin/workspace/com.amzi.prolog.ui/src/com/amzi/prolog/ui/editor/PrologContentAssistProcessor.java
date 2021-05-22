@@ -23,7 +23,6 @@ import org.eclipse.jface.text.contentassist.IContextInformation;
 //import org.eclipse.jface.text.contentassist.IContextInformationPresenter;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 
 /*
  * Copyright (c) 2002-2004 Amzi! inc. All Rights Reserved.

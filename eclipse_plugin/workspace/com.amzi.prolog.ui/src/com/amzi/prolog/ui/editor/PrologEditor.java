@@ -97,15 +97,15 @@ public class PrologEditor extends TextEditor {
 		fAnnotationAccess= createAnnotationAccess();
 		
 		fOverviewRuler= new OverviewRuler(fAnnotationAccess, VERTICAL_RULER_WIDTH, colorManager);
-		Iterator e= fAnnotationPreferences.getAnnotationPreferences().iterator();
+		Iterator<AnnotationPreference> e = fAnnotationPreferences.getAnnotationPreferences().iterator();
 		while (e.hasNext()) {
-			AnnotationPreference preference= (AnnotationPreference) e.next();
+			AnnotationPreference preference = e.next();
 			if (preference.contributesToHeader())
 				fOverviewRuler.addHeaderAnnotationType(preference.getAnnotationType());
 		}
 		
-		sourceViewer= new SourceViewer(parent, ruler, fOverviewRuler, isOverviewRulerVisible(), styles);
-		fSourceViewerDecorationSupport= new SourceViewerDecorationSupport(sourceViewer, fOverviewRuler, fAnnotationAccess, colorManager);
+		sourceViewer = new SourceViewer(parent, ruler, fOverviewRuler, isOverviewRulerVisible(), styles);
+		fSourceViewerDecorationSupport = new SourceViewerDecorationSupport(sourceViewer, fOverviewRuler, fAnnotationAccess, colorManager);
 		configureSourceViewerDecorationSupport();
 		
 		return sourceViewer;
@@ -125,9 +125,9 @@ public class PrologEditor extends TextEditor {
 	protected void configureSourceViewerDecorationSupport() {
 // 3.0		super.configureSourceViewerDecorationSupport();
 
-		Iterator e= fAnnotationPreferences.getAnnotationPreferences().iterator();
+		Iterator<AnnotationPreference> e = fAnnotationPreferences.getAnnotationPreferences().iterator();
 		while (e.hasNext())
-			fSourceViewerDecorationSupport.setAnnotationPreference((AnnotationPreference) e.next());
+			fSourceViewerDecorationSupport.setAnnotationPreference(e.next());
 /*		fSourceViewerDecorationSupport.setAnnotationPainterPreferenceKeys(DefaultMarkerAnnotationAccess.UNKNOWN, 
 			TextEditorPreferenceConstants.EDITOR_UNKNOWN_INDICATION_COLOR, 
 			TextEditorPreferenceConstants.EDITOR_UNKNOWN_INDICATION, 
