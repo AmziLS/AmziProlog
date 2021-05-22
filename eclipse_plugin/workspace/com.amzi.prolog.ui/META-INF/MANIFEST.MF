@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Amzi! User Interface
 Bundle-SymbolicName: com.amzi.prolog.ui; singleton:=true
-Bundle-Version: 4.5.10004
+Bundle-Version: 11.1
 Bundle-ClassPath: prologui.jar
 Bundle-Activator: com.amzi.prolog.ui.PrologUIPlugin
 Bundle-Vendor: Amzi! inc.
@@ -31,4 +31,6 @@ Require-Bundle: org.eclipse.ui.ide,
  org.eclipse.swt,
  org.eclipse.debug.core,
  org.eclipse.debug.ui
-Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: com.amzi.prolog.ui
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

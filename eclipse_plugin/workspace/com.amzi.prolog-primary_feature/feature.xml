@@ -2,7 +2,7 @@
 <feature
       id="com.amzi.prolog"
       label="Amzi! Prolog + Logic Server IDE"
-      version="4.5.10004"
+      version="11.1"
       provider-name="Amzi! inc."
       plugin="com.amzi.prolog"
       image="amzi_feature.jpg"
@@ -16,7 +16,7 @@ Amzi! Prolog + Logic Server
    </description>
 
    <copyright>
-      Copyright (c) 1986-2010 Amzi! inc. and others. All Rights Reserved.
+      Copyright (c) 1986-2021 Amzi! inc. and others. All Rights Reserved.
    </copyright>
 
    <license url="">
@@ -24,7 +24,7 @@ Amzi! Prolog + Logic Server
 
 MIT License
 
-Copyright (c) Amzi! inc. 2016
+Copyright (c) Amzi! inc. 2016, 2021
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &quot;Software&quot;), to deal
@@ -46,10 +46,10 @@ SOFTWARE.
    </license>
 
    <requires>
-      <import plugin="com.amzi.prolog.core" version="4.5.10001" match="compatible"/>
-      <import plugin="com.amzi.prolog.debug" version="4.5.10001" match="compatible"/>
-      <import plugin="com.amzi.prolog.ui" version="4.5.10001" match="compatible"/>
-      <import plugin="com.amzi.prolog.help" version="4.5.10001" match="compatible"/>
+      <import plugin="com.amzi.prolog.core" version="11.1" match="compatible"/>
+      <import plugin="com.amzi.prolog.debug" version="11.1" match="compatible"/>
+      <import plugin="com.amzi.prolog.ui" version="11.1" match="compatible"/>
+      <import plugin="com.amzi.prolog.help" version="11.1" match="compatible"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.ui.ide"/>
@@ -67,30 +67,30 @@ SOFTWARE.
          id="com.amzi.prolog"
          download-size="0"
          install-size="0"
-         version="4.5.10004"/>
+         version="11.1"/>
 
    <plugin
          id="com.amzi.prolog.core"
          download-size="0"
          install-size="0"
-         version="4.5.10004"/>
+         version="11.1"/>
 
    <plugin
          id="com.amzi.prolog.debug"
          download-size="0"
          install-size="0"
-         version="4.5.10004"/>
+         version="11.1"/>
 
    <plugin
          id="com.amzi.prolog.ui"
          download-size="0"
          install-size="0"
-         version="4.5.10004"/>
+         version="11.1"/>
 
    <plugin
          id="com.amzi.prolog.help"
          download-size="0"
          install-size="0"
-         version="4.5.10004"/>
+         version="11.1"/>
 
 </feature>

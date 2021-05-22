@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Amzi! Prolog + Logic Server IDE" uid="com.amzi.prolog2" id="com.amzi.prolog.ide" application="org.eclipse.ui.ide.workbench" version="4.5.10004" useFeatures="true" includeLaunchers="false">
+<product name="Amzi! Prolog + Logic Server IDE" uid="com.amzi.prolog2" id="com.amzi.prolog.ide" application="org.eclipse.ui.ide.workbench" version="11.1" useFeatures="true" includeLaunchers="false">
 
    <aboutInfo>
       <image path="/com.amzi.prolog/squirrel_words_250px.jpg"/>
       <text>
-         Amzi! Prolog + Logic Server 4.5.10001
-(c) 1986-2016 Amzi! inc., all rights reserved
+         Amzi! Prolog + Logic Server 11.1
+(c) 1986-2021 Amzi! inc., all rights reserved
 http://www.amzi.com
 
 Eclipse Platform
@@ -31,7 +31,6 @@ http://www.apache.org/
    <splash
       location="com.amzi.prolog" />
    <launcher>
-      <solaris/>
       <win useIco="false">
          <ico path="/com.amzi.prolog/square_squirrel.ico"/>
          <bmp
@@ -41,16 +40,18 @@ http://www.apache.org/
       </win>
    </launcher>
 
+
    <vm>
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/OSGi%Minimum-1.0</windows>
    </vm>
+
 
    <plugins>
    </plugins>
 
    <features>
       <feature id="org.eclipse.platform" version="4.5.1.v20150904-0015"/>
-      <feature id="com.amzi.prolog" version="4.5.10004"/>
+      <feature id="com.amzi.prolog" version="11.1"/>
    </features>
 
 
