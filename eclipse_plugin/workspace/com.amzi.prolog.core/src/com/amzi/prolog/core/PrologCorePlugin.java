@@ -1,13 +1,8 @@
 package com.amzi.prolog.core;
 
-import com.amzi.prolog.core.utils.Utils;
 import amzi.ls.LogicServer;
 import amzi.ls.LSException;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
 //import org.eclipse.core.boot.BootLoader;

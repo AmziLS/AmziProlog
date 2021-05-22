@@ -16,7 +16,7 @@ public class PrologKeywordsAndActions {
 	private final static String MIN_AMZI_VERSION_STR = "7.1.0";
 	private final static int MIN_AMZI_VERSION = 7;
 	private final static int MIN_AMZI_SUBVERSION = 1;
-	private final static int MIN_AMZI_BUILD = 0;
+//	private final static int MIN_AMZI_BUILD = 0;
 	
 	public final static int DIRECTIVE = 1;
 	public final static int CONSTANT = 2;
@@ -48,8 +48,8 @@ public class PrologKeywordsAndActions {
 //	private static boolean evaluation;
 //	private static boolean free;
 //	private static boolean versionGtRenewDate;
-	private static boolean lanEdition;
-	private static boolean connectedToServer;
+//	private static boolean lanEdition;
+//	private static boolean connectedToServer;
 //	private static String productType;
 //	private static String productName;
 //	private static String userName;
@@ -302,8 +302,8 @@ public class PrologKeywordsAndActions {
 			ls = new LogicServer();
 	     	ls.Init("");
 			String slash = System.getProperty("file.separator");
-			String subdir;
-			if (System.getProperty("os.name").contains("Windows")) subdir = "bin"; else subdir = "lib";
+			//String subdir;
+			//if (System.getProperty("os.name").contains("Windows")) subdir = "bin"; else subdir = "lib";
 	     	ls.AddLSX("aosutils", 0);
 	     	//ls.AddLSX(amziDir + slash + subdir + slash + "aosutils.lsx", 0);
 	     	//MessageDialog.openError(null, "getLogicServer", "Loading: " + amziDir + "abin" + slash + "aidl.xpl");
