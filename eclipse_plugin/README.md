@@ -2,7 +2,7 @@
 
 ## History
 
-The Eclipse plug-in was developed around 2002 by Amzi! developer Mary Kroening.  It was the first Eclipse IDE for Prolog code that included a colorized editor, cross reference capability, and most important a full four-port debugger that highlights lines of code as Prolog goes through it's backtracking search.  The debugger also keeps windows open with the full stack trace and variable bindings.
+The Eclipse plug-in was developed around 2002 by Amzi! developer Mary Kroening.  It was the first Eclipse IDE for Prolog code that included a colorized editor, cross reference capability, and most important a full four-port debugger that highlights lines of code as Prolog goes through its backtracking search.  The debugger also keeps windows open with the full stack trace and variable bindings.
 
 The debugger works in conjunction with Prolog code that runs in debug mode.  Understand that much of Prolog is written in Prolog, so for example Prolog listeners are often written in Prolog.  In the case of Amzi! the Prolog debugger is written in Prolog.  It communicates via the Amzi! Java interface with Eclipse, providing information about the current line of code, status, call stack, etc.
 

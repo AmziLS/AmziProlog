@@ -269,3 +269,7 @@ _Pvt_Extensions
 /winIDE/ReleaseA
 /winIDE/ReleaseW
 /langbindings/java/amzi/ls/*.class
+/eclipse_plugin/workspace/com.amzi.prolog.debug/bin
+/eclipse_plugin/workspace/com.amzi.prolog.core/bin
+/eclipse_plugin/workspace/com.amzi.prolog/bin
+/eclipse_plugin/workspace/com.amzi.prolog.ui/bin
