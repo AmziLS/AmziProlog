@@ -273,3 +273,7 @@ _Pvt_Extensions
 /eclipse_plugin/workspace/com.amzi.prolog.core/bin
 /eclipse_plugin/workspace/com.amzi.prolog/bin
 /eclipse_plugin/workspace/com.amzi.prolog.ui/bin
+/eclipse_plugin/workspace/com.amzi.prolog.core/build.xml
+/eclipse_plugin/workspace/com.amzi.prolog.core/javaCompiler.prologcore.jar.args
+/eclipse_plugin/workspace/com.amzi.prolog.debug/build.xml
+/eclipse_plugin/workspace/com.amzi.prolog.debug/javaCompiler.prologdebug.jar.args
