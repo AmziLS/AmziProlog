@@ -12,7 +12,7 @@ public class DebugListenerActionBuffer {
 	static int count = 0;
 	int id;
 	boolean available;
-	Vector buffer = new Vector();
+	Vector<String> buffer = new Vector<String>();
 	
 	public DebugListenerActionBuffer()
 	{
@@ -41,7 +41,7 @@ public class DebugListenerActionBuffer {
 		notifyAll();
 		//System.out.println("string get returning " + id);
 
-		action = (String)buffer.elementAt(0);
+		action = buffer.elementAt(0);
 		buffer.removeElementAt(0);
 		if (buffer.size() > 0)
 			available = true;

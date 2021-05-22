@@ -3,7 +3,6 @@ package com.amzi.prolog.debug.core.internal;
 import amzi.ls.*;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
@@ -12,9 +11,6 @@ import java.util.List;
 
 import com.amzi.prolog.core.PrologCorePlugin;
 import com.amzi.prolog.core.utils.Utils;
-import com.amzi.prolog.debug.core.internal.DebugListenerActionBuffer;
-import com.amzi.prolog.debug.core.internal.DebugListenerInputBuffer;
-import com.amzi.prolog.debug.core.internal.DebugListenerKeyBuffer;
 import com.amzi.prolog.debug.core.model.PrologDebugTarget;
 import com.amzi.prolog.debug.core.model.PrologStackFrame;
 import com.amzi.prolog.debug.core.model.PrologVariable;
@@ -24,7 +20,6 @@ import com.amzi.prolog.debug.ui.DebugListenerView;
 //import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 
 

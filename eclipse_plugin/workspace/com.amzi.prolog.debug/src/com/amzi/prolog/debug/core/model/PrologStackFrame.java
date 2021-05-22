@@ -1,7 +1,5 @@
 package com.amzi.prolog.debug.core.model;
 
-import com.amzi.prolog.debug.core.model.PrologVariable;
-
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.debug.core.DebugException;

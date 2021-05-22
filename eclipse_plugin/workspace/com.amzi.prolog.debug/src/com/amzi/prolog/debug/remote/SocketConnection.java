@@ -1,6 +1,5 @@
 package com.amzi.prolog.debug.remote;
 
-import com.amzi.prolog.core.PrologCorePlugin;
 import com.amzi.prolog.debug.PrologDebugPlugin;
 import com.amzi.prolog.debug.ui.RemoteConnectWaiter;
 
