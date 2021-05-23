@@ -734,10 +734,10 @@ public class PrologDebugTarget extends PlatformObject
 	/**
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
 	 */
-	public Object getAdapter(Class adapter) {
-		if (adapter.equals(IDebugElement.class)) {
+	public <T> T getAdapter(Class<T> adapter) {
+		if (adapter == IDebugElement.class) {
 //		if (adapter.equals(IDebugTarget.class)) {
-			return this;
+			return adapter.cast(this);
 		}
 //		if (adapter.equals(PrologDebugTarget.class)) {
 //			return this;

@@ -265,13 +265,13 @@ public class PrologStackFrame extends PlatformObject implements IDebugElement, I
 	/**
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
 	 */
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 //		if (adapter == IStackFrame.class) {
 //			return this;
 //		}
 //		return debugTarget.getAdapter(adapter);
 		if (adapter == IDebugElement.class) {
-			return this;
+			return adapter.cast(this);
 		}
 		return super.getAdapter(adapter);
 	}

@@ -245,14 +245,14 @@ public class PrologEditor extends TextEditor {
 			return super.getTitle();
 	}
 	
-	public Object getAdapter(Class required) {
+	public <T> T getAdapter(Class<T> required) {
 		if (IContentOutlinePage.class.equals(required)) {
 			if (outlinePage == null) {
 				outlinePage= new PrologContentOutlinePage(getDocumentProvider(), this);
 				if (getEditorInput() != null)
 					outlinePage.setInput(getEditorInput());
 			}
-			return outlinePage;
+			return required.cast(outlinePage);
 		}
 		return super.getAdapter(required);
 	}

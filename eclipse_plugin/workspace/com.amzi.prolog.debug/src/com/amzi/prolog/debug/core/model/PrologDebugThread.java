@@ -229,13 +229,13 @@ public class PrologDebugThread extends PlatformObject implements IDebugElement, 
 	/**
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
 	 */
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 //		if (adapter == IThread.class) {
 //			return this;
 //		} 
 		if (adapter == IStackFrame.class) {
 			try {
-				return (IStackFrame)getTopStackFrame();
+				return adapter.cast((IStackFrame)getTopStackFrame());
 			} catch (DebugException e) {
 				// do nothing if not able to get frame
 			} 
@@ -244,7 +244,7 @@ public class PrologDebugThread extends PlatformObject implements IDebugElement, 
 //		return debugTarget.getAdapter(adapter);
 
 		if (adapter == IDebugElement.class) {
-			return this;
+			return adapter.cast(this);
 		}
 		return super.getAdapter(adapter);
 	}

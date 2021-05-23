@@ -73,16 +73,16 @@ public class PrologDebugProcess extends PlatformObject implements IProcess {
 	/**
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
 	 */
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 //		if (adapter == IProcess.class) {
 //			return this;
 //		}
 //		return debugTarget.getAdapter(adapter);
-		if (adapter.equals(IProcess.class)) {
-			return this;
-		}
-		if (adapter.equals(IDebugTarget.class)) 
-			return debugTarget;
+		if (adapter == IProcess.class) {
+	        return adapter.cast(this);
+	    }
+		if (adapter == IDebugTarget.class) 
+			return adapter.cast(debugTarget);
 			/*{
 			ILaunch launch = getLaunch();
 			IDebugTarget[] targets = launch.getDebugTargets();

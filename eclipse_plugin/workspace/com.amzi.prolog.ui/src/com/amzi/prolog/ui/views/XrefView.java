@@ -93,7 +93,7 @@ public class XrefView extends ViewPart {
 			public String toString() {
 				return getName();
 			}
-			public Object getAdapter(Class key) {
+			public <T> T getAdapter(Class<T> adapter) {
 				return null;
 			}
 		}
