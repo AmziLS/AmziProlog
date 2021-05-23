@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Amzi! User Interface
 Bundle-SymbolicName: com.amzi.prolog.ui; singleton:=true
-Bundle-Version: 11.1
+Bundle-Version: 11.1.0
 Bundle-ClassPath: prologui.jar
 Bundle-Activator: com.amzi.prolog.ui.PrologUIPlugin
 Bundle-Vendor: Amzi! inc.

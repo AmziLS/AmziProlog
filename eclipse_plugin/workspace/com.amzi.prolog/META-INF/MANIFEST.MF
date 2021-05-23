@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.amzi.prolog; singleton:=true
-Bundle-Version: 11.1
+Bundle-Version: 11.1.0
 Bundle-Vendor: %Bundle-Vendor
 Bundle-Localization: plugin
 Require-Bundle: com.amzi.prolog.core;bundle-version="11.1",
