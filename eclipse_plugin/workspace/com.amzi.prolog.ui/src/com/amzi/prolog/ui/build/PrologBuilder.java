@@ -39,7 +39,7 @@ public class PrologBuilder extends IncrementalProjectBuilder {
 	/**
 	 * Builder
 	 */
-	protected IProject[] build(int type, Map args, IProgressMonitor monitor)
+	protected IProject[] build(int type, Map<String, String> args, IProgressMonitor monitor)
 		throws CoreException {
 		IFolder binFolder;
 		List<String> plmPathnames;
