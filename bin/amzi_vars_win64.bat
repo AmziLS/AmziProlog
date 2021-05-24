@@ -10,7 +10,7 @@ REM adapt path to match your MySQL installation directory
 set MYSQL=C:\Program Files\MySQL\MySQL Server 8.0
 
 REM disable or adapt path if needed (MUST point to a JDK)
-set JAVA_HOME=C:\Program Files (x86)\Java\jdk1.8.0_161\
+set JAVA_HOME=C:\Program Files\Java\jdk-16.0.1\
 
 REM *****     end adapt     *****
 
