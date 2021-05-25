@@ -1,0 +1,23 @@
+<project>
+    <target name="clean">
+        <delete dir="features"/>
+		<delete dir="plugins"/>
+		<delete file="artifacts.jar"/>
+		<delete file="content.jar"/>
+    </target>
+
+    <target name="build">
+        <mkdir dir="../../../../EclipseIDEUpdateSite"/>
+    	<mkdir dir="../../../../EclipseIDEUpdateSite/features"/>
+        <mkdir dir="../../../../EclipseIDEUpdateSite/plugins"/>
+        <copy todir="../../../../EclipseIDEUpdateSite/features">
+          <fileset dir="features"/>
+        </copy>
+        <copy todir="../../../../EclipseIDEUpdateSite/plugins">
+          <fileset dir="plugins"/>
+        </copy>    	
+        <copy file="artifacts.jar" todir="../../../../EclipseIDEUpdateSite"/>
+        <copy file="content.jar" todir="../../../../EclipseIDEUpdateSite"/>
+    	<copy file="site.xml" todir="../../../../EclipseIDEUpdateSite"/>
+    </target>
+</project>
