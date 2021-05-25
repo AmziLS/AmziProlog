@@ -14,6 +14,17 @@ the process. As users will update from
 https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/, they will
 automatically obtain the latest changes.
 
+In other words, the folder structure of the GitHub repositories should be like
+this:
+
+/AmziProlog
+/eclipse_IDE_plugin_update_site
+
+That is eclipse_IDE_plugin_update_site is *not* a sub-folder of the main
+AmziProlog repository, but independent and at the same level. This is
+intentional, since the update site is a binary distribution and should not be
+mixed with source code.
+
 ## Troubleshooting
 
 If the update_site cannot be built, make sure the feature name, path and version
