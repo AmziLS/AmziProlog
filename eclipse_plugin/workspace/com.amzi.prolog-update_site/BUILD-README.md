@@ -11,10 +11,12 @@ under `Site Map|Managing the Site` in the site.xml-editor is still correct.
 
 Incorrect features will appear faded/have a black and white icon. Unfortunately,
 builds will fail silently when a configuration is erroneous. Common reasons are
-slightly differing version numbers (such as a missing .0 at the end), renamed features,
-or any other projects that were renamed or had their version number changed.
+slightly differing version numbers (such as a missing .0 at the end), renamed
+features, or any other projects that were renamed or had their version number
+changed.
 
 The simplest solution is to delete the faded feature, and add the correct /
 updated one from the list of available features. Make sure to add it as child of
 `amzi_eclipse_feature`.
-The feature will have a name similar to this: `com.amzi.prolog-ide_extension_feature`
+The feature will have a name similar to this:
+`com.amzi.prolog-ide_extension_feature`
