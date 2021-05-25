@@ -8,8 +8,8 @@
 
 If you already have cloned
 https://github.com/AmziLS/eclipse_IDE_plugin_update_site into the same directory
-as mentioned above, relevant files will be overwritten during the build.
-Therefore, checking in the changes and synching with GitHub is enough to
+as mentioned above, relevant files will be overwritten during the build (as
+intended). Checking in the changes and synching with GitHub is enough to
 complete the process. As users will update from
 https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/, they will
 automatically obtain the latest changes.
