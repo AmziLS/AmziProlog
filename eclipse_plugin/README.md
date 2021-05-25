@@ -61,6 +61,6 @@ I welcome more experienced Eclipse developers to work with the IDE plug-in and b
 
 ## See also
 
-Further relevant documentation can also be found here:
-https://github.com/AmziLS/apls/tree/master/devdocs
-https://github.com/AmziLS/apls/tree/master/docs
+Further relevant documentation can also be found here:    
+https://github.com/AmziLS/apls/tree/master/devdocs    
+https://github.com/AmziLS/apls/tree/master/docs    
