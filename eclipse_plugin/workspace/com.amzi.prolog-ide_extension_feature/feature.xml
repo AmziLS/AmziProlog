@@ -2,7 +2,7 @@
 <feature
       id="com.amzi.prolog.ide_extension_feature"
       label="Amzi! Prolog + Logic Server IDE"
-      version="11.1"
+      version="11.1.0"
       provider-name="Amzi! inc."
       plugin="com.amzi.prolog"
       image="amzi_feature.jpg"
@@ -46,10 +46,10 @@ SOFTWARE.
    </license>
 
    <requires>
-      <import plugin="com.amzi.prolog.core" version="11.1" match="compatible"/>
-      <import plugin="com.amzi.prolog.debug" version="11.1" match="compatible"/>
-      <import plugin="com.amzi.prolog.ui" version="11.1" match="compatible"/>
-      <import plugin="com.amzi.prolog.help" version="11.1" match="compatible"/>
+      <import plugin="com.amzi.prolog.core" version="11.1.0" match="compatible"/>
+      <import plugin="com.amzi.prolog.debug" version="11.1.0" match="compatible"/>
+      <import plugin="com.amzi.prolog.ui" version="11.1.0" match="compatible"/>
+      <import plugin="com.amzi.prolog.help" version="11.1.0" match="compatible"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.ui.ide"/>
@@ -67,30 +67,30 @@ SOFTWARE.
          id="com.amzi.prolog"
          download-size="0"
          install-size="0"
-         version="11.1"/>
+         version="11.1.0"/>
 
    <plugin
          id="com.amzi.prolog.core"
          download-size="0"
          install-size="0"
-         version="11.1"/>
+         version="11.1.0"/>
 
    <plugin
          id="com.amzi.prolog.debug"
          download-size="0"
          install-size="0"
-         version="11.1"/>
+         version="11.1.0"/>
 
    <plugin
          id="com.amzi.prolog.ui"
          download-size="0"
          install-size="0"
-         version="11.1"/>
+         version="11.1.0"/>
 
    <plugin
          id="com.amzi.prolog.help"
          download-size="0"
          install-size="0"
-         version="11.1"/>
+         version="11.1.0"/>
 
 </feature>
