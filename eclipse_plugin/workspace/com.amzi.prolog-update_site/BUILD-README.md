@@ -6,7 +6,11 @@
 
 ## Automatically uploading the update site
 
-If you already have cloned https://github.com/AmziLS/eclipse_IDE_plugin_update_site into the same directory as mentioned above, relevant files will be overwritten, and you can simply check in the changes and synch with GitHub. As users will update from https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/ they will automatically optain the latest changes.
+If you already have cloned
+https://github.com/AmziLS/eclipse_IDE_plugin_update_site into the same directory
+as mentioned above, relevant files will be overwritten, and you can simply check
+in the changes and synch with GitHub. As users will update from https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/ they will
+automatically optain the latest changes.
 
 ## Troubleshooting
 
@@ -17,8 +21,8 @@ under `Site Map|Managing the Site` in the site.xml-editor is still correct.
 Incorrect features will appear faded/have a black and white icon. Unfortunately,
 builds will fail silently when a configuration is erroneous. Common reasons are
 slightly differing version numbers (such as a missing .0 at the end), renamed
-features, or any other Amzi plugin projects that were renamed or had their version
-number changed.
+features, or any other Amzi plugin projects that were renamed or had their
+version number changed.
 
 The simplest solution is to delete the faded feature, and add the correct /
 updated one from the list of available features. Make sure to add it as child of
