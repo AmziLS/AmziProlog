@@ -24,7 +24,8 @@ this:
 
 That is eclipse_IDE_plugin_update_site is *not* a sub-folder of the AmziProlog
 repository, but independent and at the same level. This is intentional, since
-the update site is a binary distribution and should not be mixed with source code.
+the update site is a binary distribution and should not be mixed with source
+code.
 
 ## Troubleshooting
 
