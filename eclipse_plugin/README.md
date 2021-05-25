@@ -1,16 +1,16 @@
 # Building the Amzi! IDE Eclipse Plug-in
 
-## History
+## Install
 
-The Eclipse plug-in was developed around 2002 by Amzi! developer Mary Kroening.  It was the first Eclipse IDE for Prolog code that included a colorized editor, cross reference capability, and most important a full four-port debugger that highlights lines of code as Prolog goes through its backtracking search.  The debugger also keeps windows open with the full stack trace and variable bindings.
-
-The debugger works in conjunction with Prolog code that runs in debug mode.  Understand that much of Prolog is written in Prolog, so for example Prolog listeners are often written in Prolog.  In the case of Amzi! the Prolog debugger is written in Prolog.  It communicates via the Amzi! Java interface with Eclipse, providing information about the current line of code, status, call stack, etc.
-
-Mary has since passed away, cancer.  She was the force behind much of the outward appearance of Amzi! Prolog + Logic Server, such as the Eclipse IDE, and a major contributor to the World-wide popularity of the software.
-
-I have re-built the IDE a couple of times, but always find Eclipse RCP to be extremely brittle.  It is basically unchanged from that 2002 version.  The build reflected in the first github version supports building the plug-in, but not the full RCP stand-alone IDE.  I believe this might be best for open source anyway as it appears to work across platforms, running at least on both a Mac and Windows.
-
-I welcome more experienced Eclipse developers to work with the IDE plug-in and bring it up to date with current Eclipse best practices.
+1. Download and install any version of Eclipse (tested with 2020-12 (4.18.0))
+2. Download and install a current release of Amzi Prolog (11.1 or higher)
+3. Set the environment variable AMZI_DIR to installation directory of Amzi Prolog
+  a. This directory will contain folders like /bin /abin /docs /langbindings etc.
+4. In Eclipse select Help|Install New Software... and enter the following URL in the "Work with:" text box:
+https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/
+  a. Alternatively you can install from the local "eclipse_plugin" directory under AMZI_DIR
+5. Check everything ("Amzi! Eclipse Feature" and its sub components)
+6. Now just click "Next" and follow the steps.
 
 ## Building
 
@@ -20,22 +20,6 @@ I welcome more experienced Eclipse developers to work with the IDE plug-in and b
 4. delete all the jar files in features, plugins and both artifacts.jar and content.jar
 5. Open site.xml in com.amzi.prolog-update_site and ‘Build All’
 6. Copy the new files in com.amzi.prolog-update_site to a new location, and it is the new plug-in.
-
-## Running
-
-1. Download and install any version of Eclipse.
-2. Make sure the Amzi! *apls* directory is in the correct relative place compared to the Eclipse executable:
-
-```
-eclipse
-  eclipse.app/exe whatever
-apls
-  bin
-  lib
-  ...
-```
-3. If you are running Windows, you can set the environment variable AMZI_DIR to point to the amzi\apls directory and then you don’t need to maintain the relative paths above.
-4. Import the plug-in and maybe it will work!
 
 ## Creating a New Version
 
@@ -62,6 +46,18 @@ Issue - uninstalling the Amzi! Plug-in removes the feature, com.amzi.prolog, but
 
 --Dennis
 
+
+## History
+
+The Eclipse plug-in was developed around 2002 by Amzi! developer Mary Kroening.  It was the first Eclipse IDE for Prolog code that included a colorized editor, cross reference capability, and most important a full four-port debugger that highlights lines of code as Prolog goes through its backtracking search.  The debugger also keeps windows open with the full stack trace and variable bindings.
+
+The debugger works in conjunction with Prolog code that runs in debug mode.  Understand that much of Prolog is written in Prolog, so for example Prolog listeners are often written in Prolog.  In the case of Amzi! the Prolog debugger is written in Prolog.  It communicates via the Amzi! Java interface with Eclipse, providing information about the current line of code, status, call stack, etc.
+
+Mary has since passed away, cancer.  She was the force behind much of the outward appearance of Amzi! Prolog + Logic Server, such as the Eclipse IDE, and a major contributor to the World-wide popularity of the software.
+
+I have re-built the IDE a couple of times, but always find Eclipse RCP to be extremely brittle.  It is basically unchanged from that 2002 version.  The build reflected in the first github version supports building the plug-in, but not the full RCP stand-alone IDE.  I believe this might be best for open source anyway as it appears to work across platforms, running at least on both a Mac and Windows.
+
+I welcome more experienced Eclipse developers to work with the IDE plug-in and bring it up to date with current Eclipse best practices.
 
 ## See also
 
