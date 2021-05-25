@@ -10,7 +10,7 @@
     https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/
     * Alternatively, you can install from the local `eclipse_plugin` directory under `AMZI_DIR`
 5. Check everything: `Amzi! Eclipse Feature` and its sub components
-6. Now just click `Next` and follow the steps.
+6. Now just click `Next` and follow the steps
 
 ## Building
 
