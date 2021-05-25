@@ -4,7 +4,12 @@
 2. Wait for the background task to finish (progress bar in the bottom right) 
 3. The result will be available in `../../../../eclipse_IDE_plugin_update_site`
 
+## Automatically uploading the update site
+
+If you already have cloned https://github.com/AmziLS/eclipse_IDE_plugin_update_site into the same directory as mentioned above, relevant files will be overwritten, and you can simply check in the changes and synch with GitHub. As users will update from https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/ they will automatically optain the latest changes.
+
 ## Troubleshooting
+
 If the update_site cannot be built, make sure the feature name, path and version
 under `Site Map|Managing the Site` in the site.xml-editor is still correct.
 (The Site Manifest Editor can be opened by double clicking site.xml.) 
