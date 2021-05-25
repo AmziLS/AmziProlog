@@ -1,4 +1,6 @@
 <project>
+	<property name="deploy" location="../../../../eclipse_IDE_plugin_update_site"/>
+	
     <target name="clean">
         <delete dir="features"/>
 		<delete dir="plugins"/>
@@ -7,17 +9,17 @@
     </target>
 
     <target name="build">
-        <mkdir dir="../../../../EclipseIDEUpdateSite"/>
-    	<mkdir dir="../../../../EclipseIDEUpdateSite/features"/>
-        <mkdir dir="../../../../EclipseIDEUpdateSite/plugins"/>
-        <copy todir="../../../../EclipseIDEUpdateSite/features">
+        <mkdir dir="${deploy}"/>
+    	<mkdir dir="${deploy}/features"/>
+        <mkdir dir="${deploy}/plugins"/>
+        <copy todir="${deploy}/features">
           <fileset dir="features"/>
         </copy>
-        <copy todir="../../../../EclipseIDEUpdateSite/plugins">
+        <copy todir="${deploy}/plugins">
           <fileset dir="plugins"/>
         </copy>    	
-        <copy file="artifacts.jar" todir="../../../../EclipseIDEUpdateSite"/>
-        <copy file="content.jar" todir="../../../../EclipseIDEUpdateSite"/>
-    	<copy file="site.xml" todir="../../../../EclipseIDEUpdateSite"/>
+        <copy file="artifacts.jar" todir="${deploy}"/>
+        <copy file="content.jar" todir="${deploy}"/>
+    	<copy file="site.xml" todir="${deploy}"/>
     </target>
 </project>
