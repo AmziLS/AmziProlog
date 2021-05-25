@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="com.amzi.prolog"
+      id="com.amzi.prolog.ide_extension_feature"
       label="Amzi! Prolog + Logic Server IDE"
       version="11.1"
       provider-name="Amzi! inc."
