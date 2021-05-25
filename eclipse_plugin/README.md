@@ -1,4 +1,4 @@
-# Building the Amzi! IDE Eclipse Plug-in
+# Installing and building the Amzi! IDE Eclipse plug-in
 
 ## Install
 
