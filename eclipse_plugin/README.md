@@ -13,8 +13,8 @@
     * Alternatively, you can install from the local `eclipse_plugin` directory under `AMZI_DIR`
 5. Then press `Add...` and confirm with `Add`
    * Optionally give the `Location` (= URL) a `Name`
-7. Check `Amzi! Eclipse Feature` and all its sub components
-8. Now just press `Next` and follow the instructions
+6. Check `Amzi! Eclipse Feature` and all its sub components
+7. Now just press `Next` and follow the instructions
 
 ## Building
 
