@@ -22,7 +22,9 @@ When the installation is complete, have a look at the following videos:
   * [Getting Started with Eclipse Amzi! Prolog](https://www.youtube.com/watch?v=EMxLnn2I9yo)    
   * [Amzi! Prolog Source Code Debugger in Eclipse](https://www.youtube.com/watch?v=fewTmnarfu8)    
 
-[Eclipse IDE Quick Start](http://www.amzi.com/manuals/amzi/pro/pug_ide_quickstart.htm)
+Articles:
+  * [Eclipse IDE Quick Start](http://www.amzi.com/manuals/amzi/pro/pug_ide_quickstart.htm)
+  * [Eclipse IDE](http://www.amzi.com/manuals/amzi/pro/pug_ide.htm)
 
 ## Building
 
