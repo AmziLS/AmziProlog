@@ -7,7 +7,7 @@
 3. Set the environment variable `AMZI_DIR` to the installation directory of Amzi Prolog
     * You can do it automatically by executing `Configure Amzi Dirs (Release).bat`
 4. Download and install any version of Eclipse
-    * Tested sucessfully with version 2020-12 (4.18.0)
+    * Tested successfully with version 2020-12 (4.18.0)
 6. In Eclipse select `Help|Install New Software...` and enter the following URL in the `Work with:` text box:    
     https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/
     * Alternatively, you can install from the local `eclipse_plugin` directory under `AMZI_DIR`
