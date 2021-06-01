@@ -26,6 +26,6 @@
     gmake -f make_win64.txt
     ````
 4. Build the Eclipse IDE plugin:
-    * Follow the instructions given in `\eclipse_plugin\workspace\com.amzi.prolog-update_site\BUILD-README.md`
+    * Follow the [instructions](https://github.com/AmziLS/AmziProlog/blob/master/eclipse_plugin/workspace/com.amzi.prolog-update_site/BUILD-README.md) given in `\eclipse_plugin\workspace\com.amzi.prolog-update_site\BUILD-README.md`
 
 5. The build result will be available in \release
