@@ -1,8 +1,11 @@
 # Building the update site for the Eclipse plugin
 
-1. Right-click `site.xml` and choose: `Plug-in Tools|Build Site`
-2. Wait for the background task to finish (progress bar in the bottom right) 
-3. The result will be available in `../../../../eclipse_IDE_plugin_update_site`
+1. Download and install [Eclipse PDE](https://www.eclipse.org/pde/)
+    * An all in-one package can be obtained by chosing [Eclipse IDE for RCP and RAP Developers](https://www.eclipse.org/downloads/packages/)
+2. Import all projects from `/eclipse_plugin/workspace` into Eclipse
+3. In the project `com.amzi.prolog-update_site` right-click `site.xml` and choose: `Plug-in Tools|Build Site`
+4. Wait for the background task to finish (progress bar in the bottom right) 
+5. The result will be available in `../../../../eclipse_IDE_plugin_update_site`
 
 ## Automatically uploading the update site
 
