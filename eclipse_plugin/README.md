@@ -16,11 +16,13 @@
 6. Check `Amzi! Eclipse Feature` and all its sub components
 7. Now just press `Next` and follow the instructions
 
-### Introductory videos
+### Introductory videos and articles
 
 When the installation is complete, have a look at the following videos:
   * [Getting Started with Eclipse Amzi! Prolog](https://www.youtube.com/watch?v=EMxLnn2I9yo)    
   * [Amzi! Prolog Source Code Debugger in Eclipse](https://www.youtube.com/watch?v=fewTmnarfu8)    
+
+[Eclipse IDE Quick Start](http://www.amzi.com/manuals/amzi/pro/pug_ide_quickstart.htm)
 
 ## Building
 
