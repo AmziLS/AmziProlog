@@ -11,9 +11,10 @@
 4. In Eclipse select `Help|Install New Software...` and enter the following URL in the `Work with:` text box:    
     https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/
     * Alternatively, you can install from the local `eclipse_plugin` directory under `AMZI_DIR`
-5. Then press `Add...` and confirm with `Add` (optionally give the URL/`Location` a `Name`)
-5. Check `Amzi! Eclipse Feature` and all its sub components
-6. Now just press `Next` and follow the instructions
+5. Then press `Add...` and confirm with `Add`
+   * Optionally give the `Location` (= URL) a `Name`
+7. Check `Amzi! Eclipse Feature` and all its sub components
+8. Now just press `Next` and follow the instructions
 
 ## Building
 
