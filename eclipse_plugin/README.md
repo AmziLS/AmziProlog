@@ -16,6 +16,12 @@
 6. Check `Amzi! Eclipse Feature` and all its sub components
 7. Now just press `Next` and follow the instructions
 
+### Introductory videos
+
+When the installation is complete, have a look at the following videos:
+  * [Getting Started with Eclipse Amzi! Prolog](https://www.youtube.com/watch?v=EMxLnn2I9yo)    
+  * [Amzi! Prolog Source Code Debugger in Eclipse](https://www.youtube.com/watch?v=fewTmnarfu8)    
+
 ## Building
 
 1. Download and install Eclipse 4.5.1 for plug-in development
