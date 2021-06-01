@@ -2,10 +2,11 @@
 
 ## Install
 
-1. Download and install any version of Eclipse -- tested with 2020-12 (4.18.0)
-2. Download and install a current release of Amzi Prolog (11.1 or higher)
-3. Set the environment variable `AMZI_DIR` to the installation directory of Amzi Prolog
-    * This directory will contain the following folders: `/bin`, `/abin`, `/docs`, `/langbindings`, ...
+1. Download and install a current release of Amzi Prolog (11.1 or higher)
+2. Set the environment variable `AMZI_DIR` to the installation directory of Amzi Prolog
+    * Manually: Look for and set it to the directory containing the following folders: `/bin`, `/abin`, `/docs`, `/langbindings`, ...
+    * Automatically: Execute `Configure Amzi Dirs (Release).bat`
+3. Download and install any version of Eclipse -- tested with 2020-12 (4.18.0)
 4. In Eclipse select `Help|Install New Software...` and enter the following URL in the `Work with:` text box:    
     https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/
     * Alternatively, you can install from the local `eclipse_plugin` directory under `AMZI_DIR`
@@ -14,12 +15,12 @@
 
 ## Building
 
-1. Download and install Eclipse 4.5.1 for plug-in development.
+1. Download and install Eclipse 4.5.1 for plug-in development
 2. Rebuild all
 3. Open com.amzi.prolog-update_site
-4. delete all the jar files in features, plugins and both artifacts.jar and content.jar
+4. Delete all the jar files in features, plugins and both artifacts.jar and content.jar
 5. Open site.xml in com.amzi.prolog-update_site and ‘Build All’
-6. Copy the new files in com.amzi.prolog-update_site to a new location, and it is the new plug-in.
+6. Copy the new files in com.amzi.prolog-update_site to a new location, and it is the new plug-in
 
 ## Creating a New Version
 
