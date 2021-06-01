@@ -32,7 +32,7 @@ repository, but independent and at the same level. This is intentional, since
 the update site is a binary distribution and should not be mixed with source
 code.
 
-## Troubleshooting
+## Troubleshooting failed builds
 
 If the update_site cannot be built, make sure the feature name, path and version
 under `Site Map|Managing the Site` in the site.xml-editor is still correct.
