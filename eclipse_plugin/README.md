@@ -6,6 +6,7 @@
 2. Download and install a current release of Amzi Prolog (11.1 or higher)
 3. Set the environment variable `AMZI_DIR` to the installation directory of Amzi Prolog
     * This directory will contain the following folders: `/bin`, `/abin`, `/docs`, `/langbindings`, ...
+    * Execute `Configure Amzi Dirs (Release).bat` to do this automatically
 4. In Eclipse select `Help|Install New Software...` and enter the following URL in the `Work with:` text box:    
     https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/
     * Alternatively, you can install from the local `eclipse_plugin` directory under `AMZI_DIR`
