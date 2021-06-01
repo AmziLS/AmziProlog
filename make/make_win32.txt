@@ -158,6 +158,7 @@ _langbindings:
 amzi_env:
 	@copy $(SOURCE)\bin\amzi_vars.bat $(RELEASE)\bin
 	@copy "$(SOURCE)\Amzi Prolog Environment (Release).lnk" $(RELEASE)
+	@copy "$(SOURCE)\Configure Amzi Dirs (Release).bat" $(RELEASE)
 
 clean:
 	@cd $(SOURCE)\engine && \
