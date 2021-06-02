@@ -1,7 +1,8 @@
 <project>
-	<property name="deploy" location="../../../../eclipse_IDE_plugin_update_site"/>
+	<property name="release" location="../../../release/eclipse_plugin"/>
+	<property name="deploy" location="../../../../eclipse_IDE_plugin_update_site"/>	
 	
-    <target name="clean">
+    <target name="clean">	  
         <delete dir="features"/>
 		<delete dir="plugins"/>
 		<delete file="artifacts.jar"/>
@@ -9,17 +10,21 @@
     </target>
 
     <target name="build">
-        <mkdir dir="${deploy}"/>
-    	<mkdir dir="${deploy}/features"/>
-        <mkdir dir="${deploy}/plugins"/>
-        <copy todir="${deploy}/features">
+        <mkdir dir="${release}"/>
+    	<mkdir dir="${release}/features"/>
+        <mkdir dir="${release}/plugins"/>
+        <copy todir="${release}/features">
           <fileset dir="features"/>
         </copy>
-        <copy todir="${deploy}/plugins">
+        <copy todir="${release}/plugins">
           <fileset dir="plugins"/>
         </copy>    	
-        <copy file="artifacts.jar" todir="${deploy}"/>
-        <copy file="content.jar" todir="${deploy}"/>
-    	<copy file="site.xml" todir="${deploy}"/>
+        <copy file="artifacts.jar" todir="${release}"/>
+        <copy file="content.jar" todir="${release}"/>
+    	<copy file="site.xml" todir="${release}"/>
+		
+        <copy todir="${deploy}">
+          <fileset dir="${release}"/>
+        </copy>    	
     </target>
 </project>

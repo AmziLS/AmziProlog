@@ -2,8 +2,7 @@ HERE = $(APLS_SOURCE)
 SOURCE = $(APLS_SOURCE)
 RELEASE = $(APLS_RELEASE)
 
-all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _winIDE _extensions _langbindings amzi_env
-#all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _winIDE _eclipse_plugin _extensions _langbindings amzi_env
+all: _dirs _engine _run _link _osutils _compile _libs _listen _docs _samples _winIDE _extensions _langbindings _amzi_env _eclipse_plugin
 
 _dirs:
 	$(info )
@@ -29,10 +28,6 @@ _dirs:
 	@-md $(RELEASE)\lib
 	@-md $(RELEASE)\langbindings
 	@-md $(RELEASE)\samples
-	@-md $(RELEASE)\eclipse_plugin
-	@-md $(RELEASE)\eclipse_plugin\features
-	@-md $(RELEASE)\eclipse_plugin\plugins
-
 
 _engine:
 	$(info )
@@ -124,19 +119,6 @@ _winIDE:
 	  gmake -f make_win32.txt clean && \
 	  gmake -f make_win32.txt
 
-_eclipse_plugin:
-	$(info )
-	$(info *************************************************************)
-	$(info *********    copying eclipse plug-in)
-	$(info *************************************************************)
-	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\artifacts.jar $(RELEASE)\eclipse_plugin
-	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\content.jar $(RELEASE)\eclipse_plugin
-	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\site.xml $(RELEASE)\eclipse_plugin
-	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\features $(RELEASE)\eclipse_plugin\features
-	copy $(AIDE_SOURCE)\workspace\com.amzi.prolog-update_site\plugins $(RELEASE)\eclipse_plugin\plugins
-	copy $(RELEASE)\bin\*.lsx $(RELEASE)\distributable\*.lsx
-	copy $(RELEASE)\config\amzi.cfg $(RELEASE)\distributable\amzi.cfg
-
 _extensions:
 	$(info )
 	$(info *************************************************************)
@@ -155,10 +137,19 @@ _langbindings:
 	  gmake -f make_win32.txt clean && \
 	  gmake -f make_win32.txt
 
-amzi_env:
+_amzi_env:
 	@copy $(SOURCE)\bin\amzi_vars.bat $(RELEASE)\bin
 	@copy "$(SOURCE)\Amzi Prolog Environment (Release).lnk" $(RELEASE)
 	@copy "$(SOURCE)\Configure Amzi Dirs (Release).bat" $(RELEASE)
+
+_eclipse_plugin:
+	$(info )
+	$(info *************************************************************)
+	$(info *********    MANUAL steps required)
+	$(info *********)
+	$(info *********    See /eclipse_plugin/README.md for build)
+	$(info *********    instructions.)
+
 
 clean:
 	@cd $(SOURCE)\engine && \
@@ -190,9 +181,6 @@ clean:
 	
 	@cd $(SOURCE)\winIDE && \
 	  @gmake -f make_win32.txt clean
-	
-#	@cd $(SOURCE)\_eclipse_plugin && \
-#	  @gmake -f make_win32.txt clean
 
 	@cd $(SOURCE)\extensions && \
 	  @gmake -f make_win32.txt clean
