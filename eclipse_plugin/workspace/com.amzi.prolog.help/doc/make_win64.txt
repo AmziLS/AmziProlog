@@ -49,11 +49,11 @@ _lsdoc :
 	$(CP) htmlidx\htmlidx.cfg $(DEV_DIR)\docs\ls\htmlidx.cfg
 	cd $(DEV_DIR)\docs\ls && \
 	  $(ARUN) htmlidx	
-	$(CP) ls\ls_toc.xml $(XML_DIR)
-	$(CP) ls\*.htm $(DOC_DIR)\ls
-	$(CP) ls\*.gif $(DOC_DIR)\ls
-	$(CP) ls\*.htm $(ECL_DIR)\ls
-	$(CP) ls\*.gif $(ECL_DIR)\ls
+	$(CP) "ls\ls_toc.xml" $(XML_DIR)
+	$(CP) "ls\*.htm" $(DOC_DIR)\ls
+	$(CP) "ls\*.gif" $(DOC_DIR)\ls
+	$(CP) "ls\*.htm" $(ECL_DIR)\ls
+	$(CP) "ls\*.gif" $(ECL_DIR)\ls
 
 _prodoc :
 	$(MD) $(DOC_DIR)\pro
@@ -62,11 +62,11 @@ _prodoc :
 	$(CP) htmlidx\htmlidx.cfg $(DEV_DIR)\docs\pro\htmlidx.cfg
 	cd $(DEV_DIR)\docs\pro && \
 	  $(ARUN) htmlidx
-	$(CP) pro\pro_toc.xml $(XML_DIR)
-	$(CP) pro\*.htm $(DOC_DIR)\pro
-	$(CP) pro\*.gif $(DOC_DIR)\pro
-	$(CP) pro\*.htm $(ECL_DIR)\pro
-	$(CP) pro\*.gif $(ECL_DIR)\pro
+	$(CP) "pro\pro_toc.xml" $(XML_DIR)
+	$(CP) "pro\*.htm" $(DOC_DIR)\pro
+	$(CP) "pro\*.gif" $(DOC_DIR)\pro
+	$(CP) "pro\*.htm" $(ECL_DIR)\pro
+	$(CP) "pro\*.gif" $(ECL_DIR)\pro
 
 _aip :
 	$(MD) $(DOC_DIR)\aip
@@ -75,11 +75,11 @@ _aip :
 	$(CP) htmlidx\htmlidx.cfg $(DEV_DIR)\docs\aip\htmlidx.cfg
 	cd $(DEV_DIR)\docs\aip && \
 	  $(ARUN) htmlidx
-	$(CP) aip\aip_toc.xml $(XML_DIR)
-	$(CP) aip\*.htm $(DOC_DIR)\aip
-	$(CP) aip\*.gif $(DOC_DIR)\aip
-	$(CP) aip\*.htm $(ECL_DIR)\aip
-	$(CP) aip\*.gif $(ECL_DIR)\aip
+	$(CP) "aip\aip_toc.xml" $(XML_DIR)
+	$(CP) "aip\*.htm" $(DOC_DIR)\aip
+	$(CP) "aip\*.gif" $(DOC_DIR)\aip
+	$(CP) "aip\*.htm" $(ECL_DIR)\aip
+	$(CP) "aip\*.gif" $(ECL_DIR)\aip
 
 _xsip :
 	$(MD) $(DOC_DIR)\xsip
@@ -89,11 +89,11 @@ _xsip :
 	cd $(DEV_DIR)\docs\xsip && \
 	  $(ARUN) htmlidx
 	$(CP) xsip\xsip_toc.xml $(XML_DIR)
-	$(CP) xsip\*.htm $(DOC_DIR)\xsip
-	$(CP) xsip\*.gif $(DOC_DIR)\xsip
+	$(CP) "xsip\*.htm" $(DOC_DIR)\xsip
+	$(CP) "xsip\*.gif" $(DOC_DIR)\xsip
 	xcopy /S /I /Y xsip\code $(DOC_DIR)\xsip\code
-	$(CP) xsip\*.htm $(ECL_DIR)\xsip
-	$(CP) xsip\*.gif $(ECL_DIR)\xsip
+	$(CP) "xsip\*.htm" $(ECL_DIR)\xsip
+	$(CP) "xsip\*.gif" $(ECL_DIR)\xsip
 	xcopy /S /I /Y xsip\code $(ECL_DIR)\xsip\code
 	xcopy /S /I /Y xsip\code $(DOC_DIR)\xsip\code
 
@@ -104,25 +104,25 @@ _libsdoc :
 	$(CP) $(DEV_DIR)\libs\list.pro libs\list.htm
 	$(CP) $(DEV_DIR)\libs\misc.pro libs\misc.htm
 	$(CP) $(DEV_DIR)\libs\xml.pro libs\xml.htm
-	$(CP) libs\libs_toc.xml $(DOC_DIR)\libs
-	$(CP) libs\doc.html $(DOC_DIR)\libs
-	$(CP) libs\*.htm $(DOC_DIR)\libs
-	$(CP) libs\libs_toc.xml $(ECL_DIR)\libs
-	$(CP) libs\doc.html $(ECL_DIR)\libs
-	$(CP) libs\*.htm $(ECL_DIR)\libs
-	$(CP) libs\*.xml $(XML_DIR)
+	$(CP) "libs\libs_toc.xml" $(DOC_DIR)\libs
+	$(CP) "libs\doc.html" $(DOC_DIR)\libs
+	$(CP) "libs\*.htm" $(DOC_DIR)\libs
+	$(CP) "libs\libs_toc.xml" $(ECL_DIR)\libs
+	$(CP) "libs\doc.html" $(ECL_DIR)\libs
+	$(CP) "libs\*.htm" $(ECL_DIR)\libs
+	$(CP) "libs\*.xml" $(XML_DIR)
 
 _articles :
 	$(MD) $(DOC_DIR)\articles
 	$(CP) articles\doc.html $(DOC_DIR)\articles
 	$(MD) $(ECL_DIR)\articles
-	$(CP) articles\doc.html $(ECL_DIR)\articles
-	$(CP) articles\doc.html $(DOC_DIR)\articles
-	$(CP) articles\articles_toc.xml $(XML_DIR)
-	$(CP) articles\*.htm $(DOC_DIR)\articles
-	$(CP) articles\*.gif $(DOC_DIR)\articles
-	$(CP) articles\*.htm $(ECL_DIR)\articles
-	$(CP) articles\*.gif $(ECL_DIR)\articles
+	$(CP) "articles\doc.html" $(ECL_DIR)\articles
+	$(CP) "articles\doc.html" $(DOC_DIR)\articles
+	$(CP) "articles\articles_toc.xml" $(XML_DIR)
+	$(CP) "articles\*.htm" $(DOC_DIR)\articles
+	$(CP) "articles\*.gif" $(DOC_DIR)\articles
+	$(CP) "articles\*.htm" $(ECL_DIR)\articles
+	$(CP) "articles\*.gif" $(ECL_DIR)\articles
 
 clean:
 	@cd $(DEV_DIR)\docs\htmlidx && \
