@@ -277,3 +277,5 @@ _Pvt_Extensions
 /eclipse_plugin/workspace/com.amzi.prolog.core/javaCompiler.prologcore.jar.args
 /eclipse_plugin/workspace/com.amzi.prolog.debug/build.xml
 /eclipse_plugin/workspace/com.amzi.prolog.debug/javaCompiler.prologdebug.jar.args
+/langbindings/java/jnilib/amzi_ls_LSException.h
+/langbindings/java/jnilib/amzi_ls_LogicServer.h
