@@ -13,18 +13,18 @@ Amzi! Prolog is made of the following:
     - adding extended predicates, and manipulating their parameters
     - error handling
   - **Logic Server Extensions** -- .lsx files that provide extended predicates/functions, implemented in other languages
-  - **Command line tools** -- to interpret (`alis`), compile (`acmp`), link (`alnk`) and execute (`arun`) Prolog programs
+  - **Command line tools** -- to interpret and debug (`alis`), compile (`acmp`), link (`alnk`) and execute (`arun`) Prolog programs
     - the Prolog listener alis is an interactive interpreter; the process is aka. [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)
   - **Eclipse IDE plugin** -- for comfortable compiling, linking, and *debugging*
 
 File types:
-  - **.pro** -- <u>Prolog source code (program or module)</u>
+  - **.pro** -- Prolog source code (program or module)
   - **.plm** -- Compiled Prolog module (Prolog/WAM byte code file -- machine independent)
   - **.xpl** -- Executable Prolog library (a linked collection of .plm files)
   - **.lsx** -- Logic Server extension (a renamed DLL/SO file)
 
 Common terms:
-  - Logic base = Prolog program
+  - Logic base = knowledge base = Prolog program
   - The Logic Server is a service, with an interface similar to a database server, which allows to query and update the logic base (= Prolog program).
   - Loading of a source code file (.pro), then interpreting it, is called "consulting". This is in contrast to compiled files (.plm/.xpl), which are simply said to be "loaded".
     - **Note:** neither loading compiled code, nor consulting source code, will automatically execute the [main/0 predicate](https://www.amzi.com/manuals/amzi/ls/lsprguid.htm#MainEntryPoints) -- use `arun` if you want that.

@@ -1,14 +1,19 @@
 # Building the update site for the Eclipse plugin
 
-1. Right-click `site.xml` and choose: `Plug-in Tools|Build Site`
-2. Wait for the background task to finish (progress bar in the bottom right) 
-3. The result will be available in `../../../../eclipse_IDE_plugin_update_site`
+1. Download and install [Eclipse PDE](https://www.eclipse.org/pde/) (look for the "Eclipse SDK" download)
+    * An all in-one package can also be obtained by chosing [Eclipse IDE for RCP and RAP Developers](https://www.eclipse.org/downloads/packages/)
+2. Import all projects from `/eclipse_plugin/workspace` into Eclipse
+3. In the project `com.amzi.prolog-update_site` right-click `site.xml` and choose: `Plug-in Tools|Build Site`
+4. Wait for the background task to finish (progress bar in the bottom right) 
+5. The result will be available in `../../../release/eclipse_plugin`
+    * For easier synching with the update site, another copy of the same files will be available in    
+    `../../../../eclipse_IDE_plugin_update_site`
 
 ## Automatically uploading the update site
 
 If you already have cloned
 https://github.com/AmziLS/eclipse_IDE_plugin_update_site into the same directory
-as mentioned above, relevant files will be overwritten during the build (as
+as mentioned above (`../../../../eclipse_IDE_plugin_update_site`), relevant files will be overwritten during the build (as
 intended). Checking in the changes and synching with GitHub is enough to
 complete the process. As users will update from
 https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/, they will
@@ -27,7 +32,7 @@ repository, but independent and at the same level. This is intentional, since
 the update site is a binary distribution and should not be mixed with source
 code.
 
-## Troubleshooting
+## Troubleshooting failed builds
 
 If the update_site cannot be built, make sure the feature name, path and version
 under `Site Map|Managing the Site` in the site.xml-editor is still correct.
