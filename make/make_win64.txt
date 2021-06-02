@@ -145,7 +145,7 @@ _amzi_env:
 _eclipse_plugin:
 	$(info )
 	$(info *************************************************************)
-	$(info *********    MANUAL steps required)
+	$(info *********    Additional MANUAL steps required)
 	$(info *********)
 	$(info *********    See /eclipse_plugin/README.md for build)
 	$(info *********    instructions.)
