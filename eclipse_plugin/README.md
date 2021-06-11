@@ -29,7 +29,7 @@ Articles:
 
 ## Building
 
-See [BUILD-README.md](workspace/com.amzi.prolog-update_site/BUILD-README.md) for (re)building all the plugin projects and the update site.
+See [BUILD-README.md](workspace/com.amzi.prolog-update_site/BUILD-README.md) for (re)building all the Eclipse IDE plugin projects and the update site.
 
 ## Creating a New Version
 
