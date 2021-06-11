@@ -2,22 +2,19 @@
 
 ## Install
 
-1. Download a current ZIP release of Amzi Prolog (11.1 or higher), and unpack it anywhere you wish
-    * Hint: the unpack destination directory is the *installation directory* and will contain the following folders: `/bin`, `/abin`, `/docs`, `/langbindings`, ...
-2. Set the environment variable `AMZI_DIR` to the installation directory of Amzi Prolog
-    * You can do it automatically by executing `Configure Amzi Dirs (Release).bat`
-3. Download and install any version of Eclipse
+1. [Install Amzi! Prolog](../Setup%20and%20getting%20started.md#installation) (11.1 or higher)
+2. Download and install any version of Eclipse
     * Tested successfully with version 2020-12 (4.18.0)
     * **Pitfall:** The bitness of the Eclipse install must match that of the Amzi! Prolog release. For example, a 64 bit Eclipse install requires that `AMZI_DIR` points to a 64 bit Amzi! Prolog release.
-4. In Eclipse select `Help|Install New Software...` and enter the following URL in the `Work with:` text box:    
+3. In Eclipse select `Help|Install New Software...` and enter the following URL in the `Work with:` text box:    
     https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/
     * Alternatively, you can install from the local `eclipse_plugin` directory under `AMZI_DIR`
-5. Then press `Add...` and confirm with `Add`
+4. Then press `Add...` and confirm with `Add`
     * Optionally give the `Location` (= URL) a `Name`
-6. Check `Amzi! Eclipse Feature` and all its sub components
-7. Now just press `Next` and follow the instructions
+5. Check `Amzi! Eclipse Feature` and all its sub components
+6. Now just press `Next` and follow the instructions
     * The installation will proceed in the background (progress shown in the status bar)
-9. Open the Prolog perspective
+7. Open the Prolog perspective
     * After the installation is completed and Eclipse was restarted, go in the menu "Window|Perspective|Open Perspective|Other..." and select "Prolog", then confirm.
 
 ### Introductory videos and articles
