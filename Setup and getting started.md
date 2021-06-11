@@ -44,5 +44,6 @@ mentioned above. Change into the directory `samples/prolog/tutorial_tests`
 and execute `alis tutor_test_ui.pro`.
 
 It will start a question and answering session about basic arithmetic.
-See the [Tutorial Testing sample documentation](https://github.com/AmziLS/AmziProlog/tree/master/samples/prolog/tutorial_tests/doc.html
+See the [Tutorial Testing sample documentation]
+(https://github.com/AmziLS/AmziProlog/tree/master/samples/prolog/tutorial_tests/doc.html)
 for further guidance.
