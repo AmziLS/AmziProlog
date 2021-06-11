@@ -11,8 +11,8 @@ to build anything.
 ## Installation
 
 1. Download a current release ZIP of Amzi Prolog for your platform (see above), and unpack it anywhere you wish
-    * Hint: the unpack destination directory is the *installation directory* and will contain the following folders: `/bin`, `/abin`, `/docs`, `/langbindings`, ...
 2. Set the environment variable `AMZI_DIR` to the installation directory of Amzi Prolog
+    * Hint: the unpack destination directory is the *installation directory* and will contain the following folders: `/bin`, `/abin`, `/docs`, `/langbindings`, ...
     * You can do it automatically by executing `Configure Amzi Dirs (Release).bat`
 
 Open `Amzi Prolog Environment (Release).lnk` to get a command line with all
