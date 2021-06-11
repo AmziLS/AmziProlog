@@ -1,5 +1,7 @@
 # Getting started with Amzi! Prolog
 
+A lot of care was taken to get you started as quickly and as simply as possible. The instructions have more detail to ensure you have the necessary information for trouble shooting, but are not complex.
+
 ## Amzi! Prolog Binary Distribution
 
 Binary Distributions of Amzi! Prolog are available under [Releases](https://github.com/AmziLS/AmziProlog/releases) and can be found, as usual on
