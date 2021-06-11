@@ -35,7 +35,7 @@ environments.
 ### Install Eclipse-IDE plugin
 
 For easier debugging and coding of Prolog programs, you can use the
-Eclipse-plugin. Follow these [simple installation steps](https://github.com/AmziLS/AmziProlog/tree/master/eclipse_plugin#install).
+Eclipse-plugin. Follow these [simple installation steps](eclipse_plugin#install).
 
 ## Running your first example
 
