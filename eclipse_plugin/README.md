@@ -28,12 +28,7 @@ Articles:
 
 ## Building
 
-1. Download and install Eclipse 4.5.1 for plug-in development
-2. Rebuild all
-3. Open com.amzi.prolog-update_site
-4. Delete all the jar files in features, plugins and both artifacts.jar and content.jar
-5. Open site.xml in com.amzi.prolog-update_site and ‘Build All’
-6. Copy the new files in com.amzi.prolog-update_site to a new location, and it is the new plug-in
+See (workspace/com.amzi.prolog-update_site/BUILD-README.md).
 
 ## Creating a New Version
 
