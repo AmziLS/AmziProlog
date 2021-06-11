@@ -69,13 +69,13 @@ Finally, apart from a simple Windows IDE (under `/winIDE`), there is also an Ecl
 
 ## Building and Debugging
 
-For building the whole system, see the `/make` subdirectory. There are [detailed building instructions for Windows](https://github.com/AmziLS/AmziProlog/blob/master/Windows%20compilation%20instructions.md).
+For building the whole system, see the `/make` subdirectory. There are [detailed building instructions for Windows](Windows%20compilation%20instructions.md).
 
 Individual components can be built using the make files in each subdirectory. It is also possible to load the .sln files in Visual Studio for debugging. Make sure that you have set up the environment variables correctly (see `/bin/amzi_vars_winXX.bat`).
 
 ## Releases
 
-[Releases](https://github.com/AmziLS/AmziProlog/releases) are available as usual on GitHub, on the right side bar. They contain the built runtime library, and command line tools, but also samples, language bindings, Logic Server extensions, and a ready to use Eclipse plugin. It's the easiest way to [get started](https://github.com/AmziLS/AmziProlog/blob/master/Setup%20and%20getting%20started.md).
+[Releases](https://github.com/AmziLS/AmziProlog/releases) are available as usual on GitHub, on the right side bar. They contain the built runtime library, and command line tools, but also samples, language bindings, Logic Server extensions, and a ready to use Eclipse plugin. It's the easiest way to [get started](Setup%20and%20getting%20started.md).
     
 ## License
 
