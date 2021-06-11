@@ -244,7 +244,8 @@ TF EXPFUNC p_wsaStartup(ENGid eid)
 {
 	WSADATA	sockdata;
     USHORT verReq;
-	RC		rc, ecode;
+    RC		rc;
+    int     ecode;
 	TF		tf;
 	int		MaxSockets, MaxUdpDg;
 
@@ -304,15 +305,15 @@ TF EXPFUNC p_wsaGetLastError(ENGid eid) {return TRUE;}
 */
 TF EXPFUNC p_accept(ENGid eid)
 {
-	ULONG sock, newsock;
-	_int32	rhostaddr;
+    SOCKET sock, newsock;
+	ULONG	rhostaddr;
 	int		rhostport, sockdesclen;
 	struct sockaddr_in	sockdesc;
 	struct sockaddr		*sdp;
 	RC		rc;
 	TF		tf;
 	
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
 	sdp = (struct sockaddr*)&sockdesc;
 	sockdesclen = sizeof(sockdesc);
@@ -321,14 +322,14 @@ TF EXPFUNC p_accept(ENGid eid)
 
 	//rhostaddr = sockdesc.sin_addr.S_un.S_addr;
 	rhostaddr = sockdesc.sin_addr.S_ADDR;
-	tf = lsUnifyParm(eid, 2, cINT, &rhostaddr);
+	tf = lsUnifyParm(eid, 2, cLONG, &rhostaddr);
 	if (tf != TRUE) return(FALSE);
 
 	rhostport = (_int32) ntohs(sockdesc.sin_port);
 	tf = lsUnifyParm(eid, 3, cINT, &rhostport);
 	if (tf != TRUE) return(FALSE);
 
-	tf = lsUnifyParm(eid, 4, cLONG, &newsock);
+	tf = lsUnifyParm(eid, 4, cADDR, &newsock);
 	if (tf != TRUE) return(FALSE);
 
 	return(TRUE);
@@ -339,25 +340,25 @@ TF EXPFUNC p_accept(ENGid eid)
 */
 TF EXPFUNC p_bind(ENGid eid)
 {
-	ULONG   sock;
-	UINT	lhostaddr;
+	SOCKET   sock;
+	ULONG	lhostaddr;
     UINT	lhostport;
     int     ecode;
 	struct sockaddr_in	sockdesc;
 	struct sockaddr		*sdp;
 	RC		rc;
 	
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
-	rc = lsGetParm(eid, 2, cINT, &lhostaddr);
+	rc = lsGetParm(eid, 2, cLONG, &lhostaddr);
 	if (rc != 0) return(FALSE);
 	rc = lsGetParm(eid, 3, cINT, &lhostport);
 	if (rc != 0) return(FALSE);
 
 	sockdesc.sin_family = AF_INET;
 	sockdesc.sin_port = htons((unsigned short) lhostport);
-	//sockdesc.sin_addr.S_un.S_addr = (unsigned long) lhostaddr;
-	sockdesc.sin_addr.S_ADDR = (unsigned long) lhostaddr;
+	//sockdesc.sin_addr.S_un.S_addr = lhostaddr;
+	sockdesc.sin_addr.S_ADDR = lhostaddr;
 	sdp = (struct sockaddr*)&sockdesc;
 	ecode = bind(sock, sdp, sizeof(sockdesc));
 	if (ecode != 0)
@@ -375,11 +376,11 @@ TF EXPFUNC p_bind(ENGid eid)
 */
 TF EXPFUNC p_closesocket(ENGid eid)
 {
-	ULONG   sock;
+    SOCKET   sock;
 	RC		rc;
 	int		ecode;
 
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
 #if defined(MSWIN)
 	ecode = closesocket(sock);
@@ -395,25 +396,25 @@ TF EXPFUNC p_closesocket(ENGid eid)
 */
 TF EXPFUNC p_connect(ENGid eid)
 {
-	ULONG	sock;
-    UINT rhostaddr;
+	SOCKET	sock;
+    ULONG rhostaddr;
     UINT rhostport;
     int ecode;
 	struct sockaddr_in	sockdesc;
 	struct sockaddr		*sdp;
 	RC		rc;
 	
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
-	rc = lsGetParm(eid, 2, cINT, &rhostaddr);
+	rc = lsGetParm(eid, 2, cLONG, &rhostaddr);
 	if (rc != 0) return(FALSE);
 	rc = lsGetParm(eid, 3, cINT, &rhostport);
 	if (rc != 0) return(FALSE);
 
 	sockdesc.sin_family = AF_INET;
 	sockdesc.sin_port = htons((u_short) rhostport);
-	//sockdesc.sin_addr.S_un.S_addr = (ULONG) rhostaddr;
-	sockdesc.sin_addr.S_ADDR = (ULONG) rhostaddr;
+	//sockdesc.sin_addr.S_un.S_addr = rhostaddr;
+	sockdesc.sin_addr.S_ADDR = rhostaddr;
     memset(&sockdesc.sin_zero, 0, sizeof(sockdesc.sin_zero));
 	sdp = (struct sockaddr*)&sockdesc;
 	ecode = connect(sock, sdp, sizeof(sockdesc));
@@ -426,14 +427,14 @@ TF EXPFUNC p_connect(ENGid eid)
 */
 TF EXPFUNC p_gethostbyaddr(ENGid eid)
 {
-	UINT    hostaddr;
+	ULONG    hostaddr;
 	struct hostent	*hp;
 	TERM	term, item;
 	RC		rc;
 	TF		tf;
 	int		i;
 
-	rc = lsGetParm(eid, 1, cINT, &hostaddr);
+	rc = lsGetParm(eid, 1, cLONG, &hostaddr);
 	if (rc != 0) return(FALSE);
 
 	hp = gethostbyaddr((char *)&hostaddr, 4, PF_INET);
@@ -542,15 +543,15 @@ TF EXPFUNC p_gethostname(ENGid eid)
 */
 TF EXPFUNC p_getpeername(ENGid eid)
 {
-	ULONG   sock;
-	UINT	rhostaddr;
+    SOCKET   sock;
+	ULONG	rhostaddr;
 	int		rhostport, sockdesclen, ecode;
 	struct sockaddr_in	sockdesc;
 	struct sockaddr		*sdp;
 	RC		rc;
 	TF		tf;
 	
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
 	sdp = (struct sockaddr*)&sockdesc;
 	ecode = getpeername(sock, sdp, &sockdesclen);
@@ -558,7 +559,7 @@ TF EXPFUNC p_getpeername(ENGid eid)
 
 	//rhostaddr = sockdesc.sin_addr.S_un.S_addr;
 	rhostaddr = sockdesc.sin_addr.S_ADDR;
-	tf = lsUnifyParm(eid, 2, cINT, &rhostaddr);
+	tf = lsUnifyParm(eid, 2, cLONG, &rhostaddr);
 	if (tf != TRUE) return(FALSE);
 
 	rhostport = (_int32) ntohs(sockdesc.sin_port);
@@ -744,15 +745,15 @@ TF EXPFUNC p_getservbyport(ENGid eid)
 */
 TF EXPFUNC p_getsockname(ENGid eid)
 {
-	ULONG	sock;
-	UINT	lhostaddr;
+    SOCKET	sock;
+    ULONG	lhostaddr;
 	int		lhostport, sockdesclen, ecode;
 	struct sockaddr_in	sockdesc;
 	struct sockaddr		*sdp;
 	RC		rc;
 	TF		tf;
 	
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
 	sdp = (struct sockaddr*)&sockdesc;
 	ecode = getsockname(sock, sdp, &sockdesclen);
@@ -760,7 +761,7 @@ TF EXPFUNC p_getsockname(ENGid eid)
 
 	//lhostaddr = sockdesc.sin_addr.S_un.S_addr;
 	lhostaddr = sockdesc.sin_addr.S_ADDR;
-	tf = lsUnifyParm(eid, 2, cINT, &lhostaddr);
+	tf = lsUnifyParm(eid, 2, cLONG, &lhostaddr);
 	if (tf != TRUE) return(FALSE);
 
 	lhostport = (_int32) ntohs(sockdesc.sin_port);
@@ -775,14 +776,14 @@ TF EXPFUNC p_getsockname(ENGid eid)
 */
 TF EXPFUNC p_getsockopt(ENGid eid)
 {
-	ULONG	sock;
+    SOCKET	sock;
 	struct linger	ling;
 	int		level, optname, valuelen, ecode;
 	_int32	value;
 	RC		rc;
 	TF		tf;
 
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
 	rc = lsGetParm(eid, 2, cINT, &level);
 	if (rc != 0) return(FALSE);
@@ -809,7 +810,7 @@ TF EXPFUNC p_getsockopt(ENGid eid)
 TF EXPFUNC p_inet_addr(ENGid eid)
 {
 	char	dotaddr[20];
-	_int32	inetaddr;
+    ULONG	inetaddr;
 	RC		rc;
 	TF		tf;
 
@@ -819,7 +820,7 @@ TF EXPFUNC p_inet_addr(ENGid eid)
 	if (rc != 0) return(FALSE);
 
 	inetaddr = inet_addr(dotaddr);
-	tf = lsUnifyParm(eid, 2, cINT, &inetaddr);
+	tf = lsUnifyParm(eid, 2, cLONG, &inetaddr);
 	if (tf != TRUE) return(FALSE);
 	if (inetaddr == INADDR_NONE) return(FALSE);
 	return(TRUE);
@@ -831,12 +832,12 @@ TF EXPFUNC p_inet_addr(ENGid eid)
 TF EXPFUNC p_inet_ntoa(ENGid eid)
 {
 	struct in_addr	iaddr;
-	UINT	inetaddr;
+    ULONG	inetaddr;
 	char	*dotaddr;
 	RC		rc;
 	TF		tf;
 
-	rc = lsGetParm(eid, 1, cINT, &inetaddr);
+	rc = lsGetParm(eid, 1, cLONG, &inetaddr);
 	if (rc != 0) return(FALSE);
 	//iaddr.S_un.S_addr = inetaddr;
 	iaddr.S_ADDR = inetaddr;
@@ -853,16 +854,17 @@ TF EXPFUNC p_inet_ntoa(ENGid eid)
 */
 TF EXPFUNC p_ioctlsocket(ENGid eid)
 {
-	ULONG	sock;
+    SOCKET	sock;
 	BOOL	barg;
 	long	larg;
-	int		cmd, ecode;
+    long	cmd;
+    int		ecode;
 	RC		rc;
 	TF		tf;
 
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
-	rc = lsGetParm(eid, 2, cINT, &cmd);
+	rc = lsGetParm(eid, 2, cLONG, &cmd);
 	if (rc != 0) return(FALSE);
 	switch (cmd)
 	{
@@ -893,11 +895,11 @@ TF EXPFUNC p_ioctlsocket(ENGid eid) { return TRUE; }
 */
 TF EXPFUNC p_listen(ENGid eid)
 {
-	ULONG	sock;
+    SOCKET	sock;
 	int		backlog, ecode;
 	RC		rc;
 
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
 	rc = lsGetParm(eid, 2, cINT, &backlog);
 	if (rc != 0) return(FALSE);
@@ -911,13 +913,13 @@ TF EXPFUNC p_listen(ENGid eid)
 */
 TF EXPFUNC p_recv(ENGid eid)
 {
-	ULONG   sock;
+    SOCKET  sock;
 	char	*buf;
 	int		flags, buflen, recvlen;
 	RC		rc;
 	TF		tf;
 
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
 	rc = lsGetParm(eid, 3, cINT, &buflen);
 	if (rc != 0) return(FALSE);
@@ -947,8 +949,8 @@ p_recv_error:
 */
 TF EXPFUNC p_recvfrom(ENGid eid)
 {
-	ULONG   sock;
-	UINT	rhostaddr;
+    SOCKET   sock;
+    ULONG	rhostaddr;
 	int		rhostport, sockdesclen;
 	struct sockaddr_in	sockdesc;
 	struct sockaddr		*sdp;
@@ -957,7 +959,7 @@ TF EXPFUNC p_recvfrom(ENGid eid)
 	RC		rc;
 	TF		tf;
 	
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
 	rc = lsGetParm(eid, 3, cINT, &buflen);
 	if (rc != 0) return(FALSE);
@@ -979,7 +981,7 @@ TF EXPFUNC p_recvfrom(ENGid eid)
 
 	//rhostaddr = sockdesc.sin_addr.S_un.S_addr;
 	rhostaddr = sockdesc.sin_addr.S_ADDR;
-	tf = lsUnifyParm(eid, 5, cINT, &rhostaddr);
+	tf = lsUnifyParm(eid, 5, cLONG, &rhostaddr);
 	if (tf != TRUE) goto p_recvfrom_error;
 
 	rhostport = (_int32) ntohs(sockdesc.sin_port);
@@ -1001,7 +1003,7 @@ p_recvfrom_error:
 */
 TF EXPFUNC p_select(ENGid eid)
 {
-	ULONG	tsock;
+    SOCKET	tsock;
 #ifdef MSWIN
 	struct fd_set	readset, writeset, errorset;
 #else
@@ -1016,19 +1018,19 @@ TF EXPFUNC p_select(ENGid eid)
 	rc = lsGetParm(eid, 1, cTERM, &list);
 	if (rc != 0) return(FALSE);
 	FD_ZERO(&readset);
-	while (lsPopList(eid, &list, cLONG, &tsock) == OK)
+	while (lsPopList(eid, &list, cADDR, &tsock) == OK)
 		FD_SET(tsock, &readset);
 	
 	rc = lsGetParm(eid, 2, cTERM, &list);
 	if (rc != 0) return(FALSE);
 	FD_ZERO(&writeset);
-	while (lsPopList(eid, &list, cLONG, &tsock) == OK)
+	while (lsPopList(eid, &list, cADDR, &tsock) == OK)
 		FD_SET(tsock, &writeset);
 	
 	rc = lsGetParm(eid, 3, cTERM, &list);
 	if (rc != 0) return(FALSE);
 	FD_ZERO(&errorset);
-	while (lsPopList(eid, &list, cLONG, &tsock) == OK)
+	while (lsPopList(eid, &list, cADDR, &tsock) == OK)
 		FD_SET(tsock, &errorset);
 	
 	rc = lsGetParm(eid, 4, cLONG, &waitlen.tv_sec);
@@ -1043,10 +1045,10 @@ TF EXPFUNC p_select(ENGid eid)
 	if (rc != 0) return(FALSE);
 	rc = lsGetParm(eid, 1, cTERM, &list);
 	if (rc != 0) return(FALSE);
-	while (lsPopList(eid, &list, cLONG, &tsock) == OK)
+	while (lsPopList(eid, &list, cADDR, &tsock) == OK)
 		if (FD_ISSET(tsock, &readset))
 		{
-			rc = lsMakeInt(eid, &newitem, tsock);
+			rc = lsMakeAddr(eid, &newitem, (VOIDptr)tsock);
 			rc = lsPushList(eid, &newlist, newitem);
 		}
 	tf = lsUnifyParm(eid, 6, cTERM, &newlist);
@@ -1056,10 +1058,10 @@ TF EXPFUNC p_select(ENGid eid)
 	if (rc != 0) return(FALSE);
 	rc = lsGetParm(eid, 2, cTERM, &list);
 	if (rc != 0) return(FALSE);
-	while (lsPopList(eid, &list, cLONG, &tsock) == OK)
+	while (lsPopList(eid, &list, cADDR, &tsock) == OK)
 		if (FD_ISSET(tsock, &writeset))
 		{
-			rc = lsMakeInt(eid, &newitem, tsock);
+			rc = lsMakeAddr(eid, &newitem, (VOIDptr)tsock);
 			rc = lsPushList(eid, &newlist, newitem);
 		}
 	tf = lsUnifyParm(eid, 7, cTERM, &newlist);
@@ -1069,10 +1071,10 @@ TF EXPFUNC p_select(ENGid eid)
 	if (rc != 0) return(FALSE);
 	rc = lsGetParm(eid, 3, cTERM, &list);
 	if (rc != 0) return(FALSE);
-	while (lsPopList(eid, &list, cLONG, &tsock) == OK)
+	while (lsPopList(eid, &list, cADDR, &tsock) == OK)
 		if (FD_ISSET(tsock, &errorset))
 		{
-			rc = lsMakeInt(eid, &newitem, tsock);
+			rc = lsMakeAddr(eid, &newitem, (VOIDptr)tsock);
 			rc = lsPushList(eid, &newlist, newitem);
 		}
 	tf = lsUnifyParm(eid, 8, cTERM, &newlist);
@@ -1086,13 +1088,13 @@ TF EXPFUNC p_select(ENGid eid)
 */
 TF EXPFUNC p_send(ENGid eid)
 {
-    ULONG	sock;
+    SOCKET	sock;
     char	*buf;
     int		flags, buflen, sentlen;
     RC		rc;
     TF		tf;
 
-    rc = lsGetParm(eid, 1, cLONG, &sock);
+    rc = lsGetParm(eid, 1, cADDR, &sock);
     if (rc != 0) return(FALSE);
     buflen = lsStrParmLen(eid, 2);
     buf = (char *)malloc(buflen + 1);
@@ -1103,7 +1105,7 @@ TF EXPFUNC p_send(ENGid eid)
     rc = lsGetParm(eid, 3, cINT, &flags);
     if (rc != 0) goto p_send_error;
 
-	sentlen = send((SOCKET)sock, buf, buflen, flags);
+	sentlen = send(sock, buf, buflen, flags);
 	tf = lsUnifyParm(eid, 4, cINT, &sentlen);
 	if (tf != TRUE) goto p_send_error;
 	if (sentlen == SOCKET_ERROR) goto p_send_error;
@@ -1120,7 +1122,7 @@ p_send_error:
 */
 TF EXPFUNC p_sendto(ENGid eid)
 {
-    ULONG	sock;
+    SOCKET	sock;
 	_int32	rhostaddr;
 	int		rhostport;
 	struct sockaddr_in	sockdesc;
@@ -1130,7 +1132,7 @@ TF EXPFUNC p_sendto(ENGid eid)
 	RC		rc;
 	TF		tf;
 
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
 	buflen = lsStrParmLen(eid, 2);
 	buf = (char *)malloc(buflen+1);
@@ -1168,13 +1170,13 @@ p_sendto_error:
 */
 TF EXPFUNC p_setsockopt(ENGid eid)
 {
-	ULONG	sock;
+    SOCKET	sock;
 	struct linger	ling;
 	int		level, optname, valuelen, ecode;
 	_int32	value;
 	RC		rc;
 
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
 	rc = lsGetParm(eid, 2, cINT, &level);
 	if (rc != 0) return(FALSE);
@@ -1200,11 +1202,11 @@ TF EXPFUNC p_setsockopt(ENGid eid)
 */
 TF EXPFUNC p_shutdown(ENGid eid)
 {
-	ULONG	sock;
+    SOCKET	sock;
 	RC		rc;
 	int		how, ecode;
 
-	rc = lsGetParm(eid, 1, cLONG, &sock);
+	rc = lsGetParm(eid, 1, cADDR, &sock);
 	if (rc != 0) return(FALSE);
 	rc = lsGetParm(eid, 2, cINT, &how);
 	if (rc != 0) return(FALSE);
@@ -1230,7 +1232,7 @@ TF EXPFUNC p_socket(ENGid eid)
 
 	sock = socket(PF_INET, socktype, sockprotocol);
 
-	tf = lsUnifyParm(eid, 3, cLONG, &sock);
+	tf = lsUnifyParm(eid, 3, cADDR, &sock);
 	if (tf != TRUE) return(FALSE);
 	return(TRUE);
 }
