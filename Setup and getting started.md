@@ -25,8 +25,7 @@ the installation paths of the installed dependencies (only necessary when using
 MySQL, MSVC or Java).
 
 For using IDEs such as MS Visual Studio or Eclipse it may be simpler to set
-system wide environment variables once, using
-`Configure Amzi Dirs (Release).bat`.
+system wide environment variables, using `Configure Amzi Dirs (Release).bat`.
 
 Your release environment will be *either* 32 *or* 64 bit, but not both at the same
 time. That is, you need to have two separate folders for Amzi! Prolog 32 and 64
