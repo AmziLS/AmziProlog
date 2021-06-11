@@ -46,3 +46,8 @@ and execute `alis tutor_test_ui.pro`.
 It will start a question and answering session about basic arithmetic.
 See the [documentation for the Tutorial Testing sample](samples/prolog/tutorial_tests/doc.html)
 for further guidance.
+
+### Documentation
+
+Have a look at the [further documentation](README.md#documentation) and especially [Getting Started with Eclipse Amzi! Prolog](https://www.youtube.com/watch?v=EMxLnn2I9yo).
+For an overview of useful concepts and the general architecture, refer to the [readme](README.md).
