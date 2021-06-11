@@ -28,7 +28,7 @@ Articles:
 
 ## Building
 
-See (workspace/com.amzi.prolog-update_site/BUILD-README.md).
+See [BUILD-README.md](workspace/com.amzi.prolog-update_site/BUILD-README.md).
 
 ## Creating a New Version
 
