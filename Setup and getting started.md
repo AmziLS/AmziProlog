@@ -10,7 +10,7 @@ to build anything.
 
 ## Installation
 
-Simply extract the ZIP file for your platform into any directory you wish.
+Simply extract the release ZIP for your platform (see above) into any directory you wish.
 
 Execute `Amzi Prolog Environment (Release).lnk` to get a command line with all
 the necessary environment variables initialized correctly.
