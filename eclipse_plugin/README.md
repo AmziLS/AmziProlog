@@ -29,7 +29,7 @@ Articles:
 
 ## Building
 
-See [BUILD-README.md](workspace/com.amzi.prolog-update_site/BUILD-README.md). It will not only build the update site, but also all the plugin projects, as well.
+See [BUILD-README.md](workspace/com.amzi.prolog-update_site/BUILD-README.md) for rebuilding all the plugin projects and the update site.
 
 ## Creating a New Version
 
