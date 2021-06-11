@@ -6,7 +6,7 @@
     * Hint: the unpack destination directory is the *installation directory* and will contain the following folders: `/bin`, `/abin`, `/docs`, `/langbindings`, ...
 2. Set the environment variable `AMZI_DIR` to the installation directory of Amzi Prolog
     * You can do it automatically by executing `Configure Amzi Dirs (Release).bat`
-    * **Pitfall:** The bitness of the Eclipse install must match that of the Amzi! Prolog release, e.g., a 64 bit Eclipse install requires that `AMZI_DIR` points to a 64 bit Amzi! Prolog release.
+    * **Pitfall:** The bitness of the Eclipse install must match that of the Amzi! Prolog release. For example, a 64 bit Eclipse install requires that `AMZI_DIR` points to a 64 bit Amzi! Prolog release.
 3. Download and install any version of Eclipse
     * Tested successfully with version 2020-12 (4.18.0)
 4. In Eclipse select `Help|Install New Software...` and enter the following URL in the `Work with:` text box:    
