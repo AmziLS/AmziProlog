@@ -12,12 +12,12 @@
     https://raw.github.com/AmziLS/eclipse_IDE_plugin_update_site/master/
     * Alternatively, you can install from the local `eclipse_plugin` directory under `AMZI_DIR`
 5. Then press `Add...` and confirm with `Add`
-   * Optionally give the `Location` (= URL) a `Name`
+    * Optionally give the `Location` (= URL) a `Name`
 6. Check `Amzi! Eclipse Feature` and all its sub components
 7. Now just press `Next` and follow the instructions
-  * The installation will proceed in the background (progress shown in the status bar)
+    * The installation will proceed in the background (progress shown in the status bar)
 9. Open the Prolog perspective
-  * After the installation is completed and Eclipse was restarted, go in the menu "Window|Perspective|Open Perspective|Other..." and select "Prolog", then confirm.
+    * After the installation is completed and Eclipse was restarted, go in the menu "Window|Perspective|Open Perspective|Other..." and select "Prolog", then confirm.
 
 ### Introductory videos and articles
 
