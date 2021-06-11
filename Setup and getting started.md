@@ -27,7 +27,7 @@ system wide environment variables once, using
 
 Your release environment will be *either* 32 or 64 bit, but not both at the same
 time, i.e., you need to have two separate folders for Amzi! Prolog 32 and 64
-it, and set the environment variable accordingly, either using
+bit, and set the environment variable accordingly: either using
 `Amzi Prolog Environment (Release).lnk` to create a temporary environment or
 `Configure Amzi Dirs (Release).bat` each time you switch between the global
 environments.
