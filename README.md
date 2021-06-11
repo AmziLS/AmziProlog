@@ -38,11 +38,16 @@ See also: [Amzi! Prolog Quick Overview](http://www.amzi.com/manuals/amzi/pro/pug
     
 [Prolog Articles / Whitepapers](https://www.amzi.com/manuals/amzi/articles/doc.html)    
 [Adventure in Prolog](https://www.amzi.com/manuals/amzi/aip/advfrtop.htm) -- A tutorial/guided tour through Prolog    
-[Building Expert Systems in Prolog](https://www.amzi.com/manuals/amzi/xsip/xsipfrtop.htm) --  An advanced tutorial
+[Building Expert Systems in Prolog](https://www.amzi.com/manuals/amzi/xsip/xsipfrtop.htm) --  An advanced tutorial    
 
-### Videos
-[Getting Started with Eclipse Amzi! Prolog](https://www.youtube.com/watch?v=EMxLnn2I9yo)    
-[Amzi! Prolog Source Code Debugger in Eclipse](https://www.youtube.com/watch?v=fewTmnarfu8)    
+### Eclipse
+Videos:
+  * [Getting Started with Eclipse Amzi! Prolog](https://www.youtube.com/watch?v=EMxLnn2I9yo)    
+  * [Amzi! Prolog Source Code Debugger in Eclipse](https://www.youtube.com/watch?v=fewTmnarfu8)    
+
+Articles:
+  * [Eclipse IDE Quick Start](http://www.amzi.com/manuals/amzi/pro/pug_ide_quickstart.htm)
+  * [Eclipse IDE](http://www.amzi.com/manuals/amzi/pro/pug_ide.htm)
 
 ## Repository Contents
 
