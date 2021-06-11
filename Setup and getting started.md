@@ -17,7 +17,7 @@ the necessary environment variables initialized correctly.
 
 ### Details
 
-Make sure to adapt bin/amzi_vars_win32.bat and bin/amzi_vars_win64.bat to match
+Make sure to adapt `bin/amzi_vars_win32.bat` and `bin/amzi_vars_win64.bat` to match
 the installation paths of the installed dependencies (only necessary when using
 MySQL, MSVC or Java).
 
