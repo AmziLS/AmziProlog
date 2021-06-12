@@ -30,7 +30,6 @@ docs :  _htmlidx _lsdoc _prodoc _aip _xsip _libsdoc _articles
 	$(CP) amzidoc_eclipse.htm $(ECL_DIR)\amzidoc.htm
 	$(CP) *.htm $(ECL_DIR)
 	$(CP) amzi_toc.xml $(XML_DIR)
-	$(CP) .eclipseextension $(RUN_DIR)\docs\eclipse
 	$(RM) $(DOC_DIR)\amzidoc_eclipse.htm
 	- $(CP) *.gif $(DOC_DIR)
 	- $(CP) *.txt $(DOC_DIR)
