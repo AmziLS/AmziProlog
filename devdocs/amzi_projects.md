@@ -53,7 +53,7 @@ Builds for the full system documentation.  It includes a program that automatica
 ## amzi-apls-samples
 This is really a big copy rather than a build.  It copies all the samples into the release directory of samples, amzi/apls/samples.
 
-## amzi-apls-wide (Windows only)
+## amzi-apls-winIDE (Windows only)
 This builds a relatively simple IDE for developing Prolog programs under Windows.  The executable is wide(.exe).
 
 ## amzi-interfaces-make
