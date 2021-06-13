@@ -17,7 +17,7 @@ to build anything.
     * Hint: `AMZI_DIR` should point to the unpack directory / installation directory; it will contain the following folders: `/bin`, `/abin`, `/docs`, `/langbindings`, ...
     * You can do it **automatically** by executing `Configure Amzi Dirs (Release).bat`
 3. Windows: install the `Visual C++ 2017 Redistributable` available in the list of [latest supported Visual C++ downloads](https://support.microsoft.com/help/2977003/the-latest-supported-visual-c-downloads)
-    * vc_redist.x86.exe for the 32 bit Amzi! Prolog distribution and vc_redist.x64.exe for the 64 bit release
+    * `vc_redist.x86.exe` for the 32 bit Amzi! Prolog distribution and `vc_redist.x64.exe` for the 64 bit release
 
 Open `Amzi Prolog Environment (Release).lnk` to get a command line with all
 the necessary environment variables initialized correctly, so you can execute all the Amzi! Prolog tools, such as `alis` or `arun`.
