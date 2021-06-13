@@ -7,12 +7,12 @@
       - install a Java Development Kit (any version should do)
       - install MySQL Server (and ensure the development components/header files are selected as well)
 
-1. Adapt amzi_vars_win32.bat and amzi_vars_win64.bat to match your system
+1. Adapt `amzi_vars_win32.bat` and `amzi_vars_win64.bat` to match your system
     - adapt the call of vcvarsXX.bat to match the Visual Studio installation directory
     - ensure %MYSQL% is set to the desired MySQL installation directory containing the \include sub dir
     - adapt %JAVA_HOME% to point to desired JDK home directory (just above \bin sub dir)
 
-2. Open "Amzi Prolog 32 Bit Environment (Source)" or "Amzi Prolog 64 Bit Environment (Source)"
+2. Open `Amzi Prolog 32 Bit Environment (Source).lnk` or `Amzi Prolog 64 Bit Environment (Source).lnk`
 
 3. Enter the following commands:
     * for Win32:    
