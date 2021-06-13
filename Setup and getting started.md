@@ -30,9 +30,9 @@ system wide environment variables, using `Configure Amzi Dirs (Release).bat`.
 Your release environment will be *either* 32 *or* 64 bit, but not both at the same
 time. That is, you need to have two separate folders for Amzi! Prolog 32 and 64
 bit, and set the environment variables accordingly:
-  * Execute `Amzi Prolog Environment (Release).lnk` to create a temporary 32/64 bit command line environment
-  * Optionally, execute `Configure Amzi Dirs (Release).bat` each time you want to globally
-set the 32/64 bit `AMZI_DIR` for use with IDEs or other tools not started from the command line environment
+  * execute `Amzi Prolog Environment (Release).lnk` to create a temporary 32/64 bit command line environment.
+  * optionally, execute `Configure Amzi Dirs (Release).bat` each time you want to globally
+set the 32/64 bit `AMZI_DIR` for use with IDEs or other tools not started from the command line environment.
 
 ### Install Eclipse-IDE plugin
 
