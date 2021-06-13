@@ -71,7 +71,10 @@ Finally, apart from a simple Windows IDE (under `/winIDE`), there is also an Ecl
 
 For building the whole system, see the `/make` subdirectory. There are [detailed building instructions for Windows](Windows%20compilation%20instructions.md).
 
-Individual components can be built using the make files in each subdirectory. It is also possible to load the .sln files in Visual Studio for debugging. Make sure that you have set up the environment variables correctly (see `/bin/amzi_vars_winXX.bat`).
+Individual components can be built using the make files in each subdirectory. It is also possible to load the .sln files in Visual Studio for debugging.
+Make sure to adapt `bin/amzi_vars_win32.bat` and `bin/amzi_vars_win64.bat` to match
+the installation paths of the installed dependencies (only necessary when using
+MySQL, Visual Studio, or Java).
 
 ## Releases
 
