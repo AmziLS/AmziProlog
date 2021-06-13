@@ -70,7 +70,7 @@ Finally, apart from a simple Windows IDE (under `/winIDE`), there is also an Ecl
 ## Building and Debugging
 
 For building the whole system, see the `/make` subdirectory.
-  * There are [detailed building instructions for Windows](Windows%20compilation%20instructions.md).    
+  * There are [detailed building instructions for Windows](Building%20instructions%20(for%20Windows).md).    
   * Individual components can be built using the make files in each subdirectory.
 
 It is also possible to load the .sln files in Visual Studio for debugging.    
