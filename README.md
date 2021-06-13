@@ -75,7 +75,7 @@ For building the whole system, see the `/make` subdirectory.
 
 It is also possible to load the .sln files in Visual Studio for debugging.    
   1. Make sure to adapt `bin/amzi_vars_win32.bat` and `bin/amzi_vars_win64.bat` to match
-the installation paths of the installed dependencies (as mentioned in the building instructions)
+the installation paths of the installed dependencies (as mentioned in the building instructions).
   2. Start Visual Studio from either `Amzi Prolog 32 Bit Environment (Source).lnk` or `Amzi Prolog 64 Bit Environment (Source).lnk` command line environments, to ensure all the necessary paths are set.
 
 ## Releases
