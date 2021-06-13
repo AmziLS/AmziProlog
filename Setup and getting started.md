@@ -20,13 +20,9 @@ to build anything.
     * `vc_redist.x86.exe` for the 32 bit Amzi! Prolog distribution and `vc_redist.x64.exe` for the 64 bit release
 
 Open `Amzi Prolog Environment (Release).lnk` to get a command line with all
-the necessary environment variables initialized correctly, so you can execute all the Amzi! Prolog tools, such as `alis` or `arun`.
+the necessary environment variables initialized correctly, so you can execute all the Amzi! Prolog tools, such as `alis` or `arun`, no matter which directory you are in.
 
 ### Details
-
-Make sure to adapt `bin/amzi_vars_win32.bat` and `bin/amzi_vars_win64.bat` to match
-the installation paths of the installed dependencies (only necessary when using
-MySQL, Visual Studio, or Java).
 
 For using IDEs such as Visual Studio or Eclipse it may be simpler to set
 system wide environment variables, using `Configure Amzi Dirs (Release).bat`.
