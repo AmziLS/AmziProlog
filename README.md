@@ -70,14 +70,14 @@ Finally, apart from a simple Windows IDE (under `/winIDE`), there is also an Ecl
 ## Building and Debugging
 
 For building the whole system, see the `/make` subdirectory.
-  * There are [detailed building instructions for Windows](Building%20instructions%20(for%20Windows).md).    
+  * There are [detailed building instructions for Windows](Building%20instructions%20for%20Windows.md).    
   * Individual components can be built using the make files in each subdirectory.
 
 It is also possible to load the .sln files in Visual Studio for debugging.    
   1. Make sure to adapt `bin/amzi_vars_win32.bat` and `bin/amzi_vars_win64.bat` to match
 the installation paths of the installed dependencies (as mentioned in the building instructions).
   2. Start Visual Studio from either `Amzi Prolog 32 Bit Environment (Source).lnk` or `Amzi Prolog 64 Bit Environment (Source).lnk` command line environments, to ensure all the necessary paths are set.    
-      * Enter `devenv` to start Visual Studio
+      * Enter `devenv` to start Visual Studio.
 
 ## Releases
 
