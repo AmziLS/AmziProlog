@@ -26,9 +26,9 @@ the necessary environment variables initialized correctly, so you can execute al
 
 Make sure to adapt `bin/amzi_vars_win32.bat` and `bin/amzi_vars_win64.bat` to match
 the installation paths of the installed dependencies (only necessary when using
-MySQL, MSVC or Java).
+MySQL, Visual Studio or Java).
 
-For using IDEs such as MS Visual Studio or Eclipse it may be simpler to set
+For using IDEs such as Visual Studio or Eclipse it may be simpler to set
 system wide environment variables, using `Configure Amzi Dirs (Release).bat`.
 
 Your release environment will be *either* 32 *or* 64 bit, but not both at the same
