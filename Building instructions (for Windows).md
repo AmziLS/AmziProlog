@@ -1,4 +1,4 @@
-# Windows compilation instructions
+# Building instructions for Windows
 
 0. Install prerequisites
     - install Visual Studio 2017 (with C++ support) or later
