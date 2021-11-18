@@ -62,6 +62,27 @@ It will start a question and answering session about basic arithmetic.
 See the [documentation for the Tutorial Testing sample](samples/prolog/tutorial_tests/doc.html)
 for further guidance.
 
+## Compiling and distributing a Prolog program
+
+In the directory `samples/prolog/duckworld` you will find a `doc.html` that
+explains how to compile, link, run, and distribute *Duckworld*, a simple
+standalone Prolog program.
+
+The linked Prolog program is called `dw.xpl`. To turn this into an executable
+you have to copy `arun.exe` (of the correct bitness for your target operating
+system!) to `dw.exe`.
+
+Also copy `amzi.dll` to the same folder.
+
+Duckworld can be run on another Windows machine if you copy the following three
+files:
+`dw.xpl`
+`amzi.dll`
+`dw.exe`
+
+Your target system will also need the VC++ runtime libraries. See point 3
+of [installation](#installation) above.
+
 ## Documentation
 
 Have a look at the [documentation](README.md#documentation) and especially
