@@ -65,19 +65,17 @@ for further guidance.
 ## Compiling and distributing a Prolog program
 
 In the directory `samples/prolog/duckworld` you will find a `doc.html` that
-explains how to compile, link, run, and distribute *Duckworld*, a simple
-standalone Prolog program.
+explains how to compile, link and run *Duckworld*, a simple standalone Prolog
+program.
 
 The linked Prolog program is called `dw.xpl`. To turn this into an executable
 you have to copy `arun.exe` (of the correct bitness for your target operating
 system!) to `dw.exe`.
 
-Also copy `amzi.dll` to the same folder.
-
 Now, Duckworld can be run on another Windows machine, if you:
   * copy the following three files:
     - `dw.xpl`
-    - `amzi.dll`
+    - `amzi.dll` (again of the correct bitness of your target system)
     - `dw.exe`
   * and your target system has the VC++ runtime installed
     - see point 3 of [installation](#installation) above
