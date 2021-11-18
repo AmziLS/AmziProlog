@@ -74,14 +74,13 @@ system!) to `dw.exe`.
 
 Also copy `amzi.dll` to the same folder.
 
-Duckworld can be run on another Windows machine if you copy the following three
-files:
-`dw.xpl`
-`amzi.dll`
-`dw.exe`
-
-Your target system will also need the VC++ runtime libraries. See point 3
-of [installation](#installation) above.
+Now, Duckworld can be run on another Windows machine, if you:
+  * copy the following three files:
+    - `dw.xpl`
+    - `amzi.dll`
+    - `dw.exe`
+  * and your target system has the VC++ runtime installed
+    - see point 3 of [installation](#installation) above
 
 ## Documentation
 
