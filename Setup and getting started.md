@@ -75,7 +75,7 @@ system!) to `dw.exe`.
 Now, Duckworld can be run on another Windows machine, if you:
   * copy the following three files:
     - `dw.xpl`
-    - `amzi.dll` (again of the correct bitness of your target system)
+    - `amzi.dll` (again of the correct bitness for your target system)
     - `dw.exe`
   * and your target system has the VC++ runtime installed
     - see point 3 of [installation](#installation) above
